@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "denoland.vscode-deno",
+    "editorconfig.editorconfig",
+    "davidanson.vscode-markdownlint",
+    "esbenp.prettier-vscode"
+  ]
+}

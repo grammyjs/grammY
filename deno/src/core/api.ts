@@ -1,0 +1,1885 @@
+import {
+    BotCommand,
+    ChatPermissions,
+    InlineQueryResult,
+    InputFile,
+    InputMedia,
+    InputMediaAudio,
+    InputMediaDocument,
+    InputMediaPhoto,
+    InputMediaVideo,
+    LabeledPrice,
+    Opts,
+    PassportElementError,
+} from '../platform.ts'
+import {
+    createRawApi,
+    RawApi,
+    ApiClientOptions,
+    TransformerConsumer,
+    WebhookReplyEnvelope,
+    Transformer,
+} from './client.ts'
+
+type AlwaysOmittedInOther = 'chat_id'
+/**
+ * Helper type to derive remaining properties of a given API method call M,
+ * given that some properties X have already been specified.
+ */
+export type Other<
+    M extends keyof RawApi,
+    X extends keyof Omit<Opts<M>, AlwaysOmittedInOther> = never
+> = Omit<Opts<M>, AlwaysOmittedInOther | X>
+
+/**
+ * This class provides access to the full Telegram Bot API. All methods of the
+ * API have an equivalent on this class, with the most important parameters
+ * pulled up into the function signature, and the other parameters captured by
+ * an object.
+ *
+ * In addition, this class has a property `raw` that provides raw access to the
+ * complete Telegram API, with the method signatures 1:1 represented as
+ * documented on the website (https://core.telegram.org/bots/api).
+ *
+ * Every method takes an optional `AbortSignal` object that allows you to cancel
+ * the request if desired.
+ *
+ * In advanced use cases, this class allows to install transformers that can
+ * modify the method and payload on the fly before sending it to the Telegram
+ * servers. Confer the `config` property for this.
+ */
+export class Api {
+    /**
+     * Provides access to all methods of the Telegram Bot API exactly as
+     * documented on the website. No arguments are pulled up in the function
+     * signature for convenience.
+     *
+     * If you suppress compiler warnings, this also allows for raw api calls to
+     * undocumented methods with arbitrary parameters—use only if you know what
+     * you are doing.
+     */
+    public readonly raw: RawApi
+
+    /**
+     * Configuration object for the API instance, used as a namespace to
+     * separate those API operations that are related to grammY from methods of
+     * the Telegram Bot API. Contains advanced options!
+     */
+    public readonly config: {
+        /**
+         * Allows to install an API request transformer function. A transformer
+         * function has access to every API call before it is being performed.
+         * This includes the method as string, the payload as object and the
+         * upstream transformer function.
+         *
+         * _Note that using transformer functions is an advanced feature of
+         * grammY that most bots will not need to make use of._
+         */
+        readonly use: TransformerConsumer
+        /**
+         * Provides read access to all currently installed transformers (those
+         * that have previously been passed to `config.use`).
+         *
+         * _Note that using transformer functions is an advanced feature of
+         * grammY that most bots will not need to make use of._
+         */
+        readonly installedTransformers: () => Transformer[]
+    }
+
+    constructor(
+        token: string,
+        config?: ApiClientOptions,
+        webhookReplyEnvelope?: WebhookReplyEnvelope
+    ) {
+        const { raw, use, installedTransformers } = createRawApi(
+            token,
+            config,
+            webhookReplyEnvelope
+        )
+        this.raw = raw
+        this.config = {
+            use,
+            installedTransformers: () => [...installedTransformers],
+        }
+    }
+
+    /**
+     * Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
+     *
+     * Notes
+     * 1. This method will not work if an outgoing webhook is set up.
+     * 2. In order to avoid getting duplicate updates, recalculate offset after each server response.
+     *
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getupdates
+     */
+    getUpdates(other?: Other<'getUpdates'>, signal?: AbortSignal) {
+        return this.raw.getUpdates({ ...other }, signal)
+    }
+
+    /**
+     * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.
+     *
+     * If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot's token, you can be pretty sure it's us.
+     *
+     * Notes
+     * 1. You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.
+     * 2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please upload as InputFile, sending a String will not work.
+     * 3. Ports currently supported for Webhooks: 443, 80, 88, 8443.
+     *
+     * NEW! If you're having any trouble setting up webhooks, please check out this amazing guide to Webhooks.
+     *
+     * @param url HTTPS url to send updates to. Use an empty string to remove webhook integration
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setwebhook
+     */
+    setWebhook(
+        url: string,
+        other?: Other<'setWebhook', 'url'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setWebhook({ url, ...other }, signal)
+    }
+
+    /**
+     * Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success.
+     *
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletewebhook
+     */
+    deleteWebhook(other?: Other<'deleteWebhook'>, signal?: AbortSignal) {
+        return this.raw.deleteWebhook({ ...other }, signal)
+    }
+
+    /**
+     * Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
+     *
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getwebhookinfo
+     */
+    getWebhookInfo(signal?: AbortSignal) {
+        return this.raw.getWebhookInfo(signal)
+    }
+
+    /**
+     * A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object.
+     *
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getme
+     */
+    getMe(signal?: AbortSignal) {
+        return this.raw.getMe(signal)
+    }
+
+    /**
+     * Use this method to log out from the cloud Bot API server before launching the bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns True on success. Requires no parameters.
+     *
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#logout
+     */
+    logOut(signal?: AbortSignal) {
+        return this.raw.logOut(signal)
+    }
+
+    /**
+     * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns True on success. Requires no parameters.
+     *
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#close
+     */
+    close(signal?: AbortSignal) {
+        return this.raw.close(signal)
+    }
+
+    /**
+     * Use this method to send text messages. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendmessage
+     */
+    sendMessage(
+        chat_id: number | string,
+        text: string,
+        other?: Other<'sendMessage', 'text'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendMessage({ chat_id, text, ...other }, signal)
+    }
+
+    /**
+     * Use this method to forward messages of any kind. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @param message_id Message identifier in the chat specified in from_chat_id
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#forwardmessage
+     */
+    forwardMessage(
+        chat_id: number | string,
+        from_chat_id: number | string,
+        message_id: number,
+        other?: Other<'forwardMessage', 'from_chat_id' | 'message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.forwardMessage(
+            {
+                chat_id,
+                from_chat_id,
+                message_id,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to copy messages of any kind. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @param message_id Message identifier in the chat specified in from_chat_id
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#copymessage
+     */
+    copyMessage(
+        chat_id: number | string,
+        from_chat_id: number | string,
+        message_id: number,
+        other?: Other<'copyMessage', 'from_chat_id' | 'message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.copyMessage(
+            {
+                chat_id,
+                from_chat_id,
+                message_id,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to send photos. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendphoto
+     */
+    sendPhoto(
+        chat_id: number | string,
+        photo: InputFile | string,
+        other?: Other<'sendPhoto', 'photo'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendPhoto({ chat_id, photo, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * For sending voice messages, use the sendVoice method instead.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendaudio
+     */
+    sendAudio(
+        chat_id: number | string,
+        audio: InputFile | string,
+        other?: Other<'sendAudio', 'audio'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendAudio({ chat_id, audio, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#senddocument
+     */
+    sendDocument(
+        chat_id: number | string,
+        document: InputFile | string,
+        other?: Other<'sendDocument', 'document'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendDocument({ chat_id, document, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvideo
+     */
+    sendVideo(
+        chat_id: number | string,
+        video: InputFile | string,
+        other?: Other<'sendVideo', 'video'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendVideo({ chat_id, video, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendanimation
+     */
+    sendAnimation(
+        chat_id: number | string,
+        animation: InputFile | string,
+        other?: Other<'sendAnimation', 'animation'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendAnimation({ chat_id, animation, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvoice
+     */
+    sendVoice(
+        chat_id: number | string,
+        voice: InputFile | string,
+        other?: Other<'sendVoice', 'voice'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendVoice({ chat_id, voice, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send video messages. On success, the sent Message is returned.
+     * As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvideonote
+     */
+    sendVideoNote(
+        chat_id: number | string,
+        video_note: InputFile | string,
+        other?: Other<'sendVideoNote', 'video_note'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendVideoNote({ chat_id, video_note, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param media An array describing messages to be sent, must include 2-10 items
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendmediagroup
+     */
+    sendMediaGroup(
+        chat_id: number | string,
+        media: ReadonlyArray<
+            | InputMediaAudio
+            | InputMediaDocument
+            | InputMediaPhoto
+            | InputMediaVideo
+        >,
+        other?: Other<'sendMediaGroup', 'media'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendMediaGroup({ chat_id, media, ...other }, signal)
+    }
+
+    /**
+     * Use this method to send point on the map. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param latitude Latitude of the location
+     * @param longitude Longitude of the location
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendlocation
+     */
+    sendLocation(
+        chat_id: number | string,
+        latitude: number,
+        longitude: number,
+        other?: Other<'sendLocation', 'latitude' | 'longitude'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendLocation(
+            { chat_id, latitude, longitude, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the message to edit
+     * @param latitude Latitude of new location
+     * @param longitude Longitude of new location
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagelivelocation
+     */
+    editMessageLiveLocation(
+        chat_id: number,
+        message_id: number,
+        latitude: number,
+        longitude: number,
+        other?: Other<
+            'editMessageLiveLocation',
+            'message_id' | 'inline_message_id' | 'latitude' | 'longitude'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageLiveLocation(
+            {
+                chat_id,
+                message_id,
+                latitude,
+                longitude,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit live location inline messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param latitude Latitude of new location
+     * @param longitude Longitude of new location
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagelivelocation
+     */
+    editMessageLiveLocationInline(
+        inline_message_id: string,
+        latitude: number,
+        longitude: number,
+        other?: Other<
+            'editMessageLiveLocation',
+            'message_id' | 'inline_message_id' | 'latitude' | 'longitude'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageLiveLocation(
+            {
+                inline_message_id,
+                latitude,
+                longitude,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to stop updating a live location message before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the message with live location to stop
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#stopmessagelivelocation
+     */
+    stopMessageLiveLocation(
+        chat_id: number | string,
+        message_id: number,
+        other?: Other<
+            'stopMessageLiveLocation',
+            'message_id' | 'inline_message_id'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.stopMessageLiveLocation(
+            {
+                chat_id,
+                message_id,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to stop updating a live location inline message before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#stopmessagelivelocation
+     */
+    stopMessageLiveLocationInline(
+        inline_message_id: string,
+        other?: Other<
+            'stopMessageLiveLocation',
+            'message_id' | 'inline_message_id'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.stopMessageLiveLocation(
+            { inline_message_id, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to send information about a venue. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param latitude Latitude of the venue
+     * @param longitude Longitude of the venue
+     * @param title Name of the venue
+     * @param address Address of the venue
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendvenue
+     */
+    sendVenue(
+        chat_id: number | string,
+        latitude: number,
+        longitude: number,
+        title: string,
+        address: string,
+        other?: Other<
+            'sendVenue',
+            'latitude' | 'longitude' | 'title' | 'address'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendVenue(
+            {
+                chat_id,
+                latitude,
+                longitude,
+                title,
+                address,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to send phone contacts. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param phone_number Contact's phone number
+     * @param first_name Contact's first name
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendcontact
+     */
+    sendContact(
+        chat_id: number | string,
+        phone_number: string,
+        first_name: string,
+        other?: Other<'sendContact', 'phone_number' | 'first_name'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendContact(
+            {
+                chat_id,
+                phone_number,
+                first_name,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to send a native poll. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param question Poll question, 1-300 characters
+     * @param options A list of answer options, 2-10 strings 1-100 characters each
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendpoll
+     */
+    sendPoll(
+        chat_id: number | string,
+        question: string,
+        options: readonly string[],
+        other?: Other<'sendPoll', 'question' | 'options'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendPoll(
+            { chat_id, question, options, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, or “🎰”. Dice can have values 1-6 for “🎲” and “🎯”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#senddice
+     */
+    sendDice(
+        chat_id: number | string,
+        emoji: string,
+        other?: Other<'sendDice', 'emoji'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendDice({ chat_id, emoji, ...other }, signal)
+    }
+
+    /**
+     * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
+     *
+     * Example: The ImageBot needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use sendChatAction with action = upload_photo. The user will see a “sending photo” status for the bot.
+     *
+     * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendchataction
+     */
+    sendChatAction(
+        chat_id: number | string,
+        action:
+            | 'typing'
+            | 'upload_photo'
+            | 'record_video'
+            | 'upload_video'
+            | 'record_voice'
+            | 'upload_voice'
+            | 'upload_document'
+            | 'find_location'
+            | 'record_video_note'
+            | 'upload_video_note',
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendChatAction({ chat_id, action }, signal)
+    }
+
+    /**
+     * Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuserprofilephotos
+     */
+    getUserProfilePhotos(
+        user_id: number,
+        other?: Other<'getUserProfilePhotos', 'user_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.getUserProfilePhotos({ user_id, ...other }, signal)
+    }
+
+    /**
+     * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+     *
+     * Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
+     *
+     * @param file_id File identifier to get info about
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getfile
+     */
+    getFile(file_id: string, signal?: AbortSignal) {
+        return this.raw.getFile({ file_id }, signal)
+    }
+
+    /**
+     * Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
+     * @param user_id Unique identifier of the target user
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#kickchatmember
+     */
+    kickChatMember(
+        chat_id: number | string,
+        user_id: number,
+        other?: Other<'kickChatMember', 'user_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.kickChatMember({ chat_id, user_id, ...other }, signal)
+    }
+
+    /**
+     * Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be removed from the chat. If you don't want this, use the parameter only_if_banned. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @username)
+     * @param user_id Unique identifier of the target user
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unbanchatmember
+     */
+    unbanChatMember(
+        chat_id: number | string,
+        user_id: number,
+        other?: Other<'unbanChatMember', 'user_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.unbanChatMember({ chat_id, user_id, ...other }, signal)
+    }
+
+    /**
+     * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param user_id Unique identifier of the target user
+     * @param permissions An object for new user permissions
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#restrictchatmember
+     */
+    restrictChatMember(
+        chat_id: number | string,
+        user_id: number,
+        permissions: ChatPermissions,
+        other?: Other<'restrictChatMember', 'user_id' | 'permissions'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.restrictChatMember(
+            {
+                chat_id,
+                user_id,
+                permissions,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param user_id Unique identifier of the target user
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#promotechatmember
+     */
+    promoteChatMember(
+        chat_id: number | string,
+        user_id: number,
+        other?: Other<'promoteChatMember', 'user_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.promoteChatMember(
+            { chat_id, user_id, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param user_id Unique identifier of the target user
+     * @param custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchatadministratorcustomtitle
+     */
+    setChatAdministratorCustomTitle(
+        chat_id: number | string,
+        user_id: number,
+        custom_title: string,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setChatAdministratorCustomTitle(
+            {
+                chat_id,
+                user_id,
+                custom_title,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members admin rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param permissions New default chat permissions
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchatpermissions
+     */
+    setChatPermissions(
+        chat_id: number | string,
+        permissions: ChatPermissions,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setChatPermissions({ chat_id, permissions }, signal)
+    }
+
+    /**
+     * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.
+     *
+     * Note: Each administrator in a chat generates their own invite links. Bots can't use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using exportChatInviteLink or by calling the getChat method. If your bot needs to generate a new primary invite link replacing its previous one, use exportChatInviteLink again.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#exportchatinvitelink
+     */
+    exportChatInviteLink(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.exportChatInviteLink({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createchatinvitelink
+     */
+    createChatInviteLink(
+        chat_id: number | string,
+        other?: Other<'createChatInviteLink'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.createChatInviteLink({ chat_id, ...other }, signal)
+    }
+
+    /**
+     *  Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the edited invite link as a ChatInviteLink object.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param invite_link The invite link to edit
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editchatinvitelink
+     */
+    editChatInviteLink(
+        chat_id: number | string,
+        invite_link: string,
+        other?: Other<'editChatInviteLink', 'invite_link'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editChatInviteLink(
+            { chat_id, invite_link, ...other },
+            signal
+        )
+    }
+
+    /**
+     *  Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the revoked invite link as ChatInviteLink object.
+     *
+     * @param chat_id Unique identifier of the target chat or username of the target channel (in the format @channelusername)
+     * @param invite_link The invite link to revoke
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#revokechatinvitelink
+     */
+    revokeChatInviteLink(
+        chat_id: number | string,
+        invite_link: string,
+        signal?: AbortSignal
+    ) {
+        return this.raw.revokeChatInviteLink({ chat_id, invite_link }, signal)
+    }
+
+    /**
+     * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param photo New chat photo, uploaded using multipart/form-data
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchatphoto
+     */
+    setChatPhoto(
+        chat_id: number | string,
+        photo: InputFile,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setChatPhoto({ chat_id, photo }, signal)
+    }
+
+    /**
+     * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletechatphoto
+     */
+    deleteChatPhoto(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.deleteChatPhoto({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param title New chat title, 1-255 characters
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchattitle
+     */
+    setChatTitle(
+        chat_id: number | string,
+        title: string,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setChatTitle({ chat_id, title }, signal)
+    }
+
+    /**
+     * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param description New chat description, 0-255 characters
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchatdescription
+     */
+    setChatDescription(
+        chat_id: number | string,
+        description: string | undefined,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setChatDescription({ chat_id, description }, signal)
+    }
+
+    /**
+     * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of a message to pin
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#pinchatmessage
+     */
+    pinChatMessage(
+        chat_id: number | string,
+        message_id: number,
+        other?: Other<'pinChatMessage', 'message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.pinChatMessage(
+            { chat_id, message_id, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unpinchatmessage
+     */
+    unpinChatMessage(
+        chat_id: number | string,
+        message_id?: number,
+        signal?: AbortSignal
+    ) {
+        return this.raw.unpinChatMessage({ chat_id, message_id }, signal)
+    }
+
+    /**
+     * Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unpinallchatmessages
+     */
+    unpinAllChatMessages(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.unpinAllChatMessages({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#leavechat
+     */
+    leaveChat(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.leaveChat({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchat
+     */
+    getChat(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.getChat({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatadministrators
+     */
+    getChatAdministrators(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.getChatAdministrators({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method to get the number of members in a chat. Returns Int on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatmemberscount
+     */
+    getChatMembersCount(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.getChatMembersCount({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param user_id Unique identifier of the target user
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatmember
+     */
+    getChatMember(
+        chat_id: number | string,
+        user_id: number,
+        signal?: AbortSignal
+    ) {
+        return this.raw.getChatMember({ chat_id, user_id }, signal)
+    }
+
+    /**
+     * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param sticker_set_name Name of the sticker set to be set as the group sticker set
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchatstickerset
+     */
+    setChatStickerSet(
+        chat_id: number | string,
+        sticker_set_name: string,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setChatStickerSet(
+            {
+                chat_id,
+                sticker_set_name,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletechatstickerset
+     */
+    deleteChatStickerSet(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.deleteChatStickerSet({ chat_id }, signal)
+    }
+
+    /**
+     * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
+     *
+     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @Botfather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
+     *
+     * @param callback_query_id Unique identifier for the query to be answered
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answercallbackquery
+     */
+    answerCallbackQuery(
+        callback_query_id: string,
+        other?: Other<'answerCallbackQuery', 'callback_query_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.answerCallbackQuery(
+            { callback_query_id, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to change the list of the bot's commands. Returns True on success.
+     *
+     * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmycommands
+     */
+    setMyCommands(commands: readonly BotCommand[], signal?: AbortSignal) {
+        return this.raw.setMyCommands({ commands }, signal)
+    }
+
+    /**
+     * Use this method to get the current list of the bot's commands. Requires no parameters. Returns Array of BotCommand on success.
+     *
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmycommands
+     */
+    getMyCommands(signal?: AbortSignal) {
+        return this.raw.getMyCommands(signal)
+    }
+
+    /**
+     * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the message to edit
+     * @param text New text of the message, 1-4096 characters after entities parsing
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagetext
+     */
+    editMessageText(
+        chat_id: number | string,
+        message_id: number,
+        text: string,
+        other?: Other<'editMessageText', 'message_id' | 'text'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageText(
+            { chat_id, message_id, text, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit text and game inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagetext
+     */
+    editMessageTextInline(
+        inline_message_id: string,
+        text: string,
+        other?: Other<'editMessageText', 'inline_message_id' | 'text'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageText(
+            { inline_message_id, text, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the message to edit
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagecaption
+     */
+    editMessageCaption(
+        chat_id: number | string,
+        message_id: number,
+        other?: Other<'editMessageCaption', 'message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageCaption(
+            { chat_id, message_id, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit captions of inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagecaption
+     */
+    editMessageCaptionInline(
+        inline_message_id: string,
+        other?: Other<'editMessageCaption', 'inline_message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageCaption(
+            { inline_message_id, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded. Use a previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the message to edit
+     * @param media An object for a new media content of the message
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagemedia
+     */
+    editMessageMedia(
+        chat_id: number | string,
+        message_id: number,
+        media: InputMedia,
+        other?: Other<'editMessageMedia', 'message_id' | 'media'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageMedia(
+            {
+                chat_id,
+                message_id,
+                media,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit animation, audio, document, photo, or video inline messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded. Use a previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param media An object for a new media content of the message
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagemedia
+     */
+    editMessageMediaInline(
+        inline_message_id: string,
+        media: InputMedia,
+        other?: Other<'editMessageMedia', 'inline_message_id' | 'media'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageMedia(
+            { inline_message_id, media, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the message to edit
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagereplymarkup
+     */
+    editMessageReplyMarkup(
+        chat_id: number | string,
+        message_id: number,
+        other?: Other<'editMessageReplyMarkup', 'message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageReplyMarkup(
+            {
+                chat_id,
+                message_id,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to edit only the reply markup of inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagereplymarkup
+     */
+    editMessageReplyMarkupInline(
+        inline_message_id: string,
+        other?: Other<'editMessageReplyMarkup', 'inline_message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.editMessageReplyMarkup(
+            { inline_message_id, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the original message with the poll
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#stoppoll
+     */
+    stopPoll(
+        chat_id: number | string,
+        message_id: number,
+        other?: Other<'stopPoll', 'message_id'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.stopPoll({ chat_id, message_id, ...other }, signal)
+    }
+
+    /**
+     * Use this method to delete a message, including service messages, with the following limitations:
+     * - A message can only be deleted if it was sent less than 48 hours ago.
+     * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
+     * - Bots can delete outgoing messages in private chats, groups, and supergroups.
+     * - Bots can delete incoming messages in private chats.
+     * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+     * - If the bot is an administrator of a group, it can delete any message there.
+     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     * Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the message to delete
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessage
+     */
+    deleteMessage(
+        chat_id: number | string,
+        message_id: number,
+        signal?: AbortSignal
+    ) {
+        return this.raw.deleteMessage({ chat_id, message_id }, signal)
+    }
+
+    /**
+     * Use this method to send static .WEBP or animated .TGS stickers. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendsticker
+     */
+    sendSticker(
+        chat_id: number | string,
+        sticker: InputFile | string,
+        other?: Other<'sendSticker', 'sticker'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendSticker({ chat_id, sticker, ...other }, signal)
+    }
+
+    /**
+     * Use this method to get a sticker set. On success, a StickerSet object is returned.
+     *
+     * @param name Name of the sticker set
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getstickerset
+     */
+    getStickerSet(name: string, signal?: AbortSignal) {
+        return this.raw.getStickerSet({ name }, signal)
+    }
+
+    /**
+     * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
+     *
+     * @param user_id User identifier of sticker file owner
+     * @param png_sticker PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px.
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#uploadstickerfile
+     */
+    uploadStickerFile(
+        user_id: number,
+        png_sticker: InputFile,
+        signal?: AbortSignal
+    ) {
+        return this.raw.uploadStickerFile({ user_id, png_sticker }, signal)
+    }
+
+    /**
+     * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker or tgs_sticker. Returns True on success.
+     *
+     * @param user_id User identifier of created sticker set owner
+     * @param name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters.
+     * @param title Sticker set title, 1-64 characters
+     * @param emojis One or more emoji corresponding to the sticker
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createnewstickerset
+     */
+    createNewStickerSet(
+        user_id: number,
+        name: string,
+        title: string,
+        emojis: string,
+        other?: Other<
+            'createNewStickerSet',
+            'user_id' | 'name' | 'title' | 'emojis'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.createNewStickerSet(
+            {
+                user_id,
+                name,
+                title,
+                emojis,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker or tgs_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.
+     *
+     * @param user_id User identifier of sticker set owner
+     * @param name Sticker set name
+     * @param emojis One or more emoji corresponding to the sticker
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#addstickertoset
+     */
+    addStickerToSet(
+        user_id: number,
+        name: string,
+        emojis: string,
+        other?: Other<'addStickerToSet', 'user_id' | 'name' | 'emojis'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.addStickerToSet(
+            { user_id, name, emojis, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to move a sticker in a set created by the bot to a specific position. Returns True on success.
+     *
+     * @param sticker File identifier of the sticker
+     * @param position New sticker position in the set, zero-based
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setstickerpositioninset
+     */
+    setStickerPositionInSet(
+        sticker: string,
+        position: number,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setStickerPositionInSet({ sticker, position }, signal)
+    }
+
+    /**
+     * Use this method to delete a sticker from a set created by the bot. Returns True on success.
+     *
+     * @param sticker File identifier of the sticker
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletestickerfromset
+     */
+    deleteStickerFromSet(sticker: string, signal?: AbortSignal) {
+        return this.raw.deleteStickerFromSet({ sticker }, signal)
+    }
+
+    /**
+     * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Returns True on success.
+     *
+     * @param name Sticker set name
+     * @param user_id User identifier of the sticker set owner
+     * @param thumb A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/animated_stickers#technical-requirements for animated sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.. Animated sticker set thumbnail can't be uploaded via HTTP URL.
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setstickersetthumb
+     */
+    setStickerSetThumb(
+        name: string,
+        user_id: number,
+        thumb: InputFile | string,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setStickerSetThumb({ name, user_id, thumb }, signal)
+    }
+
+    /**
+     * Use this method to send answers to an inline query. On success, True is returned.
+     * No more than 50 results per query are allowed.
+     *
+     * Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
+     *
+     * @param inline_query_id Unique identifier for the answered query
+     * @param results An array of results for the inline query
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerinlinequery
+     */
+    answerInlineQuery(
+        inline_query_id: string,
+        results: readonly InlineQueryResult[],
+        other?: Other<'answerInlineQuery', 'inline_query_id' | 'results'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.answerInlineQuery(
+            {
+                inline_query_id,
+                results,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to send invoices. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target private chat
+     * @param title Product name, 1-32 characters
+     * @param description Product description, 1-255 characters
+     * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
+     * @param provider_token Payments provider token, obtained via Botfather
+     * @param start_parameter Unique deep-linking parameter that can be used to generate this invoice when used as a start parameter
+     * @param currency Three-letter ISO 4217 currency code, see more on currencies
+     * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendinvoice
+     */
+    sendInvoice(
+        chat_id: number,
+        title: string,
+        description: string,
+        payload: string,
+        provider_token: string,
+        start_parameter: string,
+        currency: string,
+        prices: readonly LabeledPrice[],
+        other?: Other<
+            'sendInvoice',
+            | 'title'
+            | 'description'
+            | 'payload'
+            | 'provider_token'
+            | 'start_parameter'
+            | 'currency'
+            | 'prices'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendInvoice(
+            {
+                chat_id,
+                title,
+                description,
+                payload,
+                provider_token,
+                start_parameter,
+                currency,
+                prices,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
+     *
+     * @param shipping_query_id Unique identifier for the query to be answered
+     * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answershippingquery
+     */
+    answerShippingQuery(
+        shipping_query_id: string,
+        ok: boolean,
+        other?: Other<'answerShippingQuery', 'shipping_query_id' | 'ok'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.answerShippingQuery(
+            { shipping_query_id, ok, ...other },
+            signal
+        )
+    }
+
+    /**
+     * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an Update with the field pre_checkout_query. Use this method to respond to such pre-checkout queries. On success, True is returned. Note: The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+     *
+     * @param pre_checkout_query_id Unique identifier for the query to be answered
+     * @param ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerprecheckoutquery
+     */
+    answerPreCheckoutQuery(
+        pre_checkout_query_id: string,
+        ok: boolean,
+        other?: Other<'answerPreCheckoutQuery', 'pre_checkout_query_id' | 'ok'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.answerPreCheckoutQuery(
+            {
+                pre_checkout_query_id,
+                ok,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
+     *
+     * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
+     *
+     * @param user_id User identifier
+     * @param errors An array describing the errors
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setpassportdataerrors
+     */
+    setPassportDataErrors(
+        user_id: number,
+        errors: readonly PassportElementError[],
+        signal?: AbortSignal
+    ) {
+        return this.raw.setPassportDataErrors({ user_id, errors }, signal)
+    }
+
+    /**
+     * Use this method to send a game. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat
+     * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendgame
+     */
+    sendGame(
+        chat_id: number,
+        game_short_name: string,
+        other?: Other<'sendGame', 'game_short_name'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.sendGame({ chat_id, game_short_name, ...other }, signal)
+    }
+
+    /**
+     * Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
+     *
+     * @param chat_id Unique identifier for the target chat
+     * @param message_id Identifier of the sent message
+     * @param user_id User identifier
+     * @param score New score, must be non-negative
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setgamescore
+     */
+    setGameScore(
+        chat_id: number,
+        message_id: number,
+        user_id: number,
+        score: number,
+        other?: Other<'setGameScore', 'message_id' | 'user_id' | 'score'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setGameScore(
+            {
+                chat_id,
+                message_id,
+                user_id,
+                score,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to set the score of the specified user in an inline game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param user_id User identifier
+     * @param score New score, must be non-negative
+     * @param other remaining parameters, confer the official reference below
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setgamescore
+     */
+    setGameScoreInline(
+        inline_message_id: string,
+        user_id: number,
+        score: number,
+        other?: Other<
+            'setGameScore',
+            'inline_message_id' | 'user_id' | 'score'
+        >,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setGameScore(
+            {
+                inline_message_id,
+                user_id,
+                score,
+                ...other,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. On success, returns an Array of GameHighScore objects.
+     *
+     * This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
+     *
+     * @param chat_id Unique identifier for the target chat
+     * @param message_id Identifier of the sent message
+     * @param user_id Target user id
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getgamehighscores
+     */
+    getGameHighScores(
+        chat_id: number,
+        message_id: number,
+        user_id: number,
+        signal?: AbortSignal
+    ) {
+        return this.raw.getGameHighScores(
+            {
+                chat_id,
+                message_id,
+                user_id,
+            },
+            signal
+        )
+    }
+
+    /**
+     * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in an inline game. On success, returns an Array of GameHighScore objects.
+     *
+     * This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
+     *
+     * @param inline_message_id Identifier of the inline message
+     * @param user_id Target user id
+     * @param signal optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getgamehighscores
+     */
+    getGameHighScoresInline(
+        inline_message_id: string,
+        user_id: number,
+        signal?: AbortSignal
+    ) {
+        return this.raw.getGameHighScores(
+            {
+                inline_message_id,
+                user_id,
+            },
+            signal
+        )
+    }
+}
