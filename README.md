@@ -1,28 +1,21 @@
-# **grammY** _—Telegram Bot Framework for Deno and Node_
+# **grammY** _—Telegram Bot Framework_
+
+> This project is still in its early stages. Please try it out, but don't expect everything to work just yet :)
 
 ## Features
 
 - Super easy to learn
 - Lightning fast
-- Outstanding `TypeScript` support
+- True `TypeScript` project
 - Full Telegram Bot API 5.1 support (with 100 % type coverage)
 - Scales up when your bot does
 
 ## Quickstart
 
-grammY was written for both Deno and Node.
 You can write your bot with both `TypeScript` and `JavaScript`.
 
-Choose your platform:
-
-**[Deno](./deno)** (recommended)
-
-**[Node](./node-backport)**
+WIP
 
 ## Resources
 
-grammY Documentation
-
-grammY API Reference
-
-Telegram Bot API Reference (Official)
+[Telegram Bot API Reference (Official)](https://core.telegram.org/bots/api)
