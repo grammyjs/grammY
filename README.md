@@ -14,6 +14,10 @@
 
 You can write your bot with both `TypeScript` and `JavaScript`.
 
+```bash
+npm i grammy
+```
+
 WIP
 
 ## Resources
