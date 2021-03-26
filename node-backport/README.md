@@ -23,7 +23,7 @@ bot.command('start', ctx => ctx.reply('Welcome! Send me your pics!'))
 bot.on('message:photo' ctx => ctx.reply('Nice photo!'))
 
 // Launch!
-bot.launch()
+bot.start()
 ```
 
 **Congratulations!**
