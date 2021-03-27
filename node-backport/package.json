@@ -28,7 +28,8 @@
     "typescript": "4.2.2"
   },
   "files": [
-    "./out/"
+    "./out/**/*.js",
+    "./out/**/*.d.ts"
   ],
   "main": "./out/mod.js",
   "exports": {
