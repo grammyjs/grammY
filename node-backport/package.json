@@ -1,7 +1,7 @@
 {
   "name": "grammy",
   "description": "grammY core package ported to Node.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "KnorpelSenf",
   "license": "MIT",
   "engines": {
@@ -11,7 +11,7 @@
     "build": "node --max-old-space-size=4096 ./node_modules/.bin/tsc"
   },
   "dependencies": {
-    "@grammyjs/types": "^1.0.0",
+    "@grammyjs/types": "^1.0.1",
     "abort-controller": "^3.0.0",
     "debug": "^4.3.1",
     "node-fetch": "^2.6.1"
