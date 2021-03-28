@@ -14,7 +14,7 @@ Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript
 
 > If you are new to Telegram bots, read the official [Introduction for Developers](https://core.telegram.org/bots) written by the Telegram team.
 
-Visit [@BotFather](https://t.me/BotFather) and create new bot. You will obtain a **bot token**.
+Visit [@BotFather](https://t.me/BotFather) and create a new bot. You will obtain a **bot token**.
 
 Create a new directory and run
 
