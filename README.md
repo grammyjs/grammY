@@ -57,14 +57,6 @@ Here are some more resources to support you:
 
 ## Resources
 
-### [grammY Telegram Chat](https://t.me/grammyjs)
-
-—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas and contributions!
-
-### [grammY News Channel](https://t.me/grammyjs_news)
-
-—Telegram channel where updates to grammY and the ecosystem are posted.
-
 ### [grammY API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts)
 
 —documentation of everything that grammY exports.
@@ -72,6 +64,14 @@ Here are some more resources to support you:
 ### [grammY Example Bots](https://github.com/grammyjs/examples)
 
 —repository full of example bots. Includes a setup to easily run any of them.
+
+### [grammY Telegram Chat](https://t.me/grammyjs)
+
+—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas and contributions!
+
+### [grammY News Channel](https://t.me/grammyjs_news)
+
+—Telegram channel where updates to grammY and the ecosystem are posted.
 
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
 
