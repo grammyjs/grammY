@@ -96,7 +96,7 @@ export interface BotConfig<C extends Context> {
  * Telegram servers. Got the token? You are now ready to write some code and run
  * your bot!
  *
- * You should to three things to run your bot:
+ * You should do three things to run your bot:
  * ```ts
  * // 1. Create a bot instance
  * const bot = new Bot('<secret-token>')
@@ -138,7 +138,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
     errorHandler: ErrorHandler<C> = async err => {
         console.error(
             'Error in middleware while handling update',
-            err.ctx.update.update_id,
+            err.ctx?.update?.update_id,
             err.error
         )
         console.error('No error handler was set!')
