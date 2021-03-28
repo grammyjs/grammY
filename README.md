@@ -47,7 +47,7 @@ and it will echo all received text messages.
 
 Congrats! You just wrote a Telegram bot :)
 
-## Going further
+## Going Further
 
 grammY has an excellent documentation. If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
 
