@@ -69,7 +69,7 @@ Here are some more resources to support you:
 
 —documentation of everything that grammY exports.
 
-### [Example Bots with grammY](https://github.com/grammyjs/examples)
+### [grammY Example Bots](https://github.com/grammyjs/examples)
 
 —repository full of example bots. Includes a setup to easily run any of them.
 
