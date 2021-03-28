@@ -1,50 +1,40 @@
-# grammY for Deno
+# grammY
 
-If you haven't already, install Deno.
-
-```shellscript
-curl -fsSL https://deno.land/x/install/install.sh | sh
-```
+The grammY package lets you easily write Telegram bots. Here is a quickstart for
+you to get started, but note that a better explanation is
+[in our repo on GitHub](https://github.com/grammyjs/grammY).
 
 ## Quickstart
 
-### Simple example
+Talk to [@BotFather](https://t.me/BotFather) to create a new Telegram bot and
+obtain a _bot token_.
 
-Talk to [@BotFather](https://t.me/BotFather) to create a new Telegram bot and obtain a _bot token_.
-
-Paste the following code into a new file `example-bot.ts`.
+Paste the following code into a new file `bot.ts`.
 
 ```ts
-import { Bot } from 'https://deno.land/x/grammy'
+import { Bot } from 'grammy'
 
-// Create bot
-const bot = new Bot('<your-bot-token>')
+// Create bot object
+const bot = new Bot('') // <-- place your bot token inside this string
 
 // Listen for messages
-bot.command('start', ctx => ctx.reply('Welcome! Send me your pics!'))
-bot.on('message:photo' ctx => ctx.reply('Nice photo!'))
+bot.command('start', ctx => ctx.reply('Welcome! Send me a photo!'))
+bot.on('message:text', ctx => ctx.reply('That is text and not a photo!'))
+bot.on('message:photo', ctx => ctx.reply('Nice photo! Is that you?'))
+bot.on('edited_message', ctx =>
+    ctx.reply('Ha! Gotcha! You just edited this!', {
+        reply_to_message_id: ctx.editedMessage.message_id,
+    })
+)
 
 // Launch!
 bot.start()
 ```
 
-**Congratulations!**
-You have successfully created your first Telegram bot for Deno.
+**Congratulations!** You have successfully created your first Telegram bot.
 
 You can run it like so:
 
-```shellscript
-deno --allow-net example-bot.ts
-```
-
-### Advanced example
-
-TODO: create more complicated example
-
-```ts
-const token = Deno.env.get('BOT_TOKEN')
-```
-
-```shellscript
-deno --allow-net --allow-env example-bot.ts
+```bash
+deno run --allow-env --allow-net bot.js
 ```
