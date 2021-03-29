@@ -98,7 +98,7 @@ interface SessionOptions<S> {
  * will do is to load the correct session from your storage solution. This
  * object is then provided on `ctx.session` while your other middleware is
  * running. As soon as your bot is done handling the update, the middleware
- * takes over again and write back the session object to your storage. This
+ * takes over again and writes back the session object to your storage. This
  * allows you to modify the session object arbitrarily in your middleware, and
  * to stop worrying about the database.
  *
@@ -114,7 +114,7 @@ interface SessionOptions<S> {
  * Check out the documentation on the website to know more about how sessions
  * work in grammY.
  *
- * @param options optional configuration to pass to the session middleware
+ * @param options Optional configuration to pass to the session middleware
  */
 export function session<S>(
     options?: SessionOptions<S>
@@ -160,7 +160,7 @@ export function session<S>(
  * Check out the documentation on the website to know more about how lazy
  * sessions work in grammY.
  *
- * @param options optional configuration to pass to the session middleware
+ * @param options Optional configuration to pass to the session middleware
  */
 export function lazySession<S>(
     options?: SessionOptions<S>

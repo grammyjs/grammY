@@ -32,7 +32,7 @@ export function transformPayload(
  * uploaded via multipart/form-data. Returns `true` in the latter case and
  * `false` in the former.
  *
- * @param payload the payload to analyse
+ * @param payload The payload to analyse
  */
 export function requiresFormDataUpload(payload: unknown): boolean {
     return (
@@ -50,7 +50,7 @@ export function requiresFormDataUpload(payload: unknown): boolean {
  * by setting the necessary headers and method. May only be called for payloads
  * P that let `requiresFormDataUpload(P)` return `false`.
  *
- * @param payload the payload to wrap
+ * @param payload The payload to wrap
  */
 export function createJsonPayload(payload: Record<string, unknown>) {
     return {
@@ -68,7 +68,7 @@ export function createJsonPayload(payload: Record<string, unknown>) {
  * multipart/form-data stream under the hood. If possible, a JSON payload should
  * be created instead for performance reasons.
  *
- * @param payload the payload to wrap
+ * @param payload The payload to wrap
  */
 export function createFormDataPayload(payload: Record<string, unknown>) {
     const boundary = createBoundary()

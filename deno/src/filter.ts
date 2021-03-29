@@ -22,7 +22,7 @@ type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D
  * Check out the documentation of `bot.on` for examples. In addition, the
  * website contains more information about how filter queries work in grammY.
  *
- * @param filter a filter query or an array of filter queries
+ * @param filter A filter query or an array of filter queries
  */
 export function matchFilter<C extends Context, Q extends FilterQuery>(
     filter: Q | Q[]

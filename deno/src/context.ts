@@ -196,7 +196,7 @@ export class Context implements RenamedUpdate {
      *
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendmessage
      */
@@ -218,7 +218,7 @@ export class Context implements RenamedUpdate {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#forwardmessage
      */
@@ -241,7 +241,7 @@ export class Context implements RenamedUpdate {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#copymessage
      */
@@ -264,7 +264,7 @@ export class Context implements RenamedUpdate {
      *
      * @param photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendphoto
      */
@@ -288,7 +288,7 @@ export class Context implements RenamedUpdate {
      *
      * @param audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendaudio
      */
@@ -310,7 +310,7 @@ export class Context implements RenamedUpdate {
      *
      * @param document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#senddocument
      */
@@ -332,7 +332,7 @@ export class Context implements RenamedUpdate {
      *
      * @param video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvideo
      */
@@ -354,7 +354,7 @@ export class Context implements RenamedUpdate {
      *
      * @param animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendanimation
      */
@@ -376,7 +376,7 @@ export class Context implements RenamedUpdate {
      *
      * @param voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvoice
      */
@@ -399,7 +399,7 @@ export class Context implements RenamedUpdate {
      *
      * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvideonote
      */
@@ -421,7 +421,7 @@ export class Context implements RenamedUpdate {
      *
      * @param media An array describing messages to be sent, must include 2-10 items
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendmediagroup
      */
@@ -449,7 +449,7 @@ export class Context implements RenamedUpdate {
      * @param latitude Latitude of the location
      * @param longitude Longitude of the location
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendlocation
      */
@@ -474,7 +474,7 @@ export class Context implements RenamedUpdate {
      * @param latitude Latitude of new location
      * @param longitude Longitude of new location
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagelivelocation
      */
@@ -510,7 +510,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `stopMessageLiveLocation`. Use this method to stop updating a live location message before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#stopmessagelivelocation
      */
@@ -541,7 +541,7 @@ export class Context implements RenamedUpdate {
      * @param title Name of the venue
      * @param address Address of the venue
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvenue
      */
@@ -573,7 +573,7 @@ export class Context implements RenamedUpdate {
      * @param phone_number Contact's phone number
      * @param first_name Contact's first name
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendcontact
      */
@@ -598,7 +598,7 @@ export class Context implements RenamedUpdate {
      * @param question Poll question, 1-300 characters
      * @param options A list of answer options, 2-10 strings 1-100 characters each
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendpoll
      */
@@ -622,7 +622,7 @@ export class Context implements RenamedUpdate {
      *
      * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, or “🎰”. Dice can have values 1-6 for “🎲” and “🎯”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#senddice
      */
@@ -647,7 +647,7 @@ export class Context implements RenamedUpdate {
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
      */
@@ -677,7 +677,7 @@ export class Context implements RenamedUpdate {
      *
      * @param user_id Unique identifier of the target user
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getuserprofilephotos
      */
@@ -698,7 +698,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `kickChatMember`. Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#kickchatmember
      */
@@ -719,7 +719,7 @@ export class Context implements RenamedUpdate {
      *
      * @param user_id Unique identifier of the target user
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#kickchatmember
      */
@@ -741,7 +741,7 @@ export class Context implements RenamedUpdate {
      *
      * @param user_id Unique identifier of the target user
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unbanchatmember
      */
@@ -763,7 +763,7 @@ export class Context implements RenamedUpdate {
      *
      * @param permissions An object for new user permissions
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#restrictchatmember
      */
@@ -787,7 +787,7 @@ export class Context implements RenamedUpdate {
      * @param user_id Unique identifier of the target user
      * @param permissions An object for new user permissions
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#restrictchatmember
      */
@@ -810,7 +810,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `promoteChatMember`. Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#promotechatmember
      */
@@ -831,7 +831,7 @@ export class Context implements RenamedUpdate {
      *
      * @param user_id Unique identifier of the target user (if unspecified, defaults to author of update)
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#promotechatmember
      */
@@ -852,7 +852,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `setChatAdministratorCustomTitle`. Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success.
      *
      * @param custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatadministratorcustomtitle
      */
@@ -873,7 +873,7 @@ export class Context implements RenamedUpdate {
      *
      * @param user_id Unique identifier of the target user
      * @param custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatadministratorcustomtitle
      */
@@ -894,7 +894,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `setChatPermissions`. Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members admin rights. Returns True on success.
      *
      * @param permissions New default chat permissions
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatpermissions
      */
@@ -911,7 +911,7 @@ export class Context implements RenamedUpdate {
      *
      * Note: Each administrator in a chat generates their own invite links. Bots can't use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using exportChatInviteLink or by calling the getChat method. If your bot needs to generate a new primary invite link replacing its previous one, use exportChatInviteLink again.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#exportchatinvitelink
      */
@@ -926,7 +926,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `createChatInviteLink`. Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#createchatinvitelink
      */
@@ -946,7 +946,7 @@ export class Context implements RenamedUpdate {
      *
      * @param invite_link The invite link to edit
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editchatinvitelink
      */
@@ -967,7 +967,7 @@ export class Context implements RenamedUpdate {
      *  Context-aware alias for `revokeChatInviteLink`. Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the revoked invite link as ChatInviteLink object.
      *
      * @param invite_link The invite link to revoke
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#revokechatinvitelink
      */
@@ -983,7 +983,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `setChatPhoto`. Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
      *
      * @param photo New chat photo, uploaded using multipart/form-data
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatphoto
      */
@@ -998,7 +998,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `deleteChatPhoto`. Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatphoto
      */
@@ -1013,7 +1013,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `setChatTitle`. Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
      *
      * @param title New chat title, 1-255 characters
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchattitle
      */
@@ -1029,7 +1029,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `setChatDescription`. Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
      *
      * @param description New chat description, 0-255 characters
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatdescription
      */
@@ -1046,7 +1046,7 @@ export class Context implements RenamedUpdate {
      *
      * @param message_id Identifier of a message to pin
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#pinchatmessage
      */
@@ -1067,7 +1067,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
      *
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinchatmessage
      */
@@ -1082,7 +1082,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `unpinAllChatMessages`. Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinallchatmessages
      */
@@ -1096,7 +1096,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `leaveChat`. Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#leavechat
      */
@@ -1107,7 +1107,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `getChat`. Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchat
      */
@@ -1118,7 +1118,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `getChatAdministrators`. Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatadministrators
      */
@@ -1132,7 +1132,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `getChatMembersCount`. Use this method to get the number of members in a chat. Returns Int on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmemberscount
      */
@@ -1146,7 +1146,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmember
      */
@@ -1162,7 +1162,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
      *
      * @param user_id Unique identifier of the target user (if unspecified, defaults to author of update)
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmember
      */
@@ -1178,7 +1178,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `setChatStickerSet`. Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
      *
      * @param sticker_set_name Name of the sticker set to be set as the group sticker set
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatstickerset
      */
@@ -1193,7 +1193,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `deleteChatStickerSet`. Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatstickerset
      */
@@ -1210,7 +1210,7 @@ export class Context implements RenamedUpdate {
      * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @Botfather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answercallbackquery
      */
@@ -1230,7 +1230,7 @@ export class Context implements RenamedUpdate {
      *
      * @param text New text of the message, 1-4096 characters after entities parsing
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagetext
      */
@@ -1259,7 +1259,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `editMessageCaption`. Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagecaption
      */
@@ -1284,7 +1284,7 @@ export class Context implements RenamedUpdate {
      *
      * @param media An object for a new media content of the message
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagemedia
      */
@@ -1313,7 +1313,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `editMessageReplyMarkup`. Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagereplymarkup
      */
@@ -1340,7 +1340,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `stopPoll`. Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
      *
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#stoppoll
      */
@@ -1364,7 +1364,7 @@ export class Context implements RenamedUpdate {
      * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
      * Returns True on success.
      *
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletemessage
      */
@@ -1381,7 +1381,7 @@ export class Context implements RenamedUpdate {
      *
      * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendsticker
      */
@@ -1406,7 +1406,7 @@ export class Context implements RenamedUpdate {
      *
      * @param results An array of results for the inline query
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answerinlinequery
      */
@@ -1434,7 +1434,7 @@ export class Context implements RenamedUpdate {
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendinvoice
      */
@@ -1478,7 +1478,7 @@ export class Context implements RenamedUpdate {
      * @param shipping_query_id Unique identifier for the query to be answered
      * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answershippingquery
      */
@@ -1500,7 +1500,7 @@ export class Context implements RenamedUpdate {
      *
      * @param ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answerprecheckoutquery
      */
@@ -1523,7 +1523,7 @@ export class Context implements RenamedUpdate {
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
      *
      * @param errors An array describing the errors
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setpassportdataerrors
      */
@@ -1543,7 +1543,7 @@ export class Context implements RenamedUpdate {
      *
      * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
      * @param other Remaining parameters, confer the official reference below
-     * @param signal optional `AbortSignal` to cancel the request
+     * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendgame
      */

@@ -164,8 +164,8 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * bot.start()
      * ```
      *
-     * @param token the bot's token as acquired from https://t.me/BotFather
-     * @param config optional configuration properties for the bot
+     * @param token The bot's token as acquired from https://t.me/BotFather
+     * @param config Optional configuration properties for the bot
      */
     constructor(public readonly token: string, config?: BotConfig<C>) {
         super()
@@ -202,8 +202,8 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * If you're writing a library on top of grammY, check out the documentation
      * to learn about how grammY consumes updates.
      *
-     * @param update an update from the Telegram Bot API
-     * @param webhookReplyEnvelope an optional webhook reply envelope
+     * @param update An update from the Telegram Bot API
+     * @param webhookReplyEnvelope An optional webhook reply envelope
      */
     async handleUpdate(
         update: Update,
@@ -257,7 +257,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * worry about how much load your bot can handle, check out the grammY
      * documentation about scaling up.
      *
-     * @param options options to use for simple long polling
+     * @param options Options to use for simple long polling
      */
     async start(options?: PollingOptions) {
         await this.init()
@@ -335,7 +335,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * Calling `bot.catch` when using other means of running your bot (such as
      * `@grammy/runner` or webhooks) has no effect.
      *
-     * @param errorHandler a function that handles potential middleware errors
+     * @param errorHandler A function that handles potential middleware errors
      */
     catch(errorHandler: ErrorHandler<C>) {
         this.errorHandler = errorHandler

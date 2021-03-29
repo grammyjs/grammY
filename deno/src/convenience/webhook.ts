@@ -52,10 +52,10 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
  * Confer the grammY documentation to read more about how to run your bot with
  * webhooks.
  *
- * @param bot the bot for which to create a callback
- * @param framework an optional string identifying the framework (default: 'express')
- * @param onTimeout an optional strategy to handle timeouts (default: 'throw')
- * @param timeoutMilliseconds an optional number of timeout milliseconds (default: 10_000)
+ * @param bot The bot for which to create a callback
+ * @param framework An optional string identifying the framework (default: 'express')
+ * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
+ * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
  */
 export function webhookCallback(
     bot: Bot,

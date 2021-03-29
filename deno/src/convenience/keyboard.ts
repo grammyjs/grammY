@@ -35,7 +35,7 @@ export class Keyboard {
      * them for some reason. You most likely want to call one of the other
      * methods.
      *
-     * @param buttons the buttons to add
+     * @param buttons The buttons to add
      */
     add(...buttons: KeyboardButton[]) {
         this.keyboard[this.keyboard.length - 1]?.push(...buttons)
@@ -49,7 +49,7 @@ export class Keyboard {
      * instances for some reason. You most likely don't want to pass any
      * arguments to `row`.
      *
-     * @param buttons a number of buttons to add to the next row
+     * @param buttons A number of buttons to add to the next row
      */
     row(...buttons: KeyboardButton[]) {
         this.keyboard.push(buttons)
@@ -59,7 +59,7 @@ export class Keyboard {
      * Adds a new text button. This button will simply send the given text as a
      * text message back to your bot if a user clicks on it.
      *
-     * @param text the text to display
+     * @param text The text to display
      */
     text(text: string) {
         return this.add({ text })
@@ -68,7 +68,7 @@ export class Keyboard {
      * Adds a new contact request button. The user's phone number will be sent
      * as a contact when the button is pressed. Available in private chats only.
      *
-     * @param text the text to display
+     * @param text The text to display
      */
     requestContact(text: string) {
         return this.add({ text, request_contact: true })
@@ -77,7 +77,7 @@ export class Keyboard {
      * Adds a new location request button. The user's current location will be
      * sent when the button is pressed. Available in private chats only.
      *
-     * @param text the text to display
+     * @param text The text to display
      */
     requestLocation(text: string) {
         return this.add({ text, request_location: true })
@@ -87,8 +87,8 @@ export class Keyboard {
      * and send it to the bot when the button is pressed. Available in private
      * chats only.
      *
-     * @param text the text to display
-     * @param type the type of permitted polls to create, omit if the user may send a poll of any type
+     * @param text The text to display
+     * @param type The type of permitted polls to create, omit if the user may send a poll of any type
      */
     requestPoll(text: string, type?: 'quiz' | 'regular') {
         return this.add({ text, request_poll: { type } })
@@ -138,7 +138,7 @@ export class InlineKeyboard {
      * have them for some reason. You most likely want to call one of the other
      * methods.
      *
-     * @param buttons the buttons to add
+     * @param buttons The buttons to add
      */
     add(...buttons: InlineKeyboardButton[]) {
         this.inline_keyboard[this.inline_keyboard.length - 1]?.push(...buttons)
@@ -152,7 +152,7 @@ export class InlineKeyboard {
      * have the instances for some reason. You most likely don't want to pass
      * any arguments to `row`.
      *
-     * @param buttons a number of buttons to add to the next row
+     * @param buttons A number of buttons to add to the next row
      */
     row(...buttons: InlineKeyboardButton[]) {
         this.inline_keyboard.push(buttons)
@@ -162,7 +162,7 @@ export class InlineKeyboard {
      * Adds a new URL button. Telegram clients will open the provided URL when
      * the button is pressed.
      *
-     * @param text the text to display
+     * @param text The text to display
      * @param url HTTP or tg:// url to be opened when button is pressed
      */
     url(text: string, url: string) {
@@ -173,8 +173,8 @@ export class InlineKeyboard {
      * Telegram Login Widget. You must specify an HTTP URL used to automatically
      * authorize the user.
      *
-     * @param text the text to display
-     * @param loginUrl the login URL as string or `LoginUrl` object
+     * @param text The text to display
+     * @param loginUrl The login URL as string or `LoginUrl` object
      */
     login(text: string, loginUrl: string | LoginUrl) {
         return this.add({
@@ -195,8 +195,8 @@ export class InlineKeyboard {
      * bot.on('callback_query:data',            ctx => { ... })
      * ```
      *
-     * @param text the text to display
-     * @param data the callback data to send back to your bot (default = text)
+     * @param text The text to display
+     * @param data The callback data to send back to your bot (default = text)
      */
     text(text: string, data = text) {
         return this.add({ text, callback_data: data })
@@ -213,8 +213,8 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text the text to display
-     * @param query the (optional) inline query string to prefill
+     * @param text The text to display
+     * @param query The (optional) inline query string to prefill
      */
     switchInline(text: string, query = '') {
         return this.add({ text, switch_inline_query: query })
@@ -230,8 +230,8 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text the text to display
-     * @param query the (optional) inline query string to prefill
+     * @param text The text to display
+     * @param query The (optional) inline query string to prefill
      */
     switchInlineCurrent(text: string, query = '') {
         return this.add({ text, switch_inline_query_current_chat: query })
@@ -241,7 +241,7 @@ export class InlineKeyboard {
      *
      * This type of button must always be the first button in the first row.
      *
-     * @param text the text to display
+     * @param text The text to display
      */
     game(text: string) {
         return this.add({ text, callback_game: {} })
@@ -251,7 +251,7 @@ export class InlineKeyboard {
      *
      * This type of button must always be the first button in the first row.
      *
-     * @param text the text to display
+     * @param text The text to display
      */
     pay(text: string) {
         return this.add({ text, pay: true })

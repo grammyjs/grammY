@@ -106,8 +106,8 @@ const leaf: NextFunction = () => Promise.resolve()
 /**
  * Runs some given middleware with a given context object.
  *
- * @param middleware the middleware to run
- * @param ctx the context to use
+ * @param middleware The middleware to run
+ * @param ctx The context to use
  */
 export async function run<C extends Context>(
     middleware: MiddlewareFn<C>,
@@ -137,7 +137,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * middleware is given, the composer instance will simply make all context
      * objects pass through without touching them.
      *
-     * @param middleware the middleware to compose
+     * @param middleware The middleware to compose
      */
     constructor(...middleware: Array<Middleware<C>>) {
         this.handler =
@@ -166,7 +166,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * middleware system in grammY works, especially when it comes to chaining
      * the method calls (`use( ... ).use( ... ).use( ... )`).
      *
-     * @param middleware the middleware to register
+     * @param middleware The middleware to register
      */
     use(...middleware: Array<Middleware<C>>) {
         const composer = new Composer(...middleware)
@@ -220,8 +220,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.on('::url').on(':forward_date', ctx => { ... })
      * ```
      *
-     * @param filter the filter query to use, may also be an array of queries
-     * @param middleware the middleware to register behind the given filter
+     * @param filter The filter query to use, may also be an array of queries
+     * @param middleware The middleware to register behind the given filter
      */
     on<Q extends FilterQuery>(
         filter: MaybeArray<Q>,
@@ -259,8 +259,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.on(':text').hears(/\/echo (.+)/, ctx => { ... })
      * ```
      *
-     * @param trigger the text to look for
-     * @param middleware the middleware to register
+     * @param trigger The text to look for
+     * @param middleware The middleware to register
      */
     hears(
         trigger: MaybeArray<string | RegExp>,
@@ -311,8 +311,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * If you need more freedom matching your commands, check out the
      * `grammy-command-filter` module.
      *
-     * @param command the command to look for
-     * @param middleware the middleware to register
+     * @param command The command to look for
+     * @param middleware The middleware to register
      */
     command(
         command: MaybeArray<string>,
@@ -395,8 +395,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * You can pass an array of triggers. Your middleware will be executed if at
      * least one of them matches.
      *
-     * @param trigger the string to look for in the payload
-     * @param middleware the middleware to register
+     * @param trigger The string to look for in the payload
+     * @param middleware The middleware to register
      */
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
@@ -424,8 +424,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * You can pass an array of triggers. Your middleware will be executed if at
      * least one of them matches.
      *
-     * @param trigger the string to look for in the payload
-     * @param middleware the middleware to register
+     * @param trigger The string to look for in the payload
+     * @param middleware The middleware to register
      */
     gameQuery(
         trigger: MaybeArray<string | RegExp>,
@@ -459,8 +459,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * })
      * ```
      *
-     * @param trigger the inline query text to match
-     * @param middleware the middleware to register
+     * @param trigger The inline query text to match
+     * @param middleware The middleware to register
      */
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
@@ -505,8 +505,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * })
      * ```
      *
-     * @param predicate the predicate to check
-     * @param middleware the middleware to register
+     * @param predicate The predicate to check
+     * @param middleware The middleware to register
      */
     filter<D extends C>(
         predicate: (ctx: C) => ctx is D,
@@ -537,8 +537,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * This method is the same using `filter` (normal usage) with a negated
      * predicate.
      *
-     * @param predicate the predicate to check
-     * @param middleware the middleware to register
+     * @param predicate The predicate to check
+     * @param middleware The middleware to register
      */
     drop(predicate: (ctx: C) => boolean, ...middleware: Array<Middleware<C>>) {
         return this.filter((ctx: C) => !predicate(ctx), ...middleware)
@@ -570,7 +570,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.fork().on('message', ctx => { ... })
      * ```
      *
-     * @param middleware the middleware to run concurrently
+     * @param middleware The middleware to run concurrently
      */
     fork(...middleware: Array<Middleware<C>>) {
         const composer = new Composer(...middleware)
@@ -596,7 +596,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * You can decide to return an empty array (`[]`) if you don't want to run
      * any middleware for a given context object.
      *
-     * @param middlewareFactory the factory function creating the middleware
+     * @param middlewareFactory The factory function creating the middleware
      */
     lazy(
         middlewareFactory: (ctx: C) => MaybePromise<MaybeArray<Middleware<C>>>
@@ -643,9 +643,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * This method may need less setup than first instanciating a `Router`, but
      * for more complex setups, having a `Router` may be more readable.
      *
-     * @param router the routing function to use
-     * @param routeHandlers handlers for every route
-     * @param fallback optional fallback middleware if no route matches
+     * @param router The routing function to use
+     * @param routeHandlers Handlers for every route
+     * @param fallback Optional fallback middleware if no route matches
      */
     route<R extends Record<string, Middleware<C>>>(
         router: (ctx: C) => MaybePromise<undefined | keyof R>,
@@ -667,9 +667,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * object. If it returns `true`, the first supplied middleware is executed.
      * If it returns `false`, the second supplied middleware is executed.
      *
-     * @param predicate the predicate to check
-     * @param trueMiddleware the middleware for the `true` case
-     * @param falseMiddleware the middleware for the `false` case
+     * @param predicate The predicate to check
+     * @param trueMiddleware The middleware for the `true` case
+     * @param falseMiddleware The middleware for the `false` case
      */
     branch(
         predicate: (ctx: C) => boolean,

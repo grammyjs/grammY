@@ -32,8 +32,8 @@ export class Router<C extends Context> implements MiddlewareObj<C> {
      * preinstalled middlewares. Note that you can always install more
      * middleware on the router by calling `on`.
      *
-     * @param router a routing function that decides which middleware to run
-     * @param routeHandlers a number of middlewares
+     * @param router A routing function that decides which middleware to run
+     * @param routeHandlers A number of middlewares
      */
     constructor(
         private readonly router: (ctx: C) => string | undefined,
@@ -45,8 +45,8 @@ export class Router<C extends Context> implements MiddlewareObj<C> {
      * function may return this route as a string to select the respective
      * middleware for execution for an incoming update.
      *
-     * @param route the route for which to register the middleware
-     * @param middleware the middleware to register
+     * @param route The route for which to register the middleware
+     * @param middleware The middleware to register
      */
     on(route: string, ...middleware: Array<Middleware<C>>) {
         this.routeHandlers.set(route, new Composer(...middleware))
@@ -59,7 +59,7 @@ export class Router<C extends Context> implements MiddlewareObj<C> {
      * called, then the router will simply pass through all requests to the
      * downstream middleware.
      *
-     * @param middleware middleware to run if no route matches
+     * @param middleware Middleware to run if no route matches
      */
     otherwise(...middleware: Array<Middleware<C>>) {
         this.otherwiseHandler = new Composer(...middleware)

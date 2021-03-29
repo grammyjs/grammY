@@ -102,10 +102,10 @@ export interface ApiClientOptions {
      * URL builder function for API calls. Can be used to modify which API server
      * should be called.
      *
-     * @param root the root URL that was passed in `apiRoot`, or its default value
-     * @param token the bot's token that was passed when creating the bot
-     * @param method the API method to be called, e.g. `getMe`
-     * @return the url that will be fetched during the API call
+     * @param root The root URL that was passed in `apiRoot`, or its default value
+     * @param token The bot's token that was passed when creating the bot
+     * @param method The API method to be called, e.g. `getMe`
+     * @returns The url that will be fetched during the API call
      */
     buildUrl?: (
         root: string,
@@ -140,7 +140,7 @@ export interface ApiClientOptions {
      * subsequent API calls (during the same update) will always perform their
      * own HTTP requests.
      *
-     * @param method the method to call
+     * @param method The method to call
      */
     canUseWebhookReply?: (method: keyof RawApi) => boolean
     /**
@@ -232,9 +232,9 @@ class ApiClient {
  * as a webhook reply envelope that allows the client to perform up to one HTTP
  * request in response to a webhook call if this is desired.
  *
- * @param token the bot's token
- * @param options a number of options to pass to the created API client
- * @param webhookReplyEnvelope the webhook reply envelope that will be used
+ * @param token The bot's token
+ * @param options A number of options to pass to the created API client
+ * @param webhookReplyEnvelope The webhook reply envelope that will be used
  */
 export function createRawApi(
     token: string,

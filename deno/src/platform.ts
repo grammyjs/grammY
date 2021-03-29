@@ -18,8 +18,8 @@ export class InputFile {
     /**
      * Constructs an `InputFile` that can be used in the API to send files.
      *
-     * @param file a path to a local file or a `Buffer` or a `ReadableStream` that specifies the file data
-     * @param filename optional name of the file
+     * @param file A path to a local file or a `Buffer` or a `ReadableStream` that specifies the file data
+     * @param filename Optional name of the file
      */
     constructor(
         public readonly file:
