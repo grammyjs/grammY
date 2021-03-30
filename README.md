@@ -67,7 +67,7 @@ Here are some more resources to support you:
 
 ### [grammY Telegram Chat](https://t.me/grammyjs)
 
-—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas and contributions!
+—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas, and contributions!
 
 ### [grammY News Channel](https://t.me/grammyjs_news)
 
