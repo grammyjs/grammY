@@ -48,7 +48,7 @@ export function requiresFormDataUpload(payload: unknown): boolean {
 /**
  * Turns a payload into an options object that can be passed to a `fetch` call
  * by setting the necessary headers and method. May only be called for payloads
- * P that let `requiresFormDataUpload(P)` return `false`.
+ * `P` that let `requiresFormDataUpload(P)` return `false`.
  *
  * @param payload The payload to wrap
  */

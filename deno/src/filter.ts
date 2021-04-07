@@ -274,7 +274,7 @@ type RunL1Query<Q extends string> = Extract<Update, Record<Q, Value>>
 // Constrain types to valid property names
 type RunL2Query<U extends string, V extends string> = U extends KeyOf<Update>
     ? V extends KeyOf<Exclude<Update[U], undefined>>
-        ? RunL1Query<U> & // Carve out L1 query part
+        ? RunL1Query<U> & // Reuse L1 query part
               Record<
                   U,
                   Extract<Update[U], Record<Residue<V>, Value>> // Rename L2 property to make it discriminatory and then extract update type
@@ -308,10 +308,11 @@ type FillL2Default<Q extends string> = Q extends `${infer U}::${infer V}`
 // === Define some helpers for renaming optional properties to their discriminatory siblings
 type Residue<V extends string> = V extends KeyOf<ClassesL2> ? ClassesL2[V] : V
 interface ClassesL2 {
-    entities: 'text'
+    entities: TextMessages
     caption: CaptionMessages
     caption_entities: CaptionMessages
 }
+type TextMessages = 'text'
 type CaptionMessages =
     | 'animation'
     | 'audio'
