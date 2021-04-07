@@ -1,19 +1,23 @@
 import { InputFileProxy } from "@grammyjs/types";
+import { ReadStream } from "fs";
+import { Agent } from "https";
 import { basename } from "path";
 import { Readable } from "stream";
-import { ReadStream } from "fs";
 
-export { debug } from "debug";
 export * from "@grammyjs/types";
+export { debug } from "debug";
+// Turn a file path into an AsyncIterable<Uint8Array>
+export { createReadStream as streamFile } from "fs";
 
 // Turn an AsyncIterable<Uint8Array> into a stream
 export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
   Readable.from(itr, { objectMode: false });
-// Turn a file path into an AsyncIterable<Uint8Array>
-export { createReadStream as streamFile } from "fs";
 
 // Base configuration for `fetch` calls
-export const baseFetchConfig = { compress: true };
+export const baseFetchConfig = {
+  compress: true,
+  agent: new Agent({ keepAlive: true }),
+};
 
 /** This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser. */
 export class InputFile {
