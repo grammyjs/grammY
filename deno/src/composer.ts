@@ -225,7 +225,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     on<Q extends FilterQuery>(
         filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
-    ) {
+    ): Composer<Filter<C, Q>> {
         return this.filter(matchFilter<C, Q>(filter), ...middleware)
     }
 
@@ -263,7 +263,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     hears(
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<Middleware<Filter<C, ':text' | ':caption'>>>
-    ) {
+    ): Composer<Filter<C, ':text' | ':caption'>> {
         const trg = triggerFn(trigger)
         return this.on([':text', ':caption']).filter(ctx => {
             const msg = ctx.message ?? ctx.channelPost
@@ -315,7 +315,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     command(
         command: MaybeArray<string>,
         ...middleware: Array<Middleware<Filter<C, ':entities:bot_command'>>>
-    ) {
+    ): Composer<Filter<C, ':entities:bot_command'>> {
         const atCommands = new Set<string>()
         const noAtCommands = new Set<string>()
         toArray(command).forEach(cmd => {
@@ -396,7 +396,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<Middleware<Filter<C, 'callback_query:data'>>>
-    ) {
+    ): Composer<Filter<C, 'callback_query:data'>> {
         const trg = triggerFn(trigger)
         return this.on('callback_query:data').filter(
             ctx => match(ctx, ctx.callbackQuery.data, trg),
@@ -427,7 +427,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<
             Middleware<Filter<C, 'callback_query:game_short_name'>>
         >
-    ) {
+    ): Composer<Filter<C, 'callback_query:game_short_name'>> {
         const trg = triggerFn(trigger)
         return this.on('callback_query:game_short_name').filter(
             ctx => match(ctx, ctx.callbackQuery.game_short_name, trg),
@@ -460,7 +460,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<Middleware<Filter<C, 'inline_query'>>>
-    ) {
+    ): Composer<Filter<C, 'inline_query'>> {
         const trg = triggerFn(trigger)
         return this.on('inline_query').filter(
             ctx => match(ctx, ctx.inlineQuery.query, trg),
