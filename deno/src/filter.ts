@@ -28,13 +28,14 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
     filter: Q | Q[]
 ): FilterFunction<C, Filter<C, Q>> {
     if (Array.isArray(filter)) {
-        // @ts-ignore too complex to represent
-        const predicates = filter.map(matchSingleFilter)
+        // Must annotate with less strict types to accelerate compilation
+        const toPred: (q: FilterQuery) => Function = matchSingleFilter
+        const predicates = filter.map(toPred)
         return (ctx: C): ctx is Filter<C, Q> =>
-            predicates.some((p: any) => p(ctx))
+            predicates.some(pred => pred(ctx))
     } else {
-        const p = matchSingleFilter(filter)
-        return (ctx: C): ctx is Filter<C, Q> => p(ctx)
+        const pred = matchSingleFilter(filter)
+        return (ctx: C): ctx is Filter<C, Q> => pred(ctx)
     }
 }
 
@@ -57,12 +58,12 @@ function matchSingleFilter<C extends Context, Q extends FilterQuery>(
     // pick L1 object selector function
     const l1Obj: (ctx: C) => any =
         l1 === ''
-            ? (ctx: C) => {
+            ? ctx => {
                   const elem = L1_DEFAULTS.find(p => p in ctx.update)
                   if (elem === undefined) return undefined
                   return ctx.update[elem]
               }
-            : (ctx: C) => (ctx.update as any)[l1]
+            : ctx => (ctx.update as any)[l1]
 
     // immediately return if L2 is not given
     if (l2 === undefined)
@@ -88,14 +89,14 @@ function matchSingleFilter<C extends Context, Q extends FilterQuery>(
     // pick L2 object selector function
     const l2Obj: (ctx: C) => any =
         l2 === ''
-            ? (ctx: C) => {
+            ? ctx => {
                   const l1o = l1Obj(ctx)
                   if (l1o === undefined) return undefined
                   const elem = L2_DEFAULTS.find(p => p in l1o)
                   if (elem === undefined) return undefined
                   return l1o[elem]
               }
-            : (ctx: C) => {
+            : ctx => {
                   const l1o = l1Obj(ctx)
                   return l1o === undefined ? undefined : l1o[l2]
               }
@@ -226,19 +227,6 @@ const UPDATE_KEYS = {
 // === Build up all possible filter queries from the above validation structure
 type KeyOf<T> = string & keyof T // Emulate `keyofStringsOnly`
 
-type S = typeof UPDATE_KEYS
-
-// Includes e.g. `message`
-type L1 = KeyOf<S>
-// Includes e.g. `message:text` and `:text`
-type L2 = L2Full | L2WithDefault
-type L2Full<L extends L1 = L1> = L extends unknown
-    ? `${L}:${KeyOf<S[L]>}`
-    : never
-type L2WithDefault = `:${KeyOf<S[L1Defaults]>}`
-// Allows e.g. `message:entities:url` and `::url`
-type L3 = `${'' | L1Defaults | `edited_${L1Defaults}`}:`
-
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
  * different kinds of filter queries: Level 1, Level 2, and Level 3. Check out
@@ -255,41 +243,81 @@ type L3 = `${'' | L1Defaults | `edited_${L1Defaults}`}:`
  * bot.on('message:entities:url', ctx => { ... })
  * ```
  */
-export type FilterQuery = L1 | L2 | L3 | (`${L2 | L3}${string}` & {})
+export type FilterQuery = string
 // confer the following link to understand why we intersect the last part with {}:
 // https://github.com/microsoft/TypeScript/issues/29729#issuecomment-505826972
 
 // === Infer the present/absent properties on a context object based on a query
 // Note: L3 filters are not represented in types
-type RunQuery<Q extends string> = Q extends `${infer U}:${infer V}:${string}` // L3 level filter, e.g. 'message:entities:url'
-    ? RunL2Query<U, V>
-    : Q extends `${infer U}:${infer V}` // L2 level filter, e.g. 'message:text'
-    ? RunL2Query<U, V>
-    : RunL1Query<Q> // L1 level filter, e.g. 'message'
 
+/**
+ * Any kind of value that appears in the Telegram Bot API. When intersected with
+ * an optional field, it effectively removes `| undefined`.
+ */
 type Value = string | number | boolean | object
 
-type RunL1Query<Q extends string> = Extract<Update, Record<Q, Value>>
+/**
+ * Given a FilterQuery, returns an object that, when intersected with an Update,
+ * marks those properties as required that are guaranteed to exist when.
+ */
+type RunQuery<Q extends string> = L1Combinations<Q, L1Parts<Q>>
 
-// Constrain types to valid property names
-type RunL2Query<U extends string, V extends string> = U extends KeyOf<Update>
-    ? V extends KeyOf<Exclude<Update[U], undefined>>
-        ? RunL1Query<U> & // Reuse L1 query part
-              Record<
-                  U,
-                  Extract<Update[U], Record<Residue<V>, Value>> // Rename L2 property to make it discriminatory and then extract update type
-                  // TODO: optimize memory usage, the following line causes `tsc` to reach ~7 GiB
-                  // & Record<V, Value> // Make original properties required, i.e. caption etc
-              >
-        : never
+// build up all combinations of all L1 fields
+type L1Combinations<Q extends string, L1 extends string> = Combine<
+    L1Fields<Q, L1>,
+    L1
+>
+// maps each L1 part of the filter query to an object
+type L1Fields<Q extends string, L1 extends string> = L1 extends unknown
+    ? Record<L1, L2Combinations<L2Parts<Q, L1>>>
     : never
 
-type FilteredContext<C extends Context, U extends Update> = U extends unknown
-    ? C & Record<'update', U> & AliasProps<U>
+// build up all combinations of all L2 fields
+type L2Combinations<L2 extends string> = [L2] extends [never]
+    ? Value // short-circuit L1 queries (L2 is never)
+    : Combine<L2Fields<L2>, L2>
+// maps each L2 part of the filter query to an object and handles siblings
+type L2Fields<L2 extends string> = L2 extends unknown
+    ? Record<L2 | Twins<L2>, Value>
     : never
-export type Filter<C extends Context, Q extends FilterQuery> = Q extends unknown
-    ? FilteredContext<C, RunQuery<FillDefaults<Q>>>
+
+// define additional fields on U with value `undefined`
+type Combine<U, K extends string> = U extends unknown
+    ? U & Partial<Record<Exclude<K, keyof U>, undefined>>
     : never
+
+// gets all L1 query snippets
+type L1Parts<Q extends string> = Q extends `${infer U}:${string}` ? U : Q
+// gets all L2 query snippets for the given L1 part, or `never`
+type L2Parts<
+    Q extends string,
+    P extends string
+> = Q extends `${P}:${infer U}:${string}`
+    ? U
+    : Q extends `${P}:${infer U}`
+    ? U
+    : never
+
+/**
+ * This type infers which properties will be present on the given context object
+ * provided it matches given filter query. If the filter query is a union type,
+ * the produced context object will be a union of possible combinations, hence
+ * allowing you to narrow down manually which of the properties are present.
+ *
+ * In some sense, this type computes `matchFilter` on the type level.
+ */
+export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
+    C,
+    RunQuery<FillDefaults<Q>>
+>
+// apply a query result by intersecting it with Update, and then injecting into C
+type PerformQuery<C extends Context, U extends object> = U extends unknown
+    ? FilteredContext<C, Update & U>
+    : never
+// set the given update into a given context object, and adjust the aliases
+type FilteredContext<C extends Context, U extends Update> = C &
+    Record<'update', U> &
+    AliasProps<U>
 
 // === Define some helpers for handling default values, e.g. in '::url'
 const L1_DEFAULTS = ['message', 'channel_post'] as const
@@ -305,9 +333,9 @@ type FillL2Default<Q extends string> = Q extends `${infer U}::${infer V}`
     ? `${U}:${L2Defaults}:${V}`
     : Q
 
-// === Define some helpers for renaming optional properties to their discriminatory siblings
-type Residue<V extends string> = V extends KeyOf<ClassesL2> ? ClassesL2[V] : V
-interface ClassesL2 {
+// === Define some helpers for when one property implies the existence of others
+type Twins<V extends string> = V extends KeyOf<Equivalents> ? Equivalents[V] : V
+type Equivalents = {
     entities: TextMessages
     caption: CaptionMessages
     caption_entities: CaptionMessages

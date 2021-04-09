@@ -1,8 +1,8 @@
-import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v1.0.2?dts'
+import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.0.2?dts'
 import { basename } from 'https://deno.land/std@0.87.0/path/mod.ts'
 
 export { debug } from 'https://deno.land/x/debug@0.2.0/mod.ts'
-export * from 'https://cdn.skypack.dev/@grammyjs/types@v1.0.2?dts'
+export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.0.2?dts'
 
 // Turn an AsyncIterable<Uint8Array> into a stream
 export { readableStreamFromAsyncIterator as itrToStream } from 'https://deno.land/std@0.87.0/io/streams.ts'

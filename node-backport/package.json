@@ -12,10 +12,10 @@
     "url": "https://github.com/grammyjs/grammY"
   },
   "scripts": {
-    "build": "node --max-old-space-size=4096 ./node_modules/.bin/tsc"
+    "build": "tsc"
   },
   "dependencies": {
-    "@grammyjs/types": "^1.0.2",
+    "@grammyjs/types": "^2.0.2",
     "abort-controller": "^3.0.0",
     "debug": "^4.3.1",
     "node-fetch": "^2.6.1"

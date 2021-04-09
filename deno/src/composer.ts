@@ -1,6 +1,5 @@
 import { Context } from './context.ts'
 import { Filter, FilterQuery, matchFilter } from './filter.ts'
-import { MessageEntity } from './platform.ts'
 
 type MaybePromise<T> = T | Promise<T>
 type MaybeArray<T> = T | T[]
@@ -224,11 +223,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register behind the given filter
      */
     on<Q extends FilterQuery>(
-        filter: MaybeArray<Q>,
+        filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
     ) {
-        // @ts-ignore too complex to represent
-        return this.filter(matchFilter(filter), ...middleware)
+        return this.filter(matchFilter<C, Q>(filter), ...middleware)
     }
 
     /**
@@ -335,10 +333,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         return this.on(':entities:bot_command').filter(ctx => {
             const msg = ctx.message ?? ctx.channelPost
             const txt = msg.text ?? msg.caption
-            // @ts-expect-error incorrectly inferred as potentially undefined,
-            // the fix for this exists in `filter.ts` but causes `tsc` to OOM
-            const entities: MessageEntity[] =
-                msg.entities ?? msg.caption_entities
+            const entities = msg.entities ?? msg.caption_entities
             return entities.some(e => {
                 if (e.type !== 'bot_command') return false
                 if (e.offset !== 0) return false
