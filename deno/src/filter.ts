@@ -227,6 +227,31 @@ const UPDATE_KEYS = {
 // === Build up all possible filter queries from the above validation structure
 type KeyOf<T> = string & keyof T // Emulate `keyofStringsOnly`
 
+type S = typeof UPDATE_KEYS
+
+// E.g. 'message'
+type L1 = KeyOf<S>
+// E.g. 'message:entities'
+type L2<K extends L1 = L1> = K extends unknown ? `${K}:${KeyOf<S[K]>}` : never
+// E.g. 'message:entities:url'
+type L3<K0 extends L1 = L1> = K0 extends unknown ? L3_<K0> : never
+type L3_<
+    K0 extends L1,
+    K1 extends KeyOf<S[K0]> = KeyOf<S[K0]>
+> = K1 extends unknown ? `${K0}:${K1}:${KeyOf<S[K0][K1]>}` : never
+// All three combined
+type L123 = L1 | L2 | L3
+// E.g. 'message::url'
+type PermitL2Defaults<
+    Q extends string = L123
+> = Q extends `${infer R}:${L2Defaults}:${infer S}` ? Q | `${R}::${S}` : Q
+// E.g. '::url'
+type PermitL1Defaults<
+    Q extends string = PermitL2Defaults
+> = Q extends `${L1Defaults}:${infer R}` ? Q | `:${R}` : Q
+// All queries
+type AllValidFilterQueries = PermitL1Defaults
+
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
  * different kinds of filter queries: Level 1, Level 2, and Level 3. Check out
@@ -243,9 +268,7 @@ type KeyOf<T> = string & keyof T // Emulate `keyofStringsOnly`
  * bot.on('message:entities:url', ctx => { ... })
  * ```
  */
-export type FilterQuery = string
-// confer the following link to understand why we intersect the last part with {}:
-// https://github.com/microsoft/TypeScript/issues/29729#issuecomment-505826972
+export type FilterQuery = AllValidFilterQueries
 
 // === Infer the present/absent properties on a context object based on a query
 // Note: L3 filters are not represented in types
