@@ -4,7 +4,7 @@ _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 ---
 
-> This project has not reached 1.0. Please try it out, but don't expect everything to work just yet :)
+> This project has not reached 1.0. Please try it out and give some feedback before the release :)
 
 **grammY makes it easy to create Telegram bots.** No matter whether you just learned how to code and are looking for something **simple to get started**, or whether you are an experienced developer that has to deploy a **complex codebase that can autoscale** to handle thousands of messages per second.
 
