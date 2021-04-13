@@ -348,7 +348,7 @@ type FilteredContext<C extends Context, U extends Update> = C &
     Shortcuts<U>
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
-type Shortcuts<U extends Update> = {
+interface Shortcuts<U extends Update> {
     msg: U['callback_query'] extends { message: object }
         ? Value
         : undefined extends U['message'] &
