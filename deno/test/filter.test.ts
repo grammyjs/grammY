@@ -62,7 +62,7 @@ Deno.test('should perform L3 filtering', () => {
 
 Deno.test('should match multiple filters', () => {
     const entitiy = { type: '' }
-    let ctx = {
+    const ctx = {
         update: { message: { text: '', entities: [entitiy] } },
     } as Context
     for (const t of ['url', 'bold', 'bot_command', 'cashtag', 'code']) {

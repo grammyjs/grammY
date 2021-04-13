@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { Bot } from '../bot.ts'
 import { debug as d, Update } from '../platform.ts'
 import { WebhookReplyEnvelope } from '../core/client.ts'

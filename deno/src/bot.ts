@@ -1,3 +1,4 @@
+// deno-lint-ignore-file camelcase
 import { Composer, run } from './composer.ts'
 import { Context } from './context.ts'
 import { Api } from './core/api.ts'

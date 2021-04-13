@@ -1,3 +1,4 @@
+// deno-lint-ignore-file camelcase no-explicit-any
 import { AliasProps, Context } from './context.ts'
 import { Update } from './platform.ts'
 
@@ -29,6 +30,7 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
 ): FilterFunction<C, Filter<C, Q>> {
     if (Array.isArray(filter)) {
         // Must annotate with less strict types to accelerate compilation
+        // deno-lint-ignore ban-types
         const toPred: (q: FilterQuery) => Function = matchSingleFilter
         const predicates = filter.map(toPred)
         return (ctx: C): ctx is Filter<C, Q> =>
@@ -277,6 +279,7 @@ export type FilterQuery = AllValidFilterQueries
  * Any kind of value that appears in the Telegram Bot API. When intersected with
  * an optional field, it effectively removes `| undefined`.
  */
+// deno-lint-ignore ban-types
 type Value = string | number | boolean | object
 
 /**
@@ -334,13 +337,43 @@ export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     RunQuery<FillDefaults<Q>>
 >
 // apply a query result by intersecting it with Update, and then injecting into C
+// deno-lint-ignore ban-types
 type PerformQuery<C extends Context, U extends object> = U extends unknown
     ? FilteredContext<C, Update & U>
     : never
 // set the given update into a given context object, and adjust the aliases
 type FilteredContext<C extends Context, U extends Update> = C &
     Record<'update', U> &
-    AliasProps<U>
+    AliasProps<U> &
+    Shortcuts<U>
+
+// helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
+type Shortcuts<U extends Update> = {
+    msg: U['callback_query'] extends { message: object }
+        ? Value
+        : undefined extends U['message'] &
+              U['edited_message'] &
+              U['channel_post'] &
+              U['edited_channel_post']
+        ? undefined
+        : Value
+    chat: Shortcuts<U>['msg'] // 'chat' is required on 'Message'
+    // senderChat: disregarded here because always optional on 'Message'
+    from: undefined extends U['callback_query']
+        ? undefined extends U['inline_query']
+            ? undefined extends U['shipping_query']
+                ? undefined extends U['pre_checkout_query']
+                    ? undefined extends U['chosen_inline_result']
+                        ? undefined extends U['message'] & U['edited_message']
+                            ? Value
+                            : undefined
+                        : Value
+                    : Value
+                : Value
+            : Value
+        : Value
+    // inlineMessageId: disregarded here because always optional on both types
+}
 
 // === Define some helpers for handling default values, e.g. in '::url'
 const L1_DEFAULTS = ['message', 'channel_post'] as const

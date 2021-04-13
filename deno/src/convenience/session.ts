@@ -197,12 +197,12 @@ export function lazySession<S>(
     }
 }
 
-async function defaultGetSessionKey(ctx: Context): Promise<string | undefined> {
+function defaultGetSessionKey(ctx: Context): Promise<string | undefined> {
     const userId = ctx.from?.id
-    if (userId === undefined) return undefined
+    if (userId === undefined) return Promise.resolve(undefined)
     const chatId = ctx.chat?.id
-    if (chatId === undefined) return undefined
-    return `${userId}:${chatId}`
+    if (chatId === undefined) return Promise.resolve(undefined)
+    return Promise.resolve(`${userId}:${chatId}`)
 }
 
 class MemorySessionStorage<S> implements StorageAdapter<S> {

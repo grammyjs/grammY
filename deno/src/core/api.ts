@@ -1,3 +1,4 @@
+// deno-lint-ignore-file camelcase
 import {
     BotCommand,
     ChatPermissions,

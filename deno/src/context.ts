@@ -1,3 +1,4 @@
+// deno-lint-ignore-file camelcase
 import { Api, Other } from './core/api.ts'
 import {
     Chat,
@@ -147,6 +148,7 @@ export class Context implements RenamedUpdate {
      * ctx.editedChannelPost`
      */
     get msg(): Message | undefined {
+        // Keep in sync with types in `filter.ts`.
         return (
             this.message ??
             this.editedMessage ??
@@ -156,12 +158,17 @@ export class Context implements RenamedUpdate {
         )
     }
     /**
-     * Get chat object from whereever possible. Alias for `ctx.msg?.chat ??
-     * ctx.msg?.sender_chat`
+     * Get chat object from whereever possible. Alias for `ctx.msg?.chat`
      */
     get chat(): Chat | undefined {
-        const msg = this.msg
-        return msg?.chat ?? msg?.sender_chat
+        // Keep in sync with types in `filter.ts`.
+        return this.msg?.chat
+    }
+    /**
+     * Get sender chat object from wherever possible. Alias for `ctx.msg?.sender_chat`.
+     */
+    get senderChat(): Chat | undefined {
+        return this.msg?.sender_chat
     }
     /**
      * Get message author from whereever possible. Alias for `(ctx.callbackQuery
@@ -169,6 +176,7 @@ export class Context implements RenamedUpdate {
      * ctx.chosenInlineResult ?? ctx.msg)?.from`
      */
     get from(): User | undefined {
+        // Keep in sync with types in `filter.ts`.
         return (
             this.callbackQuery ??
             this.inlineQuery ??
