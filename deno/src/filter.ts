@@ -349,29 +349,34 @@ type FilteredContext<C extends Context, U extends Update> = C &
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
-    msg: undefined extends U['callback_query']
-        ? undefined extends U['message'] &
-              U['edited_message'] &
-              U['channel_post'] &
-              U['edited_channel_post']
-            ? undefined
-            : NotUndefined
-        : unknown // 'message' is optional on CallbackQuery
+    msg: [U['callback_query']] extends [object]
+        ? unknown // 'message' is optional on CallbackQuery
+        : [U['message']] extends [object]
+        ? U['message']
+        : [U['edited_message']] extends [object]
+        ? U['edited_message']
+        : [U['channel_post']] extends [object]
+        ? U['channel_post']
+        : [U['edited_channel_post']] extends [object]
+        ? U['edited_channel_post']
+        : undefined
     chat: Shortcuts<U>['msg'] // 'chat' is required on 'Message'
     // senderChat: disregarded here because always optional on 'Message'
-    from: undefined extends U['callback_query']
-        ? undefined extends U['inline_query']
-            ? undefined extends U['shipping_query']
-                ? undefined extends U['pre_checkout_query']
-                    ? undefined extends U['chosen_inline_result']
-                        ? undefined extends U['message'] & U['edited_message']
-                            ? NotUndefined
-                            : undefined
-                        : NotUndefined
-                    : NotUndefined
-                : NotUndefined
-            : NotUndefined
-        : NotUndefined
+    from: [U['callback_query']] extends [object]
+        ? U['callback_query']
+        : [U['inline_query']] extends [object]
+        ? U['inline_query']
+        : [U['shipping_query']] extends [object]
+        ? U['shipping_query']
+        : [U['pre_checkout_query']] extends [object]
+        ? U['pre_checkout_query']
+        : [U['chosen_inline_result']] extends [object]
+        ? U['chosen_inline_result']
+        : [U['message']] extends [object]
+        ? U['message']
+        : [U['edited_message']] extends [object]
+        ? U['edited_message']
+        : undefined
     // inlineMessageId: disregarded here because always optional on both types
 }
 
