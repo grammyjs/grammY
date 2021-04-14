@@ -280,7 +280,7 @@ export type FilterQuery = AllValidFilterQueries
  * an optional field, it effectively removes `| undefined`.
  */
 // deno-lint-ignore ban-types
-type Value = string | number | boolean | object
+type NotUndefined = string | number | boolean | object
 
 /**
  * Given a FilterQuery, returns an object that, when intersected with an Update,
@@ -300,11 +300,11 @@ type L1Fields<Q extends string, L1 extends string> = L1 extends unknown
 
 // build up all combinations of all L2 fields
 type L2Combinations<L2 extends string> = [L2] extends [never]
-    ? Value // short-circuit L1 queries (L2 is never)
+    ? NotUndefined // short-circuit L1 queries (L2 is never)
     : Combine<L2Fields<L2>, L2>
 // maps each L2 part of the filter query to an object and handles siblings
 type L2Fields<L2 extends string> = L2 extends unknown
-    ? Record<L2 | Twins<L2>, Value>
+    ? Record<L2 | Twins<L2>, NotUndefined>
     : never
 
 // define additional fields on U with value `undefined`
@@ -349,14 +349,14 @@ type FilteredContext<C extends Context, U extends Update> = C &
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
-    msg: U['callback_query'] extends { message: object }
-        ? Value
-        : undefined extends U['message'] &
+    msg: undefined extends U['callback_query']
+        ? undefined extends U['message'] &
               U['edited_message'] &
               U['channel_post'] &
               U['edited_channel_post']
-        ? undefined
-        : Value
+            ? undefined
+            : NotUndefined
+        : unknown // 'message' is optional on CallbackQuery
     chat: Shortcuts<U>['msg'] // 'chat' is required on 'Message'
     // senderChat: disregarded here because always optional on 'Message'
     from: undefined extends U['callback_query']
@@ -365,13 +365,13 @@ interface Shortcuts<U extends Update> {
                 ? undefined extends U['pre_checkout_query']
                     ? undefined extends U['chosen_inline_result']
                         ? undefined extends U['message'] & U['edited_message']
-                            ? Value
+                            ? NotUndefined
                             : undefined
-                        : Value
-                    : Value
-                : Value
-            : Value
-        : Value
+                        : NotUndefined
+                    : NotUndefined
+                : NotUndefined
+            : NotUndefined
+        : NotUndefined
     // inlineMessageId: disregarded here because always optional on both types
 }
 

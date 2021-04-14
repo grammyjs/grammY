@@ -52,8 +52,8 @@ export type Other<
 export class Api {
     /**
      * Provides access to all methods of the Telegram Bot API exactly as
-     * documented on the website. No arguments are pulled up in the function
-     * signature for convenience.
+     * documented on the website (https://core.telegram.org/bots/api). No
+     * arguments are pulled up in the function signature for convenience.
      *
      * If you suppress compiler warnings, this also allows for raw api calls to
      * undocumented methods with arbitrary parameters—use only if you know what
