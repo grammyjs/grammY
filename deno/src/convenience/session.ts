@@ -12,6 +12,9 @@ type MaybePromise<T> = Promise<T> | T
  * out the documentation on session middleware to know more.
  */
 export interface SessionContext<S> extends Context {
+    /**
+     * Session data on the context object.
+     */
     session: S | undefined
 }
 /**
@@ -25,7 +28,10 @@ export interface SessionContext<S> extends Context {
  * documentation on lazy session middleware to know more.
  */
 export interface LazySessionContext<S> extends Context {
-    session: Promise<S | undefined> | S | undefined
+    /**
+     * Session data on the context object, potentially a promise.
+     */
+    session: MaybePromise<S | undefined>
 }
 
 /**
@@ -53,7 +59,7 @@ export interface StorageAdapter<T> {
 /**
  * Options for session middleware.
  */
-interface SessionOptions<S> {
+export interface SessionOptions<S> {
     /**
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
@@ -62,7 +68,7 @@ interface SessionOptions<S> {
      *
      * The default implementation will store sessions per user-chat combination.
      */
-    getSessionKey?: (ctx: Context) => Promise<string | undefined>
+    getSessionKey?: (ctx: Context) => MaybePromise<string | undefined>
     /**
      * A storage adapter to your storage solution. Provides read, write, and
      * delete access to the session middleware.
@@ -197,12 +203,12 @@ export function lazySession<S>(
     }
 }
 
-function defaultGetSessionKey(ctx: Context): Promise<string | undefined> {
+function defaultGetSessionKey(ctx: Context): string | undefined {
     const userId = ctx.from?.id
-    if (userId === undefined) return Promise.resolve(undefined)
+    if (userId === undefined) return undefined
     const chatId = ctx.chat?.id
-    if (chatId === undefined) return Promise.resolve(undefined)
-    return Promise.resolve(`${userId}:${chatId}`)
+    if (chatId === undefined) return undefined
+    return `${userId}:${chatId}`
 }
 
 class MemorySessionStorage<S> implements StorageAdapter<S> {
