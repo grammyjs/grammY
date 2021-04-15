@@ -344,7 +344,7 @@ type PerformQuery<C extends Context, U extends object> = U extends unknown
 // set the given update into a given context object, and adjust the aliases
 type FilteredContext<C extends Context, U extends Update> = C &
     Record<'update', U> &
-    AliasProps<U> &
+    AliasProps<Omit<U, 'update_id'>> &
     Shortcuts<U>
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!

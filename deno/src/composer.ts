@@ -437,7 +437,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
 
     /**
      * Registers middleware for inline queries. Telegram sends an inline query
-     * to your bot whenever a user types “@your-bot-name ...” into a text field
+     * to your bot whenever a user types “@your_bot_name ...” into a text field
      * in Telegram. You bot will then receive the entered search query and can
      * respond with a number of results (text, images, etc) that the user can
      * pick from to send a message _via_ your bot to the respective chat. Check
@@ -447,7 +447,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * > @BotFather first.
      *
      * ```ts
-     * // Listen for users typing “@your-bot-name query”
+     * // Listen for users typing “@your_bot_name query”
      * bot.inlineQuery('query', async ctx => {
      *   // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
      *   await ctx.answerInlineQuery( ... )
@@ -682,7 +682,7 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map(t =>
         typeof t === 'string'
             ? (txt: string) => (txt === t ? t : null)
-            : (txt: string) => txt.match(t)
+            : (txt: string) => t.exec(txt)
     )
 }
 
@@ -693,8 +693,10 @@ function match<C extends Context>(
 ) {
     for (const t of triggers) {
         const res = t(content)
-        if (res) ctx.match = res
-        return true
+        if (res) {
+            ctx.match = res
+            return true
+        }
     }
     return false
 }
