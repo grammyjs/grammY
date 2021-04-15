@@ -53,7 +53,9 @@ export type ApiCallFn = <M extends keyof RawApi>(
  * payload of an API call on the fly. This can be useful if you want to
  * implement rate limiting or other things against the Telegram Bot API.
  *
- * Confer the grammY documentation to read more about how to use transformers.
+ * Confer the grammY
+ * [documentation](https://grammy.netlify.app/advanced/transformers.html) to
+ * read more about how to use transformers.
  */
 export type Transformer = <M extends keyof RawApi>(
     prev: ApiCallFn,

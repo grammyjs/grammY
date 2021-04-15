@@ -1,8 +1,10 @@
-# <h1 align="center">grammY</h1>
+# <h1 align="center">[![grammY](https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png)](https://grammy.netlify.app)</h1>
 
 _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 ---
+
+_<h1 align="center">[Docs](https://grammy.netlify.app) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs)</h1>_
 
 > This project has not reached 1.0. Please try it out and give some feedback before the release :)
 
@@ -49,7 +51,7 @@ Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent documentation. If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
+grammY has an excellent [documentation](https://grammy.netlify.app/). If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
 
 If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 
@@ -57,9 +59,13 @@ Here are some more resources to support you:
 
 ## Resources
 
+### [grammY Website](https://grammy.netlify.app)
+
+—main project website and documentation.
+
 ### [grammY API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts)
 
-—documentation of everything that grammY exports.
+—reference of everything that grammY exports.
 
 ### [grammY Example Bots](https://github.com/grammyjs/examples)
 

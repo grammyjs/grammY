@@ -71,7 +71,8 @@ export interface MiddlewareObj<C extends Context = Context> {
  *
  * Middleware is an extremely powerful concept and this short explanation only
  * scratched the surface of what is possible with grammY. If you want to know
- * more advanced things about middleware, check out the documentation on the
+ * more advanced things about middleware, check out the
+ * [documentation](https://grammy.netlify.app/advanced/middleware.html) on the
  * website.
  */
 export type Middleware<C extends Context = Context> =
@@ -126,7 +127,9 @@ export async function run<C extends Context>(
  * middleware is, or about how to use a composer.
  *
  * On the other hand, if you want to dig deeper into how grammY implements
- * middleware, check out the documentation on the website.
+ * middleware, check out the
+ * [documentation](https://grammy.netlify.app/advanced/middleware.html) on the
+ * website.
  */
 export class Composer<C extends Context> implements MiddlewareObj<C> {
     private handler: MiddlewareFn<C>
@@ -161,9 +164,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * This method returns a new instance of composer. The returned instance can
      * be further extended, and all changes will be regarded here. Confer the
-     * documentation on the website if you want to know more about how the
-     * middleware system in grammY works, especially when it comes to chaining
-     * the method calls (`use( ... ).use( ... ).use( ... )`).
+     * [documentation](https://grammy.netlify.app/advanced/middleware.html) on
+     * the website if you want to know more about how the middleware system in
+     * grammY works, especially when it comes to chaining the method calls
+     * (`use( ... ).use( ... ).use( ... )`).
      *
      * @param middleware The middleware to register
      */
@@ -200,8 +204,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * ```
      *
      * You can use autocomplete in VSCode to see all available filter queries.
-     * Check out the documentation on the website to learn more about filter
-     * queries in grammY.
+     * Check out the
+     * [documentation](https://grammy.netlify.app/guide/filter-queries.html) on
+     * the website to learn more about filter queries in grammY.
      *
      * It is possible to pass multiple filter queries in an array, i.e.
      * ```ts
