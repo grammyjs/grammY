@@ -283,7 +283,8 @@ export type FilterQuery = AllValidFilterQueries
  * an optional field, it effectively removes `| undefined`.
  */
 // deno-lint-ignore ban-types
-type NotUndefined = string | number | boolean | object
+type SomeObject = object
+type NotUndefined = string | number | boolean | SomeObject
 
 /**
  * Given a FilterQuery, returns an object that, when intersected with an Update,
@@ -340,8 +341,7 @@ export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     RunQuery<FillDefaults<Q>>
 >
 // apply a query result by intersecting it with Update, and then injecting into C
-// deno-lint-ignore ban-types
-type PerformQuery<C extends Context, U extends object> = U extends unknown
+type PerformQuery<C extends Context, U extends SomeObject> = U extends unknown
     ? FilteredContext<C, Update & U>
     : never
 // set the given update into a given context object, and adjust the aliases
@@ -352,32 +352,32 @@ type FilteredContext<C extends Context, U extends Update> = C &
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
-    msg: [U['callback_query']] extends [object]
+    msg: [U['callback_query']] extends [SomeObject]
         ? unknown // 'message' is optional on CallbackQuery
-        : [U['message']] extends [object]
+        : [U['message']] extends [SomeObject]
         ? U['message']
-        : [U['edited_message']] extends [object]
+        : [U['edited_message']] extends [SomeObject]
         ? U['edited_message']
-        : [U['channel_post']] extends [object]
+        : [U['channel_post']] extends [SomeObject]
         ? U['channel_post']
-        : [U['edited_channel_post']] extends [object]
+        : [U['edited_channel_post']] extends [SomeObject]
         ? U['edited_channel_post']
         : undefined
     chat: Shortcuts<U>['msg'] // 'chat' is required on 'Message'
     // senderChat: disregarded here because always optional on 'Message'
-    from: [U['callback_query']] extends [object]
+    from: [U['callback_query']] extends [SomeObject]
         ? U['callback_query']
-        : [U['inline_query']] extends [object]
+        : [U['inline_query']] extends [SomeObject]
         ? U['inline_query']
-        : [U['shipping_query']] extends [object]
+        : [U['shipping_query']] extends [SomeObject]
         ? U['shipping_query']
-        : [U['pre_checkout_query']] extends [object]
+        : [U['pre_checkout_query']] extends [SomeObject]
         ? U['pre_checkout_query']
-        : [U['chosen_inline_result']] extends [object]
+        : [U['chosen_inline_result']] extends [SomeObject]
         ? U['chosen_inline_result']
-        : [U['message']] extends [object]
+        : [U['message']] extends [SomeObject]
         ? U['message']
-        : [U['edited_message']] extends [object]
+        : [U['edited_message']] extends [SomeObject]
         ? U['edited_message']
         : undefined
     // inlineMessageId: disregarded here because always optional on both types

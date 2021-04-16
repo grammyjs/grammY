@@ -3,6 +3,7 @@ import { Composer, run } from './composer.ts'
 import { Context } from './context.ts'
 import { Api } from './core/api.ts'
 import { ApiClientOptions, WebhookReplyEnvelope } from './core/client.ts'
+import { GrammyError } from './core/error.ts'
 import { Update, debug as d, UserFromGetMe } from './platform.ts'
 const debug = d('grammy:bot')
 const debugErr = d('grammy:error')
@@ -247,16 +248,16 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * implementation.** `bot.start` should only be used for small bots. While
      * the rest of grammY was built to perform well even under extreme loads,
      * simple long polling is not capable of scaling up in a similar fashion.
-     * You should switch over to using `@grammy/runner` if you are running a bot
-     * with high load.
+     * You should switch over to using `@grammyjs/runner` if you are running a
+     * bot with high load.
      *
      * What exactly _high load_ means differs from bot to bot, but as a rule of
      * thumb, simple long polling should not be processing more than ~5K
      * messages every hour. Also, if your bot has long-running operations such
      * as large file transfers that block the middleware from completing, this
      * will impact the responsiveness negatively, so it makes sense to use the
-     * `@grammy/runner` package even if you receive much fewer messages. If you
-     * worry about how much load your bot can handle, check out the grammY
+     * `@grammyjs/runner` package even if you receive much fewer messages. If
+     * you worry about how much load your bot can handle, check out the grammY
      * [documentation](https://grammy.netlify.app/advanced/scaling.md) about
      * scaling up.
      *
@@ -282,10 +283,30 @@ export class Bot<C extends Context = Context> extends Composer<C> {
         while (this.pollingRunning) {
             // fetch updates
             const offset = this.lastTriedUpdateId + 1
-            const updates = await this.api.getUpdates(
-                { offset, limit, timeout, allowed_updates },
-                this.pollingAbortController.signal
+            let updates: Update[] | undefined = undefined
+            let maxRetries = 1200 // 1 hour of continuously failing requests
+            do {
+                try {
+                    updates = await this.api.getUpdates(
+                        { offset, limit, timeout, allowed_updates },
+                        this.pollingAbortController.signal
+                    )
+                } catch (error) {
+                    if (this.pollingRunning && error instanceof GrammyError) {
+                        debugErr(
+                            `Call to \`getUpdates\` failed, retrying in 3 seconds ...`
+                        )
+                        await new Promise(r => setTimeout(r, 3000))
+                    } else {
+                        throw error
+                    }
+                }
+            } while (
+                updates === undefined &&
+                this.pollingRunning &&
+                maxRetries-- > 0
             )
+            if (updates === undefined) break
             // handle them sequentially (!)
             for (const update of updates) {
                 this.lastTriedUpdateId = update.update_id
@@ -332,11 +353,11 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * Sets the bots error handler that is used during long polling.
      *
      * You should call this method to set an error handler if you are using long
-     * polling, no matter whether you use `bot.start` or the `@grammy/runner`
+     * polling, no matter whether you use `bot.start` or the `@grammyjs/runner`
      * package to run your bot.
      *
-     * Calling `bot.catch` when using other means of running your bot (such as
-     * `@grammy/runner` or webhooks) has no effect.
+     * Calling `bot.catch` when using other means of running your bot (or
+     * webhooks) has no effect.
      *
      * @param errorHandler A function that handles potential middleware errors
      */
