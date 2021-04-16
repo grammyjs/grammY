@@ -17,8 +17,8 @@ import { Context } from '../context.ts'
  *   return 'key'
  * })
  *
- * router.on('key',       ctx => { ... })
- * router.on('other-key', ctx => { ... })
+ * router.route('key',       ctx => { ... })
+ * router.route('other-key', ctx => { ... })
  * router.otherwise(ctx => { ... }) // called if no route matches
  *
  * bot.use(router)
@@ -30,7 +30,7 @@ export class Router<C extends Context> implements MiddlewareObj<C> {
     /**
      * Constructs a router with a routing function and optionally some
      * preinstalled middlewares. Note that you can always install more
-     * middleware on the router by calling `on`.
+     * middleware on the router by calling `route`.
      *
      * @param router A routing function that decides which middleware to run
      * @param routeHandlers A number of middlewares
@@ -48,7 +48,7 @@ export class Router<C extends Context> implements MiddlewareObj<C> {
      * @param route The route for which to register the middleware
      * @param middleware The middleware to register
      */
-    on(route: string, ...middleware: Array<Middleware<C>>) {
+    route(route: string, ...middleware: Array<Middleware<C>>) {
         this.routeHandlers.set(route, new Composer(...middleware))
         return this
     }
