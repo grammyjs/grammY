@@ -1,13 +1,32 @@
 import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.0.2?dts'
 import { basename } from 'https://deno.land/std@0.87.0/path/mod.ts'
 
-export { debug } from 'https://deno.land/x/debug@0.2.0/mod.ts'
 export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.0.2?dts'
+
+import debug from 'https://cdn.skypack.dev/debug@^4.3.1'
+export { debug }
+
+const isDeno = typeof Deno !== 'undefined'
+
+if (isDeno) {
+    debug.useColors = () => true
+    const env = { name: 'env', variable: 'DEBUG' } as const
+    let res = await Deno.permissions.query(env)
+    if (res.state === 'prompt') res = await Deno.permissions.request(env)
+    if (res.state === 'granted') {
+        const val = Deno.env.get(env.variable)
+        if (val) debug.enable(val)
+    }
+}
 
 // Turn an AsyncIterable<Uint8Array> into a stream
 export { readableStreamFromAsyncIterator as itrToStream } from 'https://deno.land/std@0.87.0/io/streams.ts'
 // Turn a file path into an AsyncIterable<Uint8Array>
-export const streamFile = (path: string) => Deno.open(path).then(Deno.iter)
+export const streamFile = isDeno
+    ? (path: string) => Deno.open(path).then(Deno.iter)
+    : (() => {
+          throw new Error('Reading files by path requires a Deno environment')
+      })()
 
 // Base configuration for `fetch` calls
 export const baseFetchConfig = {}
