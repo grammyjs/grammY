@@ -51,8 +51,8 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
  * ```
  *
  * Confer the grammY
- * [documentation](https://grammy.netlify.app/guide/deployment-types.html) to
- * read more about how to run your bot with webhooks.
+ * [documentation](https://grammy.dev/guide/deployment-types.html) to read more
+ * about how to run your bot with webhooks.
  *
  * @param bot The bot for which to create a callback
  * @param framework An optional string identifying the framework (default:

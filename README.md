@@ -1,10 +1,16 @@
-# <h1 align="center">[![grammY](https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png)](https://grammy.netlify.app)</h1>
+# <h1 align="center">[![grammY](https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png)](https://grammy.dev)</h1>
 
 _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 ---
 
-_<h1 align="center">[Docs](https://grammy.netlify.app) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs)</h1>_
+_<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs)</h1>_
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > This project has not reached 1.0. Please try it out and give some feedback before the release :)
 
@@ -51,7 +57,7 @@ Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent [documentation](https://grammy.netlify.app/). If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
+grammY has an excellent [documentation](https://grammy.dev/). If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
 
 If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 
@@ -59,7 +65,7 @@ Here are some more resources to support you:
 
 ## Resources
 
-### [grammY Website](https://grammy.netlify.app)
+### [grammY Website](https://grammy.dev)
 
 —main project website and documentation.
 
@@ -88,3 +94,28 @@ Here are some more resources to support you:
 All grammY packages published by [@grammyjs](https://github.com/grammyjs) run natively in Deno. We maintain our own backporting scripts to transform every codebase to still run on Node.
 
 However, given that most bot developers are still using Node, all documentation is written Node-first. We may migrate it if Deno overtakes Node. If you are already on Deno today, we expect you to know what you're doing. You mainly have to adjust the imports to URL imports, and use [`https://deno.land/x/grammy`](https://deno.land/x/grammy).
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/KnorpelSenf"><img src="https://avatars.githubusercontent.com/u/12952387?v=4?s=100" width="100px;" alt=""/><br /><sub><b>KnorpelSenf</b></sub></a><br /><a href="#ideas-KnorpelSenf" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=KnorpelSenf" title="Code">💻</a> <a href="https://github.com/grammyjs/grammY/commits?author=KnorpelSenf" title="Documentation">📖</a> <a href="#design-KnorpelSenf" title="Design">🎨</a> <a href="#example-KnorpelSenf" title="Examples">💡</a> <a href="#question-KnorpelSenf" title="Answering Questions">💬</a> <a href="https://github.com/grammyjs/grammY/commits?author=KnorpelSenf" title="Tests">⚠️</a> <a href="#plugin-KnorpelSenf" title="Plugin/utility libraries">🔌</a> <a href="#platform-KnorpelSenf" title="Packaging/porting to new platform">📦</a></td>
+    <td align="center"><a href="https://github.com/Tecardo1"><img src="https://avatars.githubusercontent.com/u/42873000?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tecardo1</b></sub></a><br /><a href="#plugin-Tecardo1" title="Plugin/utility libraries">🔌</a> <a href="#userTesting-Tecardo1" title="User Testing">📓</a></td>
+    <td align="center"><a href="https://github.com/wojpawlik"><img src="https://avatars.githubusercontent.com/u/23058303?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Wojciech Pawlik</b></sub></a><br /><a href="#ideas-wojpawlik" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/MegaITA"><img src="https://avatars.githubusercontent.com/u/32493080?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alessandro Bertozzi</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=MegaITA" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## [Contribution Guide »](./CONTRIBUTING.md)

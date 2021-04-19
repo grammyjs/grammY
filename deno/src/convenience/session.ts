@@ -12,7 +12,7 @@ type MaybePromise<T> = Promise<T> | T
  * out the
  * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#session)
  * on session middleware to know more, and read the section about sessions on
- * the [website](https://grammy.netlify.app/guide/sessions.html).
+ * the [website](https://grammy.dev/guide/sessions.html).
  */
 export interface SessionContext<S> extends Context {
     /**
@@ -30,8 +30,7 @@ export interface SessionContext<S> extends Context {
  * same context object, the cached value will be used. Check out the
  * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#lazySession)
  * on lazy session middleware to know more, and read the section about lazy
- * sessions on the
- * [website](https://grammy.netlify.app/advanced/lazy-sessions.html).
+ * sessions on the [website](https://grammy.dev/advanced/lazy-sessions.html).
  */
 export interface LazySessionContext<S> extends Context {
     /**
@@ -70,8 +69,8 @@ export interface SessionOptions<S> {
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
      * your chats and users. Check out the
-     * [documentation](https://grammy.netlify.app/guide/sessions.html) on the
-     * website about session middleware to know how session keys are used.
+     * [documentation](https://grammy.dev/guide/sessions.html) on the website
+     * about session middleware to know how session keys are used.
      *
      * The default implementation will store sessions per user-chat combination.
      */
@@ -124,8 +123,8 @@ export interface SessionOptions<S> {
  * })
  * ```
  *
- * Check out the [documentation](https://grammy.netlify.app/guide/sessions.html)
- * on the website to know more about how sessions work in grammY.
+ * Check out the [documentation](https://grammy.dev/guide/sessions.html) on the
+ * website to know more about how sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
  */
@@ -170,9 +169,8 @@ export function session<S>(
  * })
  * ```
  *
- * Check out the
- * [documentation](https://grammy.netlify.app/advanced/lazy-sessions.html) on
- * the website to know more about how lazy sessions work in grammY.
+ * Check out the [documentation](https://grammy.dev/advanced/lazy-sessions.html)
+ * on the website to know more about how lazy sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
  */

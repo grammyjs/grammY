@@ -54,8 +54,8 @@ export type ApiCallFn = <M extends keyof RawApi>(
  * implement rate limiting or other things against the Telegram Bot API.
  *
  * Confer the grammY
- * [documentation](https://grammy.netlify.app/advanced/transformers.html) to
- * read more about how to use transformers.
+ * [documentation](https://grammy.dev/advanced/transformers.html) to read more
+ * about how to use transformers.
  */
 export type Transformer = <M extends keyof RawApi>(
     prev: ApiCallFn,
@@ -97,14 +97,15 @@ const concatTransformer = (prev: ApiCallFn, trans: Transformer): ApiCallFn => (
  */
 export interface ApiClientOptions {
     /**
-     * Root URL of the Telegram Bot API server. Default: https://api.telegram.org
+     * Root URL of the Telegram Bot API server. Default:
+     * https://api.telegram.org
      */
     apiRoot?: string
     /**
-     * URL builder function for API calls. Can be used to modify which API server
-     * should be called.
+     * URL builder function for API calls. Can be used to modify which API
+     * server should be called.
      *
-     * @param root The root URL that was passed in `apiRoot`, or its default value
+     * @param root The URL that was passed in `apiRoot`, or its default value
      * @param token The bot's token that was passed when creating the bot
      * @param method The API method to be called, e.g. `getMe`
      * @returns The url that will be fetched during the API call
@@ -146,9 +147,9 @@ export interface ApiClientOptions {
      */
     canUseWebhookReply?: (method: keyof RawApi) => boolean
     /**
-     * Base configuration for `fetch` calls. Specify any additional parameters to
-     * use when fetching a method of the Telegram Bot API. Default: `{ compress:
-     * true }` (Node), `{}` (Deno)
+     * Base configuration for `fetch` calls. Specify any additional parameters
+     * to use when fetching a method of the Telegram Bot API. Default: `{
+     * compress: true }` (Node), `{}` (Deno)
      */
     baseFetchConfig?: Omit<
         Exclude<Parameters<typeof fetch>[1], undefined>,
