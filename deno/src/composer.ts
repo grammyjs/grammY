@@ -72,8 +72,7 @@ export interface MiddlewareObj<C extends Context = Context> {
  * Middleware is an extremely powerful concept and this short explanation only
  * scratched the surface of what is possible with grammY. If you want to know
  * more advanced things about middleware, check out the
- * [documentation](https://grammy.netlify.app/advanced/middleware.html) on the
- * website.
+ * [documentation](https://grammy.dev/advanced/middleware.html) on the website.
  */
 export type Middleware<C extends Context = Context> =
     | MiddlewareFn<C>
@@ -128,8 +127,7 @@ export async function run<C extends Context>(
  *
  * On the other hand, if you want to dig deeper into how grammY implements
  * middleware, check out the
- * [documentation](https://grammy.netlify.app/advanced/middleware.html) on the
- * website.
+ * [documentation](https://grammy.dev/advanced/middleware.html) on the website.
  */
 export class Composer<C extends Context> implements MiddlewareObj<C> {
     private handler: MiddlewareFn<C>
@@ -164,8 +162,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * This method returns a new instance of composer. The returned instance can
      * be further extended, and all changes will be regarded here. Confer the
-     * [documentation](https://grammy.netlify.app/advanced/middleware.html) on
-     * the website if you want to know more about how the middleware system in
+     * [documentation](https://grammy.dev/advanced/middleware.html) on the
+     * website if you want to know more about how the middleware system in
      * grammY works, especially when it comes to chaining the method calls
      * (`use( ... ).use( ... ).use( ... )`).
      *
@@ -205,8 +203,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * You can use autocomplete in VSCode to see all available filter queries.
      * Check out the
-     * [documentation](https://grammy.netlify.app/guide/filter-queries.html) on
-     * the website to learn more about filter queries in grammY.
+     * [documentation](https://grammy.dev/guide/filter-queries.html) on the
+     * website to learn more about filter queries in grammY.
      *
      * It is possible to pass multiple filter queries in an array, i.e.
      * ```ts
@@ -594,7 +592,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * You may generate this middleware in an `async` fashion.
      *
      * You can decide to return an empty array (`[]`) if you don't want to run
-     * any middleware for a given context object.
+     * any middleware for a given context object. This is equivalent to
+     * returning an empty instance of `Composer`.
      *
      * @param middlewareFactory The factory function creating the middleware
      */

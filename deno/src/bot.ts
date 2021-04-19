@@ -202,8 +202,8 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * your bot will handle.
      *
      * If you're writing a library on top of grammY, check out the
-     * [documentation](https://grammy.netlify.app/advanced/runner.html) to learn
-     * about how grammY receives updates.
+     * [documentation](https://grammy.dev/advanced/runner.html) to learn about
+     * how grammY receives updates.
      *
      * @param update An update from the Telegram Bot API
      * @param webhookReplyEnvelope An optional webhook reply envelope
@@ -258,8 +258,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * will impact the responsiveness negatively, so it makes sense to use the
      * `@grammyjs/runner` package even if you receive much fewer messages. If
      * you worry about how much load your bot can handle, check out the grammY
-     * [documentation](https://grammy.netlify.app/advanced/scaling.md) about
-     * scaling up.
+     * [documentation](https://grammy.dev/advanced/scaling.md) about scaling up.
      *
      * @param options Options to use for simple long polling
      */

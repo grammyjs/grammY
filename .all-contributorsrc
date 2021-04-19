@@ -1,0 +1,60 @@
+{
+  "projectName": "grammY",
+  "projectOwner": "grammyjs",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "KnorpelSenf",
+      "name": "KnorpelSenf",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12952387?v=4",
+      "profile": "https://github.com/KnorpelSenf",
+      "contributions": [
+        "ideas",
+        "code",
+        "doc",
+        "design",
+        "example",
+        "question",
+        "test",
+        "plugin",
+        "platform"
+      ]
+    },
+    {
+      "login": "Tecardo1",
+      "name": "Tecardo1",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42873000?v=4",
+      "profile": "https://github.com/Tecardo1",
+      "contributions": [
+        "plugin",
+        "userTesting"
+      ]
+    },
+    {
+      "login": "wojpawlik",
+      "name": "Wojciech Pawlik",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23058303?v=4",
+      "profile": "https://github.com/wojpawlik",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "MegaITA",
+      "name": "Alessandro Bertozzi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32493080?v=4",
+      "profile": "https://github.com/MegaITA",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
