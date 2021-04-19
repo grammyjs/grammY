@@ -1,16 +1,16 @@
 # <h1 align="center">[![grammY](https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png)](https://grammy.dev)</h1>
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
 _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 ---
 
 _<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs)</h1>_
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > This project has not reached 1.0. Please try it out and give some feedback before the release :)
 
