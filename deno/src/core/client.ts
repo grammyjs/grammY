@@ -105,8 +105,7 @@ export interface ApiClientOptions {
      * URL builder function for API calls. Can be used to modify which API
      * server should be called.
      *
-     * @param root The root URL that was passed in `apiRoot`, or its default
-     * value
+     * @param root The URL that was passed in `apiRoot`, or its default value
      * @param token The bot's token that was passed when creating the bot
      * @param method The API method to be called, e.g. `getMe`
      * @returns The url that will be fetched during the API call
