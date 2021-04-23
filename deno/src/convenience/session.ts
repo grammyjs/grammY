@@ -1,10 +1,12 @@
 import { Context } from '../context.ts'
 import { MiddlewareFn } from '../composer.ts'
+import { debug as d } from '../platform.ts'
+const debug = d('grammy:session')
 
 type MaybePromise<T> = Promise<T> | T
 
 /**
- * A session context is a context that can hold session data under
+ * A session flavor is a context flavor that holds session data under
  * `ctx.session`.
  *
  * Session middleware will load the session data of a specific chat from your
@@ -14,14 +16,24 @@ type MaybePromise<T> = Promise<T> | T
  * on session middleware to know more, and read the section about sessions on
  * the [website](https://grammy.dev/guide/sessions.html).
  */
-export interface SessionContext<S> extends Context {
+export interface SessionFlavor<S> {
     /**
      * Session data on the context object.
+     *
+     * **WARNING:** You have to make sure that your session data is not
+     * undefined by _providing an inital value to the session middleware_, or by
+     * making sure that `ctx.session` is assigned if it is empty! The type
+     * system does not include `| undefined` because this is really annoying to
+     * work with.
+     *
+     *  Accessing `ctx.session` by reading or writing will throw if
+     * `getSessionKey(ctx) === undefined` for the respective context object
+     * `ctx`.
      */
-    session: S | undefined
+    session: S
 }
 /**
- * A lazy session context is a context that can hold a promise of some session
+ * A lazy session flavor is a context flavor holds a promise of some session
  * data under `ctx.session`.
  *
  * Lazy session middleware will provide this promise lazily on the context
@@ -32,11 +44,21 @@ export interface SessionContext<S> extends Context {
  * on lazy session middleware to know more, and read the section about lazy
  * sessions on the [website](https://grammy.dev/advanced/lazy-sessions.html).
  */
-export interface LazySessionContext<S> extends Context {
+export interface LazySessionFlavor<S> {
     /**
      * Session data on the context object, potentially a promise.
+     *
+     * **WARNING:** You have to make sure that your session data is not
+     * undefined by _providing a default value to the session middleware_, or by
+     * making sure that `ctx.session` is assigned if it is empty! The type
+     * system does not include `| undefined` because this is really annoying to
+     * work with.
+     *
+     * Accessing `ctx.session` by reading or writing will throw iff
+     * `getSessionKey(ctx) === undefined` holds for the respective context
+     * object `ctx`.
      */
-    session: MaybePromise<S | undefined>
+    session: MaybePromise<S>
 }
 
 /**
@@ -66,13 +88,24 @@ export interface StorageAdapter<T> {
  */
 export interface SessionOptions<S> {
     /**
+     * **Recommended to use.**
+     *
+     * A function that produces an initial value for `ctx.session`. This
+     * function will be called every time the storage solution returns undefined
+     * for a given session key. Make sure to create a new value every time, such
+     * that different context objects do that accidentally share the same
+     * session data.
+     */
+    initial?: () => S
+    /**
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
      * your chats and users. Check out the
      * [documentation](https://grammy.dev/guide/sessions.html) on the website
      * about session middleware to know how session keys are used.
      *
-     * The default implementation will store sessions per user-chat combination.
+     * The default implementation will store sessions per chat, as determined by
+     * `ctx.chat?.id`.
      */
     getSessionKey?: (ctx: Context) => MaybePromise<string | undefined>
     /**
@@ -123,23 +156,45 @@ export interface SessionOptions<S> {
  * })
  * ```
  *
+ * It is recommended to make use of the `inital` option in the configuration
+ * object, which correctly initializes session objects for new chats.
+ *
  * Check out the [documentation](https://grammy.dev/guide/sessions.html) on the
  * website to know more about how sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
  */
-export function session<S>(
+export function session<S, C extends Context>(
     options?: SessionOptions<S>
-): MiddlewareFn<SessionContext<S>> {
+): MiddlewareFn<C & SessionFlavor<S>> {
     const getSessionKey = options?.getSessionKey ?? defaultGetSessionKey
     const storage = options?.storage ?? new MemorySessionStorage()
     return async (ctx, next) => {
         const key = await getSessionKey(ctx)
-        ctx.session = key === undefined ? undefined : await storage.read(key)
-        await next()
+        let value =
+            key === undefined
+                ? undefined
+                : (await storage.read(key)) ?? options?.initial?.()
+        Object.defineProperty(ctx, 'session', {
+            get() {
+                if (key === undefined)
+                    throw new Error(
+                        'Cannot access session data because the session key was undefined!'
+                    )
+                return value
+            },
+            set(v) {
+                if (key === undefined)
+                    throw new Error(
+                        'Cannot assign session data because the session key was undefined!'
+                    )
+                value = v
+            },
+        })
+        await next() // no catch: do not write back if middleware throws
         if (key !== undefined)
-            if (!ctx.session) await storage.delete(key)
-            else await storage.write(key, ctx.session)
+            if (value == null) await storage.delete(key)
+            else await storage.write(key, value)
     }
 }
 
@@ -152,8 +207,8 @@ export function session<S>(
  *
  * Instead of directly querying the storage every time an update arrives, lazy
  * sessions quickly do this _once you access_ `ctx.session`. This can
- * significantly reduce the database traffic (especially when your bot can be
- * added to group chats), because it skips a read and a write operation for all
+ * significantly reduce the database traffic (especially when your bot is added
+ * to group chats), because it skips a read and a wrote operation for all
  * updates that the bot does not react to.
  *
  * ```ts
@@ -174,47 +229,66 @@ export function session<S>(
  *
  * @param options Optional configuration to pass to the session middleware
  */
-export function lazySession<S>(
+export function lazySession<S, C extends Context>(
     options?: SessionOptions<S>
-): MiddlewareFn<LazySessionContext<S>> {
+): MiddlewareFn<C & LazySessionFlavor<S>> {
     const getSessionKey = options?.getSessionKey ?? defaultGetSessionKey
     const storage = options?.storage ?? new MemorySessionStorage()
     return async (ctx, next) => {
         const key = await getSessionKey(ctx)
-        let session: Promise<S | undefined> | S | undefined = undefined
+        let value: Promise<S | undefined> | S | undefined = undefined
         let promise: Promise<S | undefined> | undefined = undefined
+        let wrote = false
         let read = false
-        let write = false
+        let fetching = false
         Object.defineProperty(ctx, 'session', {
             get() {
+                if (wrote) return value
+                if (key === undefined)
+                    throw new Error(
+                        'Cannot access lazy session data because the session key was undefined!'
+                    )
                 read = true
-                return (promise ??= Promise.resolve(
-                    key === undefined ? undefined : storage.read(key)
-                ).then(s => (session = s)))
+                return (promise ??=
+                    ((fetching = true),
+                    Promise.resolve(storage.read(key)).then(v => {
+                        if (!fetching) return value
+                        if (v === undefined) {
+                            v = options?.initial?.()
+                            if (v !== undefined) {
+                                wrote = true
+                                value = v
+                            }
+                        } else {
+                            value = v
+                        }
+                        return value
+                    })))
             },
-            set(newValue) {
-                write = true
-                session = newValue
+            set(v) {
+                if (key === undefined)
+                    throw new Error(
+                        'Cannot assign lazy session data because the session key was undefined!'
+                    )
+                wrote = true
+                fetching = false
+                value = v
             },
         })
-        await next()
+        await next() // no catch: do not wrote back if middleware throws
         if (key !== undefined) {
             if (read) await promise
-            if (read || write) {
-                session = await session
-                if (session) await storage.write(key, session)
-                else await storage.delete(key)
+            if (read || wrote) {
+                value = await value
+                if (value == null) await storage.delete(key)
+                else await storage.write(key, value)
             }
         }
     }
 }
 
 function defaultGetSessionKey(ctx: Context): string | undefined {
-    const userId = ctx.from?.id
-    if (userId === undefined) return undefined
-    const chatId = ctx.chat?.id
-    if (chatId === undefined) return undefined
-    return `${userId}:${chatId}`
+    return ctx.chat?.id.toString()
 }
 
 class MemorySessionStorage<S> implements StorageAdapter<S> {
@@ -223,7 +297,11 @@ class MemorySessionStorage<S> implements StorageAdapter<S> {
         { session: S; expires?: number }
     >()
 
-    constructor(private readonly timeToLive = Infinity) {}
+    constructor(private readonly timeToLive = Infinity) {
+        debug(
+            'Storing session data in memory, all data will be lost when the bot restarts.'
+        )
+    }
 
     read(key: string) {
         const value = this.storage.get(key)
