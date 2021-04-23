@@ -23,9 +23,9 @@ export interface PollingOptions {
      */
     timeout?: number
     /**
-     * A JSON-serialized list of the update types you want your bot to receive.
-     * For example, specify [“message”, “edited_channel_post”, “callback_query”]
-     * to only receive updates of these types. See Update for a complete list of
+     * A list of the update types you want your bot to receive. For example,
+     * specify [“message”, “edited_channel_post”, “callback_query”] to only
+     * receive updates of these types. See Update for a complete list of
      * available update types. Specify an empty list to receive all update types
      * except chat_member (default). If not specified, the previous setting will
      * be used.
