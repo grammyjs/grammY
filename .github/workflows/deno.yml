@@ -15,6 +15,13 @@ on:
     branches: [main]
 
 jobs:
+  backport:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run backporting script
+        run: ./backport --full
+        working-directory: node_backport/
+    
   test:
     runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
 
