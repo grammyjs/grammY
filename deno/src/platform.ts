@@ -9,7 +9,7 @@ export { debug }
 const isDeno = typeof Deno !== 'undefined'
 
 if (isDeno) {
-    debug.useColors = () => true
+    debug.useColors = () => !Deno.noColor
     const env = { name: 'env', variable: 'DEBUG' } as const
     let res = await Deno.permissions.query(env)
     if (res.state === 'prompt') res = await Deno.permissions.request(env)
@@ -24,9 +24,9 @@ export { readableStreamFromAsyncIterator as itrToStream } from 'https://deno.lan
 // Turn a file path into an AsyncIterable<Uint8Array>
 export const streamFile = isDeno
     ? (path: string) => Deno.open(path).then(Deno.iter)
-    : (() => {
+    : () => {
           throw new Error('Reading files by path requires a Deno environment')
-      })()
+      }
 
 // Base configuration for `fetch` calls
 export const baseFetchConfig = {}
