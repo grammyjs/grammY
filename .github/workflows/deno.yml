@@ -20,20 +20,18 @@ jobs:
 
     strategy:
       matrix:
-        deno: ["v1.x", "nightly"]
         os: [macOS-latest, windows-latest, ubuntu-latest]
 
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
-
-      - name: Setup Deno
-        uses: denolib/setup-deno@c7d7968ad4a59c159a777f79adddad6872ee8d96
+        
+      - uses: denoland/setup-deno@main
         with:
-          deno-version: ${{ matrix.deno }} # tests across multiple Deno versions
+          deno-version: v1.x
 
       - name: Cache Dependencies
-        run: deno cache deps.ts
+        run: deno cache platform.ts
         working-directory: deno
 
       - name: Run Tests
