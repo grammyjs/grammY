@@ -6,7 +6,7 @@
 # This workflow will install Deno and run tests across stable and nightly builds on Windows, Ubuntu and macOS.
 # For more information see: https://github.com/denolib/setup-deno
 
-name: Deno
+name: grammY
 
 on:
   push:
@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run backporting script
-        run: ./backport --full
+        run: ./backport.sh --full
         working-directory: node-backport
-    
+
   test:
     runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
 
@@ -32,7 +32,7 @@ jobs:
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
-        
+
       - uses: denoland/setup-deno@main
         with:
           deno-version: v1.x
