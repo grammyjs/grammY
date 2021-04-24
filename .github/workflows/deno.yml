@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Run backporting script
         run: ./backport --full
-        working-directory: node_backport/
+        working-directory: node-backport/
     
   test:
     runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
