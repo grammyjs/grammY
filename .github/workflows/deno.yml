@@ -18,6 +18,9 @@ jobs:
   backport:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
+
       - name: Run backporting script
         run: ./backport.sh --full
         working-directory: node-backport
