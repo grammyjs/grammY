@@ -256,11 +256,4 @@ export class InlineKeyboard {
     pay(text: string) {
         return this.add({ text, pay: true })
     }
-    /**
-     * Return the resulting inline keyboard that was built. May be called in the
-     * end if necessary so you can specify more options in `reply_markup`.
-     */
-    build() {
-        return this.inline_keyboard
-    }
 }
