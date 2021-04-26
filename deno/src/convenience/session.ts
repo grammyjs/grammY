@@ -14,7 +14,7 @@ type MaybePromise<T> = Promise<T> | T
  * out the
  * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#session)
  * on session middleware to know more, and read the section about sessions on
- * the [website](https://grammy.dev/guide/sessions.html).
+ * the [website](https://grammy.dev/plugins/session.html).
  */
 export interface SessionFlavor<S> {
     /**
@@ -33,8 +33,8 @@ export interface SessionFlavor<S> {
     session: S
 }
 /**
- * A lazy session flavor is a context flavor holds a promise of some session
- * data under `ctx.session`.
+ * A lazy session flavor is a context flavor that holds a promise of some
+ * session data under `ctx.session`.
  *
  * Lazy session middleware will provide this promise lazily on the context
  * object. Once you access `ctx.session`, the storage will be queried and the
@@ -42,7 +42,8 @@ export interface SessionFlavor<S> {
  * same context object, the cached value will be used. Check out the
  * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#lazySession)
  * on lazy session middleware to know more, and read the section about lazy
- * sessions on the [website](https://grammy.dev/advanced/lazy-sessions.html).
+ * sessions on the
+ * [website](https://grammy.dev/plugins/session.html#lazy-sessions).
  */
 export interface LazySessionFlavor<S> {
     /**
@@ -101,8 +102,9 @@ export interface SessionOptions<S> {
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
      * your chats and users. Check out the
-     * [documentation](https://grammy.dev/guide/sessions.html) on the website
-     * about session middleware to know how session keys are used.
+     * [documentation](https://grammy.dev/plugins/session.html#how-to-use-sessions)
+     * on the website about how to use session middleware to know how session
+     * keys are used.
      *
      * The default implementation will store sessions per chat, as determined by
      * `ctx.chat?.id`.
@@ -159,7 +161,7 @@ export interface SessionOptions<S> {
  * It is recommended to make use of the `inital` option in the configuration
  * object, which correctly initializes session objects for new chats.
  *
- * Check out the [documentation](https://grammy.dev/guide/sessions.html) on the
+ * Check out the [documentation](https://grammy.dev/plugins/session.html) on the
  * website to know more about how sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
@@ -224,8 +226,9 @@ export function session<S, C extends Context>(
  * })
  * ```
  *
- * Check out the [documentation](https://grammy.dev/advanced/lazy-sessions.html)
- * on the website to know more about how lazy sessions work in grammY.
+ * Check out the
+ * [documentation](https://grammy.dev/plugins/session.html#lazy-sessions) on the
+ * website to know more about how lazy sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
  */

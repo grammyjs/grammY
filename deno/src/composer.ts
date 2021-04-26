@@ -72,7 +72,7 @@ export interface MiddlewareObj<C extends Context = Context> {
  * Middleware is an extremely powerful concept and this short explanation only
  * scratched the surface of what is possible with grammY. If you want to know
  * more advanced things about middleware, check out the
- * [documentation](https://grammy.dev/advanced/middleware.html) on the website.
+ * [documentation](https://grammy.dev/guide/middleware.html) on the website.
  */
 export type Middleware<C extends Context = Context> =
     | MiddlewareFn<C>

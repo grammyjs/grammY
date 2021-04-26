@@ -57,7 +57,7 @@ Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent [documentation](https://grammy.dev/). If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
+grammY has an excellent [documentation](https://grammy.dev). If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
 
 If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 

@@ -59,9 +59,9 @@ type RenamedUpdate = AliasProps<Omit<Update, 'update_id'>>
  * methods to keep information about how a regular expression was matched.
  *
  * Read up about middleware on the
- * [website](https://grammy.dev/advanced/middleware.html) if you want to know
- * more about the powerful opportunities that lie in context objects, and about
- * how grammY implements them.
+ * [website](https://grammy.dev/guide/context.html) if you want to know more
+ * about the powerful opportunities that lie in context objects, and about how
+ * grammY implements them.
  */
 export class Context implements RenamedUpdate {
     /**
