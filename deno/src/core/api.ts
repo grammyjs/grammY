@@ -222,7 +222,7 @@ export class Api {
     }
 
     /**
-     * Use this method to forward messages of any kind. On success, the sent Message is returned.
+     * Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -251,7 +251,7 @@ export class Api {
     }
 
     /**
-     * Use this method to copy messages of any kind. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -1631,12 +1631,11 @@ export class Api {
     /**
      * Use this method to send invoices. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target private chat
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
      * @param provider_token Payments provider token, obtained via Botfather
-     * @param start_parameter Unique deep-linking parameter that can be used to generate this invoice when used as a start parameter
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Remaining parameters, confer the official reference below
@@ -1645,12 +1644,11 @@ export class Api {
      * **Official reference:** https://core.telegram.org/bots/api#sendinvoice
      */
     sendInvoice(
-        chat_id: number,
+        chat_id: number | string,
         title: string,
         description: string,
         payload: string,
         provider_token: string,
-        start_parameter: string,
         currency: string,
         prices: readonly LabeledPrice[],
         other?: Other<
@@ -1672,7 +1670,6 @@ export class Api {
                 description,
                 payload,
                 provider_token,
-                start_parameter,
                 currency,
                 prices,
                 ...other,
