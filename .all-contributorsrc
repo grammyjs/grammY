@@ -66,5 +66,5 @@
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": false
 }
