@@ -98,7 +98,7 @@ const enc = new TextEncoder()
 async function* payloadToMultipartItr(
     payload: Record<string, unknown>,
     boundary = createBoundary()
-): AsyncIterable<Uint8Array> {
+): AsyncIterableIterator<Uint8Array> {
     yield enc.encode(`--${boundary}\r\n`)
 
     const separator = enc.encode(`\r\n--${boundary}\r\n`)
@@ -157,7 +157,7 @@ async function* filePart(
     id: string,
     key: string,
     input: InputFile
-): AsyncIterable<Uint8Array> {
+): AsyncIterableIterator<Uint8Array> {
     const filename = input.filename ?? `${key}.${getExt(key)}`
     if (filename.includes(';') || filename.includes('"')) {
         debug('WARNING: Telegram Bot API currently does not support')
