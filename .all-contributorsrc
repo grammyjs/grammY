@@ -54,7 +54,17 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "trgwii",
+      "name": "trgwii",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11262022?v=4",
+      "profile": "https://trgwii.no/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": false
 }
