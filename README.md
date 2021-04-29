@@ -6,13 +6,19 @@ _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 _<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs)</h1>_
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<div align="center">
+
+[![Bot API](https://img.shields.io/badge/Bot%20API-5.2-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
+[![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-> This project has not reached 1.0. Please try it out and give some feedback before the release :)
+</div>
 
-**grammY makes it easy to create Telegram bots.** No matter whether you just learned how to code and are looking for something **simple to get started**, or whether you are an experienced developer that has to deploy a **complex codebase that can autoscale** to handle thousands of messages per second.
+**grammY makes it easy to create Telegram bots.**
+
+No matter whether you just learned how to code and are looking for something **simple to get started**, or whether you are an experienced developer that has to deploy a complex codebase that can autoscale to handle thousands of messages per second.
 
 Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript) and run on [Node.js](https://nodejs.org/).
 
