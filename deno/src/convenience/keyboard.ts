@@ -11,17 +11,21 @@ import { KeyboardButton, InlineKeyboardButton, LoginUrl } from '../platform.ts'
  *   .text('C').text('D')
  *
  * // Now you can either pass it directly:
- * ctx.reply('text', {
+ * ctx.reply('Here is your keyboard!', {
  *   reply_markup: keyboard
  * })
  * // Or if you need to specify more options in `reply_markup`:
- * ctx.reply('text', {
+ * ctx.reply('Here is your keyboard!', {
  *   reply_markup: {
- *     parse_mode: 'HTML',
  *     keyboard: keyboard.build(), // note the `build` call
+ *     one_time_keyboard: true,
  *   }
  * })
  * ```
+ *
+ * Be sure to check out the
+ * [documentation](https://grammy.dev/plugins/keyboard.html#keyboards) on
+ * keyboards in grammY.
  */
 export class Keyboard {
     /**
@@ -113,18 +117,15 @@ export class Keyboard {
  *   .text('C').text('D').row()
  *   .url('Telegram', 'telegram.org')
  *
- * // Now you can either pass it directly:
- * ctx.reply('text', {
+ * // Send the keyboard:
+ * ctx.reply('Here is your inline keyboard!', {
  *   reply_markup: keyboard
  * })
- * // Or if you need to specify more options in `reply_markup`:
- * ctx.reply('text', {
- *   reply_markup: {
- *     parse_mode: 'HTML',
- *     inline_keyboard: keyboard.build(), // note the `build` call
- *   }
- * })
  * ```
+ *
+ * Be sure to to check the
+ * [documentation](https://grammy.dev/plugins/keyboard.html#inline-keyboards) on
+ * inline keyboards in grammY.
  */
 export class InlineKeyboard {
     /**
@@ -192,7 +193,10 @@ export class InlineKeyboard {
      * Your bot will receive an update every time a user presses any of the text
      * buttons. You can listen to these updates like this:
      * ```ts
-     * bot.on('callback_query:data',            ctx => { ... })
+     * // Specific buttons:
+     * bot.callbackQuery('button-data', ctx => { ... })
+     * // Any button of any inline keyboard:
+     * bot.on('callback_query:data',    ctx => { ... })
      * ```
      *
      * @param text The text to display
