@@ -511,11 +511,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<Middleware<D>>
     ): Composer<D>
     filter(
-        predicate: (ctx: C) => boolean,
+        predicate: (ctx: C) => MaybePromise<boolean>,
         ...middleware: Array<Middleware<C>>
     ): Composer<C>
     filter(
-        predicate: (ctx: C) => boolean,
+        predicate: (ctx: C) => MaybePromise<boolean>,
         ...middleware: Array<Middleware<C>>
     ) {
         const composer = new Composer(...middleware)
@@ -538,8 +538,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param predicate The predicate to check
      * @param middleware The middleware to register
      */
-    drop(predicate: (ctx: C) => boolean, ...middleware: Array<Middleware<C>>) {
-        return this.filter((ctx: C) => !predicate(ctx), ...middleware)
+    drop(
+        predicate: (ctx: C) => MaybePromise<boolean>,
+        ...middleware: Array<Middleware<C>>
+    ) {
+        return this.filter(
+            async (ctx: C) => !(await predicate(ctx)),
+            ...middleware
+        )
     }
 
     /**
@@ -671,12 +677,12 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param falseMiddleware The middleware for the `false` case
      */
     branch(
-        predicate: (ctx: C) => boolean,
+        predicate: (ctx: C) => MaybePromise<boolean>,
         trueMiddleware: MaybeArray<Middleware<C>>,
         falseMiddleware: MaybeArray<Middleware<C>>
     ) {
-        return this.lazy(ctx =>
-            predicate(ctx) ? trueMiddleware : falseMiddleware
+        return this.lazy(async ctx =>
+            (await predicate(ctx)) ? trueMiddleware : falseMiddleware
         )
     }
 }
