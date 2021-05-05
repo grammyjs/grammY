@@ -1,6 +1,6 @@
 // Commonly used stuff
-export { BotError, Bot } from './bot.ts'
-export type { PollingOptions, ErrorHandler, BotConfig } from './bot.ts'
+export { Bot } from './bot.ts'
+export type { PollingOptions, BotConfig } from './bot.ts'
 
 export { InputFile } from './platform.ts'
 
@@ -12,8 +12,9 @@ export * from './convenience/session.ts'
 export * from './convenience/webhook.ts'
 
 // A little more advanced stuff
-export { Composer } from './composer.ts'
+export { BotError, Composer } from './composer.ts'
 export type {
+    ErrorHandler,
     NextFunction,
     Middleware,
     MiddlewareObj,

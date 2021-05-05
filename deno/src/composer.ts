@@ -78,6 +78,26 @@ export type Middleware<C extends Context = Context> =
     | MiddlewareFn<C>
     | MiddlewareObj<C>
 
+// === Middleware errors
+/**
+ * This error is thrown when middleware throws. It simply wraps the original
+ * error (accessible via the `error` property), but also provides access to the
+ * respective context object that was processed while the error occurred.
+ */
+export class BotError<C extends Context = Context> extends Error {
+    constructor(public readonly error: unknown, public readonly ctx: C) {
+        super('Error in middleware!')
+    }
+}
+
+/**
+ * Error handler that can be installed on a bot to catch error thrown by
+ * middleware.
+ */
+export type ErrorHandler<C extends Context = Context> = (
+    error: BotError<C>
+) => unknown
+
 // === Middleware base functions
 function flatten<C extends Context>(mw: Middleware<C>): MiddlewareFn<C> {
     return typeof mw === 'function'
@@ -103,7 +123,7 @@ function pass<C extends Context>(_ctx: C, next: NextFunction) {
 
 const leaf: NextFunction = () => Promise.resolve()
 /**
- * Runs some given middleware with a given context object.
+ * Runs some given middleware function with a given context object.
  *
  * @param middleware The middleware to run
  * @param ctx The context to use
@@ -481,7 +501,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * skipped and the next middleware will be executed.
      *
      * This method has two signatures. The first one is straightforward, it is
-     * the one described above.
+     * the one described above. Note that the predicate may be asyncronous, i.e.
+     * it can return a Promise of a boolean.
      *
      * Alternatively, you can pass a function that has a type predicate as
      * return type. This will allow you to narrow down the context object. The
@@ -530,7 +551,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * context object and decides whether or not to execute the middleware. In
      * other words, the middleware will only be executed if the given predicate
      * returns `false` for the given context object. Otherwise, it will be
-     * skipped and the next middleware will be executed.
+     * skipped and the next middleware will be executed. Note that the predicate
+     * may be asyncronous, i.e. it can return a Promise of a boolean.
      *
      * This method is the same using `filter` (normal usage) with a negated
      * predicate.
@@ -670,7 +692,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * This method takes a predicate function that is tested once per context
      * object. If it returns `true`, the first supplied middleware is executed.
-     * If it returns `false`, the second supplied middleware is executed.
+     * If it returns `false`, the second supplied middleware is executed. Note
+     * that the predicate may be asyncronous, i.e. it can return a Promise of a
+     * boolean.
      *
      * @param predicate The predicate to check
      * @param trueMiddleware The middleware for the `true` case
@@ -684,6 +708,64 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         return this.lazy(async ctx =>
             (await predicate(ctx)) ? trueMiddleware : falseMiddleware
         )
+    }
+
+    /**
+     * > This is an advanced function of grammY.
+     *
+     * Installs an error boundary that catches errors that happen only inside
+     * the given middleware. This allows you to install custom error handlers
+     * that protect some parts of your bot. Errors will not be able to bubble
+     * out of this part of your middleware system, unless the supplied error
+     * handler rethrows them, in which case the next surrounding error boundary
+     * will catch the error.
+     *
+     * Example usage:
+     * ```ts
+     * function errHandler(err: BotError) {
+     *   console.error('Error boundary caught error!', err)
+     * }
+     *
+     * const safe =
+     *   // All passed middleware will be protected by the error boundary.
+     *   bot.errorBoundary(errHandler, middleware0, middleware1, middleware2)
+     *
+     * // Those will also be protected!
+     * safe.on('message', middleware3)
+     *
+     * // No error from `middleware4` will reach the `errHandler` from above,
+     * // as errors are suppressed.
+     *
+     * // do nothing on error (suppress error)
+     * const suppress = (_err: BotError) => {}
+     * safe.errorBoundary(suppress).on('edited_message', middleware4)
+     * ```
+     *
+     * If you run your bot using long polling, the error handler installed by
+     * `bot.catch` can be viewed as the outermost error boundary.
+     *
+     * Check out the
+     * [documentation](https://grammy.dev/guide/errors.html#error-boundaries) on
+     * the website to learn more about error boundaries.
+     *
+     * @param errorHandler The error handler to use
+     * @param middleware The middleware to protect
+     */
+    errorBoundary(
+        errorHandler: ErrorHandler<C>,
+        ...middleware: Array<Middleware<C>>
+    ) {
+        const composer = new Composer<C>(...middleware)
+        const bound = flatten(composer)
+        this.use(async (ctx, next) => {
+            try {
+                await run(bound, ctx)
+            } catch (err) {
+                await errorHandler(new BotError<C>(ctx, err))
+            }
+            await next()
+        })
+        return composer
     }
 }
 
@@ -700,7 +782,7 @@ function match<C extends Context>(
     ctx: C,
     content: string,
     triggers: Array<(content: string) => string | RegExpMatchArray | null>
-) {
+): boolean {
     for (const t of triggers) {
         const res = t(content)
         if (res) {
@@ -711,6 +793,6 @@ function match<C extends Context>(
     return false
 }
 
-function toArray<E>(e: MaybeArray<E>) {
+function toArray<E>(e: MaybeArray<E>): E[] {
     return Array.isArray(e) ? e : [e]
 }
