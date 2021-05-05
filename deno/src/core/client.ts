@@ -5,7 +5,7 @@ import {
     Telegram,
     baseFetchConfig,
 } from '../platform.ts'
-import { GrammyError } from './error.ts'
+import { GrammyError, HttpError } from './error.ts'
 import {
     requiresFormDataUpload,
     transformPayload,
@@ -220,9 +220,24 @@ class ApiClient {
         payload: Opts<M>,
         signal?: AbortSignal
     ) {
-        const data = await this.call(method, payload, signal)
+        let data: ApiResponse<ReturnType<Telegram[M]>> | undefined
+        try {
+            data = await this.call(method, payload, signal)
+        } catch (err) {
+            let msg = `Network request for '${method}' failed!`
+            if (err.status && err.statusText) {
+                msg += ` (${err.status}: ${err.statusText})`
+            }
+            throw new HttpError(msg, err)
+        }
         if (data.ok) return data.result
-        else throw new GrammyError(`Call to ${method} failed!`, data, payload)
+        else
+            throw new GrammyError(
+                `Call to '${method}' failed!`,
+                data,
+                method,
+                payload
+            )
     }
 }
 
