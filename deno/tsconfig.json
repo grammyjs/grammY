@@ -12,7 +12,6 @@
         "declaration": true,
         "module": "commonjs",
         "outDir": "./out/",
-        "removeComments": true,
         "skipLibCheck": true,
         "target": "es2019"
     },
