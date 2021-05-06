@@ -11,7 +11,7 @@ Talk to [@BotFather](https://t.me/BotFather) to create a new Telegram bot and ob
 Paste the following code into a new file `bot.ts`.
 
 ```ts
-import { Bot } from 'grammy'
+import { Bot } from 'https://deno.land/x/grammy/mod.ts'
 
 // Create bot object
 const bot = new Bot('') // <-- place your bot token inside this string

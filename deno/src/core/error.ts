@@ -36,8 +36,8 @@ export class GrammyError extends Error implements ApiError {
 }
 
 /**
- * This class represents error that are thrown by grammY because an HTTP call to
- * the Telegram Bot API failed.
+ * This class represents errors that are thrown by grammY because an HTTP call
+ * to the Telegram Bot API failed.
  *
  * Instances of this class hold the error object that was created because the
  * fetch call failed. It can be inspected to determine why exactly the network
