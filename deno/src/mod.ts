@@ -33,4 +33,4 @@ export type {
     TransformableApi,
     ApiClientOptions,
 } from './core/client.ts'
-export { GrammyError } from './core/error.ts'
+export { GrammyError, HttpError } from './core/error.ts'
