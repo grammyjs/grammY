@@ -1,5 +1,5 @@
 // deno-lint-ignore-file camelcase
-import { BotError, Composer, ErrorHandler, run } from './composer.ts'
+import { BotError, Composer, run } from './composer.ts'
 import { Context } from './context.ts'
 import { Api } from './core/api.ts'
 import { ApiClientOptions, WebhookReplyEnvelope } from './core/client.ts'
@@ -40,6 +40,15 @@ export interface PollingOptions {
      */
     drop_pending_updates?: boolean
 }
+
+export { BotError }
+/**
+ * Error handler that can be installed on a bot to catch error thrown by
+ * middleware.
+ */
+export type ErrorHandler<C extends Context = Context> = (
+    error: BotError<C>
+) => unknown
 
 /**
  * Options to pass the bot when creating it.

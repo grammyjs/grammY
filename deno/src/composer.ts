@@ -90,14 +90,6 @@ export class BotError<C extends Context = Context> extends Error {
     }
 }
 
-/**
- * Error handler that can be installed on a bot to catch error thrown by
- * middleware.
- */
-export type ErrorHandler<C extends Context = Context> = (
-    error: BotError<C>
-) => unknown
-
 // === Middleware base functions
 function flatten<C extends Context>(mw: Middleware<C>): MiddlewareFn<C> {
     return typeof mw === 'function'
@@ -736,13 +728,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * // No error from `middleware4` will reach the `errHandler` from above,
      * // as errors are suppressed.
      *
-     * // do nothing on error (suppress error)
-     * const suppress = (_err: BotError) => {}
+     * // do nothing on error (suppress error), and run outside middleware
+     * const suppress = (_err: BotError, next: NextFunction) => { return next() }
      * safe.errorBoundary(suppress).on('edited_message', middleware4)
      * ```
-     *
-     * If you run your bot using long polling, the error handler installed by
-     * `bot.catch` can be viewed as the outermost error boundary.
      *
      * Check out the
      * [documentation](https://grammy.dev/guide/errors.html#error-boundaries) on
@@ -752,18 +741,24 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to protect
      */
     errorBoundary(
-        errorHandler: ErrorHandler<C>,
+        errorHandler: (
+            error: BotError<C>,
+            next: NextFunction
+        ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
     ) {
         const composer = new Composer<C>(...middleware)
         const bound = flatten(composer)
         this.use(async (ctx, next) => {
+            let nextCalled = false
+            const cont = () => ((nextCalled = true), Promise.resolve())
             try {
-                await run(bound, ctx)
+                await bound(ctx, cont)
             } catch (err) {
-                await errorHandler(new BotError<C>(ctx, err))
+                nextCalled = false
+                await errorHandler(new BotError<C>(ctx, err), cont)
             }
-            await next()
+            if (nextCalled) await next()
         })
         return composer
     }
