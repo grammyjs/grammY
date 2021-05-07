@@ -31,8 +31,25 @@ export const streamFile = isDeno
 // Base configuration for `fetch` calls
 export const baseFetchConfig = {}
 
-/** This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser. */
+// Accessor for file data in `InputFile` instances
+export const inputFileData = Symbol('InputFile data')
+
+/**
+ * An `InputFile` wraps a number of different sources for [sending
+ * files](https://grammy.dev/guide/files.html#uploading-your-own-file).
+ *
+ * It corresponds to the `InputFile` type in the [Telegram Bot API
+ * Reference](https://core.telegram.org/bots/api#inputfile).
+ */
 export class InputFile {
+    public readonly [inputFileData]: ConstructorParameters<typeof InputFile>[0]
+    /**
+     * Optional name of the constructed `InputFile` instance.
+     *
+     * Check out the
+     * [documenation](https://grammy.dev/guide/files.html#uploading-your-own-file)
+     * on sending files with `InputFile`.
+     */
     public readonly filename?: string
     /**
      * Constructs an `InputFile` that can be used in the API to send files.
@@ -41,20 +58,21 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        public readonly file:
+        file:
             | string
             | Uint8Array
-            | ReadableStream
-            | AsyncGenerator<Uint8Array>,
+            | ReadableStream<Uint8Array>
+            | AsyncIterable<Uint8Array>,
         filename?: string
     ) {
+        this[inputFileData] = file
         if (filename === undefined && typeof file === 'string')
             filename = basename(file)
         this.filename = filename
     }
 }
 
-// CUSTOM TYPEGRAM TYPES
+// CUSTOM INPUT FILE TYPES
 
 type GrammyTypes = InputFileProxy<InputFile>
 
