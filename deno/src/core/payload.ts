@@ -173,17 +173,10 @@ ${filename}
         `content-disposition:form-data;name="${id}";filename=${filename}\r\n\r\n`
     )
     const fileData = input[inputFileData]
-    if (fileData instanceof Uint8Array) {
-        // `fileData` is a buffer
-        yield fileData
-    } else {
-        const stream =
-            typeof fileData === 'string'
-                ? await streamFile(fileData) // `fileData` is a file path
-                : fileData // `fileData` is a stream
-
-        yield* stream
-    }
+    // handle buffers, file paths, and streams:
+    if (fileData instanceof Uint8Array) yield fileData
+    else if (typeof fileData === 'string') yield* await streamFile(fileData)
+    else yield* fileData
 }
 /** Returns the default file extension for an API property name */
 function getExt(key: string) {
