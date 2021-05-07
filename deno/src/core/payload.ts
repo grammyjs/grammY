@@ -2,6 +2,7 @@ import {
     itrToStream,
     streamFile,
     InputFile,
+    inputFileData,
     InputMedia,
     debug as d,
 } from '../platform.ts'
@@ -170,14 +171,16 @@ async function* filePart(
     yield enc.encode(
         `content-disposition:form-data;name="${id}";filename=${filename}\r\n\r\n`
     )
-    if (input.file instanceof Uint8Array) {
-        // `input.file` is a buffer
-        yield input.file
+    const fileData = input[inputFileData]
+    if (fileData instanceof Uint8Array) {
+        // `fileData` is a buffer
+        yield fileData
     } else {
         const stream =
-            typeof input.file === 'string'
-                ? await streamFile(input.file) // `input.file` is a file path
-                : input.file // `input.file` is a stream
+            typeof fileData === 'string'
+                ? await streamFile(fileData) // `fileData` is a file path
+                : fileData // `fileData` is a stream
+
         yield* stream
     }
 }
