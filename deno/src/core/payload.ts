@@ -160,13 +160,14 @@ async function* filePart(
     input: InputFile
 ): AsyncIterableIterator<Uint8Array> {
     const filename = input.filename ?? `${key}.${getExt(key)}`
-    if (filename.includes(';') || filename.includes('"')) {
-        debug('WARNING: Telegram Bot API currently does not support')
-        debug('sending filenames that contain semicolons or double quotes')
-        debug('(or both), confer https://github.com/tdlib/td/issues/1459.')
-        debug('While grammY will send the correct data, the Telegram')
-        debug('Bot API will discard everything after the first semicolon,')
-        debug('and it will convert the double quotes into spaces.')
+    if (filename.includes('\r') || filename.includes('\n')) {
+        throw new Error(
+            `File paths cannot contain carriage-return (\\r) \
+or newline (\\n) characters! Filename for property '${key}' was:
+"""
+${filename}
+"""`
+        )
     }
     yield enc.encode(
         `content-disposition:form-data;name="${id}";filename=${filename}\r\n\r\n`
