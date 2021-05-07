@@ -58,7 +58,11 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file: string | Uint8Array | ReadableStream | AsyncGenerator<Uint8Array>,
+        file:
+            | string
+            | Uint8Array
+            | ReadableStream<Uint8Array>
+            | AsyncIterable<Uint8Array>,
         filename?: string
     ) {
         this[inputFileData] = file
