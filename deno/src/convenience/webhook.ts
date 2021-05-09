@@ -2,6 +2,7 @@
 import { Bot } from '../bot.ts'
 import { debug as d, Update } from '../platform.ts'
 import { WebhookReplyEnvelope } from '../core/client.ts'
+import { Context } from '../context.ts'
 const debugErr = d('grammy:error')
 
 /**
@@ -19,11 +20,13 @@ type FrameworkAdapter = (
     ...args: any[]
 ) => {
     update: Update
+    end?: () => Promise<void>
     respond: (json: string) => unknown
 }
 
 const standard: FrameworkAdapter = (req, res) => ({
     update: req.body,
+    end: () => res.end(),
     respond: json => res.send(json),
 })
 const withCtx: FrameworkAdapter = ctx => ({
@@ -37,7 +40,11 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
     https: standard,
     koa: withCtx,
     oak: withCtx,
-    fastify: standard,
+    fastify: (req, reply) => ({
+        update: req.body,
+        respond: json => reply.send(json),
+    }),
+    // please open a PR if you want to add another
 }
 
 /**
@@ -59,8 +66,8 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
  * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
  * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
  */
-export function webhookCallback(
-    bot: Bot,
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
     framework: SupportedFrameworks = 'express',
     onTimeout: 'throw' | 'return' | ((...args: any[]) => unknown) = 'throw',
     timeoutMilliseconds = 10_000
@@ -70,9 +77,11 @@ export function webhookCallback(
     let initialized = false
     let initCall: Promise<void> | undefined
     return async (...args: any[]) => {
-        const { update, respond } = server(...args)
+        const { update, respond, end } = server(...args)
+        let usedWebhookReply = false
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
             send: async json => {
+                usedWebhookReply = true
                 await respond(json)
             },
         }
@@ -91,6 +100,7 @@ export function webhookCallback(
                 : onTimeout,
             timeoutMilliseconds
         )
+        if (end !== undefined && !usedWebhookReply) end()
     }
 }
 
