@@ -20,7 +20,7 @@ type FrameworkAdapter = (
     ...args: any[]
 ) => {
     update: Update
-    end?: () => Promise<void>
+    end?: () => void
     respond: (json: string) => unknown
 }
 
@@ -30,7 +30,10 @@ const standard: FrameworkAdapter = (req, res) => ({
     respond: json => res.send(json),
 })
 const withCtx: FrameworkAdapter = ctx => ({
-    update: ctx.req.body,
+    update: ctx.request.body,
+    end: () => {
+        ctx.body = ''
+    },
     respond: json => (ctx.response.body = json),
 })
 
