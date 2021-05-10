@@ -85,11 +85,10 @@ export interface TransformableApi {
 }
 
 // Transformer base functions
-const concatTransformer = (prev: ApiCallFn, trans: Transformer): ApiCallFn => (
-    method,
-    payload,
-    signal
-) => trans(prev, method, payload, signal)
+const concatTransformer =
+    (prev: ApiCallFn, trans: Transformer): ApiCallFn =>
+    (method, payload, signal) =>
+        trans(prev, method, payload, signal)
 
 /**
  * Options to pass to the API client that eventually connects to the Telegram
@@ -262,8 +261,10 @@ export function createRawApi(
     const client = new ApiClient(token, options, webhookReplyEnvelope)
 
     const proxyHandler: ProxyHandler<RawApi> = {
-        get(_, m: keyof RawApi) {
-            return client.callApi.bind(client, m)
+        get(_, m: keyof RawApi | 'toJSON') {
+            return m === 'toJSON'
+                ? '__internal'
+                : client.callApi.bind(client, m)
         },
         ...proxyMethods,
     }
