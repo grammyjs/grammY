@@ -4,7 +4,7 @@ const { ClassDeclaration, ExportAssignment, FunctionDeclaration, Project, Variab
 const index = './src/mod.ts'
 
 const wrapperPath = './out/esm'
-const wrapperFile = `${wrapperPath}/wrapper.js`
+const wrapperFile = `${wrapperPath}/wrapper.mjs`
 
 const project = new Project()
 project.addSourceFileAtPath(index)

@@ -33,7 +33,7 @@
   ],
   "main": "./out/mod.js",
   "exports": {
-    "import": "./out/esm/wrapper.js",
+    "import": "./out/esm/wrapper.mjs",
     "require": "./out/mod.js"
   },
   "keywords": [
