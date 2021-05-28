@@ -63,6 +63,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "KnightNiwrem",
+      "name": "KnightNiwrem",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9781814?v=4",
+      "profile": "https://github.com/KnightNiwrem",
+      "contributions": [
+        "code",
+        "bug",
+        "plugin"
+      ]
     }
   ],
   "contributorsPerLine": 7,
