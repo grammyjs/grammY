@@ -80,9 +80,8 @@ type GrammyTypes = InputFileProxy<InputFile>
 export type Telegram = GrammyTypes['Telegram']
 
 /** Utility type providing the argument type for the given method name or `{}` if the method does not take any parameters */
-export type Opts<
-    M extends keyof GrammyTypes['Telegram']
-> = GrammyTypes['Opts'][M]
+export type Opts<M extends keyof GrammyTypes['Telegram']> =
+    GrammyTypes['Opts'][M]
 
 /** This object represents the content of a media message to be sent. It should be one of
 - InputMediaAnimation

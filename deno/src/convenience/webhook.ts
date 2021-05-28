@@ -16,9 +16,7 @@ type SupportedFrameworks =
     | 'koa'
     | 'oak'
     | 'fastify'
-type FrameworkAdapter = (
-    ...args: any[]
-) => {
+type FrameworkAdapter = (...args: any[]) => {
     update: Update
     end?: () => void
     respond: (json: string) => unknown

@@ -245,20 +245,16 @@ type L1 = KeyOf<S>
 type L2<K extends L1 = L1> = K extends unknown ? `${K}:${KeyOf<S[K]>}` : never
 // E.g. 'message:entities:url'
 type L3<K0 extends L1 = L1> = K0 extends unknown ? L3_<K0> : never
-type L3_<
-    K0 extends L1,
-    K1 extends KeyOf<S[K0]> = KeyOf<S[K0]>
-> = K1 extends unknown ? `${K0}:${K1}:${KeyOf<S[K0][K1]>}` : never
+type L3_<K0 extends L1, K1 extends KeyOf<S[K0]> = KeyOf<S[K0]>> =
+    K1 extends unknown ? `${K0}:${K1}:${KeyOf<S[K0][K1]>}` : never
 // All three combined
 type L123 = L1 | L2 | L3
 // E.g. 'message::url'
-type PermitL2Defaults<
-    Q extends string = L123
-> = Q extends `${infer R}:${L2Defaults}:${infer S}` ? Q | `${R}::${S}` : Q
+type PermitL2Defaults<Q extends string = L123> =
+    Q extends `${infer R}:${L2Defaults}:${infer S}` ? Q | `${R}::${S}` : Q
 // E.g. '::url'
-type PermitL1Defaults<
-    Q extends string = PermitL2Defaults
-> = Q extends `${L1Defaults}:${infer R}` ? Q | `:${R}` : Q
+type PermitL1Defaults<Q extends string = PermitL2Defaults> =
+    Q extends `${L1Defaults}:${infer R}` ? Q | `:${R}` : Q
 // All queries
 type AllValidFilterQueries = PermitL1Defaults
 
@@ -324,14 +320,12 @@ type Combine<U, K extends string> = U extends unknown
 // gets all L1 query snippets
 type L1Parts<Q extends string> = Q extends `${infer U}:${string}` ? U : Q
 // gets all L2 query snippets for the given L1 part, or `never`
-type L2Parts<
-    Q extends string,
-    P extends string
-> = Q extends `${P}:${infer U}:${string}`
-    ? U
-    : Q extends `${P}:${infer U}`
-    ? U
-    : never
+type L2Parts<Q extends string, P extends string> =
+    Q extends `${P}:${infer U}:${string}`
+        ? U
+        : Q extends `${P}:${infer U}`
+        ? U
+        : never
 
 /**
  * This type infers which properties will be present on the given context object
@@ -371,19 +365,19 @@ interface Shortcuts<U extends Update> {
     chat: Shortcuts<U>['msg'] // 'chat' is required on 'Message'
     // senderChat: disregarded here because always optional on 'Message'
     from: [U['callback_query']] extends [SomeObject]
-        ? U['callback_query']
+        ? U['callback_query']['from']
         : [U['inline_query']] extends [SomeObject]
-        ? U['inline_query']
+        ? U['inline_query']['from']
         : [U['shipping_query']] extends [SomeObject]
-        ? U['shipping_query']
+        ? U['shipping_query']['from']
         : [U['pre_checkout_query']] extends [SomeObject]
-        ? U['pre_checkout_query']
+        ? U['pre_checkout_query']['from']
         : [U['chosen_inline_result']] extends [SomeObject]
-        ? U['chosen_inline_result']
+        ? U['chosen_inline_result']['from']
         : [U['message']] extends [SomeObject]
-        ? U['message']
+        ? Exclude<U['message']['from'], undefined>
         : [U['edited_message']] extends [SomeObject]
-        ? U['edited_message']
+        ? Exclude<U['edited_message'], undefined>
         : undefined
     // inlineMessageId: disregarded here because always optional on both types
 }

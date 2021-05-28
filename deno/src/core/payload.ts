@@ -6,7 +6,6 @@ import {
     InputMedia,
     debug as d,
 } from '../platform.ts'
-const debug = d('grammy:warn')
 
 // === JSON serialization where necessary
 /**
