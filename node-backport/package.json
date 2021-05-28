@@ -32,10 +32,6 @@
     "out/"
   ],
   "main": "./out/mod.js",
-  "exports": {
-    "import": "./out/esm/wrapper.mjs",
-    "require": "./out/mod.js"
-  },
   "keywords": [
     "telegram",
     "bot",

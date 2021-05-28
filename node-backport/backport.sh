@@ -56,8 +56,4 @@ grep -lr "AbortController" src | xargs -r sed -Ei -e "1s/^/import { AbortControl
 grep -lr "AbortSignal" src | xargs -r sed -Ei -e "1s/^/import { AbortSignal } from 'abort-controller'\n/"
 
 echo "Emitting JS output"
-npm run -s build &&
-    # TODO: switch to Deno once `ts-morph` was ported
-    echo "Creating ESM compatibility layer" &&
-    node create-esm-wrapper.js &&
-    echo "Success!"
+npm run -s build && echo "Success!"
