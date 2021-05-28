@@ -334,7 +334,8 @@ export class Bot<C extends Context = Context> extends Composer<C> {
             debug('Stopping bot, saving update offset')
             this.pollingRunning = false
             this.pollingAbortController?.abort()
-            await this.api.getUpdates({ offset: this.lastTriedUpdateId + 1 })
+            const offset = this.lastTriedUpdateId + 1
+            await this.api.getUpdates({ offset, limit: 1 })
             this.pollingAbortController = undefined
         } else {
             debug('Bot is not running!')

@@ -4,7 +4,6 @@ import {
     InputFile,
     inputFileData,
     InputMedia,
-    debug as d,
 } from '../platform.ts'
 
 // === JSON serialization where necessary
