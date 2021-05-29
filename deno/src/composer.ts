@@ -663,7 +663,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * for more complex setups, having a `Router` may be more readable.
      *
      * @param router The routing function to use
-     * @param route Handlers Handlers for every route
+     * @param routeHandlers Handlers for every route
      * @param fallback Optional fallback middleware if no route matches
      */
     route<R extends Record<string, Middleware<C>>>(
