@@ -276,7 +276,6 @@ export class Bot<C extends Context = Context> extends Composer<C> {
             // fetch updates
             const offset = this.lastTriedUpdateId + 1
             let updates: Update[] | undefined = undefined
-            let maxRetries = 1200 // 1 hour of continuously failing requests
             do {
                 try {
                     updates = await this.api.getUpdates(
@@ -284,20 +283,16 @@ export class Bot<C extends Context = Context> extends Composer<C> {
                         this.pollingAbortController.signal
                     )
                 } catch (error) {
-                    if (this.pollingRunning && error instanceof GrammyError) {
+                    if (this.pollingRunning) {
                         debugErr(
-                            `Call to \`getUpdates\` failed, retrying in 3 seconds ...`
+                            'Call to `getUpdates` failed, retrying in 3 seconds ...'
                         )
                         await new Promise(r => setTimeout(r, 3000))
                     } else {
                         throw error
                     }
                 }
-            } while (
-                updates === undefined &&
-                this.pollingRunning &&
-                maxRetries-- > 0
-            )
+            } while (updates === undefined && this.pollingRunning)
             if (updates === undefined) break
             // handle them sequentially (!)
             for (const update of updates) {
