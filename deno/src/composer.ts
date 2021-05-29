@@ -630,9 +630,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     /**
      * > This is an advanced method of grammY.
      *
-     * _Not to be confused with the `Router` class._
+     * _Not to be confused with the `router` plugin._
      *
-     * This method is an alternative to the `Router` class. It allows you to
+     * This method is an alternative to the `router` plugin. It allows you to
      * branch between different middleware per context object. You can pass two
      * things to it:
      * 1. A routing function
