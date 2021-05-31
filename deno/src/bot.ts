@@ -3,7 +3,6 @@ import { BotError, Composer, run } from './composer.ts'
 import { Context } from './context.ts'
 import { Api } from './core/api.ts'
 import { ApiClientOptions, WebhookReplyEnvelope } from './core/client.ts'
-import { GrammyError } from './core/error.ts'
 import { Update, debug as d, UserFromGetMe } from './platform.ts'
 const debug = d('grammy:bot')
 const debugErr = d('grammy:error')

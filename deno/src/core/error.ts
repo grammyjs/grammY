@@ -26,7 +26,7 @@ export class GrammyError extends Error implements ApiError {
         /** The called method name which caused this error to be thrown. */
         public readonly method: string,
         /** The payload that was passed when calling the method. */
-        public readonly payload: object
+        public readonly payload: Record<string, unknown>
     ) {
         super(`${message} (${err.error_code}: ${err.description})`)
         this.error_code = err.error_code
