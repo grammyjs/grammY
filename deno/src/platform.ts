@@ -1,5 +1,5 @@
 import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.1.3?dts'
-import { basename } from 'https://deno.land/std@0.87.0/path/mod.ts'
+import { basename } from 'https://deno.land/std@0.97.0/path/mod.ts'
 
 export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.1.3?dts'
 
@@ -19,11 +19,12 @@ if (isDeno) {
     }
 }
 
+import { iter } from 'https://deno.land/std@0.97.0/io/mod.ts'
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromAsyncIterator as itrToStream } from 'https://deno.land/std@0.87.0/io/streams.ts'
+export { readableStreamFromIterable as itrToStream } from 'https://deno.land/std@0.97.0/io/mod.ts'
 // Turn a file path into an AsyncIterable<Uint8Array>
 export const streamFile = isDeno
-    ? (path: string) => Deno.open(path).then(Deno.iter)
+    ? (path: string) => Deno.open(path).then(iter)
     : () => {
           throw new Error('Reading files by path requires a Deno environment')
       }
