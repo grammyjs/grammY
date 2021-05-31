@@ -74,6 +74,15 @@
         "bug",
         "plugin"
       ]
+    },
+    {
+      "login": "MKRhere",
+      "name": "Muthu Kumar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19621208?v=4",
+      "profile": "https://mkr.pw",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
