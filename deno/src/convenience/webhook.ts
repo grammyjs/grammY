@@ -16,33 +16,60 @@ type SupportedFrameworks =
     | 'koa'
     | 'oak'
     | 'fastify'
-type FrameworkAdapter = (...args: any[]) => {
-    update: Update
+
+/**
+ * Abstraction over a request-response cycle, provding access to the update, as
+ * well as a mechanism for responding to the request and to end it.
+ */
+interface ReqResHandler {
+    /**
+     * The update object sent from Telegram, usually resolves the request's JSON
+     * body
+     */
+    update: Promise<Update>
+    /**
+     * Ends the request immediately without body, called after every request
+     * unless a webhook reply was performed
+     */
     end?: () => void
+    /**
+     * Sends the specified JSON as a payload in the body, used for webhook
+     * replies
+     */
     respond: (json: string) => unknown
 }
+/**
+ * Middleware for a web framework. Creates a request-response handler for a
+ * request. The handler will be used to integrate with the compatible framework.
+ */
+type FrameworkAdapter = (...args: any[]) => ReqResHandler
 
 const standard: FrameworkAdapter = (req, res) => ({
-    update: req.body,
+    update: Promise.resolve(req.body),
     end: () => res.end(),
     respond: json => res.send(json),
 })
-const withCtx: FrameworkAdapter = ctx => ({
-    update: ctx.request.body,
-    end: () => {
-        ctx.body = ''
-    },
-    respond: json => (ctx.response.body = json),
-})
 
+// Integrations with popular frameworks
 const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
     express: standard,
     http: standard,
     https: standard,
-    koa: withCtx,
-    oak: withCtx,
+    koa: ctx => ({
+        update: Promise.resolve(ctx.request.body),
+        end: () => (ctx.body = ''),
+        respond: json => (ctx.response.body = json),
+    }),
+    oak: ctx => ({
+        update: ctx.request.body({ type: 'json' }).value,
+        end: () => (ctx.response.status = 200),
+        respond: json => {
+            ctx.response.type = 'json'
+            ctx.response.body = json
+        },
+    }),
     fastify: (req, reply) => ({
-        update: req.body,
+        update: Promise.resolve(req.body),
         respond: json => reply.send(json),
     }),
     // please open a PR if you want to add another
@@ -95,7 +122,7 @@ export function webhookCallback<C extends Context = Context>(
             initialized = true
         }
         await timeoutIfNecessary(
-            bot.handleUpdate(update, webhookReplyEnvelope),
+            bot.handleUpdate(await update, webhookReplyEnvelope),
             typeof onTimeout === 'function'
                 ? () => onTimeout(...args)
                 : onTimeout,
