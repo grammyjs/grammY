@@ -245,8 +245,10 @@ type L1 = KeyOf<S>
 type L2<K extends L1 = L1> = K extends unknown ? `${K}:${KeyOf<S[K]>}` : never
 // E.g. 'message:entities:url'
 type L3<K0 extends L1 = L1> = K0 extends unknown ? L3_<K0> : never
-type L3_<K0 extends L1, K1 extends KeyOf<S[K0]> = KeyOf<S[K0]>> =
-    K1 extends unknown ? `${K0}:${K1}:${KeyOf<S[K0][K1]>}` : never
+type L3_<
+    K0 extends L1,
+    K1 extends KeyOf<S[K0]> = KeyOf<S[K0]>
+> = K1 extends unknown ? `${K0}:${K1}:${KeyOf<S[K0][K1]>}` : never
 // All three combined
 type L123 = L1 | L2 | L3
 // E.g. 'message::url'
@@ -320,12 +322,14 @@ type Combine<U, K extends string> = U extends unknown
 // gets all L1 query snippets
 type L1Parts<Q extends string> = Q extends `${infer U}:${string}` ? U : Q
 // gets all L2 query snippets for the given L1 part, or `never`
-type L2Parts<Q extends string, P extends string> =
-    Q extends `${P}:${infer U}:${string}`
-        ? U
-        : Q extends `${P}:${infer U}`
-        ? U
-        : never
+type L2Parts<
+    Q extends string,
+    P extends string
+> = Q extends `${P}:${infer U}:${string}`
+    ? U
+    : Q extends `${P}:${infer U}`
+    ? U
+    : never
 
 /**
  * This type infers which properties will be present on the given context object
@@ -375,9 +379,9 @@ interface Shortcuts<U extends Update> {
         : [U['chosen_inline_result']] extends [SomeObject]
         ? U['chosen_inline_result']['from']
         : [U['message']] extends [SomeObject]
-        ? Exclude<U['message']['from'], undefined>
+        ? NonNullable<U['message']['from']>
         : [U['edited_message']] extends [SomeObject]
-        ? Exclude<U['edited_message'], undefined>
+        ? NonNullable<U['edited_message']>
         : undefined
     // inlineMessageId: disregarded here because always optional on both types
 }

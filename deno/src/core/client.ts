@@ -151,7 +151,7 @@ export interface ApiClientOptions {
      * compress: true }` (Node), `{}` (Deno)
      */
     baseFetchConfig?: Omit<
-        Exclude<Parameters<typeof fetch>[1], undefined>,
+        NonNullable<Parameters<typeof fetch>[1]>,
         'method' | 'headers' | 'body'
     >
 }
