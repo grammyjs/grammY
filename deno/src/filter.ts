@@ -381,7 +381,7 @@ interface Shortcuts<U extends Update> {
         : [U['message']] extends [SomeObject]
         ? NonNullable<U['message']['from']>
         : [U['edited_message']] extends [SomeObject]
-        ? NonNullable<U['edited_message']>
+        ? NonNullable<U['edited_message']['from']>
         : undefined
     // inlineMessageId: disregarded here because always optional on both types
 }
