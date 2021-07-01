@@ -3,9 +3,7 @@ import { Filter, FilterQuery, matchFilter } from './filter.ts'
 
 type MaybePromise<T> = T | Promise<T>
 type MaybeArray<T> = T | T[]
-type StringWithSuggestions<S extends string> =
-    // permits `string` but gives hints
-    S | (string & Record<string, unknown>)
+type StringWithSuggestions<S extends string> = (string & {}) | S // permits `string` but gives hints
 
 // === Middleware types
 /**
