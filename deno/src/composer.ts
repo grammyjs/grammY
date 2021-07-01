@@ -3,6 +3,7 @@ import { Filter, FilterQuery, matchFilter } from './filter.ts'
 
 type MaybePromise<T> = T | Promise<T>
 type MaybeArray<T> = T | T[]
+type StringWithSuggestions<S extends string> = (string & {}) | S // permits `string` but gives hints
 
 // === Middleware types
 /**
@@ -331,7 +332,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     command(
-        command: MaybeArray<string>,
+        command: MaybeArray<
+            StringWithSuggestions<'start' | 'help' | 'settings'>
+        >,
         ...middleware: Array<Middleware<Filter<C, ':entities:bot_command'>>>
     ): Composer<Filter<C, ':entities:bot_command'>> {
         const atCommands = new Set<string>()
