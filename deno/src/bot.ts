@@ -255,6 +255,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * @param options Options to use for simple long polling
      */
     async start(options?: PollingOptions) {
+        // Perform setup
         await this.init()
         if (this.pollingRunning) {
             debug('Simple long polling already running!')
@@ -263,6 +264,23 @@ export class Bot<C extends Context = Context> extends Composer<C> {
         await this.api.deleteWebhook({
             drop_pending_updates: options?.drop_pending_updates,
         })
+
+        // Prevent common misuse that causes memory leak
+        this.use = () => {
+            throw new Error(`It looks like you are registering more listeners \
+on your bot from within other listeners! This mean that every time your bot \
+handles a message like this one, new listeners will be added. This list grows until \
+your machine crashes, so grammY throws this error to tell you that you should \
+probably do things a bit differently. If you're unsure how to resolve this problem, \
+you can ask in the group chat: https://telegram.me/grammyjs
+
+On the other hand, if you actually know what you're doing and you do need to install \
+further middleware while your bot is running, consider installing a composer \
+instance on your bot, and in turn augment the composer after the fact. This way, \
+you can circumvent this protection against memory leaks.`)
+        }
+
+        // Start polling
         debug('Starting simple long polling')
         this.pollingRunning = true
         this.pollingAbortController = new AbortController()
