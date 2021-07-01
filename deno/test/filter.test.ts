@@ -46,6 +46,16 @@ Deno.test('should fill in L2 defaults', () => {
     assert(!matchFilter('edited_message')(ctx))
 })
 
+Deno.test('should expand in L2 shortcuts', () => {
+    const ctx = { update: { edited_message: { text: '' } } } as Context
+    assert(matchFilter('edit')(ctx))
+    assert(matchFilter('edit:text')(ctx))
+    assert(!matchFilter('edit:entities')(ctx))
+    assert(matchFilter('edited_message')(ctx))
+    assert(!matchFilter('message')(ctx))
+    assert(!matchFilter(':text')(ctx))
+})
+
 Deno.test('should perform L3 filtering', () => {
     let ctx = {
         update: { message: { text: '', entities: [{ type: 'url' }] } },
