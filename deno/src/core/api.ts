@@ -755,7 +755,9 @@ export class Api {
     }
 
     /** @deprecated Use `banChatMember` instead. */
-    kickChatMember = this.banChatMember
+    kickChatMember(...args: Parameters<Api['banChatMember']>) {
+        return this.banChatMember(...args)
+    }
 
     /**
      * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
@@ -1111,7 +1113,9 @@ export class Api {
     }
 
     /** @deprecated Use `getChatMemberCount` instead. */
-    getChatMembersCount = this.getChatMemberCount
+    getChatMembersCount(...args: Parameters<Api['getChatMemberCount']>) {
+        return this.getChatMemberCount(...args)
+    }
 
     /**
      * Use this method to get the number of members in a chat. Returns Int on success.

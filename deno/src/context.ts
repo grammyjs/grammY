@@ -704,7 +704,9 @@ export class Context implements RenamedUpdate {
     // TODO: alias for getFile?
 
     /** @deprecated Use `banAuthor` instead. */
-    kickAuthor = this.banAuthor
+    kickAuthor(...args: Parameters<Context['banAuthor']>) {
+        return this.banAuthor(...args)
+    }
 
     /**
      * Context-aware alias for `banChatMember`. Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
@@ -724,7 +726,9 @@ export class Context implements RenamedUpdate {
     }
 
     /** @deprecated Use `banChatMember` instead. */
-    kickChatMember = this.banChatMember
+    kickChatMember(...args: Parameters<Context['banChatMember']>) {
+        return this.banChatMember(...args)
+    }
 
     /**
      * Context-aware alias for `banChatMember`. Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
@@ -1142,7 +1146,9 @@ export class Context implements RenamedUpdate {
     }
 
     /** @deprecated Use `getChatMembersCount` instead. */
-    getChatMembersCount = this.getChatMemberCount
+    getChatMembersCount(...args: Parameters<Context['getChatMemberCount']>) {
+        return this.getChatMemberCount(...args)
+    }
 
     /**
      * Context-aware alias for `getChatMemberCount`. Use this method to get the number of members in a chat. Returns Int on success.
