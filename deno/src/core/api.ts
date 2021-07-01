@@ -111,7 +111,7 @@ export class Api {
      * 1. This method will not work if an outgoing webhook is set up.
      * 2. In order to avoid getting duplicate updates, recalculate offset after each server response.
      *
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getupdates
@@ -133,7 +133,7 @@ export class Api {
      * NEW! If you're having any trouble setting up webhooks, please check out this amazing guide to Webhooks.
      *
      * @param url HTTPS url to send updates to. Use an empty string to remove webhook integration
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setwebhook
@@ -149,7 +149,7 @@ export class Api {
     /**
      * Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success.
      *
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletewebhook
@@ -207,7 +207,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendmessage
@@ -227,7 +227,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
      * @param message_id Message identifier in the chat specified in from_chat_id
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#forwardmessage
@@ -256,7 +256,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
      * @param message_id Message identifier in the chat specified in from_chat_id
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#copymessage
@@ -284,7 +284,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendphoto
@@ -305,7 +305,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendaudio
@@ -324,7 +324,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#senddocument
@@ -343,7 +343,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvideo
@@ -362,7 +362,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendanimation
@@ -381,7 +381,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvoice
@@ -401,7 +401,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvideonote
@@ -420,7 +420,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param media An array describing messages to be sent, must include 2-10 items
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendmediagroup
@@ -445,7 +445,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param latitude Latitude of the location
      * @param longitude Longitude of the location
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendlocation
@@ -470,7 +470,7 @@ export class Api {
      * @param message_id Identifier of the message to edit
      * @param latitude Latitude of new location
      * @param longitude Longitude of new location
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagelivelocation
@@ -504,7 +504,7 @@ export class Api {
      * @param inline_message_id Identifier of the inline message
      * @param latitude Latitude of new location
      * @param longitude Longitude of new location
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagelivelocation
@@ -535,7 +535,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the message with live location to stop
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#stopmessagelivelocation
@@ -563,7 +563,7 @@ export class Api {
      * Use this method to stop updating a live location inline message before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
      *
      * @param inline_message_id Identifier of the inline message
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#stopmessagelivelocation
@@ -590,7 +590,7 @@ export class Api {
      * @param longitude Longitude of the venue
      * @param title Name of the venue
      * @param address Address of the venue
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvenue
@@ -626,7 +626,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param phone_number Contact's phone number
      * @param first_name Contact's first name
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendcontact
@@ -655,7 +655,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param question Poll question, 1-300 characters
      * @param options A list of answer options, 2-10 strings 1-100 characters each
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendpoll
@@ -678,7 +678,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, or “🎰”. Dice can have values 1-6 for “🎲” and “🎯”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#senddice
@@ -727,7 +727,7 @@ export class Api {
      * Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
      *
      * @param user_id Unique identifier of the target user
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getuserprofilephotos
@@ -754,31 +754,34 @@ export class Api {
         return this.raw.getFile({ file_id }, signal)
     }
 
+    /** @deprecated Use `banChatMember` instead. */
+    kickChatMember = this.banChatMember
+
     /**
-     * Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
      *
      * @param chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
      * @param user_id Unique identifier of the target user
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#kickchatmember
+     * **Official reference:** https://core.telegram.org/bots/api#banchatmember
      */
-    kickChatMember(
+    banChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Other<'kickChatMember', 'user_id'>,
+        other?: Other<'banChatMember', 'user_id'>,
         signal?: AbortSignal
     ) {
-        return this.raw.kickChatMember({ chat_id, user_id, ...other }, signal)
+        return this.raw.banChatMember({ chat_id, user_id, ...other }, signal)
     }
 
     /**
-     * Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be removed from the chat. If you don't want this, use the parameter only_if_banned. Returns True on success.
+     * Use this method to unban a previously banned user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be removed from the chat. If you don't want this, use the parameter only_if_banned. Returns True on success.
      *
      * @param chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @username)
      * @param user_id Unique identifier of the target user
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unbanchatmember
@@ -798,7 +801,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param user_id Unique identifier of the target user
      * @param permissions An object for new user permissions
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#restrictchatmember
@@ -826,7 +829,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param user_id Unique identifier of the target user
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#promotechatmember
@@ -904,7 +907,7 @@ export class Api {
      * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#createchatinvitelink
@@ -922,7 +925,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param invite_link The invite link to edit
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editchatinvitelink
@@ -1024,7 +1027,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of a message to pin
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#pinchatmessage
@@ -1046,7 +1049,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinchatmessage
@@ -1107,16 +1110,19 @@ export class Api {
         return this.raw.getChatAdministrators({ chat_id }, signal)
     }
 
+    /** @deprecated Use `getChatMemberCount` instead. */
+    getChatMembersCount = this.getChatMemberCount
+
     /**
      * Use this method to get the number of members in a chat. Returns Int on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#getchatmemberscount
+     * **Official reference:** https://core.telegram.org/bots/api#getchatmembercount
      */
-    getChatMembersCount(chat_id: number | string, signal?: AbortSignal) {
-        return this.raw.getChatMembersCount({ chat_id }, signal)
+    getChatMemberCount(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.getChatMemberCount({ chat_id }, signal)
     }
 
     /**
@@ -1177,7 +1183,7 @@ export class Api {
      * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @Botfather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @param callback_query_id Unique identifier for the query to be answered
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answercallbackquery
@@ -1194,26 +1200,44 @@ export class Api {
     }
 
     /**
-     * Use this method to change the list of the bot's commands. Returns True on success.
+     * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.
      *
      * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setmycommands
      */
-    setMyCommands(commands: readonly BotCommand[], signal?: AbortSignal) {
-        return this.raw.setMyCommands({ commands }, signal)
+    setMyCommands(
+        commands: readonly BotCommand[],
+        other?: Other<'setMyCommands', 'commands'>,
+        signal?: AbortSignal
+    ) {
+        return this.raw.setMyCommands({ commands, ...other }, signal)
     }
 
     /**
-     * Use this method to get the current list of the bot's commands. Requires no parameters. Returns Array of BotCommand on success.
+     * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, higher level commands will be shown to affected users. Returns True on success.
      *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemycommands
+     */
+    deleteMyCommands(other?: Other<'deleteMyCommands'>, signal?: AbortSignal) {
+        return this.raw.deleteMyCommands({ ...other }, signal)
+    }
+
+    /**
+     * Use this method to get the current list of the bot's commands for the given scope and user language. Returns Array of BotCommand on success. If commands aren't set, an empty list is returned.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmycommands
      */
-    getMyCommands(signal?: AbortSignal) {
-        return this.raw.getMyCommands(signal)
+    getMyCommands(other?: Other<'getMyCommands'>, signal?: AbortSignal) {
+        return this.raw.getMyCommands({ ...other }, signal)
     }
 
     /**
@@ -1222,7 +1246,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the message to edit
      * @param text New text of the message, 1-4096 characters after entities parsing
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagetext
@@ -1244,7 +1268,7 @@ export class Api {
      * Use this method to edit text and game inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
      * @param inline_message_id Identifier of the inline message
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagetext
@@ -1266,7 +1290,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the message to edit
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagecaption
@@ -1287,7 +1311,7 @@ export class Api {
      * Use this method to edit captions of inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
      * @param inline_message_id Identifier of the inline message
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagecaption
@@ -1309,7 +1333,7 @@ export class Api {
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the message to edit
      * @param media An object for a new media content of the message
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagemedia
@@ -1337,7 +1361,7 @@ export class Api {
      *
      * @param inline_message_id Identifier of the inline message
      * @param media An object for a new media content of the message
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagemedia
@@ -1359,7 +1383,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the message to edit
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagereplymarkup
@@ -1384,7 +1408,7 @@ export class Api {
      * Use this method to edit only the reply markup of inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
      * @param inline_message_id Identifier of the inline message
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagereplymarkup
@@ -1405,7 +1429,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the original message with the poll
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#stoppoll
@@ -1449,7 +1473,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendsticker
@@ -1499,7 +1523,7 @@ export class Api {
      * @param name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters.
      * @param title Sticker set title, 1-64 characters
      * @param emojis One or more emoji corresponding to the sticker
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#createnewstickerset
@@ -1533,7 +1557,7 @@ export class Api {
      * @param user_id User identifier of sticker set owner
      * @param name Sticker set name
      * @param emojis One or more emoji corresponding to the sticker
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#addstickertoset
@@ -1607,7 +1631,7 @@ export class Api {
      *
      * @param inline_query_id Unique identifier for the answered query
      * @param results An array of results for the inline query
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answerinlinequery
@@ -1638,7 +1662,7 @@ export class Api {
      * @param provider_token Payments provider token, obtained via Botfather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendinvoice
@@ -1683,7 +1707,7 @@ export class Api {
      *
      * @param shipping_query_id Unique identifier for the query to be answered
      * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answershippingquery
@@ -1705,7 +1729,7 @@ export class Api {
      *
      * @param pre_checkout_query_id Unique identifier for the query to be answered
      * @param ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#answerprecheckoutquery
@@ -1750,7 +1774,7 @@ export class Api {
      *
      * @param chat_id Unique identifier for the target chat
      * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendgame
@@ -1771,7 +1795,7 @@ export class Api {
      * @param message_id Identifier of the sent message
      * @param user_id User identifier
      * @param score New score, must be non-negative
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setgamescore
@@ -1802,7 +1826,7 @@ export class Api {
      * @param inline_message_id Identifier of the inline message
      * @param user_id User identifier
      * @param score New score, must be non-negative
-     * @param other Remaining parameters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setgamescore
