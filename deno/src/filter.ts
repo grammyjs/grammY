@@ -438,6 +438,7 @@ type ExpandL1<S extends string> = S extends L1Shortcuts
 // === Define some helpers for when one property implies the existence of others
 type Twins<V extends string> = V extends KeyOf<Equivalents> ? Equivalents[V] : V
 type Equivalents = {
+    animation: 'document'
     entities: TextMessages
     caption: CaptionMessages
     caption_entities: CaptionMessages
