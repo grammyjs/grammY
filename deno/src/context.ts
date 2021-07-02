@@ -701,7 +701,29 @@ export class Context implements RenamedUpdate {
         )
     }
 
-    // TODO: alias for getFile?
+    /**
+     * Context-aware alias for `getFile`. Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+     *
+     * Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getfile
+     */
+    getFile(signal?: AbortSignal) {
+        const m = orThrow(this.msg, 'getFile')
+        const file =
+            m.photo !== undefined
+                ? m.photo[m.photo.length - 1]
+                : m.animation ??
+                  m.audio ??
+                  m.document ??
+                  m.video ??
+                  m.video_note ??
+                  m.voice ??
+                  m.sticker
+        return this.api.getFile(orThrow(file, 'getFile').file_id, signal)
+    }
 
     /** @deprecated Use `banAuthor` instead. */
     kickAuthor(...args: Parameters<Context['banAuthor']>) {
