@@ -1,24 +1,53 @@
+// === Needed imports
 import { InputFileProxy } from "@grammyjs/types";
 import { Agent } from "https";
 import { basename } from "path";
+import { URL } from "url";
 import { Readable } from "stream";
-import type { ReadStream } from "fs";
+import fs, { ReadStream } from "fs";
+import os from "os";
+import path from "path";
 
+// === Export all API types
 export * from "@grammyjs/types";
-export { debug } from "debug";
-// Turn a file path into an AsyncIterable<Uint8Array>
-export { createReadStream as streamFile } from "fs";
 
+// === Export debug
+export { debug } from "debug";
+
+// === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
 export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
   Readable.from(itr, { objectMode: false });
+// Turn a file path into an AsyncIterable<Uint8Array>
+export { createReadStream as streamFile } from "fs";
+// Determine wether a file path is absolute
+export { isAbsolute as isAbsolutePath } from "path";
+export {
+  // Turn a file path into a URL object
+  pathToFileURL as pathToUrl,
+  // Define URL type
+  URL,
+} from "url";
+// Turn a link into a URL object
+export const linkToUrl = (link: string) => new URL(link);
+// Create a temporary file
+export const createTempFile = async () =>
+  path.join(
+    await fs.promises.mkdtemp(
+      (await fs.promises.realpath(os.tmpdir())) + path.sep
+    ),
+    "filedata"
+  );
+// Copy a file from a URL to a file path
+// TODO: implement transferFile
 
-// Base configuration for `fetch` calls
+// === Base configuration for `fetch` calls
 export const baseFetchConfig = {
   compress: true,
   agent: new Agent({ keepAlive: true }),
 };
 
+// === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const inputFileData = Symbol("InputFile data");
 
@@ -56,17 +85,15 @@ export class InputFile {
   }
 }
 
-// CUSTOM INPUT FILE TYPES
-
+// === Export InputFile types
 type GrammyTypes = InputFileProxy<InputFile>;
 
 /** Wrapper type to bundle all methods of the Telegram API */
 export type Telegram = GrammyTypes["Telegram"];
 
 /** Utility type providing the argument type for the given method name or `{}` if the method does not take any parameters */
-export type Opts<
-  M extends keyof GrammyTypes["Telegram"]
-> = GrammyTypes["Opts"][M];
+export type Opts<M extends keyof GrammyTypes["Telegram"]> =
+  GrammyTypes["Opts"][M];
 
 /** This object represents the content of a media message to be sent. It should be one of
 - InputMediaAnimation
