@@ -740,8 +740,8 @@ export class Context implements RenamedUpdate {
      */
     banAuthor(other?: Other<'banChatMember', 'user_id'>, signal?: AbortSignal) {
         return this.api.banChatMember(
-            orThrow(this.chat, 'banChatMember').id,
-            orThrow(this.from, 'banChatMember').id,
+            orThrow(this.chat, 'banAuthor').id,
+            orThrow(this.from, 'banAuthor').id,
             other,
             signal
         )
@@ -811,8 +811,8 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal
     ) {
         return this.api.restrictChatMember(
-            orThrow(this.chat, 'restrictChatMember').id,
-            orThrow(this.from, 'restrictChatMember').id,
+            orThrow(this.chat, 'restrictAuthor').id,
+            orThrow(this.from, 'restrictAuthor').id,
             permissions,
             other,
             signal
@@ -857,8 +857,8 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal
     ) {
         return this.api.promoteChatMember(
-            orThrow(this.chat, 'promoteChatMember').id,
-            orThrow(this.from, 'promoteChatMember').id,
+            orThrow(this.chat, 'promoteAuthor').id,
+            orThrow(this.from, 'promoteAuthor').id,
             other,
             signal
         )
@@ -899,8 +899,8 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal
     ) {
         return this.api.setChatAdministratorCustomTitle(
-            orThrow(this.chat, 'setChatAdministratorCustomTitle').id,
-            orThrow(this.from, 'setChatAdministratorCustomTitle').id,
+            orThrow(this.chat, 'setChatAdministratorAuthorCustomTitle').id,
+            orThrow(this.from, 'setChatAdministratorAuthorCustomTitle').id,
             custom_title,
             signal
         )
@@ -1195,8 +1195,8 @@ export class Context implements RenamedUpdate {
      */
     getAuthor(signal?: AbortSignal) {
         return this.api.getChatMember(
-            orThrow(this.chat, 'getChatMember').id,
-            orThrow(this.from, 'getChatMember').id,
+            orThrow(this.chat, 'getAuthor').id,
+            orThrow(this.from, 'getAuthor').id,
             signal
         )
     }
