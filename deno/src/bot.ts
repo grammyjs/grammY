@@ -299,7 +299,13 @@ export class Bot<C extends Context = Context> extends Composer<C> {
                 try {
                     await this.handleUpdate(update)
                 } catch (err) {
-                    await this.errorHandler(err)
+                    // should always be true
+                    if (err instanceof BotError) {
+                        await this.errorHandler(err)
+                    } else {
+                        console.error('FATAL: grammY unable to handle:', err)
+                        throw err
+                    }
                 }
             }
             // Telegram uses the last setting if `allowed_updates` is omitted so

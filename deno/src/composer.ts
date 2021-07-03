@@ -86,8 +86,33 @@ export type Middleware<C extends Context = Context> =
  */
 export class BotError<C extends Context = Context> extends Error {
     constructor(public readonly error: unknown, public readonly ctx: C) {
-        super('Error in middleware!')
+        super(generateBotErrorMessage(error))
+        this.name = 'BotError'
     }
+}
+function generateBotErrorMessage(error: unknown) {
+    let msg: string
+    if (error instanceof Error) {
+        msg = `${error.name} in middleware: ${error.message}`
+    } else {
+        const type = typeof error
+        msg = `Non-error value of type ${type} thrown in middleware`
+        switch (type) {
+            case 'bigint':
+            case 'boolean':
+            case 'number':
+            case 'symbol':
+                msg += `: ${error}`
+                break
+            case 'string':
+                msg += `: ${String(error).substr(0, 50)}`
+                break
+            default:
+                msg += '!'
+                break
+        }
+    }
+    return msg
 }
 
 // === Middleware base functions
@@ -782,7 +807,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                 await bound(ctx, cont)
             } catch (err) {
                 nextCalled = false
-                await errorHandler(new BotError<C>(ctx, err), cont)
+                await errorHandler(new BotError<C>(err, ctx), cont)
             }
             if (nextCalled) await next()
         })

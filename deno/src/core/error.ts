@@ -29,6 +29,7 @@ export class GrammyError extends Error implements ApiError {
         public readonly payload: Record<string, unknown>
     ) {
         super(`${message} (${err.error_code}: ${err.description})`)
+        this.name = 'GrammyError'
         this.error_code = err.error_code
         this.description = err.description
         this.parameters = err.parameters ?? {}
@@ -55,5 +56,6 @@ export class HttpError extends Error {
         public readonly error: unknown
     ) {
         super(message)
+        this.name = 'HttpError'
     }
 }
