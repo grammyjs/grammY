@@ -8,7 +8,7 @@ _<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.den
 
 <div align="center">
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-5.2-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-5.3-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
