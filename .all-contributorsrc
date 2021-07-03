@@ -84,6 +84,36 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "EdJoPaTo",
+      "name": "EdJoPaTo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7953011?v=4",
+      "profile": "https://edjopato.de/",
+      "contributions": [
+        "plugin",
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "Amir-Zouerami",
+      "name": "Amir Zouerami",
+      "avatar_url": "https://avatars.githubusercontent.com/u/53701884?v=4",
+      "profile": "https://github.com/Amir-Zouerami",
+      "contributions": [
+        "doc",
+        "plugin"
+      ]
+    },
+    {
+      "login": "rojserbest",
+      "name": "Roj",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49933115?v=4",
+      "profile": "https://github.com/rojserbest",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
