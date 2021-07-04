@@ -13,7 +13,9 @@ if (isDeno) {
     try {
         const val = Deno.env.get('DEBUG')
         if (val) debug.enable(val)
-    } catch (error) {}
+    } catch {
+        // cannot access env var, treat as if it is not set
+    }
 }
 
 import { iter } from 'https://deno.land/std@0.97.0/io/mod.ts'
