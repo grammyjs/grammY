@@ -10,15 +10,10 @@ const isDeno = typeof Deno !== 'undefined'
 
 if (isDeno) {
     debug.useColors = () => !Deno.noColor
-    const env = { name: 'env', variable: 'DEBUG' } as const
-    if (Deno.permissions !== undefined) {
-        let res = await Deno.permissions.query(env)
-        if (res.state === 'prompt') res = await Deno.permissions.request(env)
-        if (res.state === 'granted') {
-            const val = Deno.env.get(env.variable)
-            if (val) debug.enable(val)
-        }
-    }
+    try {
+        const val = Deno.env.get('DEBUG')
+        if (val) debug.enable(val)
+    } catch (error) {}
 }
 
 import { iter } from 'https://deno.land/std@0.97.0/io/mod.ts'
