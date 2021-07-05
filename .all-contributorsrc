@@ -114,6 +114,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "jokasimr",
+      "name": "jokasimr",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20954731?v=4",
+      "profile": "https://github.com/jokasimr",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

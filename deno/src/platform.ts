@@ -1,7 +1,7 @@
-import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.0?dts'
+import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.1?dts'
 import { basename } from 'https://deno.land/std@0.97.0/path/mod.ts'
 
-export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.0?dts'
+export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.1?dts'
 
 import debug from 'https://cdn.skypack.dev/debug@^4.3.1'
 export { debug }
@@ -10,12 +10,11 @@ const isDeno = typeof Deno !== 'undefined'
 
 if (isDeno) {
     debug.useColors = () => !Deno.noColor
-    const env = { name: 'env', variable: 'DEBUG' } as const
-    let res = await Deno.permissions.query(env)
-    if (res.state === 'prompt') res = await Deno.permissions.request(env)
-    if (res.state === 'granted') {
-        const val = Deno.env.get(env.variable)
+    try {
+        const val = Deno.env.get('DEBUG')
         if (val) debug.enable(val)
+    } catch {
+        // cannot access env var, treat as if it is not set
     }
 }
 

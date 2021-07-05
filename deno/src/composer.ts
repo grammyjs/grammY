@@ -88,8 +88,33 @@ export type Middleware<C extends Context = Context> =
  */
 export class BotError<C extends Context = Context> extends Error {
     constructor(public readonly error: unknown, public readonly ctx: C) {
-        super('Error in middleware!')
+        super(generateBotErrorMessage(error))
+        this.name = 'BotError'
     }
+}
+function generateBotErrorMessage(error: unknown) {
+    let msg: string
+    if (error instanceof Error) {
+        msg = `${error.name} in middleware: ${error.message}`
+    } else {
+        const type = typeof error
+        msg = `Non-error value of type ${type} thrown in middleware`
+        switch (type) {
+            case 'bigint':
+            case 'boolean':
+            case 'number':
+            case 'symbol':
+                msg += `: ${error}`
+                break
+            case 'string':
+                msg += `: ${String(error).substr(0, 50)}`
+                break
+            default:
+                msg += '!'
+                break
+        }
+    }
+    return msg
 }
 
 // === Middleware base functions
@@ -326,8 +351,22 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * // A photo message with the caption “/start”
      * ```
      *
+     * By default, commands are detected in channel posts, too. This means that
+     * `ctx.message` is potentially `undefined`, so you should use `ctx.msg`
+     * instead to grab both messages and channel posts. Alternatively, if want
+     * to limit your bot to finding commands only in private and group chats,
+     * you can do use `bot.on('message').command('start', ctx => { ... })`, or
+     * even store a message-only version of your bot in a variable like so:
+     * ```ts
+     * const m = bot.on('message')
+     *
+     * m.command('start', ctx => { ... })
+     * m.command('help', ctx => { ... })
+     * // etc
+     * ```
+     *
      * If you need more freedom matching your commands, check out the
-     * `grammy-command-filter` module.
+     * `command-filter` plugin.
      *
      * @param command The command to look for
      * @param middleware The middleware to register
@@ -336,8 +375,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         command: MaybeArray<
             StringWithSuggestions<'start' | 'help' | 'settings'>
         >,
-        ...middleware: Array<Middleware<Filter<C, ':entities:bot_command'>>>
-    ): Composer<Filter<C, ':entities:bot_command'>> {
+        ...middleware: Array<Middleware<CommandContext<C>>>
+    ): Composer<CommandContext<C>> {
         const atCommands = new Set<string>()
         const noAtCommands = new Set<string>()
         toArray(command).forEach(cmd => {
@@ -352,30 +391,36 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             const set = cmd.indexOf('@') === -1 ? noAtCommands : atCommands
             set.add(cmd)
         })
-        return this.on(':entities:bot_command').filter(ctx => {
-            const msg = ctx.message ?? ctx.channelPost
-            if (msg === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
-            const txt = msg.text ?? msg.caption
-            if (txt === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
-            const entities = msg.entities ?? msg.caption_entities
-            if (entities === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
-            return entities.some(e => {
-                if (e.type !== 'bot_command') return false
-                if (e.offset !== 0) return false
-                const cmd = txt.substring(1, e.length)
-                if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                    ctx.match = txt.substr(cmd.length + 1)
-                    return true
-                }
-                const index = cmd.indexOf('@')
-                if (index === -1) return false
-                if (noAtCommands.has(cmd.substring(0, index))) {
-                    ctx.match = txt.substr(cmd.length + 1)
-                    return true
-                }
-                return false
-            })
-        }, ...middleware)
+        return this.on(':entities:bot_command').filter(
+            (ctx): ctx is CommandContext<C> => {
+                const msg = ctx.message ?? ctx.channelPost
+                if (msg === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
+                const txt = msg.text ?? msg.caption
+                if (txt === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
+                const entities = msg.entities ?? msg.caption_entities
+                if (entities === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
+                return entities.some(e => {
+                    if (e.type !== 'bot_command') return false
+                    if (e.offset !== 0) return false
+                    const cmd = txt.substring(1, e.length)
+                    if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
+                        ctx.match = txt.substr(cmd.length + 1)
+                        return true
+                    }
+                    const index = cmd.indexOf('@')
+                    if (index === -1) return false
+                    const atTarget = cmd.substring(index + 1)
+                    if (atTarget !== ctx.me.username) return false
+                    const atCommand = cmd.substring(0, index)
+                    if (noAtCommands.has(atCommand)) {
+                        ctx.match = txt.substr(cmd.length + 1)
+                        return true
+                    }
+                    return false
+                })
+            },
+            ...middleware
+        )
     }
 
     /**
@@ -766,7 +811,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                 await bound(ctx, cont)
             } catch (err) {
                 nextCalled = false
-                await errorHandler(new BotError<C>(ctx, err), cont)
+                await errorHandler(new BotError<C>(err, ctx), cont)
             }
             if (nextCalled) await next()
         })
@@ -774,7 +819,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 }
 
-// === Util functions
+// === Util functions and types
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map(t =>
         typeof t === 'string'
@@ -782,6 +827,11 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
             : (txt: string) => t.exec(txt)
     )
 }
+
+type CommandContext<C extends Context> = Filter<
+    C & { match: string },
+    ':entities:bot_command'
+>
 
 function match<C extends Context>(
     ctx: C,

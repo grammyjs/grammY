@@ -68,6 +68,13 @@ function matchSingleFilter<C extends Context, Q extends FilterQuery>(
                   if (elem === undefined) return undefined
                   return ctx.update[elem]
               }
+            : l1 in L1_SHORTCUTS
+            ? ctx => {
+                  const shortcut = l1 as L1Shortcuts
+                  const elem = L1_SHORTCUTS[shortcut].find(p => p in ctx.update)
+                  if (elem === undefined) return undefined
+                  return ctx.update[elem]
+              }
             : ctx => (ctx.update as any)[l1]
 
     // immediately return if L2 is not given
@@ -148,6 +155,7 @@ function testMaybeArray<T>(t: T | T[], pred: (t: T) => boolean): boolean {
 }
 
 // === Define a structure to validate the queries
+// L3
 const ENTITY_KEYS = {
     mention: {},
     hashtag: {},
@@ -167,22 +175,32 @@ const USER_KEYS = {
     is_bot: {},
 } as const
 
-const MESSAGE_KEYS = {
+// L2
+const EDITABLE_MESSAGE_KEYS = {
     text: {},
     animation: {},
     audio: {},
     document: {},
     photo: {},
-    sticker: {},
     video: {},
+    game: {},
+    location: {},
+
+    entities: ENTITY_KEYS,
+    caption_entities: ENTITY_KEYS,
+
+    caption: {},
+} as const
+const MESSAGE_KEYS = {
+    ...EDITABLE_MESSAGE_KEYS,
+
+    sticker: {},
     video_note: {},
     voice: {},
     contact: {},
     dice: {},
-    game: {},
     poll: {},
     venue: {},
-    location: {},
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
     new_chat_title: {},
@@ -205,11 +223,7 @@ const MESSAGE_KEYS = {
     voice_chat_ended: {},
     voice_chat_participants_invited: {},
 
-    entities: ENTITY_KEYS,
-    caption_entities: ENTITY_KEYS,
-
     forward_date: {},
-    caption: {},
 } as const
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const
 const CHAT_MEMBER_UPDATED_KEYS = {
@@ -218,7 +232,10 @@ const CHAT_MEMBER_UPDATED_KEYS = {
     old_chat_member: {},
     new_chat_member: {},
 } as const
+
+// L1
 const UPDATE_KEYS = {
+    // Regular keys
     message: MESSAGE_KEYS,
     edited_message: MESSAGE_KEYS,
     channel_post: MESSAGE_KEYS,
@@ -232,6 +249,9 @@ const UPDATE_KEYS = {
     poll_answer: {},
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
+
+    // L1 shortcuts
+    edit: EDITABLE_MESSAGE_KEYS,
 } as const
 
 // === Build up all possible filter queries from the above validation structure
@@ -341,7 +361,7 @@ type L2Parts<
  */
 export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     C,
-    RunQuery<FillDefaults<Q>>
+    RunQuery<ExpandShortcuts<FillDefaults<Q>>>
 >
 // apply a query result by intersecting it with Update, and then injecting into C
 type PerformQuery<C extends Context, U extends SomeObject> = U extends unknown
@@ -400,9 +420,25 @@ type FillL2Default<Q extends string> = Q extends `${infer U}::${infer V}`
     ? `${U}:${L2Defaults}:${V}`
     : Q
 
+// === Define some helpers for handling shortcuts, e.g. in 'edit:photo'
+const L1_SHORTCUTS = {
+    edit: ['edited_message', 'edited_channel_post'],
+} as const
+type L1Shortcuts = KeyOf<typeof L1_SHORTCUTS>
+
+type ExpandShortcuts<Q extends string> = Q extends `${L1Shortcuts}:${infer R}`
+    ? Q extends `${infer S}:${R}`
+        ? `${ExpandL1<S>}:${R}`
+        : never
+    : Q
+type ExpandL1<S extends string> = S extends L1Shortcuts
+    ? typeof L1_SHORTCUTS[S][number]
+    : S
+
 // === Define some helpers for when one property implies the existence of others
 type Twins<V extends string> = V extends KeyOf<Equivalents> ? Equivalents[V] : V
 type Equivalents = {
+    animation: 'document'
     entities: TextMessages
     caption: CaptionMessages
     caption_entities: CaptionMessages

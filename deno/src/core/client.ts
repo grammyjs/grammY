@@ -154,6 +154,18 @@ export interface ApiClientOptions {
         NonNullable<Parameters<typeof fetch>[1]>,
         'method' | 'headers' | 'body'
     >
+    /**
+     * When the network connection is unreliable and some API requests fail
+     * because of that, grammY will throw errors that tell you exactly which
+     * requests failed. However, the error messages do not disclose the fetched
+     * URL as it contains your bot's token. Logging it may lead to token leaks.
+     *
+     * If you are sure that no logs are ever posted in Telegram chats, GitHub
+     * issues, or otherwise shared, you can set this option to `true` in order
+     * to obtain more detailed logs that may help you debug your bot. The
+     * default value is `false`, meaning that the bot token is not logged.
+     */
+    sensitiveLogs?: boolean
 }
 
 const DEFAULT_OPTIONS: Required<ApiClientOptions> = {
@@ -161,6 +173,7 @@ const DEFAULT_OPTIONS: Required<ApiClientOptions> = {
     buildUrl: (root, token, method) => `${root}/bot${token}/${method}`,
     baseFetchConfig,
     canUseWebhookReply: () => false,
+    sensitiveLogs: false,
 }
 
 class ApiClient {
@@ -224,8 +237,10 @@ class ApiClient {
             data = await this.call(method, payload, signal)
         } catch (err) {
             let msg = `Network request for '${method}' failed!`
-            if (err.status && err.statusText) {
+            if (isTelegramError(err)) {
                 msg += ` (${err.status}: ${err.statusText})`
+            } else if (this.options.sensitiveLogs && err instanceof Error) {
+                msg += ` ${err.message}`
             }
             throw new HttpError(msg, err)
         }
@@ -295,4 +310,15 @@ const proxyMethods = {
     ownKeys() {
         return []
     },
+}
+
+function isTelegramError(
+    err: unknown
+): err is { status: string; statusText: string } {
+    return (
+        typeof err === 'object' &&
+        err !== null &&
+        'status' in err &&
+        'statusText' in err
+    )
 }
