@@ -3,6 +3,8 @@ import { Filter, FilterQuery, matchFilter } from './filter.ts'
 
 type MaybePromise<T> = T | Promise<T>
 type MaybeArray<T> = T | T[]
+// deno-lint-ignore ban-types because {} is required for this to work
+type StringWithSuggestions<S extends string> = (string & {}) | S // permits `string` but gives hints
 
 // === Middleware types
 /**
@@ -370,7 +372,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     command(
-        command: MaybeArray<string>,
+        command: MaybeArray<
+            StringWithSuggestions<'start' | 'help' | 'settings'>
+        >,
         ...middleware: Array<Middleware<CommandContext<C>>>
     ): Composer<CommandContext<C>> {
         const atCommands = new Set<string>()
