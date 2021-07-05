@@ -1,7 +1,7 @@
-import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.0?dts'
+import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.1?dts'
 import { basename } from 'https://deno.land/std@0.97.0/path/mod.ts'
 
-export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.0?dts'
+export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.1?dts'
 
 import debug from 'https://cdn.skypack.dev/debug@^4.3.1'
 export { debug }
