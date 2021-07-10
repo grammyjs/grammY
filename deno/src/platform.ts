@@ -3,10 +3,7 @@ const isDeno = typeof Deno !== 'undefined'
 // === Needed imports
 import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.2?dts'
 import { basename } from 'https://deno.land/std@0.100.0/path/mod.ts'
-import {
-    iter,
-    readerFromIterable,
-} from 'https://deno.land/std@0.100.0/io/mod.ts'
+import { iter } from 'https://deno.land/std@0.100.0/io/mod.ts'
 
 // === Export all API types
 export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.2?dts'
@@ -33,35 +30,6 @@ export const streamFile = isDeno
     : () => {
           throw new Error('Reading files by path requires a Deno environment')
       }
-export {
-    // Determine whether a file path is absolute
-    isAbsolute as isAbsolutePath,
-    // Turn a file path into a URL object
-    toFileUrl as pathToUrl,
-} from 'https://deno.land/std@0.100.0/path/mod.ts'
-// Turn a link into a URL object
-export const linkToUrl = (link: string) => new URL(link)
-// Define URL type
-export type URL = globalThis.URL
-// Create a temporary file
-export const createTempFile = () => Deno.makeTempFile()
-// Copy a file from a URL to a file path
-export const transferFile = async (url: URL, dest: string) => {
-    if (url.protocol === 'file') {
-        const src = url.pathname
-        await Deno.copyFile(src, dest)
-    } else {
-        const { body } = await fetch(url)
-        if (body === null) throw new Error('Download failed, no response body!')
-        const reader = readerFromIterable(body)
-        const writer = await Deno.open(dest, { write: true })
-        try {
-            await Deno.copy(reader, writer)
-        } finally {
-            writer.close()
-        }
-    }
-}
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = {}

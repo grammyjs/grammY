@@ -2,11 +2,8 @@
 import { InputFileProxy } from "@grammyjs/types";
 import { Agent } from "https";
 import { basename } from "path";
-import { URL } from "url";
 import { Readable } from "stream";
-import fs, { ReadStream } from "fs";
-import os from "os";
-import path from "path";
+import type { ReadStream } from "fs";
 
 // === Export all API types
 export * from "@grammyjs/types";
@@ -20,26 +17,6 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
   Readable.from(itr, { objectMode: false });
 // Turn a file path into an AsyncIterable<Uint8Array>
 export { createReadStream as streamFile } from "fs";
-// Determine wether a file path is absolute
-export { isAbsolute as isAbsolutePath } from "path";
-export {
-  // Turn a file path into a URL object
-  pathToFileURL as pathToUrl,
-  // Define URL type
-  URL,
-} from "url";
-// Turn a link into a URL object
-export const linkToUrl = (link: string) => new URL(link);
-// Create a temporary file
-export const createTempFile = async () =>
-  path.join(
-    await fs.promises.mkdtemp(
-      (await fs.promises.realpath(os.tmpdir())) + path.sep
-    ),
-    "filedata"
-  );
-// Copy a file from a URL to a file path
-// TODO: implement transferFile
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = {
