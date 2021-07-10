@@ -4,13 +4,6 @@ import {
     Opts,
     Telegram,
     baseFetchConfig,
-    isAbsolutePath,
-    pathToUrl,
-    File,
-    linkToUrl,
-    URL,
-    createTempFile,
-    transferFile,
 } from '../platform.ts'
 import { GrammyError, HttpError } from './error.ts'
 import {
@@ -20,6 +13,8 @@ import {
     createFormDataPayload,
 } from './payload.ts'
 const debug = d('grammy:core')
+
+export type Methods<R extends RawApi> = string & keyof R
 
 // Available under `bot.api.raw`
 /**
@@ -31,9 +26,20 @@ const debug = d('grammy:core')
  */
 export type RawApi = {
     [M in keyof Telegram]: Parameters<Telegram[M]>[0] extends undefined
-        ? (signal?: AbortSignal) => Promise<ApiCallResult<M>>
-        : (args: Opts<M>, signal?: AbortSignal) => Promise<ApiCallResult<M>>
+        ? (signal?: AbortSignal) => Promise<ReturnType<Telegram[M]>>
+        : (
+              args: Opts<M>,
+              signal?: AbortSignal
+          ) => Promise<ReturnType<Telegram[M]>>
 }
+
+export type Payload<M extends Methods<R>, R extends RawApi> = R[M] extends (
+    ...args: unknown[]
+) => unknown
+    ? Parameters<R[M]>[0] extends undefined
+        ? {}
+        : NonNullable<Parameters<R[M]>[0]>
+    : {}
 
 /**
  * Small utility interface that abstracts from webhook reply calls of different
@@ -46,16 +52,17 @@ export interface WebhookReplyEnvelope {
 /**
  * Type of a function that can perform an API call. Used for Transformers.
  */
-export type ApiCallFn = <M extends keyof RawApi>(
+export type ApiCallFn<R extends RawApi = RawApi> = <M extends Methods<R>>(
     method: M,
-    payload: Opts<M>,
+    payload: Payload<M, R>,
     signal?: AbortSignal
-) => Promise<ApiResponse<ApiCallResult<M>>>
+) => Promise<ApiResponse<ApiCallResult<M, R>>>
 
-type ApiCallResult<M extends keyof RawApi> =
-    M extends keyof ApiCallResultExtensions
-        ? ReturnType<Telegram[M]> & ApiCallResultExtensions[M]
-        : ReturnType<Telegram[M]>
+type ApiCallResult<M extends Methods<R>, R extends RawApi> = R[M] extends (
+    ...args: unknown[]
+) => unknown
+    ? ReturnType<R[M]>
+    : never
 
 /**
  * API call transformers are functions that can access and modify the method and
@@ -66,38 +73,41 @@ type ApiCallResult<M extends keyof RawApi> =
  * [documentation](https://grammy.dev/advanced/transformers.html) to read more
  * about how to use transformers.
  */
-export type Transformer = <M extends keyof RawApi>(
+export type Transformer<R extends RawApi = RawApi> = <M extends Methods<R>>(
     prev: ApiCallFn,
     method: M,
-    payload: Opts<M>,
+    payload: Payload<M, R>,
     signal?: AbortSignal
-) => Promise<ApiResponse<ApiCallResult<M>>>
-export type TransformerConsumer = TransformableApi['use']
+) => Promise<ApiResponse<ApiCallResult<M, R>>>
+export type TransformerConsumer<R extends RawApi = RawApi> =
+    TransformableApi<R>['use']
 /**
  * A transformable API enhances the `RawApi` type by transformers.
  */
-export interface TransformableApi {
+export interface TransformableApi<R extends RawApi = RawApi> {
     /**
      * Access to the raw API that the tranformers will be installed on.
      */
-    raw: RawApi
+    raw: R
     /**
      * Can be used to register any number of transformers on the API.
      */
-    use: (...transformers: Transformer[]) => this
+    use: (...transformers: Transformer<R>[]) => this
     /**
      * Returns a readonly list or the currently installed transformers. The list
      * is sorted by time of installation where index 0 represents the
      * transformer that was installed first.
      */
-    installedTransformers: Transformer[]
+    installedTransformers: Transformer<R>[]
 }
 
 // Transformer base functions
-const concatTransformer =
-    (prev: ApiCallFn, trans: Transformer): ApiCallFn =>
-    (method, payload, signal) =>
-        trans(prev, method, payload, signal)
+function concatTransformer<R extends RawApi>(
+    prev: ApiCallFn<R>,
+    trans: Transformer<R>
+): ApiCallFn<R> {
+    return (method, payload, signal) => trans(prev, method, payload, signal)
+}
 
 /**
  * Options to pass to the API client that eventually connects to the Telegram
@@ -123,16 +133,6 @@ export interface ApiClientOptions {
         token: string,
         method: string
     ) => Parameters<typeof fetch>[0]
-    /**
-     * URL builder function for downloading files. Can be used to modify which
-     * API server should be called when downloading files.
-     *
-     * @param root The URL that was passed in `apiRoot`, or its default value
-     * @param token The bot's token that was passed when creating the bot
-     * @param path The `file_path` value that identifies the file
-     * @returns The URL that will be fetched during the download
-     */
-    buildFileUrl?: (root: string, token: string, path: string) => string
     /**
      * If the bot is running on webhooks, as soon as the bot receives an update
      * from Telegram, it is possible to make up to one API call in the response
@@ -163,7 +163,7 @@ export interface ApiClientOptions {
      *
      * @param method The method to call
      */
-    canUseWebhookReply?: (method: keyof RawApi) => boolean
+    canUseWebhookReply?: (method: string) => boolean
     /**
      * Base configuration for `fetch` calls. Specify any additional parameters
      * to use when fetching a method of the Telegram Bot API. Default: `{
@@ -190,18 +190,17 @@ export interface ApiClientOptions {
 const DEFAULT_OPTIONS: Required<ApiClientOptions> = {
     apiRoot: 'https://api.telegram.org',
     buildUrl: (root, token, method) => `${root}/bot${token}/${method}`,
-    buildFileUrl: (root, token, path) => `${root}/file/bot${token}/${path}`,
     baseFetchConfig,
     canUseWebhookReply: () => false,
     sensitiveLogs: false,
 }
 
-class ApiClient {
+class ApiClient<R extends RawApi> {
     private readonly options: Required<ApiClientOptions>
 
     private hasUsedWebhookReply = false
 
-    readonly installedTransformers: Transformer[] = []
+    readonly installedTransformers: Transformer<R>[] = []
 
     constructor(
         private readonly token: string,
@@ -211,7 +210,7 @@ class ApiClient {
         this.options = { ...DEFAULT_OPTIONS, ...options }
     }
 
-    private call: ApiCallFn = async (method, payload, signal) => {
+    private call: ApiCallFn<R> = async (method, payload, signal) => {
         debug('Calling', method)
         const url = this.options.buildUrl(
             this.options.apiRoot,
@@ -241,18 +240,18 @@ class ApiClient {
         }
     }
 
-    use(...transformers: Transformer[]) {
+    use(...transformers: Transformer<R>[]) {
         this.call = transformers.reduce(concatTransformer, this.call)
         this.installedTransformers.push(...transformers)
         return this
     }
 
-    async callApi<M extends keyof RawApi>(
+    async callApi<M extends Methods<R>>(
         method: M,
-        payload: Opts<M>,
+        payload: Payload<M, R>,
         signal?: AbortSignal
     ) {
-        let data: ApiResponse<ApiCallResult<M>> | undefined
+        let data: ApiResponse<ApiCallResult<M, R>> | undefined
         try {
             data = await this.call(method, payload, signal)
         } catch (err) {
@@ -264,97 +263,15 @@ class ApiClient {
             }
             throw new HttpError(msg, err)
         }
-
-        if (data.ok) {
-            this.installExtensions(data.result)
-            return data.result
-        } else {
-            const msg = `Call to '${method}' failed!`
-            throw new GrammyError(msg, data, method, payload)
-        }
+        if (data.ok) return data.result
+        else
+            throw new GrammyError(
+                `Call to '${method}' failed!`,
+                data,
+                method,
+                payload
+            )
     }
-
-    private installExtensions<M extends keyof RawApi>(
-        result: ApiCallResult<M>
-    ) {
-        if (typeof result !== 'object') return
-        // We know that `result` cannot be `null`
-        if ('file_id' in result) this.installFileMethods(result)
-    }
-
-    private installFileMethods(file: File) {
-        const methods: FileX = {
-            getUrl: () => {
-                const path = file.file_path
-                if (path === undefined) {
-                    const id = file.file_id
-                    throw new Error(
-                        `File path is not available for file '${id}'`
-                    )
-                }
-                if (isAbsolutePath(path)) {
-                    return pathToUrl(path)
-                } else {
-                    const link = this.options.buildFileUrl(
-                        this.options.apiRoot,
-                        this.token,
-                        path
-                    )
-                    return linkToUrl(link)
-                }
-            },
-            download: async (path?: string) => {
-                const url = methods.getUrl()
-                if (path === undefined) path = await createTempFile()
-                await transferFile(url, path)
-                return path
-            },
-        }
-        Object.assign(file, methods)
-    }
-}
-
-interface ApiCallResultExtensions {
-    getFile: FileX
-}
-
-interface FileX {
-    /** Computes a URL from the `file_path` property of this file object. The
-     * URL can be used to download the file contents.
-     *
-     * If you are using a local Bot API server, then this method will return a
-     * file:// URL that identifies the local file on your system.
-     *
-     * If the `file_path` of this file object is `undefined`, this method will
-     * throw an error.
-     *
-     * Note that this method is installed by grammY on [the File
-     * object](https://core.telegram.org/bots/api#file).
-     */
-    getUrl(): URL
-    /**
-     * This method will download the file from the Telegram servers and store it
-     * under the given file path on your system. It returns the absolute path to
-     * the created file, so this may be the same value as the argument to the
-     * function.
-     *
-     * If you omit the path argument to this function, then a temporary file
-     * will be created for you. This path will still be returned, hence giving
-     * you access to the downloaded file.
-     *
-     * If you are using a local Bot API server, then the local file will be
-     * copied over to the specified path, or to a new temporary location.
-     *
-     * If the `file_path` of this file object is `undefined`, this method will
-     * throw an error.
-     *
-     * Note that this method is installed by grammY on [the File
-     * object](https://core.telegram.org/bots/api#file).
-     *
-     * @param path Optional path to store the file (default: temporary file)
-     * @returns An absolute file path to the downloaded/copied file
-     */
-    download(path?: string): Promise<string>
 }
 
 /**
@@ -370,24 +287,24 @@ interface FileX {
  * @param options A number of options to pass to the created API client
  * @param webhookReplyEnvelope The webhook reply envelope that will be used
  */
-export function createRawApi(
+export function createRawApi<R extends RawApi>(
     token: string,
     options?: ApiClientOptions,
     webhookReplyEnvelope?: WebhookReplyEnvelope
-): TransformableApi {
-    const client = new ApiClient(token, options, webhookReplyEnvelope)
+): TransformableApi<R> {
+    const client = new ApiClient<R>(token, options, webhookReplyEnvelope)
 
-    const proxyHandler: ProxyHandler<RawApi> = {
-        get(_, m: keyof RawApi | 'toJSON') {
+    const proxyHandler: ProxyHandler<R> = {
+        get(_, m: Methods<R> | 'toJSON') {
             return m === 'toJSON'
                 ? '__internal'
                 : client.callApi.bind(client, m)
         },
         ...proxyMethods,
     }
-    const raw = new Proxy({} as RawApi, proxyHandler)
+    const raw = new Proxy({} as R, proxyHandler)
     const installedTransformers = client.installedTransformers
-    const api: TransformableApi = {
+    const api: TransformableApi<R> = {
         raw,
         installedTransformers,
         use: (...t) => {

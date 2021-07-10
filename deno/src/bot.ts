@@ -99,7 +99,10 @@ export interface BotConfig<C extends Context> {
  * bot.start()
  * ```
  */
-export class Bot<C extends Context = Context> extends Composer<C> {
+export class Bot<
+    C extends Context = Context,
+    A extends Api = Api
+> extends Composer<C> {
     private pollingRunning = false
     private pollingAbortController: AbortController | undefined
     private lastTriedUpdateId = 0
@@ -114,7 +117,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * Use this only outside of your middleware. If you have access to `ctx`,
      * then using `ctx.api` instead of `bot.api` is preferred.
      */
-    public readonly api: Api
+    public readonly api: A
 
     private botInfo: UserFromGetMe | undefined
     private readonly clientConfig: ApiClientOptions | undefined
@@ -170,7 +173,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
             (Context as new (
                 ...args: ConstructorParameters<typeof Context>
             ) => C)
-        this.api = new Api(token, this.clientConfig)
+        this.api = new Api(token, this.clientConfig) as A
     }
 
     /**
