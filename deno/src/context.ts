@@ -1,5 +1,6 @@
 // deno-lint-ignore-file camelcase
-import { Api, Other } from './core/api.ts'
+import { Api, Other as OtherApi } from './core/api.ts'
+import { Methods, RawApi } from './core/client.ts'
 import {
     Chat,
     ChatPermissions,
@@ -18,6 +19,11 @@ import {
     UserFromGetMe,
 } from './platform.ts'
 
+type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
+    RawApi,
+    M,
+    X
+>
 type SnakeToCamelCase<S extends string> = S extends `${infer L}_${infer R}`
     ? `${L}${Capitalize<SnakeToCamelCase<R>>}`
     : S

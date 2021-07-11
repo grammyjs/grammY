@@ -34,7 +34,7 @@ export type RawApi = {
 }
 
 export type Payload<M extends Methods<R>, R extends RawApi> = R[M] extends (
-    ...args: unknown[]
+    ...args: [Record<string, unknown>, ...unknown[]]
 ) => unknown
     ? Parameters<R[M]>[0] extends undefined
         ? {}
