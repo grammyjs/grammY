@@ -34,4 +34,3 @@ export type {
     ApiClientOptions,
 } from './core/client.ts'
 export { GrammyError, HttpError } from './core/error.ts'
-
