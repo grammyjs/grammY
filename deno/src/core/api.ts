@@ -10,7 +10,6 @@ import {
     InputMediaPhoto,
     InputMediaVideo,
     LabeledPrice,
-    Opts,
     PassportElementError,
 } from '../platform.ts'
 import {

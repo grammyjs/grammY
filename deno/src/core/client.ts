@@ -36,9 +36,9 @@ export type RawApi = {
 export type Payload<M extends Methods<R>, R extends RawApi> = R[M] extends (
     ...args: [Record<string, unknown>, ...unknown[]]
 ) => unknown
-    ? Parameters<R[M]>[0] extends undefined
+    ? Parameters<R[M]>[0] extends undefined // deno-lint-ignore ban-types
         ? {}
-        : NonNullable<Parameters<R[M]>[0]>
+        : NonNullable<Parameters<R[M]>[0]> // deno-lint-ignore ban-types
     : {}
 
 /**
