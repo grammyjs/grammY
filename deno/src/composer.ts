@@ -90,6 +90,7 @@ export class BotError<C extends Context = Context> extends Error {
     constructor(public readonly error: unknown, public readonly ctx: C) {
         super(generateBotErrorMessage(error))
         this.name = 'BotError'
+        if (error instanceof Error) this.stack = error.stack
     }
 }
 function generateBotErrorMessage(error: unknown) {
