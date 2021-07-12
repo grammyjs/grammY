@@ -191,7 +191,7 @@ const EDITABLE_MESSAGE_KEYS = {
 
     caption: {},
 } as const
-const MESSAGE_KEYS = {
+const COMMON_MESSAGE_KEYS = {
     ...EDITABLE_MESSAGE_KEYS,
 
     sticker: {},
@@ -201,22 +201,13 @@ const MESSAGE_KEYS = {
     dice: {},
     poll: {},
     venue: {},
-    new_chat_members: USER_KEYS,
-    left_chat_member: USER_KEYS,
+
     new_chat_title: {},
     new_chat_photo: {},
     delete_chat_photo: {},
-    group_chat_created: {},
-    supergroup_chat_created: {},
-    channel_chat_created: {},
     message_auto_delete_timer_changed: {},
-    migrate_to_chat_id: {},
-    migrate_from_chat_id: {},
     pinned_message: {},
     invoice: {},
-    successful_payment: {},
-    connected_website: {},
-    passport_data: {},
     proximity_alert_triggered: {},
     voice_chat_scheduled: {},
     voice_chat_started: {},
@@ -225,6 +216,22 @@ const MESSAGE_KEYS = {
 
     forward_date: {},
 } as const
+const MESSAGE_KEYS = {
+    ...COMMON_MESSAGE_KEYS,
+    new_chat_members: USER_KEYS,
+    left_chat_member: USER_KEYS,
+    group_chat_created: {},
+    supergroup_chat_created: {},
+    migrate_to_chat_id: {},
+    migrate_from_chat_id: {},
+    successful_payment: {},
+    connected_website: {},
+    passport_data: {},
+}
+const CHANNEL_POST_KEYS = {
+    ...COMMON_MESSAGE_KEYS,
+    channel_chat_created: {},
+}
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const
 const CHAT_MEMBER_UPDATED_KEYS = {
     chat: {},
@@ -238,8 +245,8 @@ const UPDATE_KEYS = {
     // Regular keys
     message: MESSAGE_KEYS,
     edited_message: MESSAGE_KEYS,
-    channel_post: MESSAGE_KEYS,
-    edited_channel_post: MESSAGE_KEYS,
+    channel_post: CHANNEL_POST_KEYS,
+    edited_channel_post: CHANNEL_POST_KEYS,
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
