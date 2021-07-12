@@ -6,26 +6,19 @@ import {
     InputMedia,
 } from '../platform.ts'
 
-// === JSON serialization where necessary
-/**
- * Performs a JSON serialization on some nested properties inside the payload as
- * required by the Telegram Bot API specification.
- */
-export function transformPayload(
-    method: string,
-    payload: Record<string, unknown>
-) {
-    const entries = Object.entries(payload).map(kv => {
-        const [key, value] = kv
-        if (mustSerialize(method, key)) {
-            kv = [key, JSON.stringify(value)]
-        }
-        return kv
-    })
-    return Object.fromEntries(entries)
-}
-
 // === Payload types (JSON vs. form data)
+/**
+ * Turns a payload into an options object that can be passed to a `fetch` call.
+ * Automatically switches between JSON payloads and form-data payloads as
+ * needed.
+ *
+ * @param payload The payload to use
+ */
+export function createRequestConfig(payload: Record<string, unknown>) {
+    return requiresFormDataUpload(payload)
+        ? createFormDataPayload(payload)
+        : createJsonPayload(payload)
+}
 /**
  * Determines for a given payload if it may be sent as JSON, or if it has to be
  * uploaded via multipart/form-data. Returns `true` in the latter case and
@@ -33,7 +26,7 @@ export function transformPayload(
  *
  * @param payload The payload to analyse
  */
-export function requiresFormDataUpload(payload: unknown): boolean {
+function requiresFormDataUpload(payload: unknown): boolean {
     return (
         typeof payload === 'object' &&
         payload !== null &&
@@ -51,7 +44,7 @@ export function requiresFormDataUpload(payload: unknown): boolean {
  *
  * @param payload The payload to wrap
  */
-export function createJsonPayload(payload: Record<string, unknown>) {
+function createJsonPayload(payload: Record<string, unknown>) {
     return {
         method: 'POST',
         headers: {
@@ -69,7 +62,7 @@ export function createJsonPayload(payload: Record<string, unknown>) {
  *
  * @param payload The payload to wrap
  */
-export function createFormDataPayload(payload: Record<string, unknown>) {
+function createFormDataPayload(payload: Record<string, unknown>) {
     const boundary = createBoundary()
 
     return {
@@ -197,27 +190,6 @@ function getExt(key: string) {
 }
 
 // === Helper functions
-/** Fields that have to be JSON serialized in all methods */
-const serializationFields = new Set([
-    'allowed_updates',
-    'reply_markup',
-    'options',
-    'commands',
-    'mask_position',
-    'results',
-    'prices',
-    'shipping_options',
-    'errors',
-])
-/** Fields that have to be JSON serialized only for some methods */
-const serializationMethodFields = new Set(['restrictChatMember:permissions'])
-/** Determines if a given key in a given method should be JSON-serialized */
-function mustSerialize(method: string, key: string) {
-    return (
-        serializationFields.has(key) ||
-        serializationMethodFields.has(`${method}:${key}`)
-    )
-}
 /** Fields that require a multipart/form-data upload via ID instead of via the property itself */
 const indirectAttachmentFields = new Set(['thumb'])
 /** Determines if a file behind a given key should be send via `attach://<id>` instead of the key itself */
