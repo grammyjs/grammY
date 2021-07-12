@@ -227,11 +227,11 @@ const MESSAGE_KEYS = {
     successful_payment: {},
     connected_website: {},
     passport_data: {},
-}
+} as const
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
-}
+} as const
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const
 const CHAT_MEMBER_UPDATED_KEYS = {
     chat: {},
