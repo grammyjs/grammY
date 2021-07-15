@@ -10,7 +10,6 @@ import {
     InputMediaPhoto,
     InputMediaVideo,
     LabeledPrice,
-    Opts,
     PassportElementError,
 } from '../platform.ts'
 import {
@@ -20,6 +19,8 @@ import {
     TransformerConsumer,
     WebhookReplyEnvelope,
     Transformer,
+    Payload,
+    Methods,
 } from './client.ts'
 
 type AlwaysOmittedInOther = 'chat_id'
@@ -28,9 +29,10 @@ type AlwaysOmittedInOther = 'chat_id'
  * given that some properties X have already been specified.
  */
 export type Other<
-    M extends keyof RawApi,
-    X extends keyof Omit<Opts<M>, AlwaysOmittedInOther> = never
-> = Omit<Opts<M>, AlwaysOmittedInOther | X>
+    R extends RawApi,
+    M extends Methods<R>,
+    X extends string = never
+> = Omit<Payload<M, R>, X | AlwaysOmittedInOther>
 
 /**
  * This class provides access to the full Telegram Bot API. All methods of the
@@ -49,7 +51,7 @@ export type Other<
  * modify the method and payload on the fly before sending it to the Telegram
  * servers. Confer the `config` property for this.
  */
-export class Api {
+export class Api<R extends RawApi = RawApi> {
     /**
      * Provides access to all methods of the Telegram Bot API exactly as
      * documented on the website (https://core.telegram.org/bots/api). No
@@ -59,7 +61,7 @@ export class Api {
      * undocumented methods with arbitrary parameters—use only if you know what
      * you are doing.
      */
-    public readonly raw: RawApi
+    public readonly raw: R
 
     /**
      * Configuration object for the API instance, used as a namespace to
@@ -76,7 +78,7 @@ export class Api {
          * _Note that using transformer functions is an advanced feature of
          * grammY that most bots will not need to make use of._
          */
-        readonly use: TransformerConsumer
+        readonly use: TransformerConsumer<R>
         /**
          * Provides read access to all currently installed transformers (those
          * that have previously been passed to `config.use`).
@@ -84,7 +86,7 @@ export class Api {
          * _Note that using transformer functions is an advanced feature of
          * grammY that most bots will not need to make use of._
          */
-        readonly installedTransformers: () => Transformer[]
+        readonly installedTransformers: () => Transformer<R>[]
     }
 
     constructor(
@@ -92,7 +94,7 @@ export class Api {
         config?: ApiClientOptions,
         webhookReplyEnvelope?: WebhookReplyEnvelope
     ) {
-        const { raw, use, installedTransformers } = createRawApi(
+        const { raw, use, installedTransformers } = createRawApi<R>(
             token,
             config,
             webhookReplyEnvelope
@@ -116,7 +118,7 @@ export class Api {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getupdates
      */
-    getUpdates(other?: Other<'getUpdates'>, signal?: AbortSignal) {
+    getUpdates(other?: Other<R, 'getUpdates'>, signal?: AbortSignal) {
         return this.raw.getUpdates({ ...other }, signal)
     }
 
@@ -140,7 +142,7 @@ export class Api {
      */
     setWebhook(
         url: string,
-        other?: Other<'setWebhook', 'url'>,
+        other?: Other<R, 'setWebhook', 'url'>,
         signal?: AbortSignal
     ) {
         return this.raw.setWebhook({ url, ...other }, signal)
@@ -154,7 +156,7 @@ export class Api {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletewebhook
      */
-    deleteWebhook(other?: Other<'deleteWebhook'>, signal?: AbortSignal) {
+    deleteWebhook(other?: Other<R, 'deleteWebhook'>, signal?: AbortSignal) {
         return this.raw.deleteWebhook({ ...other }, signal)
     }
 
@@ -215,7 +217,7 @@ export class Api {
     sendMessage(
         chat_id: number | string,
         text: string,
-        other?: Other<'sendMessage', 'text'>,
+        other?: Other<R, 'sendMessage', 'text'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendMessage({ chat_id, text, ...other }, signal)
@@ -236,7 +238,7 @@ export class Api {
         chat_id: number | string,
         from_chat_id: number | string,
         message_id: number,
-        other?: Other<'forwardMessage', 'from_chat_id' | 'message_id'>,
+        other?: Other<R, 'forwardMessage', 'from_chat_id' | 'message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.forwardMessage(
@@ -265,7 +267,7 @@ export class Api {
         chat_id: number | string,
         from_chat_id: number | string,
         message_id: number,
-        other?: Other<'copyMessage', 'from_chat_id' | 'message_id'>,
+        other?: Other<R, 'copyMessage', 'from_chat_id' | 'message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.copyMessage(
@@ -292,7 +294,7 @@ export class Api {
     sendPhoto(
         chat_id: number | string,
         photo: InputFile | string,
-        other?: Other<'sendPhoto', 'photo'>,
+        other?: Other<R, 'sendPhoto', 'photo'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendPhoto({ chat_id, photo, ...other }, signal)
@@ -313,7 +315,7 @@ export class Api {
     sendAudio(
         chat_id: number | string,
         audio: InputFile | string,
-        other?: Other<'sendAudio', 'audio'>,
+        other?: Other<R, 'sendAudio', 'audio'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendAudio({ chat_id, audio, ...other }, signal)
@@ -332,7 +334,7 @@ export class Api {
     sendDocument(
         chat_id: number | string,
         document: InputFile | string,
-        other?: Other<'sendDocument', 'document'>,
+        other?: Other<R, 'sendDocument', 'document'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendDocument({ chat_id, document, ...other }, signal)
@@ -351,7 +353,7 @@ export class Api {
     sendVideo(
         chat_id: number | string,
         video: InputFile | string,
-        other?: Other<'sendVideo', 'video'>,
+        other?: Other<R, 'sendVideo', 'video'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendVideo({ chat_id, video, ...other }, signal)
@@ -370,7 +372,7 @@ export class Api {
     sendAnimation(
         chat_id: number | string,
         animation: InputFile | string,
-        other?: Other<'sendAnimation', 'animation'>,
+        other?: Other<R, 'sendAnimation', 'animation'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendAnimation({ chat_id, animation, ...other }, signal)
@@ -389,7 +391,7 @@ export class Api {
     sendVoice(
         chat_id: number | string,
         voice: InputFile | string,
-        other?: Other<'sendVoice', 'voice'>,
+        other?: Other<R, 'sendVoice', 'voice'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendVoice({ chat_id, voice, ...other }, signal)
@@ -409,7 +411,7 @@ export class Api {
     sendVideoNote(
         chat_id: number | string,
         video_note: InputFile | string,
-        other?: Other<'sendVideoNote', 'video_note'>,
+        other?: Other<R, 'sendVideoNote', 'video_note'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendVideoNote({ chat_id, video_note, ...other }, signal)
@@ -433,7 +435,7 @@ export class Api {
             | InputMediaPhoto
             | InputMediaVideo
         >,
-        other?: Other<'sendMediaGroup', 'media'>,
+        other?: Other<R, 'sendMediaGroup', 'media'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendMediaGroup({ chat_id, media, ...other }, signal)
@@ -454,7 +456,7 @@ export class Api {
         chat_id: number | string,
         latitude: number,
         longitude: number,
-        other?: Other<'sendLocation', 'latitude' | 'longitude'>,
+        other?: Other<R, 'sendLocation', 'latitude' | 'longitude'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendLocation(
@@ -481,6 +483,7 @@ export class Api {
         latitude: number,
         longitude: number,
         other?: Other<
+            R,
             'editMessageLiveLocation',
             'message_id' | 'inline_message_id' | 'latitude' | 'longitude'
         >,
@@ -514,6 +517,7 @@ export class Api {
         latitude: number,
         longitude: number,
         other?: Other<
+            R,
             'editMessageLiveLocation',
             'message_id' | 'inline_message_id' | 'latitude' | 'longitude'
         >,
@@ -544,6 +548,7 @@ export class Api {
         chat_id: number | string,
         message_id: number,
         other?: Other<
+            R,
             'stopMessageLiveLocation',
             'message_id' | 'inline_message_id'
         >,
@@ -571,6 +576,7 @@ export class Api {
     stopMessageLiveLocationInline(
         inline_message_id: string,
         other?: Other<
+            R,
             'stopMessageLiveLocation',
             'message_id' | 'inline_message_id'
         >,
@@ -602,6 +608,7 @@ export class Api {
         title: string,
         address: string,
         other?: Other<
+            R,
             'sendVenue',
             'latitude' | 'longitude' | 'title' | 'address'
         >,
@@ -635,7 +642,7 @@ export class Api {
         chat_id: number | string,
         phone_number: string,
         first_name: string,
-        other?: Other<'sendContact', 'phone_number' | 'first_name'>,
+        other?: Other<R, 'sendContact', 'phone_number' | 'first_name'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendContact(
@@ -664,7 +671,7 @@ export class Api {
         chat_id: number | string,
         question: string,
         options: readonly string[],
-        other?: Other<'sendPoll', 'question' | 'options'>,
+        other?: Other<R, 'sendPoll', 'question' | 'options'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendPoll(
@@ -686,7 +693,7 @@ export class Api {
     sendDice(
         chat_id: number | string,
         emoji: string,
-        other?: Other<'sendDice', 'emoji'>,
+        other?: Other<R, 'sendDice', 'emoji'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendDice({ chat_id, emoji, ...other }, signal)
@@ -734,7 +741,7 @@ export class Api {
      */
     getUserProfilePhotos(
         user_id: number,
-        other?: Other<'getUserProfilePhotos', 'user_id'>,
+        other?: Other<R, 'getUserProfilePhotos', 'user_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.getUserProfilePhotos({ user_id, ...other }, signal)
@@ -772,7 +779,7 @@ export class Api {
     banChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Other<'banChatMember', 'user_id'>,
+        other?: Other<R, 'banChatMember', 'user_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.banChatMember({ chat_id, user_id, ...other }, signal)
@@ -791,7 +798,7 @@ export class Api {
     unbanChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Other<'unbanChatMember', 'user_id'>,
+        other?: Other<R, 'unbanChatMember', 'user_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.unbanChatMember({ chat_id, user_id, ...other }, signal)
@@ -812,7 +819,7 @@ export class Api {
         chat_id: number | string,
         user_id: number,
         permissions: ChatPermissions,
-        other?: Other<'restrictChatMember', 'user_id' | 'permissions'>,
+        other?: Other<R, 'restrictChatMember', 'user_id' | 'permissions'>,
         signal?: AbortSignal
     ) {
         return this.raw.restrictChatMember(
@@ -839,7 +846,7 @@ export class Api {
     promoteChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Other<'promoteChatMember', 'user_id'>,
+        other?: Other<R, 'promoteChatMember', 'user_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.promoteChatMember(
@@ -916,7 +923,7 @@ export class Api {
      */
     createChatInviteLink(
         chat_id: number | string,
-        other?: Other<'createChatInviteLink'>,
+        other?: Other<R, 'createChatInviteLink'>,
         signal?: AbortSignal
     ) {
         return this.raw.createChatInviteLink({ chat_id, ...other }, signal)
@@ -935,7 +942,7 @@ export class Api {
     editChatInviteLink(
         chat_id: number | string,
         invite_link: string,
-        other?: Other<'editChatInviteLink', 'invite_link'>,
+        other?: Other<R, 'editChatInviteLink', 'invite_link'>,
         signal?: AbortSignal
     ) {
         return this.raw.editChatInviteLink(
@@ -1037,7 +1044,7 @@ export class Api {
     pinChatMessage(
         chat_id: number | string,
         message_id: number,
-        other?: Other<'pinChatMessage', 'message_id'>,
+        other?: Other<R, 'pinChatMessage', 'message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.pinChatMessage(
@@ -1194,7 +1201,7 @@ export class Api {
      */
     answerCallbackQuery(
         callback_query_id: string,
-        other?: Other<'answerCallbackQuery', 'callback_query_id'>,
+        other?: Other<R, 'answerCallbackQuery', 'callback_query_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.answerCallbackQuery(
@@ -1214,7 +1221,7 @@ export class Api {
      */
     setMyCommands(
         commands: readonly BotCommand[],
-        other?: Other<'setMyCommands', 'commands'>,
+        other?: Other<R, 'setMyCommands', 'commands'>,
         signal?: AbortSignal
     ) {
         return this.raw.setMyCommands({ commands, ...other }, signal)
@@ -1228,7 +1235,10 @@ export class Api {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletemycommands
      */
-    deleteMyCommands(other?: Other<'deleteMyCommands'>, signal?: AbortSignal) {
+    deleteMyCommands(
+        other?: Other<R, 'deleteMyCommands'>,
+        signal?: AbortSignal
+    ) {
         return this.raw.deleteMyCommands({ ...other }, signal)
     }
 
@@ -1240,7 +1250,7 @@ export class Api {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmycommands
      */
-    getMyCommands(other?: Other<'getMyCommands'>, signal?: AbortSignal) {
+    getMyCommands(other?: Other<R, 'getMyCommands'>, signal?: AbortSignal) {
         return this.raw.getMyCommands({ ...other }, signal)
     }
 
@@ -1259,7 +1269,7 @@ export class Api {
         chat_id: number | string,
         message_id: number,
         text: string,
-        other?: Other<'editMessageText', 'message_id' | 'text'>,
+        other?: Other<R, 'editMessageText', 'message_id' | 'text'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageText(
@@ -1280,7 +1290,7 @@ export class Api {
     editMessageTextInline(
         inline_message_id: string,
         text: string,
-        other?: Other<'editMessageText', 'inline_message_id' | 'text'>,
+        other?: Other<R, 'editMessageText', 'inline_message_id' | 'text'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageText(
@@ -1302,7 +1312,7 @@ export class Api {
     editMessageCaption(
         chat_id: number | string,
         message_id: number,
-        other?: Other<'editMessageCaption', 'message_id'>,
+        other?: Other<R, 'editMessageCaption', 'message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageCaption(
@@ -1322,7 +1332,7 @@ export class Api {
      */
     editMessageCaptionInline(
         inline_message_id: string,
-        other?: Other<'editMessageCaption', 'inline_message_id'>,
+        other?: Other<R, 'editMessageCaption', 'inline_message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageCaption(
@@ -1346,7 +1356,7 @@ export class Api {
         chat_id: number | string,
         message_id: number,
         media: InputMedia,
-        other?: Other<'editMessageMedia', 'message_id' | 'media'>,
+        other?: Other<R, 'editMessageMedia', 'message_id' | 'media'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageMedia(
@@ -1373,7 +1383,7 @@ export class Api {
     editMessageMediaInline(
         inline_message_id: string,
         media: InputMedia,
-        other?: Other<'editMessageMedia', 'inline_message_id' | 'media'>,
+        other?: Other<R, 'editMessageMedia', 'inline_message_id' | 'media'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageMedia(
@@ -1395,7 +1405,7 @@ export class Api {
     editMessageReplyMarkup(
         chat_id: number | string,
         message_id: number,
-        other?: Other<'editMessageReplyMarkup', 'message_id'>,
+        other?: Other<R, 'editMessageReplyMarkup', 'message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageReplyMarkup(
@@ -1419,7 +1429,7 @@ export class Api {
      */
     editMessageReplyMarkupInline(
         inline_message_id: string,
-        other?: Other<'editMessageReplyMarkup', 'inline_message_id'>,
+        other?: Other<R, 'editMessageReplyMarkup', 'inline_message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.editMessageReplyMarkup(
@@ -1441,7 +1451,7 @@ export class Api {
     stopPoll(
         chat_id: number | string,
         message_id: number,
-        other?: Other<'stopPoll', 'message_id'>,
+        other?: Other<R, 'stopPoll', 'message_id'>,
         signal?: AbortSignal
     ) {
         return this.raw.stopPoll({ chat_id, message_id, ...other }, signal)
@@ -1485,7 +1495,7 @@ export class Api {
     sendSticker(
         chat_id: number | string,
         sticker: InputFile | string,
-        other?: Other<'sendSticker', 'sticker'>,
+        other?: Other<R, 'sendSticker', 'sticker'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendSticker({ chat_id, sticker, ...other }, signal)
@@ -1538,6 +1548,7 @@ export class Api {
         title: string,
         emojis: string,
         other?: Other<
+            R,
             'createNewStickerSet',
             'user_id' | 'name' | 'title' | 'emojis'
         >,
@@ -1570,7 +1581,7 @@ export class Api {
         user_id: number,
         name: string,
         emojis: string,
-        other?: Other<'addStickerToSet', 'user_id' | 'name' | 'emojis'>,
+        other?: Other<R, 'addStickerToSet', 'user_id' | 'name' | 'emojis'>,
         signal?: AbortSignal
     ) {
         return this.raw.addStickerToSet(
@@ -1643,7 +1654,7 @@ export class Api {
     answerInlineQuery(
         inline_query_id: string,
         results: readonly InlineQueryResult[],
-        other?: Other<'answerInlineQuery', 'inline_query_id' | 'results'>,
+        other?: Other<R, 'answerInlineQuery', 'inline_query_id' | 'results'>,
         signal?: AbortSignal
     ) {
         return this.raw.answerInlineQuery(
@@ -1680,6 +1691,7 @@ export class Api {
         currency: string,
         prices: readonly LabeledPrice[],
         other?: Other<
+            R,
             'sendInvoice',
             | 'title'
             | 'description'
@@ -1719,7 +1731,7 @@ export class Api {
     answerShippingQuery(
         shipping_query_id: string,
         ok: boolean,
-        other?: Other<'answerShippingQuery', 'shipping_query_id' | 'ok'>,
+        other?: Other<R, 'answerShippingQuery', 'shipping_query_id' | 'ok'>,
         signal?: AbortSignal
     ) {
         return this.raw.answerShippingQuery(
@@ -1741,7 +1753,11 @@ export class Api {
     answerPreCheckoutQuery(
         pre_checkout_query_id: string,
         ok: boolean,
-        other?: Other<'answerPreCheckoutQuery', 'pre_checkout_query_id' | 'ok'>,
+        other?: Other<
+            R,
+            'answerPreCheckoutQuery',
+            'pre_checkout_query_id' | 'ok'
+        >,
         signal?: AbortSignal
     ) {
         return this.raw.answerPreCheckoutQuery(
@@ -1786,7 +1802,7 @@ export class Api {
     sendGame(
         chat_id: number,
         game_short_name: string,
-        other?: Other<'sendGame', 'game_short_name'>,
+        other?: Other<R, 'sendGame', 'game_short_name'>,
         signal?: AbortSignal
     ) {
         return this.raw.sendGame({ chat_id, game_short_name, ...other }, signal)
@@ -1809,7 +1825,7 @@ export class Api {
         message_id: number,
         user_id: number,
         score: number,
-        other?: Other<'setGameScore', 'message_id' | 'user_id' | 'score'>,
+        other?: Other<R, 'setGameScore', 'message_id' | 'user_id' | 'score'>,
         signal?: AbortSignal
     ) {
         return this.raw.setGameScore(
@@ -1840,6 +1856,7 @@ export class Api {
         user_id: number,
         score: number,
         other?: Other<
+            R,
             'setGameScore',
             'inline_message_id' | 'user_id' | 'score'
         >,
