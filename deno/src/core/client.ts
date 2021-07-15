@@ -6,12 +6,7 @@ import {
     baseFetchConfig,
 } from '../platform.ts'
 import { GrammyError, HttpError } from './error.ts'
-import {
-    requiresFormDataUpload,
-    transformPayload,
-    createJsonPayload,
-    createFormDataPayload,
-} from './payload.ts'
+import { createRequestConfig } from './payload.ts'
 const debug = d('grammy:core')
 
 export type Methods<R extends RawApi> = string & keyof R
@@ -217,10 +212,7 @@ class ApiClient<R extends RawApi> {
             this.token,
             method
         )
-        const transformed = transformPayload(method, payload ?? {})
-        const config = requiresFormDataUpload(transformed)
-            ? createFormDataPayload(transformed)
-            : createJsonPayload(transformed)
+        const config = createRequestConfig(payload ?? {})
         if (
             this.webhookReplyEnvelope.send !== undefined &&
             !this.hasUsedWebhookReply &&
