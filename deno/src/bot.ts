@@ -206,7 +206,12 @@ export class Bot<
         update: Update,
         webhookReplyEnvelope?: WebhookReplyEnvelope
     ) {
-        if (this.botInfo === undefined) throw new Error('Bot not initialized!')
+        if (this.botInfo === undefined)
+            throw new Error(
+                'Bot not initialized! Either call `await bot.init()`, \
+or directly set the `botInfo` option in the `Bot` constructor to specify \
+a known bot info object.'
+            )
         debug(`Processing update ${update.update_id}`)
         // create API object
         const api = new Api(this.token, this.clientConfig, webhookReplyEnvelope)
