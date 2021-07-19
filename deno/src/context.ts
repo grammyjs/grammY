@@ -873,7 +873,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.promoteChatMember`. Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
      *
-     * @param user_id Unique identifier of the target user (if unspecified, defaults to author of update)
+     * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1210,7 +1210,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
      *
-     * @param user_id Unique identifier of the target user (if unspecified, defaults to author of update)
+     * @param user_id Unique identifier of the target user
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmember
