@@ -99,7 +99,9 @@
         "plugin",
         "doc",
         "ideas",
-        "review"
+        "review",
+        "bug",
+        "code"
       ]
     },
     {
