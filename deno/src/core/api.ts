@@ -478,7 +478,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#editmessagelivelocation
      */
     editMessageLiveLocation(
-        chat_id: number,
+        chat_id: number | string,
         message_id: number,
         latitude: number,
         longitude: number,
