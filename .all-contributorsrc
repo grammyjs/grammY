@@ -24,7 +24,9 @@
         "question",
         "test",
         "plugin",
-        "platform"
+        "platform",
+        "review",
+        "mentoring"
       ]
     },
     {
@@ -73,7 +75,10 @@
       "contributions": [
         "code",
         "bug",
-        "plugin"
+        "plugin",
+        "doc",
+        "example",
+        "review"
       ]
     },
     {
@@ -93,7 +98,10 @@
       "contributions": [
         "plugin",
         "doc",
-        "ideas"
+        "ideas",
+        "review",
+        "bug",
+        "code"
       ]
     },
     {
@@ -122,6 +130,16 @@
       "profile": "https://github.com/jokasimr",
       "contributions": [
         "bug"
+      ]
+    },
+    {
+      "login": "CikiMomogi",
+      "name": "Ciki Momogi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74030149?v=4",
+      "profile": "https://github.com/CikiMomogi",
+      "contributions": [
+        "doc",
+        "tutorial"
       ]
     }
   ],

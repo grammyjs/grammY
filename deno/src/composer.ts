@@ -354,10 +354,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * By default, commands are detected in channel posts, too. This means that
      * `ctx.message` is potentially `undefined`, so you should use `ctx.msg`
-     * instead to grab both messages and channel posts. Alternatively, if want
-     * to limit your bot to finding commands only in private and group chats,
-     * you can do use `bot.on('message').command('start', ctx => { ... })`, or
-     * even store a message-only version of your bot in a variable like so:
+     * instead to grab both messages and channel posts. Alternatively, if you
+     * want to limit your bot to finding commands only in private and group
+     * chats, you can do use `bot.on('message').command('start', ctx => { ...
+     * })`, or even store a message-only version of your bot in a variable like
+     * so:
      * ```ts
      * const m = bot.on('message')
      *
