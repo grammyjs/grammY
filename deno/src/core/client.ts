@@ -56,8 +56,9 @@ export type ApiCallFn<R extends RawApi = RawApi> = <M extends Methods<R>>(
 type ApiCallResult<M extends Methods<R>, R extends RawApi> = R[M] extends (
     ...args: unknown[]
 ) => unknown
-    ? ReturnType<R[M]>
+    ? Await<ReturnType<R[M]>>
     : never
+type Await<T> = T extends PromiseLike<infer V> ? V : T
 
 /**
  * API call transformers are functions that can access and modify the method and
@@ -223,11 +224,22 @@ class ApiClient<R extends RawApi> {
             await this.webhookReplyEnvelope.send(config.body)
             return { ok: true, result: true }
         } else {
-            const res = await fetch(url, {
-                ...this.options.baseFetchConfig,
-                signal,
-                ...config,
-            })
+            let res: Await<ReturnType<typeof fetch>>
+            try {
+                res = await fetch(url, {
+                    ...this.options.baseFetchConfig,
+                    signal,
+                    ...config,
+                })
+            } catch (err) {
+                let msg = `Network request for '${method}' failed!`
+                if (isTelegramError(err)) {
+                    msg += ` (${err.status}: ${err.statusText})`
+                } else if (this.options.sensitiveLogs && err instanceof Error) {
+                    msg += ` ${err.message}`
+                }
+                throw new HttpError(msg, err)
+            }
             return await res.json()
         }
     }
@@ -244,17 +256,7 @@ class ApiClient<R extends RawApi> {
         signal?: AbortSignal
     ) {
         let data: ApiResponse<ApiCallResult<M, R>> | undefined
-        try {
-            data = await this.call(method, payload, signal)
-        } catch (err) {
-            let msg = `Network request for '${method}' failed!`
-            if (isTelegramError(err)) {
-                msg += ` (${err.status}: ${err.statusText})`
-            } else if (this.options.sensitiveLogs && err instanceof Error) {
-                msg += ` ${err.message}`
-            }
-            throw new HttpError(msg, err)
-        }
+        data = await this.call(method, payload, signal)
         if (data.ok) return data.result
         else
             throw new GrammyError(
