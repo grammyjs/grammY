@@ -291,7 +291,8 @@ export function lazySession<S, C extends Context>(
 }
 
 function defaultGetSessionKey(ctx: Context): string | undefined {
-    return ctx.chat?.id.toString()
+    return ctx.chat?.id.toString() ?? 
+ctx.myChatMember?.chat?.id.toString()
 }
 
 class MemorySessionStorage<S> implements StorageAdapter<S> {
