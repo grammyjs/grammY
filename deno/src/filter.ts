@@ -393,7 +393,7 @@ interface Shortcuts<U extends Update> {
         : [U['edited_channel_post']] extends [SomeObject]
         ? U['edited_channel_post']
         : undefined
-    chat: Shortcuts<U>['msg']
+    chat: Shortcuts<U>['msg'] // 'chat' is required on 'Message'
     // senderChat: disregarded here because always optional on 'Message'
     from: [U['callback_query']] extends [SomeObject]
         ? U['callback_query']['from']
