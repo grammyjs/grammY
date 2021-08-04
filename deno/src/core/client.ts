@@ -56,8 +56,9 @@ export type ApiCallFn<R extends RawApi = RawApi> = <M extends Methods<R>>(
 type ApiCallResult<M extends Methods<R>, R extends RawApi> = R[M] extends (
     ...args: unknown[]
 ) => unknown
-    ? ReturnType<R[M]>
+    ? Await<ReturnType<R[M]>>
     : never
+type Await<T> = T extends PromiseLike<infer V> ? V : T
 
 /**
  * API call transformers are functions that can access and modify the method and
@@ -135,10 +136,12 @@ export interface ApiClientOptions {
      * to one HTTP request per update. However, there are a number of drawbacks
      * to using this:
      * 1) You will not be able to handle potential errors of the respective API
-     *    call.
+     *    call. This includes rate limiting errors, so sent messages can be
+     *    swallowed by the Bot API server and there is no way to detect if a
+     *    message was actually sent or not.
      * 2) More importantly, you also won't have access to the response object,
      *    so e.g. calling `sendMessage` will not give you access to the message
-     *    you send.
+     *    you sent.
      * 3) Furthermore, it is not possible to cancel the request. The
      *    `AbortSignal` will be disregarded.
      * 4) Note also that the types in grammY do not reflect the consequences of
@@ -223,11 +226,22 @@ class ApiClient<R extends RawApi> {
             await this.webhookReplyEnvelope.send(config.body)
             return { ok: true, result: true }
         } else {
-            const res = await fetch(url, {
-                ...this.options.baseFetchConfig,
-                signal,
-                ...config,
-            })
+            let res: Await<ReturnType<typeof fetch>>
+            try {
+                res = await fetch(url, {
+                    ...this.options.baseFetchConfig,
+                    signal,
+                    ...config,
+                })
+            } catch (err) {
+                let msg = `Network request for '${method}' failed!`
+                if (isTelegramError(err)) {
+                    msg += ` (${err.status}: ${err.statusText})`
+                } else if (this.options.sensitiveLogs && err instanceof Error) {
+                    msg += ` ${err.message}`
+                }
+                throw new HttpError(msg, err)
+            }
             return await res.json()
         }
     }
@@ -243,18 +257,7 @@ class ApiClient<R extends RawApi> {
         payload: Payload<M, R>,
         signal?: AbortSignal
     ) {
-        let data: ApiResponse<ApiCallResult<M, R>> | undefined
-        try {
-            data = await this.call(method, payload, signal)
-        } catch (err) {
-            let msg = `Network request for '${method}' failed!`
-            if (isTelegramError(err)) {
-                msg += ` (${err.status}: ${err.statusText})`
-            } else if (this.options.sensitiveLogs && err instanceof Error) {
-                msg += ` ${err.message}`
-            }
-            throw new HttpError(msg, err)
-        }
+        const data = await this.call(method, payload, signal)
         if (data.ok) return data.result
         else
             throw new GrammyError(

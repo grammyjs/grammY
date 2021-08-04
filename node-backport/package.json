@@ -1,7 +1,7 @@
 {
   "name": "grammy",
   "description": "grammY core package ported to Node.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "KnorpelSenf",
   "license": "MIT",
   "engines": {
@@ -16,7 +16,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@grammyjs/types": "^2.2.3",
+    "@grammyjs/types": "^2.2.4",
     "abort-controller": "^3.0.0",
     "debug": "^4.3.1",
     "node-fetch": "^2.6.1"
