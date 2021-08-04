@@ -1,7 +1,7 @@
 {
   "name": "grammy",
   "description": "grammY core package ported to Node.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "KnorpelSenf",
   "license": "MIT",
   "engines": {
