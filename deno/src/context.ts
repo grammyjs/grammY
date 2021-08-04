@@ -188,6 +188,8 @@ export class Context implements RenamedUpdate {
             this.callbackQuery ??
             this.inlineQuery ??
             this.shippingQuery ??
+            this.myChatMember ??
+            this.chatMember ??
             this.preCheckoutQuery ??
             this.chosenInlineResult ??
             this.msg
