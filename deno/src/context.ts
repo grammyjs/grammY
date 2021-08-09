@@ -502,8 +502,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageLiveLocationInline(
                   inlineId,
@@ -536,8 +535,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.stopMessageLiveLocationInline(inlineId, other)
             : this.api.stopMessageLiveLocation(
@@ -1291,8 +1289,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageTextInline(inlineId, text, other)
             : this.api.editMessageText(
@@ -1316,8 +1313,7 @@ export class Context implements RenamedUpdate {
         other?: Other<'editMessageCaption', 'message_id' | 'inline_message_id'>,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageCaptionInline(inlineId, other)
             : this.api.editMessageCaption(
@@ -1345,8 +1341,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageMediaInline(inlineId, media, other)
             : this.api.editMessageMedia(
@@ -1373,8 +1368,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageReplyMarkupInline(inlineId, other)
             : this.api.editMessageReplyMarkup(
