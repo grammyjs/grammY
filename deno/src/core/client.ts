@@ -70,7 +70,7 @@ type Await<T> = T extends PromiseLike<infer V> ? V : T
  * about how to use transformers.
  */
 export type Transformer<R extends RawApi = RawApi> = <M extends Methods<R>>(
-    prev: ApiCallFn,
+    prev: ApiCallFn<R>,
     method: M,
     payload: Payload<M, R>,
     signal?: AbortSignal
