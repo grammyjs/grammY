@@ -26,7 +26,7 @@
     "@types/node": "^15.12.5",
     "@types/node-fetch": "^2.5.10",
     "ts-morph": "^11.0.0",
-    "typescript": "4.3.4"
+    "typescript": "next"
   },
   "files": [
     "out/"
