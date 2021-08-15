@@ -454,7 +454,7 @@ type FilteredContext<C extends Context, U extends Update> = C &
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
     msg: [U['callback_query']] extends [SomeObject]
-        ? unknown // 'message' is optional on CallbackQuery
+        ? U['callback_query']['message']
         : [U['message']] extends [SomeObject]
         ? U['message']
         : [U['edited_message']] extends [SomeObject]
@@ -464,7 +464,15 @@ interface Shortcuts<U extends Update> {
         : [U['edited_channel_post']] extends [SomeObject]
         ? U['edited_channel_post']
         : undefined
-    chat: Shortcuts<U>['msg'] // 'chat' is required on 'Message'
+    chat: [U['callback_query']] extends [SomeObject]
+        ? NonNullable<U['callback_query']['message']>['chat'] | undefined
+        : [Shortcuts<U>['msg']] extends [SomeObject]
+        ? Shortcuts<U>['msg']['chat']
+        : [U['my_chat_member']] extends [SomeObject]
+        ? U['my_chat_member']['chat']
+        : [U['chat_member']] extends [SomeObject]
+        ? U['chat_member']['chat']
+        : undefined
     // senderChat: disregarded here because always optional on 'Message'
     from: [U['callback_query']] extends [SomeObject]
         ? U['callback_query']['from']
@@ -480,6 +488,10 @@ interface Shortcuts<U extends Update> {
         ? NonNullable<U['message']['from']>
         : [U['edited_message']] extends [SomeObject]
         ? NonNullable<U['edited_message']['from']>
+        : [U['my_chat_member']] extends [SomeObject]
+        ? U['my_chat_member']['from']
+        : [U['chat_member']] extends [SomeObject]
+        ? U['chat_member']['from']
         : undefined
     // inlineMessageId: disregarded here because always optional on both types
 }
