@@ -276,7 +276,7 @@ a known bot info object.'
         // Prevent common misuse that causes memory leak
         this.use = () => {
             throw new Error(`It looks like you are registering more listeners \
-on your bot from within other listeners! This mean that every time your bot \
+on your bot from within other listeners! This means that every time your bot \
 handles a message like this one, new listeners will be added. This list grows until \
 your machine crashes, so grammY throws this error to tell you that you should \
 probably do things a bit differently. If you're unsure how to resolve this problem, \
