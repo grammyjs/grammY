@@ -3,6 +3,7 @@ import { BotError, Composer, run } from './composer.ts'
 import { Context } from './context.ts'
 import { Api } from './core/api.ts'
 import { ApiClientOptions, WebhookReplyEnvelope } from './core/client.ts'
+import { GrammyError } from './core/error.ts'
 import { Update, debug as d, UserFromGetMe } from './platform.ts'
 const debug = d('grammy:bot')
 const debugErr = d('grammy:error')
@@ -338,6 +339,26 @@ you can circumvent this protection against memory leaks.`)
             throw error
         }
 
+        const handleErr = async (error: unknown) => {
+            if (!this.pollingRunning) throw error
+            else if (error instanceof GrammyError) {
+                debugErr(error.message)
+                if (error.error_code === 401) {
+                    debugErr(
+                        'Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).'
+                    )
+                    throw error
+                } else if (error.error_code === 409) {
+                    debugErr(
+                        'Consider revoking the bot token if you believe that no other instance is running.'
+                    )
+                    throw error
+                }
+            } else debugErr(error)
+            debugErr('Call to `getUpdates` failed, retrying in 3 seconds ...')
+            await new Promise(r => setTimeout(r, 3000))
+        }
+
         while (this.pollingRunning) {
             // fetch updates
             const offset = this.lastTriedUpdateId + 1
@@ -349,14 +370,7 @@ you can circumvent this protection against memory leaks.`)
                         this.pollingAbortController.signal
                     )
                 } catch (error) {
-                    if (this.pollingRunning) {
-                        debugErr(
-                            'Call to `getUpdates` failed, retrying in 3 seconds ...'
-                        )
-                        await new Promise(r => setTimeout(r, 3000))
-                    } else {
-                        throw error
-                    }
+                    await handleErr(error)
                 }
             } while (updates === undefined && this.pollingRunning)
             if (updates === undefined) break
