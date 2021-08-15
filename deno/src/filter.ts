@@ -59,6 +59,7 @@ function preprocess(filter: string[]): string[][] {
             if (!(l1 in L1_SHORTCUTS)) return [q]
             // only expand for at least one non-empty part
             if (!l1 && !l2 && !l3) return [q]
+            // perform actual expansion
             const targets = L1_SHORTCUTS[l1 as L1Shortcuts]
             const expanded = targets.map(s => [s, l2, l3])
             // assume that bare L1 expansions are always correct
@@ -75,10 +76,13 @@ function preprocess(filter: string[]): string[][] {
             if (!(l2 in L2_SHORTCUTS)) return [q]
             // only expand for at least one non-empty part
             if (!l2 && !l3) return [q]
+            // perform actual expansion
+            const targets = L2_SHORTCUTS[l2 as L2Shortcuts]
+            const expanded = targets.map(s => [l1, s, l3])
+            // assume that bare L1 expansions are always correct
+            if (l3 === undefined) return expanded
             // filter out invalid expansions
-            return L2_SHORTCUTS[l2 as L2Shortcuts]
-                .map(s => [l1, s, l3])
-                .filter(([, s]) => !!valid[l1]?.[s]?.[l3])
+            return expanded.filter(([, s]) => !!valid[l1]?.[s]?.[l3])
         })
     if (expanded.length === 0)
         throw new Error(
@@ -483,10 +487,22 @@ interface Shortcuts<U extends Update> {
 // === Define some helpers for handling shortcuts, e.g. in 'edit:photo'
 const L1_SHORTCUTS = {
     '': ['message', 'channel_post'],
+    msg: ['message', 'channel_post'],
     edit: ['edited_message', 'edited_channel_post'],
 } as const
 const L2_SHORTCUTS = {
     '': ['entities', 'caption_entities'],
+    media: ['photo', 'video'],
+    file: [
+        'photo',
+        'animation',
+        'audio',
+        'document',
+        'video',
+        'video_note',
+        'voice',
+        'sticker',
+    ],
 } as const
 type L1Shortcuts = KeyOf<typeof L1_SHORTCUTS>
 type L2Shortcuts = KeyOf<typeof L2_SHORTCUTS>
