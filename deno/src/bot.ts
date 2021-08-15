@@ -38,6 +38,14 @@ export interface PollingOptions {
      * Pass True to drop all pending updates before starting the long polling.
      */
     drop_pending_updates?: boolean
+    /**
+     * Synchronous callback that is useful for logging. It will be executed once
+     * the setup of the bot has completed, and immediately before the first
+     * updates are being fetched. The bot information `bot.botInfo` will be
+     * available when the function is run. For convenience, the callback
+     * function receives the value of `bot.botInfo` as an argument.
+     */
+    onStart?: (botInfo: UserFromGetMe) => void
 }
 
 export { BotError }
@@ -119,7 +127,7 @@ export class Bot<
      */
     public readonly api: A
 
-    private botInfo: UserFromGetMe | undefined
+    private me: UserFromGetMe | undefined
     private readonly clientConfig: ApiClientOptions | undefined
 
     private readonly ContextConstructor: new (
@@ -131,7 +139,7 @@ export class Bot<
      * (rejects). If you set your own error handler via `bot.catch`, all that
      * happens is that this variable is assigned.
      */
-    errorHandler: ErrorHandler<C> = async err => {
+    public errorHandler: ErrorHandler<C> = async err => {
         console.error(
             'Error in middleware while handling update',
             err.ctx?.update?.update_id,
@@ -166,7 +174,7 @@ export class Bot<
     constructor(public readonly token: string, config?: BotConfig<C>) {
         super()
         if (token.length === 0) throw new Error('Empty token!')
-        this.botInfo = config?.botInfo
+        this.me = config?.botInfo
         this.clientConfig = config?.client
         this.ContextConstructor =
             config?.ContextConstructor ??
@@ -177,17 +185,43 @@ export class Bot<
     }
 
     /**
+     * Information about the bot itself as retrieved from `api.getMe()`. Only
+     * available after the bot has been initialized via `await bot.init()`, or
+     * after the value has been set manually.
+     *
+     * Starting the bot will always perform the initialization automatically,
+     * unless a manual value is already set.
+     *
+     * Note that the recommended way to set a custom bot information object is
+     * to pass it to the configuration object of the `new Bot()` instatiation,
+     * rather than assigning this property.
+     */
+    public set botInfo(botInfo: UserFromGetMe) {
+        this.me = botInfo
+    }
+    public get botInfo(): UserFromGetMe {
+        if (this.me === undefined) {
+            throw new Error(
+                'Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!'
+            )
+        }
+        return this.me
+    }
+
+    /**
      * Initializes the bot, i.e. fetches information about the bot itself. This
      * method is called automatically, you don't have to call it manually.
      */
     async init() {
-        if (this.botInfo === undefined) {
+        if (this.me === undefined) {
             debug('Initializing bot')
-            this.botInfo = await this.api.getMe()
+            const me = await this.api.getMe()
+            if (this.me === undefined) this.me = me
+            else debug('Bot info was set manually by now, will not overwrite')
         } else {
             debug('Bot already initialized!')
         }
-        debug(`I am ${this.botInfo.username}!`)
+        debug(`I am ${this.me.username}!`)
     }
 
     /**
@@ -206,7 +240,7 @@ export class Bot<
         update: Update,
         webhookReplyEnvelope?: WebhookReplyEnvelope
     ) {
-        if (this.botInfo === undefined)
+        if (this.me === undefined)
             throw new Error(
                 'Bot not initialized! Either call `await bot.init()`, \
 or directly set the `botInfo` option in the `Bot` constructor to specify \
@@ -219,7 +253,7 @@ a known bot info object.'
         const t = this.api.config.installedTransformers()
         if (t.length > 0) api.config.use(...t)
         // create context object
-        const ctx = new this.ContextConstructor(update, api, this.botInfo)
+        const ctx = new this.ContextConstructor(update, api, this.me)
         try {
             // run middleware stack
             await run(this.middleware(), ctx)
@@ -296,6 +330,13 @@ you can circumvent this protection against memory leaks.`)
         const limit = options?.limit
         const timeout = options?.timeout ?? 30 // seconds
         let allowed_updates = options?.allowed_updates
+        try {
+            options?.onStart?.(this.botInfo)
+        } catch (error) {
+            this.pollingRunning = false
+            this.pollingAbortController = undefined
+            throw error
+        }
 
         while (this.pollingRunning) {
             // fetch updates
