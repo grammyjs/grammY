@@ -51,7 +51,7 @@ export class InputFile {
     private [internalInputFileData]: ConstructorParameters<typeof InputFile>[0]
     public get [inputFileData]() {
         const file = this[internalInputFileData]
-        return file instanceof File ? file.stream() : file
+        return file instanceof Blob ? file.stream() : file
     }
     /**
      * Optional name of the constructed `InputFile` instance.
@@ -73,7 +73,7 @@ export class InputFile {
             | Uint8Array
             | ReadableStream<Uint8Array>
             | AsyncIterable<Uint8Array>
-            | File,
+            | Blob,
         filename?: string
     ) {
         this[internalInputFileData] = file
