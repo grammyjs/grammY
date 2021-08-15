@@ -401,8 +401,7 @@ you can circumvent this protection against memory leaks.`)
      *
      * All middleware that is currently being executed may complete, but no
      * further `getUpdates` calls will be performed. The current `getUpdates`
-     * request will be cancelled (unless you know what Deno is and you're using
-     * it, there cancelling requests is not supported yet).
+     * request will be cancelled.
      *
      * In addition, this method will _confirm_ the last received update to the
      * Telegram servers by calling `getUpdates` one last time with the latest
