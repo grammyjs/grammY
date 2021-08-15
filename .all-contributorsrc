@@ -138,8 +138,36 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/74030149?v=4",
       "profile": "https://github.com/CikiMomogi",
       "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "AndreoliBR",
+      "name": "AndreoliBR",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15970011?v=4",
+      "profile": "https://github.com/AndreoliBR",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "Loskir",
+      "name": "Kirill Loskutov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21295738?v=4",
+      "profile": "https://github.com/Loskir",
+      "contributions": [
         "doc",
-        "tutorial"
+        "bug",
+        "ideas"
+      ]
+    },
+    {
+      "login": "AndrewLaneX",
+      "name": "Andrew Lane",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32808683?v=4",
+      "profile": "https://lungers.com/",
+      "contributions": [
+        "bug"
       ]
     }
   ],
