@@ -37,6 +37,8 @@ export const baseFetchConfig = {}
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const inputFileData = Symbol('InputFile data')
+// Internal data storage for data in `InputFile` instances
+const internalInputFileData = Symbol('Internal InputFile data')
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -46,7 +48,11 @@ export const inputFileData = Symbol('InputFile data')
  * Reference](https://core.telegram.org/bots/api#inputfile).
  */
 export class InputFile {
-    public readonly [inputFileData]: ConstructorParameters<typeof InputFile>[0]
+    private [internalInputFileData]: ConstructorParameters<typeof InputFile>[0]
+    public get [inputFileData]() {
+        const file = this[internalInputFileData]
+        return file instanceof File ? file.stream() : file
+    }
     /**
      * Optional name of the constructed `InputFile` instance.
      *
@@ -66,12 +72,14 @@ export class InputFile {
             | string
             | Uint8Array
             | ReadableStream<Uint8Array>
-            | AsyncIterable<Uint8Array>,
+            | AsyncIterable<Uint8Array>
+            | File,
         filename?: string
     ) {
-        this[inputFileData] = file
-        if (filename === undefined && typeof file === 'string')
-            filename = basename(file)
+        this[internalInputFileData] = file
+        if (filename === undefined)
+            if (typeof file === 'string') filename = basename(file)
+            else if (file instanceof File) filename = file.name
         this.filename = filename
     }
 }
