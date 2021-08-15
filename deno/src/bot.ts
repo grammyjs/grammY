@@ -379,6 +379,7 @@ you can circumvent this protection against memory leaks.`)
             // we can save same traffic by only sending it in the first request
             allowed_updates = undefined
         }
+        debug('Middleware is done running')
     }
 
     /**
@@ -395,6 +396,10 @@ you can circumvent this protection against memory leaks.`)
      * discarded and will be fetched again when the bot starts up the next time.
      * Confer the official documentation on confirming updates if you want to
      * know more: https://core.telegram.org/bots/api#getupdates
+     *
+     * > Note that this method will not wait for the middleware stack to finish.
+     * > If you need to run code after all middleware is done, consider waiting
+     * > for the promise returned by `bot.start()` to resolve.
      */
     async stop() {
         if (this.pollingRunning) {
