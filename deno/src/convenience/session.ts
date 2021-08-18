@@ -114,8 +114,9 @@ export interface SessionOptions<S> {
      * A storage adapter to your storage solution. Provides read, write, and
      * delete access to the session middleware.
      *
-     * Consider using third-party session middleware instead of rolling your own
-     * implementation of this.
+     * Consider using a [known storage
+     * adapter](https://grammy.dev/plugins/session.html#known-storage-adapters)
+     * instead of rolling your own implementation of this.
      *
      * The default implementation will store session in memory. The data will be
      * lost whenever your bot restarts.
@@ -170,7 +171,12 @@ export function session<S, C extends Context>(
     options?: SessionOptions<S>
 ): MiddlewareFn<C & SessionFlavor<S>> {
     const getSessionKey = options?.getSessionKey ?? defaultGetSessionKey
-    const storage = options?.storage ?? new MemorySessionStorage()
+    const storage =
+        options?.storage ??
+        (debug(
+            'Storing session data in memory, all data will be lost when the bot restarts.'
+        ),
+        new MemorySessionStorage())
     return async (ctx, next) => {
         const key = await getSessionKey(ctx)
         let value =
@@ -236,7 +242,12 @@ export function lazySession<S, C extends Context>(
     options?: SessionOptions<S>
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
     const getSessionKey = options?.getSessionKey ?? defaultGetSessionKey
-    const storage = options?.storage ?? new MemorySessionStorage()
+    const storage =
+        options?.storage ??
+        (debug(
+            'Storing session data in memory, all data will be lost when the bot restarts.'
+        ),
+        new MemorySessionStorage())
     return async (ctx, next) => {
         const key = await getSessionKey(ctx)
         let value: Promise<S | undefined> | S | undefined = undefined
@@ -294,17 +305,35 @@ function defaultGetSessionKey(ctx: Context): string | undefined {
     return ctx.chat?.id.toString()
 }
 
-class MemorySessionStorage<S> implements StorageAdapter<S> {
+/**
+ * The memory session storage is a built-in storage adapter that saves your
+ * session data in RAM using a regular JavaScript `Map` object. If you use this
+ * storage adapter, all sessions will be lost when your process terminates or
+ * restarts. Hence, you should only use it for short-lived data that is not
+ * important to persist.
+ *
+ * This class is used as default if you do not provide a storage adapter, e.g.
+ * to your database.
+ *
+ * This storage adapter features expiring sessions. When instatiating this class
+ * yourself, you can pass a time to live in milliseconds that will be used for
+ * each session object. If a session for a user expired, the session data will
+ * be discarded on its first read, and a fresh session object as returned by the
+ * `inital` option (or undefined) will be put into place.
+ */
+export class MemorySessionStorage<S> implements StorageAdapter<S> {
     private readonly storage = new Map<
         string,
         { session: S; expires?: number }
     >()
 
-    constructor(private readonly timeToLive = Infinity) {
-        debug(
-            'Storing session data in memory, all data will be lost when the bot restarts.'
-        )
-    }
+    /**
+     * Constructs a new memory session storage with the given time to live. Note
+     * that this storage adapter will not store your data permanently.
+     *
+     * @param timeToLive TTL in milliseconds, default is `Infinity`
+     */
+    constructor(private readonly timeToLive = Infinity) {}
 
     read(key: string) {
         const value = this.storage.get(key)
