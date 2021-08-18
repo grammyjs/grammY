@@ -28,13 +28,13 @@ export type RawApi = {
           ) => Promise<ReturnType<Telegram[M]>>
 }
 
-export type Payload<M extends Methods<R>, R extends RawApi> = R[M] extends (
-    ...args: [Record<string, unknown>, ...unknown[]]
-) => unknown
-    ? Parameters<R[M]>[0] extends undefined // deno-lint-ignore ban-types
-        ? {}
-        : NonNullable<Parameters<R[M]>[0]> // deno-lint-ignore ban-types
-    : {}
+export type Payload<M extends Methods<R>, R extends RawApi> = M extends unknown
+    ? R[M] extends (signal?: AbortSignal) => unknown // deno-lint-ignore ban-types
+        ? {} // deno-lint-ignore no-explicit-any
+        : R[M] extends (args: any, signal?: AbortSignal) => unknown
+        ? Parameters<R[M]>[0]
+        : never
+    : never
 
 /**
  * Small utility interface that abstracts from webhook reply calls of different

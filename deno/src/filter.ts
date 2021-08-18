@@ -79,7 +79,7 @@ function preprocess(filter: string[]): string[][] {
             // perform actual expansion
             const targets = L2_SHORTCUTS[l2 as L2Shortcuts]
             const expanded = targets.map(s => [l1, s, l3])
-            // assume that bare L1 expansions are always correct
+            // assume that bare L2 expansions are always correct
             if (l3 === undefined) return expanded
             // filter out invalid expansions
             return expanded.filter(([, s]) => !!valid[l1]?.[s]?.[l3])
