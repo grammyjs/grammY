@@ -2,8 +2,8 @@ const isDeno = typeof Deno !== 'undefined'
 
 // === Needed imports
 import { InputFileProxy } from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.6?dts'
-import { basename } from 'https://deno.land/std@0.105.0/path/mod.ts'
-import { iter } from 'https://deno.land/std@0.105.0/io/mod.ts'
+import { basename } from 'https://deno.land/std@0.106.0/path/mod.ts'
+import { iter } from 'https://deno.land/std@0.106.0/io/mod.ts'
 
 // === Export all API types
 export * from 'https://cdn.skypack.dev/@grammyjs/types@v2.2.6?dts'
@@ -23,7 +23,7 @@ if (isDeno) {
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from 'https://deno.land/std@0.105.0/io/mod.ts'
+export { readableStreamFromIterable as itrToStream } from 'https://deno.land/std@0.106.0/io/mod.ts'
 // Turn a file path into an AsyncIterable<Uint8Array>
 export const streamFile = isDeno
     ? (path: string) => Deno.open(path).then(iter)
