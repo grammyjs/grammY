@@ -406,7 +406,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     if (e.offset !== 0) return false
                     const cmd = txt.substring(1, e.length)
                     if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                        ctx.match = txt.substr(cmd.length + 1)
+                        ctx.match = txt.substr(cmd.length + 1).trimStart()
                         return true
                     }
                     const index = cmd.indexOf('@')
@@ -415,7 +415,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     if (atTarget !== ctx.me.username) return false
                     const atCommand = cmd.substring(0, index)
                     if (noAtCommands.has(atCommand)) {
-                        ctx.match = txt.substr(cmd.length + 1)
+                        ctx.match = txt.substr(cmd.length + 1).trimStart()
                         return true
                     }
                     return false
