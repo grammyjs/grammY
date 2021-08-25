@@ -327,8 +327,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.command('help', ctx => { ... })
      * ```
      *
-     * The rest of the message (excluding the command) is provided via
-     * `ctx.match`.
+     * The rest of the message (excluding the command, and trimmed) is provided
+     * via `ctx.match`.
      *
      * > **Did you know?** You can use deep linking
      * > (https://core.telegram.org/bots#deep-linking) to let users start your
@@ -356,9 +356,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * `ctx.message` is potentially `undefined`, so you should use `ctx.msg`
      * instead to grab both messages and channel posts. Alternatively, if you
      * want to limit your bot to finding commands only in private and group
-     * chats, you can do use `bot.on('message').command('start', ctx => { ...
-     * })`, or even store a message-only version of your bot in a variable like
-     * so:
+     * chats, you can use `bot.on('message').command('start', ctx => { ... })`,
+     * or even store a message-only version of your bot in a variable like so:
      * ```ts
      * const m = bot.on('message')
      *
