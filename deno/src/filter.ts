@@ -285,12 +285,7 @@ const CHANNEL_POST_KEYS = {
     channel_chat_created: {},
 } as const
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const
-const CHAT_MEMBER_UPDATED_KEYS = {
-    chat: {},
-    from: USER_KEYS,
-    old_chat_member: {},
-    new_chat_member: {},
-} as const
+const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const
 
 // L1
 const UPDATE_KEYS = {
