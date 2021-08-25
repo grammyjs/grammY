@@ -178,6 +178,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "waptik",
+      "name": "Stephane Mensah",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1687551?v=4",
+      "profile": "https://beta.ku-di.com/waptik",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
