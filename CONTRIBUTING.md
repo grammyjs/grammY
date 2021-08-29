@@ -36,3 +36,43 @@ We use Deno testing, Deno linting, and the [Deno extension](https://marketplace.
 We just make sure that _the code also runs on Node.js_, but this transpilation process is automated, and you usually don't even have to think about it.
 
 > Note that not all plugins of grammY have to have the same setup: many of them only integrate with grammY itself, and hence can be written for Node and automatically ported to Deno via <https://skypack.dev/> and similar services.
+
+## How to Contribute
+
+There are several areas of contributions, and they have different ways to get you started.
+
+- **Docs.**
+  You can always just edit the documentation by clicking the link at the bottom of the respective page.
+  This will open a pull request on GitHub.
+- **Core.**
+  We are happy to take pull requests of any kind against the core code base of grammY.
+  If you're unsure whether or not your work goes in the right direction, simply ask about it in an issue or in the [Telegram chat](https://telegram.me/grammyjs).
+- **Plugins.**
+  There are both official plugins and third-party plugins.
+  Our official plugins need to be of high quality (100 % TypeScript, ES6, Deno support, docs that are on par with grammY, semver, etc).
+  Third-party plugins are independent and anyone can do them however they want.
+  If a third-party plugins was to be listed on the website, some docs would be nice.
+- **Storage adapters.**
+  Please send a message to the [group chat](https://telegram.me/grammyjs) if you want to create an offical storage adapter for the [session plugin](https://grammy.dev/plugins/session.html).
+  You will be granted all necessary permissions, and the repository will be listed [here](https://grammy.dev/plugins/session.html#official).
+  Consider checking out an existing implementation to make your life easier, e.g. [this one](https://github.com/grammyjs/storage-firestore/blob/main/src/index.ts).
+- **Issues, bugs, and everything else.**
+  We're happy to hear from you if you want to report a bug, request a feature, or contribute anything else—also if it is not code.
+  There are no technical steps to this.
+
+### Working on the Core of grammY
+
+1. Install Deno from <https://deno.land>.
+2. Use <https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno> or a similar extension if you are using a different editor.
+3. `cd` into `deno/` and run `deno cache src/mod.ts`.
+
+You are now ready to work on grammY.
+
+Before you open a PR, make sure to run `deno test` and `deno lint` on the Deno codebase, i.e. inside the `deno/` subdir.
+
+### Working on an Official Plugin of grammY
+
+This works analogously to the grammY core development.
+
+If you want to publish a new official plugin, a quick message in the [group chat](https://telegram.me/grammyjs) is enough and you will be granted the necessary permissions to work on a repository under the [@grammyjs](https://github.com/grammyjs) organisation on GitHub, and to publish your plugin on npm.
+You will be responsible for maintaining it, but perhaps other people will join in.
