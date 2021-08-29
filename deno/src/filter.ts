@@ -426,9 +426,10 @@ type L2Parts<
 
 /**
  * This type infers which properties will be present on the given context object
- * provided it matches given filter query. If the filter query is a union type,
- * the produced context object will be a union of possible combinations, hence
- * allowing you to narrow down manually which of the properties are present.
+ * provided it matches a given filter query. If the filter query is a union
+ * type, the produced context object will be a union of possible combinations,
+ * hence allowing you to narrow down manually which of the properties are
+ * present.
  *
  * In some sense, this type computes `matchFilter` on the type level.
  */
