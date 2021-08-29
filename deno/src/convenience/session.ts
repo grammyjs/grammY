@@ -30,7 +30,8 @@ export interface SessionFlavor<S> {
      * `getSessionKey(ctx) === undefined` for the respective context object
      * `ctx`.
      */
-    session: S
+    get session(): S
+    set session(session: S | null | undefined)
 }
 /**
  * A lazy session flavor is a context flavor that holds a promise of some
@@ -59,7 +60,8 @@ export interface LazySessionFlavor<S> {
      * `getSessionKey(ctx) === undefined` holds for the respective context
      * object `ctx`.
      */
-    session: MaybePromise<S>
+    get session(): MaybePromise<S>
+    set session(session: MaybePromise<S | null | undefined>)
 }
 
 /**
@@ -161,6 +163,9 @@ export interface SessionOptions<S> {
  *
  * It is recommended to make use of the `inital` option in the configuration
  * object, which correctly initializes session objects for new chats.
+ *
+ * You can delete the session data by setting `ctx.session` to `null` or
+ * `undefined`.
  *
  * Check out the [documentation](https://grammy.dev/plugins/session.html) on the
  * website to know more about how sessions work in grammY.
