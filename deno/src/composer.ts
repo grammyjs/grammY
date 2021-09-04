@@ -209,8 +209,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * @param middleware The middleware to register
      */
-    use(...middleware: Array<Middleware<C>>) {
-        const composer = new Composer(...middleware)
+    use<T extends C>(...middleware: Array<Middleware<T>>) {
+        const composer = new Composer<T>(...middleware)
         this.handler = concat(this.handler, flatten(composer))
         return composer
     }
