@@ -185,7 +185,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1687551?v=4",
       "profile": "https://beta.ku-di.com/waptik",
       "contributions": [
-        "bug"
+        "bug",
+        "plugin"
       ]
     },
     {
@@ -213,6 +214,17 @@
       "profile": "https://satont.js.org/",
       "contributions": [
         "plugin"
+      ]
+    },
+    {
+      "login": "deptyped",
+      "name": "deptyped",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26162440?v=4",
+      "profile": "https://github.com/deptyped",
+      "contributions": [
+        "example",
+        "doc",
+        "tutorial"
       ]
     }
   ],
