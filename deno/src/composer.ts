@@ -305,16 +305,19 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     hears(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, ':text' | ':caption'>>>
-    ): Composer<Filter<C, ':text' | ':caption'>> {
+        ...middleware: Array<Middleware<HearsContext<C>>>
+    ): Composer<HearsContext<C>> {
         const trg = triggerFn(trigger)
-        return this.on([':text', ':caption']).filter(ctx => {
-            const msg = ctx.message ?? ctx.channelPost
-            if (msg === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
-            const txt = msg.text ?? msg.caption
-            if (txt === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
-            return match(ctx, txt, trg)
-        }, ...middleware)
+        return this.on([':text', ':caption']).filter(
+            (ctx): ctx is HearsContext<C> => {
+                const msg = ctx.message ?? ctx.channelPost
+                if (msg === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
+                const txt = msg.text ?? msg.caption
+                if (txt === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
+                return match(ctx, txt, trg)
+            },
+            ...middleware
+        )
     }
 
     /**
@@ -829,6 +832,10 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
     )
 }
 
+type HearsContext<C extends Context> = Filter<
+    C & { match: string | RegExpMatchArray },
+    ':text' | ':caption'
+>
 type CommandContext<C extends Context> = Filter<
     C & { match: string },
     ':entities:bot_command'
