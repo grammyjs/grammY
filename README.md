@@ -4,7 +4,7 @@ _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 ---
 
-_<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs)</h1>_
+_<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs) | [News](https://telegram.me/grammyjs_news)</h1>_
 
 <div align="center">
 
@@ -15,9 +15,11 @@ _<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.den
 
 </div>
 
-**grammY makes it easy to create Telegram bots.**
+**grammY makes it easy to create Telegram bots.** Both for beginners and at scale.
 
-No matter whether you just learned how to code and are looking for something **simple to get started**, or whether you are an experienced developer that has to deploy a complex codebase that can autoscale to handle thousands of messages per second.
+You want grammY because it is easy to use. It is very powerful and always up to date. It has the best [documentation](https://grammy.dev) in town. It is extremely efficient and scales up effortlessly. It has a thriving ecosystem of plugins, a friendly community chat, seamless integrations with web frameworks and databases, and so much more.
+
+Are you ready? 🤖🚀
 
 Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript) and run on [Node.js](https://nodejs.org/).
 
@@ -60,7 +62,7 @@ Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent [documentation](https://grammy.dev). If you are using [VSCode](https://code.visualstudio.com/) as your code editor, you can hover over any element of grammY to get a detailed description of what that thing does or means.
+grammY has an excellent [documentation](https://grammy.dev), and an [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts). It even integrates with your code editor, e.g. [VSCode](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
 
 If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 
