@@ -311,9 +311,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         return this.on([':text', ':caption']).filter(
             (ctx): ctx is HearsContext<C> => {
                 const msg = ctx.message ?? ctx.channelPost
-                if (msg === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
                 const txt = msg.text ?? msg.caption
-                if (txt === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
                 return match(ctx, txt, trg)
             },
             ...middleware
@@ -398,11 +396,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         return this.on(':entities:bot_command').filter(
             (ctx): ctx is CommandContext<C> => {
                 const msg = ctx.message ?? ctx.channelPost
-                if (msg === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
                 const txt = msg.text ?? msg.caption
-                if (txt === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
                 const entities = msg.entities ?? msg.caption_entities
-                if (entities === undefined) return false // TODO: remove after https://github.com/microsoft/TypeScript/pull/44771
                 return entities.some(e => {
                     if (e.type !== 'bot_command') return false
                     if (e.offset !== 0) return false
