@@ -9,6 +9,8 @@ import { GrammyError, HttpError } from './error.ts'
 import { createRequestConfig } from './payload.ts'
 const debug = d('grammy:core')
 
+export type Methods<R extends RawApi> = string & keyof R
+
 // Available under `bot.api.raw`
 /**
  * Represents the raw Telegram Bot API with all methods specified 1:1 as
@@ -26,6 +28,14 @@ export type RawApi = {
           ) => Promise<ReturnType<Telegram[M]>>
 }
 
+export type Payload<M extends Methods<R>, R extends RawApi> = M extends unknown
+    ? R[M] extends (signal?: AbortSignal) => unknown // deno-lint-ignore ban-types
+        ? {} // deno-lint-ignore no-explicit-any
+        : R[M] extends (args: any, signal?: AbortSignal) => unknown
+        ? Parameters<R[M]>[0]
+        : never
+    : never
+
 /**
  * Small utility interface that abstracts from webhook reply calls of different
  * web frameworks.
@@ -35,13 +45,20 @@ export interface WebhookReplyEnvelope {
 }
 
 /**
- * Type of a function that can perform an API call. Used for Tranfromers.
+ * Type of a function that can perform an API call. Used for Transformers.
  */
-export type ApiCallFn = <M extends keyof RawApi>(
+export type ApiCallFn<R extends RawApi = RawApi> = <M extends Methods<R>>(
     method: M,
-    payload: Opts<M>,
+    payload: Payload<M, R>,
     signal?: AbortSignal
-) => Promise<ApiResponse<ReturnType<Telegram[M]>>>
+) => Promise<ApiResponse<ApiCallResult<M, R>>>
+
+type ApiCallResult<M extends Methods<R>, R extends RawApi> = R[M] extends (
+    ...args: unknown[]
+) => unknown
+    ? Await<ReturnType<R[M]>>
+    : never
+type Await<T> = T extends PromiseLike<infer V> ? V : T
 
 /**
  * API call transformers are functions that can access and modify the method and
@@ -52,38 +69,41 @@ export type ApiCallFn = <M extends keyof RawApi>(
  * [documentation](https://grammy.dev/advanced/transformers.html) to read more
  * about how to use transformers.
  */
-export type Transformer = <M extends keyof RawApi>(
-    prev: ApiCallFn,
+export type Transformer<R extends RawApi = RawApi> = <M extends Methods<R>>(
+    prev: ApiCallFn<R>,
     method: M,
-    payload: Opts<M>,
+    payload: Payload<M, R>,
     signal?: AbortSignal
-) => Promise<ApiResponse<ReturnType<Telegram[M]>>>
-export type TransformerConsumer = TransformableApi['use']
+) => Promise<ApiResponse<ApiCallResult<M, R>>>
+export type TransformerConsumer<R extends RawApi = RawApi> =
+    TransformableApi<R>['use']
 /**
  * A transformable API enhances the `RawApi` type by transformers.
  */
-export interface TransformableApi {
+export interface TransformableApi<R extends RawApi = RawApi> {
     /**
      * Access to the raw API that the tranformers will be installed on.
      */
-    raw: RawApi
+    raw: R
     /**
      * Can be used to register any number of transformers on the API.
      */
-    use: (...transformers: Transformer[]) => this
+    use: (...transformers: Transformer<R>[]) => this
     /**
      * Returns a readonly list or the currently installed transformers. The list
      * is sorted by time of installation where index 0 represents the
      * transformer that was installed first.
      */
-    installedTransformers: Transformer[]
+    installedTransformers: Transformer<R>[]
 }
 
 // Transformer base functions
-const concatTransformer =
-    (prev: ApiCallFn, trans: Transformer): ApiCallFn =>
-    (method, payload, signal) =>
-        trans(prev, method, payload, signal)
+function concatTransformer<R extends RawApi>(
+    prev: ApiCallFn<R>,
+    trans: Transformer<R>
+): ApiCallFn<R> {
+    return (method, payload, signal) => trans(prev, method, payload, signal)
+}
 
 /**
  * Options to pass to the API client that eventually connects to the Telegram
@@ -102,7 +122,7 @@ export interface ApiClientOptions {
      * @param root The URL that was passed in `apiRoot`, or its default value
      * @param token The bot's token that was passed when creating the bot
      * @param method The API method to be called, e.g. `getMe`
-     * @returns The url that will be fetched during the API call
+     * @returns The URL that will be fetched during the API call
      */
     buildUrl?: (
         root: string,
@@ -116,10 +136,12 @@ export interface ApiClientOptions {
      * to one HTTP request per update. However, there are a number of drawbacks
      * to using this:
      * 1) You will not be able to handle potential errors of the respective API
-     *    call.
+     *    call. This includes rate limiting errors, so sent messages can be
+     *    swallowed by the Bot API server and there is no way to detect if a
+     *    message was actually sent or not.
      * 2) More importantly, you also won't have access to the response object,
      *    so e.g. calling `sendMessage` will not give you access to the message
-     *    you send.
+     *    you sent.
      * 3) Furthermore, it is not possible to cancel the request. The
      *    `AbortSignal` will be disregarded.
      * 4) Note also that the types in grammY do not reflect the consequences of
@@ -139,7 +161,7 @@ export interface ApiClientOptions {
      *
      * @param method The method to call
      */
-    canUseWebhookReply?: (method: keyof RawApi) => boolean
+    canUseWebhookReply?: (method: string) => boolean
     /**
      * Base configuration for `fetch` calls. Specify any additional parameters
      * to use when fetching a method of the Telegram Bot API. Default: `{
@@ -171,12 +193,12 @@ const DEFAULT_OPTIONS: Required<ApiClientOptions> = {
     sensitiveLogs: false,
 }
 
-class ApiClient {
+class ApiClient<R extends RawApi> {
     private readonly options: Required<ApiClientOptions>
 
     private hasUsedWebhookReply = false
 
-    readonly installedTransformers: Transformer[] = []
+    readonly installedTransformers: Transformer<R>[] = []
 
     constructor(
         private readonly token: string,
@@ -186,7 +208,7 @@ class ApiClient {
         this.options = { ...DEFAULT_OPTIONS, ...options }
     }
 
-    private call: ApiCallFn = async (method, payload, signal) => {
+    private call: ApiCallFn<R> = async (method, payload, signal) => {
         debug('Calling', method)
         const url = this.options.buildUrl(
             this.options.apiRoot,
@@ -204,38 +226,38 @@ class ApiClient {
             await this.webhookReplyEnvelope.send(config.body)
             return { ok: true, result: true }
         } else {
-            const res = await fetch(url, {
-                ...this.options.baseFetchConfig,
-                signal,
-                ...config,
-            })
+            let res: Await<ReturnType<typeof fetch>>
+            try {
+                res = await fetch(url, {
+                    ...this.options.baseFetchConfig,
+                    signal,
+                    ...config,
+                })
+            } catch (err) {
+                let msg = `Network request for '${method}' failed!`
+                if (isTelegramError(err)) {
+                    msg += ` (${err.status}: ${err.statusText})`
+                } else if (this.options.sensitiveLogs && err instanceof Error) {
+                    msg += ` ${err.message}`
+                }
+                throw new HttpError(msg, err)
+            }
             return await res.json()
         }
     }
 
-    use(...transformers: Transformer[]) {
+    use(...transformers: Transformer<R>[]) {
         this.call = transformers.reduce(concatTransformer, this.call)
         this.installedTransformers.push(...transformers)
         return this
     }
 
-    async callApi<M extends keyof RawApi>(
+    async callApi<M extends Methods<R>>(
         method: M,
-        payload: Opts<M>,
+        payload: Payload<M, R>,
         signal?: AbortSignal
     ) {
-        let data: ApiResponse<ReturnType<Telegram[M]>> | undefined
-        try {
-            data = await this.call(method, payload, signal)
-        } catch (err) {
-            let msg = `Network request for '${method}' failed!`
-            if (isTelegramError(err)) {
-                msg += ` (${err.status}: ${err.statusText})`
-            } else if (this.options.sensitiveLogs && err instanceof Error) {
-                msg += ` ${err.message}`
-            }
-            throw new HttpError(msg, err)
-        }
+        const data = await this.call(method, payload, signal)
         if (data.ok) return data.result
         else
             throw new GrammyError(
@@ -260,24 +282,24 @@ class ApiClient {
  * @param options A number of options to pass to the created API client
  * @param webhookReplyEnvelope The webhook reply envelope that will be used
  */
-export function createRawApi(
+export function createRawApi<R extends RawApi>(
     token: string,
     options?: ApiClientOptions,
     webhookReplyEnvelope?: WebhookReplyEnvelope
-): TransformableApi {
-    const client = new ApiClient(token, options, webhookReplyEnvelope)
+): TransformableApi<R> {
+    const client = new ApiClient<R>(token, options, webhookReplyEnvelope)
 
-    const proxyHandler: ProxyHandler<RawApi> = {
-        get(_, m: keyof RawApi | 'toJSON') {
+    const proxyHandler: ProxyHandler<R> = {
+        get(_, m: Methods<R> | 'toJSON') {
             return m === 'toJSON'
                 ? '__internal'
                 : client.callApi.bind(client, m)
         },
         ...proxyMethods,
     }
-    const raw = new Proxy({} as RawApi, proxyHandler)
+    const raw = new Proxy({} as R, proxyHandler)
     const installedTransformers = client.installedTransformers
-    const api: TransformableApi = {
+    const api: TransformableApi<R> = {
         raw,
         installedTransformers,
         use: (...t) => {

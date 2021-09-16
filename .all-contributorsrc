@@ -24,7 +24,9 @@
         "question",
         "test",
         "plugin",
-        "platform"
+        "platform",
+        "review",
+        "mentoring"
       ]
     },
     {
@@ -73,7 +75,10 @@
       "contributions": [
         "code",
         "bug",
-        "plugin"
+        "plugin",
+        "doc",
+        "example",
+        "review"
       ]
     },
     {
@@ -93,7 +98,10 @@
       "contributions": [
         "plugin",
         "doc",
-        "ideas"
+        "ideas",
+        "review",
+        "bug",
+        "code"
       ]
     },
     {
@@ -122,6 +130,101 @@
       "profile": "https://github.com/jokasimr",
       "contributions": [
         "bug"
+      ]
+    },
+    {
+      "login": "CikiMomogi",
+      "name": "Ciki Momogi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74030149?v=4",
+      "profile": "https://github.com/CikiMomogi",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "AndreoliBR",
+      "name": "AndreoliBR",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15970011?v=4",
+      "profile": "https://github.com/AndreoliBR",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "Loskir",
+      "name": "Kirill Loskutov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21295738?v=4",
+      "profile": "https://github.com/Loskir",
+      "contributions": [
+        "doc",
+        "bug",
+        "ideas"
+      ]
+    },
+    {
+      "login": "AndrewLaneX",
+      "name": "Andrew Lane",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32808683?v=4",
+      "profile": "https://lungers.com/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "code-withAshish",
+      "name": "code-withAshish",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73625149?v=4",
+      "profile": "https://github.com/code-withAshish",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "waptik",
+      "name": "Stephane Mensah",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1687551?v=4",
+      "profile": "https://beta.ku-di.com/waptik",
+      "contributions": [
+        "bug",
+        "plugin"
+      ]
+    },
+    {
+      "login": "Asaku01",
+      "name": "Asaku01",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29716396?v=4",
+      "profile": "https://github.com/Asaku01",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "ppsimn",
+      "name": "ppsimn",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88509883?v=4",
+      "profile": "https://github.com/ppsimn",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Satont",
+      "name": "Satont",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42675886?v=4",
+      "profile": "https://satont.js.org/",
+      "contributions": [
+        "plugin"
+      ]
+    },
+    {
+      "login": "deptyped",
+      "name": "deptyped",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26162440?v=4",
+      "profile": "https://github.com/deptyped",
+      "contributions": [
+        "example",
+        "doc",
+        "tutorial"
       ]
     }
   ],

@@ -102,6 +102,7 @@ async function* payloadToMultipartItr(
             if (mustAttachIndirectly(key)) {
                 const id = randomId()
                 yield* filePart(id, key, value)
+                yield separator
                 yield valuePart(key, `attach://${id}`)
             } else {
                 yield* filePart(key, key, value)
@@ -111,6 +112,7 @@ async function* payloadToMultipartItr(
             if (value.media instanceof InputFile) {
                 const id = randomId()
                 yield* filePart(id, key, value.media)
+                yield separator
                 value.media = `attach://${id}`
             }
             yield valuePart(key, JSON.stringify(value))

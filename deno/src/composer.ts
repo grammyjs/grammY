@@ -3,7 +3,7 @@ import { Filter, FilterQuery, matchFilter } from './filter.ts'
 
 type MaybePromise<T> = T | Promise<T>
 type MaybeArray<T> = T | T[]
-// deno-lint-ignore ban-types because {} is required for this to work
+// deno-lint-ignore ban-types
 type StringWithSuggestions<S extends string> = (string & {}) | S // permits `string` but gives hints
 
 // === Middleware types
@@ -305,14 +305,17 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     hears(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, ':text' | ':caption'>>>
-    ): Composer<Filter<C, ':text' | ':caption'>> {
+        ...middleware: Array<Middleware<HearsContext<C>>>
+    ): Composer<HearsContext<C>> {
         const trg = triggerFn(trigger)
-        return this.on([':text', ':caption']).filter(ctx => {
-            const msg = ctx.message ?? ctx.channelPost
-            const txt = msg.text ?? msg.caption
-            return match(ctx, txt, trg)
-        }, ...middleware)
+        return this.on([':text', ':caption']).filter(
+            (ctx): ctx is HearsContext<C> => {
+                const msg = ctx.message ?? ctx.channelPost
+                const txt = msg.text ?? msg.caption
+                return match(ctx, txt, trg)
+            },
+            ...middleware
+        )
     }
 
     /**
@@ -325,8 +328,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.command('help', ctx => { ... })
      * ```
      *
-     * The rest of the message (excluding the command) is provided via
-     * `ctx.match`.
+     * The rest of the message (excluding the command, and trimmed) is provided
+     * via `ctx.match`.
      *
      * > **Did you know?** You can use deep linking
      * > (https://core.telegram.org/bots#deep-linking) to let users start your
@@ -352,10 +355,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * By default, commands are detected in channel posts, too. This means that
      * `ctx.message` is potentially `undefined`, so you should use `ctx.msg`
-     * instead to grab both messages and channel posts. Alternatively, if want
-     * to limit your bot to finding commands only in private and group chats,
-     * you can do use `bot.on('message').command('start', ctx => { ... })`, or
-     * even store a message-only version of your bot in a variable like so:
+     * instead to grab both messages and channel posts. Alternatively, if you
+     * want to limit your bot to finding commands only in private and group
+     * chats, you can use `bot.on('message').command('start', ctx => { ... })`,
+     * or even store a message-only version of your bot in a variable like so:
      * ```ts
      * const m = bot.on('message')
      *
@@ -400,7 +403,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     if (e.offset !== 0) return false
                     const cmd = txt.substring(1, e.length)
                     if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                        ctx.match = txt.substr(cmd.length + 1)
+                        ctx.match = txt.substr(cmd.length + 1).trimStart()
                         return true
                     }
                     const index = cmd.indexOf('@')
@@ -409,7 +412,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     if (atTarget !== ctx.me.username) return false
                     const atCommand = cmd.substring(0, index)
                     if (noAtCommands.has(atCommand)) {
-                        ctx.match = txt.substr(cmd.length + 1)
+                        ctx.match = txt.substr(cmd.length + 1).trimStart()
                         return true
                     }
                     return false
@@ -824,6 +827,10 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
     )
 }
 
+type HearsContext<C extends Context> = Filter<
+    C & { match: string | RegExpMatchArray },
+    ':text' | ':caption'
+>
 type CommandContext<C extends Context> = Filter<
     C & { match: string },
     ':entities:bot_command'

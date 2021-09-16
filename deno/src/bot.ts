@@ -3,6 +3,7 @@ import { BotError, Composer, run } from './composer.ts'
 import { Context } from './context.ts'
 import { Api } from './core/api.ts'
 import { ApiClientOptions, WebhookReplyEnvelope } from './core/client.ts'
+import { GrammyError } from './core/error.ts'
 import { Update, debug as d, UserFromGetMe } from './platform.ts'
 const debug = d('grammy:bot')
 const debugErr = d('grammy:error')
@@ -38,6 +39,14 @@ export interface PollingOptions {
      * Pass True to drop all pending updates before starting the long polling.
      */
     drop_pending_updates?: boolean
+    /**
+     * Synchronous callback that is useful for logging. It will be executed once
+     * the setup of the bot has completed, and immediately before the first
+     * updates are being fetched. The bot information `bot.botInfo` will be
+     * available when the function is run. For convenience, the callback
+     * function receives the value of `bot.botInfo` as an argument.
+     */
+    onStart?: (botInfo: UserFromGetMe) => void
 }
 
 export { BotError }
@@ -99,7 +108,10 @@ export interface BotConfig<C extends Context> {
  * bot.start()
  * ```
  */
-export class Bot<C extends Context = Context> extends Composer<C> {
+export class Bot<
+    C extends Context = Context,
+    A extends Api = Api
+> extends Composer<C> {
     private pollingRunning = false
     private pollingAbortController: AbortController | undefined
     private lastTriedUpdateId = 0
@@ -114,9 +126,9 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * Use this only outside of your middleware. If you have access to `ctx`,
      * then using `ctx.api` instead of `bot.api` is preferred.
      */
-    public readonly api: Api
+    public readonly api: A
 
-    private botInfo: UserFromGetMe | undefined
+    private me: UserFromGetMe | undefined
     private readonly clientConfig: ApiClientOptions | undefined
 
     private readonly ContextConstructor: new (
@@ -128,7 +140,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * (rejects). If you set your own error handler via `bot.catch`, all that
      * happens is that this variable is assigned.
      */
-    errorHandler: ErrorHandler<C> = async err => {
+    public errorHandler: ErrorHandler<C> = async err => {
         console.error(
             'Error in middleware while handling update',
             err.ctx?.update?.update_id,
@@ -163,14 +175,38 @@ export class Bot<C extends Context = Context> extends Composer<C> {
     constructor(public readonly token: string, config?: BotConfig<C>) {
         super()
         if (token.length === 0) throw new Error('Empty token!')
-        this.botInfo = config?.botInfo
+        this.me = config?.botInfo
         this.clientConfig = config?.client
         this.ContextConstructor =
             config?.ContextConstructor ??
             (Context as new (
                 ...args: ConstructorParameters<typeof Context>
             ) => C)
-        this.api = new Api(token, this.clientConfig)
+        this.api = new Api(token, this.clientConfig) as A
+    }
+
+    /**
+     * Information about the bot itself as retrieved from `api.getMe()`. Only
+     * available after the bot has been initialized via `await bot.init()`, or
+     * after the value has been set manually.
+     *
+     * Starting the bot will always perform the initialization automatically,
+     * unless a manual value is already set.
+     *
+     * Note that the recommended way to set a custom bot information object is
+     * to pass it to the configuration object of the `new Bot()` instatiation,
+     * rather than assigning this property.
+     */
+    public set botInfo(botInfo: UserFromGetMe) {
+        this.me = botInfo
+    }
+    public get botInfo(): UserFromGetMe {
+        if (this.me === undefined) {
+            throw new Error(
+                'Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!'
+            )
+        }
+        return this.me
     }
 
     /**
@@ -178,13 +214,15 @@ export class Bot<C extends Context = Context> extends Composer<C> {
      * method is called automatically, you don't have to call it manually.
      */
     async init() {
-        if (this.botInfo === undefined) {
+        if (this.me === undefined) {
             debug('Initializing bot')
-            this.botInfo = await this.api.getMe()
+            const me = await this.api.getMe()
+            if (this.me === undefined) this.me = me
+            else debug('Bot info was set manually by now, will not overwrite')
         } else {
             debug('Bot already initialized!')
         }
-        debug(`I am ${this.botInfo.username}!`)
+        debug(`I am ${this.me.username}!`)
     }
 
     /**
@@ -203,7 +241,12 @@ export class Bot<C extends Context = Context> extends Composer<C> {
         update: Update,
         webhookReplyEnvelope?: WebhookReplyEnvelope
     ) {
-        if (this.botInfo === undefined) throw new Error('Bot not initialized!')
+        if (this.me === undefined)
+            throw new Error(
+                'Bot not initialized! Either call `await bot.init()`, \
+or directly set the `botInfo` option in the `Bot` constructor to specify \
+a known bot info object.'
+            )
         debug(`Processing update ${update.update_id}`)
         // create API object
         const api = new Api(this.token, this.clientConfig, webhookReplyEnvelope)
@@ -211,7 +254,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
         const t = this.api.config.installedTransformers()
         if (t.length > 0) api.config.use(...t)
         // create context object
-        const ctx = new this.ContextConstructor(update, api, this.botInfo)
+        const ctx = new this.ContextConstructor(update, api, this.me)
         try {
             // run middleware stack
             await run(this.middleware(), ctx)
@@ -268,7 +311,7 @@ export class Bot<C extends Context = Context> extends Composer<C> {
         // Prevent common misuse that causes memory leak
         this.use = () => {
             throw new Error(`It looks like you are registering more listeners \
-on your bot from within other listeners! This mean that every time your bot \
+on your bot from within other listeners! This means that every time your bot \
 handles a message like this one, new listeners will be added. This list grows until \
 your machine crashes, so grammY throws this error to tell you that you should \
 probably do things a bit differently. If you're unsure how to resolve this problem, \
@@ -288,6 +331,33 @@ you can circumvent this protection against memory leaks.`)
         const limit = options?.limit
         const timeout = options?.timeout ?? 30 // seconds
         let allowed_updates = options?.allowed_updates
+        try {
+            options?.onStart?.(this.botInfo)
+        } catch (error) {
+            this.pollingRunning = false
+            this.pollingAbortController = undefined
+            throw error
+        }
+
+        const handleErr = async (error: unknown) => {
+            if (!this.pollingRunning) throw error
+            else if (error instanceof GrammyError) {
+                debugErr(error.message)
+                if (error.error_code === 401) {
+                    debugErr(
+                        'Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).'
+                    )
+                    throw error
+                } else if (error.error_code === 409) {
+                    debugErr(
+                        'Consider revoking the bot token if you believe that no other instance is running.'
+                    )
+                    throw error
+                }
+            } else debugErr(error)
+            debugErr('Call to `getUpdates` failed, retrying in 3 seconds ...')
+            await new Promise(r => setTimeout(r, 3000))
+        }
 
         while (this.pollingRunning) {
             // fetch updates
@@ -300,14 +370,7 @@ you can circumvent this protection against memory leaks.`)
                         this.pollingAbortController.signal
                     )
                 } catch (error) {
-                    if (this.pollingRunning) {
-                        debugErr(
-                            'Call to `getUpdates` failed, retrying in 3 seconds ...'
-                        )
-                        await new Promise(r => setTimeout(r, 3000))
-                    } else {
-                        throw error
-                    }
+                    await handleErr(error)
                 }
             } while (updates === undefined && this.pollingRunning)
             if (updates === undefined) break
@@ -330,6 +393,7 @@ you can circumvent this protection against memory leaks.`)
             // we can save same traffic by only sending it in the first request
             allowed_updates = undefined
         }
+        debug('Middleware is done running')
     }
 
     /**
@@ -337,8 +401,7 @@ you can circumvent this protection against memory leaks.`)
      *
      * All middleware that is currently being executed may complete, but no
      * further `getUpdates` calls will be performed. The current `getUpdates`
-     * request will be cancelled (unless you know what Deno is and you're using
-     * it, there cancelling requests is not supported yet).
+     * request will be cancelled.
      *
      * In addition, this method will _confirm_ the last received update to the
      * Telegram servers by calling `getUpdates` one last time with the latest
@@ -346,6 +409,10 @@ you can circumvent this protection against memory leaks.`)
      * discarded and will be fetched again when the bot starts up the next time.
      * Confer the official documentation on confirming updates if you want to
      * know more: https://core.telegram.org/bots/api#getupdates
+     *
+     * > Note that this method will not wait for the middleware stack to finish.
+     * > If you need to run code after all middleware is done, consider waiting
+     * > for the promise returned by `bot.start()` to resolve.
      */
     async stop() {
         if (this.pollingRunning) {

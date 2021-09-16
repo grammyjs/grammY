@@ -7,7 +7,6 @@
     "newLine": "lf",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noUncheckedIndexedAccess": true,
     "noUnusedParameters": true,
     "rootDir": "./src/",
     "strict": true,

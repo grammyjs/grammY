@@ -1,5 +1,6 @@
 // deno-lint-ignore-file camelcase
-import { Api, Other } from './core/api.ts'
+import { Api, Other as OtherApi } from './core/api.ts'
+import { Methods, RawApi } from './core/client.ts'
 import {
     Chat,
     ChatPermissions,
@@ -18,6 +19,11 @@ import {
     UserFromGetMe,
 } from './platform.ts'
 
+type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
+    RawApi,
+    M,
+    X
+>
 type SnakeToCamelCase<S extends string> = S extends `${infer L}_${infer R}`
     ? `${L}${Capitalize<SnakeToCamelCase<R>>}`
     : S
@@ -159,22 +165,25 @@ export class Context implements RenamedUpdate {
         )
     }
     /**
-     * Get chat object from whereever possible. Alias for `ctx.msg?.chat`
+     * Get chat object from whereever possible. Alias for `(this.msg ??
+     * this.myChatMember ?? this.chatMember)?.chat`
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
-        return this.msg?.chat
+        return (this.msg ?? this.myChatMember ?? this.chatMember)?.chat
     }
     /**
-     * Get sender chat object from wherever possible. Alias for `ctx.msg?.sender_chat`.
+     * Get sender chat object from wherever possible. Alias for
+     * `ctx.msg?.sender_chat`.
      */
     get senderChat(): Chat | undefined {
         return this.msg?.sender_chat
     }
     /**
-     * Get message author from whereever possible. Alias for `(ctx.callbackQuery
-     * ?? ctx.inlineQuery ?? ctx.shippingQuery ?? ctx.preCheckoutQuery ??
-     * ctx.chosenInlineResult ?? ctx.msg)?.from`
+     * Get message author from whereever possible. Alias for
+     * `(ctx.callbackQuery?? ctx.inlineQuery ?? ctx.shippingQuery ??
+     * ctx.preCheckoutQuery ?? ctx.chosenInlineResult ?? ctx.msg ??
+     * this.myChatMember ?? this.chatMember)?.from`
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -184,7 +193,9 @@ export class Context implements RenamedUpdate {
             this.shippingQuery ??
             this.preCheckoutQuery ??
             this.chosenInlineResult ??
-            this.msg
+            this.msg ??
+            this.myChatMember ??
+            this.chatMember
         )?.from
     }
     /**
@@ -496,8 +507,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageLiveLocationInline(
                   inlineId,
@@ -516,7 +526,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.stopMessageLiveLocation`. Use this method to stop updating a live location message before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.
+     * Context-aware alias for `api.stopMessageLiveLocation`. Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -530,8 +540,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.stopMessageLiveLocationInline(inlineId, other)
             : this.api.stopMessageLiveLocation(
@@ -867,7 +876,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.promoteChatMember`. Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
      *
-     * @param user_id Unique identifier of the target user (if unspecified, defaults to author of update)
+     * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1204,7 +1213,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
      *
-     * @param user_id Unique identifier of the target user (if unspecified, defaults to author of update)
+     * @param user_id Unique identifier of the target user
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmember
@@ -1285,8 +1294,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageTextInline(inlineId, text, other)
             : this.api.editMessageText(
@@ -1310,8 +1318,7 @@ export class Context implements RenamedUpdate {
         other?: Other<'editMessageCaption', 'message_id' | 'inline_message_id'>,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageCaptionInline(inlineId, other)
             : this.api.editMessageCaption(
@@ -1323,7 +1330,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editMessageMedia`. Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded. Use a previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.
+     * Context-aware alias for `api.editMessageMedia`. Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
      * @param media An object for a new media content of the message
      * @param other Optional remaining parameters, confer the official reference below
@@ -1339,8 +1346,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageMediaInline(inlineId, media, other)
             : this.api.editMessageMedia(
@@ -1367,8 +1373,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal
     ) {
-        const inlineId = (this.callbackQuery ?? this.chosenInlineResult)
-            ?.inline_message_id
+        const inlineId = this.inlineMessageId
         return inlineId !== undefined
             ? this.api.editMessageReplyMarkupInline(inlineId, other)
             : this.api.editMessageReplyMarkup(
@@ -1380,7 +1385,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.stopPoll`. Use this method to stop a poll which was sent by the bot. On success, the stopped Poll with the final results is returned.
+     * Context-aware alias for `api.stopPoll`. Use this method to stop a poll which was sent by the bot. On success, the stopped Poll is returned.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
