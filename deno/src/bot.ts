@@ -267,16 +267,17 @@ a known bot info object.'
     /**
      * Starts your bot using long polling.
      *
+     * > This method returns a `Promise` that will never resolve except if your
+     * > bot is stopped. **You don't need to `await` the call to `bot.start`**,
+     * > but remember to catch potential errors by calling `bot.catch`.
+     * > Otherwise your bot will crash (and stop) if something goes wrong in
+     * > your code.
+     *
      * This method effectively enters a loop that will repeatedly call
      * `getUpdates` and run your middleware for every received update, allowing
      * your bot to respond to messages.
      *
      * If your bot is already running, this method does nothing.
-     *
-     * This method returns a `Promise` that will never resolve except if your
-     * bot is stopped. Remember to catch potential errors by calling
-     * `bot.catch`, otherwise your bot will crash (and stop) if something goes
-     * wrong in your code.
      *
      * **Note that this starts your bot using a very simple long polling
      * implementation.** `bot.start` should only be used for small bots. While
