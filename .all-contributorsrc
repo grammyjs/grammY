@@ -226,6 +226,15 @@
         "doc",
         "tutorial"
       ]
+    },
+    {
+      "login": "dzek69",
+      "name": "Jacek Nowacki",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4936805?v=4",
+      "profile": "https://github.com/dzek69",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
