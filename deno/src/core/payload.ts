@@ -3,7 +3,6 @@ import {
     streamFile,
     InputFile,
     inputFileData,
-    InputMedia,
 } from '../platform.ts'
 
 // === Payload types (JSON vs. form data)
