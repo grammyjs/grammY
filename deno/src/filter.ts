@@ -16,8 +16,8 @@ type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D
  * This function is used internally by `bot.on` but exposed for advanced usage
  * like the following.
  * ```ts
- * // Listens for all messages and channel posts except forwards
- * `bot.drop(matchFilter(':forward_date'), ctx => { ... })
+ * // Listens for updates except forwards of messages or channel posts
+ * bot.drop(matchFilter(':forward_date'), ctx => { ... })
  * ```
  *
  * Check out the
@@ -86,9 +86,9 @@ function preprocess(filter: string[]): string[][] {
         })
     if (expanded.length === 0)
         throw new Error(
-            `Shortcuts in ${filter.join(
+            `Shortcuts in '${filter.join(
                 ':'
-            )} do not expand to any valid filter query`
+            )}' do not expand to any valid filter query`
         )
     return expanded
 }
