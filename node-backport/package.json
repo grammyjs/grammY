@@ -19,7 +19,7 @@
     "@grammyjs/types": "^2.2.6",
     "abort-controller": "^3.0.0",
     "debug": "^4.3.2",
-    "node-fetch": "^3.0.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
