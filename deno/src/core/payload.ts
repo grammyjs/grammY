@@ -3,7 +3,6 @@ import {
     streamFile,
     InputFile,
     inputFileData,
-    InputMedia,
 } from '../platform.ts'
 
 // === Payload types (JSON vs. form data)
@@ -38,6 +37,16 @@ function requiresFormDataUpload(payload: unknown): boolean {
     )
 }
 /**
+ * Calls `JSON.stringify` but removes `null` values from objects before
+ * serialization
+ *
+ * @param value value
+ * @returns stringified value
+ */
+function str(value: unknown) {
+    return JSON.stringify(value, (_, v) => v ?? undefined)
+}
+/**
  * Turns a payload into an options object that can be passed to a `fetch` call
  * by setting the necessary headers and method. May only be called for payloads
  * `P` that let `requiresFormDataUpload(P)` return `false`.
@@ -51,7 +60,7 @@ function createJsonPayload(payload: Record<string, unknown>) {
             'content-type': 'application/json',
             connection: 'keep-alive',
         },
-        body: JSON.stringify(payload, (_, v) => v ?? undefined),
+        body: str(payload),
     }
 }
 /**
@@ -87,57 +96,64 @@ function randomId(length = 16) {
 }
 
 const enc = new TextEncoder()
+/**
+ * Takes a payload object and produces a valid multipart/form-data stream. The
+ * stream is an iterator of `Uint8Array` objects. You also need to specify the
+ * boundary string that was used in the Content-Type header of the HTTP request.
+ *
+ * @param payload a payload object
+ * @param boundary the boundary string to use between the parts
+ */
 async function* payloadToMultipartItr(
     payload: Record<string, unknown>,
-    boundary = createBoundary()
+    boundary: string
 ): AsyncIterableIterator<Uint8Array> {
+    const files = extractFiles(payload)
+    // Start multipart/form-data protocol
     yield enc.encode(`--${boundary}\r\n`)
-
+    // Send all payload fields
     const separator = enc.encode(`\r\n--${boundary}\r\n`)
     let first = true
     for (const [key, value] of Object.entries(payload)) {
         if (!first) yield separator
-        if (value instanceof InputFile) {
-            // InputFile in payload
-            if (mustAttachIndirectly(key)) {
-                const id = randomId()
-                yield* filePart(id, key, value)
-                yield separator
-                yield valuePart(key, `attach://${id}`)
-            } else {
-                yield* filePart(key, key, value)
-            }
-        } else if (isInputMedia(value)) {
-            // InputMedia* in payload
-            if (value.media instanceof InputFile) {
-                const id = randomId()
-                yield* filePart(id, key, value.media)
-                yield separator
-                value.media = `attach://${id}`
-            }
-            yield valuePart(key, JSON.stringify(value))
-        } else if (Array.isArray(value)) {
-            // Array in payload (elements might be InputMedia*)
-            for (const elem of value) {
-                if (isInputMedia(elem) && elem.media instanceof InputFile) {
-                    const id = randomId()
-                    yield* filePart(id, key, elem.media)
-                    yield separator
-                    elem.media = `attach://${id}`
-                }
-            }
-            yield valuePart(key, JSON.stringify(value))
-        } else {
-            // other value in payload
-            yield valuePart(
-                key,
-                typeof value === 'object' ? JSON.stringify(value) : value
-            )
-        }
+        yield valuePart(key, typeof value === 'object' ? str(value) : value)
         first = false
     }
-
+    // Send all files
+    for (const { id, origin, file } of files) {
+        if (!first) yield separator
+        yield* filePart(id, origin, file)
+        first = false
+    }
+    // End multipart/form-data protocol
     yield enc.encode(`\r\n--${boundary}--`)
+}
+
+type ExtractedFile = { id: string; origin: string; file: InputFile }
+/**
+ * Replaces all instances of `InputFile` in a given payload by attach://
+ * strings. This alters the passed object. After calling this method, the
+ * payload object can be stringified.
+ *
+ * Returns a list of `InputFile` instances along with the random identifiers
+ * that were used in the corresponding attach:// strings, as well as the origin
+ * keys of the original payload object.
+ *
+ * @param value a payload object, or a part of it
+ * @param key the origin key of the payload object, if a part of it is passed
+ * @returns the cleaned payload object
+ */
+function extractFiles(value: unknown, key?: string): ExtractedFile[] {
+    if (typeof value !== 'object' || value === null) return []
+    return Object.entries(value).flatMap(([k, v]) => {
+        const origin = key ?? k
+        if (Array.isArray(v)) return v.flatMap(p => extractFiles(p, origin))
+        else if (v instanceof InputFile) {
+            const id = randomId()
+            Object.assign(value, { [k]: `attach://${id}` })
+            return { id, origin, file: v }
+        } else return extractFiles(v, origin)
+    })
 }
 
 /** Turns a regular value into a `Uint8Array` */
@@ -149,14 +165,14 @@ function valuePart(key: string, value: unknown): Uint8Array {
 /** Turns an InputFile into a generator of `Uint8Array`s */
 async function* filePart(
     id: string,
-    key: string,
+    origin: string,
     input: InputFile
 ): AsyncIterableIterator<Uint8Array> {
-    const filename = input.filename ?? `${key}.${getExt(key)}`
+    const filename = input.filename ?? `${origin}.${getExt(origin)}`
     if (filename.includes('\r') || filename.includes('\n')) {
         throw new Error(
             `File paths cannot contain carriage-return (\\r) \
-or newline (\\n) characters! Filename for property '${key}' was:
+or newline (\\n) characters! Filename for property '${origin}' was:
 """
 ${filename}
 """`
@@ -189,27 +205,4 @@ function getExt(key: string) {
         default:
             return 'dat'
     }
-}
-
-// === Helper functions
-/** Fields that require a multipart/form-data upload via ID instead of via the property itself */
-const indirectAttachmentFields = new Set(['thumb'])
-/** Determines if a file behind a given key should be send via `attach://<id>` instead of the key itself */
-function mustAttachIndirectly(key: string) {
-    return indirectAttachmentFields.has(key)
-}
-function has<K extends readonly string[]>(
-    obj: unknown,
-    props: K
-): obj is Record<K[number], unknown> {
-    return typeof obj === 'object' && obj !== null && props.every(p => p in obj)
-}
-const inputMediaProps = ['type', 'media'] as const
-/** Determines if a value is an `InputMedia` object */
-function isInputMedia(value: unknown): value is InputMedia {
-    return (
-        has(value, inputMediaProps) &&
-        typeof value.type === 'string' &&
-        (typeof value.media === 'string' || value.media instanceof InputFile)
-    )
 }
