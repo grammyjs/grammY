@@ -185,14 +185,6 @@ export interface ApiClientOptions {
     sensitiveLogs?: boolean
 }
 
-const DEFAULT_OPTIONS: Required<ApiClientOptions> = {
-    apiRoot: 'https://api.telegram.org',
-    buildUrl: (root, token, method) => `${root}/bot${token}/${method}`,
-    baseFetchConfig,
-    canUseWebhookReply: () => false,
-    sensitiveLogs: false,
-}
-
 class ApiClient<R extends RawApi> {
     private readonly options: Required<ApiClientOptions>
 
@@ -202,10 +194,23 @@ class ApiClient<R extends RawApi> {
 
     constructor(
         private readonly token: string,
-        options?: ApiClientOptions,
+        options: ApiClientOptions = {},
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {}
     ) {
-        this.options = { ...DEFAULT_OPTIONS, ...options }
+        const {
+            apiRoot = 'https://api.telegram.org',
+            buildUrl = (root, token, method) => `${root}/bot${token}/${method}`,
+            baseFetchConfig: baseFetch = baseFetchConfig,
+            canUseWebhookReply = () => false,
+            sensitiveLogs = false,
+        } = options
+        this.options = {
+            apiRoot,
+            buildUrl,
+            baseFetchConfig: baseFetch,
+            canUseWebhookReply,
+            sensitiveLogs,
+        }
     }
 
     private call: ApiCallFn<R> = async (method, payload, signal) => {
