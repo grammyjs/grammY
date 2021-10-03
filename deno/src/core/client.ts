@@ -252,8 +252,7 @@ class ApiClient<R extends RawApi> {
                 }
                 throw new HttpError(msg, err)
             }
-            // deno-lint-ignore no-explicit-any
-            return (await res.json()) as any // node-fetch returns `unknown`
+            return await res.json()
         }
     }
 
