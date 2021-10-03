@@ -206,6 +206,12 @@ class ApiClient<R extends RawApi> {
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {}
     ) {
         this.options = { ...DEFAULT_OPTIONS, ...options }
+        if (this.options.apiRoot.endsWith('/'))
+            throw new Error(
+                `Remove the trailing '/' from the 'apiRoot' option! (Use '${this.options.apiRoot.substr(
+                    this.options.apiRoot.length - 1
+                )}' instead of '${this.options.apiRoot}'.)`
+            )
     }
 
     private call: ApiCallFn<R> = async (method, payload, signal) => {
