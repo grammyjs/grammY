@@ -241,11 +241,10 @@ class ApiClient<R extends RawApi> {
                 })
             } catch (err) {
                 let msg = `Network request for '${method}' failed!`
-                if (isTelegramError(err)) {
+                if (isTelegramError(err))
                     msg += ` (${err.status}: ${err.statusText})`
-                } else if (this.options.sensitiveLogs && err instanceof Error) {
+                if (this.options.sensitiveLogs && err instanceof Error)
                     msg += ` ${err.message}`
-                }
                 throw new HttpError(msg, err)
             }
             return await res.json()
