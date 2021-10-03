@@ -206,6 +206,12 @@ class ApiClient<R extends RawApi> {
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
         }
+        if (this.options.apiRoot.endsWith('/'))
+            throw new Error(
+                `Remove the trailing '/' from the 'apiRoot' option! (Use '${this.options.apiRoot.substr(
+                    this.options.apiRoot.length - 1
+                )}' instead of '${this.options.apiRoot}'.)`
+            )
     }
 
     private call: ApiCallFn<R> = async (method, payload, signal) => {
@@ -235,11 +241,10 @@ class ApiClient<R extends RawApi> {
                 })
             } catch (err) {
                 let msg = `Network request for '${method}' failed!`
-                if (isTelegramError(err)) {
+                if (isTelegramError(err))
                     msg += ` (${err.status}: ${err.statusText})`
-                } else if (this.options.sensitiveLogs && err instanceof Error) {
+                if (this.options.sensitiveLogs && err instanceof Error)
                     msg += ` ${err.message}`
-                }
                 throw new HttpError(msg, err)
             }
             return await res.json()
