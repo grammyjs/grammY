@@ -185,14 +185,6 @@ export interface ApiClientOptions {
     sensitiveLogs?: boolean
 }
 
-const DEFAULT_OPTIONS: Required<ApiClientOptions> = {
-    apiRoot: 'https://api.telegram.org',
-    buildUrl: (root, token, method) => `${root}/bot${token}/${method}`,
-    baseFetchConfig,
-    canUseWebhookReply: () => false,
-    sensitiveLogs: false,
-}
-
 class ApiClient<R extends RawApi> {
     private readonly options: Required<ApiClientOptions>
 
@@ -202,10 +194,18 @@ class ApiClient<R extends RawApi> {
 
     constructor(
         private readonly token: string,
-        options?: ApiClientOptions,
+        options: ApiClientOptions = {},
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {}
     ) {
-        this.options = { ...DEFAULT_OPTIONS, ...options }
+        this.options = {
+            apiRoot: options.apiRoot ?? 'https://api.telegram.org',
+            buildUrl:
+                options.buildUrl ??
+                ((root, token, method) => `${root}/bot${token}/${method}`),
+            baseFetchConfig: options.baseFetchConfig ?? baseFetchConfig,
+            canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
+            sensitiveLogs: options.sensitiveLogs ?? false,
+        }
         if (this.options.apiRoot.endsWith('/'))
             throw new Error(
                 `Remove the trailing '/' from the 'apiRoot' option! (Use '${this.options.apiRoot.substr(
