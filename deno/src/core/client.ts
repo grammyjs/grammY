@@ -202,10 +202,20 @@ class ApiClient<R extends RawApi> {
 
     constructor(
         private readonly token: string,
-        options?: ApiClientOptions,
+        options: ApiClientOptions = {},
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {}
     ) {
-        this.options = { ...DEFAULT_OPTIONS, ...options }
+        this.options = {
+            apiRoot: options.apiRoot ?? DEFAULT_OPTIONS.apiRoot,
+            buildUrl: options.buildUrl ?? DEFAULT_OPTIONS.buildUrl,
+            baseFetchConfig:
+                options.baseFetchConfig ?? DEFAULT_OPTIONS.baseFetchConfig,
+            canUseWebhookReply:
+                options.canUseWebhookReply ??
+                DEFAULT_OPTIONS.canUseWebhookReply,
+            sensitiveLogs:
+                options.sensitiveLogs ?? DEFAULT_OPTIONS.sensitiveLogs,
+        }
     }
 
     private call: ApiCallFn<R> = async (method, payload, signal) => {
@@ -242,7 +252,8 @@ class ApiClient<R extends RawApi> {
                 }
                 throw new HttpError(msg, err)
             }
-            return await res.json()
+            // deno-lint-ignore no-explicit-any
+            return (await res.json()) as any // node-fetch returns `unknown`
         }
     }
 
