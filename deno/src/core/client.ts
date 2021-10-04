@@ -208,9 +208,9 @@ class ApiClient<R extends RawApi> {
         }
         if (this.options.apiRoot.endsWith('/'))
             throw new Error(
-                `Remove the trailing '/' from the 'apiRoot' option! (Use '${this.options.apiRoot.substr(
+                `Remove the trailing '/' from the 'apiRoot' option (use '${this.options.apiRoot.substr(0,
                     this.options.apiRoot.length - 1
-                )}' instead of '${this.options.apiRoot}'.)`
+                )}' instead of '${this.options.apiRoot}')`
             )
     }
 
