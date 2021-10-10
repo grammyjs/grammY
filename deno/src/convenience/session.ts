@@ -21,7 +21,7 @@ export interface SessionFlavor<S> {
      * Session data on the context object.
      *
      * **WARNING:** You have to make sure that your session data is not
-     * undefined by _providing an inital value to the session middleware_, or by
+     * undefined by _providing an initial value to the session middleware_, or by
      * making sure that `ctx.session` is assigned if it is empty! The type
      * system does not include `| undefined` because this is really annoying to
      * work with.
