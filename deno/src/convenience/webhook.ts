@@ -16,6 +16,7 @@ type SupportedFrameworks =
     | 'koa'
     | 'oak'
     | 'fastify'
+    | 'worktop'
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -72,6 +73,11 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
         update: Promise.resolve(req.body),
         respond: json => reply.send(json),
     }),
+    worktop: (req, res) => ({
+        update: Promise.resolve(req.body.json()),
+        end: () => res.end(),
+        respond: json => res.send(200, json)
+    })
     // please open a PR if you want to add another
 }
 
