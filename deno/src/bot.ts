@@ -174,7 +174,7 @@ export class Bot<
      */
     constructor(public readonly token: string, config?: BotConfig<C>) {
         super()
-        if (token.length === 0) throw new Error('Empty token!')
+        if (!token) throw new Error('Empty token!')
         this.me = config?.botInfo
         this.clientConfig = config?.client
         this.ContextConstructor =
