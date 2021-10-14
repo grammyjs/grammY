@@ -4,7 +4,7 @@ _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 ---
 
-_<h1 align="center">[Docs](https://grammy.dev) | [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs) | [News](https://telegram.me/grammyjs_news)</h1>_
+_<h1 align="center">[Documentation](https://grammy.dev) | [API](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs) | [News](https://telegram.me/grammyjs_news)</h1>_
 
 <div align="center">
 
