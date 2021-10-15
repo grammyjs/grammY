@@ -40,10 +40,10 @@ jobs:
                   deno-version: v1.x
 
             - name: Cache Dependencies
-              run: deno cache deno/src/mod.ts
+              run: deno cache src/mod.ts
 
             - name: Run Tests
-              run: deno test --allow-env --config deno.json deno
+              run: deno test --allow-env --config deno.json
 
             - name: Run Linting
-              run: deno lint --config deno.json deno
+              run: deno lint --config deno.json
