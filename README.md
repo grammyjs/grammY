@@ -4,46 +4,30 @@ _<h3 align="right">—The Telegram Bot Framework</h3>_
 
 ---
 
-_<h1 align="center"> [Documentation](https://grammy.dev) |
-[API](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) |
-[Chat](https://telegram.me/grammyjs) |
-[News](https://telegram.me/grammyjs_news)</h1>_
+_<h1 align="center"> [Documentation](https://grammy.dev) | [API](https://doc.deno.land/https/deno.land/x/grammy/mod.ts) | [Chat](https://telegram.me/grammyjs) | [News](https://telegram.me/grammyjs_news)</h1>_
 
 <div align="center">
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.3-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
-[![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy)
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
+[![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
-
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 </div>
 
-**grammY makes it easy to create Telegram bots.** Both for beginners and at
-scale.
+**grammY makes it easy to create Telegram bots.** Both for beginners and at scale.
 
-You want grammY because it is easy to use. It is very powerful and always up to
-date. It has the best [documentation](https://grammy.dev) in town. It is
-extremely efficient and scales up effortlessly. It has a thriving ecosystem of
-plugins, a friendly community chat, seamless integrations with web frameworks
-and databases, and so much more.
+You want grammY because it is easy to use. It is very powerful and always up to date. It has the best [documentation](https://grammy.dev) in town. It is extremely efficient and scales up effortlessly. It has a thriving ecosystem of plugins, a friendly community chat, seamless integrations with web frameworks and databases, and so much more.
 
 Are you ready? 🤖🚀
 
-Bots are written in [TypeScript](https://www.typescriptlang.org/) (or
-JavaScript) and run on [Node.js](https://nodejs.org/).
+Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript) and run on [Node.js](https://nodejs.org/).
 
 ## Quickstart
 
-> If you are new to Telegram bots, read the official
-> [Introduction for Developers](https://core.telegram.org/bots) written by the
-> Telegram team.
+> If you are new to Telegram bots, read the official [Introduction for Developers](https://core.telegram.org/bots) written by the Telegram team.
 
-Visit [@BotFather](https://t.me/BotFather) and create a new bot. You will obtain
-a **bot token**.
+Visit [@BotFather](https://t.me/BotFather) and create a new bot. You will obtain a **bot token**.
 
 Create a new directory and run
 
@@ -78,15 +62,9 @@ Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent [documentation](https://grammy.dev), and an
-[API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts). It even
-integrates with your code editor, e.g. [VSCode](https://code.visualstudio.com/).
-You can hover over any element of grammY to get a detailed description of what
-that thing does or means.
+grammY has an excellent [documentation](https://grammy.dev), and an [API Reference](https://doc.deno.land/https/deno.land/x/grammy/mod.ts). It even integrates with your code editor, e.g. [VSCode](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
 
-If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and
-ask for help. People are nice there and we appreciate your question, no matter
-what it is :)
+If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 
 Here are some more resources to support you:
 
@@ -106,8 +84,7 @@ Here are some more resources to support you:
 
 ### [grammY Telegram Chat](https://t.me/grammyjs)
 
-—Telegram chat where you can ask any question about grammY or bots in general.
-We are also open for feedback, ideas, and contributions!
+—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas, and contributions!
 
 ### [grammY News Channel](https://t.me/grammyjs_news)
 
@@ -115,25 +92,17 @@ We are also open for feedback, ideas, and contributions!
 
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
 
-—documentation of the API that Telegram offers, and that grammY connects to
-under the hood.
+—documentation of the API that Telegram offers, and that grammY connects to under the hood.
 
 ## Deno Support
 
-All grammY packages published by [@grammyjs](https://github.com/grammyjs) run
-natively in Deno. We maintain our own backporting scripts to transform every
-codebase to still run on Node.
+All grammY packages published by [@grammyjs](https://github.com/grammyjs) run natively in Deno. We maintain our own backporting scripts to transform every codebase to still run on Node.
 
-However, given that most bot developers are still using Node, all documentation
-is written Node-first. We may migrate it if Deno overtakes Node. If you are
-already on Deno today, we expect you to know what you're doing. You mainly have
-to adjust the imports to URL imports, and use
-[`https://deno.land/x/grammy`](https://deno.land/x/grammy).
+However, given that most bot developers are still using Node, all documentation is written Node-first. We may migrate it if Deno overtakes Node. If you are already on Deno today, we expect you to know what you're doing. You mainly have to adjust the imports to URL imports, and use [`https://deno.land/x/grammy`](https://deno.land/x/grammy).
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people
-([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -179,8 +148,6 @@ Thanks goes to these wonderful people
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the
-[all-contributors](https://github.com/all-contributors/all-contributors)
-specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 ## [Contribution Guide »](./CONTRIBUTING.md)

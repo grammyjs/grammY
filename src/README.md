@@ -1,15 +1,12 @@
 # grammY
 
-The grammY package lets you easily write Telegram bots. Here is a quickstart for
-you to get started, but note that a better explanation is
-[in our repo on GitHub](https://github.com/grammyjs/grammY).
+The grammY package lets you easily write Telegram bots. Here is a quickstart for you to get started, but note that a better explanation is [in our repo on GitHub](https://github.com/grammyjs/grammY).
 
 You may also want to check out the [docs](https://grammy.dev).
 
 ## Quickstart
 
-Talk to [@BotFather](https://t.me/BotFather) to create a new Telegram bot and
-obtain a _bot token_.
+Talk to [@BotFather](https://t.me/BotFather) to create a new Telegram bot and obtain a _bot token_.
 
 Paste the following code into a new file `bot.ts`.
 
