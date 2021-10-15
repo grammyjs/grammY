@@ -1,0 +1,7 @@
+# Checkout CRLF on windows
+* text=auto
+# Apply this to text files
+*.ts text
+*.md text
+*.json text
+*.yml text
