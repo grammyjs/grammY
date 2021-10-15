@@ -8,11 +8,15 @@ _<h1 align="center"> [Documentation](https://grammy.dev) | [API](https://doc.den
 
 <div align="center">
 
+<!-- deno-fmt-ignore-start -->
+
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.3-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+<!-- deno-fmt-ignore-end -->
 
 </div>
 

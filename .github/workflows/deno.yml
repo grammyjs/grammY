@@ -44,7 +44,10 @@ jobs:
         run: deno cache deno/src/mod.ts
 
       - name: Run Tests
-        run: deno test --allow-env --config deno.json deno
+        run: deno test --config deno.json --allow-env
 
-      - name: Run Linting
-        run: deno lint --config deno.json deno
+      - name: Check Format
+        run: deno fmt --config deno.json --check
+
+      - name: Lint
+        run: deno lint --config deno.json
