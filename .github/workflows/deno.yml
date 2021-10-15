@@ -25,7 +25,7 @@ jobs:
         run: ./backport.sh --full
         working-directory: node-backport
 
-  test-and-lint:
+  test:
     runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
 
     strategy:
@@ -45,6 +45,12 @@ jobs:
 
       - name: Run Tests
         run: deno test --config deno.json --allow-env
+
+  format-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
 
       - name: Check Format
         run: deno fmt --config deno.json --check
