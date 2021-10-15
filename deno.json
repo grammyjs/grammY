@@ -12,8 +12,5 @@
             "indentWidth": 4,
             "proseWrap": "preserve"
         }
-    },
-    "lint": {
-        "files": { "include": ["src/"] }
     }
 }
