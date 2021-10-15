@@ -14,14 +14,14 @@ export { debug } from "debug";
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
 export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
-  Readable.from(itr, { objectMode: false });
+    Readable.from(itr, { objectMode: false });
 // Turn a file path into an AsyncIterable<Uint8Array>
 export { createReadStream as streamFile } from "fs";
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = {
-  compress: true,
-  agent: new Agent({ keepAlive: true }),
+    compress: true,
+    agent: new Agent({ keepAlive: true }),
 };
 
 // === InputFile handling and File augmenting
@@ -36,30 +36,31 @@ export const inputFileData = Symbol("InputFile data");
  * Reference](https://core.telegram.org/bots/api#inputfile).
  */
 export class InputFile {
-  public readonly [inputFileData]: ConstructorParameters<typeof InputFile>[0];
-  /**
-   * Optional name of the constructed `InputFile` instance.
-   *
-   * Check out the
-   * [documenation](https://grammy.dev/guide/files.html#uploading-your-own-file)
-   * on sending files with `InputFile`.
-   */
-  public readonly filename?: string;
-  /**
-   * Constructs an `InputFile` that can be used in the API to send files.
-   *
-   * @param file A path to a local file or a `Buffer` or a `fs.ReadStream` that specifies the file data
-   * @param filename Optional name of the file
-   */
-  constructor(
-    file: string | Uint8Array | ReadStream | AsyncIterable<Uint8Array>,
-    filename?: string
-  ) {
-    this[inputFileData] = file;
-    if (filename === undefined && typeof file === "string")
-      filename = basename(file);
-    this.filename = filename;
-  }
+    public readonly [inputFileData]: ConstructorParameters<typeof InputFile>[0];
+    /**
+     * Optional name of the constructed `InputFile` instance.
+     *
+     * Check out the
+     * [documenation](https://grammy.dev/guide/files.html#uploading-your-own-file)
+     * on sending files with `InputFile`.
+     */
+    public readonly filename?: string;
+    /**
+     * Constructs an `InputFile` that can be used in the API to send files.
+     *
+     * @param file A path to a local file or a `Buffer` or a `fs.ReadStream` that specifies the file data
+     * @param filename Optional name of the file
+     */
+    constructor(
+        file: string | Uint8Array | ReadStream | AsyncIterable<Uint8Array>,
+        filename?: string,
+    ) {
+        this[inputFileData] = file;
+        if (filename === undefined && typeof file === "string") {
+            filename = basename(file);
+        }
+        this.filename = filename;
+    }
 }
 
 // === Export InputFile types
@@ -70,7 +71,7 @@ export type Telegram = GrammyTypes["Telegram"];
 
 /** Utility type providing the argument type for the given method name or `{}` if the method does not take any parameters */
 export type Opts<M extends keyof GrammyTypes["Telegram"]> =
-  GrammyTypes["Opts"][M];
+    GrammyTypes["Opts"][M];
 
 /** This object represents the content of a media message to be sent. It should be one of
 - InputMediaAnimation

@@ -1,10 +1,10 @@
-import { Context } from './context.ts'
-import { Filter, FilterQuery, matchFilter } from './filter.ts'
+import { Context } from "./context.ts";
+import { Filter, FilterQuery, matchFilter } from "./filter.ts";
 
-type MaybePromise<T> = T | Promise<T>
-type MaybeArray<T> = T | T[]
+type MaybePromise<T> = T | Promise<T>;
+type MaybeArray<T> = T | T[];
 // deno-lint-ignore ban-types
-type StringWithSuggestions<S extends string> = (string & {}) | S // permits `string` but gives hints
+type StringWithSuggestions<S extends string> = (string & {}) | S; // permits `string` but gives hints
 
 // === Middleware types
 /**
@@ -18,15 +18,15 @@ type StringWithSuggestions<S extends string> = (string & {}) | S // permits `str
  * Once the `Promise` returned by this function resolves, the downstream
  * middleware is done executing, hence returning the control.
  */
-export type NextFunction = () => Promise<void>
+export type NextFunction = () => Promise<void>;
 
 /**
  * Middleware in the form of a function.
  */
 export type MiddlewareFn<C extends Context = Context> = (
     ctx: C,
-    next: NextFunction
-) => MaybePromise<unknown>
+    next: NextFunction,
+) => MaybePromise<unknown>;
 /**
  * Middleware in the form of a container for a function.
  */
@@ -34,7 +34,7 @@ export interface MiddlewareObj<C extends Context = Context> {
     /**
      * Returns the contained middleware.
      */
-    middleware: () => MiddlewareFn<C>
+    middleware: () => MiddlewareFn<C>;
 }
 /**
  * Middleware for grammY, either as a function or as a container for a function.
@@ -78,7 +78,7 @@ export interface MiddlewareObj<C extends Context = Context> {
  */
 export type Middleware<C extends Context = Context> =
     | MiddlewareFn<C>
-    | MiddlewareObj<C>
+    | MiddlewareObj<C>;
 
 // === Middleware errors
 /**
@@ -88,60 +88,60 @@ export type Middleware<C extends Context = Context> =
  */
 export class BotError<C extends Context = Context> extends Error {
     constructor(public readonly error: unknown, public readonly ctx: C) {
-        super(generateBotErrorMessage(error))
-        this.name = 'BotError'
-        if (error instanceof Error) this.stack = error.stack
+        super(generateBotErrorMessage(error));
+        this.name = "BotError";
+        if (error instanceof Error) this.stack = error.stack;
     }
 }
 function generateBotErrorMessage(error: unknown) {
-    let msg: string
+    let msg: string;
     if (error instanceof Error) {
-        msg = `${error.name} in middleware: ${error.message}`
+        msg = `${error.name} in middleware: ${error.message}`;
     } else {
-        const type = typeof error
-        msg = `Non-error value of type ${type} thrown in middleware`
+        const type = typeof error;
+        msg = `Non-error value of type ${type} thrown in middleware`;
         switch (type) {
-            case 'bigint':
-            case 'boolean':
-            case 'number':
-            case 'symbol':
-                msg += `: ${error}`
-                break
-            case 'string':
-                msg += `: ${String(error).substr(0, 50)}`
-                break
+            case "bigint":
+            case "boolean":
+            case "number":
+            case "symbol":
+                msg += `: ${error}`;
+                break;
+            case "string":
+                msg += `: ${String(error).substr(0, 50)}`;
+                break;
             default:
-                msg += '!'
-                break
+                msg += "!";
+                break;
         }
     }
-    return msg
+    return msg;
 }
 
 // === Middleware base functions
 function flatten<C extends Context>(mw: Middleware<C>): MiddlewareFn<C> {
-    return typeof mw === 'function'
+    return typeof mw === "function"
         ? mw
-        : (ctx, next) => mw.middleware()(ctx, next)
+        : (ctx, next) => mw.middleware()(ctx, next);
 }
 function concat<C extends Context>(
     first: MiddlewareFn<C>,
-    andThen: MiddlewareFn<C>
+    andThen: MiddlewareFn<C>,
 ): MiddlewareFn<C> {
     return async (ctx, next) => {
-        let nextCalled = false
+        let nextCalled = false;
         await first(ctx, async () => {
-            if (nextCalled) throw new Error('`next` already called before!')
-            else nextCalled = true
-            await andThen(ctx, next)
-        })
-    }
+            if (nextCalled) throw new Error("`next` already called before!");
+            else nextCalled = true;
+            await andThen(ctx, next);
+        });
+    };
 }
 function pass<C extends Context>(_ctx: C, next: NextFunction) {
-    return next()
+    return next();
 }
 
-const leaf: NextFunction = () => Promise.resolve()
+const leaf: NextFunction = () => Promise.resolve();
 /**
  * Runs some given middleware function with a given context object.
  *
@@ -150,9 +150,9 @@ const leaf: NextFunction = () => Promise.resolve()
  */
 export async function run<C extends Context>(
     middleware: MiddlewareFn<C>,
-    ctx: C
+    ctx: C,
 ) {
-    await middleware(ctx, leaf)
+    await middleware(ctx, leaf);
 }
 
 // === Composer
@@ -170,7 +170,7 @@ export async function run<C extends Context>(
  * [documentation](https://grammy.dev/advanced/middleware.html) on the website.
  */
 export class Composer<C extends Context> implements MiddlewareObj<C> {
-    private handler: MiddlewareFn<C>
+    private handler: MiddlewareFn<C>;
 
     /**
      * Constructs a new composer based on the provided middleware. If no
@@ -180,14 +180,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to compose
      */
     constructor(...middleware: Array<Middleware<C>>) {
-        this.handler =
-            middleware.length === 0
-                ? pass
-                : middleware.map(flatten).reduce(concat)
+        this.handler = middleware.length === 0
+            ? pass
+            : middleware.map(flatten).reduce(concat);
     }
 
     middleware() {
-        return this.handler
+        return this.handler;
     }
 
     /**
@@ -210,9 +209,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     use(...middleware: Array<Middleware<C>>) {
-        const composer = new Composer(...middleware)
-        this.handler = concat(this.handler, flatten(composer))
-        return composer
+        const composer = new Composer(...middleware);
+        this.handler = concat(this.handler, flatten(composer));
+        return composer;
     }
 
     /**
@@ -269,7 +268,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
     ): Composer<Filter<C, Q>> {
-        return this.filter(matchFilter<C, Q>(filter), ...middleware)
+        return this.filter(matchFilter<C, Q>(filter), ...middleware);
     }
 
     /**
@@ -307,15 +306,15 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<Middleware<HearsContext<C>>>
     ): Composer<HearsContext<C>> {
-        const trg = triggerFn(trigger)
-        return this.on([':text', ':caption']).filter(
+        const trg = triggerFn(trigger);
+        return this.on([":text", ":caption"]).filter(
             (ctx): ctx is HearsContext<C> => {
-                const msg = ctx.message ?? ctx.channelPost
-                const txt = msg.text ?? msg.caption
-                return match(ctx, txt, trg)
+                const msg = ctx.message ?? ctx.channelPost;
+                const txt = msg.text ?? msg.caption;
+                return match(ctx, txt, trg);
             },
-            ...middleware
-        )
+            ...middleware,
+        );
     }
 
     /**
@@ -375,51 +374,53 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     command(
         command: MaybeArray<
-            StringWithSuggestions<'start' | 'help' | 'settings'>
+            StringWithSuggestions<"start" | "help" | "settings">
         >,
         ...middleware: Array<Middleware<CommandContext<C>>>
     ): Composer<CommandContext<C>> {
-        const atCommands = new Set<string>()
-        const noAtCommands = new Set<string>()
-        toArray(command).forEach(cmd => {
-            if (cmd.startsWith('/')) {
+        const atCommands = new Set<string>();
+        const noAtCommands = new Set<string>();
+        toArray(command).forEach((cmd) => {
+            if (cmd.startsWith("/")) {
                 throw new Error(
-                    `Do not include '/' when registering command handlers (use '${cmd.substr(
-                        0,
-                        1
-                    )}' not '${cmd}')`
-                )
+                    `Do not include '/' when registering command handlers (use '${
+                        cmd.substr(
+                            0,
+                            1,
+                        )
+                    }' not '${cmd}')`,
+                );
             }
-            const set = cmd.indexOf('@') === -1 ? noAtCommands : atCommands
-            set.add(cmd)
-        })
-        return this.on(':entities:bot_command').filter(
+            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
+            set.add(cmd);
+        });
+        return this.on(":entities:bot_command").filter(
             (ctx): ctx is CommandContext<C> => {
-                const msg = ctx.message ?? ctx.channelPost
-                const txt = msg.text ?? msg.caption
-                const entities = msg.entities ?? msg.caption_entities
-                return entities.some(e => {
-                    if (e.type !== 'bot_command') return false
-                    if (e.offset !== 0) return false
-                    const cmd = txt.substring(1, e.length)
+                const msg = ctx.message ?? ctx.channelPost;
+                const txt = msg.text ?? msg.caption;
+                const entities = msg.entities ?? msg.caption_entities;
+                return entities.some((e) => {
+                    if (e.type !== "bot_command") return false;
+                    if (e.offset !== 0) return false;
+                    const cmd = txt.substring(1, e.length);
                     if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                        ctx.match = txt.substr(cmd.length + 1).trimStart()
-                        return true
+                        ctx.match = txt.substr(cmd.length + 1).trimStart();
+                        return true;
                     }
-                    const index = cmd.indexOf('@')
-                    if (index === -1) return false
-                    const atTarget = cmd.substring(index + 1)
-                    if (atTarget !== ctx.me.username) return false
-                    const atCommand = cmd.substring(0, index)
+                    const index = cmd.indexOf("@");
+                    if (index === -1) return false;
+                    const atTarget = cmd.substring(index + 1);
+                    if (atTarget !== ctx.me.username) return false;
+                    const atCommand = cmd.substring(0, index);
                     if (noAtCommands.has(atCommand)) {
-                        ctx.match = txt.substr(cmd.length + 1).trimStart()
-                        return true
+                        ctx.match = txt.substr(cmd.length + 1).trimStart();
+                        return true;
                     }
-                    return false
-                })
+                    return false;
+                });
             },
-            ...middleware
-        )
+            ...middleware,
+        );
     }
 
     /**
@@ -464,13 +465,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, 'callback_query:data'>>>
-    ): Composer<Filter<C, 'callback_query:data'>> {
-        const trg = triggerFn(trigger)
-        return this.on('callback_query:data').filter(
-            ctx => match(ctx, ctx.callbackQuery.data, trg),
-            ...middleware
-        )
+        ...middleware: Array<Middleware<Filter<C, "callback_query:data">>>
+    ): Composer<Filter<C, "callback_query:data">> {
+        const trg = triggerFn(trigger);
+        return this.on("callback_query:data").filter(
+            (ctx) => match(ctx, ctx.callbackQuery.data, trg),
+            ...middleware,
+        );
     }
 
     /**
@@ -494,14 +495,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     gameQuery(
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<
-            Middleware<Filter<C, 'callback_query:game_short_name'>>
+            Middleware<Filter<C, "callback_query:game_short_name">>
         >
-    ): Composer<Filter<C, 'callback_query:game_short_name'>> {
-        const trg = triggerFn(trigger)
-        return this.on('callback_query:game_short_name').filter(
-            ctx => match(ctx, ctx.callbackQuery.game_short_name, trg),
-            ...middleware
-        )
+    ): Composer<Filter<C, "callback_query:game_short_name">> {
+        const trg = triggerFn(trigger);
+        return this.on("callback_query:game_short_name").filter(
+            (ctx) => match(ctx, ctx.callbackQuery.game_short_name, trg),
+            ...middleware,
+        );
     }
 
     /**
@@ -528,13 +529,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, 'inline_query'>>>
-    ): Composer<Filter<C, 'inline_query'>> {
-        const trg = triggerFn(trigger)
-        return this.on('inline_query').filter(
-            ctx => match(ctx, ctx.inlineQuery.query, trg),
-            ...middleware
-        )
+        ...middleware: Array<Middleware<Filter<C, "inline_query">>>
+    ): Composer<Filter<C, "inline_query">> {
+        const trg = triggerFn(trigger);
+        return this.on("inline_query").filter(
+            (ctx) => match(ctx, ctx.inlineQuery.query, trg),
+            ...middleware,
+        );
     }
 
     /**
@@ -576,18 +577,18 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     filter<D extends C>(
         predicate: (ctx: C) => ctx is D,
         ...middleware: Array<Middleware<D>>
-    ): Composer<D>
+    ): Composer<D>;
     filter(
         predicate: (ctx: C) => MaybePromise<boolean>,
         ...middleware: Array<Middleware<C>>
-    ): Composer<C>
+    ): Composer<C>;
     filter(
         predicate: (ctx: C) => MaybePromise<boolean>,
         ...middleware: Array<Middleware<C>>
     ) {
-        const composer = new Composer(...middleware)
-        this.branch(predicate, composer, pass)
-        return composer
+        const composer = new Composer(...middleware);
+        this.branch(predicate, composer, pass);
+        return composer;
     }
 
     /**
@@ -612,8 +613,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     ) {
         return this.filter(
             async (ctx: C) => !(await predicate(ctx)),
-            ...middleware
-        )
+            ...middleware,
+        );
     }
 
     /**
@@ -645,10 +646,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to run concurrently
      */
     fork(...middleware: Array<Middleware<C>>) {
-        const composer = new Composer(...middleware)
-        const fork = flatten(composer)
-        this.use((ctx, next) => Promise.all([next(), run(fork, ctx)]))
-        return composer
+        const composer = new Composer(...middleware);
+        const fork = flatten(composer);
+        this.use((ctx, next) => Promise.all([next(), run(fork, ctx)]));
+        return composer;
     }
 
     /**
@@ -672,13 +673,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middlewareFactory The factory function creating the middleware
      */
     lazy(
-        middlewareFactory: (ctx: C) => MaybePromise<MaybeArray<Middleware<C>>>
+        middlewareFactory: (ctx: C) => MaybePromise<MaybeArray<Middleware<C>>>,
     ): Composer<C> {
         return this.use(async (ctx, next) => {
-            const middleware = await middlewareFactory(ctx)
-            const arr = toArray(middleware)
-            await flatten(new Composer(...arr))(ctx, next)
-        })
+            const middleware = await middlewareFactory(ctx);
+            const arr = toArray(middleware);
+            await flatten(new Composer(...arr))(ctx, next);
+        });
     }
 
     /**
@@ -723,12 +724,12 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     route<R extends Record<string, Middleware<C>>>(
         router: (ctx: C) => MaybePromise<undefined | keyof R>,
         routeHandlers: R,
-        fallback: Middleware<C> = pass
+        fallback: Middleware<C> = pass,
     ): Composer<C> {
-        return this.lazy(async ctx => {
-            const route = await router(ctx)
-            return route === undefined ? [] : routeHandlers[route] ?? fallback
-        })
+        return this.lazy(async (ctx) => {
+            const route = await router(ctx);
+            return route === undefined ? [] : routeHandlers[route] ?? fallback;
+        });
     }
 
     /**
@@ -749,11 +750,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     branch(
         predicate: (ctx: C) => MaybePromise<boolean>,
         trueMiddleware: MaybeArray<Middleware<C>>,
-        falseMiddleware: MaybeArray<Middleware<C>>
+        falseMiddleware: MaybeArray<Middleware<C>>,
     ) {
-        return this.lazy(async ctx =>
+        return this.lazy(async (ctx) =>
             (await predicate(ctx)) ? trueMiddleware : falseMiddleware
-        )
+        );
     }
 
     /**
@@ -797,60 +798,60 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     errorBoundary(
         errorHandler: (
             error: BotError<C>,
-            next: NextFunction
+            next: NextFunction,
         ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
     ) {
-        const composer = new Composer<C>(...middleware)
-        const bound = flatten(composer)
+        const composer = new Composer<C>(...middleware);
+        const bound = flatten(composer);
         this.use(async (ctx, next) => {
-            let nextCalled = false
-            const cont = () => ((nextCalled = true), Promise.resolve())
+            let nextCalled = false;
+            const cont = () => ((nextCalled = true), Promise.resolve());
             try {
-                await bound(ctx, cont)
+                await bound(ctx, cont);
             } catch (err) {
-                nextCalled = false
-                await errorHandler(new BotError<C>(err, ctx), cont)
+                nextCalled = false;
+                await errorHandler(new BotError<C>(err, ctx), cont);
             }
-            if (nextCalled) await next()
-        })
-        return composer
+            if (nextCalled) await next();
+        });
+        return composer;
     }
 }
 
 // === Util functions and types
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
-    return toArray(trigger).map(t =>
-        typeof t === 'string'
+    return toArray(trigger).map((t) =>
+        typeof t === "string"
             ? (txt: string) => (txt === t ? t : null)
             : (txt: string) => t.exec(txt)
-    )
+    );
 }
 
 type HearsContext<C extends Context> = Filter<
     C & { match: string | RegExpMatchArray },
-    ':text' | ':caption'
->
+    ":text" | ":caption"
+>;
 type CommandContext<C extends Context> = Filter<
     C & { match: string },
-    ':entities:bot_command'
->
+    ":entities:bot_command"
+>;
 
 function match<C extends Context>(
     ctx: C,
     content: string,
-    triggers: Array<(content: string) => string | RegExpMatchArray | null>
+    triggers: Array<(content: string) => string | RegExpMatchArray | null>,
 ): boolean {
     for (const t of triggers) {
-        const res = t(content)
+        const res = t(content);
         if (res) {
-            ctx.match = res
-            return true
+            ctx.match = res;
+            return true;
         }
     }
-    return false
+    return false;
 }
 
 function toArray<E>(e: MaybeArray<E>): E[] {
-    return Array.isArray(e) ? e : [e]
+    return Array.isArray(e) ? e : [e];
 }

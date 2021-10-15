@@ -1,12 +1,12 @@
 // deno-lint-ignore-file camelcase
-import { BotError, Composer, run } from './composer.ts'
-import { Context } from './context.ts'
-import { Api } from './core/api.ts'
-import { ApiClientOptions, WebhookReplyEnvelope } from './core/client.ts'
-import { GrammyError } from './core/error.ts'
-import { Update, debug as d, UserFromGetMe } from './platform.ts'
-const debug = d('grammy:bot')
-const debugErr = d('grammy:error')
+import { BotError, Composer, run } from "./composer.ts";
+import { Context } from "./context.ts";
+import { Api } from "./core/api.ts";
+import { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
+import { GrammyError } from "./core/error.ts";
+import { debug as d, Update, UserFromGetMe } from "./platform.ts";
+const debug = d("grammy:bot");
+const debugErr = d("grammy:error");
 
 /**
  * Options that can be specified when running the bot via simple long polling.
@@ -16,12 +16,12 @@ export interface PollingOptions {
      * Limits the number of updates to be retrieved per `getUpdates` call.
      * Values between 1-100 are accepted. Defaults to 100.
      */
-    limit?: number
+    limit?: number;
     /**
      * Timeout in seconds for long polling. grammY uses 30 seconds as a default
      * value.
      */
-    timeout?: number
+    timeout?: number;
     /**
      * A list of the update types you want your bot to receive. For example,
      * specify [“message”, “edited_channel_post”, “callback_query”] to only
@@ -34,11 +34,11 @@ export interface PollingOptions {
      * call to the getUpdates, so unwanted updates may be received for a short
      * period of time.
      */
-    allowed_updates?: ReadonlyArray<Exclude<keyof Update, 'update_id'>>
+    allowed_updates?: ReadonlyArray<Exclude<keyof Update, "update_id">>;
     /**
      * Pass True to drop all pending updates before starting the long polling.
      */
-    drop_pending_updates?: boolean
+    drop_pending_updates?: boolean;
     /**
      * Synchronous callback that is useful for logging. It will be executed once
      * the setup of the bot has completed, and immediately before the first
@@ -46,17 +46,17 @@ export interface PollingOptions {
      * available when the function is run. For convenience, the callback
      * function receives the value of `bot.botInfo` as an argument.
      */
-    onStart?: (botInfo: UserFromGetMe) => void
+    onStart?: (botInfo: UserFromGetMe) => void;
 }
 
-export { BotError }
+export { BotError };
 /**
  * Error handler that can be installed on a bot to catch error thrown by
  * middleware.
  */
 export type ErrorHandler<C extends Context = Context> = (
-    error: BotError<C>
-) => unknown
+    error: BotError<C>,
+) => unknown;
 
 /**
  * Options to pass the bot when creating it.
@@ -68,7 +68,7 @@ export interface BotConfig<C extends Context> {
      * grammY that actually connects to the Telegram Bot API server in the end
      * when making HTTP requests.
      */
-    client?: ApiClientOptions
+    client?: ApiClientOptions;
     /**
      * grammY automatically calls `getMe` when starting up to make sure that
      * your bot has access to the bot's own information. If you restart your bot
@@ -79,14 +79,14 @@ export interface BotConfig<C extends Context> {
      * values. If you use this option, grammY will not attempt to make a `getMe`
      * call but use the provided data instead.
      */
-    botInfo?: UserFromGetMe
+    botInfo?: UserFromGetMe;
     /**
      * Pass the constructor of a custom context object that will be used when
      * creating the context for each incoming update.
      */
     ContextConstructor?: new (
         ...args: ConstructorParameters<typeof Context>
-    ) => C
+    ) => C;
 }
 
 /**
@@ -110,11 +110,11 @@ export interface BotConfig<C extends Context> {
  */
 export class Bot<
     C extends Context = Context,
-    A extends Api = Api
+    A extends Api = Api,
 > extends Composer<C> {
-    private pollingRunning = false
-    private pollingAbortController: AbortController | undefined
-    private lastTriedUpdateId = 0
+    private pollingRunning = false;
+    private pollingAbortController: AbortController | undefined;
+    private lastTriedUpdateId = 0;
 
     /**
      * Gives you full access to the Telegram Bot API.
@@ -126,34 +126,34 @@ export class Bot<
      * Use this only outside of your middleware. If you have access to `ctx`,
      * then using `ctx.api` instead of `bot.api` is preferred.
      */
-    public readonly api: A
+    public readonly api: A;
 
-    private me: UserFromGetMe | undefined
-    private readonly clientConfig: ApiClientOptions | undefined
+    private me: UserFromGetMe | undefined;
+    private readonly clientConfig: ApiClientOptions | undefined;
 
     private readonly ContextConstructor: new (
         ...args: ConstructorParameters<typeof Context>
-    ) => C
+    ) => C;
 
     /**
      * Holds the bot's error handler that is invoked whenever middleware throws
      * (rejects). If you set your own error handler via `bot.catch`, all that
      * happens is that this variable is assigned.
      */
-    public errorHandler: ErrorHandler<C> = async err => {
+    public errorHandler: ErrorHandler<C> = async (err) => {
         console.error(
-            'Error in middleware while handling update',
+            "Error in middleware while handling update",
             err.ctx?.update?.update_id,
-            err.error
-        )
-        console.error('No error handler was set!')
-        console.error('Set your own error handler with `bot.catch = ...`')
+            err.error,
+        );
+        console.error("No error handler was set!");
+        console.error("Set your own error handler with `bot.catch = ...`");
         if (this.pollingRunning) {
-            console.error('Stopping bot')
-            await this.stop()
+            console.error("Stopping bot");
+            await this.stop();
         }
-        throw err
-    }
+        throw err;
+    };
 
     /**
      * Creates a new Bot with the given token.
@@ -173,16 +173,15 @@ export class Bot<
      * @param config Optional configuration properties for the bot
      */
     constructor(public readonly token: string, config?: BotConfig<C>) {
-        super()
-        if (!token) throw new Error('Empty token!')
-        this.me = config?.botInfo
-        this.clientConfig = config?.client
-        this.ContextConstructor =
-            config?.ContextConstructor ??
+        super();
+        if (!token) throw new Error("Empty token!");
+        this.me = config?.botInfo;
+        this.clientConfig = config?.client;
+        this.ContextConstructor = config?.ContextConstructor ??
             (Context as new (
                 ...args: ConstructorParameters<typeof Context>
-            ) => C)
-        this.api = new Api(token, this.clientConfig) as A
+            ) => C);
+        this.api = new Api(token, this.clientConfig) as A;
     }
 
     /**
@@ -198,15 +197,15 @@ export class Bot<
      * rather than assigning this property.
      */
     public set botInfo(botInfo: UserFromGetMe) {
-        this.me = botInfo
+        this.me = botInfo;
     }
     public get botInfo(): UserFromGetMe {
         if (this.me === undefined) {
             throw new Error(
-                'Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!'
-            )
+                "Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!",
+            );
         }
-        return this.me
+        return this.me;
     }
 
     /**
@@ -215,14 +214,14 @@ export class Bot<
      */
     async init() {
         if (this.me === undefined) {
-            debug('Initializing bot')
-            const me = await this.api.getMe()
-            if (this.me === undefined) this.me = me
-            else debug('Bot info was set manually by now, will not overwrite')
+            debug("Initializing bot");
+            const me = await this.api.getMe();
+            if (this.me === undefined) this.me = me;
+            else debug("Bot info was set manually by now, will not overwrite");
         } else {
-            debug('Bot already initialized!')
+            debug("Bot already initialized!");
         }
-        debug(`I am ${this.me.username}!`)
+        debug(`I am ${this.me.username}!`);
     }
 
     /**
@@ -239,28 +238,33 @@ export class Bot<
      */
     async handleUpdate(
         update: Update,
-        webhookReplyEnvelope?: WebhookReplyEnvelope
+        webhookReplyEnvelope?: WebhookReplyEnvelope,
     ) {
-        if (this.me === undefined)
+        if (this.me === undefined) {
             throw new Error(
-                'Bot not initialized! Either call `await bot.init()`, \
+"Bot not initialized! Either call `await bot.init()`, \
 or directly set the `botInfo` option in the `Bot` constructor to specify \
-a known bot info object.'
-            )
-        debug(`Processing update ${update.update_id}`)
+a known bot info object.",
+            );
+        }
+        debug(`Processing update ${update.update_id}`);
         // create API object
-        const api = new Api(this.token, this.clientConfig, webhookReplyEnvelope)
+        const api = new Api(
+            this.token,
+            this.clientConfig,
+            webhookReplyEnvelope,
+        );
         // configure it with the same transformers as bot.api
-        const t = this.api.config.installedTransformers()
-        if (t.length > 0) api.config.use(...t)
+        const t = this.api.config.installedTransformers();
+        if (t.length > 0) api.config.use(...t);
         // create context object
-        const ctx = new this.ContextConstructor(update, api, this.me)
+        const ctx = new this.ContextConstructor(update, api, this.me);
         try {
             // run middleware stack
-            await run(this.middleware(), ctx)
+            await run(this.middleware(), ctx);
         } catch (err) {
-            debugErr(`Error in middleware for update ${update.update_id}`)
-            throw new BotError<C>(err, ctx)
+            debugErr(`Error in middleware for update ${update.update_id}`);
+            throw new BotError<C>(err, ctx);
         }
     }
 
@@ -300,14 +304,14 @@ a known bot info object.'
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        await this.init()
+        await this.init();
         if (this.pollingRunning) {
-            debug('Simple long polling already running!')
-            return
+            debug("Simple long polling already running!");
+            return;
         }
         await this.api.deleteWebhook({
             drop_pending_updates: options?.drop_pending_updates,
-        })
+        });
 
         // Prevent common misuse that causes memory leak
         this.use = () => {
@@ -321,80 +325,80 @@ you can ask in the group chat: https://telegram.me/grammyjs
 On the other hand, if you actually know what you're doing and you do need to install \
 further middleware while your bot is running, consider installing a composer \
 instance on your bot, and in turn augment the composer after the fact. This way, \
-you can circumvent this protection against memory leaks.`)
-        }
+you can circumvent this protection against memory leaks.`);
+        };
 
         // Start polling
-        debug('Starting simple long polling')
-        this.pollingRunning = true
-        this.pollingAbortController = new AbortController()
+        debug("Starting simple long polling");
+        this.pollingRunning = true;
+        this.pollingAbortController = new AbortController();
 
-        const limit = options?.limit
-        const timeout = options?.timeout ?? 30 // seconds
-        let allowed_updates = options?.allowed_updates
+        const limit = options?.limit;
+        const timeout = options?.timeout ?? 30; // seconds
+        let allowed_updates = options?.allowed_updates;
         try {
-            options?.onStart?.(this.botInfo)
+            options?.onStart?.(this.botInfo);
         } catch (error) {
-            this.pollingRunning = false
-            this.pollingAbortController = undefined
-            throw error
+            this.pollingRunning = false;
+            this.pollingAbortController = undefined;
+            throw error;
         }
 
         const handleErr = async (error: unknown) => {
-            if (!this.pollingRunning) throw error
+            if (!this.pollingRunning) throw error;
             else if (error instanceof GrammyError) {
-                debugErr(error.message)
+                debugErr(error.message);
                 if (error.error_code === 401) {
                     debugErr(
-                        'Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).'
-                    )
-                    throw error
+                        "Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).",
+                    );
+                    throw error;
                 } else if (error.error_code === 409) {
                     debugErr(
-                        'Consider revoking the bot token if you believe that no other instance is running.'
-                    )
-                    throw error
+                        "Consider revoking the bot token if you believe that no other instance is running.",
+                    );
+                    throw error;
                 }
-            } else debugErr(error)
-            debugErr('Call to `getUpdates` failed, retrying in 3 seconds ...')
-            await new Promise(r => setTimeout(r, 3000))
-        }
+            } else debugErr(error);
+            debugErr("Call to `getUpdates` failed, retrying in 3 seconds ...");
+            await new Promise((r) => setTimeout(r, 3000));
+        };
 
         while (this.pollingRunning) {
             // fetch updates
-            const offset = this.lastTriedUpdateId + 1
-            let updates: Update[] | undefined = undefined
+            const offset = this.lastTriedUpdateId + 1;
+            let updates: Update[] | undefined = undefined;
             do {
                 try {
                     updates = await this.api.getUpdates(
                         { offset, limit, timeout, allowed_updates },
-                        this.pollingAbortController.signal
-                    )
+                        this.pollingAbortController.signal,
+                    );
                 } catch (error) {
-                    await handleErr(error)
+                    await handleErr(error);
                 }
-            } while (updates === undefined && this.pollingRunning)
-            if (updates === undefined) break
+            } while (updates === undefined && this.pollingRunning);
+            if (updates === undefined) break;
             // handle them sequentially (!)
             for (const update of updates) {
-                this.lastTriedUpdateId = update.update_id
+                this.lastTriedUpdateId = update.update_id;
                 try {
-                    await this.handleUpdate(update)
+                    await this.handleUpdate(update);
                 } catch (err) {
                     // should always be true
                     if (err instanceof BotError) {
-                        await this.errorHandler(err)
+                        await this.errorHandler(err);
                     } else {
-                        console.error('FATAL: grammY unable to handle:', err)
-                        throw err
+                        console.error("FATAL: grammY unable to handle:", err);
+                        throw err;
                     }
                 }
             }
             // Telegram uses the last setting if `allowed_updates` is omitted so
             // we can save same traffic by only sending it in the first request
-            allowed_updates = undefined
+            allowed_updates = undefined;
         }
-        debug('Middleware is done running')
+        debug("Middleware is done running");
     }
 
     /**
@@ -417,14 +421,14 @@ you can circumvent this protection against memory leaks.`)
      */
     async stop() {
         if (this.pollingRunning) {
-            debug('Stopping bot, saving update offset')
-            this.pollingRunning = false
-            this.pollingAbortController?.abort()
-            const offset = this.lastTriedUpdateId + 1
-            await this.api.getUpdates({ offset, limit: 1 })
-            this.pollingAbortController = undefined
+            debug("Stopping bot, saving update offset");
+            this.pollingRunning = false;
+            this.pollingAbortController?.abort();
+            const offset = this.lastTriedUpdateId + 1;
+            await this.api.getUpdates({ offset, limit: 1 });
+            this.pollingAbortController = undefined;
         } else {
-            debug('Bot is not running!')
+            debug("Bot is not running!");
         }
     }
 
@@ -441,6 +445,6 @@ you can circumvent this protection against memory leaks.`)
      * @param errorHandler A function that handles potential middleware errors
      */
     catch(errorHandler: ErrorHandler<C>) {
-        this.errorHandler = errorHandler
+        this.errorHandler = errorHandler;
     }
 }
