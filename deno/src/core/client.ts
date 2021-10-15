@@ -240,9 +240,10 @@ class ApiClient<R extends RawApi> {
             await this.webhookReplyEnvelope.send(config.body);
             return { ok: true, result: true };
         } else {
+            const p = payload ?? {};
             const config = formDataRequired
-                ? createFormDataPayload(payload)
-                : createJsonPayload(payload);
+                ? createFormDataPayload(p)
+                : createJsonPayload(p);
             let res: Await<ReturnType<typeof fetch>>;
             try {
                 res = await fetch(url, {
