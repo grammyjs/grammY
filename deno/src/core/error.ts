@@ -1,4 +1,4 @@
-import { ApiError, ResponseParameters } from '../platform.ts'
+import { ApiError, ResponseParameters } from "../platform.ts";
 
 /**
  * This class represents errors that are thrown by grammY because the Telegram
@@ -13,26 +13,26 @@ import { ApiError, ResponseParameters } from '../platform.ts'
  */
 export class GrammyError extends Error implements ApiError {
     /** Flag that this request was unsuccessful. Always `false`. */
-    public readonly ok: false = false
+    public readonly ok: false = false;
     /** An integer holding Telegram's error code. Subject to change. */
-    public readonly error_code: number
+    public readonly error_code: number;
     /** A human-readable description of the error. */
-    public readonly description: string
+    public readonly description: string;
     /** Further parameters that may help to automatically handle the error. */
-    public readonly parameters: ResponseParameters
+    public readonly parameters: ResponseParameters;
     constructor(
         message: string,
         err: ApiError,
         /** The called method name which caused this error to be thrown. */
         public readonly method: string,
         /** The payload that was passed when calling the method. */
-        public readonly payload: Record<string, unknown>
+        public readonly payload: Record<string, unknown>,
     ) {
-        super(`${message} (${err.error_code}: ${err.description})`)
-        this.name = 'GrammyError'
-        this.error_code = err.error_code
-        this.description = err.description
-        this.parameters = err.parameters ?? {}
+        super(`${message} (${err.error_code}: ${err.description})`);
+        this.name = "GrammyError";
+        this.error_code = err.error_code;
+        this.description = err.description;
+        this.parameters = err.parameters ?? {};
     }
 }
 
@@ -53,9 +53,9 @@ export class HttpError extends Error {
     constructor(
         message: string,
         /** The thrown error object. */
-        public readonly error: unknown
+        public readonly error: unknown,
     ) {
-        super(message)
-        this.name = 'HttpError'
+        super(message);
+        this.name = "HttpError";
     }
 }

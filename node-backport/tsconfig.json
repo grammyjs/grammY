@@ -1,21 +1,21 @@
 {
-  "compilerOptions": {
-    "charset": "utf8",
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
-    "forceConsistentCasingInFileNames": true,
-    "newLine": "lf",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedParameters": true,
-    "rootDir": "./src/",
-    "strict": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "outDir": "./out/",
-    "skipLibCheck": true,
-    "target": "es2019"
-  },
-  "include": ["src/"]
+    "compilerOptions": {
+        "charset": "utf8",
+        "incremental": true,
+        "tsBuildInfoFile": ".tsbuildinfo",
+        "forceConsistentCasingInFileNames": true,
+        "newLine": "lf",
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedParameters": true,
+        "rootDir": "./src/",
+        "strict": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "outDir": "./out/",
+        "skipLibCheck": true,
+        "target": "es2019"
+    },
+    "include": ["src/"]
 }

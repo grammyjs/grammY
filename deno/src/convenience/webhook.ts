@@ -1,22 +1,22 @@
 // deno-lint-ignore-file no-explicit-any
-import { Bot } from '../bot.ts'
-import { debug as d, Update } from '../platform.ts'
-import { WebhookReplyEnvelope } from '../core/client.ts'
-import { Context } from '../context.ts'
-const debugErr = d('grammy:error')
+import { Bot } from "../bot.ts";
+import { debug as d, Update } from "../platform.ts";
+import { WebhookReplyEnvelope } from "../core/client.ts";
+import { Context } from "../context.ts";
+const debugErr = d("grammy:error");
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
  * box.
  */
 type SupportedFrameworks =
-    | 'express'
-    | 'http'
-    | 'https'
-    | 'koa'
-    | 'oak'
-    | 'fastify'
-    | 'worktop'
+    | "express"
+    | "http"
+    | "https"
+    | "koa"
+    | "oak"
+    | "fastify"
+    | "worktop";
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -27,59 +27,59 @@ interface ReqResHandler {
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
      */
-    update: Promise<Update>
+    update: Promise<Update>;
     /**
      * Ends the request immediately without body, called after every request
      * unless a webhook reply was performed
      */
-    end?: () => void
+    end?: () => void;
     /**
      * Sends the specified JSON as a payload in the body, used for webhook
      * replies
      */
-    respond: (json: string) => unknown
+    respond: (json: string) => unknown;
 }
 /**
  * Middleware for a web framework. Creates a request-response handler for a
  * request. The handler will be used to integrate with the compatible framework.
  */
-type FrameworkAdapter = (...args: any[]) => ReqResHandler
+type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 
 const standard: FrameworkAdapter = (req, res) => ({
     update: Promise.resolve(req.body),
     end: () => res.end(),
-    respond: json => res.send(json),
-})
+    respond: (json) => res.send(json),
+});
 
 // Integrations with popular frameworks
 const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
     express: standard,
     http: standard,
     https: standard,
-    koa: ctx => ({
+    koa: (ctx) => ({
         update: Promise.resolve(ctx.request.body),
-        end: () => (ctx.body = ''),
-        respond: json => (ctx.response.body = json),
+        end: () => (ctx.body = ""),
+        respond: (json) => (ctx.response.body = json),
     }),
-    oak: ctx => ({
-        update: ctx.request.body({ type: 'json' }).value,
+    oak: (ctx) => ({
+        update: ctx.request.body({ type: "json" }).value,
         end: () => (ctx.response.status = 200),
-        respond: json => {
-            ctx.response.type = 'json'
-            ctx.response.body = json
+        respond: (json) => {
+            ctx.response.type = "json";
+            ctx.response.body = json;
         },
     }),
     fastify: (req, reply) => ({
         update: Promise.resolve(req.body),
-        respond: json => reply.send(json),
+        respond: (json) => reply.send(json),
     }),
     worktop: (req, res) => ({
         update: Promise.resolve(req.body.json()),
         end: () => res.end(),
-        respond: json => res.send(200, json)
-    })
+        respond: (json) => res.send(200, json),
+    }),
     // please open a PR if you want to add another
-}
+};
 
 /**
  * Creates a callback function that you can pass to a web framework (such as
@@ -102,64 +102,64 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
  */
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    framework: SupportedFrameworks = 'express',
-    onTimeout: 'throw' | 'return' | ((...args: any[]) => unknown) = 'throw',
-    timeoutMilliseconds = 10_000
+    framework: SupportedFrameworks = "express",
+    onTimeout: "throw" | "return" | ((...args: any[]) => unknown) = "throw",
+    timeoutMilliseconds = 10_000,
 ) {
-    const server = frameworkAdapters[framework] ?? standard
-    let firstUpdate = true
-    let initialized = false
-    let initCall: Promise<void> | undefined
+    const server = frameworkAdapters[framework] ?? standard;
+    let firstUpdate = true;
+    let initialized = false;
+    let initCall: Promise<void> | undefined;
     return async (...args: any[]) => {
-        const { update, respond, end } = server(...args)
-        let usedWebhookReply = false
+        const { update, respond, end } = server(...args);
+        let usedWebhookReply = false;
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
-            send: async json => {
-                usedWebhookReply = true
-                await respond(json)
+            send: async (json) => {
+                usedWebhookReply = true;
+                await respond(json);
             },
-        }
+        };
         if (!initialized) {
             if (firstUpdate) {
-                initCall = bot.init()
-                firstUpdate = false
+                initCall = bot.init();
+                firstUpdate = false;
             }
-            await initCall
-            initialized = true
+            await initCall;
+            initialized = true;
         }
         await timeoutIfNecessary(
             bot.handleUpdate(await update, webhookReplyEnvelope),
-            typeof onTimeout === 'function'
+            typeof onTimeout === "function"
                 ? () => onTimeout(...args)
                 : onTimeout,
-            timeoutMilliseconds
-        )
-        if (end !== undefined && !usedWebhookReply) end()
-    }
+            timeoutMilliseconds,
+        );
+        if (end !== undefined && !usedWebhookReply) end();
+    };
 }
 
 function timeoutIfNecessary(
     task: Promise<void>,
-    onTimeout: 'throw' | 'return' | (() => unknown),
-    timeout: number
+    onTimeout: "throw" | "return" | (() => unknown),
+    timeout: number,
 ): Promise<void> {
-    if (timeout === Infinity) return task
+    if (timeout === Infinity) return task;
     return new Promise((resolve, reject) => {
         const handle = setTimeout(() => {
-            if (onTimeout === 'throw') {
-                reject(new Error(`Request timed out after ${timeout} ms`))
+            if (onTimeout === "throw") {
+                reject(new Error(`Request timed out after ${timeout} ms`));
             } else {
-                if (typeof onTimeout === 'function') onTimeout()
-                resolve()
+                if (typeof onTimeout === "function") onTimeout();
+                resolve();
             }
-            const now = Date.now()
+            const now = Date.now();
             task.finally(() => {
-                const diff = Date.now() - now
-                debugErr(`Request completed ${diff} ms after timeout!`)
-            })
-        }, timeout)
+                const diff = Date.now() - now;
+                debugErr(`Request completed ${diff} ms after timeout!`);
+            });
+        }, timeout);
         task.then(resolve)
             .catch(reject)
-            .finally(() => clearTimeout(handle))
-    })
+            .finally(() => clearTimeout(handle));
+    });
 }

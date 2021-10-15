@@ -49,5 +49,5 @@ jobs:
         working-directory: deno
 
       - name: Run Linting
-        run: deno lint src/
+        run: deno lint --config deno.json
         working-directory: deno

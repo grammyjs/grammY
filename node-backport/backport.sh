@@ -51,9 +51,9 @@ find src -type f -name "*.ts" | xargs sed -Ei -e "s/from(\\s+)'\\.(\\.?)\\/([a-z
 # find src -type f -name "*.ts" | xargs -I % mv % %.ts
 
 # Inject polyfilling import calls where necessary
-grep -lr "fetch\s*(" src | xargs -r sed -Ei -e "1s/^/import fetch from 'node-fetch'\n/"
-grep -lr "AbortController" src | xargs -r sed -Ei -e "1s/^/import { AbortController } from 'abort-controller'\n/"
-grep -lr "AbortSignal" src | xargs -r sed -Ei -e "1s/^/import { AbortSignal } from 'abort-controller'\n/"
+grep -lr "fetch\s*(" src | xargs -r sed -Ei -e "1s/^/import fetch from \"node-fetch\"\n/"
+grep -lr "AbortController" src | xargs -r sed -Ei -e "1s/^/import { AbortController } from \"abort-controller\"\n/"
+grep -lr "AbortSignal" src | xargs -r sed -Ei -e "1s/^/import { AbortSignal } from \"abort-controller\"\n/"
 
 echo "Emitting JS output"
 npm run -s build && echo "Success!"

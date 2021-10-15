@@ -1,4 +1,4 @@
-import { KeyboardButton, InlineKeyboardButton, LoginUrl } from '../platform.ts'
+import { InlineKeyboardButton, KeyboardButton, LoginUrl } from "../platform.ts";
 
 /**
  * Use this class to simplify building a keyboard (something like this:
@@ -32,7 +32,7 @@ export class Keyboard {
      * The nested array that holds the keyboard. It will be extended every time
      * you call one of the provided methods.
      */
-    public readonly keyboard: KeyboardButton[][] = [[]]
+    public readonly keyboard: KeyboardButton[][] = [[]];
 
     /**
      * Allows you to add your own `KeyboardButton` objects if you already have
@@ -42,8 +42,8 @@ export class Keyboard {
      * @param buttons The buttons to add
      */
     add(...buttons: KeyboardButton[]) {
-        this.keyboard[this.keyboard.length - 1]?.push(...buttons)
-        return this
+        this.keyboard[this.keyboard.length - 1]?.push(...buttons);
+        return this;
     }
     /**
      * Adds a 'line break'. Call this method to make sure that the next added
@@ -56,8 +56,8 @@ export class Keyboard {
      * @param buttons A number of buttons to add to the next row
      */
     row(...buttons: KeyboardButton[]) {
-        this.keyboard.push(buttons)
-        return this
+        this.keyboard.push(buttons);
+        return this;
     }
     /**
      * Adds a new text button. This button will simply send the given text as a
@@ -66,7 +66,7 @@ export class Keyboard {
      * @param text The text to display
      */
     text(text: string) {
-        return this.add({ text })
+        return this.add({ text });
     }
     /**
      * Adds a new contact request button. The user's phone number will be sent
@@ -75,7 +75,7 @@ export class Keyboard {
      * @param text The text to display
      */
     requestContact(text: string) {
-        return this.add({ text, request_contact: true })
+        return this.add({ text, request_contact: true });
     }
     /**
      * Adds a new location request button. The user's current location will be
@@ -84,7 +84,7 @@ export class Keyboard {
      * @param text The text to display
      */
     requestLocation(text: string) {
-        return this.add({ text, request_location: true })
+        return this.add({ text, request_location: true });
     }
     /**
      * Adds a new poll request button. The user will be asked to create a poll
@@ -94,15 +94,15 @@ export class Keyboard {
      * @param text The text to display
      * @param type The type of permitted polls to create, omit if the user may send a poll of any type
      */
-    requestPoll(text: string, type?: 'quiz' | 'regular') {
-        return this.add({ text, request_poll: { type } })
+    requestPoll(text: string, type?: "quiz" | "regular") {
+        return this.add({ text, request_poll: { type } });
     }
     /**
      * Return the resulting keyboard that was built. May be called in the end if
      * necessary so you can specify more options in `reply_markup`.
      */
     build() {
-        return this.keyboard
+        return this.keyboard;
     }
 }
 
@@ -132,7 +132,7 @@ export class InlineKeyboard {
      * The nested array that holds the inline keyboard. It will be extended
      * every time you call one of the provided methods.
      */
-    public readonly inline_keyboard: InlineKeyboardButton[][] = [[]]
+    public readonly inline_keyboard: InlineKeyboardButton[][] = [[]];
 
     /**
      * Allows you to add your own `InlineKeyboardButton` objects if you already
@@ -142,8 +142,8 @@ export class InlineKeyboard {
      * @param buttons The buttons to add
      */
     add(...buttons: InlineKeyboardButton[]) {
-        this.inline_keyboard[this.inline_keyboard.length - 1]?.push(...buttons)
-        return this
+        this.inline_keyboard[this.inline_keyboard.length - 1]?.push(...buttons);
+        return this;
     }
     /**
      * Adds a 'line break'. Call this method to make sure that the next added
@@ -156,8 +156,8 @@ export class InlineKeyboard {
      * @param buttons A number of buttons to add to the next row
      */
     row(...buttons: InlineKeyboardButton[]) {
-        this.inline_keyboard.push(buttons)
-        return this
+        this.inline_keyboard.push(buttons);
+        return this;
     }
     /**
      * Adds a new URL button. Telegram clients will open the provided URL when
@@ -167,7 +167,7 @@ export class InlineKeyboard {
      * @param url HTTP or tg:// url to be opened when button is pressed
      */
     url(text: string, url: string) {
-        return this.add({ text, url })
+        return this.add({ text, url });
     }
     /**
      * Adds a new login button. This can be used as a replacement for the
@@ -180,9 +180,10 @@ export class InlineKeyboard {
     login(text: string, loginUrl: string | LoginUrl) {
         return this.add({
             text,
-            login_url:
-                typeof loginUrl === 'string' ? { url: loginUrl } : loginUrl,
-        })
+            login_url: typeof loginUrl === "string"
+                ? { url: loginUrl }
+                : loginUrl,
+        });
     }
     /**
      * Adds a new callback query button. The button contains a text and a custom
@@ -203,7 +204,7 @@ export class InlineKeyboard {
      * @param data The callback data to send back to your bot (default = text)
      */
     text(text: string, data = text) {
-        return this.add({ text, callback_data: data })
+        return this.add({ text, callback_data: data });
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -220,8 +221,8 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param query The (optional) inline query string to prefill
      */
-    switchInline(text: string, query = '') {
-        return this.add({ text, switch_inline_query: query })
+    switchInline(text: string, query = "") {
+        return this.add({ text, switch_inline_query: query });
     }
     /**
      * Adds a new inline query button that act on the current chat. The selected
@@ -237,8 +238,8 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param query The (optional) inline query string to prefill
      */
-    switchInlineCurrent(text: string, query = '') {
-        return this.add({ text, switch_inline_query_current_chat: query })
+    switchInlineCurrent(text: string, query = "") {
+        return this.add({ text, switch_inline_query_current_chat: query });
     }
     /**
      * Adds a new game query button, confer https://core.telegram.org/bots/api#games
@@ -248,7 +249,7 @@ export class InlineKeyboard {
      * @param text The text to display
      */
     game(text: string) {
-        return this.add({ text, callback_game: {} })
+        return this.add({ text, callback_game: {} });
     }
     /**
      * Adds a new payment button, confer https://core.telegram.org/bots/api#payments
@@ -258,6 +259,6 @@ export class InlineKeyboard {
      * @param text The text to display
      */
     pay(text: string) {
-        return this.add({ text, pay: true })
+        return this.add({ text, pay: true });
     }
 }
