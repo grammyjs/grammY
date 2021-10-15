@@ -46,7 +46,7 @@ cp -r ../deno/src .
 cp platform.ts src
 
 # Strip file extensions from imports
-find src -type f -name "*.ts" | xargs sed -Ei -e "s/from(\\s+)'\\.(\\.?)\\/([a-z\\-\\.\\/]+)\\.ts';$/from\\1'.\\2\\/\\3'/g"
+find src -type f -name "*.ts" | xargs sed -Ei -e "s/from(\\s+)\"\\.(\\.?)\\/([a-z\\-\\.\\/]+)\\.ts\";$/from\\1\".\\2\\/\\3\"/g"
 # could also rename files if the regex ever fails, but leads to unreadable file names (*.ts.js, *.ts.d.ts, etc)
 # find src -type f -name "*.ts" | xargs -I % mv % %.ts
 

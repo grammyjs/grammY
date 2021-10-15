@@ -1,4 +1,4 @@
-import { InlineKeyboardButton, KeyboardButton, LoginUrl } from '../platform.ts';
+import { InlineKeyboardButton, KeyboardButton, LoginUrl } from "../platform.ts";
 
 /**
  * Use this class to simplify building a keyboard (something like this:
@@ -94,7 +94,7 @@ export class Keyboard {
      * @param text The text to display
      * @param type The type of permitted polls to create, omit if the user may send a poll of any type
      */
-    requestPoll(text: string, type?: 'quiz' | 'regular') {
+    requestPoll(text: string, type?: "quiz" | "regular") {
         return this.add({ text, request_poll: { type } });
     }
     /**
@@ -180,7 +180,7 @@ export class InlineKeyboard {
     login(text: string, loginUrl: string | LoginUrl) {
         return this.add({
             text,
-            login_url: typeof loginUrl === 'string'
+            login_url: typeof loginUrl === "string"
                 ? { url: loginUrl }
                 : loginUrl,
         });
@@ -221,7 +221,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param query The (optional) inline query string to prefill
      */
-    switchInline(text: string, query = '') {
+    switchInline(text: string, query = "") {
         return this.add({ text, switch_inline_query: query });
     }
     /**
@@ -238,7 +238,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param query The (optional) inline query string to prefill
      */
-    switchInlineCurrent(text: string, query = '') {
+    switchInlineCurrent(text: string, query = "") {
         return this.add({ text, switch_inline_query_current_chat: query });
     }
     /**

@@ -1,7 +1,7 @@
-import { Context } from '../context.ts';
-import { MiddlewareFn } from '../composer.ts';
-import { debug as d } from '../platform.ts';
-const debug = d('grammy:session');
+import { Context } from "../context.ts";
+import { MiddlewareFn } from "../composer.ts";
+import { debug as d } from "../platform.ts";
+const debug = d("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;
 
@@ -178,7 +178,7 @@ export function session<S, C extends Context>(
     const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
     const storage = options.storage ??
         (debug(
-            'Storing session data in memory, all data will be lost when the bot restarts.',
+            "Storing session data in memory, all data will be lost when the bot restarts.",
         ),
             new MemorySessionStorage());
     return async (ctx, next) => {
@@ -186,11 +186,11 @@ export function session<S, C extends Context>(
         let value = key === undefined
             ? undefined
             : (await storage.read(key)) ?? options.initial?.();
-        Object.defineProperty(ctx, 'session', {
+        Object.defineProperty(ctx, "session", {
             get() {
                 if (key === undefined) {
                     throw new Error(
-                        'Cannot access session data because the session key was undefined!',
+                        "Cannot access session data because the session key was undefined!",
                     );
                 }
                 return value;
@@ -198,7 +198,7 @@ export function session<S, C extends Context>(
             set(v) {
                 if (key === undefined) {
                     throw new Error(
-                        'Cannot assign session data because the session key was undefined!',
+                        "Cannot assign session data because the session key was undefined!",
                     );
                 }
                 value = v;
@@ -250,7 +250,7 @@ export function lazySession<S, C extends Context>(
     const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
     const storage = options.storage ??
         (debug(
-            'Storing session data in memory, all data will be lost when the bot restarts.',
+            "Storing session data in memory, all data will be lost when the bot restarts.",
         ),
             new MemorySessionStorage());
     return async (ctx, next) => {
@@ -264,7 +264,7 @@ export function lazySession<S, C extends Context>(
         async function load() {
             if (key === undefined) {
                 throw new Error(
-                    'Cannot access lazy session data because the session key was undefined!',
+                    "Cannot access lazy session data because the session key was undefined!",
                 );
             }
             let v = await storage.read(key);
@@ -281,7 +281,7 @@ export function lazySession<S, C extends Context>(
             return value;
         }
 
-        Object.defineProperty(ctx, 'session', {
+        Object.defineProperty(ctx, "session", {
             get() {
                 if (wrote) return value;
                 read = true;
@@ -294,7 +294,7 @@ export function lazySession<S, C extends Context>(
             set(v) {
                 if (key === undefined) {
                     throw new Error(
-                        'Cannot assign lazy session data because the session key was undefined!',
+                        "Cannot assign lazy session data because the session key was undefined!",
                     );
                 }
                 wrote = true;

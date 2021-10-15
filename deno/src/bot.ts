@@ -1,12 +1,12 @@
 // deno-lint-ignore-file camelcase
-import { BotError, Composer, run } from './composer.ts';
-import { Context } from './context.ts';
-import { Api } from './core/api.ts';
-import { ApiClientOptions, WebhookReplyEnvelope } from './core/client.ts';
-import { GrammyError } from './core/error.ts';
-import { debug as d, Update, UserFromGetMe } from './platform.ts';
-const debug = d('grammy:bot');
-const debugErr = d('grammy:error');
+import { BotError, Composer, run } from "./composer.ts";
+import { Context } from "./context.ts";
+import { Api } from "./core/api.ts";
+import { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
+import { GrammyError } from "./core/error.ts";
+import { debug as d, Update, UserFromGetMe } from "./platform.ts";
+const debug = d("grammy:bot");
+const debugErr = d("grammy:error");
 
 /**
  * Options that can be specified when running the bot via simple long polling.
@@ -34,7 +34,7 @@ export interface PollingOptions {
      * call to the getUpdates, so unwanted updates may be received for a short
      * period of time.
      */
-    allowed_updates?: ReadonlyArray<Exclude<keyof Update, 'update_id'>>;
+    allowed_updates?: ReadonlyArray<Exclude<keyof Update, "update_id">>;
     /**
      * Pass True to drop all pending updates before starting the long polling.
      */
@@ -142,14 +142,14 @@ export class Bot<
      */
     public errorHandler: ErrorHandler<C> = async (err) => {
         console.error(
-            'Error in middleware while handling update',
+            "Error in middleware while handling update",
             err.ctx?.update?.update_id,
             err.error,
         );
-        console.error('No error handler was set!');
-        console.error('Set your own error handler with `bot.catch = ...`');
+        console.error("No error handler was set!");
+        console.error("Set your own error handler with `bot.catch = ...`");
         if (this.pollingRunning) {
-            console.error('Stopping bot');
+            console.error("Stopping bot");
             await this.stop();
         }
         throw err;
@@ -174,7 +174,7 @@ export class Bot<
      */
     constructor(public readonly token: string, config?: BotConfig<C>) {
         super();
-        if (!token) throw new Error('Empty token!');
+        if (!token) throw new Error("Empty token!");
         this.me = config?.botInfo;
         this.clientConfig = config?.client;
         this.ContextConstructor = config?.ContextConstructor ??
@@ -202,7 +202,7 @@ export class Bot<
     public get botInfo(): UserFromGetMe {
         if (this.me === undefined) {
             throw new Error(
-                'Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!',
+                "Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!",
             );
         }
         return this.me;
@@ -214,12 +214,12 @@ export class Bot<
      */
     async init() {
         if (this.me === undefined) {
-            debug('Initializing bot');
+            debug("Initializing bot");
             const me = await this.api.getMe();
             if (this.me === undefined) this.me = me;
-            else debug('Bot info was set manually by now, will not overwrite');
+            else debug("Bot info was set manually by now, will not overwrite");
         } else {
-            debug('Bot already initialized!');
+            debug("Bot already initialized!");
         }
         debug(`I am ${this.me.username}!`);
     }
@@ -242,9 +242,9 @@ export class Bot<
     ) {
         if (this.me === undefined) {
             throw new Error(
-'Bot not initialized! Either call `await bot.init()`, \
+"Bot not initialized! Either call `await bot.init()`, \
 or directly set the `botInfo` option in the `Bot` constructor to specify \
-a known bot info object.',
+a known bot info object.",
             );
         }
         debug(`Processing update ${update.update_id}`);
@@ -306,7 +306,7 @@ a known bot info object.',
         // Perform setup
         await this.init();
         if (this.pollingRunning) {
-            debug('Simple long polling already running!');
+            debug("Simple long polling already running!");
             return;
         }
         await this.api.deleteWebhook({
@@ -329,7 +329,7 @@ you can circumvent this protection against memory leaks.`);
         };
 
         // Start polling
-        debug('Starting simple long polling');
+        debug("Starting simple long polling");
         this.pollingRunning = true;
         this.pollingAbortController = new AbortController();
 
@@ -350,17 +350,17 @@ you can circumvent this protection against memory leaks.`);
                 debugErr(error.message);
                 if (error.error_code === 401) {
                     debugErr(
-                        'Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).',
+                        "Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).",
                     );
                     throw error;
                 } else if (error.error_code === 409) {
                     debugErr(
-                        'Consider revoking the bot token if you believe that no other instance is running.',
+                        "Consider revoking the bot token if you believe that no other instance is running.",
                     );
                     throw error;
                 }
             } else debugErr(error);
-            debugErr('Call to `getUpdates` failed, retrying in 3 seconds ...');
+            debugErr("Call to `getUpdates` failed, retrying in 3 seconds ...");
             await new Promise((r) => setTimeout(r, 3000));
         };
 
@@ -389,7 +389,7 @@ you can circumvent this protection against memory leaks.`);
                     if (err instanceof BotError) {
                         await this.errorHandler(err);
                     } else {
-                        console.error('FATAL: grammY unable to handle:', err);
+                        console.error("FATAL: grammY unable to handle:", err);
                         throw err;
                     }
                 }
@@ -398,7 +398,7 @@ you can circumvent this protection against memory leaks.`);
             // we can save same traffic by only sending it in the first request
             allowed_updates = undefined;
         }
-        debug('Middleware is done running');
+        debug("Middleware is done running");
     }
 
     /**
@@ -421,14 +421,14 @@ you can circumvent this protection against memory leaks.`);
      */
     async stop() {
         if (this.pollingRunning) {
-            debug('Stopping bot, saving update offset');
+            debug("Stopping bot, saving update offset");
             this.pollingRunning = false;
             this.pollingAbortController?.abort();
             const offset = this.lastTriedUpdateId + 1;
             await this.api.getUpdates({ offset, limit: 1 });
             this.pollingAbortController = undefined;
         } else {
-            debug('Bot is not running!');
+            debug("Bot is not running!");
         }
     }
 

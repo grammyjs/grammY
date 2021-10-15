@@ -1,5 +1,5 @@
-import { Context } from './context.ts';
-import { Filter, FilterQuery, matchFilter } from './filter.ts';
+import { Context } from "./context.ts";
+import { Filter, FilterQuery, matchFilter } from "./filter.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 type MaybeArray<T> = T | T[];
@@ -89,7 +89,7 @@ export type Middleware<C extends Context = Context> =
 export class BotError<C extends Context = Context> extends Error {
     constructor(public readonly error: unknown, public readonly ctx: C) {
         super(generateBotErrorMessage(error));
-        this.name = 'BotError';
+        this.name = "BotError";
         if (error instanceof Error) this.stack = error.stack;
     }
 }
@@ -101,17 +101,17 @@ function generateBotErrorMessage(error: unknown) {
         const type = typeof error;
         msg = `Non-error value of type ${type} thrown in middleware`;
         switch (type) {
-            case 'bigint':
-            case 'boolean':
-            case 'number':
-            case 'symbol':
+            case "bigint":
+            case "boolean":
+            case "number":
+            case "symbol":
                 msg += `: ${error}`;
                 break;
-            case 'string':
+            case "string":
                 msg += `: ${String(error).substr(0, 50)}`;
                 break;
             default:
-                msg += '!';
+                msg += "!";
                 break;
         }
     }
@@ -120,7 +120,7 @@ function generateBotErrorMessage(error: unknown) {
 
 // === Middleware base functions
 function flatten<C extends Context>(mw: Middleware<C>): MiddlewareFn<C> {
-    return typeof mw === 'function'
+    return typeof mw === "function"
         ? mw
         : (ctx, next) => mw.middleware()(ctx, next);
 }
@@ -131,7 +131,7 @@ function concat<C extends Context>(
     return async (ctx, next) => {
         let nextCalled = false;
         await first(ctx, async () => {
-            if (nextCalled) throw new Error('`next` already called before!');
+            if (nextCalled) throw new Error("`next` already called before!");
             else nextCalled = true;
             await andThen(ctx, next);
         });
@@ -307,7 +307,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<Middleware<HearsContext<C>>>
     ): Composer<HearsContext<C>> {
         const trg = triggerFn(trigger);
-        return this.on([':text', ':caption']).filter(
+        return this.on([":text", ":caption"]).filter(
             (ctx): ctx is HearsContext<C> => {
                 const msg = ctx.message ?? ctx.channelPost;
                 const txt = msg.text ?? msg.caption;
@@ -374,14 +374,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     command(
         command: MaybeArray<
-            StringWithSuggestions<'start' | 'help' | 'settings'>
+            StringWithSuggestions<"start" | "help" | "settings">
         >,
         ...middleware: Array<Middleware<CommandContext<C>>>
     ): Composer<CommandContext<C>> {
         const atCommands = new Set<string>();
         const noAtCommands = new Set<string>();
         toArray(command).forEach((cmd) => {
-            if (cmd.startsWith('/')) {
+            if (cmd.startsWith("/")) {
                 throw new Error(
                     `Do not include '/' when registering command handlers (use '${
                         cmd.substr(
@@ -391,23 +391,23 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     }' not '${cmd}')`,
                 );
             }
-            const set = cmd.indexOf('@') === -1 ? noAtCommands : atCommands;
+            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
             set.add(cmd);
         });
-        return this.on(':entities:bot_command').filter(
+        return this.on(":entities:bot_command").filter(
             (ctx): ctx is CommandContext<C> => {
                 const msg = ctx.message ?? ctx.channelPost;
                 const txt = msg.text ?? msg.caption;
                 const entities = msg.entities ?? msg.caption_entities;
                 return entities.some((e) => {
-                    if (e.type !== 'bot_command') return false;
+                    if (e.type !== "bot_command") return false;
                     if (e.offset !== 0) return false;
                     const cmd = txt.substring(1, e.length);
                     if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
                         ctx.match = txt.substr(cmd.length + 1).trimStart();
                         return true;
                     }
-                    const index = cmd.indexOf('@');
+                    const index = cmd.indexOf("@");
                     if (index === -1) return false;
                     const atTarget = cmd.substring(index + 1);
                     if (atTarget !== ctx.me.username) return false;
@@ -465,10 +465,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, 'callback_query:data'>>>
-    ): Composer<Filter<C, 'callback_query:data'>> {
+        ...middleware: Array<Middleware<Filter<C, "callback_query:data">>>
+    ): Composer<Filter<C, "callback_query:data">> {
         const trg = triggerFn(trigger);
-        return this.on('callback_query:data').filter(
+        return this.on("callback_query:data").filter(
             (ctx) => match(ctx, ctx.callbackQuery.data, trg),
             ...middleware,
         );
@@ -495,11 +495,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     gameQuery(
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<
-            Middleware<Filter<C, 'callback_query:game_short_name'>>
+            Middleware<Filter<C, "callback_query:game_short_name">>
         >
-    ): Composer<Filter<C, 'callback_query:game_short_name'>> {
+    ): Composer<Filter<C, "callback_query:game_short_name">> {
         const trg = triggerFn(trigger);
-        return this.on('callback_query:game_short_name').filter(
+        return this.on("callback_query:game_short_name").filter(
             (ctx) => match(ctx, ctx.callbackQuery.game_short_name, trg),
             ...middleware,
         );
@@ -529,10 +529,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, 'inline_query'>>>
-    ): Composer<Filter<C, 'inline_query'>> {
+        ...middleware: Array<Middleware<Filter<C, "inline_query">>>
+    ): Composer<Filter<C, "inline_query">> {
         const trg = triggerFn(trigger);
-        return this.on('inline_query').filter(
+        return this.on("inline_query").filter(
             (ctx) => match(ctx, ctx.inlineQuery.query, trg),
             ...middleware,
         );
@@ -822,7 +822,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
 // === Util functions and types
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map((t) =>
-        typeof t === 'string'
+        typeof t === "string"
             ? (txt: string) => (txt === t ? t : null)
             : (txt: string) => t.exec(txt)
     );
@@ -830,11 +830,11 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
 
 type HearsContext<C extends Context> = Filter<
     C & { match: string | RegExpMatchArray },
-    ':text' | ':caption'
+    ":text" | ":caption"
 >;
 type CommandContext<C extends Context> = Filter<
     C & { match: string },
-    ':entities:bot_command'
+    ":entities:bot_command"
 >;
 
 function match<C extends Context>(

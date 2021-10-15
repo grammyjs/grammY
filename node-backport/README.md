@@ -11,21 +11,21 @@ Talk to [@BotFather](https://t.me/BotFather) to create a new Telegram bot and ob
 Paste the following code into a new file `bot.js`.
 
 ```js
-import { Bot } from 'grammy';
+import { Bot } from "grammy";
 // This works, too (CommonJS modules):
 // const { Bot } = require('grammy')
 
 // Create bot object
-const bot = new Bot(''); // <-- place your bot token inside this string
+const bot = new Bot(""); // <-- place your bot token inside this string
 
 // Listen for messages
-bot.command('start', (ctx) => ctx.reply('Welcome! Send me a photo!'));
-bot.on('message:text', (ctx) => ctx.reply('That is text and not a photo!'));
-bot.on('message:photo', (ctx) => ctx.reply('Nice photo! Is that you?'));
+bot.command("start", (ctx) => ctx.reply("Welcome! Send me a photo!"));
+bot.on("message:text", (ctx) => ctx.reply("That is text and not a photo!"));
+bot.on("message:photo", (ctx) => ctx.reply("Nice photo! Is that you?"));
 bot.on(
-    'edited_message',
+    "edited_message",
     (ctx) =>
-        ctx.reply('Ha! Gotcha! You just edited this!', {
+        ctx.reply("Ha! Gotcha! You just edited this!", {
             reply_to_message_id: ctx.editedMessage.message_id,
         }),
 );

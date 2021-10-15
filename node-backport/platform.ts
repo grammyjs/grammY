@@ -1,22 +1,22 @@
 // === Needed imports
-import { InputFileProxy } from '@grammyjs/types';
-import { Agent } from 'https';
-import { basename } from 'path';
-import { Readable } from 'stream';
-import type { ReadStream } from 'fs';
+import { InputFileProxy } from "@grammyjs/types";
+import { Agent } from "https";
+import { basename } from "path";
+import { Readable } from "stream";
+import type { ReadStream } from "fs";
 
 // === Export all API types
-export * from '@grammyjs/types';
+export * from "@grammyjs/types";
 
 // === Export debug
-export { debug } from 'debug';
+export { debug } from "debug";
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
 export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
     Readable.from(itr, { objectMode: false });
 // Turn a file path into an AsyncIterable<Uint8Array>
-export { createReadStream as streamFile } from 'fs';
+export { createReadStream as streamFile } from "fs";
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = {
@@ -26,7 +26,7 @@ export const baseFetchConfig = {
 
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
-export const inputFileData = Symbol('InputFile data');
+export const inputFileData = Symbol("InputFile data");
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -56,7 +56,7 @@ export class InputFile {
         filename?: string,
     ) {
         this[inputFileData] = file;
-        if (filename === undefined && typeof file === 'string') {
+        if (filename === undefined && typeof file === "string") {
             filename = basename(file);
         }
         this.filename = filename;
@@ -67,11 +67,11 @@ export class InputFile {
 type GrammyTypes = InputFileProxy<InputFile>;
 
 /** Wrapper type to bundle all methods of the Telegram API */
-export type Telegram = GrammyTypes['Telegram'];
+export type Telegram = GrammyTypes["Telegram"];
 
 /** Utility type providing the argument type for the given method name or `{}` if the method does not take any parameters */
-export type Opts<M extends keyof GrammyTypes['Telegram']> =
-    GrammyTypes['Opts'][M];
+export type Opts<M extends keyof GrammyTypes["Telegram"]> =
+    GrammyTypes["Opts"][M];
 
 /** This object represents the content of a media message to be sent. It should be one of
 - InputMediaAnimation
@@ -79,14 +79,14 @@ export type Opts<M extends keyof GrammyTypes['Telegram']> =
 - InputMediaAudio
 - InputMediaPhoto
 - InputMediaVideo */
-export type InputMedia = GrammyTypes['InputMedia'];
+export type InputMedia = GrammyTypes["InputMedia"];
 /** Represents a photo to be sent. */
-export type InputMediaPhoto = GrammyTypes['InputMediaPhoto'];
+export type InputMediaPhoto = GrammyTypes["InputMediaPhoto"];
 /** Represents a video to be sent. */
-export type InputMediaVideo = GrammyTypes['InputMediaVideo'];
+export type InputMediaVideo = GrammyTypes["InputMediaVideo"];
 /** Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent. */
-export type InputMediaAnimation = GrammyTypes['InputMediaAnimation'];
+export type InputMediaAnimation = GrammyTypes["InputMediaAnimation"];
 /** Represents an audio file to be treated as music to be sent. */
-export type InputMediaAudio = GrammyTypes['InputMediaAudio'];
+export type InputMediaAudio = GrammyTypes["InputMediaAudio"];
 /** Represents a general file to be sent. */
-export type InputMediaDocument = GrammyTypes['InputMediaDocument'];
+export type InputMediaDocument = GrammyTypes["InputMediaDocument"];

@@ -10,7 +10,6 @@
         },
         "options": {
             "indentWidth": 4,
-            "singleQuote": true,
             "proseWrap": "preserve"
         }
     }

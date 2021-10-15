@@ -1,22 +1,22 @@
 // deno-lint-ignore-file no-explicit-any
-import { Bot } from '../bot.ts';
-import { debug as d, Update } from '../platform.ts';
-import { WebhookReplyEnvelope } from '../core/client.ts';
-import { Context } from '../context.ts';
-const debugErr = d('grammy:error');
+import { Bot } from "../bot.ts";
+import { debug as d, Update } from "../platform.ts";
+import { WebhookReplyEnvelope } from "../core/client.ts";
+import { Context } from "../context.ts";
+const debugErr = d("grammy:error");
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
  * box.
  */
 type SupportedFrameworks =
-    | 'express'
-    | 'http'
-    | 'https'
-    | 'koa'
-    | 'oak'
-    | 'fastify'
-    | 'worktop';
+    | "express"
+    | "http"
+    | "https"
+    | "koa"
+    | "oak"
+    | "fastify"
+    | "worktop";
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -58,14 +58,14 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
     https: standard,
     koa: (ctx) => ({
         update: Promise.resolve(ctx.request.body),
-        end: () => (ctx.body = ''),
+        end: () => (ctx.body = ""),
         respond: (json) => (ctx.response.body = json),
     }),
     oak: (ctx) => ({
-        update: ctx.request.body({ type: 'json' }).value,
+        update: ctx.request.body({ type: "json" }).value,
         end: () => (ctx.response.status = 200),
         respond: (json) => {
-            ctx.response.type = 'json';
+            ctx.response.type = "json";
             ctx.response.body = json;
         },
     }),
@@ -102,8 +102,8 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
  */
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    framework: SupportedFrameworks = 'express',
-    onTimeout: 'throw' | 'return' | ((...args: any[]) => unknown) = 'throw',
+    framework: SupportedFrameworks = "express",
+    onTimeout: "throw" | "return" | ((...args: any[]) => unknown) = "throw",
     timeoutMilliseconds = 10_000,
 ) {
     const server = frameworkAdapters[framework] ?? standard;
@@ -129,7 +129,7 @@ export function webhookCallback<C extends Context = Context>(
         }
         await timeoutIfNecessary(
             bot.handleUpdate(await update, webhookReplyEnvelope),
-            typeof onTimeout === 'function'
+            typeof onTimeout === "function"
                 ? () => onTimeout(...args)
                 : onTimeout,
             timeoutMilliseconds,
@@ -140,16 +140,16 @@ export function webhookCallback<C extends Context = Context>(
 
 function timeoutIfNecessary(
     task: Promise<void>,
-    onTimeout: 'throw' | 'return' | (() => unknown),
+    onTimeout: "throw" | "return" | (() => unknown),
     timeout: number,
 ): Promise<void> {
     if (timeout === Infinity) return task;
     return new Promise((resolve, reject) => {
         const handle = setTimeout(() => {
-            if (onTimeout === 'throw') {
+            if (onTimeout === "throw") {
                 reject(new Error(`Request timed out after ${timeout} ms`));
             } else {
-                if (typeof onTimeout === 'function') onTimeout();
+                if (typeof onTimeout === "function") onTimeout();
                 resolve();
             }
             const now = Date.now();
