@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase
-import { Api, Other as OtherApi } from "./core/api.ts";
-import { Methods, RawApi } from "./core/client.ts";
+import { Api, Other as OtherApi } from './core/api.ts';
+import { Methods, RawApi } from './core/client.ts';
 import {
     Chat,
     ChatPermissions,
@@ -17,7 +17,7 @@ import {
     Update,
     User,
     UserFromGetMe,
-} from "./platform.ts";
+} from './platform.ts';
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
     RawApi,
@@ -30,7 +30,7 @@ type SnakeToCamelCase<S extends string> = S extends `${infer L}_${infer R}`
 export type AliasProps<U> = {
     [key in string & keyof U as SnakeToCamelCase<key>]: U[key];
 };
-type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
+type RenamedUpdate = AliasProps<Omit<Update, 'update_id'>>;
 
 /**
  * When your bot receives a message, Telegram sends an update object to your
@@ -222,11 +222,11 @@ export class Context implements RenamedUpdate {
      */
     reply(
         text: string,
-        other?: Other<"sendMessage", "text">,
+        other?: Other<'sendMessage', 'text'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendMessage(
-            orThrow(this.chat, "sendMessage").id,
+            orThrow(this.chat, 'sendMessage').id,
             text,
             other,
             signal,
@@ -244,13 +244,13 @@ export class Context implements RenamedUpdate {
      */
     forwardMessage(
         chat_id: number | string,
-        other?: Other<"forwardMessage", "from_chat_id" | "message_id">,
+        other?: Other<'forwardMessage', 'from_chat_id' | 'message_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.forwardMessage(
             chat_id,
-            orThrow(this.chat, "forwardMessage").id,
-            orThrow(this.msg, "forwardMessage").message_id,
+            orThrow(this.chat, 'forwardMessage').id,
+            orThrow(this.msg, 'forwardMessage').message_id,
             other,
             signal,
         );
@@ -267,13 +267,13 @@ export class Context implements RenamedUpdate {
      */
     copyMessage(
         chat_id: number | string,
-        other?: Other<"copyMessage", "from_chat_id" | "message_id">,
+        other?: Other<'copyMessage', 'from_chat_id' | 'message_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.copyMessage(
             chat_id,
-            orThrow(this.chat, "copyMessage").id,
-            orThrow(this.msg, "copyMessage").message_id,
+            orThrow(this.chat, 'copyMessage').id,
+            orThrow(this.msg, 'copyMessage').message_id,
             other,
             signal,
         );
@@ -290,11 +290,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithPhoto(
         photo: InputFile | string,
-        other?: Other<"sendPhoto", "photo">,
+        other?: Other<'sendPhoto', 'photo'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendPhoto(
-            orThrow(this.chat, "sendPhoto").id,
+            orThrow(this.chat, 'sendPhoto').id,
             photo,
             other,
             signal,
@@ -314,11 +314,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithAudio(
         audio: InputFile | string,
-        other?: Other<"sendAudio", "audio">,
+        other?: Other<'sendAudio', 'audio'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendAudio(
-            orThrow(this.chat, "sendAudio").id,
+            orThrow(this.chat, 'sendAudio').id,
             audio,
             other,
             signal,
@@ -336,11 +336,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithDocument(
         document: InputFile | string,
-        other?: Other<"sendDocument", "document">,
+        other?: Other<'sendDocument', 'document'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendDocument(
-            orThrow(this.chat, "sendDocument").id,
+            orThrow(this.chat, 'sendDocument').id,
             document,
             other,
             signal,
@@ -358,11 +358,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithVideo(
         video: InputFile | string,
-        other?: Other<"sendVideo", "video">,
+        other?: Other<'sendVideo', 'video'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendVideo(
-            orThrow(this.chat, "sendVideo").id,
+            orThrow(this.chat, 'sendVideo').id,
             video,
             other,
             signal,
@@ -380,11 +380,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithAnimation(
         animation: InputFile | string,
-        other?: Other<"sendAnimation", "animation">,
+        other?: Other<'sendAnimation', 'animation'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendAnimation(
-            orThrow(this.chat, "sendAnimation").id,
+            orThrow(this.chat, 'sendAnimation').id,
             animation,
             other,
             signal,
@@ -402,11 +402,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithVoice(
         voice: InputFile | string,
-        other?: Other<"sendVoice", "voice">,
+        other?: Other<'sendVoice', 'voice'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendVoice(
-            orThrow(this.chat, "sendVoice").id,
+            orThrow(this.chat, 'sendVoice').id,
             voice,
             other,
             signal,
@@ -425,11 +425,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithVideoNote(
         video_note: InputFile | string,
-        other?: Other<"sendVideoNote", "video_note">,
+        other?: Other<'sendVideoNote', 'video_note'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendVideoNote(
-            orThrow(this.chat, "sendVideoNote").id,
+            orThrow(this.chat, 'sendVideoNote').id,
             video_note,
             other,
             signal,
@@ -452,11 +452,11 @@ export class Context implements RenamedUpdate {
             | InputMediaPhoto
             | InputMediaVideo
         >,
-        other?: Other<"sendMediaGroup", "media">,
+        other?: Other<'sendMediaGroup', 'media'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendMediaGroup(
-            orThrow(this.chat, "sendMediaGroup").id,
+            orThrow(this.chat, 'sendMediaGroup').id,
             media,
             other,
             signal,
@@ -476,11 +476,11 @@ export class Context implements RenamedUpdate {
     replyWithLocation(
         latitude: number,
         longitude: number,
-        other?: Other<"sendLocation", "latitude" | "longitude">,
+        other?: Other<'sendLocation', 'latitude' | 'longitude'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendLocation(
-            orThrow(this.chat, "sendLocation").id,
+            orThrow(this.chat, 'sendLocation').id,
             latitude,
             longitude,
             other,
@@ -502,8 +502,8 @@ export class Context implements RenamedUpdate {
         latitude: number,
         longitude: number,
         other?: Other<
-            "editMessageLiveLocation",
-            "message_id" | "inline_message_id" | "latitude" | "longitude"
+            'editMessageLiveLocation',
+            'message_id' | 'inline_message_id' | 'latitude' | 'longitude'
         >,
         signal?: AbortSignal,
     ) {
@@ -516,8 +516,8 @@ export class Context implements RenamedUpdate {
                 other,
             )
             : this.api.editMessageLiveLocation(
-                orThrow(this.chat, "editMessageLiveLocation").id,
-                orThrow(this.msg, "editMessageLiveLocation").message_id,
+                orThrow(this.chat, 'editMessageLiveLocation').id,
+                orThrow(this.msg, 'editMessageLiveLocation').message_id,
                 latitude,
                 longitude,
                 other,
@@ -535,8 +535,8 @@ export class Context implements RenamedUpdate {
      */
     stopMessageLiveLocation(
         other?: Other<
-            "stopMessageLiveLocation",
-            "message_id" | "inline_message_id"
+            'stopMessageLiveLocation',
+            'message_id' | 'inline_message_id'
         >,
         signal?: AbortSignal,
     ) {
@@ -544,8 +544,8 @@ export class Context implements RenamedUpdate {
         return inlineId !== undefined
             ? this.api.stopMessageLiveLocationInline(inlineId, other)
             : this.api.stopMessageLiveLocation(
-                orThrow(this.chat, "stopMessageLiveLocation").id,
-                orThrow(this.msg, "stopMessageLiveLocation").message_id,
+                orThrow(this.chat, 'stopMessageLiveLocation').id,
+                orThrow(this.msg, 'stopMessageLiveLocation').message_id,
                 other,
                 signal,
             );
@@ -569,13 +569,13 @@ export class Context implements RenamedUpdate {
         title: string,
         address: string,
         other?: Other<
-            "sendVenue",
-            "latitude" | "longitude" | "title" | "address"
+            'sendVenue',
+            'latitude' | 'longitude' | 'title' | 'address'
         >,
         signal?: AbortSignal,
     ) {
         return this.api.sendVenue(
-            orThrow(this.chat, "sendVenue").id,
+            orThrow(this.chat, 'sendVenue').id,
             latitude,
             longitude,
             title,
@@ -598,11 +598,11 @@ export class Context implements RenamedUpdate {
     replyWithContact(
         phone_number: string,
         first_name: string,
-        other?: Other<"sendContact", "phone_number" | "first_name">,
+        other?: Other<'sendContact', 'phone_number' | 'first_name'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendContact(
-            orThrow(this.chat, "sendContact").id,
+            orThrow(this.chat, 'sendContact').id,
             phone_number,
             first_name,
             other,
@@ -623,11 +623,11 @@ export class Context implements RenamedUpdate {
     replyWithPoll(
         question: string,
         options: readonly string[],
-        other?: Other<"sendPoll", "question" | "options">,
+        other?: Other<'sendPoll', 'question' | 'options'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendPoll(
-            orThrow(this.chat, "sendPoll").id,
+            orThrow(this.chat, 'sendPoll').id,
             question,
             options,
             other,
@@ -646,11 +646,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithDice(
         emoji: string,
-        other?: Other<"sendDice", "emoji">,
+        other?: Other<'sendDice', 'emoji'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendDice(
-            orThrow(this.chat, "sendDice").id,
+            orThrow(this.chat, 'sendDice').id,
             emoji,
             other,
             signal,
@@ -671,20 +671,20 @@ export class Context implements RenamedUpdate {
      */
     replyWithChatAction(
         action:
-            | "typing"
-            | "upload_photo"
-            | "record_video"
-            | "upload_video"
-            | "record_voice"
-            | "upload_voice"
-            | "upload_document"
-            | "find_location"
-            | "record_video_note"
-            | "upload_video_note",
+            | 'typing'
+            | 'upload_photo'
+            | 'record_video'
+            | 'upload_video'
+            | 'record_voice'
+            | 'upload_voice'
+            | 'upload_document'
+            | 'find_location'
+            | 'record_video_note'
+            | 'upload_video_note',
         signal?: AbortSignal,
     ) {
         return this.api.sendChatAction(
-            orThrow(this.chat, "sendChatAction").id,
+            orThrow(this.chat, 'sendChatAction').id,
             action,
             signal,
         );
@@ -700,11 +700,11 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#getuserprofilephotos
      */
     getUserProfilePhotos(
-        other?: Other<"getUserProfilePhotos", "user_id">,
+        other?: Other<'getUserProfilePhotos', 'user_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.getUserProfilePhotos(
-            orThrow(this.from, "getUserProfilePhotos").id,
+            orThrow(this.from, 'getUserProfilePhotos').id,
             other,
             signal,
         );
@@ -720,7 +720,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#getfile
      */
     getFile(signal?: AbortSignal) {
-        const m = orThrow(this.msg, "getFile");
+        const m = orThrow(this.msg, 'getFile');
         const file = m.photo !== undefined
             ? m.photo[m.photo.length - 1]
             : m.animation ??
@@ -730,11 +730,11 @@ export class Context implements RenamedUpdate {
                 m.video_note ??
                 m.voice ??
                 m.sticker;
-        return this.api.getFile(orThrow(file, "getFile").file_id, signal);
+        return this.api.getFile(orThrow(file, 'getFile').file_id, signal);
     }
 
     /** @deprecated Use `banAuthor` instead. */
-    kickAuthor(...args: Parameters<Context["banAuthor"]>) {
+    kickAuthor(...args: Parameters<Context['banAuthor']>) {
         return this.banAuthor(...args);
     }
 
@@ -746,17 +746,17 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#banchatmember
      */
-    banAuthor(other?: Other<"banChatMember", "user_id">, signal?: AbortSignal) {
+    banAuthor(other?: Other<'banChatMember', 'user_id'>, signal?: AbortSignal) {
         return this.api.banChatMember(
-            orThrow(this.chat, "banAuthor").id,
-            orThrow(this.from, "banAuthor").id,
+            orThrow(this.chat, 'banAuthor').id,
+            orThrow(this.from, 'banAuthor').id,
             other,
             signal,
         );
     }
 
     /** @deprecated Use `banChatMember` instead. */
-    kickChatMember(...args: Parameters<Context["banChatMember"]>) {
+    kickChatMember(...args: Parameters<Context['banChatMember']>) {
         return this.banChatMember(...args);
     }
 
@@ -771,11 +771,11 @@ export class Context implements RenamedUpdate {
      */
     banChatMember(
         user_id: number,
-        other?: Other<"banChatMember", "user_id">,
+        other?: Other<'banChatMember', 'user_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.banChatMember(
-            orThrow(this.chat, "banChatMember").id,
+            orThrow(this.chat, 'banChatMember').id,
             user_id,
             other,
             signal,
@@ -793,11 +793,11 @@ export class Context implements RenamedUpdate {
      */
     unbanChatMember(
         user_id: number,
-        other?: Other<"unbanChatMember", "user_id">,
+        other?: Other<'unbanChatMember', 'user_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.unbanChatMember(
-            orThrow(this.chat, "unbanChatMember").id,
+            orThrow(this.chat, 'unbanChatMember').id,
             user_id,
             other,
             signal,
@@ -815,12 +815,12 @@ export class Context implements RenamedUpdate {
      */
     restrictAuthor(
         permissions: ChatPermissions,
-        other?: Other<"restrictChatMember", "user_id" | "permissions">,
+        other?: Other<'restrictChatMember', 'user_id' | 'permissions'>,
         signal?: AbortSignal,
     ) {
         return this.api.restrictChatMember(
-            orThrow(this.chat, "restrictAuthor").id,
-            orThrow(this.from, "restrictAuthor").id,
+            orThrow(this.chat, 'restrictAuthor').id,
+            orThrow(this.from, 'restrictAuthor').id,
             permissions,
             other,
             signal,
@@ -840,11 +840,11 @@ export class Context implements RenamedUpdate {
     restrictChatMember(
         user_id: number,
         permissions: ChatPermissions,
-        other?: Other<"restrictChatMember", "user_id" | "permissions">,
+        other?: Other<'restrictChatMember', 'user_id' | 'permissions'>,
         signal?: AbortSignal,
     ) {
         return this.api.restrictChatMember(
-            orThrow(this.chat, "restrictChatMember").id,
+            orThrow(this.chat, 'restrictChatMember').id,
             user_id,
             permissions,
             other,
@@ -861,12 +861,12 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#promotechatmember
      */
     promoteAuthor(
-        other?: Other<"promoteChatMember", "user_id">,
+        other?: Other<'promoteChatMember', 'user_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.promoteChatMember(
-            orThrow(this.chat, "promoteAuthor").id,
-            orThrow(this.from, "promoteAuthor").id,
+            orThrow(this.chat, 'promoteAuthor').id,
+            orThrow(this.from, 'promoteAuthor').id,
             other,
             signal,
         );
@@ -883,11 +883,11 @@ export class Context implements RenamedUpdate {
      */
     promoteChatMember(
         user_id: number,
-        other?: Other<"promoteChatMember", "user_id">,
+        other?: Other<'promoteChatMember', 'user_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.promoteChatMember(
-            orThrow(this.chat, "promoteChatMember").id,
+            orThrow(this.chat, 'promoteChatMember').id,
             user_id,
             other,
             signal,
@@ -907,8 +907,8 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.setChatAdministratorCustomTitle(
-            orThrow(this.chat, "setChatAdministratorAuthorCustomTitle").id,
-            orThrow(this.from, "setChatAdministratorAuthorCustomTitle").id,
+            orThrow(this.chat, 'setChatAdministratorAuthorCustomTitle').id,
+            orThrow(this.from, 'setChatAdministratorAuthorCustomTitle').id,
             custom_title,
             signal,
         );
@@ -929,7 +929,7 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.setChatAdministratorCustomTitle(
-            orThrow(this.chat, "setChatAdministratorCustomTitle").id,
+            orThrow(this.chat, 'setChatAdministratorCustomTitle').id,
             user_id,
             custom_title,
             signal,
@@ -946,7 +946,7 @@ export class Context implements RenamedUpdate {
      */
     setChatPermissions(permissions: ChatPermissions, signal?: AbortSignal) {
         return this.api.setChatPermissions(
-            orThrow(this.chat, "setChatPermissions").id,
+            orThrow(this.chat, 'setChatPermissions').id,
             permissions,
             signal,
         );
@@ -963,7 +963,7 @@ export class Context implements RenamedUpdate {
      */
     exportChatInviteLink(signal?: AbortSignal) {
         return this.api.exportChatInviteLink(
-            orThrow(this.chat, "exportChatInviteLink").id,
+            orThrow(this.chat, 'exportChatInviteLink').id,
             signal,
         );
     }
@@ -977,11 +977,11 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#createchatinvitelink
      */
     createChatInviteLink(
-        other?: Other<"createChatInviteLink">,
+        other?: Other<'createChatInviteLink'>,
         signal?: AbortSignal,
     ) {
         return this.api.createChatInviteLink(
-            orThrow(this.chat, "createChatInviteLink").id,
+            orThrow(this.chat, 'createChatInviteLink').id,
             other,
             signal,
         );
@@ -998,11 +998,11 @@ export class Context implements RenamedUpdate {
      */
     editChatInviteLink(
         invite_link: string,
-        other?: Other<"editChatInviteLink", "invite_link">,
+        other?: Other<'editChatInviteLink', 'invite_link'>,
         signal?: AbortSignal,
     ) {
         return this.api.editChatInviteLink(
-            orThrow(this.chat, "editChatInviteLink").id,
+            orThrow(this.chat, 'editChatInviteLink').id,
             invite_link,
             other,
             signal,
@@ -1019,7 +1019,7 @@ export class Context implements RenamedUpdate {
      */
     revokeChatInviteLink(invite_link: string, signal?: AbortSignal) {
         return this.api.revokeChatInviteLink(
-            orThrow(this.chat, "editChatInviteLink").id,
+            orThrow(this.chat, 'editChatInviteLink').id,
             invite_link,
             signal,
         );
@@ -1035,7 +1035,7 @@ export class Context implements RenamedUpdate {
      */
     setChatPhoto(photo: InputFile, signal?: AbortSignal) {
         return this.api.setChatPhoto(
-            orThrow(this.chat, "setChatPhoto").id,
+            orThrow(this.chat, 'setChatPhoto').id,
             photo,
             signal,
         );
@@ -1050,7 +1050,7 @@ export class Context implements RenamedUpdate {
      */
     deleteChatPhoto(signal?: AbortSignal) {
         return this.api.deleteChatPhoto(
-            orThrow(this.chat, "deleteChatPhoto").id,
+            orThrow(this.chat, 'deleteChatPhoto').id,
             signal,
         );
     }
@@ -1065,7 +1065,7 @@ export class Context implements RenamedUpdate {
      */
     setChatTitle(title: string, signal?: AbortSignal) {
         return this.api.setChatTitle(
-            orThrow(this.chat, "setChatTitle").id,
+            orThrow(this.chat, 'setChatTitle').id,
             title,
             signal,
         );
@@ -1081,7 +1081,7 @@ export class Context implements RenamedUpdate {
      */
     setChatDescription(description: string | undefined, signal?: AbortSignal) {
         return this.api.setChatDescription(
-            orThrow(this.chat, "setChatDescription").id,
+            orThrow(this.chat, 'setChatDescription').id,
             description,
             signal,
         );
@@ -1098,11 +1098,11 @@ export class Context implements RenamedUpdate {
      */
     pinChatMessage(
         message_id: number,
-        other?: Other<"pinChatMessage", "message_id">,
+        other?: Other<'pinChatMessage', 'message_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.pinChatMessage(
-            orThrow(this.chat, "pinChatMessage").id,
+            orThrow(this.chat, 'pinChatMessage').id,
             message_id,
             other,
             signal,
@@ -1119,7 +1119,7 @@ export class Context implements RenamedUpdate {
      */
     unpinChatMessage(message_id?: number, signal?: AbortSignal) {
         return this.api.unpinChatMessage(
-            orThrow(this.chat, "unpinChatMessage").id,
+            orThrow(this.chat, 'unpinChatMessage').id,
             message_id,
             signal,
         );
@@ -1134,7 +1134,7 @@ export class Context implements RenamedUpdate {
      */
     unpinAllChatMessages(signal?: AbortSignal) {
         return this.api.unpinAllChatMessages(
-            orThrow(this.chat, "unpinAllChatMessages").id,
+            orThrow(this.chat, 'unpinAllChatMessages').id,
             signal,
         );
     }
@@ -1147,7 +1147,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#leavechat
      */
     leaveChat(signal?: AbortSignal) {
-        return this.api.leaveChat(orThrow(this.chat, "leaveChat").id, signal);
+        return this.api.leaveChat(orThrow(this.chat, 'leaveChat').id, signal);
     }
 
     /**
@@ -1158,7 +1158,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#getchat
      */
     getChat(signal?: AbortSignal) {
-        return this.api.getChat(orThrow(this.chat, "getChat").id, signal);
+        return this.api.getChat(orThrow(this.chat, 'getChat').id, signal);
     }
 
     /**
@@ -1170,13 +1170,13 @@ export class Context implements RenamedUpdate {
      */
     getChatAdministrators(signal?: AbortSignal) {
         return this.api.getChatAdministrators(
-            orThrow(this.chat, "getChatAdministrators").id,
+            orThrow(this.chat, 'getChatAdministrators').id,
             signal,
         );
     }
 
     /** @deprecated Use `getChatMembersCount` instead. */
-    getChatMembersCount(...args: Parameters<Context["getChatMemberCount"]>) {
+    getChatMembersCount(...args: Parameters<Context['getChatMemberCount']>) {
         return this.getChatMemberCount(...args);
     }
 
@@ -1189,7 +1189,7 @@ export class Context implements RenamedUpdate {
      */
     getChatMemberCount(signal?: AbortSignal) {
         return this.api.getChatMemberCount(
-            orThrow(this.chat, "getChatMemberCount").id,
+            orThrow(this.chat, 'getChatMemberCount').id,
             signal,
         );
     }
@@ -1203,8 +1203,8 @@ export class Context implements RenamedUpdate {
      */
     getAuthor(signal?: AbortSignal) {
         return this.api.getChatMember(
-            orThrow(this.chat, "getAuthor").id,
-            orThrow(this.from, "getAuthor").id,
+            orThrow(this.chat, 'getAuthor').id,
+            orThrow(this.from, 'getAuthor').id,
             signal,
         );
     }
@@ -1219,7 +1219,7 @@ export class Context implements RenamedUpdate {
      */
     getChatMember(user_id: number, signal?: AbortSignal) {
         return this.api.getChatMember(
-            orThrow(this.chat, "getChatMember").id,
+            orThrow(this.chat, 'getChatMember').id,
             user_id,
             signal,
         );
@@ -1235,7 +1235,7 @@ export class Context implements RenamedUpdate {
      */
     setChatStickerSet(sticker_set_name: string, signal?: AbortSignal) {
         return this.api.setChatStickerSet(
-            orThrow(this.chat, "setChatStickerSet").id,
+            orThrow(this.chat, 'setChatStickerSet').id,
             sticker_set_name,
             signal,
         );
@@ -1250,7 +1250,7 @@ export class Context implements RenamedUpdate {
      */
     deleteChatStickerSet(signal?: AbortSignal) {
         return this.api.deleteChatStickerSet(
-            orThrow(this.chat, "deleteChatStickerSet").id,
+            orThrow(this.chat, 'deleteChatStickerSet').id,
             signal,
         );
     }
@@ -1266,11 +1266,11 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#answercallbackquery
      */
     answerCallbackQuery(
-        other?: Other<"answerCallbackQuery", "callback_query_id">,
+        other?: Other<'answerCallbackQuery', 'callback_query_id'>,
         signal?: AbortSignal,
     ) {
         return this.api.answerCallbackQuery(
-            orThrow(this.callbackQuery, "answerCallbackQuery").id,
+            orThrow(this.callbackQuery, 'answerCallbackQuery').id,
             other,
             signal,
         );
@@ -1288,8 +1288,8 @@ export class Context implements RenamedUpdate {
     editMessageText(
         text: string,
         other?: Other<
-            "editMessageText",
-            "message_id" | "inline_message_id" | "text"
+            'editMessageText',
+            'message_id' | 'inline_message_id' | 'text'
         >,
         signal?: AbortSignal,
     ) {
@@ -1297,8 +1297,8 @@ export class Context implements RenamedUpdate {
         return inlineId !== undefined
             ? this.api.editMessageTextInline(inlineId, text, other)
             : this.api.editMessageText(
-                orThrow(this.chat, "editMessageText").id,
-                orThrow(this.msg, "editMessageText").message_id,
+                orThrow(this.chat, 'editMessageText').id,
+                orThrow(this.msg, 'editMessageText').message_id,
                 text,
                 other,
                 signal,
@@ -1314,15 +1314,15 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#editmessagecaption
      */
     editMessageCaption(
-        other?: Other<"editMessageCaption", "message_id" | "inline_message_id">,
+        other?: Other<'editMessageCaption', 'message_id' | 'inline_message_id'>,
         signal?: AbortSignal,
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
             ? this.api.editMessageCaptionInline(inlineId, other)
             : this.api.editMessageCaption(
-                orThrow(this.chat, "editMessageCaption").id,
-                orThrow(this.msg, "editMessageCaption").message_id,
+                orThrow(this.chat, 'editMessageCaption').id,
+                orThrow(this.msg, 'editMessageCaption').message_id,
                 other,
                 signal,
             );
@@ -1340,8 +1340,8 @@ export class Context implements RenamedUpdate {
     editMessageMedia(
         media: InputMedia,
         other?: Other<
-            "editMessageMedia",
-            "message_id" | "inline_message_id" | "media"
+            'editMessageMedia',
+            'message_id' | 'inline_message_id' | 'media'
         >,
         signal?: AbortSignal,
     ) {
@@ -1349,8 +1349,8 @@ export class Context implements RenamedUpdate {
         return inlineId !== undefined
             ? this.api.editMessageMediaInline(inlineId, media, other)
             : this.api.editMessageMedia(
-                orThrow(this.chat, "editMessageMedia").id,
-                orThrow(this.msg, "editMessageMedia").message_id,
+                orThrow(this.chat, 'editMessageMedia').id,
+                orThrow(this.msg, 'editMessageMedia').message_id,
                 media,
                 other,
                 signal,
@@ -1367,8 +1367,8 @@ export class Context implements RenamedUpdate {
      */
     editMessageReplyMarkup(
         other?: Other<
-            "editMessageReplyMarkup",
-            "message_id" | "inline_message_id"
+            'editMessageReplyMarkup',
+            'message_id' | 'inline_message_id'
         >,
         signal?: AbortSignal,
     ) {
@@ -1376,8 +1376,8 @@ export class Context implements RenamedUpdate {
         return inlineId !== undefined
             ? this.api.editMessageReplyMarkupInline(inlineId, other)
             : this.api.editMessageReplyMarkup(
-                orThrow(this.chat, "editMessageReplyMarkup").id,
-                orThrow(this.msg, "editMessageReplyMarkup").message_id,
+                orThrow(this.chat, 'editMessageReplyMarkup').id,
+                orThrow(this.msg, 'editMessageReplyMarkup').message_id,
                 other,
                 signal,
             );
@@ -1391,10 +1391,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#stoppoll
      */
-    stopPoll(other?: Other<"stopPoll", "message_id">, signal?: AbortSignal) {
+    stopPoll(other?: Other<'stopPoll', 'message_id'>, signal?: AbortSignal) {
         return this.api.stopPoll(
-            orThrow(this.chat, "stopPoll").id,
-            orThrow(this.msg, "stopPoll").message_id,
+            orThrow(this.chat, 'stopPoll').id,
+            orThrow(this.msg, 'stopPoll').message_id,
             other,
             signal,
         );
@@ -1417,8 +1417,8 @@ export class Context implements RenamedUpdate {
      */
     deleteMessage(signal?: AbortSignal) {
         return this.api.deleteMessage(
-            orThrow(this.chat, "deleteMessage").id,
-            orThrow(this.msg, "deleteMessage").message_id,
+            orThrow(this.chat, 'deleteMessage').id,
+            orThrow(this.msg, 'deleteMessage').message_id,
             signal,
         );
     }
@@ -1434,11 +1434,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithSticker(
         sticker: InputFile | string,
-        other?: Other<"sendSticker", "sticker">,
+        other?: Other<'sendSticker', 'sticker'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendSticker(
-            orThrow(this.chat, "sendSticker").id,
+            orThrow(this.chat, 'sendSticker').id,
             sticker,
             other,
             signal,
@@ -1459,11 +1459,11 @@ export class Context implements RenamedUpdate {
      */
     answerInlineQuery(
         results: readonly InlineQueryResult[],
-        other?: Other<"answerInlineQuery", "inline_query_id" | "results">,
+        other?: Other<'answerInlineQuery', 'inline_query_id' | 'results'>,
         signal?: AbortSignal,
     ) {
         return this.api.answerInlineQuery(
-            orThrow(this.inlineQuery, "answerInlineQuery").id,
+            orThrow(this.inlineQuery, 'answerInlineQuery').id,
             results,
             other,
             signal,
@@ -1492,19 +1492,19 @@ export class Context implements RenamedUpdate {
         currency: string,
         prices: readonly LabeledPrice[],
         other?: Other<
-            "sendInvoice",
-            | "title"
-            | "description"
-            | "payload"
-            | "provider_token"
-            | "start_parameter"
-            | "currency"
-            | "prices"
+            'sendInvoice',
+            | 'title'
+            | 'description'
+            | 'payload'
+            | 'provider_token'
+            | 'start_parameter'
+            | 'currency'
+            | 'prices'
         >,
         signal?: AbortSignal,
     ) {
         return this.api.sendInvoice(
-            orThrow(this.chat, "sendInvoice").id,
+            orThrow(this.chat, 'sendInvoice').id,
             title,
             description,
             payload,
@@ -1528,11 +1528,11 @@ export class Context implements RenamedUpdate {
      */
     answerShippingQuery(
         ok: boolean,
-        other?: Other<"answerShippingQuery", "shipping_query_id" | "ok">,
+        other?: Other<'answerShippingQuery', 'shipping_query_id' | 'ok'>,
         signal?: AbortSignal,
     ) {
         return this.api.answerShippingQuery(
-            orThrow(this.shippingQuery, "answerShippingQuery").id,
+            orThrow(this.shippingQuery, 'answerShippingQuery').id,
             ok,
             other,
             signal,
@@ -1550,11 +1550,11 @@ export class Context implements RenamedUpdate {
      */
     answerPreCheckoutQuery(
         ok: boolean,
-        other?: Other<"answerPreCheckoutQuery", "pre_checkout_query_id" | "ok">,
+        other?: Other<'answerPreCheckoutQuery', 'pre_checkout_query_id' | 'ok'>,
         signal?: AbortSignal,
     ) {
         return this.api.answerPreCheckoutQuery(
-            orThrow(this.preCheckoutQuery, "answerPreCheckoutQuery").id,
+            orThrow(this.preCheckoutQuery, 'answerPreCheckoutQuery').id,
             ok,
             other,
             signal,
@@ -1576,7 +1576,7 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.setPassportDataErrors(
-            orThrow(this.from, "setPassportDataErrors").id,
+            orThrow(this.from, 'setPassportDataErrors').id,
             errors,
             signal,
         );
@@ -1593,11 +1593,11 @@ export class Context implements RenamedUpdate {
      */
     replyWithGame(
         game_short_name: string,
-        other?: Other<"sendGame", "game_short_name">,
+        other?: Other<'sendGame', 'game_short_name'>,
         signal?: AbortSignal,
     ) {
         return this.api.sendGame(
-            orThrow(this.chat, "sendGame").id,
+            orThrow(this.chat, 'sendGame').id,
             game_short_name,
             other,
             signal,

@@ -4,10 +4,10 @@ import {
     debug as d,
     Opts,
     Telegram,
-} from "../platform.ts";
-import { GrammyError, HttpError } from "./error.ts";
-import { createRequestConfig } from "./payload.ts";
-const debug = d("grammy:core");
+} from '../platform.ts';
+import { GrammyError, HttpError } from './error.ts';
+import { createRequestConfig } from './payload.ts';
+const debug = d('grammy:core');
 
 export type Methods<R extends RawApi> = string & keyof R;
 
@@ -76,7 +76,7 @@ export type Transformer<R extends RawApi = RawApi> = <M extends Methods<R>>(
 ) => Promise<ApiResponse<ApiCallResult<M, R>>>;
 export type TransformerConsumer<R extends RawApi = RawApi> = TransformableApi<
     R
->["use"];
+>['use'];
 /**
  * A transformable API enhances the `RawApi` type by transformers.
  */
@@ -169,7 +169,7 @@ export interface ApiClientOptions {
      */
     baseFetchConfig?: Omit<
         NonNullable<Parameters<typeof fetch>[1]>,
-        "method" | "headers" | "body"
+        'method' | 'headers' | 'body'
     >;
     /**
      * When the network connection is unreliable and some API requests fail
@@ -198,14 +198,14 @@ class ApiClient<R extends RawApi> {
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {},
     ) {
         this.options = {
-            apiRoot: options.apiRoot ?? "https://api.telegram.org",
+            apiRoot: options.apiRoot ?? 'https://api.telegram.org',
             buildUrl: options.buildUrl ??
                 ((root, token, method) => `${root}/bot${token}/${method}`),
             baseFetchConfig: options.baseFetchConfig ?? baseFetchConfig,
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
         };
-        if (this.options.apiRoot.endsWith("/")) {
+        if (this.options.apiRoot.endsWith('/')) {
             throw new Error(
                 `Remove the trailing '/' from the 'apiRoot' option (use '${
                     this.options.apiRoot.substr(
@@ -218,7 +218,7 @@ class ApiClient<R extends RawApi> {
     }
 
     private call: ApiCallFn<R> = async (method, payload, signal) => {
-        debug("Calling", method);
+        debug('Calling', method);
         const url = this.options.buildUrl(
             this.options.apiRoot,
             this.token,
@@ -228,7 +228,7 @@ class ApiClient<R extends RawApi> {
         if (
             this.webhookReplyEnvelope.send !== undefined &&
             !this.hasUsedWebhookReply &&
-            typeof config.body === "string" &&
+            typeof config.body === 'string' &&
             this.options.canUseWebhookReply(method)
         ) {
             this.hasUsedWebhookReply = true;
@@ -301,9 +301,9 @@ export function createRawApi<R extends RawApi>(
     const client = new ApiClient<R>(token, options, webhookReplyEnvelope);
 
     const proxyHandler: ProxyHandler<R> = {
-        get(_, m: Methods<R> | "toJSON") {
-            return m === "toJSON"
-                ? "__internal"
+        get(_, m: Methods<R> | 'toJSON') {
+            return m === 'toJSON'
+                ? '__internal'
                 : client.callApi.bind(client, m);
         },
         ...proxyMethods,
@@ -341,9 +341,9 @@ function isTelegramError(
     err: unknown,
 ): err is { status: string; statusText: string } {
     return (
-        typeof err === "object" &&
+        typeof err === 'object' &&
         err !== null &&
-        "status" in err &&
-        "statusText" in err
+        'status' in err &&
+        'statusText' in err
     );
 }

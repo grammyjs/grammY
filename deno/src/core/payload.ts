@@ -4,7 +4,7 @@ import {
     InputMedia,
     itrToStream,
     streamFile,
-} from "../platform.ts";
+} from '../platform.ts';
 
 // === Payload types (JSON vs. form data)
 /**
@@ -28,7 +28,7 @@ export function createRequestConfig(payload: Record<string, unknown>) {
  */
 function requiresFormDataUpload(payload: unknown): boolean {
     return (
-        typeof payload === "object" &&
+        typeof payload === 'object' &&
         payload !== null &&
         Object.values(payload).some((v) =>
             Array.isArray(v)
@@ -46,10 +46,10 @@ function requiresFormDataUpload(payload: unknown): boolean {
  */
 function createJsonPayload(payload: Record<string, unknown>) {
     return {
-        method: "POST",
+        method: 'POST',
         headers: {
-            "content-type": "application/json",
-            connection: "keep-alive",
+            'content-type': 'application/json',
+            connection: 'keep-alive',
         },
         body: JSON.stringify(payload, (_, v) => v ?? undefined),
     };
@@ -66,10 +66,10 @@ function createFormDataPayload(payload: Record<string, unknown>) {
     const boundary = createBoundary();
 
     return {
-        method: "POST",
+        method: 'POST',
         headers: {
-            "content-type": `multipart/form-data; boundary=${boundary}`,
-            connection: "keep-alive",
+            'content-type': `multipart/form-data; boundary=${boundary}`,
+            connection: 'keep-alive',
         },
         body: itrToStream(payloadToMultipartItr(payload, boundary)),
     };
@@ -78,12 +78,12 @@ function createFormDataPayload(payload: Record<string, unknown>) {
 // === Form data creation
 function createBoundary() {
     // Taken from Deno std lib
-    return "----------" + randomId(32);
+    return '----------' + randomId(32);
 }
 function randomId(length = 16) {
     return Array.from(Array(length))
         .map(() => Math.random().toString(36)[2] || 0)
-        .join("");
+        .join('');
 }
 
 const enc = new TextEncoder();
@@ -131,7 +131,7 @@ async function* payloadToMultipartItr(
             // other value in payload
             yield valuePart(
                 key,
-                typeof value === "object" ? JSON.stringify(value) : value,
+                typeof value === 'object' ? JSON.stringify(value) : value,
             );
         }
         first = false;
@@ -153,7 +153,7 @@ async function* filePart(
     input: InputFile,
 ): AsyncIterableIterator<Uint8Array> {
     const filename = input.filename ?? `${key}.${getExt(key)}`;
-    if (filename.includes("\r") || filename.includes("\n")) {
+    if (filename.includes('\r') || filename.includes('\n')) {
         throw new Error(
             `File paths cannot contain carriage-return (\\r) \
 or newline (\\n) characters! Filename for property '${key}' was:
@@ -168,32 +168,32 @@ ${filename}
     const fileData = input[inputFileData];
     // handle buffers, file paths, and streams:
     if (fileData instanceof Uint8Array) yield fileData;
-    else if (typeof fileData === "string") yield* await streamFile(fileData);
+    else if (typeof fileData === 'string') yield* await streamFile(fileData);
     else yield* fileData;
 }
 /** Returns the default file extension for an API property name */
 function getExt(key: string) {
     switch (key) {
-        case "photo":
-            return "jpg";
-        case "voice":
-            return "ogg";
-        case "audio":
-            return "mp3";
-        case "animation":
-        case "video":
-        case "video_note":
-            return "mp4";
-        case "sticker":
-            return "webp";
+        case 'photo':
+            return 'jpg';
+        case 'voice':
+            return 'ogg';
+        case 'audio':
+            return 'mp3';
+        case 'animation':
+        case 'video':
+        case 'video_note':
+            return 'mp4';
+        case 'sticker':
+            return 'webp';
         default:
-            return "dat";
+            return 'dat';
     }
 }
 
 // === Helper functions
 /** Fields that require a multipart/form-data upload via ID instead of via the property itself */
-const indirectAttachmentFields = new Set(["thumb"]);
+const indirectAttachmentFields = new Set(['thumb']);
 /** Determines if a file behind a given key should be send via `attach://<id>` instead of the key itself */
 function mustAttachIndirectly(key: string) {
     return indirectAttachmentFields.has(key);
@@ -202,15 +202,15 @@ function has<K extends readonly string[]>(
     obj: unknown,
     props: K,
 ): obj is Record<K[number], unknown> {
-    return typeof obj === "object" && obj !== null &&
+    return typeof obj === 'object' && obj !== null &&
         props.every((p) => p in obj);
 }
-const inputMediaProps = ["type", "media"] as const;
+const inputMediaProps = ['type', 'media'] as const;
 /** Determines if a value is an `InputMedia` object */
 function isInputMedia(value: unknown): value is InputMedia {
     return (
         has(value, inputMediaProps) &&
-        typeof value.type === "string" &&
-        (typeof value.media === "string" || value.media instanceof InputFile)
+        typeof value.type === 'string' &&
+        (typeof value.media === 'string' || value.media instanceof InputFile)
     );
 }

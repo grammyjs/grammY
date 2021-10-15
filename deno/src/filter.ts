@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase no-explicit-any
-import { AliasProps, Context } from "./context.ts";
-import { Update } from "./platform.ts";
+import { AliasProps, Context } from './context.ts';
+import { Update } from './platform.ts';
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
@@ -38,8 +38,8 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
 
 function parse(filter: FilterQuery | FilterQuery[]): string[][] {
     return Array.isArray(filter)
-        ? filter.map((q) => q.split(":"))
-        : [filter.split(":")];
+        ? filter.map((q) => q.split(':'))
+        : [filter.split(':')];
 }
 
 function compile(parsed: string[][]): (ctx: Context) => boolean {
@@ -88,7 +88,7 @@ function preprocess(filter: string[]): string[][] {
         throw new Error(
             `Shortcuts in '${
                 filter.join(
-                    ":",
+                    ':',
                 )
             }' do not expand to any valid filter query`,
         );
@@ -97,7 +97,7 @@ function preprocess(filter: string[]): string[][] {
 }
 
 function check(original: string[], preprocessed: string[][]): string[][] {
-    if (preprocessed.length === 0) throw new Error("Empty filter query given");
+    if (preprocessed.length === 0) throw new Error('Empty filter query given');
     const errors = preprocessed
         .map(checkOne)
         .filter((r): r is string => r !== true);
@@ -106,10 +106,10 @@ function check(original: string[], preprocessed: string[][]): string[][] {
     else {
         throw new Error(
             `Invalid filter query '${
-                original.join(":")
+                original.join(':')
             }'. There are ${errors.length} errors after expanding the contained shortcuts: ${
                 errors.join(
-                    "; ",
+                    '; ',
                 )
             }`,
         );
@@ -117,37 +117,37 @@ function check(original: string[], preprocessed: string[][]): string[][] {
 }
 function checkOne(filter: string[]): string | true {
     const [l1, l2, l3, ...n] = filter;
-    if (l1 === undefined) return "Empty filter query given";
+    if (l1 === undefined) return 'Empty filter query given';
     if (!(l1 in UPDATE_KEYS)) {
         const permitted = Object.keys(UPDATE_KEYS);
-        return `Invalid L1 filter '${l1}' given in '${filter.join(":")}'. \
-Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")}.`;
+        return `Invalid L1 filter '${l1}' given in '${filter.join(':')}'. \
+Permitted values are: ${permitted.map((k) => `'${k}'`).join(', ')}.`;
     }
     if (l2 === undefined) return true;
     const l1Obj: any = UPDATE_KEYS[l1 as keyof S];
     if (!(l2 in l1Obj)) {
         const permitted = Object.keys(l1Obj);
-        return `Invalid L2 filter '${l2}' given in '${filter.join(":")}'. \
-Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")}.`;
+        return `Invalid L2 filter '${l2}' given in '${filter.join(':')}'. \
+Permitted values are: ${permitted.map((k) => `'${k}'`).join(', ')}.`;
     }
     if (l3 === undefined) return true;
     const l2Obj = l1Obj[l2];
     if (!(l3 in l2Obj)) {
         const permitted = Object.keys(l2Obj);
-        return `Invalid L3 filter '${l3}' given in '${filter.join(":")}'. ${
+        return `Invalid L3 filter '${l3}' given in '${filter.join(':')}'. ${
             permitted.length === 0
                 ? `No further filtering is possible after '${l1}:${l2}'.`
                 : `Permitted values are: ${
                     permitted
                         .map((k) => `'${k}'`)
-                        .join(", ")
+                        .join(', ')
                 }.`
         }`;
     }
     if (n.length === 0) return true;
     return `Cannot filter further than three levels, ':${
         n.join(
-            ":",
+            ':',
         )
     }' is invalid!`;
 }
@@ -188,7 +188,7 @@ function arborist(tree: LTree): Pred {
         const l2Predicates = Object.entries(subtree).map(([l2, set]) => {
             const l2Pred: Pred = (obj) => obj[l2];
             const l3Predicates = Array.from(set).map((l3) => {
-                const l3Pred: Pred = l3 === "me" // special handling for `me` shortcut
+                const l3Pred: Pred = l3 === 'me' // special handling for `me` shortcut
                     ? (obj, ctx) => {
                         const me = ctx.me.id;
                         return testMaybeArray(obj, (u) => u.id === me);
@@ -206,7 +206,7 @@ function arborist(tree: LTree): Pred {
             : concat(l1Pred, l2Predicates.reduce(or));
     });
     if (l1Predicates.length === 0) {
-        throw new Error("Cannot create filter function for empty query");
+        throw new Error('Cannot create filter function for empty query');
     }
     return l1Predicates.reduce(or);
 }
@@ -341,7 +341,7 @@ type InjectShortcuts<Q extends L123 = L123> = Q extends
 // Add L1 shortcuts
 type CollapseL1<
     Q extends string,
-    L extends L1Shortcuts = Exclude<L1Shortcuts, "">,
+    L extends L1Shortcuts = Exclude<L1Shortcuts, ''>,
 > =
     | Q
     | (L extends string ? Q extends typeof L1_SHORTCUTS[L][number] ? L
@@ -350,7 +350,7 @@ type CollapseL1<
 // Add L2 shortcuts
 type CollapseL2<
     Q extends string,
-    L extends L2Shortcuts = Exclude<L2Shortcuts, "">,
+    L extends L2Shortcuts = Exclude<L2Shortcuts, ''>,
 > =
     | Q
     | (L extends string ? Q extends typeof L2_SHORTCUTS[L][number] ? L
@@ -447,67 +447,67 @@ type PerformQuery<C extends Context, U extends SomeObject> = U extends unknown
 // set the given update into a given context object, and adjust the aliases
 type FilteredContext<C extends Context, U extends Update> =
     & C
-    & Record<"update", U>
-    & AliasProps<Omit<U, "update_id">>
+    & Record<'update', U>
+    & AliasProps<Omit<U, 'update_id'>>
     & Shortcuts<U>;
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
-    msg: [U["callback_query"]] extends [SomeObject]
-        ? U["callback_query"]["message"]
-        : [U["message"]] extends [SomeObject] ? U["message"]
-        : [U["edited_message"]] extends [SomeObject] ? U["edited_message"]
-        : [U["channel_post"]] extends [SomeObject] ? U["channel_post"]
-        : [U["edited_channel_post"]] extends [SomeObject]
-            ? U["edited_channel_post"]
+    msg: [U['callback_query']] extends [SomeObject]
+        ? U['callback_query']['message']
+        : [U['message']] extends [SomeObject] ? U['message']
+        : [U['edited_message']] extends [SomeObject] ? U['edited_message']
+        : [U['channel_post']] extends [SomeObject] ? U['channel_post']
+        : [U['edited_channel_post']] extends [SomeObject]
+            ? U['edited_channel_post']
         : undefined;
-    chat: [U["callback_query"]] extends [SomeObject]
-        ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
-        : [Shortcuts<U>["msg"]] extends [SomeObject]
-            ? Shortcuts<U>["msg"]["chat"]
-        : [U["my_chat_member"]] extends [SomeObject]
-            ? U["my_chat_member"]["chat"]
-        : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["chat"]
+    chat: [U['callback_query']] extends [SomeObject]
+        ? NonNullable<U['callback_query']['message']>['chat'] | undefined
+        : [Shortcuts<U>['msg']] extends [SomeObject]
+            ? Shortcuts<U>['msg']['chat']
+        : [U['my_chat_member']] extends [SomeObject]
+            ? U['my_chat_member']['chat']
+        : [U['chat_member']] extends [SomeObject] ? U['chat_member']['chat']
         : undefined;
     // senderChat: disregarded here because always optional on 'Message'
-    from: [U["callback_query"]] extends [SomeObject]
-        ? U["callback_query"]["from"]
-        : [U["inline_query"]] extends [SomeObject] ? U["inline_query"]["from"]
-        : [U["shipping_query"]] extends [SomeObject]
-            ? U["shipping_query"]["from"]
-        : [U["pre_checkout_query"]] extends [SomeObject]
-            ? U["pre_checkout_query"]["from"]
-        : [U["chosen_inline_result"]] extends [SomeObject]
-            ? U["chosen_inline_result"]["from"]
-        : [U["message"]] extends [SomeObject]
-            ? NonNullable<U["message"]["from"]>
-        : [U["edited_message"]] extends [SomeObject]
-            ? NonNullable<U["edited_message"]["from"]>
-        : [U["my_chat_member"]] extends [SomeObject]
-            ? U["my_chat_member"]["from"]
-        : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["from"]
+    from: [U['callback_query']] extends [SomeObject]
+        ? U['callback_query']['from']
+        : [U['inline_query']] extends [SomeObject] ? U['inline_query']['from']
+        : [U['shipping_query']] extends [SomeObject]
+            ? U['shipping_query']['from']
+        : [U['pre_checkout_query']] extends [SomeObject]
+            ? U['pre_checkout_query']['from']
+        : [U['chosen_inline_result']] extends [SomeObject]
+            ? U['chosen_inline_result']['from']
+        : [U['message']] extends [SomeObject]
+            ? NonNullable<U['message']['from']>
+        : [U['edited_message']] extends [SomeObject]
+            ? NonNullable<U['edited_message']['from']>
+        : [U['my_chat_member']] extends [SomeObject]
+            ? U['my_chat_member']['from']
+        : [U['chat_member']] extends [SomeObject] ? U['chat_member']['from']
         : undefined;
     // inlineMessageId: disregarded here because always optional on both types
 }
 
 // === Define some helpers for handling shortcuts, e.g. in 'edit:photo'
 const L1_SHORTCUTS = {
-    "": ["message", "channel_post"],
-    msg: ["message", "channel_post"],
-    edit: ["edited_message", "edited_channel_post"],
+    '': ['message', 'channel_post'],
+    msg: ['message', 'channel_post'],
+    edit: ['edited_message', 'edited_channel_post'],
 } as const;
 const L2_SHORTCUTS = {
-    "": ["entities", "caption_entities"],
-    media: ["photo", "video"],
+    '': ['entities', 'caption_entities'],
+    media: ['photo', 'video'],
     file: [
-        "photo",
-        "animation",
-        "audio",
-        "document",
-        "video",
-        "video_note",
-        "voice",
-        "sticker",
+        'photo',
+        'animation',
+        'audio',
+        'document',
+        'video',
+        'video_note',
+        'voice',
+        'sticker',
     ],
 } as const;
 type L1Shortcuts = KeyOf<typeof L1_SHORTCUTS>;
@@ -528,16 +528,16 @@ type ExpandL2<S extends string> = S extends L2Shortcuts
 type Twins<V extends string> = V extends KeyOf<Equivalents> ? Equivalents[V]
     : V;
 type Equivalents = {
-    animation: "document";
+    animation: 'document';
     entities: TextMessages;
     caption: CaptionMessages;
     caption_entities: CaptionMessages;
 };
-type TextMessages = "text";
+type TextMessages = 'text';
 type CaptionMessages =
-    | "animation"
-    | "audio"
-    | "document"
-    | "photo"
-    | "video"
-    | "voice";
+    | 'animation'
+    | 'audio'
+    | 'document'
+    | 'photo'
+    | 'video'
+    | 'voice';
