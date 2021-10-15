@@ -32,7 +32,7 @@ export const streamFile = isDeno
     };
 
 // === Base configuration for `fetch` calls
-export const baseFetchConfig = {};
+export const baseFetchConfig = (_apiRoot: string) => ({});
 
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances

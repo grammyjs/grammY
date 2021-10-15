@@ -197,11 +197,13 @@ class ApiClient<R extends RawApi> {
         options: ApiClientOptions = {},
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {},
     ) {
+        const apiRoot = options.apiRoot ?? "https://api.telegram.org";
         this.options = {
-            apiRoot: options.apiRoot ?? "https://api.telegram.org",
+            apiRoot,
             buildUrl: options.buildUrl ??
                 ((root, token, method) => `${root}/bot${token}/${method}`),
-            baseFetchConfig: options.baseFetchConfig ?? baseFetchConfig,
+            baseFetchConfig: options.baseFetchConfig ??
+                baseFetchConfig(apiRoot),
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
         };
