@@ -1,4 +1,4 @@
-import { ApiError, ResponseParameters } from "../platform.ts";
+import { ApiError, ResponseParameters } from "../platform.deno.ts";
 
 /**
  * This class represents errors that are thrown by grammY because the Telegram

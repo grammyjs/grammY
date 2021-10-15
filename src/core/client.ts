@@ -4,7 +4,7 @@ import {
     debug as d,
     Opts,
     Telegram,
-} from "../platform.ts";
+} from "../platform.deno.ts";
 import { GrammyError, HttpError } from "./error.ts";
 import { createRequestConfig } from "./payload.ts";
 const debug = d("grammy:core");
