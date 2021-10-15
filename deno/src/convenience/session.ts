@@ -173,10 +173,10 @@ export interface SessionOptions<S> {
  * @param options Optional configuration to pass to the session middleware
  */
 export function session<S, C extends Context>(
-    options?: SessionOptions<S>,
+    options: SessionOptions<S> = {},
 ): MiddlewareFn<C & SessionFlavor<S>> {
-    const getSessionKey = options?.getSessionKey ?? defaultGetSessionKey;
-    const storage = options?.storage ??
+    const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
+    const storage = options.storage ??
         (debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
         ),
@@ -185,7 +185,7 @@ export function session<S, C extends Context>(
         const key = await getSessionKey(ctx);
         let value = key === undefined
             ? undefined
-            : (await storage.read(key)) ?? options?.initial?.();
+            : (await storage.read(key)) ?? options.initial?.();
         Object.defineProperty(ctx, "session", {
             get() {
                 if (key === undefined) {
@@ -245,45 +245,51 @@ export function session<S, C extends Context>(
  * @param options Optional configuration to pass to the session middleware
  */
 export function lazySession<S, C extends Context>(
-    options?: SessionOptions<S>,
+    options: SessionOptions<S> = {},
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
-    const getSessionKey = options?.getSessionKey ?? defaultGetSessionKey;
-    const storage = options?.storage ??
+    const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
+    const storage = options.storage ??
         (debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
         ),
             new MemorySessionStorage());
     return async (ctx, next) => {
         const key = await getSessionKey(ctx);
-        let value: Promise<S | undefined> | S | undefined = undefined;
+        let value: MaybePromise<S | undefined> = undefined;
         let promise: Promise<S | undefined> | undefined = undefined;
-        let wrote = false;
-        let read = false;
         let fetching = false;
+        let read = false;
+        let wrote = false;
+
+        async function load() {
+            if (key === undefined) {
+                throw new Error(
+                    "Cannot access lazy session data because the session key was undefined!",
+                );
+            }
+            let v = await storage.read(key);
+            if (!fetching) return value;
+            if (v === undefined) {
+                v = options.initial?.();
+                if (v !== undefined) {
+                    wrote = true;
+                    value = v;
+                }
+            } else {
+                value = v;
+            }
+            return value;
+        }
+
         Object.defineProperty(ctx, "session", {
             get() {
                 if (wrote) return value;
-                if (key === undefined) {
-                    throw new Error(
-                        "Cannot access lazy session data because the session key was undefined!",
-                    );
-                }
                 read = true;
-                return (promise ??=
-                    ((fetching = true),
-                        Promise.resolve(storage.read(key)).then((v) => {
-                            if (!fetching) return value;
-                            if (v === undefined) {
-                                v = options?.initial?.();
-                                if (v !== undefined) {
-                                    wrote = true;
-                                    value = v;
-                                }
-                            } else {
-                                value = v;
-                            }
-                            return value;
-                        })));
+                if (promise === undefined) {
+                    fetching = true;
+                    promise = load();
+                }
+                return promise;
             },
             set(v) {
                 if (key === undefined) {
