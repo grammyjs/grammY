@@ -579,11 +579,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<Middleware<D>>
     ): Composer<D>;
     filter(
-        predicate: (ctx: C) => MaybePromise<boolean>,
+        predicate: MaybeArray<(ctx: C) => MaybePromise<boolean>>,
         ...middleware: Array<Middleware<C>>
     ): Composer<C>;
     filter(
-        predicate: (ctx: C) => MaybePromise<boolean>,
+        predicate: MaybeArray<(ctx: C) => MaybePromise<boolean>>,
         ...middleware: Array<Middleware<C>>
     ) {
         const composer = new Composer(...middleware);
@@ -608,11 +608,12 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     drop(
-        predicate: (ctx: C) => MaybePromise<boolean>,
+        predicate: MaybeArray<(ctx: C) => MaybePromise<boolean>>,
         ...middleware: Array<Middleware<C>>
     ) {
+        const arr = toArray(predicate);
         return this.filter(
-            async (ctx: C) => !(await predicate(ctx)),
+            arr.map((pred) => async (ctx: C) => !(await pred(ctx))),
             ...middleware,
         );
     }
@@ -748,12 +749,25 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param falseMiddleware The middleware for the `false` case
      */
     branch(
-        predicate: (ctx: C) => MaybePromise<boolean>,
+        predicate: MaybeArray<(ctx: C) => MaybePromise<boolean>>,
         trueMiddleware: MaybeArray<Middleware<C>>,
         falseMiddleware: MaybeArray<Middleware<C>>,
     ) {
+        const arr = toArray(predicate);
+        if (arr.length === 0) {
+            throw new Error("Cannot branch over zero middlewares!");
+        }
+        let pred: (ctx: C) => MaybePromise<boolean>;
+        if (arr.length === 1) {
+            pred = arr[0];
+        } else {
+            pred = async (ctx: C) => {
+                const res = await Promise.all(arr.map((p) => p(ctx)));
+                return res.every(Boolean);
+            };
+        }
         return this.lazy(async (ctx) =>
-            (await predicate(ctx)) ? trueMiddleware : falseMiddleware
+            (await pred(ctx)) ? trueMiddleware : falseMiddleware
         );
     }
 
