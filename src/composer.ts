@@ -753,18 +753,21 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         trueMiddleware: MaybeArray<Middleware<C>>,
         falseMiddleware: MaybeArray<Middleware<C>>,
     ) {
-        const arr = toArray(predicate);
-        if (arr.length === 0) {
-            throw new Error("Cannot branch over zero middlewares!");
-        }
         let pred: (ctx: C) => MaybePromise<boolean>;
-        if (arr.length === 1) {
-            pred = arr[0];
+        if (Array.isArray(predicate)) {
+            if (predicate.length === 0) {
+                // Universal quantifacations about [] are always true, skip branching
+                return this.use(...toArray(trueMiddleware));
+            } else if (predicate.length === 1) {
+                pred = predicate[0];
+            } else {
+                pred = async (ctx: C) => {
+                    const res = await Promise.all(predicate.map((p) => p(ctx)));
+                    return res.every(Boolean);
+                };
+            }
         } else {
-            pred = async (ctx: C) => {
-                const res = await Promise.all(arr.map((p) => p(ctx)));
-                return res.every(Boolean);
-            };
+            pred = predicate;
         }
         return this.lazy(async (ctx) =>
             (await pred(ctx)) ? trueMiddleware : falseMiddleware
