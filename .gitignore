@@ -21,6 +21,4 @@ package-lock.json
 *.tgz
 
 # Build output
-.tsbuildinfo
-src/
 out/

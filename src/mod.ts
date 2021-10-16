@@ -2,7 +2,7 @@
 export { Bot, BotError } from "./bot.ts";
 export type { BotConfig, ErrorHandler, PollingOptions } from "./bot.ts";
 
-export { InputFile } from "./platform.ts";
+export { InputFile } from "./platform.deno.ts";
 
 export { Context } from "./context.ts";
 

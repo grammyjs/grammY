@@ -11,7 +11,7 @@ import {
     InputMediaVideo,
     LabeledPrice,
     PassportElementError,
-} from "../platform.ts";
+} from "../platform.deno.ts";
 import {
     ApiClientOptions,
     createRawApi,
