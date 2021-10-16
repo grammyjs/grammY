@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { Bot } from "../bot.ts";
-import { debug as d, Update } from "../platform.ts";
+import { debug as d, Update } from "../platform.deno.ts";
 import { WebhookReplyEnvelope } from "../core/client.ts";
 import { Context } from "../context.ts";
 const debugErr = d("grammy:error");

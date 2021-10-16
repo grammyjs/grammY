@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase no-explicit-any
 import { AliasProps, Context } from "./context.ts";
-import { Update } from "./platform.ts";
+import { Update } from "./platform.deno.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 

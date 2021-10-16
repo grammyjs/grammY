@@ -1,6 +1,6 @@
 import { Context } from "../context.ts";
 import { MiddlewareFn } from "../composer.ts";
-import { debug as d } from "../platform.ts";
+import { debug as d } from "../platform.deno.ts";
 const debug = d("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;

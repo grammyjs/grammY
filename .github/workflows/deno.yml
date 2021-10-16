@@ -9,42 +9,60 @@
 name: grammY
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-  backport:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup repo
-        uses: actions/checkout@v2
+    backport:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v2
 
-      - name: Run backporting script
-        run: ./backport.sh --full
-        working-directory: node-backport
+            - name: Install dependencies
+              run: npm install --ignore-scripts
 
-  test-and-lint:
-    runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
+            - name: Run backporting
+              run: npm run backport
 
-    strategy:
-      matrix:
-        os: [macOS-latest, windows-latest, ubuntu-latest]
+    format-and-lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v2
 
-    steps:
-      - name: Setup repo
-        uses: actions/checkout@v2
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
 
-      - uses: denoland/setup-deno@main
-        with:
-          deno-version: v1.x
+            - name: Check Format
+              run: deno fmt --config deno.json --check
 
-      - name: Cache Dependencies
-        run: deno cache deno/src/mod.ts
+            - name: Lint
+              run: deno lint --config deno.json
 
-      - name: Run Tests
-        run: deno test --allow-env --config deno.json deno
+    test:
+        runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
 
-      - name: Run Linting
-        run: deno lint --config deno.json deno
+        strategy:
+            matrix:
+                os: [macOS-latest, windows-latest, ubuntu-latest]
+
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v2
+
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
+
+            - name: Cache Dependencies
+              run: deno cache src/mod.ts
+
+            - name: Run Tests
+              run: deno test --config deno.json --allow-env
+
+            - name: Run Linting
+              run: deno lint --config deno.json

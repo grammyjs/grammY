@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "charset": "utf8",
-        "incremental": true,
-        "tsBuildInfoFile": ".tsbuildinfo",
         "forceConsistentCasingInFileNames": true,
         "newLine": "lf",
         "noFallthroughCasesInSwitch": true,
@@ -17,5 +15,8 @@
         "skipLibCheck": true,
         "target": "es2019"
     },
-    "include": ["src/"]
+    "include": ["src/"],
+    "deno2node": {
+        "shim": "./src/shim.node.ts"
+    }
 }
