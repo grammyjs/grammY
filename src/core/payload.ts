@@ -1,10 +1,9 @@
 import {
     InputFile,
     inputFileData,
-    InputMedia,
     itrToStream,
     streamFile,
-} from "../platform.ts";
+} from "../platform.deno.ts";
 
 // === Payload types (JSON vs. form data)
 /**

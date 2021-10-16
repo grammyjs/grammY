@@ -1,4 +1,8 @@
-import { InlineKeyboardButton, KeyboardButton, LoginUrl } from "../platform.ts";
+import {
+    InlineKeyboardButton,
+    KeyboardButton,
+    LoginUrl,
+} from "../platform.deno.ts";
 
 /**
  * Use this class to simplify building a keyboard (something like this:

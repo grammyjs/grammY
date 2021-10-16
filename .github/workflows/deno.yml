@@ -9,55 +9,60 @@
 name: grammY
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-  backport:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup repo
-        uses: actions/checkout@v2
+    backport:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v2
 
-      - name: Run backporting script
-        run: ./backport.sh --full
-        working-directory: node-backport
+            - name: Install dependencies
+              run: npm install --ignore-scripts
 
-  format-and-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup repo
-        uses: actions/checkout@v2
+            - name: Run backporting
+              run: npm run backport
 
-      - uses: denoland/setup-deno@main
-        with:
-          deno-version: v1.x
+    format-and-lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v2
 
-      - name: Check Format
-        run: deno fmt --config deno.json --check
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
 
-      - name: Lint
-        run: deno lint --config deno.json
+            - name: Check Format
+              run: deno fmt --config deno.json --check
 
-  test:
-    runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
+            - name: Lint
+              run: deno lint --config deno.json
 
-    strategy:
-      matrix:
-        os: [macOS-latest, windows-latest, ubuntu-latest]
+    test:
+        runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
 
-    steps:
-      - name: Setup repo
-        uses: actions/checkout@v2
+        strategy:
+            matrix:
+                os: [macOS-latest, windows-latest, ubuntu-latest]
 
-      - uses: denoland/setup-deno@main
-        with:
-          deno-version: v1.x
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v2
 
-      - name: Cache Dependencies
-        run: deno cache deno/src/mod.ts
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
 
-      - name: Run Tests
-        run: deno test --config deno.json --allow-env
+            - name: Cache Dependencies
+              run: deno cache src/mod.ts
+
+            - name: Run Tests
+              run: deno test --config deno.json --allow-env
+
+            - name: Run Linting
+              run: deno lint --config deno.json

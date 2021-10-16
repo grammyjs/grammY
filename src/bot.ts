@@ -4,7 +4,7 @@ import { Context } from "./context.ts";
 import { Api } from "./core/api.ts";
 import { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
 import { GrammyError } from "./core/error.ts";
-import { debug as d, Update, UserFromGetMe } from "./platform.ts";
+import { debug as d, Update, UserFromGetMe } from "./platform.deno.ts";
 const debug = d("grammy:bot");
 const debugErr = d("grammy:error");
 
