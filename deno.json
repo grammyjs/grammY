@@ -1,5 +1,9 @@
 {
     "fmt": {
+        "options": {
+            "indentWidth": 4,
+            "proseWrap": "preserve"
+        },
         "files": {
             "exclude": [
                 "node-backport/node_modules",
@@ -7,10 +11,16 @@
                 "node-backport/out",
                 "node-backport/package-lock.json"
             ]
-        },
-        "options": {
-            "indentWidth": 4,
-            "proseWrap": "preserve"
+        }
+    },
+    "lint": {
+        "files": {
+            "exclude": [
+                "node-backport/node_modules",
+                "node-backport/src",
+                "node-backport/out",
+                "node-backport/package-lock.json"
+            ]
         }
     }
 }
