@@ -1,7 +1,6 @@
 import {
     InputFile,
     inputFileData,
-    InputMedia,
     itrToStream,
     streamFile,
 } from "../platform.deno.ts";
