@@ -1,16 +1,25 @@
 {
     "fmt": {
+        "options": {
+            "indentWidth": 4,
+            "proseWrap": "preserve"
+        },
+        "files": {
+            "exclude": [
+                "node-backport/node_modules",
+                "node-backport/src",
+                "node-backport/out",
+                "node-backport/package-lock.json"
+            ]
+        }
+    },
+    "lint": {
         "files": {
             "exclude": ["./node_modules/", "./out/", "./package-lock.json"]
         },
         "options": {
             "indentWidth": 4,
             "proseWrap": "preserve"
-        }
-    },
-    "lint": {
-        "files": {
-            "exclude": ["./node_modules/", "./out/", "./package-lock.json"]
         }
     }
 }
