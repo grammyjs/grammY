@@ -372,10 +372,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param command The command to look for
      * @param middleware The middleware to register
      */
-    command(
-        command: MaybeArray<
-            StringWithSuggestions<"start" | "help" | "settings">
-        >,
+    command<CommandName extends StringWithSuggestions<"start" | "help" | "settings">>(
+        command: MaybeArray<CommandName>,
         ...middleware: Array<Middleware<CommandContext<C>>>
     ): Composer<CommandContext<C>> {
         const atCommands = new Set<string>();
