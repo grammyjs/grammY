@@ -6,7 +6,7 @@ import {
     Telegram,
 } from "../platform.deno.ts";
 import { GrammyError, HttpError } from "./error.ts";
-import { createRequestConfig } from "./payload.ts";
+import { requiresFormDataUpload, createJsonPayload, createFormDataPayload } from "./payload.ts";
 const debug = d("grammy:core");
 
 export type Methods<R extends RawApi> = string & keyof R;
@@ -224,17 +224,21 @@ class ApiClient<R extends RawApi> {
             this.token,
             method,
         );
-        const config = createRequestConfig(payload ?? {});
+        const requiresFormData = requiresFormDataUpload(payload);
         if (
             this.webhookReplyEnvelope.send !== undefined &&
             !this.hasUsedWebhookReply &&
-            typeof config.body === "string" &&
+            !requiresFormData &&
             this.options.canUseWebhookReply(method)
         ) {
+            const config = createJsonPayload({ ...payload, method });
             this.hasUsedWebhookReply = true;
             await this.webhookReplyEnvelope.send(config.body);
             return { ok: true, result: true };
         } else {
+            const config = requiresFormData
+                ? createFormDataPayload(payload)
+                : createJsonPayload(payload);
             let res: Await<ReturnType<typeof fetch>>;
             try {
                 res = await fetch(url, {
