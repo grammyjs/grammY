@@ -18,7 +18,7 @@ type SupportedFrameworks =
     | "fastify"
     | "worktop"
     | "callback"
-    | "aws-api-lambda";
+    | "aws-lambda";
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -85,7 +85,7 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
         update: update,
         respond: callback,
     }),
-    "aws-api-lambda": (event, _context, callback) => ({
+    "aws-lambda": (event, _context, callback) => ({
         update: JSON.parse(event.body),
         end: () => callback(null, { statusCode: 200 }),
         respond: (json) =>
