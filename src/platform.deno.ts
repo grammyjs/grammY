@@ -5,6 +5,8 @@ import { InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?d
 import { basename } from "https://deno.land/std@0.113.0/path/mod.ts";
 import { iterateReader } from "https://deno.land/std@0.113.0/streams/mod.ts";
 
+import type { FrameworkAdapter } from "./convenience/webhook.ts";
+
 // === Export all API types
 export * from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
 
@@ -114,6 +116,22 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     }
     yield* body;
 }
+
+export const httpAdapter: FrameworkAdapter = (req: Request) => {
+    let streamController: ReadableStreamDefaultController<any>;
+    const stream = new ReadableStream({
+        start(controller) {
+            streamController = controller;
+        }
+    });
+    const res = new Response(stream);
+    return {
+        update: req.json(),
+        end: () => stream.cancel(),
+        respond: (json) => streamController?.enqueue(json),
+        handlerReturn: res,
+    };
+};
 
 // === Export InputFile types
 type GrammyTypes = InputFileProxy<InputFile>;

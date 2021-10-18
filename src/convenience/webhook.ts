@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { Bot } from "../bot.ts";
-import { debug as d, Update } from "../platform.deno.ts";
+import { debug as d, Update, httpAdapter } from "../platform.deno.ts";
 import { WebhookReplyEnvelope } from "../core/client.ts";
 import { Context } from "../context.ts";
 const debugErr = d("grammy:error");
@@ -40,12 +40,17 @@ interface ReqResHandler {
      * replies
      */
     respond: (json: string) => unknown;
+    /**
+     * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume
+     * that handler returns something
+     */
+    handlerReturn?: any;
 }
 /**
  * Middleware for a web framework. Creates a request-response handler for a
  * request. The handler will be used to integrate with the compatible framework.
  */
-type FrameworkAdapter = (...args: any[]) => ReqResHandler;
+export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 
 const standard: FrameworkAdapter = (req, res) => ({
     update: Promise.resolve(req.body),
@@ -59,8 +64,8 @@ const standard: FrameworkAdapter = (req, res) => ({
 // Integrations with popular frameworks
 const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
     express: standard,
-    http: standard,
-    https: standard,
+    http: httpAdapter,
+    https: httpAdapter,
     koa: (ctx) => ({
         update: Promise.resolve(ctx.request.body),
         end: () => (ctx.body = ""),
@@ -133,7 +138,7 @@ export function webhookCallback<C extends Context = Context>(
     let initialized = false;
     let initCall: Promise<void> | undefined;
     return async (...args: any[]) => {
-        const { update, respond, end } = server(...args);
+        const { update, respond, end, handlerReturn } = server(...args);
         let usedWebhookReply = false;
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
             send: async (json) => {
@@ -157,6 +162,7 @@ export function webhookCallback<C extends Context = Context>(
             timeoutMilliseconds,
         );
         if (end !== undefined && !usedWebhookReply) end();
+        return handlerReturn;
     };
 }
 

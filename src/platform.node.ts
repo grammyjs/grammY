@@ -1,10 +1,13 @@
 // === Needed imports
 import { InputFileProxy } from "@grammyjs/types";
 import { Agent } from "https";
+import { IncomingMessage, ServerResponse } from "http";
 import { basename } from "path";
 import { Readable } from "stream";
 import type { ReadStream } from "fs";
 import { URL } from "url";
+
+import type { FrameworkAdapter } from "./convenience/webhook";
 
 // === Export all API types
 export * from "@grammyjs/types";
@@ -111,6 +114,24 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
         yield chunk;
     }
 }
+
+export const httpAdapter: FrameworkAdapter = (req: IncomingMessage, res: ServerResponse) => ({
+    update: new Promise((resolve) => {
+        const chunks: Buffer[] = [];
+        req
+            .on("data", chunk => chunks.push(chunk))
+            .on("end", () => {
+                const raw = Buffer.concat(chunks).toString("utf-8");
+                resolve(JSON.parse(raw));
+            });
+    }),
+    end: () => res.end(),
+    respond: (json) => {
+        return res
+            .writeHead(200, { "Content-Type": "application/json" })
+            .end(json);
+    }
+});
 
 // === Export InputFile types
 type GrammyTypes = InputFileProxy<InputFile>;
