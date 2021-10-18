@@ -91,9 +91,9 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
         respond: (json) =>
             callback(null, {
                 statusCode: 200,
-                body: json
+                body: json,
             }),
-    })
+    }),
     // please open a PR if you want to add another
 };
 
