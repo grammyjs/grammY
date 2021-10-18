@@ -375,8 +375,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     command<
         CommandName extends StringWithSuggestions<
             "start" | "help" | "settings"
-            >,
-        >(
+        >,
+    >(
         command: MaybeArray<CommandName>,
         ...middleware: Array<Middleware<CommandContext<C>>>
     ): Composer<CommandContext<C>> {
