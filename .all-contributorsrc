@@ -270,7 +270,27 @@
       "profile": "https://github.com/amberlionk",
       "contributions": [
         "review",
-        "bug"
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "prazedotid",
+      "name": "prastian",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19567624?v=4",
+      "profile": "https://github.com/prazedotid",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "sayem314",
+      "name": "Sayem Chowdhury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14138401?v=4",
+      "profile": "https://sayem.eu.org/",
+      "contributions": [
+        "ideas"
       ]
     }
   ],
