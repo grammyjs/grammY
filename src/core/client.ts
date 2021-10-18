@@ -236,7 +236,7 @@ class ApiClient<R extends RawApi> {
             this.options.canUseWebhookReply(method)
         ) {
             this.hasUsedWebhookReply = true;
-            const config = createJsonPayload({ method, ...payload });
+            const config = createJsonPayload({ ...payload, method });
             await this.webhookReplyEnvelope.send(config.body);
             return { ok: true, result: true };
         } else {
