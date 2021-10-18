@@ -373,7 +373,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     command<
-        CommandName extends StringWithSuggestions<"start" | "help" | "settings">,
+        CommandName extends StringWithSuggestions<
+            "start" | "help" | "settings"
+            >,
         >(
         command: MaybeArray<CommandName>,
         ...middleware: Array<Middleware<CommandContext<C>>>
