@@ -71,6 +71,7 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
     }),
     fastify: (req, reply) => ({
         update: Promise.resolve(req.body),
+        end: () => reply.send({}),
         respond: (json) => reply.send(json),
     }),
     worktop: (req, res) => ({

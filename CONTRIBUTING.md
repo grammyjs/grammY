@@ -23,8 +23,8 @@ It solves this problem substantially better by providing a Deno-aware wrapper of
 Hence, you can write a Deno project and directly compile it to JavaScript files that run under Node.js.
 
 In other words, working on grammY effectively means work on a Deno project.
-We use Deno testing, Deno linting, and the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) for VSCode.
-You usual TypeScript tooling does not work—and once you tried developing for Deno, you know that this is a good thing.
+We use Deno testing, Deno linting, Deno formatting, and the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) for VSCode.
+Your usual TypeScript tooling does not work—and once you tried developing for Deno and you have experienced how superior the development experience is, you will know why we are happy about our choice.
 
 > Note that not all plugins of grammY have to have the same setup: many of them only integrate with grammY itself, and hence can be written for Node and automatically ported to Deno via <https://skypack.dev/> and similar services.
 
@@ -42,7 +42,7 @@ There are several areas of contributions, and they have different ways to get yo
   There are both official plugins and third-party plugins.
   Our official plugins need to be of high quality (100 % TypeScript, ES6, Deno support, docs that are on par with grammY, semver, etc).
   Third-party plugins are independent and anyone can do them however they want.
-  If a third-party plugins was to be listed on the website, some docs would be nice.
+  If a third-party plugin was to be listed on the website, some docs would be nice.
 - **Storage adapters.**
   Please send a message to the [group chat](https://telegram.me/grammyjs) if you want to create an offical storage adapter for the [session plugin](https://grammy.dev/plugins/session.html).
   You will be granted all necessary permissions, and the repository will be listed [here](https://grammy.dev/plugins/session.html#official).
