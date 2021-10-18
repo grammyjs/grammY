@@ -16,7 +16,9 @@ type SupportedFrameworks =
     | "koa"
     | "oak"
     | "fastify"
-    | "worktop";
+    | "worktop"
+    | "callback"
+    | "aws-lambda";
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -78,6 +80,19 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
         update: Promise.resolve(req.body.json()),
         end: () => res.end(),
         respond: (json) => res.send(200, json),
+    }),
+    callback: (update, callback) => ({
+        update: update,
+        respond: callback,
+    }),
+    "aws-lambda": (event, _context, callback) => ({
+        update: JSON.parse(event.body),
+        end: () => callback(null, { statusCode: 200 }),
+        respond: (json) =>
+            callback(null, {
+                statusCode: 200,
+                body: json,
+            }),
     }),
     // please open a PR if you want to add another
 };
