@@ -24,7 +24,7 @@ export function baseFetchConfig(apiRoot: string) {
     if (apiRoot.startsWith("https:")) {
         return { compress: true, agent: new HttpsAgent({ keepAlive: true }) };
     } else if (apiRoot.startsWith("http:")) {
-        return { compress: true, agent: new HttpAgent({ keepAlive: true }) };
+        return { agent: new HttpAgent({ keepAlive: true }) };
     } else return {};
 }
 
