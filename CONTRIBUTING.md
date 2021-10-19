@@ -54,6 +54,7 @@ There are several areas of contributions, and they have different ways to get yo
 ### Working on the Core of grammY using Deno (recommended)
 
 If you just want to build from the newest version of the source code on GitHub, you can directly import from `https://raw.githubusercontent.com/grammyjs/grammY/main/src/mod.ts`.
+(Naturally, you can replace main by another branch name, e.g. in order to test a PR.)
 
 If you want to read or modify grammY's code, you can do the following.
 
@@ -72,7 +73,10 @@ Specify `--config deno.json` for the latter two commands.
 You can install grammY directly from source via
 
 ```sh
+# main branch
 npm install grammyjs/grammy
+# another branch, e.g. called branch-name
+npm install grammyjs/grammy#branch-name
 ```
 
 which will download grammY and build the code locally.
