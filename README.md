@@ -12,7 +12,7 @@ _<h1 align="center"> [Documentation](https://grammy.dev) | [API](https://doc.den
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.3-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-27-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-28-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -146,6 +146,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/amberlionk"><img src="https://avatars.githubusercontent.com/u/29119723?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yevhen Denesiuk</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Aamberlionk" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/grammyjs/grammY/issues?q=author%3Aamberlionk" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=amberlionk" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/prazedotid"><img src="https://avatars.githubusercontent.com/u/19567624?v=4?s=100" width="100px;" alt=""/><br /><sub><b>prastian</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Aprazedotid" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=prazedotid" title="Code">💻</a></td>
     <td align="center"><a href="https://sayem.eu.org/"><img src="https://avatars.githubusercontent.com/u/14138401?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sayem Chowdhury</b></sub></a><br /><a href="#ideas-sayem314" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/kospra"><img src="https://avatars.githubusercontent.com/u/42740406?v=4?s=100" width="100px;" alt=""/><br /><sub><b>kospra</b></sub></a><br /><a href="#ideas-kospra" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=kospra" title="Code">💻</a></td>
   </tr>
 </table>
 

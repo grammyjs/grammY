@@ -292,6 +292,16 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "kospra",
+      "name": "kospra",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42740406?v=4",
+      "profile": "https://github.com/kospra",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
