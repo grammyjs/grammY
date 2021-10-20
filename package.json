@@ -14,6 +14,9 @@
     },
     "scripts": {
         "prepare": "npm run backport",
+        "lint": "deno lint --config deno.json",
+        "fmt": "deno fmt --config deno.json",
+        "test": "deno test ./test/",
         "backport": "deno2node tsconfig.json"
     },
     "dependencies": {
@@ -24,7 +27,7 @@
     },
     "devDependencies": {
         "@types/debug": "^4.1.7",
-        "@types/node": "^12.20.27",
+        "@types/node": "^12.20.33",
         "@types/node-fetch": "^2.5.12",
         "deno2node": "^1.0.0"
     },
