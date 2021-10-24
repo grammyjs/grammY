@@ -115,11 +115,14 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     }
 }
 
-export const httpAdapter: FrameworkAdapter = (req: IncomingMessage, res: ServerResponse) => ({
+export const httpAdapter: FrameworkAdapter = (
+    req: IncomingMessage,
+    res: ServerResponse,
+) => ({
     update: new Promise((resolve) => {
         const chunks: Buffer[] = [];
         req
-            .on("data", chunk => chunks.push(chunk))
+            .on("data", (chunk) => chunks.push(chunk))
             .on("end", () => {
                 const raw = Buffer.concat(chunks).toString("utf-8");
                 resolve(JSON.parse(raw));
@@ -130,7 +133,7 @@ export const httpAdapter: FrameworkAdapter = (req: IncomingMessage, res: ServerR
         return res
             .writeHead(200, { "Content-Type": "application/json" })
             .end(json);
-    }
+    },
 });
 
 // === Export InputFile types
