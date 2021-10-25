@@ -12,7 +12,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.3-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-30-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -150,6 +150,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/chimit"><img src="https://avatars.githubusercontent.com/u/839349?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Chimit</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=chimit" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/CalsiBotDev"><img src="https://avatars.githubusercontent.com/u/55633371?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Calsi</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=CalsiBotDev" title="Documentation">📖</a></td>
   </tr>
 </table>
 
