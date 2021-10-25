@@ -122,7 +122,7 @@ export const httpAdapter: FrameworkAdapter = (req: Request) => {
     const stream = new ReadableStream({
         start(controller) {
             streamController = controller;
-        }
+        },
     });
     const res = new Response(stream);
     return {
