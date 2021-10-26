@@ -321,6 +321,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "jfowl",
+      "name": "Jonas Zohren",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15788906?v=4",
+      "profile": "https://zohren.xyz",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
