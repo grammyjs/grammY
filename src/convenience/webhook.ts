@@ -50,7 +50,10 @@ type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 const standard: FrameworkAdapter = (req, res) => ({
     update: Promise.resolve(req.body),
     end: () => res.end(),
-    respond: (json) => res.send(json),
+    respond: (json) => {
+        res.set("Content-Type", "application/json");
+        res.send(json);
+    },
 });
 
 // Integrations with popular frameworks
@@ -61,7 +64,10 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
     koa: (ctx) => ({
         update: Promise.resolve(ctx.request.body),
         end: () => (ctx.body = ""),
-        respond: (json) => (ctx.response.body = json),
+        respond: (json) => {
+            ctx.set("Content-Type", "application/json");
+            ctx.response.body = json;
+        },
     }),
     oak: (ctx) => ({
         update: ctx.request.body({ type: "json" }).value,
