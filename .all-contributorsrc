@@ -331,6 +331,33 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "linbuxiao",
+      "name": "linbuxiao",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56839018?v=4",
+      "profile": "https://zhemu.buzz/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "JiquanWang99",
+      "name": "JiquanWang99",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63894579?v=4",
+      "profile": "https://github.com/JiquanWang99",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "zumoshi",
+      "name": "Borhan Hafez",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4184939?v=4",
+      "profile": "http://bor691.ir/",
+      "contributions": [
+        "plugin"
+      ]
     }
   ],
   "contributorsPerLine": 7,
