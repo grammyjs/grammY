@@ -358,6 +358,15 @@
       "contributions": [
         "plugin"
       ]
+    },
+    {
+      "login": "WingLim",
+      "name": "WingLim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6434137?v=4",
+      "profile": "https://blog.limx.dev/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
