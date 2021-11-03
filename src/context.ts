@@ -1266,12 +1266,12 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#answercallbackquery
      */
     answerCallbackQuery(
-        other?: Other<"answerCallbackQuery", "callback_query_id">,
+        other?: string | Other<"answerCallbackQuery", "callback_query_id">,
         signal?: AbortSignal,
     ) {
         return this.api.answerCallbackQuery(
             orThrow(this.callbackQuery, "answerCallbackQuery").id,
-            other,
+            typeof other === "string" ? { text: other } : other,
             signal,
         );
     }
@@ -1550,13 +1550,15 @@ export class Context implements RenamedUpdate {
      */
     answerPreCheckoutQuery(
         ok: boolean,
-        other?: Other<"answerPreCheckoutQuery", "pre_checkout_query_id" | "ok">,
+        other?:
+            | string
+            | Other<"answerPreCheckoutQuery", "pre_checkout_query_id" | "ok">,
         signal?: AbortSignal,
     ) {
         return this.api.answerPreCheckoutQuery(
             orThrow(this.preCheckoutQuery, "answerPreCheckoutQuery").id,
             ok,
-            other,
+            typeof other === "string" ? { error_message: other } : other,
             signal,
         );
     }
