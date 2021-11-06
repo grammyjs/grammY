@@ -102,7 +102,14 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
             `Download failed, no response body from '${url}'`,
         );
     }
-    for await (const chunk of body) yield JSON.parse(chunk.toString());
+    for await (const chunk of body) {
+        if (typeof chunk === "string") {
+            throw new Error(
+                `Could not transfer file, received string data instead of bytes from ${url}`,
+            );
+        }
+        yield chunk;
+    }
 }
 
 // === Export InputFile types
