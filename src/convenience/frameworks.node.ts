@@ -26,7 +26,7 @@ export const frameworkAdapters = {
         },
     }),
     http: (req: any, res: any) => ({
-        update: new Promise((resolve) => {
+        update: new Promise<any>((resolve) => {
             const chunks: Buffer[] = [];
             req
                 .on("data", (chunk: Buffer) => chunks.push(chunk))
@@ -43,7 +43,7 @@ export const frameworkAdapters = {
         },
     }),
     https: (req: any, res: any) => ({
-        update: new Promise((resolve) => {
+        update: new Promise<any>((resolve) => {
             const chunks: Buffer[] = [];
             req
                 .on("data", (chunk: Buffer) => chunks.push(chunk))
