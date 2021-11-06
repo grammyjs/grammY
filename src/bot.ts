@@ -458,14 +458,21 @@ async function withRetries(task: () => Promise<unknown>) {
             await task();
             success = true;
         } catch (error) {
-            if (
-                error instanceof HttpError ||
-                error instanceof GrammyError &&
-                    (error.error_code === 429 || error.error_code >= 500)
-            ) {
-                debugErr(error);
-                continue;
-            } else throw error;
+            debugErr(error);
+            if (error instanceof HttpError) continue;
+            if (error instanceof GrammyError) {
+                if (error.error_code >= 500) continue;
+                if (error.error_code === 429) {
+                    const retryAfter = error.parameters.retry_after;
+                    if (retryAfter !== undefined) {
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, 1000 * retryAfter)
+                        );
+                    }
+                    continue;
+                }
+            }
+            throw error;
         }
     }
 }
