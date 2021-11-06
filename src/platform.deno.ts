@@ -117,22 +117,6 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     yield* body;
 }
 
-export const httpAdapter: FrameworkAdapter = (req: Request) => {
-    let streamController: ReadableStreamDefaultController<any>;
-    const stream = new ReadableStream({
-        start(controller) {
-            streamController = controller;
-        },
-    });
-    const res = new Response(stream);
-    return {
-        update: req.json(),
-        end: () => stream.cancel(),
-        respond: (json) => streamController?.enqueue(json),
-        handlerReturn: res,
-    };
-};
-
 // === Export InputFile types
 type GrammyTypes = InputFileProxy<InputFile>;
 
