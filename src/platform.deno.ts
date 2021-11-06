@@ -46,7 +46,8 @@ export const inputFileData = Symbol("InputFile data");
  * Reference](https://core.telegram.org/bots/api#inputfile).
  */
 export class InputFile {
-    public readonly [inputFileData]: ConstructorParameters<typeof InputFile>[0];
+    private consumed = false;
+    private readonly fileData: ConstructorParameters<typeof InputFile>[0];
     /**
      * Optional name of the constructed `InputFile` instance.
      *
@@ -69,11 +70,21 @@ export class InputFile {
             | AsyncIterable<Uint8Array>,
         filename?: string,
     ) {
-        this[inputFileData] = file;
+        this.fileData = file;
         if (filename === undefined && typeof file === "string") {
             filename = basename(file);
         }
         this.filename = filename;
+    }
+    get [inputFileData]() {
+        if (this.consumed) {
+            throw new Error("Cannot reuse InputFile data source!");
+        }
+        const data = this.fileData;
+        if (typeof data !== "string" && (!(data instanceof Uint8Array))) {
+            this.consumed = false;
+        }
+        return data;
     }
 }
 
