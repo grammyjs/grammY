@@ -221,7 +221,11 @@ class ApiClient<R extends RawApi> {
         }
     }
 
-    private call: ApiCallFn<R> = async (method, payload, signal) => {
+    private call: ApiCallFn<R> = async <M extends Methods<R>>(
+        method: M,
+        payload: Payload<M, R>,
+        signal?: AbortSignal,
+    ) => {
         debug("Calling", method);
         const url = this.options.buildUrl(
             this.options.apiRoot,
@@ -248,7 +252,7 @@ class ApiClient<R extends RawApi> {
                 ? () => abortController.abort()
                 : combineAborts(abortController, signal);
 
-            const res = await new Promise(
+            const res = await new Promise<ApiResponse<ApiCallResult<M, R>>>(
                 (resolve, reject) => {
                     function onStreamError(err: unknown) {
                         abort();
