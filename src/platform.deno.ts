@@ -34,6 +34,15 @@ export const streamFile = isDeno
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = {};
 
+/** Something that looks like a URL. */
+interface URLLike {
+    /**
+     * Identifier of the resouce. Must be in a format that can be parsed by the
+     * URL constructor.
+     */
+    url: string;
+}
+
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const inputFileData = Symbol("InputFile data");
@@ -65,6 +74,8 @@ export class InputFile {
     constructor(
         file:
             | string
+            | URL
+            | URLLike
             | Uint8Array
             | ReadableStream<Uint8Array>
             | AsyncIterable<Uint8Array>,
@@ -80,8 +91,23 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = this.fileData;
-        if (typeof data !== "string" && (!(data instanceof Uint8Array))) {
+        let data = this.fileData;
+        if (
+            typeof data === "object" && ("url" in data || data instanceof URL)
+        ) {
+            data = (async function* () {
+                let url = data instanceof URL ? data : data.url;
+                const { body } = await fetch(url);
+                if (body === null) {
+                    throw new Error(
+                        `Download failed, no response body from '${url}'`,
+                    );
+                }
+                yield* body;
+            })();
+        } else if (
+            typeof data !== "string" && (!(data instanceof Uint8Array))
+        ) {
             this.consumed = false;
         }
         return data;
