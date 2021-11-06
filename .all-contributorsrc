@@ -377,6 +377,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "FatalMerlin",
+      "name": "Merlin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14237330?v=4",
+      "profile": "https://www.linkedin.com/in/merlin-brandes-42328717a/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
