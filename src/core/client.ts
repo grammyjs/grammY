@@ -254,21 +254,28 @@ class ApiClient<R extends RawApi> {
 
             const res = await new Promise<ApiResponse<ApiCallResult<M, R>>>(
                 (resolve, reject) => {
-                    function onStreamError(err: unknown) {
+                    const onHttpError = toHttpError(method, sensLogs, reject);
+                    function onOtherError(err: unknown) {
                         abort();
                         reject(err);
                     }
-                    const onHttpError = toHttpError(method, sensLogs, reject);
                     const config = formDataRequired
-                        ? createFormDataPayload(p, onStreamError)
+                        ? createFormDataPayload(p, onOtherError)
                         : createJsonPayload(p);
                     const opts = {
                         ...this.options.baseFetchConfig,
                         signal: abortController.signal,
                         ...config,
                     };
-                    fetch(url, opts).then((res) => res.json()).then(resolve)
-                        .catch(onHttpError);
+                    const timeoutHandle = setTimeout(() => {
+                        const msg =
+                            `Request to '${method}' timed out after 500 seconds`;
+                        onOtherError(new Error(msg));
+                    }, 500_000); // 500 seconds timeout, same as in Bot API
+                    fetch(url, opts).then((res) => res.json())
+                        .then(resolve)
+                        .catch(onHttpError)
+                        .finally(() => clearTimeout(timeoutHandle));
                 },
             );
             return res;
