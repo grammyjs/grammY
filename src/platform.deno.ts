@@ -95,16 +95,7 @@ export class InputFile {
         if (
             typeof data === "object" && ("url" in data || data instanceof URL)
         ) {
-            data = (async function* () {
-                let url = data instanceof URL ? data : data.url;
-                const { body } = await fetch(url);
-                if (body === null) {
-                    throw new Error(
-                        `Download failed, no response body from '${url}'`,
-                    );
-                }
-                yield* body;
-            })();
+            data = fetchFile(data instanceof URL ? data : data.url);
         } else if (
             typeof data !== "string" && (!(data instanceof Uint8Array))
         ) {
@@ -112,6 +103,16 @@ export class InputFile {
         }
         return data;
     }
+}
+
+async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
+    const { body } = await fetch(url);
+    if (body === null) {
+        throw new Error(
+            `Download failed, no response body from '${url}'`,
+        );
+    }
+    yield* body;
 }
 
 // === Export InputFile types
