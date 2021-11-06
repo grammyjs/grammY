@@ -728,7 +728,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     ): Composer<C> {
         return this.lazy(async (ctx) => {
             const route = await router(ctx);
-            return route === undefined ? [] : routeHandlers[route] ?? fallback;
+            return (route === undefined || !routeHandlers[route]
+                ? fallback
+                : routeHandlers[route]) ?? [];
         });
     }
 
