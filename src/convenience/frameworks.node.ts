@@ -12,7 +12,6 @@ export type SupportedFrameworks =
     | "koa"
     | "fastify"
     | "worktop"
-    | "callback"
     | "aws-lambda";
 
 export const defaultFramework: SupportedFrameworks = "express";

@@ -6,8 +6,7 @@
  */
 export type SupportedFrameworks =
     | "std/http"
-    | "oak"
-    | "callback";
+    | "oak";
 
 export const defaultFramework: SupportedFrameworks = "oak";
 

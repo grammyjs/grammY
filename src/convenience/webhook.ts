@@ -41,8 +41,10 @@ interface ReqResHandler {
  */
 export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 
+type AdapterNames = SupportedFrameworks | "callback";
+
 // Integrations with popular frameworks
-const adapters: Record<SupportedFrameworks, FrameworkAdapter> = {
+const adapters: Record<AdapterNames, FrameworkAdapter> = {
     ...frameworkAdapters,
     callback: (update: any, callback: any) => ({ update, respond: callback }),
 };
