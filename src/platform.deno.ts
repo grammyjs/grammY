@@ -82,7 +82,7 @@ export class InputFile {
         }
         const data = this.fileData;
         if (typeof data !== "string" && (!(data instanceof Uint8Array))) {
-            this.consumed = false;
+            this.consumed = true;
         }
         return data;
     }
