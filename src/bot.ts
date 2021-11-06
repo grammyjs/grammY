@@ -3,7 +3,7 @@ import { BotError, Composer, run } from "./composer.ts";
 import { Context } from "./context.ts";
 import { Api } from "./core/api.ts";
 import { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
-import { GrammyError } from "./core/error.ts";
+import { GrammyError, HttpError } from "./core/error.ts";
 import { debug as d, Update, UserFromGetMe } from "./platform.deno.ts";
 const debug = d("grammy:bot");
 const debugErr = d("grammy:error");
@@ -304,14 +304,16 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        await this.init();
+        await withRetries(() => this.init());
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
         }
-        await this.api.deleteWebhook({
-            drop_pending_updates: options?.drop_pending_updates,
-        });
+        await withRetries(() =>
+            this.api.deleteWebhook({
+                drop_pending_updates: options?.drop_pending_updates,
+            })
+        );
 
         // Prevent common misuse that causes memory leak
         this.use = () => {
@@ -446,5 +448,24 @@ you can circumvent this protection against memory leaks.`);
      */
     catch(errorHandler: ErrorHandler<C>) {
         this.errorHandler = errorHandler;
+    }
+}
+
+async function withRetries(task: () => Promise<unknown>) {
+    let success = false;
+    while (!success) {
+        try {
+            await task();
+            success = true;
+        } catch (error) {
+            if (
+                error instanceof HttpError ||
+                error instanceof GrammyError &&
+                    (error.error_code === 429 || error.error_code >= 500)
+            ) {
+                debugErr(error);
+                continue;
+            } else throw error;
+        }
     }
 }
