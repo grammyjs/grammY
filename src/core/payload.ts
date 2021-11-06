@@ -51,6 +51,16 @@ export function createJsonPayload(payload: Record<string, unknown>) {
         body: str(payload),
     };
 }
+async function* protectItr<T>(
+    itr: AsyncIterableIterator<T>,
+    onError: (err: unknown) => void,
+) {
+    try {
+        yield* itr;
+    } catch (err) {
+        onError(err);
+    }
+}
 /**
  * Turns a payload into an options object that can be passed to a `fetch` call
  * by setting the necessary headers and method. Note that this method creates a
@@ -59,16 +69,21 @@ export function createJsonPayload(payload: Record<string, unknown>) {
  *
  * @param payload The payload to wrap
  */
-export function createFormDataPayload(payload: Record<string, unknown>) {
+export function createFormDataPayload(
+    payload: Record<string, unknown>,
+    onError: (err: unknown) => void,
+) {
     const boundary = createBoundary();
-
+    const itr = payloadToMultipartItr(payload, boundary);
+    const safeItr = protectItr(itr, onError);
+    const stream = itrToStream(safeItr);
     return {
         method: "POST",
         headers: {
             "content-type": `multipart/form-data; boundary=${boundary}`,
             connection: "keep-alive",
         },
-        body: itrToStream(payloadToMultipartItr(payload, boundary)),
+        body: stream,
     };
 }
 
