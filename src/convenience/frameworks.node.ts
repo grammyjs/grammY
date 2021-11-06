@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
+import type { IncomingMessage, ServerResponse } from "http";
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
@@ -25,7 +26,7 @@ export const frameworkAdapters = {
             res.send(json);
         },
     }),
-    http: (req: any, res: any) => ({
+    http: (req: IncomingMessage, res: ServerResponse) => ({
         update: new Promise<any>((resolve) => {
             const chunks: Buffer[] = [];
             req
@@ -42,7 +43,7 @@ export const frameworkAdapters = {
                 .end(json);
         },
     }),
-    https: (req: any, res: any) => ({
+    https: (req: IncomingMessage, res: ServerResponse) => ({
         update: new Promise<any>((resolve) => {
             const chunks: Buffer[] = [];
             req
