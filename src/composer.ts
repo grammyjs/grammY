@@ -315,19 +315,35 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The text to look for
      * @param middleware The middleware to register
      */
-    hears<T extends string = string, U extends FilteredMatchContext<C, T, ":text" | ":caption"> = FilteredMatchContext<C, T, ":text" | ":caption">>(
+    hears<
+        T extends string = string,
+        U extends FilteredMatchContext<C, T, ":text" | ":caption"> =
+            FilteredMatchContext<C, T, ":text" | ":caption">,
+    >(
         trigger: MaybeNonEmptyArray<string>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    hears<T extends RegExpMatchArray = RegExpMatchArray, U extends FilteredMatchContext<C, T, ":text" | ":caption"> = FilteredMatchContext<C, T, ":text" | ":caption">>(
+    hears<
+        T extends RegExpMatchArray = RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, ":text" | ":caption"> =
+            FilteredMatchContext<C, T, ":text" | ":caption">,
+    >(
         trigger: MaybeNonEmptyArray<RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    hears<T extends string | RegExpMatchArray = string | RegExpMatchArray, U extends FilteredMatchContext<C, T, ":text" | ":caption"> = FilteredMatchContext<C, T, ":text" | ":caption">>(
+    hears<
+        T extends string | RegExpMatchArray = string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, ":text" | ":caption"> =
+            FilteredMatchContext<C, T, ":text" | ":caption">,
+    >(
         trigger: MustMixedNonEmptyArrayType<string, RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    hears<T extends string | RegExpMatchArray, U extends FilteredMatchContext<C, T, ":text" | ":caption"> = FilteredMatchContext<C, T, ":text" | ":caption">>(
+    hears<
+        T extends string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, ":text" | ":caption"> =
+            FilteredMatchContext<C, T, ":text" | ":caption">,
+    >(
         trigger: MaybeNonEmptyArray<string | RegExp>,
         ...middleware: Array<Middleware<U>>
     ) {
@@ -489,19 +505,35 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The string to look for in the payload
      * @param middleware The middleware to register
      */
-    callbackQuery<T extends string = string, U extends FilteredMatchContext<C, T, "callback_query:data"> = FilteredMatchContext<C, T, "callback_query:data">>(
+    callbackQuery<
+        T extends string = string,
+        U extends FilteredMatchContext<C, T, "callback_query:data"> =
+            FilteredMatchContext<C, T, "callback_query:data">,
+    >(
         trigger: MaybeNonEmptyArray<string>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    callbackQuery<T extends RegExpMatchArray = RegExpMatchArray, U extends FilteredMatchContext<C, T, "callback_query:data"> = FilteredMatchContext<C, T, "callback_query:data">>(
+    callbackQuery<
+        T extends RegExpMatchArray = RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "callback_query:data"> =
+            FilteredMatchContext<C, T, "callback_query:data">,
+    >(
         trigger: MaybeNonEmptyArray<RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    callbackQuery<T extends string | RegExpMatchArray = string | RegExpMatchArray, U extends FilteredMatchContext<C, T, "callback_query:data"> = FilteredMatchContext<C, T, "callback_query:data">>(
+    callbackQuery<
+        T extends string | RegExpMatchArray = string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "callback_query:data"> =
+            FilteredMatchContext<C, T, "callback_query:data">,
+    >(
         trigger: MustMixedNonEmptyArrayType<string, RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    callbackQuery<T extends string | RegExpMatchArray = string | RegExpMatchArray, U extends FilteredMatchContext<C, T, "callback_query:data"> = FilteredMatchContext<C, T, "callback_query:data">>(
+    callbackQuery<
+        T extends string | RegExpMatchArray = string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "callback_query:data"> =
+            FilteredMatchContext<C, T, "callback_query:data">,
+    >(
         trigger: MaybeNonEmptyArray<string | RegExp>,
         ...middleware: Array<Middleware<U>>
     ) {
@@ -531,26 +563,43 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The string to look for in the payload
      * @param middleware The middleware to register
      */
-    gameQuery<T extends string = string, U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> = FilteredMatchContext<C, T, "callback_query:game_short_name">>(
+    gameQuery<
+        T extends string = string,
+        U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> =
+            FilteredMatchContext<C, T, "callback_query:game_short_name">,
+    >(
         trigger: MaybeNonEmptyArray<string>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    gameQuery<T extends RegExpMatchArray = RegExpMatchArray, U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> = FilteredMatchContext<C, T, "callback_query:game_short_name">>(
+    gameQuery<
+        T extends RegExpMatchArray = RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> =
+            FilteredMatchContext<C, T, "callback_query:game_short_name">,
+    >(
         trigger: MaybeNonEmptyArray<RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    gameQuery<T extends string | RegExpMatchArray = string | RegExpMatchArray, U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> = FilteredMatchContext<C, T, "callback_query:game_short_name">>(
+    gameQuery<
+        T extends string | RegExpMatchArray = string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> =
+            FilteredMatchContext<C, T, "callback_query:game_short_name">,
+    >(
         trigger: MustMixedNonEmptyArrayType<string, RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    gameQuery<T extends string | RegExpMatchArray = string | RegExpMatchArray, U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> = FilteredMatchContext<C, T, "callback_query:game_short_name">>(
+    gameQuery<
+        T extends string | RegExpMatchArray = string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "callback_query:game_short_name"> =
+            FilteredMatchContext<C, T, "callback_query:game_short_name">,
+    >(
         trigger: MaybeNonEmptyArray<string | RegExp>,
         ...middleware: Array<Middleware<U>>
     ) {
         const triggers = toNonEmptyArray(trigger);
         const triggerFns = triggers.map((t) => triggerFn(t));
         return this.on("callback_query:game_short_name").filter(
-            (ctx): ctx is U => match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
+            (ctx): ctx is U =>
+                match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
             ...middleware,
         );
     }
@@ -577,19 +626,35 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The inline query text to match
      * @param middleware The middleware to register
      */
-    inlineQuery<T extends string = string, U extends FilteredMatchContext<C, T, "inline_query"> = FilteredMatchContext<C, T, "inline_query">>(
+    inlineQuery<
+        T extends string = string,
+        U extends FilteredMatchContext<C, T, "inline_query"> =
+            FilteredMatchContext<C, T, "inline_query">,
+    >(
         trigger: MaybeNonEmptyArray<string>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    inlineQuery<T extends RegExpMatchArray = RegExpMatchArray, U extends FilteredMatchContext<C, T, "inline_query"> = FilteredMatchContext<C, T, "inline_query">>(
+    inlineQuery<
+        T extends RegExpMatchArray = RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "inline_query"> =
+            FilteredMatchContext<C, T, "inline_query">,
+    >(
         trigger: MaybeNonEmptyArray<RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    inlineQuery<T extends string | RegExpMatchArray = string | RegExpMatchArray, U extends FilteredMatchContext<C, T, "inline_query"> = FilteredMatchContext<C, T, "inline_query">>(
+    inlineQuery<
+        T extends string | RegExpMatchArray = string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "inline_query"> =
+            FilteredMatchContext<C, T, "inline_query">,
+    >(
         trigger: MustMixedNonEmptyArrayType<string, RegExp>,
         ...middleware: Array<Middleware<U>>
     ): Composer<U>;
-    inlineQuery<T extends string | RegExpMatchArray = string | RegExpMatchArray, U extends FilteredMatchContext<C, T, "inline_query"> = FilteredMatchContext<C, T, "inline_query">>(
+    inlineQuery<
+        T extends string | RegExpMatchArray = string | RegExpMatchArray,
+        U extends FilteredMatchContext<C, T, "inline_query"> =
+            FilteredMatchContext<C, T, "inline_query">,
+    >(
         trigger: MaybeNonEmptyArray<string | RegExp>,
         ...middleware: Array<Middleware<U>>
     ) {
@@ -895,7 +960,11 @@ function triggerFn(trigger: string | RegExp) {
         : (txt: string) => trigger.exec(txt);
 }
 
-type CommandContext<C extends Context> = FilteredMatchContext<C, string, ":entities:bot_command">;
+type CommandContext<C extends Context> = FilteredMatchContext<
+    C,
+    string,
+    ":entities:bot_command"
+>;
 type FilteredMatchContext<
     C extends Context,
     T,
