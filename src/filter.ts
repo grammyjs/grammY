@@ -358,7 +358,7 @@ type CollapseL2<
     : never
         : never);
 // All queries
-type AllValidFilterQueries = InjectShortcuts;
+export type AllValidFilterQueries = InjectShortcuts;
 
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
