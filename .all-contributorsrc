@@ -386,6 +386,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "darvesh",
+      "name": "Darvesh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22394081?v=4",
+      "profile": "https://darve.sh",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
