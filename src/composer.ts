@@ -1,6 +1,5 @@
 import { Context } from "./context.ts";
 import {
-    AllValidFilterQueries,
     Filter,
     FilterQuery,
     matchFilter,
@@ -968,7 +967,7 @@ type CommandContext<C extends Context> = FilteredMatchContext<
 type FilteredMatchContext<
     C extends Context,
     T,
-    Q extends AllValidFilterQueries,
+    Q extends FilterQuery,
 > = Filter<C & { match: T }, Q>;
 
 function match<C extends Context>(
