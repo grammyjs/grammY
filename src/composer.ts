@@ -1,10 +1,18 @@
 import { Context } from "./context.ts";
-import { AllValidFilterQueries, Filter, FilterQuery, matchFilter } from "./filter.ts";
+import {
+    AllValidFilterQueries,
+    Filter,
+    FilterQuery,
+    matchFilter,
+} from "./filter.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 type MaybeArray<T> = T | T[];
 type MaybeNonEmptyArray<T> = T | NonEmptyArray<T>;
-type MustMixedNonEmptyArrayType<U1, U2> = NotArrayOfType<NotArrayOfType<NonEmptyArray<U1 | U2>, U1>, U2>;
+type MustMixedNonEmptyArrayType<U1, U2> = NotArrayOfType<
+    NotArrayOfType<NonEmptyArray<U1 | U2>, U1>,
+    U2
+>;
 type NonEmptyArray<T> = [T, ...T[]];
 type NotArrayOfType<T, U> = T extends Array<U> ? never : T;
 
@@ -309,25 +317,57 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     hears(
         trigger: MaybeNonEmptyArray<string>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string, ":text" | ":caption">>>
+        ...middleware: Array<
+            Middleware<FilteredMatchContext<C, string, ":text" | ":caption">>
+        >
     ): Composer<FilteredMatchContext<C, string, ":text" | ":caption">>;
     hears(
         trigger: MaybeNonEmptyArray<RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, RegExpMatchArray, ":text" | ":caption">>>
-    ): Composer<FilteredMatchContext<C, RegExpMatchArray, ":text" | ":caption">>;
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<C, RegExpMatchArray, ":text" | ":caption">
+            >
+        >
+    ): Composer<
+        FilteredMatchContext<C, RegExpMatchArray, ":text" | ":caption">
+    >;
     hears(
         trigger: MustMixedNonEmptyArrayType<string, RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string | RegExpMatchArray, ":text" | ":caption">>>
-    ): Composer<FilteredMatchContext<C, string | RegExpMatchArray, ":text" | ":caption">>;
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    ":text" | ":caption"
+                >
+            >
+        >
+    ): Composer<
+        FilteredMatchContext<C, string | RegExpMatchArray, ":text" | ":caption">
+    >;
     hears(
         trigger: MaybeNonEmptyArray<string | RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string | RegExpMatchArray, ":text" | ":caption">>>
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    ":text" | ":caption"
+                >
+            >
+        >
     ) {
         const triggers = toNonEmptyArray(trigger);
-        const triggerFns = triggers.map(t => triggerFn(t));
+        const triggerFns = triggers.map((t) => triggerFn(t));
         if (isNonEmptyStringArray(triggers)) {
             return this.on([":text", ":caption"]).filter(
-                (ctx): ctx is FilteredMatchContext<C, string, ":text" | ":caption"> => {
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    string,
+                    ":text" | ":caption"
+                > => {
                     const msg = ctx.message ?? ctx.channelPost;
                     const txt = msg.text ?? msg.caption;
                     return match(ctx, txt, triggerFns);
@@ -336,7 +376,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             );
         } else if (isNonEmptyRegExpArray(triggers)) {
             return this.on([":text", ":caption"]).filter(
-                (ctx): ctx is FilteredMatchContext<C, RegExpMatchArray, ":text" | ":caption"> => {
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    RegExpMatchArray,
+                    ":text" | ":caption"
+                > => {
                     const msg = ctx.message ?? ctx.channelPost;
                     const txt = msg.text ?? msg.caption;
                     return match(ctx, txt, triggerFns);
@@ -345,7 +391,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             );
         } else {
             return this.on([":text", ":caption"]).filter(
-                (ctx): ctx is FilteredMatchContext<C, string | RegExpMatchArray, ":text" | ":caption"> => {
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    ":text" | ":caption"
+                > => {
                     const msg = ctx.message ?? ctx.channelPost;
                     const txt = msg.text ?? msg.caption;
                     return match(ctx, txt, triggerFns);
@@ -502,36 +554,84 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     callbackQuery(
-      trigger: MaybeNonEmptyArray<string>,
-      ...middleware: Array<Middleware<FilteredMatchContext<C, string, "callback_query:data">>>
+        trigger: MaybeNonEmptyArray<string>,
+        ...middleware: Array<
+            Middleware<FilteredMatchContext<C, string, "callback_query:data">>
+        >
     ): Composer<FilteredMatchContext<C, string, "callback_query:data">>;
     callbackQuery(
-      trigger: MaybeNonEmptyArray<RegExp>,
-      ...middleware: Array<Middleware<FilteredMatchContext<C, RegExpMatchArray, "callback_query:data">>>
-    ): Composer<FilteredMatchContext<C, RegExpMatchArray, "callback_query:data">>;
+        trigger: MaybeNonEmptyArray<RegExp>,
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<C, RegExpMatchArray, "callback_query:data">
+            >
+        >
+    ): Composer<
+        FilteredMatchContext<C, RegExpMatchArray, "callback_query:data">
+    >;
     callbackQuery(
-      trigger: MustMixedNonEmptyArrayType<string, RegExp>,
-      ...middleware: Array<Middleware<FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:data">>>
-    ): Composer<FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:data">>;
+        trigger: MustMixedNonEmptyArrayType<string, RegExp>,
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "callback_query:data"
+                >
+            >
+        >
+    ): Composer<
+        FilteredMatchContext<
+            C,
+            string | RegExpMatchArray,
+            "callback_query:data"
+        >
+    >;
     callbackQuery(
         trigger: MaybeNonEmptyArray<string | RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:data">>>
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "callback_query:data"
+                >
+            >
+        >
     ) {
         const triggers = toNonEmptyArray(trigger);
-        const triggerFns = triggers.map(t => triggerFn(t));
+        const triggerFns = triggers.map((t) => triggerFn(t));
         if (isNonEmptyStringArray(triggers)) {
             return this.on("callback_query:data").filter(
-                (ctx): ctx is FilteredMatchContext<C, string, "callback_query:data"> => match(ctx, ctx.callbackQuery.data, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    string,
+                    "callback_query:data"
+                > => match(ctx, ctx.callbackQuery.data, triggerFns),
                 ...middleware,
             );
         } else if (isNonEmptyRegExpArray(triggers)) {
             return this.on("callback_query:data").filter(
-                (ctx): ctx is FilteredMatchContext<C, RegExpMatchArray, "callback_query:data"> => match(ctx, ctx.callbackQuery.data, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    RegExpMatchArray,
+                    "callback_query:data"
+                > => match(ctx, ctx.callbackQuery.data, triggerFns),
                 ...middleware,
             );
         } else {
             return this.on("callback_query:data").filter(
-                (ctx): ctx is FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:data"> => match(ctx, ctx.callbackQuery.data, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "callback_query:data"
+                > => match(ctx, ctx.callbackQuery.data, triggerFns),
                 ...middleware,
             );
         }
@@ -557,40 +657,99 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     gameQuery(
         trigger: MaybeNonEmptyArray<string>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string, "callback_query:game_short_name">>
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string,
+                    "callback_query:game_short_name"
+                >
+            >
         >
-    ): Composer<FilteredMatchContext<C, string, "callback_query:game_short_name">>;
+    ): Composer<
+        FilteredMatchContext<C, string, "callback_query:game_short_name">
+    >;
     gameQuery(
         trigger: MaybeNonEmptyArray<RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, RegExpMatchArray, "callback_query:game_short_name">>
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    RegExpMatchArray,
+                    "callback_query:game_short_name"
+                >
+            >
         >
-    ): Composer<FilteredMatchContext<C, RegExpMatchArray, "callback_query:game_short_name">>;
+    ): Composer<
+        FilteredMatchContext<
+            C,
+            RegExpMatchArray,
+            "callback_query:game_short_name"
+        >
+    >;
     gameQuery(
         trigger: MustMixedNonEmptyArrayType<string, RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:game_short_name">>
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "callback_query:game_short_name"
+                >
+            >
         >
-    ): Composer<FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:game_short_name">>;
+    ): Composer<
+        FilteredMatchContext<
+            C,
+            string | RegExpMatchArray,
+            "callback_query:game_short_name"
+        >
+    >;
     gameQuery(
         trigger: MaybeNonEmptyArray<string | RegExp>,
         ...middleware: Array<
-            Middleware<FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:game_short_name">>
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "callback_query:game_short_name"
+                >
+            >
         >
     ) {
         const triggers = toNonEmptyArray(trigger);
-        const triggerFns = triggers.map(t => triggerFn(t));
+        const triggerFns = triggers.map((t) => triggerFn(t));
         if (isNonEmptyStringArray(triggers)) {
             return this.on("callback_query:game_short_name").filter(
-                (ctx): ctx is FilteredMatchContext<C, string, "callback_query:game_short_name"> => match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    string,
+                    "callback_query:game_short_name"
+                > => match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
                 ...middleware,
             );
         } else if (isNonEmptyRegExpArray(triggers)) {
             return this.on("callback_query:game_short_name").filter(
-                (ctx): ctx is FilteredMatchContext<C, RegExpMatchArray, "callback_query:game_short_name"> => match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    RegExpMatchArray,
+                    "callback_query:game_short_name"
+                > => match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
                 ...middleware,
             );
         } else {
             return this.on("callback_query:game_short_name").filter(
-                (ctx): ctx is FilteredMatchContext<C, string | RegExpMatchArray, "callback_query:game_short_name"> => match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "callback_query:game_short_name"
+                > => match(ctx, ctx.callbackQuery.game_short_name, triggerFns),
                 ...middleware,
             );
         }
@@ -620,35 +779,72 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     inlineQuery(
         trigger: MaybeNonEmptyArray<string>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string, "inline_query">>>
+        ...middleware: Array<
+            Middleware<FilteredMatchContext<C, string, "inline_query">>
+        >
     ): Composer<FilteredMatchContext<C, string, "inline_query">>;
     inlineQuery(
         trigger: MaybeNonEmptyArray<RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, RegExpMatchArray, "inline_query">>>
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<C, RegExpMatchArray, "inline_query">
+            >
+        >
     ): Composer<FilteredMatchContext<C, RegExpMatchArray, "inline_query">>;
     inlineQuery(
         trigger: MustMixedNonEmptyArrayType<string, RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string | RegExpMatchArray, "inline_query">>>
-    ): Composer<FilteredMatchContext<C, string | RegExpMatchArray, "inline_query">>;
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "inline_query"
+                >
+            >
+        >
+    ): Composer<
+        FilteredMatchContext<C, string | RegExpMatchArray, "inline_query">
+    >;
     inlineQuery(
         trigger: MaybeNonEmptyArray<string | RegExp>,
-        ...middleware: Array<Middleware<FilteredMatchContext<C, string | RegExpMatchArray, "inline_query">>>
+        ...middleware: Array<
+            Middleware<
+                FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "inline_query"
+                >
+            >
+        >
     ) {
         const triggers = toNonEmptyArray(trigger);
-        const triggerFns = triggers.map(t => triggerFn(t));
+        const triggerFns = triggers.map((t) => triggerFn(t));
         if (isNonEmptyStringArray(triggers)) {
             return this.on("inline_query").filter(
-                (ctx): ctx is FilteredMatchContext<C, string, "inline_query"> => match(ctx, ctx.inlineQuery.query, triggerFns),
+                (ctx): ctx is FilteredMatchContext<C, string, "inline_query"> =>
+                    match(ctx, ctx.inlineQuery.query, triggerFns),
                 ...middleware,
             );
         } else if (isNonEmptyRegExpArray(triggers)) {
             return this.on("inline_query").filter(
-                (ctx): ctx is FilteredMatchContext<C, RegExpMatchArray, "inline_query"> => match(ctx, ctx.inlineQuery.query, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    RegExpMatchArray,
+                    "inline_query"
+                > => match(ctx, ctx.inlineQuery.query, triggerFns),
                 ...middleware,
             );
         } else {
             return this.on("inline_query").filter(
-                (ctx): ctx is FilteredMatchContext<C, string | RegExpMatchArray, "inline_query"> => match(ctx, ctx.inlineQuery.query, triggerFns),
+                (
+                    ctx,
+                ): ctx is FilteredMatchContext<
+                    C,
+                    string | RegExpMatchArray,
+                    "inline_query"
+                > => match(ctx, ctx.inlineQuery.query, triggerFns),
                 ...middleware,
             );
         }
@@ -940,10 +1136,12 @@ type StringExecFn = (content: string) => string | null;
 type RegExpExecFn = (content: string) => RegExpExecArray | null;
 
 function isNonEmptyStringArray(xs: any): xs is NonEmptyArray<string> {
-    return Array.isArray(xs) && xs.length > 0 && xs.every(x => typeof x === "string");
+    return Array.isArray(xs) && xs.length > 0 &&
+        xs.every((x) => typeof x === "string");
 }
 function isNonEmptyRegExpArray(xs: any): xs is NonEmptyArray<RegExp> {
-    return Array.isArray(xs) && xs.length > 0 && xs.every(x => x instanceof RegExp);
+    return Array.isArray(xs) && xs.length > 0 &&
+        xs.every((x) => x instanceof RegExp);
 }
 
 function triggerFn(trigger: string): StringExecFn;
@@ -959,7 +1157,11 @@ type CommandContext<C extends Context> = Filter<
     C & { match: string },
     ":entities:bot_command"
 >;
-type FilteredMatchContext<C extends Context, T, Q extends AllValidFilterQueries> = Filter<C & { match: T }, Q>;
+type FilteredMatchContext<
+    C extends Context,
+    T,
+    Q extends AllValidFilterQueries,
+> = Filter<C & { match: T }, Q>;
 
 function match<C extends Context>(
     ctx: C,
@@ -981,7 +1183,9 @@ function toArray<E>(e: MaybeArray<E>): E[] {
 }
 
 function toNonEmptyArray<E>(e: undefined): undefined;
-function toNonEmptyArray<E extends NonNullable<any>>(e: MaybeArray<E>): NonEmptyArray<E>;
+function toNonEmptyArray<E extends NonNullable<any>>(
+    e: MaybeArray<E>,
+): NonEmptyArray<E>;
 function toNonEmptyArray<E>(e: MaybeArray<E>) {
-    return e === undefined || Array.isArray(e) ? e : [e]
+    return e === undefined || Array.isArray(e) ? e : [e];
 }
