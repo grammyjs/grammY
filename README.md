@@ -104,6 +104,8 @@ All grammY packages published by [@grammyjs](https://github.com/grammyjs) run na
 
 However, given that most bot developers are still using Node, all documentation is written Node-first. We may migrate it if Deno overtakes Node. If you are already on Deno today, we expect you to know what you're doing. You mainly have to adjust the imports to URL imports, and import from [`https://deno.land/x/grammy/mod.ts`](https://deno.land/x/grammy).
 
+## [Contribution Guide »](./CONTRIBUTING.md)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -170,5 +172,3 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
-
-## [Contribution Guide »](./CONTRIBUTING.md)
