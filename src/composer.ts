@@ -824,7 +824,7 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map((t) =>
         typeof t === "string"
             ? (txt: string) => (txt === t ? t : null)
-            : (txt: string) => t.exec(txt)
+            : (txt: string) => txt.match(t)
     );
 }
 
