@@ -3,7 +3,7 @@ const isDeno = typeof Deno !== "undefined";
 // === Needed imports
 import { InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
 import { basename } from "https://deno.land/std@0.113.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.113.0/io/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.113.0/streams/mod.ts";
 
 // === Export all API types
 export * from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
@@ -23,7 +23,7 @@ if (isDeno) {
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.113.0/io/mod.ts";
+export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.113.0/streams/mod.ts";
 // Turn a file path into an AsyncIterable<Uint8Array>
 export const streamFile = isDeno
     ? (path: string) => Deno.open(path).then(iterateReader)
@@ -33,6 +33,15 @@ export const streamFile = isDeno
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = {};
+
+/** Something that looks like a URL. */
+interface URLLike {
+    /**
+     * Identifier of the resouce. Must be in a format that can be parsed by the
+     * URL constructor.
+     */
+    url: string;
+}
 
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
@@ -65,6 +74,8 @@ export class InputFile {
     constructor(
         file:
             | string
+            | URL
+            | URLLike
             | Uint8Array
             | ReadableStream<Uint8Array>
             | AsyncIterable<Uint8Array>,
@@ -80,12 +91,28 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = this.fileData;
-        if (typeof data !== "string" && (!(data instanceof Uint8Array))) {
+        let data = this.fileData;
+        if (
+            typeof data === "object" && ("url" in data || data instanceof URL)
+        ) {
+            data = fetchFile(data instanceof URL ? data : data.url);
+        } else if (
+            typeof data !== "string" && (!(data instanceof Uint8Array))
+        ) {
             this.consumed = true;
         }
         return data;
     }
+}
+
+async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
+    const { body } = await fetch(url);
+    if (body === null) {
+        throw new Error(
+            `Download failed, no response body from '${url}'`,
+        );
+    }
+    yield* body;
 }
 
 // === Export InputFile types
