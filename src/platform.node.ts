@@ -4,6 +4,7 @@ import { Agent } from "https";
 import { basename } from "path";
 import { Readable } from "stream";
 import type { ReadStream } from "fs";
+import { URL } from "url";
 
 // === Export all API types
 export * from "@grammyjs/types";
@@ -24,6 +25,14 @@ export const baseFetchConfig = {
     agent: new Agent({ keepAlive: true }),
 };
 
+/** Something that looks like a URL. */
+interface URLLike {
+    /**
+     * Identifier of the resouce. Must be in a format that can be parsed by the
+     * URL constructor.
+     */
+    url: string;
+}
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const inputFileData = Symbol("InputFile data");
@@ -36,7 +45,8 @@ export const inputFileData = Symbol("InputFile data");
  * Reference](https://core.telegram.org/bots/api#inputfile).
  */
 export class InputFile {
-    public readonly [inputFileData]: ConstructorParameters<typeof InputFile>[0];
+    private consumed = false;
+    private readonly fileData: ConstructorParameters<typeof InputFile>[0];
     /**
      * Optional name of the constructed `InputFile` instance.
      *
@@ -52,14 +62,53 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file: string | Uint8Array | ReadStream | AsyncIterable<Uint8Array>,
+        file:
+            | string
+            | URL
+            | URLLike
+            | Uint8Array
+            | ReadStream
+            | AsyncIterable<Uint8Array>,
         filename?: string,
     ) {
-        this[inputFileData] = file;
+        this.fileData = file;
         if (filename === undefined && typeof file === "string") {
             filename = basename(file);
         }
         this.filename = filename;
+    }
+    get [inputFileData]() {
+        if (this.consumed) {
+            throw new Error("Cannot reuse InputFile data source!");
+        }
+        let data = this.fileData;
+        if (
+            typeof data === "object" && ("url" in data || data instanceof URL)
+        ) {
+            data = fetchFile(data instanceof URL ? data : data.url);
+        } else if (
+            typeof data !== "string" && (!(data instanceof Uint8Array))
+        ) {
+            this.consumed = false;
+        }
+        return data;
+    }
+}
+
+async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
+    const { body } = await fetch(url);
+    if (body === null) {
+        throw new Error(
+            `Download failed, no response body from '${url}'`,
+        );
+    }
+    for await (const chunk of body) {
+        if (typeof chunk === "string") {
+            throw new Error(
+                `Could not transfer file, received string data instead of bytes from '${url}'`,
+            );
+        }
+        yield chunk;
     }
 }
 
