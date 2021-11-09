@@ -35,6 +35,7 @@ interface URLLike {
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const toRaw = Symbol("InputFile data");
+type MaybePromise<T> = T | Promise<T>;
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -61,13 +62,14 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file:
+        file: MaybePromise<
             | string
             | URL
             | URLLike
             | Uint8Array
             | ReadStream
-            | AsyncIterable<Uint8Array>,
+            | AsyncIterable<Uint8Array>
+        >,
         filename?: string,
     ) {
         this.fileData = file;
@@ -80,7 +82,7 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = this.fileData;
+        const data = await this.fileData;
         // Handle file paths, URLs, and URLLike objects
         if (typeof data === "string") return createReadStream(data);
         if (data instanceof URL) return fetchFile(data);
