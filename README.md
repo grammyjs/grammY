@@ -12,7 +12,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.4-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-37-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-39-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -104,6 +104,8 @@ All grammY packages published by [@grammyjs](https://github.com/grammyjs) run na
 
 However, given that most bot developers are still using Node, all documentation is written Node-first. We may migrate it if Deno overtakes Node. If you are already on Deno today, we expect you to know what you're doing. You mainly have to adjust the imports to URL imports, and import from [`https://deno.land/x/grammy/mod.ts`](https://deno.land/x/grammy).
 
+## [Contribution Guide »](./CONTRIBUTING.md)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -160,6 +162,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/taotie111"><img src="https://avatars.githubusercontent.com/u/44166322?v=4?s=100" width="100px;" alt=""/><br /><sub><b>taotie111</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=taotie111" title="Documentation">📖</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/merlin-brandes-42328717a/"><img src="https://avatars.githubusercontent.com/u/14237330?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Merlin</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=FatalMerlin" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://darve.sh"><img src="https://avatars.githubusercontent.com/u/22394081?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Darvesh</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Adarvesh" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=darvesh" title="Code">💻</a></td>
+    <td align="center"><a href="http://telegram.me/dcdunkan"><img src="https://avatars.githubusercontent.com/u/70066170?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dcdunkan</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Adcdunkan" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=dcdunkan" title="Code">💻</a></td>
   </tr>
 </table>
 
@@ -169,5 +173,3 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
-
-## [Contribution Guide »](./CONTRIBUTING.md)
