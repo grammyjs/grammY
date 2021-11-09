@@ -227,57 +227,67 @@ class ApiClient<R extends RawApi> {
         signal?: AbortSignal,
     ) => {
         debug("Calling", method);
-        const url = this.options.buildUrl(
-            this.options.apiRoot,
-            this.token,
-            method,
-        );
+        // General config
+        const opts = this.options;
+        const url = opts.buildUrl(opts.apiRoot, this.token, method);
         const formDataRequired = requiresFormDataUpload(payload);
+        // Short-circuit on webhook reply
         if (
             this.webhookReplyEnvelope.send !== undefined &&
             !this.hasUsedWebhookReply &&
             !formDataRequired &&
-            this.options.canUseWebhookReply(method)
+            opts.canUseWebhookReply(method)
         ) {
             this.hasUsedWebhookReply = true;
             const config = createJsonPayload({ ...payload, method });
             await this.webhookReplyEnvelope.send(config.body);
             return { ok: true, result: true as any };
-        } else {
-            const p = payload ?? {};
-            const sensLogs = this.options.sensitiveLogs;
-
-            const abortController = new AbortController();
-            const abort = combineAborts(abortController, signal);
-
-            const res = await new Promise<ApiResponse<ApiCallResult<M, R>>>(
-                (resolve, reject) => {
-                    const onHttpError = toHttpError(method, sensLogs, reject);
-                    function onOtherError(err: unknown) {
-                        abort();
-                        reject(err);
-                    }
-                    const config = formDataRequired
-                        ? createFormDataPayload(p, onOtherError)
-                        : createJsonPayload(p);
-                    const opts = {
-                        ...this.options.baseFetchConfig,
-                        signal: abortController.signal,
-                        ...config,
-                    };
-                    const timeoutHandle = setTimeout(() => {
-                        const msg =
-                            `Request to '${method}' timed out after 500 seconds`;
-                        onOtherError(new Error(msg));
-                    }, 500_000); // 500 seconds timeout, same as in Bot API
-                    fetch(url, opts).then((res) => res.json())
-                        .then(resolve)
-                        .catch(onHttpError)
-                        .finally(() => clearTimeout(timeoutHandle));
-                },
-            );
-            return res;
         }
+        // Regular request
+        const p = payload ?? {};
+        const controller = new AbortController();
+        const abort = combineAborts(controller, signal);
+        const options = { ...opts.baseFetchConfig, signal: controller.signal };
+        return await new Promise<ApiResponse<ApiCallResult<M, R>>>(
+            (resolve, reject) => {
+                let rejected = false; // prevents repeated rejections
+                /** Error handler for `fetch` */
+                function onHttpError(err: unknown) {
+                    if (rejected) return;
+                    rejected = true;
+                    let msg = `Network request for '${method}' failed!`;
+                    if (isTelegramError(err)) {
+                        msg += ` (${err.status}: ${err.statusText})`;
+                    }
+                    if (opts.sensitiveLogs && err instanceof Error) {
+                        msg += ` ${err.message}`;
+                    }
+                    reject(new HttpError(msg, err));
+                }
+                /** Error handler for timeouts and body stream errors */
+                function onOtherError(err: unknown) {
+                    if (rejected) return;
+                    rejected = true;
+                    reject(err);
+                    abort();
+                }
+                // Create fetch config
+                const config = formDataRequired
+                    ? createFormDataPayload(p, onOtherError)
+                    : createJsonPayload(p);
+                // Use same timeouts for requests as Bot API
+                const timeoutHandle = setTimeout(() => {
+                    const msg =
+                        `Request to '${method}' timed out after 500 seconds`;
+                    onOtherError(new Error(msg));
+                }, 500_000); // 500 seconds
+                // Perform request
+                fetch(url, { ...options, ...config }).then((res) => res.json())
+                    .then(resolve)
+                    .catch(onHttpError)
+                    .finally(() => clearTimeout(timeoutHandle));
+            },
+        );
     };
 
     use(...transformers: Transformer<R>[]) {
@@ -370,18 +380,6 @@ function isTelegramError(
         "status" in err &&
         "statusText" in err
     );
-}
-function toHttpError(
-    method: string,
-    sensitiveLogs: boolean,
-    reject: (err: unknown) => void,
-) {
-    return (err: unknown) => {
-        let msg = `Network request for '${method}' failed!`;
-        if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
-        if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
-        reject(new HttpError(msg, err));
-    };
 }
 function combineAborts(abortController: AbortController, signal?: AbortSignal) {
     if (signal === undefined) return () => abortController.abort();
