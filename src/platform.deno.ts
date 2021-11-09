@@ -71,6 +71,7 @@ export class InputFile {
         file: MaybePromise<
             | string
             | Blob
+            | Deno.File
             | URL
             | URLLike
             | Uint8Array
@@ -101,6 +102,7 @@ export class InputFile {
             return iterateReader(file);
         }
         if (data instanceof Blob) return data.stream();
+        if (isDenoFile(data)) return iterateReader(data);
         // Handle URL and URLLike
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
@@ -119,6 +121,9 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
         );
     }
     yield* body;
+}
+function isDenoFile(data: unknown): data is Deno.File {
+    return isDeno && data instanceof Deno.File;
 }
 
 // === Export InputFile types
