@@ -1,12 +1,12 @@
 const isDeno = typeof Deno !== "undefined";
 
 // === Needed imports
-import { InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.2.6?dts";
-import { basename } from "https://deno.land/std@0.106.0/path/mod.ts";
-import { iter } from "https://deno.land/std@0.106.0/io/mod.ts";
+import { InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
+import { basename } from "https://deno.land/std@0.113.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.113.0/streams/mod.ts";
 
 // === Export all API types
-export * from "https://cdn.skypack.dev/@grammyjs/types@v2.2.6?dts";
+export * from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
 
 // === Export debug
 import debug from "https://cdn.skypack.dev/debug@^4.3.2";
@@ -23,16 +23,25 @@ if (isDeno) {
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.106.0/io/mod.ts";
+export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.113.0/streams/mod.ts";
 // Turn a file path into an AsyncIterable<Uint8Array>
 export const streamFile = isDeno
-    ? (path: string) => Deno.open(path).then(iter)
+    ? (path: string) => Deno.open(path).then(iterateReader)
     : () => {
         throw new Error("Reading files by path requires a Deno environment");
     };
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
+
+/** Something that looks like a URL. */
+interface URLLike {
+    /**
+     * Identifier of the resouce. Must be in a format that can be parsed by the
+     * URL constructor.
+     */
+    url: string;
+}
 
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
@@ -46,7 +55,8 @@ export const inputFileData = Symbol("InputFile data");
  * Reference](https://core.telegram.org/bots/api#inputfile).
  */
 export class InputFile {
-    public readonly [inputFileData]: ConstructorParameters<typeof InputFile>[0];
+    private consumed = false;
+    private readonly fileData: ConstructorParameters<typeof InputFile>[0];
     /**
      * Optional name of the constructed `InputFile` instance.
      *
@@ -64,17 +74,45 @@ export class InputFile {
     constructor(
         file:
             | string
+            | URL
+            | URLLike
             | Uint8Array
             | ReadableStream<Uint8Array>
             | AsyncIterable<Uint8Array>,
         filename?: string,
     ) {
-        this[inputFileData] = file;
+        this.fileData = file;
         if (filename === undefined && typeof file === "string") {
             filename = basename(file);
         }
         this.filename = filename;
     }
+    get [inputFileData]() {
+        if (this.consumed) {
+            throw new Error("Cannot reuse InputFile data source!");
+        }
+        let data = this.fileData;
+        if (
+            typeof data === "object" && ("url" in data || data instanceof URL)
+        ) {
+            data = fetchFile(data instanceof URL ? data : data.url);
+        } else if (
+            typeof data !== "string" && (!(data instanceof Uint8Array))
+        ) {
+            this.consumed = false;
+        }
+        return data;
+    }
+}
+
+async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
+    const { body } = await fetch(url);
+    if (body === null) {
+        throw new Error(
+            `Download failed, no response body from '${url}'`,
+        );
+    }
+    yield* body;
 }
 
 // === Export InputFile types

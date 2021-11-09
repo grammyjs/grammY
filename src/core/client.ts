@@ -223,7 +223,11 @@ class ApiClient<R extends RawApi> {
         }
     }
 
-    private call: ApiCallFn<R> = async (method, payload, signal) => {
+    private call: ApiCallFn<R> = async <M extends Methods<R>>(
+        method: M,
+        payload: Payload<M, R>,
+        signal?: AbortSignal,
+    ) => {
         debug("Calling", method);
         const url = this.options.buildUrl(
             this.options.apiRoot,
@@ -240,30 +244,35 @@ class ApiClient<R extends RawApi> {
             this.hasUsedWebhookReply = true;
             const config = createJsonPayload({ ...payload, method });
             await this.webhookReplyEnvelope.send(config.body);
-            return { ok: true, result: true };
+            // deno-lint-ignore no-explicit-any
+            return { ok: true, result: true as any };
         } else {
             const p = payload ?? {};
-            const config = formDataRequired
-                ? createFormDataPayload(p)
-                : createJsonPayload(p);
-            let res: Await<ReturnType<typeof fetch>>;
-            try {
-                res = await fetch(url, {
-                    ...this.options.baseFetchConfig,
-                    signal,
-                    ...config,
-                });
-            } catch (err) {
-                let msg = `Network request for '${method}' failed!`;
-                if (isTelegramError(err)) {
-                    msg += ` (${err.status}: ${err.statusText})`;
-                }
-                if (this.options.sensitiveLogs && err instanceof Error) {
-                    msg += ` ${err.message}`;
-                }
-                throw new HttpError(msg, err);
-            }
-            return await res.json();
+            const sensLogs = this.options.sensitiveLogs;
+
+            const abortController = new AbortController();
+            const abort = combineAborts(abortController, signal);
+
+            const res = await new Promise<ApiResponse<ApiCallResult<M, R>>>(
+                (resolve, reject) => {
+                    function onStreamError(err: unknown) {
+                        abort();
+                        reject(err);
+                    }
+                    const onHttpError = toHttpError(method, sensLogs, reject);
+                    const config = formDataRequired
+                        ? createFormDataPayload(p, onStreamError)
+                        : createJsonPayload(p);
+                    const opts = {
+                        ...this.options.baseFetchConfig,
+                        signal: abortController.signal,
+                        ...config,
+                    };
+                    fetch(url, opts).then((res) => res.json()).then(resolve)
+                        .catch(onHttpError);
+                },
+            );
+            return res;
         }
     };
 
@@ -357,4 +366,27 @@ function isTelegramError(
         "status" in err &&
         "statusText" in err
     );
+}
+function toHttpError(
+    method: string,
+    sensitiveLogs: boolean,
+    reject: (err: unknown) => void,
+) {
+    return (err: unknown) => {
+        let msg = `Network request for '${method}' failed!`;
+        if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
+        if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
+        reject(new HttpError(msg, err));
+    };
+}
+function combineAborts(abortController: AbortController, signal?: AbortSignal) {
+    if (signal === undefined) return () => abortController.abort();
+    const sig = signal;
+    function abort() {
+        abortController.abort();
+        sig.removeEventListener("abort", abort);
+    }
+    if (sig.aborted) abort();
+    else sig.addEventListener("abort", abort);
+    return abort;
 }

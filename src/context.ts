@@ -146,6 +146,10 @@ export class Context implements RenamedUpdate {
     get chatMember() {
         return this.update.chat_member;
     }
+    /** Alias for `ctx.update.chat_join_request` */
+    get chatJoinRequest() {
+        return this.update.chat_join_request;
+    }
 
     // AGGREGATION SHORTCUTS
 
@@ -664,7 +668,7 @@ export class Context implements RenamedUpdate {
      *
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
-     * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.
+     * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
@@ -739,7 +743,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.banChatMember`. Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     * Context-aware alias for `api.banChatMember`. Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -761,7 +765,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.banChatMember`. Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     * Context-aware alias for `api.banChatMember`. Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
@@ -805,7 +809,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.restrictChatMember`. Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
+     * Context-aware alias for `api.restrictChatMember`. Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
      *
      * @param permissions An object for new user permissions
      * @param other Optional remaining parameters, confer the official reference below
@@ -828,7 +832,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.restrictChatMember`. Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
+     * Context-aware alias for `api.restrictChatMember`. Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
      *
      * @param user_id Unique identifier of the target user
      * @param permissions An object for new user permissions
@@ -853,7 +857,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.promoteChatMember`. Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
+     * Context-aware alias for `api.promoteChatMember`. Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass False for all boolean parameters to demote a user. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -873,7 +877,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.promoteChatMember`. Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.
+     * Context-aware alias for `api.promoteChatMember`. Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass False for all boolean parameters to demote a user. Returns True on success.
      *
      * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
@@ -937,7 +941,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setChatPermissions`. Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members admin rights. Returns True on success.
+     * Context-aware alias for `api.setChatPermissions`. Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.
      *
      * @param permissions New default chat permissions
      * @param signal Optional `AbortSignal` to cancel the request
@@ -953,7 +957,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.exportChatInviteLink`. Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.
+     * Context-aware alias for `api.exportChatInviteLink`. Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as String on success.
      *
      * Note: Each administrator in a chat generates their own invite links. Bots can't use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using exportChatInviteLink or by calling the getChat method. If your bot needs to generate a new primary invite link replacing its previous one, use exportChatInviteLink again.
      *
@@ -969,7 +973,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.createChatInviteLink`. Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
+     * Context-aware alias for `api.createChatInviteLink`. Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -988,7 +992,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     *  Context-aware alias for `api.editChatInviteLink`. Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the edited invite link as a ChatInviteLink object.
+     *  Context-aware alias for `api.editChatInviteLink`. Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
      *
      * @param invite_link The invite link to edit
      * @param other Optional remaining parameters, confer the official reference below
@@ -1010,7 +1014,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     *  Context-aware alias for `api.revokeChatInviteLink`. Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the revoked invite link as ChatInviteLink object.
+     *  Context-aware alias for `api.revokeChatInviteLink`. Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
      *
      * @param invite_link The invite link to revoke
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1026,7 +1030,45 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setChatPhoto`. Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     * Context-aware alias for `api.approveChatJoinRequest`. Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#approvechatjoinrequest
+     */
+    approveChatJoinRequest(
+        user_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.api.approveChatJoinRequest(
+            orThrow(this.chat, "approveChatJoinRequest").id,
+            user_id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.declineChatJoinRequest`. Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#declinechatjoinrequest
+     */
+    declineChatJoinRequest(
+        user_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.api.declineChatJoinRequest(
+            orThrow(this.chat, "declineChatJoinRequest").id,
+            user_id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setChatPhoto`. Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param photo New chat photo, uploaded using multipart/form-data
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1042,7 +1084,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.deleteChatPhoto`. Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     * Context-aware alias for `api.deleteChatPhoto`. Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1056,7 +1098,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setChatTitle`. Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     * Context-aware alias for `api.setChatTitle`. Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param title New chat title, 1-255 characters
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1072,7 +1114,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setChatDescription`. Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.
+     * Context-aware alias for `api.setChatDescription`. Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param description New chat description, 0-255 characters
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1088,7 +1130,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.pinChatMessage`. Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
+     * Context-aware alias for `api.pinChatMessage`. Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
      *
      * @param message_id Identifier of a message to pin
      * @param other Optional remaining parameters, confer the official reference below
@@ -1110,7 +1152,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
+     * Context-aware alias for `api.unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
      *
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1126,7 +1168,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.unpinAllChatMessages`. Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' admin right in a supergroup or 'can_edit_messages' admin right in a channel. Returns True on success.
+     * Context-aware alias for `api.unpinAllChatMessages`. Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1226,7 +1268,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setChatStickerSet`. Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
+     * Context-aware alias for `api.setChatStickerSet`. Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
      *
      * @param sticker_set_name Name of the sticker set to be set as the group sticker set
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1242,7 +1284,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.deleteChatStickerSet`. Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
+     * Context-aware alias for `api.deleteChatStickerSet`. Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1266,12 +1308,12 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#answercallbackquery
      */
     answerCallbackQuery(
-        other?: Other<"answerCallbackQuery", "callback_query_id">,
+        other?: string | Other<"answerCallbackQuery", "callback_query_id">,
         signal?: AbortSignal,
     ) {
         return this.api.answerCallbackQuery(
             orThrow(this.callbackQuery, "answerCallbackQuery").id,
-            other,
+            typeof other === "string" ? { text: other } : other,
             signal,
         );
     }
@@ -1449,7 +1491,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.answerInlineQuery`. Use this method to send answers to an inline query. On success, True is returned.
      * No more than 50 results per query are allowed.
      *
-     * Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
+     * Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
      *
      * @param results An array of results for the inline query
      * @param other Optional remaining parameters, confer the official reference below
@@ -1550,13 +1592,15 @@ export class Context implements RenamedUpdate {
      */
     answerPreCheckoutQuery(
         ok: boolean,
-        other?: Other<"answerPreCheckoutQuery", "pre_checkout_query_id" | "ok">,
+        other?:
+            | string
+            | Other<"answerPreCheckoutQuery", "pre_checkout_query_id" | "ok">,
         signal?: AbortSignal,
     ) {
         return this.api.answerPreCheckoutQuery(
             orThrow(this.preCheckoutQuery, "answerPreCheckoutQuery").id,
             ok,
-            other,
+            typeof other === "string" ? { error_message: other } : other,
             signal,
         );
     }

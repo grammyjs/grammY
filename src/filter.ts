@@ -231,6 +231,9 @@ const ENTITY_KEYS = {
     underline: {},
     strikethrough: {},
     code: {},
+    pre: {},
+    text_link: {},
+    text_mention: {},
 } as const;
 const USER_KEYS = {
     me: {},
@@ -312,6 +315,7 @@ const UPDATE_KEYS = {
     poll_answer: {},
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
+    chat_join_request: {},
 } as const;
 
 // === Build up all possible filter queries from the above validation structure
