@@ -248,9 +248,7 @@ class ApiClient<R extends RawApi> {
             const sensLogs = this.options.sensitiveLogs;
 
             const abortController = new AbortController();
-            const abort = signal === undefined
-                ? () => abortController.abort()
-                : combineAborts(abortController, signal);
+            const abort = combineAborts(abortController, signal);
 
             const res = await new Promise<ApiResponse<ApiCallResult<M, R>>>(
                 (resolve, reject) => {
@@ -378,16 +376,14 @@ function toHttpError(
         reject(new HttpError(msg, err));
     };
 }
-function combineAborts(abortController: AbortController, signal: AbortSignal) {
+function combineAborts(abortController: AbortController, signal?: AbortSignal) {
+    if (signal === undefined) return () => abortController.abort();
+    const sig = signal;
     function abort() {
         abortController.abort();
-        if (signal !== undefined) {
-            signal.removeEventListener("abort", abort);
-        }
+        sig.removeEventListener("abort", abort);
     }
-    if (signal !== undefined) {
-        if (signal.aborted) abort();
-        else signal.addEventListener("abort", abort);
-    }
+    if (sig.aborted) abort();
+    else sig.addEventListener("abort", abort);
     return abort;
 }
