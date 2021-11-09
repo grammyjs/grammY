@@ -1,9 +1,4 @@
-import {
-    InputFile,
-    inputFileData,
-    itrToStream,
-    streamFile,
-} from "../platform.deno.ts";
+import { InputFile, itrToStream, toRaw } from "../platform.deno.ts";
 
 // === Payload types (JSON vs. form data)
 /**
@@ -184,11 +179,9 @@ ${filename}
     yield enc.encode(
         `content-disposition:form-data;name="${id}";filename=${filename}\r\n\r\n`,
     );
-    const fileData = input[inputFileData];
-    // handle buffers, file paths, and streams:
-    if (fileData instanceof Uint8Array) yield fileData;
-    else if (typeof fileData === "string") yield* await streamFile(fileData);
-    else yield* fileData;
+    const data = await input[toRaw]();
+    if (data instanceof Uint8Array) yield data;
+    else yield* data;
 }
 /** Returns the default file extension for an API property name */
 function getExt(key: string) {

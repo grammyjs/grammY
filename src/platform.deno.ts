@@ -1,3 +1,4 @@
+/** Are we running on Deno or in a web browser? */
 const isDeno = typeof Deno !== "undefined";
 
 // === Needed imports
@@ -24,12 +25,6 @@ if (isDeno) {
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
 export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.113.0/streams/mod.ts";
-// Turn a file path into an AsyncIterable<Uint8Array>
-export const streamFile = isDeno
-    ? (path: string) => Deno.open(path).then(iterateReader)
-    : () => {
-        throw new Error("Reading files by path requires a Deno environment");
-    };
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = {};
@@ -45,7 +40,7 @@ interface URLLike {
 
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
-export const inputFileData = Symbol("InputFile data");
+export const toRaw = Symbol("InputFile data");
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -87,20 +82,27 @@ export class InputFile {
         }
         this.filename = filename;
     }
-    get [inputFileData]() {
+    async [toRaw](): Promise<Uint8Array | AsyncIterable<Uint8Array>> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        let data = this.fileData;
-        if (
-            typeof data === "object" && ("url" in data || data instanceof URL)
-        ) {
-            data = fetchFile(data instanceof URL ? data : data.url);
-        } else if (
-            typeof data !== "string" && (!(data instanceof Uint8Array))
-        ) {
-            this.consumed = true;
+        const data = this.fileData;
+        // Handle file paths
+        if (typeof data === "string") {
+            if (!isDeno) {
+                throw new Error(
+                    "Reading files by path requires a Deno environment",
+                );
+            }
+            const file = await Deno.open(data);
+            return iterateReader(file);
         }
+        // Handle URL and URLLike
+        if (data instanceof URL) return fetchFile(data);
+        if ("url" in data) return fetchFile(data.url);
+        // Mark streams and iterators as consumed
+        if (!(data instanceof Uint8Array)) this.consumed = true;
+        // Return buffers and byte streams as-is
         return data;
     }
 }
