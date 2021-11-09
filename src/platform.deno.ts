@@ -69,6 +69,7 @@ export class InputFile {
     constructor(
         file:
             | string
+            | Blob
             | URL
             | URLLike
             | Uint8Array
@@ -87,7 +88,7 @@ export class InputFile {
             throw new Error("Cannot reuse InputFile data source!");
         }
         const data = this.fileData;
-        // Handle file paths
+        // Handle local files
         if (typeof data === "string") {
             if (!isDeno) {
                 throw new Error(
@@ -97,6 +98,7 @@ export class InputFile {
             const file = await Deno.open(data);
             return iterateReader(file);
         }
+        if (data instanceof Blob) return data.stream();
         // Handle URL and URLLike
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
