@@ -396,6 +396,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "dcdunkan",
+      "name": "dcdunkan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/70066170?v=4",
+      "profile": "http://telegram.me/dcdunkan",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
