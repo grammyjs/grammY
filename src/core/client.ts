@@ -268,8 +268,8 @@ class ApiClient<R extends RawApi> {
                 function onOtherError(err: unknown) {
                     if (rejected) return;
                     rejected = true;
-                    reject(err);
                     abort();
+                    reject(err);
                 }
                 // Create fetch config
                 const config = formDataRequired
@@ -282,10 +282,16 @@ class ApiClient<R extends RawApi> {
                     onOtherError(new Error(msg));
                 }, 500_000); // 500 seconds
                 // Perform request
-                fetch(url, { ...options, ...config }).then((res) => res.json())
+                fetch(url, { ...options, ...config })
+                    .then((res) => {
+                        clearTimeout(timeoutHandle);
+                        return res.json();
+                    })
                     .then(resolve)
-                    .catch(onHttpError)
-                    .finally(() => clearTimeout(timeoutHandle));
+                    .catch((err) => {
+                        clearTimeout(timeoutHandle);
+                        onHttpError(err);
+                    });
             },
         );
     };
