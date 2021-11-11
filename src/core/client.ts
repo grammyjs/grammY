@@ -242,6 +242,7 @@ class ApiClient<R extends RawApi> {
             this.hasUsedWebhookReply = true;
             const config = createJsonPayload({ ...payload, method });
             await this.webhookReplyEnvelope.send(config.body);
+            // deno-lint-ignore no-explicit-any
             return { ok: true, result: true as any };
         } else {
             const p = payload ?? {};
