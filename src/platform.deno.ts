@@ -41,6 +41,7 @@ interface URLLike {
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const toRaw = Symbol("InputFile data");
+type MaybePromise<T> = T | Promise<T>;
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -67,13 +68,16 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file:
+        file: MaybePromise<
             | string
+            | Blob
+            | Deno.File
             | URL
             | URLLike
             | Uint8Array
             | ReadableStream<Uint8Array>
-            | AsyncIterable<Uint8Array>,
+            | AsyncIterable<Uint8Array>
+        >,
         filename?: string,
     ) {
         this.fileData = file;
@@ -86,8 +90,8 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = this.fileData;
-        // Handle file paths
+        const data = await this.fileData;
+        // Handle local files
         if (typeof data === "string") {
             if (!isDeno) {
                 throw new Error(
@@ -97,6 +101,8 @@ export class InputFile {
             const file = await Deno.open(data);
             return iterateReader(file);
         }
+        if (data instanceof Blob) return data.stream();
+        if (isDenoFile(data)) return iterateReader(data);
         // Handle URL and URLLike
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
@@ -115,6 +121,9 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
         );
     }
     yield* body;
+}
+function isDenoFile(data: unknown): data is Deno.File {
+    return isDeno && data instanceof Deno.File;
 }
 
 // === Export InputFile types
