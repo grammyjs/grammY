@@ -13,7 +13,8 @@
         "module": "commonjs",
         "outDir": "./out/",
         "skipLibCheck": true,
-        "target": "es2019"
+        "target": "es2019",
+        "esModuleInterop": true
     },
     "include": ["src/"],
     "deno2node": {

@@ -1,83 +1,76 @@
 // deno-lint-ignore-file no-explicit-any
-import type { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "http";
+import safeStrCmp from "tsscmp";
+import { AdapterFactory } from "./webhook";
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
  * box.
  */
-export type SupportedFrameworks =
-    | "express"
-    | "http"
-    | "https"
-    | "koa"
-    | "fastify"
-    | "worktop"
-    | "aws-lambda";
 
-export const defaultFramework: SupportedFrameworks = "express";
+export const http: AdapterFactory<{ secretPath: string }> = ({ secretPath }) =>
+    (req: IncomingMessage, res: ServerResponse) => ({
+        update: new Promise((resolve) => {
+            if (
+                req.method !== "POST" || !safeStrCmp(secretPath, req.url ?? "")
+            ) {
+                resolve(undefined);
+            }
+            const chunks: Buffer[] = [];
+            req
+                .on("data", (chunk) => chunks.push(chunk))
+                .on("end", () => {
+                    const raw = Buffer.concat(chunks).toString("utf-8");
+                    resolve(JSON.parse(raw));
+                });
+        }),
+        end: () => res.end(),
+        respond: (json) =>
+            res
+                .writeHead(200, { "Content-Type": "application/json" })
+                .end(json),
+    });
 
-export const frameworkAdapters = {
-    express: (req: any, res: any) => ({
+export const https = http;
+
+export const express: AdapterFactory = () =>
+    (req: any, res: any) => ({
         update: Promise.resolve(req.body),
         end: () => res.end(),
         respond: (json: string) => {
             res.set("Content-Type", "application/json");
             res.send(json);
         },
-    }),
-    http: (req: IncomingMessage, res: ServerResponse) => ({
-        update: new Promise<any>((resolve) => {
-            const chunks: Buffer[] = [];
-            req
-                .on("data", (chunk: Buffer) => chunks.push(chunk))
-                .on("end", () => {
-                    const raw = Buffer.concat(chunks).toString("utf-8");
-                    resolve(JSON.parse(raw));
-                });
-        }),
-        end: () => res.end(),
-        respond: (json: string) => {
-            return res
-                .writeHead(200, { "Content-Type": "application/json" })
-                .end(json);
-        },
-    }),
-    https: (req: IncomingMessage, res: ServerResponse) => ({
-        update: new Promise<any>((resolve) => {
-            const chunks: Buffer[] = [];
-            req
-                .on("data", (chunk: Buffer) => chunks.push(chunk))
-                .on("end", () => {
-                    const raw = Buffer.concat(chunks).toString("utf-8");
-                    resolve(JSON.parse(raw));
-                });
-        }),
-        end: () => res.end(),
-        respond: (json: string) => {
-            return res
-                .writeHead(200, { "Content-Type": "application/json" })
-                .end(json);
-        },
-    }),
-    koa: (ctx: any) => ({
+    });
+
+export const koa: AdapterFactory = () =>
+    (ctx: any) => ({
         update: Promise.resolve(ctx.request.body),
-        end: () => (ctx.body = ""),
+        end: () => {
+            ctx.body = "";
+        },
         respond: (json: string) => {
             ctx.set("Content-Type", "application/json");
             ctx.response.body = json;
         },
-    }),
-    fastify: (req: any, reply: any) => ({
+    });
+
+export const fastify: AdapterFactory = () =>
+    (req: any, reply: any) => ({
         update: Promise.resolve(req.body),
-        end: () => reply.send({}),
+        end: () => reply.status(200).send(),
         respond: (json: string) => reply.send(json),
-    }),
-    worktop: (req: any, res: any) => ({
+    });
+
+export const worktop: AdapterFactory = () =>
+    (req: any, res: any) => ({
         update: Promise.resolve(req.body.json()),
         end: () => res.end(),
         respond: (json: string) => res.send(200, json),
-    }),
-    "aws-lambda": (event: any, _context: any, callback: any) => ({
+    });
+
+export const awsLambda: AdapterFactory = () =>
+    (event: any, _context: any, callback: any) => ({
         update: JSON.parse(event.body),
         end: () => callback(null, { statusCode: 200 }),
         respond: (json: string) =>
@@ -85,6 +78,8 @@ export const frameworkAdapters = {
                 statusCode: 200,
                 body: json,
             }),
-    }),
-    // please open a PR if you want to add another
-};
+    });
+
+// please open a PR if you want to add another
+
+export const defaultAdapter = express;

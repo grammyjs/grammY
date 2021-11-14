@@ -5,8 +5,6 @@ import { InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?d
 import { basename } from "https://deno.land/std@0.113.0/path/mod.ts";
 import { iterateReader } from "https://deno.land/std@0.113.0/streams/mod.ts";
 
-import type { FrameworkAdapter } from "./convenience/webhook.ts";
-
 // === Export all API types
 export * from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
 

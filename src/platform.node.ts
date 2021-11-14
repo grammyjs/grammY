@@ -1,13 +1,10 @@
 // === Needed imports
 import { InputFileProxy } from "@grammyjs/types";
 import { Agent } from "https";
-import { IncomingMessage, ServerResponse } from "http";
 import { basename } from "path";
 import { Readable } from "stream";
 import type { ReadStream } from "fs";
 import { URL } from "url";
-
-import type { FrameworkAdapter } from "./convenience/webhook";
 
 // === Export all API types
 export * from "@grammyjs/types";
