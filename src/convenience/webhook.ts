@@ -66,8 +66,9 @@ type WebhookCbReturn<A extends FrameworkAdapter> = (
  *
  * @param bot The bot for which to create a callback
  * @param framework An optional string identifying the framework (default: 'express')
- * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
- * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
+ * @param adapterOptions Additional options for adapter behavior
+ * @param adapterOptions.onTimeout An optional strategy to handle timeouts (default: 'throw')
+ * @param adapterOptions.timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
  */
 export function webhookCallback<
     A extends FrameworkAdapter,
@@ -75,11 +76,9 @@ export function webhookCallback<
 >(
     bot: Bot<C>,
     adapter?: A,
-    {
-        onTimeout = "throw",
-        timeoutMilliseconds = 10_000,
-    }: CommonAdapterOptions = {},
+    adapterOptions: CommonAdapterOptions = {},
 ): WebhookCbReturn<A> {
+    const { onTimeout = "throw", timeoutMilliseconds = 10_000 } = adapterOptions;
     let firstUpdate = true;
     let initialized = false;
     let initCall: Promise<void> | undefined;
