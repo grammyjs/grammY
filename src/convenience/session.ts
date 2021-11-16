@@ -317,7 +317,7 @@ export function lazySession<S, C extends Context>(
 function defaultGetSessionKey(ctx: Context): string | undefined {
     const chatInstance = ctx.chat?.id ??
         ctx.callbackQuery?.chat_instance ??
-        ctx.from.id;
+        ctx.from?.id;
     return chatInstance?.toString();
 }
 
