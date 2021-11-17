@@ -12,7 +12,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.4-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-39-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-40-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -164,6 +164,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.linkedin.com/in/merlin-brandes-42328717a/"><img src="https://avatars.githubusercontent.com/u/14237330?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Merlin</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=FatalMerlin" title="Documentation">📖</a></td>
     <td align="center"><a href="https://darve.sh"><img src="https://avatars.githubusercontent.com/u/22394081?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Darvesh</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Adarvesh" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=darvesh" title="Code">💻</a></td>
     <td align="center"><a href="http://telegram.me/dcdunkan"><img src="https://avatars.githubusercontent.com/u/70066170?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dcdunkan</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Adcdunkan" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=dcdunkan" title="Code">💻</a></td>
+    <td align="center"><a href="https://xuann.wang/"><img src="https://avatars.githubusercontent.com/u/44045911?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kid</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=kidonng" title="Documentation">📖</a></td>
   </tr>
 </table>
 
