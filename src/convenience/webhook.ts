@@ -18,7 +18,8 @@ type SupportedFrameworks =
     | "fastify"
     | "worktop"
     | "callback"
-    | "aws-lambda";
+    | "aws-lambda"
+    | "serveHttp";
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -99,6 +100,19 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
                 statusCode: 200,
                 body: json,
             }),
+    }),
+    "serveHttp": (requestEvent) => ({
+        update: Promise.resolve(requestEvent.request.json()),
+        end: () =>
+            requestEvent.respondWith(
+                new Response(undefined, {
+                    status: 200,
+                }),
+            ),
+        respond: (json) =>
+            requestEvent.respondWith(
+                new Response(JSON.stringify(json), { status: 200 }),
+            ),
     }),
     // please open a PR if you want to add another
 };
