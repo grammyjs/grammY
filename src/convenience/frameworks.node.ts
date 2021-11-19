@@ -1,7 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
-import { IncomingMessage, ServerResponse } from "http";
-import safeStrCmp from "tsscmp";
+import type { IncomingMessage, ServerResponse } from "http";
 import { AdapterFactory } from "./webhook";
+import { safeStringCompare } from "../platform.deno.ts";
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
@@ -10,19 +10,19 @@ import { AdapterFactory } from "./webhook";
 
 export const http: AdapterFactory<{ secretPath: string }> = ({ secretPath }) =>
     (req: IncomingMessage, res: ServerResponse) => ({
-        update: new Promise((resolve) => {
-            if (
-                req.method !== "POST" || !safeStrCmp(secretPath, req.url ?? "")
-            ) {
-                resolve(undefined);
+        update: new Promise((resolve, reject) => {
+            if (req.method !== "POST" || !safeStringCompare(secretPath, req.url ?? "")) {
+                reject();
+                return;
             }
             const chunks: Buffer[] = [];
             req
                 .on("data", (chunk) => chunks.push(chunk))
-                .on("end", () => {
+                .once("end", () => {
                     const raw = Buffer.concat(chunks).toString("utf-8");
                     resolve(JSON.parse(raw));
-                });
+                })
+                .once("error", (e) => reject(e));
         }),
         end: () => res.end(),
         respond: (json) =>

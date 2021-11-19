@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { AdapterFactory } from "./webhook.ts";
+import type { AdapterFactory } from "./webhook.ts";
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
@@ -13,7 +13,7 @@ export const stdHttp: AdapterFactory<{ secretPath: string }> = (
     const reqUrl = new URL(req.url);
     return {
         update: (req.method !== "POST" || reqUrl.pathname !== secretPath)
-            ? Promise.resolve(undefined)
+            ? Promise.reject()
             : req.json(),
         end: () => {
             if (resolveResponse) resolveResponse(new Response());

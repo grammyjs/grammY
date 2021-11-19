@@ -6,6 +6,8 @@ import { defaultAdapter } from "./frameworks.deno.ts";
 export * as adapters from "./frameworks.deno.ts";
 const debugErr = d("grammy:error");
 
+import * as adapters from "./frameworks.node";
+
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
  * well as a mechanism for responding to the request and to end it.
@@ -13,10 +15,10 @@ const debugErr = d("grammy:error");
 interface ReqResHandler {
     /**
      * The update object sent from Telegram, usually resolves the request's JSON
-     * body. In case it is `undefined`, i.e. if the adapter dropped that request
+     * body. In case it is rejected, i.e. if the adapter dropped that request
      * because of url pathname mismatch, then it won't be processed
      */
-    update: Promise<Update | undefined>;
+    update: Promise<Update>;
     /**
      * Ends the request immediately without body, called after every request
      * unless a webhook reply was performed
@@ -75,23 +77,18 @@ export function webhookCallback<
     C extends Context = Context,
 >(
     bot: Bot<C>,
-    adapter?: A,
+    adapter?: A | keyof typeof adapters, // TODO: remove union before next maj. release
     adapterOptions: CommonAdapterOptions = {},
 ): WebhookCbReturn<A> {
-    const { onTimeout = "throw", timeoutMilliseconds = 10_000 } = adapterOptions;
+    const { onTimeout = "throw", timeoutMilliseconds = 10_000 } =
+        adapterOptions;
     let firstUpdate = true;
     let initialized = false;
     let initCall: Promise<void> | undefined;
-    const server: FrameworkAdapter = adapter ?? defaultAdapter();
+    const server: FrameworkAdapter = typeof adapter === "string" // TODO: remove check before next maj. release
+        ? (adapters[adapter] as AdapterFactory)()
+        : adapter ?? defaultAdapter();
     return async (...args: any[]) => {
-        const { update, respond, end, handlerReturn } = server(...args);
-        let usedWebhookReply = false;
-        const webhookReplyEnvelope: WebhookReplyEnvelope = {
-            send: async (json) => {
-                usedWebhookReply = true;
-                await respond(json);
-            },
-        };
         if (!initialized) {
             if (firstUpdate) {
                 initCall = bot.init();
@@ -100,16 +97,25 @@ export function webhookCallback<
             await initCall;
             initialized = true;
         }
-        const maybeUpdate = await update;
-        if (maybeUpdate) {
+        const { update, respond, end, handlerReturn } = server(...args);
+        let usedWebhookReply = false;
+        const webhookReplyEnvelope: WebhookReplyEnvelope = {
+            send: async (json) => {
+                usedWebhookReply = true;
+                await respond(json);
+            },
+        };
+        try {
             await timeoutIfNecessary(
-                bot.handleUpdate(maybeUpdate, webhookReplyEnvelope),
+                bot.handleUpdate(await update, webhookReplyEnvelope),
                 typeof onTimeout === "function"
                     ? () => onTimeout(...args)
                     : onTimeout,
                 timeoutMilliseconds,
             );
             if (end !== undefined && !usedWebhookReply) end();
+        } catch {
+            // Adapter rejected processing an update
         }
         return handlerReturn;
     };
