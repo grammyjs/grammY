@@ -102,7 +102,7 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
             }),
     }),
     "serveHttp": (requestEvent) => ({
-        update: Promise.resolve(requestEvent.request.json()),
+        update: requestEvent.request.json(),
         end: () =>
             requestEvent.respondWith(
                 new Response(undefined, {
