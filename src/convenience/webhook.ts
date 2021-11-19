@@ -3,10 +3,9 @@ import { debug as d, Update } from "../platform.deno.ts";
 import { WebhookReplyEnvelope } from "../core/client.ts";
 import { Context } from "../context.ts";
 import { defaultAdapter } from "./frameworks.deno.ts";
+import * as adapters from "./frameworks.deno.ts";
 export * as adapters from "./frameworks.deno.ts";
 const debugErr = d("grammy:error");
-
-import * as adapters from "./frameworks.node";
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
