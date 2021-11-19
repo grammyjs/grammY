@@ -11,7 +11,10 @@ import { safeStringCompare } from "../platform.deno.ts";
 export const http: AdapterFactory<{ secretPath: string }> = ({ secretPath }) =>
     (req: IncomingMessage, res: ServerResponse) => ({
         update: new Promise((resolve, reject) => {
-            if (req.method !== "POST" || !safeStringCompare(secretPath, req.url ?? "")) {
+            if (
+                req.method !== "POST" ||
+                !safeStringCompare(secretPath, req.url ?? "")
+            ) {
                 reject();
                 return;
             }
