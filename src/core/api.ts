@@ -20,6 +20,7 @@ import {
     RawApi,
     Transformer,
     TransformerConsumer,
+    OnTransformerConsumer,
     WebhookReplyEnvelope,
 } from "./client.ts";
 
@@ -78,6 +79,16 @@ export class Api<R extends RawApi = RawApi> {
          * _Note that using transformer functions is an advanced feature of
          * grammY that most bots will not need to make use of._
          */
+        readonly on: OnTransformerConsumer<R>;
+        /**
+         * Allows to install an API request transformer function. A transformer
+         * function has access to every API call before it is being performed.
+         * This includes the method as string, the payload as object and the
+         * upstream transformer function.
+         *
+         * _Note that using transformer functions is an advanced feature of
+         * grammY that most bots will not need to make use of._
+         */
         readonly use: TransformerConsumer<R>;
         /**
          * Provides read access to all currently installed transformers (those
@@ -94,13 +105,14 @@ export class Api<R extends RawApi = RawApi> {
         config?: ApiClientOptions,
         webhookReplyEnvelope?: WebhookReplyEnvelope,
     ) {
-        const { raw, use, installedTransformers } = createRawApi<R>(
+        const { raw, on, use, installedTransformers } = createRawApi<R>(
             token,
             config,
             webhookReplyEnvelope,
         );
         this.raw = raw;
         this.config = {
+            on,
             use,
             installedTransformers: () => [...installedTransformers],
         };

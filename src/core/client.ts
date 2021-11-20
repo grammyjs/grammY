@@ -81,6 +81,14 @@ export type Transformer<R extends RawApi = RawApi> = <M extends Methods<R>>(
 export type TransformerConsumer<R extends RawApi = RawApi> = TransformableApi<
     R
 >["use"];
+export type FilterTransformer<M extends Methods<R>, R extends RawApi = RawApi> = (
+    prev: (payload: Payload<M, R>) => ReturnType<ApiCallFn<R>>,
+    payload: Payload<M, R>,
+    signal?: AbortSignal,
+) => Promise<ApiResponse<ApiCallResult<M, R>>>;
+export type OnTransformerConsumer<R extends RawApi = RawApi> = TransformableApi<
+    R
+>["on"];
 /**
  * A transformable API enhances the `RawApi` type by transformers.
  */
@@ -89,6 +97,10 @@ export interface TransformableApi<R extends RawApi = RawApi> {
      * Access to the raw API that the tranformers will be installed on.
      */
     raw: R;
+    /**
+     * Can be used to register any number of transformers on the API.
+     */
+    on: <M extends Methods<R>>(methods: M | M[], ...transformers: FilterTransformer<M, R>[]) => this;
     /**
      * Can be used to register any number of transformers on the API.
      */
@@ -331,6 +343,22 @@ export function createRawApi<R extends RawApi>(
     const api: TransformableApi<R> = {
         raw,
         installedTransformers,
+        on: (maybeMs, ...ts) => {
+            const ms = Array.isArray(maybeMs) ? maybeMs : [maybeMs];
+            const setMs = new Set(...ms);
+            const tts = ts.map(t => {
+                const tt: Transformer<R> = (prev, method, payload, signal) => {
+                    if (setMs.has(method)) {
+                        return t((payload) => prev(method, payload as any), payload as any, signal) as any;
+                    } else {
+                        return prev(method, payload, signal);
+                    }
+                };
+                return tt;
+            });
+            client.use(...tts);
+            return api;
+        },
         use: (...t) => {
             client.use(...t);
             return api;
