@@ -407,6 +407,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "kidonng",
+      "name": "Kid",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44045911?v=4",
+      "profile": "https://xuann.wang/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
