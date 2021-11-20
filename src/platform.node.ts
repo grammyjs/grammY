@@ -80,7 +80,7 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = await this.fileData;
+        const data = this.fileData;
         // Handle file paths, URLs, and URLLike objects
         if (typeof data === "string") return createReadStream(data);
         if (data instanceof URL) return fetchFile(data);

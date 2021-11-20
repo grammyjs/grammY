@@ -88,7 +88,7 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = await this.fileData;
+        const data = this.fileData;
         // Handle local files
         if (typeof data === "string") {
             if (!isDeno) {
