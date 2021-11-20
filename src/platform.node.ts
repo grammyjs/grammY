@@ -76,7 +76,7 @@ export class InputFile {
         }
         this.filename = filename;
     }
-    async [toRaw](): Promise<Uint8Array | AsyncIterable<Uint8Array>> {
+    [toRaw](): Uint8Array | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
