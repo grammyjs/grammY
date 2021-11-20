@@ -41,7 +41,6 @@ interface URLLike {
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const toRaw = Symbol("InputFile data");
-type MaybePromise<T> = T | Promise<T>;
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -68,7 +67,7 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file: MaybePromise<
+        file:
             | string
             | Blob
             | Deno.File
@@ -76,8 +75,7 @@ export class InputFile {
             | URLLike
             | Uint8Array
             | ReadableStream<Uint8Array>
-            | AsyncIterable<Uint8Array>
-        >,
+            | AsyncIterable<Uint8Array>,
         filename?: string,
     ) {
         this.fileData = file;
