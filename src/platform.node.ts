@@ -86,6 +86,10 @@ export class InputFile {
             else if (typeof file === "object") {
                 if ("url" in file) filename = basename(file.url);
                 else if ("path" in file) filename = basename(file.path);
+                else if (file instanceof URL) {
+                    filename = basename(file.pathname) ||
+                        basename(file.hostname);
+                }
             }
         }
         this.filename = filename;
