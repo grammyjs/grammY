@@ -5,7 +5,6 @@ import { basename } from "path";
 import { Readable } from "stream";
 import type { ReadStream } from "fs";
 import { URL } from "url";
-import { timingSafeEqual } from "crypto";
 
 // === Export all API types
 export * from "@grammyjs/types";
@@ -111,12 +110,6 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
         }
         yield chunk;
     }
-}
-
-export function safeStringCompare(s1: string, s2: string): boolean {
-    const b1 = Buffer.from(s1, "utf-8");
-    const b2 = Buffer.from(s2, "utf-8");
-    return (b1.length === b2.length) && timingSafeEqual(b1, b2);
 }
 
 // === Export InputFile types

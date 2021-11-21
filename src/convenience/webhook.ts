@@ -105,18 +105,14 @@ export function webhookCallback<
                 await respond(json);
             },
         };
-        try {
-            await timeoutIfNecessary(
-                bot.handleUpdate(await update, webhookReplyEnvelope),
-                typeof onTimeout === "function"
-                    ? () => onTimeout(...args)
-                    : onTimeout,
-                timeoutMilliseconds,
-            );
-            if (end !== undefined && !usedWebhookReply) end();
-        } catch {
-            // Adapter rejected processing an update
-        }
+        await timeoutIfNecessary(
+            bot.handleUpdate(await update, webhookReplyEnvelope),
+            typeof onTimeout === "function"
+                ? () => onTimeout(...args)
+                : onTimeout,
+            timeoutMilliseconds,
+        );
+        if (end !== undefined && !usedWebhookReply) end();
         return handlerReturn;
     };
 }
