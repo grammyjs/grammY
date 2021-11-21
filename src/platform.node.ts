@@ -32,6 +32,15 @@ interface URLLike {
      */
     url: string;
 }
+
+/** Something that looks like a local file path. */
+interface PathLike {
+    /**
+     * Identifier of the resouce. Must be a local file path.
+     */
+    path: string;
+}
+
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const toRaw = Symbol("InputFile data");
@@ -65,14 +74,19 @@ export class InputFile {
             | string
             | URL
             | URLLike
+            | PathLike
             | Uint8Array
             | ReadStream
             | AsyncIterable<Uint8Array>,
         filename?: string,
     ) {
         this.fileData = file;
-        if (filename === undefined && typeof file === "string") {
-            filename = basename(file);
+        if (filename === undefined) {
+            if (typeof file === "string") filename = basename(file);
+            else if (typeof file === "object") {
+                if ("url" in file) filename = basename(file.url);
+                else if ("path" in file) filename = basename(file.path);
+            }
         }
         this.filename = filename;
     }
@@ -80,15 +94,26 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = this.fileData;
-        // Handle file paths, URLs, and URLLike objects
-        if (typeof data === "string") return createReadStream(data);
+        let data = this.fileData;
+        // Guess local file path or URL from string
+        if (typeof data === "string") data = guessPathOrUrl(data);
+        // Handle URL and URLLike
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
+        // Handle local file paths
+        if ("path" in data) return createReadStream(data);
         // Mark streams and iterators as consumed
         if (!(data instanceof Uint8Array)) this.consumed = true;
         // Return buffers and byte streams as-is
         return data;
+    }
+}
+
+function guessPathOrUrl(path: string): URL | PathLike {
+    try {
+        return new URL(path);
+    } catch {
+        return { path };
     }
 }
 
