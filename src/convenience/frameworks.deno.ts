@@ -7,9 +7,10 @@ import type { AdapterFactory } from "./webhook.ts";
  */
 
 export const stdHttp: AdapterFactory = () =>
-    () => {
+    (req: Request) => {
         let resolveResponse: (res: Response) => void;
         return {
+            update: req.json(),
             end: () => {
                 if (resolveResponse) resolveResponse(new Response());
             },
