@@ -111,7 +111,8 @@ export class InputFile {
 
 function guessPathOrUrl(path: string): URL | PathLike {
     try {
-        return new URL(path);
+        const url = new URL(path);
+        return url.protocol === "file:" ? { path } : url;
     } catch {
         return { path };
     }
