@@ -127,7 +127,8 @@
       "contributions": [
         "doc",
         "review",
-        "infra"
+        "infra",
+        "translation"
       ]
     },
     {
@@ -245,7 +246,8 @@
         "doc",
         "code",
         "bug",
-        "review"
+        "review",
+        "ideas"
       ]
     },
     {
@@ -340,7 +342,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/56839018?v=4",
       "profile": "https://zhemu.buzz/",
       "contributions": [
-        "doc"
+        "doc",
+        "translation"
       ]
     },
     {
@@ -349,7 +352,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/63894579?v=4",
       "profile": "https://github.com/JiquanWang99",
       "contributions": [
-        "doc"
+        "doc",
+        "translation"
       ]
     },
     {
@@ -367,7 +371,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/6434137?v=4",
       "profile": "https://blog.limx.dev/",
       "contributions": [
-        "doc"
+        "doc",
+        "translation"
       ]
     },
     {
@@ -376,7 +381,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/44166322?v=4",
       "profile": "https://github.com/taotie111",
       "contributions": [
-        "doc"
+        "doc",
+        "translation"
       ]
     },
     {
@@ -414,7 +420,17 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/44045911?v=4",
       "profile": "https://xuann.wang/",
       "contributions": [
-        "doc"
+        "doc",
+        "translation"
+      ]
+    },
+    {
+      "login": "slavafomin",
+      "name": "Slava Fomin II",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1702725?v=4",
+      "profile": "http://slava.fomin.io/",
+      "contributions": [
+        "bug"
       ]
     }
   ],

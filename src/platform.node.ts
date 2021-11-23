@@ -1,6 +1,7 @@
 // === Needed imports
 import { InputFileProxy } from "@grammyjs/types";
-import { Agent } from "https";
+import { Agent as HttpAgent } from "http";
+import { Agent as HttpsAgent } from "https";
 import { basename } from "path";
 import { Readable } from "stream";
 import type { ReadStream } from "fs";
@@ -19,10 +20,13 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
     Readable.from(itr, { objectMode: false });
 
 // === Base configuration for `fetch` calls
-export const baseFetchConfig = {
-    compress: true,
-    agent: new Agent({ keepAlive: true }),
-};
+export function baseFetchConfig(apiRoot: string) {
+    if (apiRoot.startsWith("https:")) {
+        return { compress: true, agent: new HttpsAgent({ keepAlive: true }) };
+    } else if (apiRoot.startsWith("http:")) {
+        return { agent: new HttpAgent({ keepAlive: true }) };
+    } else return {};
+}
 
 /** Something that looks like a URL. */
 interface URLLike {
