@@ -6,19 +6,20 @@ import { basename } from "path";
 import { Readable } from "stream";
 import type { ReadStream } from "fs";
 import { URL } from "url";
+import { createReadStream } from "fs";
 
 // === Export all API types
 export * from "@grammyjs/types";
 
 // === Export debug
-export { debug } from "debug";
+import { debug as d } from "debug";
+export { d as debug };
+const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
 export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
     Readable.from(itr, { objectMode: false });
-// Turn a file path into an AsyncIterable<Uint8Array>
-export { createReadStream as streamFile } from "fs";
 
 // === Base configuration for `fetch` calls
 export function baseFetchConfig(apiRoot: string) {
@@ -37,9 +38,10 @@ interface URLLike {
      */
     url: string;
 }
+
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
-export const inputFileData = Symbol("InputFile data");
+export const toRaw = Symbol("InputFile data");
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -76,36 +78,49 @@ export class InputFile {
         filename?: string,
     ) {
         this.fileData = file;
-        if (filename === undefined && typeof file === "string") {
-            filename = basename(file);
-        }
+        filename ??= this.guessFilename(file);
         this.filename = filename;
+        if (
+            typeof file === "string" &&
+            (file.startsWith("http:") || file.startsWith("https:"))
+        ) {
+            debug(
+                `InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`,
+            );
+        }
     }
-    get [inputFileData]() {
+    private guessFilename(
+        file: ConstructorParameters<typeof InputFile>[0],
+    ): string | undefined {
+        if (typeof file === "string") return basename(file);
+        if (typeof file !== "object") return undefined;
+        if ("url" in file) return basename(file.url);
+        if (!(file instanceof URL)) return undefined;
+        return basename(file.pathname) || basename(file.hostname);
+    }
+    [toRaw](): Uint8Array | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        let data = this.fileData;
-        if (
-            typeof data === "object" && ("url" in data || data instanceof URL)
-        ) {
-            data = fetchFile(data instanceof URL ? data : data.url);
-        } else if (
-            typeof data !== "string" && (!(data instanceof Uint8Array))
-        ) {
-            this.consumed = false;
+        const data = this.fileData;
+        // Handle local files
+        if (typeof data === "string") return createReadStream(data);
+        // Handle URLs and URLLike objects
+        if (data instanceof URL) {
+            return data.protocol === "file" // node-fetch does not support file URLs
+                ? createReadStream(data.pathname)
+                : fetchFile(data);
         }
+        if ("url" in data) return fetchFile(data.url);
+        // Mark streams and iterators as consumed
+        if (!(data instanceof Uint8Array)) this.consumed = true;
+        // Return buffers and byte streams as-is
         return data;
     }
 }
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const { body } = await fetch(url);
-    if (body === null) {
-        throw new Error(
-            `Download failed, no response body from '${url}'`,
-        );
-    }
     for await (const chunk of body) {
         if (typeof chunk === "string") {
             throw new Error(

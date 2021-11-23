@@ -1,3 +1,4 @@
+/** Are we running on Deno or in a web browser? */
 const isDeno = typeof Deno !== "undefined";
 
 // === Needed imports
@@ -9,27 +10,22 @@ import { iterateReader } from "https://deno.land/std@0.113.0/streams/mod.ts";
 export * from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
 
 // === Export debug
-import debug from "https://cdn.skypack.dev/debug@^4.3.2";
-export { debug };
+import d from "https://cdn.skypack.dev/debug@^4.3.2";
+export { d as debug };
 if (isDeno) {
-    debug.useColors = () => !Deno.noColor;
+    d.useColors = () => !Deno.noColor;
     try {
         const val = Deno.env.get("DEBUG");
-        if (val) debug.enable(val);
+        if (val) d.enable(val);
     } catch {
         // cannot access env var, treat as if it is not set
     }
 }
+const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
 export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.113.0/streams/mod.ts";
-// Turn a file path into an AsyncIterable<Uint8Array>
-export const streamFile = isDeno
-    ? (path: string) => Deno.open(path).then(iterateReader)
-    : () => {
-        throw new Error("Reading files by path requires a Deno environment");
-    };
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
@@ -45,7 +41,7 @@ interface URLLike {
 
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
-export const inputFileData = Symbol("InputFile data");
+export const toRaw = Symbol("InputFile data");
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -74,6 +70,8 @@ export class InputFile {
     constructor(
         file:
             | string
+            | Blob
+            | Deno.File
             | URL
             | URLLike
             | Uint8Array
@@ -82,25 +80,49 @@ export class InputFile {
         filename?: string,
     ) {
         this.fileData = file;
-        if (filename === undefined && typeof file === "string") {
-            filename = basename(file);
-        }
+        filename ??= this.guessFilename(file);
         this.filename = filename;
+        if (
+            typeof file === "string" &&
+            (file.startsWith("http:") || file.startsWith("https:"))
+        ) {
+            debug(
+                `InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`,
+            );
+        }
     }
-    get [inputFileData]() {
+    private guessFilename(
+        file: ConstructorParameters<typeof InputFile>[0],
+    ): string | undefined {
+        if (typeof file === "string") return basename(file);
+        if (typeof file !== "object") return undefined;
+        if ("url" in file) return basename(file.url);
+        if (!(file instanceof URL)) return undefined;
+        return basename(file.pathname) || basename(file.hostname);
+    }
+    async [toRaw](): Promise<Uint8Array | AsyncIterable<Uint8Array>> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        let data = this.fileData;
-        if (
-            typeof data === "object" && ("url" in data || data instanceof URL)
-        ) {
-            data = fetchFile(data instanceof URL ? data : data.url);
-        } else if (
-            typeof data !== "string" && (!(data instanceof Uint8Array))
-        ) {
-            this.consumed = false;
+        const data = this.fileData;
+        // Handle local files
+        if (typeof data === "string") {
+            if (!isDeno) {
+                throw new Error(
+                    "Reading files by path requires a Deno environment",
+                );
+            }
+            const file = await Deno.open(data);
+            return iterateReader(file);
         }
+        if (data instanceof Blob) return data.stream();
+        if (isDenoFile(data)) return iterateReader(data);
+        // Handle URL and URLLike objects
+        if (data instanceof URL) return fetchFile(data);
+        if ("url" in data) return fetchFile(data.url);
+        // Mark streams and iterators as consumed
+        if (!(data instanceof Uint8Array)) this.consumed = true;
+        // Return buffers and byte streams as-is
         return data;
     }
 }
@@ -108,11 +130,12 @@ export class InputFile {
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const { body } = await fetch(url);
     if (body === null) {
-        throw new Error(
-            `Download failed, no response body from '${url}'`,
-        );
+        throw new Error(`Download failed, no response body from '${url}'`);
     }
     yield* body;
+}
+function isDenoFile(data: unknown): data is Deno.File {
+    return isDeno && data instanceof Deno.File;
 }
 
 // === Export InputFile types
