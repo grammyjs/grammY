@@ -12,7 +12,9 @@ import { createReadStream } from "fs";
 export * from "@grammyjs/types";
 
 // === Export debug
-export { debug } from "debug";
+import { debug as d } from "debug";
+export { d as debug };
+const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
@@ -36,6 +38,7 @@ interface URLLike {
      */
     url: string;
 }
+
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const toRaw = Symbol("InputFile data");
@@ -75,19 +78,37 @@ export class InputFile {
         filename?: string,
     ) {
         this.fileData = file;
-        if (filename === undefined && typeof file === "string") {
-            filename = basename(file);
-        }
+        filename ??= this.guessFilename(file);
         this.filename = filename;
+        if (
+            typeof file === "string" &&
+            (file.startsWith("http:") || file.startsWith("https:"))
+        ) {
+            d(`InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`);
+        }
+    }
+    private guessFilename(
+        file: ConstructorParameters<typeof InputFile>[0],
+    ): string | undefined {
+        if (typeof file === "string") return basename(file);
+        if (typeof file !== "object") return undefined;
+        if ("url" in file) return basename(file.url);
+        if (!(file instanceof URL)) return undefined;
+        return basename(file.pathname) || basename(file.hostname);
     }
     [toRaw](): Uint8Array | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
         const data = this.fileData;
-        // Handle file paths, URLs, and URLLike objects
+        // Handle local files
         if (typeof data === "string") return createReadStream(data);
-        if (data instanceof URL) return fetchFile(data);
+        // Handle URLs and URLLike objects
+        if (data instanceof URL) {
+            return data.protocol === "file" // node-fetch does not support file URLs
+                ? createReadStream(data.pathname)
+                : fetchFile(data);
+        }
         if ("url" in data) return fetchFile(data.url);
         // Mark streams and iterators as consumed
         if (!(data instanceof Uint8Array)) this.consumed = true;
@@ -98,11 +119,6 @@ export class InputFile {
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const { body } = await fetch(url);
-    if (body === null) {
-        throw new Error(
-            `Download failed, no response body from '${url}'`,
-        );
-    }
     for await (const chunk of body) {
         if (typeof chunk === "string") {
             throw new Error(

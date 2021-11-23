@@ -10,17 +10,18 @@ import { iterateReader } from "https://deno.land/std@0.113.0/streams/mod.ts";
 export * from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
 
 // === Export debug
-import debug from "https://cdn.skypack.dev/debug@^4.3.2";
-export { debug };
+import d from "https://cdn.skypack.dev/debug@^4.3.2";
+export { d as debug };
 if (isDeno) {
-    debug.useColors = () => !Deno.noColor;
+    d.useColors = () => !Deno.noColor;
     try {
         const val = Deno.env.get("DEBUG");
-        if (val) debug.enable(val);
+        if (val) d.enable(val);
     } catch {
         // cannot access env var, treat as if it is not set
     }
 }
+const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
@@ -79,10 +80,23 @@ export class InputFile {
         filename?: string,
     ) {
         this.fileData = file;
-        if (filename === undefined && typeof file === "string") {
-            filename = basename(file);
-        }
+        filename ??= this.guessFilename(file);
         this.filename = filename;
+        if (
+            typeof file === "string" &&
+            (file.startsWith("http:") || file.startsWith("https:"))
+        ) {
+            d(`InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`);
+        }
+    }
+    private guessFilename(
+        file: ConstructorParameters<typeof InputFile>[0],
+    ): string | undefined {
+        if (typeof file === "string") return basename(file);
+        if (typeof file !== "object") return undefined;
+        if ("url" in file) return basename(file.url);
+        if (!(file instanceof URL)) return undefined;
+        return basename(file.pathname) || basename(file.hostname);
     }
     async [toRaw](): Promise<Uint8Array | AsyncIterable<Uint8Array>> {
         if (this.consumed) {
@@ -101,7 +115,7 @@ export class InputFile {
         }
         if (data instanceof Blob) return data.stream();
         if (isDenoFile(data)) return iterateReader(data);
-        // Handle URL and URLLike
+        // Handle URL and URLLike objects
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
         // Mark streams and iterators as consumed
@@ -114,9 +128,7 @@ export class InputFile {
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const { body } = await fetch(url);
     if (body === null) {
-        throw new Error(
-            `Download failed, no response body from '${url}'`,
-        );
+        throw new Error(`Download failed, no response body from '${url}'`);
     }
     yield* body;
 }
