@@ -206,8 +206,10 @@ class ApiClient<R extends RawApi> {
             apiRoot,
             buildUrl: options.buildUrl ??
                 ((root, token, method) => `${root}/bot${token}/${method}`),
-            baseFetchConfig: options.baseFetchConfig ??
-                baseFetchConfig(apiRoot),
+            baseFetchConfig: {
+                ...baseFetchConfig(apiRoot),
+                ...options.baseFetchConfig,
+            },
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
         };
