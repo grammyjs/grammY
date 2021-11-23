@@ -27,7 +27,7 @@ if (isDeno) {
 export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.113.0/streams/mod.ts";
 
 // === Base configuration for `fetch` calls
-export const baseFetchConfig = {};
+export const baseFetchConfig = (_apiRoot: string) => ({});
 
 /** Something that looks like a URL. */
 interface URLLike {
