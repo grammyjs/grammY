@@ -86,7 +86,9 @@ export class InputFile {
             typeof file === "string" &&
             (file.startsWith("http:") || file.startsWith("https:"))
         ) {
-            d(`InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`);
+            debug(
+                `InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`,
+            );
         }
     }
     private guessFilename(
