@@ -10,17 +10,18 @@ import { iterateReader } from "https://deno.land/std@0.113.0/streams/mod.ts";
 export * from "https://cdn.skypack.dev/@grammyjs/types@v2.3.1?dts";
 
 // === Export debug
-import debug from "https://cdn.skypack.dev/debug@^4.3.2";
-export { debug };
+import d from "https://cdn.skypack.dev/debug@^4.3.2";
+export { d as debug };
 if (isDeno) {
-    debug.useColors = () => !Deno.noColor;
+    d.useColors = () => !Deno.noColor;
     try {
         const val = Deno.env.get("DEBUG");
-        if (val) debug.enable(val);
+        if (val) d.enable(val);
     } catch {
         // cannot access env var, treat as if it is not set
     }
 }
+const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
@@ -81,6 +82,12 @@ export class InputFile {
         this.fileData = file;
         filename ??= this.guessFilename(file);
         this.filename = filename;
+        if (
+            typeof file === "string" &&
+            (file.startsWith("http:") || file.startsWith("https:"))
+        ) {
+            d(`InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`);
+        }
     }
     private guessFilename(
         file: ConstructorParameters<typeof InputFile>[0],
@@ -95,7 +102,7 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        let data = this.fileData;
+        const data = this.fileData;
         // Handle local files
         if (typeof data === "string") {
             if (!isDeno) {

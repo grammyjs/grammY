@@ -12,7 +12,9 @@ import { createReadStream } from "fs";
 export * from "@grammyjs/types";
 
 // === Export debug
-export { debug } from "debug";
+import { debug as d } from "debug";
+export { d as debug };
+const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
@@ -78,6 +80,12 @@ export class InputFile {
         this.fileData = file;
         filename ??= this.guessFilename(file);
         this.filename = filename;
+        if (
+            typeof file === "string" &&
+            (file.startsWith("http:") || file.startsWith("https:"))
+        ) {
+            d(`InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`);
+        }
     }
     private guessFilename(
         file: ConstructorParameters<typeof InputFile>[0],
