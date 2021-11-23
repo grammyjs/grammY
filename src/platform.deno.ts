@@ -38,14 +38,6 @@ interface URLLike {
     url: string;
 }
 
-/** Something that looks like a local file path. */
-interface PathLike {
-    /**
-     * Identifier of the resouce. Must be a local file path.
-     */
-    path: string;
-}
-
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const toRaw = Symbol("InputFile data");
@@ -81,48 +73,44 @@ export class InputFile {
             | Deno.File
             | URL
             | URLLike
-            | PathLike
             | Uint8Array
             | ReadableStream<Uint8Array>
             | AsyncIterable<Uint8Array>,
         filename?: string,
     ) {
         this.fileData = file;
-        if (filename === undefined) {
-            if (typeof file === "string") filename = basename(file);
-            else if (typeof file === "object") {
-                if ("url" in file) filename = basename(file.url);
-                else if ("path" in file) filename = basename(file.path);
-                else if (file instanceof URL) {
-                    filename = basename(file.pathname) ||
-                        basename(file.hostname);
-                }
-            }
-        }
+        filename ??= this.guessFilename(file);
         this.filename = filename;
+    }
+    private guessFilename(
+        file: ConstructorParameters<typeof InputFile>[0],
+    ): string | undefined {
+        if (typeof file === "string") return basename(file);
+        if (typeof file !== "object") return undefined;
+        if ("url" in file) return basename(file.url);
+        if (!(file instanceof URL)) return undefined;
+        return basename(file.pathname) || basename(file.hostname);
     }
     async [toRaw](): Promise<Uint8Array | AsyncIterable<Uint8Array>> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
         let data = this.fileData;
-        // Guess local file path or URL from string
-        if (typeof data === "string") data = guessPathOrUrl(data);
-        // Handle binary data
-        if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) return iterateReader(data);
-        // Handle URL and URLLike
-        if (data instanceof URL) return fetchFile(data);
-        if ("url" in data) return fetchFile(data.url);
-        // Handle local file paths
-        if ("path" in data) {
+        // Handle local files
+        if (typeof data === "string") {
             if (!isDeno) {
                 throw new Error(
                     "Reading files by path requires a Deno environment",
                 );
             }
-            return iterateReader(await Deno.open(data.path));
+            const file = await Deno.open(data);
+            return iterateReader(file);
         }
+        if (data instanceof Blob) return data.stream();
+        if (isDenoFile(data)) return iterateReader(data);
+        // Handle URL and URLLike objects
+        if (data instanceof URL) return fetchFile(data);
+        if ("url" in data) return fetchFile(data.url);
         // Mark streams and iterators as consumed
         if (!(data instanceof Uint8Array)) this.consumed = true;
         // Return buffers and byte streams as-is
@@ -130,20 +118,10 @@ export class InputFile {
     }
 }
 
-function guessPathOrUrl(path: string): URL | PathLike {
-    try {
-        return new URL(path);
-    } catch {
-        return { path };
-    }
-}
-
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const { body } = await fetch(url);
     if (body === null) {
-        throw new Error(
-            `Download failed, no response body from '${url}'`,
-        );
+        throw new Error(`Download failed, no response body from '${url}'`);
     }
     yield* body;
 }
