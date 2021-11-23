@@ -100,11 +100,15 @@ export class InputFile {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        let data = this.fileData;
+        const data = this.fileData;
         // Handle local files
         if (typeof data === "string") return createReadStream(data);
         // Handle URLs and URLLike objects
-        if (data instanceof URL) return fetchFile(data);
+        if (data instanceof URL) {
+            return data.protocol === "file" // node-fetch does not support file URLs
+                ? createReadStream(data.pathname)
+                : fetchFile(data);
+        }
         if ("url" in data) return fetchFile(data.url);
         // Mark streams and iterators as consumed
         if (!(data instanceof Uint8Array)) this.consumed = true;
