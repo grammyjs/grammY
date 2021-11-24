@@ -22,3 +22,4 @@ package-lock.json
 
 # Build output
 out/
+grammy-bundle.js
