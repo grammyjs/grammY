@@ -961,7 +961,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     ): Composer<C> {
         return this.lazy(async (ctx) => {
             const route = await router(ctx);
-            return route === undefined ? [] : routeHandlers[route] ?? fallback;
+            return (route === undefined || !routeHandlers[route]
+                ? fallback
+                : routeHandlers[route]) ?? [];
         });
     }
 
@@ -1064,7 +1066,7 @@ function triggerFn(trigger: string | RegExp): StringExecFn | RegExpExecFn;
 function triggerFn(trigger: string | RegExp) {
     return typeof trigger === "string"
         ? (txt: string) => (txt === trigger ? trigger : null)
-        : (txt: string) => trigger.exec(txt);
+        : (txt: string) => txt.match(trigger);
 }
 
 type CommandContext<C extends Context> = FilteredMatchContext<

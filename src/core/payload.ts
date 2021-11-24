@@ -1,9 +1,4 @@
-import {
-    InputFile,
-    inputFileData,
-    itrToStream,
-    streamFile,
-} from "../platform.deno.ts";
+import { InputFile, itrToStream, toRaw } from "../platform.deno.ts";
 
 // === Payload types (JSON vs. form data)
 /**
@@ -51,6 +46,16 @@ export function createJsonPayload(payload: Record<string, unknown>) {
         body: str(payload),
     };
 }
+async function* protectItr<T>(
+    itr: AsyncIterableIterator<T>,
+    onError: (err: unknown) => void,
+) {
+    try {
+        yield* itr;
+    } catch (err) {
+        onError(err);
+    }
+}
 /**
  * Turns a payload into an options object that can be passed to a `fetch` call
  * by setting the necessary headers and method. Note that this method creates a
@@ -59,16 +64,21 @@ export function createJsonPayload(payload: Record<string, unknown>) {
  *
  * @param payload The payload to wrap
  */
-export function createFormDataPayload(payload: Record<string, unknown>) {
+export function createFormDataPayload(
+    payload: Record<string, unknown>,
+    onError: (err: unknown) => void,
+) {
     const boundary = createBoundary();
-
+    const itr = payloadToMultipartItr(payload, boundary);
+    const safeItr = protectItr(itr, onError);
+    const stream = itrToStream(safeItr);
     return {
         method: "POST",
         headers: {
             "content-type": `multipart/form-data; boundary=${boundary}`,
             connection: "keep-alive",
         },
-        body: itrToStream(payloadToMultipartItr(payload, boundary)),
+        body: stream,
     };
 }
 
@@ -156,7 +166,7 @@ async function* filePart(
     origin: string,
     input: InputFile,
 ): AsyncIterableIterator<Uint8Array> {
-    const filename = input.filename ?? `${origin}.${getExt(origin)}`;
+    const filename = input.filename || `${origin}.${getExt(origin)}`;
     if (filename.includes("\r") || filename.includes("\n")) {
         throw new Error(
             `File paths cannot contain carriage-return (\\r) \
@@ -169,11 +179,9 @@ ${filename}
     yield enc.encode(
         `content-disposition:form-data;name="${id}";filename=${filename}\r\n\r\n`,
     );
-    const fileData = input[inputFileData];
-    // handle buffers, file paths, and streams:
-    if (fileData instanceof Uint8Array) yield fileData;
-    else if (typeof fileData === "string") yield* await streamFile(fileData);
-    else yield* fileData;
+    const data = await input[toRaw]();
+    if (data instanceof Uint8Array) yield data;
+    else yield* data;
 }
 /** Returns the default file extension for an API property name */
 function getExt(key: string) {

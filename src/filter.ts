@@ -231,6 +231,9 @@ const ENTITY_KEYS = {
     underline: {},
     strikethrough: {},
     code: {},
+    pre: {},
+    text_link: {},
+    text_mention: {},
 } as const;
 const USER_KEYS = {
     me: {},

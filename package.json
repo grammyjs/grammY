@@ -1,12 +1,10 @@
 {
     "name": "grammy",
-    "description": "grammY core package ported to Node.js",
-    "version": "1.4.0",
+    "description": "The Telegram Bot Framework.",
+    "version": "1.4.2",
     "author": "KnorpelSenf",
     "license": "MIT",
-    "engines": {
-        "node": "^12.20.0 || >=14.13.1"
-    },
+    "engines": { "node": "^12.20.0 || >=14.13.1" },
     "homepage": "https://grammy.dev/",
     "repository": {
         "type": "git",
@@ -32,14 +30,16 @@
         "@types/node-fetch": "^2.5.12",
         "deno2node": "^1.0.0"
     },
-    "files": [
-        "out/"
-    ],
+    "files": ["out/"],
     "main": "./out/mod.js",
     "types": "./out/mod.d.ts",
     "keywords": [
         "telegram",
         "bot",
-        "api"
+        "api",
+        "client",
+        "framework",
+        "library",
+        "grammy"
     ]
 }
