@@ -1,3 +1,5 @@
+console.log("ES6 bundling script started.");
+
 // === THROTTLING UTILS
 const CONCURRENCY = 4;
 async function throttle(tasks: Array<() => Promise<void>>) {
