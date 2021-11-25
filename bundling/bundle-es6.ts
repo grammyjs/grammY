@@ -43,7 +43,7 @@ function tick() {
 
 async function createBundle(source: string, release: string) {
     const es6 = await Deno.emit(source, {
-        bundle: "classic",
+        bundle: "module",
         compilerOptions: { target: "es6" },
     }).then((res) => res.files["deno:///bundle.js"]);
     tick();
