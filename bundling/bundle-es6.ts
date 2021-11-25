@@ -51,7 +51,7 @@ async function createBundle(source: string, release: string) {
         sources: { "/src.js": es6 },
         compilerOptions: { target: "es6" },
     }).then((res) => res.files["file:///src.js"]);
-    const path = `./bundles/grammy@${release}-es6.js`;
+    const path = `./bundles/es6@${release}.js`;
     tick();
     await Deno.writeTextFile(path, bundle);
     tick();
