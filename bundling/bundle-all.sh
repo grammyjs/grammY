@@ -11,3 +11,4 @@ fi
 
 deno --version
 deno run --unstable --allow-net --allow-run --allow-read=.. --allow-write=bundles/ bundle-es6.ts
+cp -v netlify.toml bundles/
