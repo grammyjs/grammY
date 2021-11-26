@@ -433,6 +433,15 @@
         "bug",
         "doc"
       ]
+    },
+    {
+      "login": "Kikobeats",
+      "name": "Kiko Beats",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2096101?v=4",
+      "profile": "https://kikobeats.com/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
