@@ -3,23 +3,26 @@ import { Bot } from "../bot.ts";
 import { debug as d, Update } from "../platform.deno.ts";
 import { WebhookReplyEnvelope } from "../core/client.ts";
 import { Context } from "../context.ts";
+import {
+    adapters as nativeAdapters,
+    defaultAdapter,
+} from "./frameworks.deno.ts";
 const debugErr = d("grammy:error");
+
+const callbackAdapter: FrameworkAdapter = (
+    update: Update,
+    callback: (json: string) => unknown,
+) => ({
+    update: Promise.resolve(update),
+    respond: callback,
+});
+const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
  * box.
  */
-type SupportedFrameworks =
-    | "express"
-    | "http"
-    | "https"
-    | "koa"
-    | "oak"
-    | "fastify"
-    | "worktop"
-    | "callback"
-    | "aws-lambda"
-    | "serveHttp";
+type SupportedFrameworks = keyof typeof adapters;
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -41,81 +44,17 @@ interface ReqResHandler {
      * replies
      */
     respond: (json: string) => unknown;
+    /**
+     * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume
+     * that handler returns something
+     */
+    handlerReturn?: any;
 }
 /**
  * Middleware for a web framework. Creates a request-response handler for a
  * request. The handler will be used to integrate with the compatible framework.
  */
-type FrameworkAdapter = (...args: any[]) => ReqResHandler;
-
-const standard: FrameworkAdapter = (req, res) => ({
-    update: Promise.resolve(req.body),
-    end: () => res.end(),
-    respond: (json) => {
-        res.set("Content-Type", "application/json");
-        res.send(json);
-    },
-});
-
-// Integrations with popular frameworks
-const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
-    express: standard,
-    http: standard,
-    https: standard,
-    koa: (ctx) => ({
-        update: Promise.resolve(ctx.request.body),
-        end: () => (ctx.body = ""),
-        respond: (json) => {
-            ctx.set("Content-Type", "application/json");
-            ctx.response.body = json;
-        },
-    }),
-    oak: (ctx) => ({
-        update: ctx.request.body({ type: "json" }).value,
-        end: () => (ctx.response.status = 200),
-        respond: (json) => {
-            ctx.response.type = "json";
-            ctx.response.body = json;
-        },
-    }),
-    fastify: (req, reply) => ({
-        update: Promise.resolve(req.body),
-        end: () => reply.send({}),
-        respond: (json) => reply.send(json),
-    }),
-    worktop: (req, res) => ({
-        update: Promise.resolve(req.body.json()),
-        end: () => res.end(),
-        respond: (json) => res.send(200, json),
-    }),
-    callback: (update, callback) => ({
-        update: update,
-        respond: callback,
-    }),
-    "aws-lambda": (event, _context, callback) => ({
-        update: JSON.parse(event.body),
-        end: () => callback(null, { statusCode: 200 }),
-        respond: (json) =>
-            callback(null, {
-                statusCode: 200,
-                body: json,
-            }),
-    }),
-    "serveHttp": (requestEvent) => ({
-        update: requestEvent.request.json(),
-        end: () =>
-            requestEvent.respondWith(
-                new Response(undefined, {
-                    status: 200,
-                }),
-            ),
-        respond: (json) =>
-            requestEvent.respondWith(
-                new Response(JSON.stringify(json), { status: 200 }),
-            ),
-    }),
-    // please open a PR if you want to add another
-};
+export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 
 /**
  * Creates a callback function that you can pass to a web framework (such as
@@ -138,23 +77,17 @@ const frameworkAdapters: Record<SupportedFrameworks, FrameworkAdapter> = {
  */
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    framework: SupportedFrameworks = "express",
+    adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
     onTimeout: "throw" | "return" | ((...args: any[]) => unknown) = "throw",
     timeoutMilliseconds = 10_000,
 ) {
-    const server = frameworkAdapters[framework] ?? standard;
     let firstUpdate = true;
     let initialized = false;
     let initCall: Promise<void> | undefined;
+    const server: FrameworkAdapter = typeof adapter === "string"
+        ? adapters[adapter]
+        : adapter;
     return async (...args: any[]) => {
-        const { update, respond, end } = server(...args);
-        let usedWebhookReply = false;
-        const webhookReplyEnvelope: WebhookReplyEnvelope = {
-            send: async (json) => {
-                usedWebhookReply = true;
-                await respond(json);
-            },
-        };
         if (!initialized) {
             if (firstUpdate) {
                 initCall = bot.init();
@@ -163,6 +96,14 @@ export function webhookCallback<C extends Context = Context>(
             await initCall;
             initialized = true;
         }
+        const { update, respond, end, handlerReturn } = server(...args);
+        let usedWebhookReply = false;
+        const webhookReplyEnvelope: WebhookReplyEnvelope = {
+            async send(json) {
+                usedWebhookReply = true;
+                await respond(json);
+            },
+        };
         await timeoutIfNecessary(
             bot.handleUpdate(await update, webhookReplyEnvelope),
             typeof onTimeout === "function"
@@ -171,6 +112,7 @@ export function webhookCallback<C extends Context = Context>(
             timeoutMilliseconds,
         );
         if (end !== undefined && !usedWebhookReply) end();
+        return handlerReturn;
     };
 }
 

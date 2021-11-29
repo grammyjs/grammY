@@ -12,7 +12,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.4-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-42-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-43-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -167,6 +167,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://xuann.wang/"><img src="https://avatars.githubusercontent.com/u/44045911?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kid</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=kidonng" title="Documentation">📖</a> <a href="#translation-kidonng" title="Translation">🌍</a></td>
     <td align="center"><a href="http://slava.fomin.io/"><img src="https://avatars.githubusercontent.com/u/1702725?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Slava Fomin II</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Aslavafomin" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=slavafomin" title="Documentation">📖</a></td>
     <td align="center"><a href="https://kikobeats.com/"><img src="https://avatars.githubusercontent.com/u/2096101?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kiko Beats</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Kikobeats" title="Documentation">📖</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////kraftwerk28.pp.ua"><img src="https://avatars.githubusercontent.com/u/31807671?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vsevolod</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=kraftwerk28" title="Code">💻</a> <a href="#ideas-kraftwerk28" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Akraftwerk28" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
