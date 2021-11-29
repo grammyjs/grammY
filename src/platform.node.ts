@@ -74,6 +74,7 @@ export class InputFile {
             | URLLike
             | Uint8Array
             | ReadStream
+            | Iterable<Uint8Array>
             | AsyncIterable<Uint8Array>,
         filename?: string,
     ) {
@@ -98,7 +99,7 @@ export class InputFile {
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
     }
-    [toRaw](): Uint8Array | AsyncIterable<Uint8Array> {
+    [toRaw](): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
