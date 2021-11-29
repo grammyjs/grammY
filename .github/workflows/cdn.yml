@@ -29,7 +29,6 @@ jobs:
               with:
                   publish-dir: "./bundling/bundles"
                   production-branch: main
-                  netlify-config-path: "./bundling/bundles/netlify.toml"
               env:
                   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
                   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
