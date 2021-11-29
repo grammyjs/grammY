@@ -5,7 +5,7 @@ import {
     Opts,
     Telegram,
 } from "../platform.deno.ts";
-import { GrammyError, HttpError } from "./error.ts";
+import { GrammyError, HttpError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
@@ -276,16 +276,7 @@ class ApiClient<R extends RawApi> {
             : createJsonPayload(payload);
         // Perform fetch call, and handle networking errors
         const successPromise = fetch(url, { ...options, ...config })
-            .catch((err) => {
-                let msg = `Network request for '${method}' failed!`;
-                if (isTelegramError(err)) {
-                    msg += ` (${err.status}: ${err.statusText})`;
-                }
-                if (opts.sensitiveLogs && err instanceof Error) {
-                    msg += ` ${err.message}`;
-                }
-                throw new HttpError(msg, err);
-            });
+            .catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErrorPromise, timeoutPromise];
         // Wait for result
@@ -378,16 +369,6 @@ const proxyMethods = {
     },
 };
 
-function isTelegramError(
-    err: unknown,
-): err is { status: string; statusText: string } {
-    return (
-        typeof err === "object" &&
-        err !== null &&
-        "status" in err &&
-        "statusText" in err
-    );
-}
 function combineAborts(abortController: AbortController, signal?: AbortSignal) {
     if (signal === undefined) return () => abortController.abort();
     const sig = signal;
