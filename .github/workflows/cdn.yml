@@ -29,9 +29,9 @@ jobs:
               run: find bundling
 
             - name: Netlify deployment
-              uses: nwtgck/actions-netlify@v1.1.11
+              uses: nwtgck/actions-netlify@v1.2
               with:
-                  publish-dir: bundling/bundles
+                  publish-dir: bundling
                   production-branch: main
               env:
                   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
