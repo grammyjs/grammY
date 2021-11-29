@@ -25,6 +25,10 @@ jobs:
               run: cp -v netlify.toml bundles/
               working-directory: bundling
 
+            - name: Show output
+              run: find .
+              working-directory: bundling
+
             - name: Netlify deployment
               uses: nwtgck/actions-netlify@v1.2
               with:
