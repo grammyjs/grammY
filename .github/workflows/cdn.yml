@@ -17,8 +17,12 @@ jobs:
               with:
                   deno-version: v1.x
 
-            - name: Check Format
-              run: ./bundle-all.sh
+            - name: Bundle
+              run: deno run --unstable --allow-net --allow-run --allow-read=.. --allow-write=bundles/ bundle-es6.ts
+              working-directory: bundling
+
+            - name: Install headers
+              run: cp -v netlify.toml bundles/
               working-directory: bundling
 
             - name: Netlify deployment
