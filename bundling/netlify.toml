@@ -5,7 +5,7 @@ Access-Control-Allow-Origin = "*"
 
 [[redirects]]
 force = true # ensure that we always redirect
-from = "/" 
+from = "/*"
 headers = {X-From = "Netlify"} 
 signed = "API_SIGNATURE_TOKEN" 
 status = 200 
