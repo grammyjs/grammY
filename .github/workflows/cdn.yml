@@ -26,11 +26,10 @@ jobs:
               working-directory: bundling
 
             - name: Show output
-              run: find .
-              working-directory: bundling
+              run: find bundling
 
             - name: Netlify deployment
-              uses: nwtgck/actions-netlify@v1.2
+              uses: nwtgck/actions-netlify@v1.1.11
               with:
                   publish-dir: bundling/bundles
                   production-branch: main
