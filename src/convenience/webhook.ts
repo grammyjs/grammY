@@ -3,8 +3,20 @@ import { Bot } from "../bot.ts";
 import { debug as d, Update } from "../platform.deno.ts";
 import { WebhookReplyEnvelope } from "../core/client.ts";
 import { Context } from "../context.ts";
-import { adapters, defaultAdapter } from "./frameworks.deno.ts";
+import {
+    adapters as nativeAdapters,
+    defaultAdapter,
+} from "./frameworks.deno.ts";
 const debugErr = d("grammy:error");
+
+const callbackAdapter: FrameworkAdapter = (
+    update: Update,
+    callback: (json: string) => unknown,
+) => ({
+    update: Promise.resolve(update),
+    respond: callback,
+});
+const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
