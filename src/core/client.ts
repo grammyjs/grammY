@@ -293,7 +293,7 @@ class ApiClient<R extends RawApi> {
             const res = await Promise.race(operations);
             return await res.json();
         } finally {
-            clearTimeout(timeoutHandle);
+            if (timeoutHandle !== undefined) clearTimeout(timeoutHandle);
         }
     };
 
