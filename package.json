@@ -4,7 +4,9 @@
     "version": "1.4.2",
     "author": "KnorpelSenf",
     "license": "MIT",
-    "engines": { "node": "^12.20.0 || >=14.13.1" },
+    "engines": {
+        "node": "^12.20.0 || >=14.13.1"
+    },
     "homepage": "https://grammy.dev/",
     "repository": {
         "type": "git",
@@ -16,7 +18,8 @@
         "lint": "deno lint --config deno.json",
         "fmt": "deno fmt --config deno.json",
         "test": "deno test ./test/",
-        "backport": "deno2node tsconfig.json"
+        "backport": "deno2node tsconfig.json",
+        "contribs": "all-contributors"
     },
     "dependencies": {
         "@grammyjs/types": "^2.3.1",
@@ -28,9 +31,12 @@
         "@types/debug": "^4.1.7",
         "@types/node": "^12.20.36",
         "@types/node-fetch": "^2.5.12",
+        "all-contributors-cli": "^6.20.0",
         "deno2node": "^1.0.0"
     },
-    "files": ["out/"],
+    "files": [
+        "out/"
+    ],
     "main": "./out/mod.js",
     "types": "./out/mod.d.ts",
     "keywords": [

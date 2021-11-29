@@ -246,7 +246,8 @@
         "doc",
         "code",
         "bug",
-        "review"
+        "review",
+        "ideas"
       ]
     },
     {
@@ -421,6 +422,25 @@
       "contributions": [
         "doc",
         "translation"
+      ]
+    },
+    {
+      "login": "slavafomin",
+      "name": "Slava Fomin II",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1702725?v=4",
+      "profile": "http://slava.fomin.io/",
+      "contributions": [
+        "bug",
+        "doc"
+      ]
+    },
+    {
+      "login": "Kikobeats",
+      "name": "Kiko Beats",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2096101?v=4",
+      "profile": "https://kikobeats.com/",
+      "contributions": [
+        "doc"
       ]
     }
   ],
