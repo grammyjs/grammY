@@ -53,13 +53,13 @@ async function createBundle(source: string, release: string) {
         sources: { "/src.js": es6 },
         compilerOptions: { target: "es6" },
     }).then((res) => res.files["file:///src.js"]);
-    const path = `./bundles/es6@${release}.js`;
+    const path = `./bundles/es6-${release}.js`;
     tick();
     await Deno.writeTextFile(path, bundle);
     tick();
 }
 
-console.log("Bundling source and releases...");
+console.log("Bundling source and releases ...");
 await Deno.mkdir("./bundles/", { recursive: true });
 console.log("Bundling source ...");
 await createBundle("../src/mod.ts", "dev");
