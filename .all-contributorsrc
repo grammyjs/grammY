@@ -128,7 +128,8 @@
         "doc",
         "review",
         "infra",
-        "translation"
+        "translation",
+        "code"
       ]
     },
     {
