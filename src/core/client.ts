@@ -5,7 +5,7 @@ import {
     Opts,
     Telegram,
 } from "../platform.deno.ts";
-import { GrammyError, HttpError, toHttpError } from "./error.ts";
+import { GrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
