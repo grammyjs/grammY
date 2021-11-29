@@ -227,9 +227,11 @@ class ApiClient<R extends RawApi> {
 
     private call: ApiCallFn<R> = async <M extends Methods<R>>(
         method: M,
-        payload: Payload<M, R>,
+        p: Payload<M, R>,
         signal?: AbortSignal,
     ) => {
+        const payload = p ?? {};
+
         debug("Calling", method);
         // General config
         const opts = this.options;
@@ -247,57 +249,52 @@ class ApiClient<R extends RawApi> {
             await this.webhookReplyEnvelope.send(config.body);
             return { ok: true, result: true as ApiCallResult<M, R> };
         }
-        // Regular request
-        const p = payload ?? {};
+        // Handle timeout errors
         const controller = new AbortController();
         const abort = combineAborts(controller, signal);
         const options = { ...opts.baseFetchConfig, signal: controller.signal };
-        return await new Promise<ApiResponse<ApiCallResult<M, R>>>(
-            (resolve, reject) => {
-                let rejected = false; // prevents repeated rejections
-                /** Error handler for `fetch` */
-                function onHttpError(err: unknown) {
-                    if (rejected) return;
-                    rejected = true;
-                    let msg = `Network request for '${method}' failed!`;
-                    if (isTelegramError(err)) {
-                        msg += ` (${err.status}: ${err.statusText})`;
-                    }
-                    if (opts.sensitiveLogs && err instanceof Error) {
-                        msg += ` ${err.message}`;
-                    }
-                    reject(new HttpError(msg, err));
+        let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
+        const timeoutPromise = new Promise<never>((_, reject) => {
+            timeoutHandle = setTimeout(() => {
+                const msg =
+                    `Request to '${method}' timed out after 500 seconds`;
+                reject(new Error(msg));
+                abort();
+            }, 500_000);
+        });
+        // Handle errors in request stream
+        let onStreamError: (err: unknown) => void;
+        const streamErrorPromise = new Promise<never>((_, reject) => {
+            onStreamError = (err: unknown) => {
+                reject(err);
+                abort();
+            };
+        });
+        // Build request config
+        const config = formDataRequired
+            ? createFormDataPayload(payload, (err) => onStreamError(err))
+            : createJsonPayload(payload);
+        // Perform fetch call, and handle networking errors
+        const successPromise = fetch(url, { ...options, ...config })
+            .catch((err) => {
+                let msg = `Network request for '${method}' failed!`;
+                if (isTelegramError(err)) {
+                    msg += ` (${err.status}: ${err.statusText})`;
                 }
-                /** Error handler for timeouts and body stream errors */
-                function onOtherError(err: unknown) {
-                    if (rejected) return;
-                    rejected = true;
-                    abort();
-                    reject(err);
+                if (opts.sensitiveLogs && err instanceof Error) {
+                    msg += ` ${err.message}`;
                 }
-                // Create fetch config
-                const config = formDataRequired
-                    ? createFormDataPayload(p, onOtherError)
-                    : createJsonPayload(p);
-                // Use same timeouts for requests as Bot API
-                const timeoutHandle = setTimeout(() => {
-                    const msg =
-                        `Request to '${method}' timed out after 500 seconds`;
-                    onOtherError(new Error(msg));
-                }, 500_000); // 500 seconds
-                // Perform request
-                fetch(url, { ...options, ...config })
-                    .then((res) => {
-                        clearTimeout(timeoutHandle);
-                        return res.json();
-                    })
-                    .then(resolve)
-                    .catch((err) => {
-                        clearTimeout(timeoutHandle);
-                        onHttpError(err);
-                    });
-            },
-        );
+                throw new HttpError(msg, err);
+            });
+        // Those are the three possible outcomes of the fetch call:
+        const operations = [successPromise, streamErrorPromise, timeoutPromise];
+        // Wait for result
+        try {
+            const res = await Promise.race(operations);
+            return await res.json();
+        } finally {
+            clearTimeout(timeoutHandle);
+        }
     };
 
     use(...transformers: Transformer<R>[]) {
