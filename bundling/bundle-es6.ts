@@ -16,7 +16,7 @@ async function throttle(tasks: Array<() => Promise<void>>) {
 console.log("Fetching release list ...");
 const res = await fetch("https://cdn.deno.land/grammy/meta/versions.json");
 const { versions: vs } = await res.json();
-const versions: string[] = vs.filter((v: string) => v.startsWith("v1"));
+const versions: string[] = [vs.filter((v: string) => v.startsWith("v1"))[0]];
 console.log("Found", versions.length, "stable releases");
 console.log(versions);
 
@@ -64,7 +64,7 @@ await Deno.mkdir("./bundles/", { recursive: true });
 console.log("Bundling source ...");
 await createBundle("../src/mod.ts", "dev");
 console.log("Bundling releases ...");
-await throttle([versions[0]].map((v: string) => () => createBundle(url(v), v)));
+await throttle(versions.map((v: string) => () => createBundle(url(v), v)));
 console.log("Done! Created files:");
 for await (const path of Deno.readDir("./bundles/")) {
     console.log(path.name);
