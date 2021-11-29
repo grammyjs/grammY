@@ -3,10 +3,14 @@ import { Bot } from "../bot.ts";
 import { debug as d, Update } from "../platform.deno.ts";
 import { WebhookReplyEnvelope } from "../core/client.ts";
 import { Context } from "../context.ts";
-import { defaultAdapter } from "./frameworks.deno.ts";
-import * as adapters from "./frameworks.deno.ts";
-export * as adapters from "./frameworks.deno.ts";
+import { adapters, defaultAdapter } from "./frameworks.deno.ts";
 const debugErr = d("grammy:error");
+
+/**
+ * HTTP Web frameworks for which grammY provides compatible callback out of the
+ * box.
+ */
+type SupportedFrameworks = keyof typeof adapters;
 
 /**
  * Abstraction over a request-response cycle, provding access to the update, as
@@ -15,8 +19,7 @@ const debugErr = d("grammy:error");
 interface ReqResHandler {
     /**
      * The update object sent from Telegram, usually resolves the request's JSON
-     * body. In case it is rejected, i.e. if the adapter dropped that request
-     * because of url pathname mismatch, then it won't be processed
+     * body
      */
     update: Promise<Update>;
     /**
@@ -35,22 +38,11 @@ interface ReqResHandler {
      */
     handlerReturn?: any;
 }
-
 /**
  * Middleware for a web framework. Creates a request-response handler for a
  * request. The handler will be used to integrate with the compatible framework.
  */
 export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
-export type AdapterFactory<O = never> = [O] extends [never]
-    ? () => FrameworkAdapter
-    : (opts: O) => FrameworkAdapter;
-type CommonAdapterOptions = {
-    onTimeout?: "throw" | "return" | ((...args: any[]) => unknown);
-    timeoutMilliseconds?: number;
-};
-type WebhookCbReturn<A extends FrameworkAdapter> = (
-    ...args: Parameters<A>
-) => any;
 
 /**
  * Creates a callback function that you can pass to a web framework (such as
@@ -68,26 +60,21 @@ type WebhookCbReturn<A extends FrameworkAdapter> = (
  *
  * @param bot The bot for which to create a callback
  * @param framework An optional string identifying the framework (default: 'express')
- * @param adapterOptions Additional options for adapter behavior
- * @param adapterOptions.onTimeout An optional strategy to handle timeouts (default: 'throw')
- * @param adapterOptions.timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
+ * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
+ * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
  */
-export function webhookCallback<
-    A extends FrameworkAdapter,
-    C extends Context = Context,
->(
+export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter?: A | keyof typeof adapters, // TODO: remove union before next maj. release
-    adapterOptions: CommonAdapterOptions = {},
-): WebhookCbReturn<A> {
-    const { onTimeout = "throw", timeoutMilliseconds = 10_000 } =
-        adapterOptions;
+    adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
+    onTimeout: "throw" | "return" | ((...args: any[]) => unknown) = "throw",
+    timeoutMilliseconds = 10_000,
+) {
     let firstUpdate = true;
     let initialized = false;
     let initCall: Promise<void> | undefined;
-    const server: FrameworkAdapter = typeof adapter === "string" // TODO: remove check before next maj. release
-        ? (adapters[adapter] as AdapterFactory)()
-        : adapter ?? defaultAdapter();
+    const server: FrameworkAdapter = typeof adapter === "string"
+        ? adapters[adapter]
+        : adapter;
     return async (...args: any[]) => {
         if (!initialized) {
             if (firstUpdate) {
@@ -100,7 +87,7 @@ export function webhookCallback<
         const { update, respond, end, handlerReturn } = server(...args);
         let usedWebhookReply = false;
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
-            send: async (json) => {
+            async send(json) {
                 usedWebhookReply = true;
                 await respond(json);
             },
