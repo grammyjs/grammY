@@ -100,7 +100,7 @@ Here are some more resources to support you:
 
 ## Deno Support
 
-All grammY packages published by [@grammyjs](https://github.com/grammyjs) run natively in Deno. We are compiling every codebase to still run on Node.
+All grammY packages published by [@grammyjs](https://github.com/grammyjs) run natively on Deno. We are compiling every codebase to still run on Node.
 
 However, given that most bot developers are still using Node, all documentation is written Node-first. We may migrate it if Deno overtakes Node. If you are already on Deno today, we expect you to know what you're doing. You mainly have to adjust the imports to URL imports, and import from [`https://deno.land/x/grammy/mod.ts`](https://deno.land/x/grammy).
 
