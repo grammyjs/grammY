@@ -16,7 +16,7 @@ async function throttle(tasks: Array<() => Promise<void>>) {
 console.log("Fetching release list ...");
 const res = await fetch("https://cdn.deno.land/grammy/meta/versions.json");
 const { versions: vs } = await res.json();
-const versions: string[] = [vs.filter((v: string) => v.startsWith("v1"))[0]];
+const versions: string[] = vs.filter((v: string) => v.startsWith("v1"));
 console.log("Found", versions.length, "stable releases");
 console.log(versions);
 

@@ -21,6 +21,10 @@ jobs:
               run: deno run --unstable --allow-net --allow-run --allow-read=.. --allow-write=bundles/ bundle-es6.ts
               working-directory: bundling
 
+            - name: Install headers
+              run: cp -v netlify.toml bundles/
+              working-directory: bundling
+
             - name: Show output
               run: find bundling
 
@@ -29,6 +33,7 @@ jobs:
               with:
                   publish-dir: "./bundling/bundles"
                   production-branch: main
+                  netlify-config-path: "./bundling/bundles/netlify.toml"
               env:
                   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
                   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
