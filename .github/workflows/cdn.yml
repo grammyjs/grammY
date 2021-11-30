@@ -16,7 +16,7 @@ jobs:
                   deno-version: v1.x
 
             - name: Bundle
-              run: deno run --unstable --allow-net --allow-run --allow-read=.. --allow-write=bundles/ bundle-es6.ts
+              run: deno run --unstable --allow-net --allow-run --allow-read=.. --allow-write=bundles/ bundle-es.ts
               working-directory: bundling
 
             - name: Install headers
