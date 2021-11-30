@@ -26,7 +26,8 @@ function url(version: string) {
 
 // === CACHING
 async function cache(url: string) {
-    await Deno.run({ cmd: ["deno", "cache", url] }).status();
+    console.log(url);
+    await Deno.run({ cmd: ["deno", "cache", "--quiet", url] }).status();
 }
 
 console.log("Caching source code");
@@ -53,7 +54,7 @@ async function createBundle(source: string, release: string) {
         sources: { "/src.js": es6 },
         compilerOptions: { target: "es6" },
     }).then((res) => res.files["file:///src.js"]);
-    const path = `./bundles/es6-${release}.js`;
+    const path = `./bundles/es6@${release}.js`;
     tick();
     await Deno.writeTextFile(path, bundle);
     tick();
