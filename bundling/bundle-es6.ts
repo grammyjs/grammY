@@ -37,15 +37,15 @@ await throttle(versions.map(url).map((v: string) => () => cache(v)));
 // === BUNDLING
 async function createBundle(source: string, release: string) {
     console.log(release);
-    const bundleRes = await Deno.emit(source, { bundle: "module" });
-    const bundle = bundleRes.files["deno:///bundle.js"];
-    const transpileRes = await Deno.emit("/src.ts", {
-        sources: { "/src.ts": bundle },
+    const bundled = await Deno.emit(source, { bundle: "module" });
+    const bundledCode = bundled.files["deno:///bundle.js"];
+    const transpiled = await Deno.emit("/src.ts", {
+        sources: { "/src.ts": bundledCode },
         compilerOptions: { target: "es6" },
     });
-    const output = transpileRes.files["file:///src.ts.js"];
+    const transpiledCode = transpiled.files["file:///src.ts.js"];
     const path = `./bundles/es6@${release}.js`;
-    await Deno.writeTextFile(path, bundle);
+    await Deno.writeTextFile(path, transpiledCode);
 }
 
 console.log("Bundling source and releases ...");
