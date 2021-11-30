@@ -1,4 +1,4 @@
-console.log("ES6 bundling script started.");
+console.log("ES bundling script started.");
 
 // === THROTTLING UTILS
 const CONCURRENCY = 4;
@@ -31,29 +31,42 @@ async function cache(url: string) {
 }
 
 console.log("Caching source code and releases ...");
-await cache("../src/mod.ts");
-await throttle(versions.map(url).map((v: string) => () => cache(v)));
+const src = "../src/mod.ts";
+await throttle([src, ...versions.map(url)].map((v) => () => cache(v)));
 
 // === BUNDLING
-async function createBundle(source: string, release: string) {
-    console.log(release);
+type EmitArg1 = Parameters<typeof Deno.emit>[1];
+type V = Required<Exclude<EmitArg1, undefined>>["compilerOptions"]["target"];
+async function createBundle(input: string, release: string) {
+    const bundled = await bundle(input);
+    const targets = ["es3", "es5", "es6", "esnext"] as const;
+    await throttle(targets.map((es) => () => transpile(bundled, release, es)));
+}
+async function bundle(source: string) {
+    console.log("Bundling", source);
     const bundled = await Deno.emit(source, { bundle: "module" });
     const bundledCode = bundled.files["deno:///bundle.js"];
+    return bundledCode;
+}
+async function transpile(source: string, release: string, es: V) {
+    console.log("Transpiling", release, "to", es);
     const transpiled = await Deno.emit("/src.ts", {
-        sources: { "/src.ts": bundledCode },
-        compilerOptions: { target: "es6" },
+        sources: { "/src.ts": source },
+        compilerOptions: { target: es },
     });
     const transpiledCode = transpiled.files["file:///src.ts.js"];
-    const path = `./bundles/es6@${release}.js`;
+
+    const path = `./bundles/${es}@${release}.js`;
+    console.log("Writing", path);
     await Deno.writeTextFile(path, transpiledCode);
 }
 
 console.log("Bundling source and releases ...");
 await Deno.mkdir("./bundles/", { recursive: true });
-await createBundle("../src/mod.ts", "dev");
-await throttle(versions.map((v: string) => () => createBundle(url(v), v)));
+const inputs = [[src, "dev"], ...versions.map((v) => [url(v), v])];
+await throttle(inputs.map(([url, v]) => () => createBundle(url, v)));
 console.log("Done! Created files:");
 for await (const path of Deno.readDir("./bundles/")) {
     console.log(path.name);
 }
-console.log("ES6 bundling script complete.");
+console.log("ES bundling script complete.");
