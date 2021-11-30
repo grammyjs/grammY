@@ -3,8 +3,6 @@ name: cdn-builds
 on:
     push:
         branches: [main]
-    pull_request: # used for testing, will be removed before merging
-        branches: [main]
 
 jobs:
     deploy:
@@ -33,7 +31,7 @@ jobs:
               with:
                   publish-dir: "./bundling/bundles"
                   production-branch: main
-                  production-deploy: false
+                  production-deploy: true
                   netlify-config-path: "./bundling/bundles/netlify.toml"
               env:
                   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
