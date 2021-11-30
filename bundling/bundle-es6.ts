@@ -44,7 +44,7 @@ async function createBundle(source: string, release: string) {
     const bundle = await Deno.emit("/tmp/src.js", {
         sources: { "/tmp/src.js": es6 },
         compilerOptions: { target: "es6" },
-    }).then((res) => res.files["file:///src.js"]);
+    }).then((res) => res.files["file:///tmp/src.js"]);
     const path = `./bundles/es6@${release}.js`;
     await Deno.writeTextFile(path, bundle);
 }
