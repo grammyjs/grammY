@@ -8,5 +8,4 @@ force = true # ensure that we always redirect
 from = "/"
 headers = {X-From = "Netlify"}
 signed = "API_SIGNATURE_TOKEN"
-status = 200
 to = "https://grammy.dev"
