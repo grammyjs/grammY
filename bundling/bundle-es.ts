@@ -1,4 +1,4 @@
-console.log("ES6 bundling script started.");
+console.log("ES bundling script started.");
 
 // === THROTTLING UTILS
 const CONCURRENCY = 4;
