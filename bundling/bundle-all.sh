@@ -16,7 +16,6 @@ cores=$(grep -c ^processor /proc/cpuinfo)
 echo "Caching and bundling releases using $cores cores"
 curl --silent https://cdn.deno.land/grammy/meta/versions.json |
     jq --raw-output '.versions | .[] | select(startswith("v1"))' |
-    head -n 1 |
     xargs -P$cores -I% bash -c \
         'deno cache -r --quiet https://deno.land/x/grammy@%/mod.ts &&
             echo "Cached %" &&
