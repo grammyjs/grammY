@@ -5,12 +5,22 @@
             "proseWrap": "preserve"
         },
         "files": {
-            "exclude": ["./node_modules/", "./out/", "./package-lock.json"]
+            "exclude": [
+                "./node_modules/",
+                "./out/",
+                "./package-lock.json",
+                "./bundling/bundles"
+            ]
         }
     },
     "lint": {
         "files": {
-            "exclude": ["./node_modules/", "./out/", "./package-lock.json"]
+            "exclude": [
+                "./node_modules/",
+                "./out/",
+                "./package-lock.json",
+                "./bundling/bundles"
+            ]
         }
     }
 }
