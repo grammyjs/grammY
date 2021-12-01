@@ -1,0 +1,31 @@
+name: cdn-builds
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v2
+
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
+
+            - name: Bundle
+              run: ./bundle-all.sh
+              working-directory: bundling
+
+            - name: Netlify deployment
+              uses: nwtgck/actions-netlify@v1.2
+              with:
+                  publish-dir: "./bundling/bundles"
+                  production-branch: main
+                  production-deploy: true
+                  netlify-config-path: "./bundling/bundles/netlify.toml"
+              env:
+                  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+                  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}

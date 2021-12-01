@@ -32,9 +32,24 @@ const oak = (ctx: any) => ({
     },
 });
 
+const serveHttp = (requestEvent: Deno.RequestEvent) => ({
+    update: requestEvent.request.json(),
+    end: () =>
+        requestEvent.respondWith(
+            new Response(undefined, {
+                status: 200,
+            }),
+        ),
+    respond: (json: string) =>
+        requestEvent.respondWith(
+            new Response(JSON.stringify(json), { status: 200 }),
+        ),
+});
+
 // please open a PR if you want to add another
 export const adapters = {
     "std/http": stdHttp,
     oak,
+    serveHttp,
 };
 export const defaultAdapter = "oak";
