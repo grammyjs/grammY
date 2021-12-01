@@ -24,3 +24,6 @@ echo 'Done.'
 echo
 echo 'Created output:'
 du -ch bundles/*
+
+echo "Copying config file into output directory"
+cp -v netlify.toml bundles/

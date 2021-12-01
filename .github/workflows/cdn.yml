@@ -19,13 +19,6 @@ jobs:
               run: ./bundle-all.sh
               working-directory: bundling
 
-            - name: Install headers
-              run: cp -v netlify.toml bundles/
-              working-directory: bundling
-
-            - name: Show output
-              run: find bundling
-
             - name: Netlify deployment
               uses: nwtgck/actions-netlify@v1.2
               with:
