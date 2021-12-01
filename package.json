@@ -18,6 +18,7 @@
         "lint": "deno lint --config deno.json",
         "fmt": "deno fmt --config deno.json",
         "test": "deno test ./test/",
+        "bundle": "cd bundling && ./bundle-all.sh",
         "backport": "deno2node tsconfig.json",
         "contribs": "all-contributors"
     },
