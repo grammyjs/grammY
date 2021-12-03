@@ -172,7 +172,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="http://///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////kraftwerk28.pp.ua"><img src="https://avatars.githubusercontent.com/u/31807671?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vsevolod</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=kraftwerk28" title="Code">💻</a> <a href="#ideas-kraftwerk28" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Akraftwerk28" title="Reviewed Pull Requests">👀</a></td>
-    <td align="center"><a href="https://github.com/habemuscode"><img src="https://avatars.githubusercontent.com/u/34692207?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Juan Luis Gutierrez Dos Santos</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Ahabemuscode" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/habemuscode"><img src="https://avatars.githubusercontent.com/u/34692207?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Habemuscode</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Ahabemuscode" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
