@@ -90,6 +90,8 @@ Here are some more resources to support you:
 
 —Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas, and contributions!
 
+The Russian commnity chat can be found [here](https://t.me/grammyjs_ru).
+
 ### [grammY News Channel](https://t.me/grammyjs_news)
 
 —Telegram channel where updates to grammY and the ecosystem are posted.
