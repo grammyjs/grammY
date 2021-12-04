@@ -12,7 +12,7 @@ type MaybePromise<T> = Promise<T> | T;
  * Session middleware will load the session data of a specific chat from your
  * storage solution, and make it available to you on the context object. Check
  * out the
- * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts/~/session)
+ * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#session)
  * on session middleware to know more, and read the section about sessions on
  * the [website](https://grammy.dev/plugins/session.html).
  */
@@ -41,7 +41,7 @@ export interface SessionFlavor<S> {
  * object. Once you access `ctx.session`, the storage will be queried and the
  * session data becomes available. If you access `ctx.session` again for the
  * same context object, the cached value will be used. Check out the
- * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts/~/lazySession)
+ * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#lazySession)
  * on lazy session middleware to know more, and read the section about lazy
  * sessions on the
  * [website](https://grammy.dev/plugins/session.html#lazy-sessions).

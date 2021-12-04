@@ -21,7 +21,7 @@ type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
  * ```
  *
  * Check out the
- * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts/~/Composer#on)
+ * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#Composer)
  * of `bot.on` for examples. In addition, the
  * [website](https://grammy.dev/guide/filter-queries.html) contains more
  * information about how filter queries work in grammY.
