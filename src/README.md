@@ -37,5 +37,5 @@ bot.start();
 You can run it like so:
 
 ```bash
-deno run --allow-env --allow-net bot.ts
+deno run --allow-net bot.ts
 ```
