@@ -25,7 +25,7 @@ You want grammY because it is easy to use. It is very powerful and always up to 
 
 Are you ready? 🤖🚀
 
-Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript) and run on [Node.js](https://nodejs.org/).
+Bots are written in [TypeScript](https://www.typescriptlang.org/) (or JavaScript) and run on [Node.js](https://nodejs.org/) and on [Deno](#deno-support).
 
 ## Quickstart
 
@@ -102,9 +102,11 @@ The Russian commnity chat can be found [here](https://t.me/grammyjs_ru).
 
 ## Deno Support
 
-All grammY packages published by [@grammyjs](https://github.com/grammyjs) run natively on Deno. We are compiling every codebase to still run on Node.
+All grammY packages published by [@grammyjs](https://github.com/grammyjs) run natively on [Deno](https://deno.land). We are compiling every codebase to still run on Node.
 
-However, given that most bot developers are still using Node, all documentation is written Node-first. We may migrate it if Deno overtakes Node. If you are already on Deno today, we expect you to know what you're doing. You mainly have to adjust the imports to URL imports, and import from [`https://deno.land/x/grammy/mod.ts`](https://deno.land/x/grammy).
+However, given that most bot developers are still using Node, all documentation is written Node-first. We may migrate it if Deno overtakes Node. If you are already on Deno today, import grammY from [`https://deno.land/x/grammy/mod.ts`](https://deno.land/x/grammy).
+
+You may also be interested in [why we support Deno](https://grammy.dev/resources/faq.html#why-do-you-support-deno).
 
 ## [Contribution Guide »](./CONTRIBUTING.md)
 
