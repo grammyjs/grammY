@@ -957,7 +957,7 @@ export class Context implements RenamedUpdate {
      */
     banChatSenderChat(
         sender_chat_id: number,
-        other?: Other<"promoteChatMember", "user_id">,
+        other?: Other<"banChatSenderChat", "user_id">,
         signal?: AbortSignal,
     ) {
         return this.api.banChatSenderChat(
