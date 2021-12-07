@@ -412,7 +412,9 @@
       "profile": "http://telegram.me/dcdunkan",
       "contributions": [
         "bug",
-        "code"
+        "code",
+        "plugin",
+        "review"
       ]
     },
     {
@@ -453,6 +455,24 @@
         "code",
         "ideas",
         "review"
+      ]
+    },
+    {
+      "login": "habemuscode",
+      "name": "Habemuscode",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34692207?v=4",
+      "profile": "https://github.com/habemuscode",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "backmeupplz",
+      "name": "Nikita Kolmogorov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3192028?v=4",
+      "profile": "https://borodutch.com/",
+      "contributions": [
+        "plugin"
       ]
     }
   ],

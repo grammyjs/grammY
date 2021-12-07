@@ -74,7 +74,7 @@ export class Context implements RenamedUpdate {
      * Used by some middleware to store information about how a certain string
      * or regular expression was matched.
      */
-    public match?: string | RegExpMatchArray | null;
+    public match?: string | RegExpMatchArray;
 
     constructor(
         /**
@@ -170,11 +170,16 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get chat object from whereever possible. Alias for `(this.msg ??
-     * this.myChatMember ?? this.chatMember)?.chat`
+     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest)?.chat`
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
-        return (this.msg ?? this.myChatMember ?? this.chatMember)?.chat;
+        return (
+            this.msg ??
+                this.myChatMember ??
+                this.chatMember ??
+                this.chatJoinRequest
+        )?.chat;
     }
     /**
      * Get sender chat object from wherever possible. Alias for
@@ -187,7 +192,7 @@ export class Context implements RenamedUpdate {
      * Get message author from whereever possible. Alias for
      * `(ctx.callbackQuery?? ctx.inlineQuery ?? ctx.shippingQuery ??
      * ctx.preCheckoutQuery ?? ctx.chosenInlineResult ?? ctx.msg ??
-     * this.myChatMember ?? this.chatMember)?.from`
+     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest)?.from`
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -199,7 +204,8 @@ export class Context implements RenamedUpdate {
                 this.chosenInlineResult ??
                 this.msg ??
                 this.myChatMember ??
-                this.chatMember
+                this.chatMember ??
+                this.chatJoinRequest
         )?.from;
     }
     /**
@@ -936,6 +942,47 @@ export class Context implements RenamedUpdate {
             orThrow(this.chat, "setChatAdministratorCustomTitle").id,
             user_id,
             custom_title,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.banChatSenderChat`. Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
+     */
+    banChatSenderChat(
+        sender_chat_id: number,
+        other?: Other<"banChatSenderChat", "sender_chat_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.banChatSenderChat(
+            orThrow(this.chat, "banChatSenderChat").id,
+            sender_chat_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.unbanChatSenderChat`. Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unbanchatsenderchat
+     */
+    unbanChatSenderChat(
+        sender_chat_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.api.unbanChatSenderChat(
+            orThrow(this.chat, "unbanChatSenderChat").id,
+            sender_chat_id,
             signal,
         );
     }

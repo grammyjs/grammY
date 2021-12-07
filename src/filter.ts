@@ -21,7 +21,7 @@ type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
  * ```
  *
  * Check out the
- * [documentation](https://doc.deno.land/https/deno.land/x/grammy/mod.ts#Composer)
+ * [documentation](https://doc.deno.land/https://deno.land/x/grammy/mod.ts/~/Composer)
  * of `bot.on` for examples. In addition, the
  * [website](https://grammy.dev/guide/filter-queries.html) contains more
  * information about how filter queries work in grammY.
@@ -280,6 +280,7 @@ const COMMON_MESSAGE_KEYS = {
     voice_chat_participants_invited: {},
 
     forward_date: {},
+    is_automatic_forward: {},
 } as const;
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
@@ -472,6 +473,8 @@ interface Shortcuts<U extends Update> {
         : [U["my_chat_member"]] extends [SomeObject]
             ? U["my_chat_member"]["chat"]
         : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["chat"]
+        : [U["chat_join_request"]] extends [SomeObject]
+            ? U["chat_join_request"]["chat"]
         : undefined;
     // senderChat: disregarded here because always optional on 'Message'
     from: [U["callback_query"]] extends [SomeObject]
@@ -490,6 +493,8 @@ interface Shortcuts<U extends Update> {
         : [U["my_chat_member"]] extends [SomeObject]
             ? U["my_chat_member"]["from"]
         : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["from"]
+        : [U["chat_join_request"]] extends [SomeObject]
+            ? U["chat_join_request"]["from"]
         : undefined;
     // inlineMessageId: disregarded here because always optional on both types
 }
