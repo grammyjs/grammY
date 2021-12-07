@@ -2,7 +2,7 @@ import { FilterQuery, matchFilter } from "../src/filter.ts";
 import {
     assert,
     assertThrows,
-} from "https://deno.land/std@0.116.0/testing/asserts.ts";
+} from "https://deno.land/std@0.117.0/testing/asserts.ts";
 import { Context } from "../src/context.ts";
 
 Deno.test("should reject empty filters", () => {
