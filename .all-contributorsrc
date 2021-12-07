@@ -465,6 +465,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "backmeupplz",
+      "name": "Nikita Kolmogorov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3192028?v=4",
+      "profile": "https://borodutch.com/",
+      "contributions": [
+        "plugin"
+      ]
     }
   ],
   "contributorsPerLine": 7,

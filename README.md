@@ -12,7 +12,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.5-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-44-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-45-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -175,6 +175,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////kraftwerk28.pp.ua"><img src="https://avatars.githubusercontent.com/u/31807671?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vsevolod</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=kraftwerk28" title="Code">💻</a> <a href="#ideas-kraftwerk28" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Akraftwerk28" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/habemuscode"><img src="https://avatars.githubusercontent.com/u/34692207?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Habemuscode</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Ahabemuscode" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://borodutch.com/"><img src="https://avatars.githubusercontent.com/u/3192028?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nikita Kolmogorov</b></sub></a><br /><a href="#plugin-backmeupplz" title="Plugin/utility libraries">🔌</a></td>
   </tr>
 </table>
 
