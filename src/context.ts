@@ -947,6 +947,47 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.banChatSenderChat`. Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
+     */
+    banChatSenderChat(
+        sender_chat_id: number,
+        other?: Other<"banChatSenderChat", "sender_chat_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.banChatSenderChat(
+            orThrow(this.chat, "banChatSenderChat").id,
+            sender_chat_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.unbanChatSenderChat`. Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unbanchatsenderchat
+     */
+    unbanChatSenderChat(
+        sender_chat_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.api.unbanChatSenderChat(
+            orThrow(this.chat, "unbanChatSenderChat").id,
+            sender_chat_id,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.setChatPermissions`. Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.
      *
      * @param permissions New default chat permissions

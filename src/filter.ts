@@ -280,6 +280,7 @@ const COMMON_MESSAGE_KEYS = {
     voice_chat_participants_invited: {},
 
     forward_date: {},
+    is_automatic_forward: {},
 } as const;
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,

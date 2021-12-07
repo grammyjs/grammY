@@ -242,12 +242,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.forwardMessage(
-            {
-                chat_id,
-                from_chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, from_chat_id, message_id, ...other },
             signal,
         );
     }
@@ -271,12 +266,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.copyMessage(
-            {
-                chat_id,
-                from_chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, from_chat_id, message_id, ...other },
             signal,
         );
     }
@@ -493,13 +483,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageLiveLocation(
-            {
-                chat_id,
-                message_id,
-                latitude,
-                longitude,
-                ...other,
-            },
+            { chat_id, message_id, latitude, longitude, ...other },
             signal,
         );
     }
@@ -527,12 +511,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageLiveLocation(
-            {
-                inline_message_id,
-                latitude,
-                longitude,
-                ...other,
-            },
+            { inline_message_id, latitude, longitude, ...other },
             signal,
         );
     }
@@ -558,11 +537,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.stopMessageLiveLocation(
-            {
-                chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, message_id, ...other },
             signal,
         );
     }
@@ -618,14 +593,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.sendVenue(
-            {
-                chat_id,
-                latitude,
-                longitude,
-                title,
-                address,
-                ...other,
-            },
+            { chat_id, latitude, longitude, title, address, ...other },
             signal,
         );
     }
@@ -649,12 +617,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.sendContact(
-            {
-                chat_id,
-                phone_number,
-                first_name,
-                ...other,
-            },
+            { chat_id, phone_number, first_name, ...other },
             signal,
         );
     }
@@ -826,12 +789,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.restrictChatMember(
-            {
-                chat_id,
-                user_id,
-                permissions,
-                ...other,
-            },
+            { chat_id, user_id, permissions, ...other },
             signal,
         );
     }
@@ -875,11 +833,49 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setChatAdministratorCustomTitle(
-            {
-                chat_id,
-                user_id,
-                custom_title,
-            },
+            { chat_id, user_id, custom_title },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
+     */
+    banChatSenderChat(
+        chat_id: number | string,
+        sender_chat_id: number,
+        other?: Other<R, "banChatSenderChat", "sender_chat_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.banChatSenderChat(
+            { chat_id, sender_chat_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unbanchatsenderchat
+     */
+    unbanChatSenderChat(
+        chat_id: number | string,
+        sender_chat_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.unbanChatSenderChat(
+            { chat_id, sender_chat_id },
             signal,
         );
     }
@@ -1205,10 +1201,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setChatStickerSet(
-            {
-                chat_id,
-                sticker_set_name,
-            },
+            { chat_id, sticker_set_name },
             signal,
         );
     }
@@ -1397,12 +1390,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageMedia(
-            {
-                chat_id,
-                message_id,
-                media,
-                ...other,
-            },
+            { chat_id, message_id, media, ...other },
             signal,
         );
     }
@@ -1446,11 +1434,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageReplyMarkup(
-            {
-                chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, message_id, ...other },
             signal,
         );
     }
@@ -1592,13 +1576,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.createNewStickerSet(
-            {
-                user_id,
-                name,
-                title,
-                emojis,
-                ...other,
-            },
+            { user_id, name, title, emojis, ...other },
             signal,
         );
     }
@@ -1695,11 +1673,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.answerInlineQuery(
-            {
-                inline_query_id,
-                results,
-                ...other,
-            },
+            { inline_query_id, results, ...other },
             signal,
         );
     }
@@ -1798,11 +1772,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.answerPreCheckoutQuery(
-            {
-                pre_checkout_query_id,
-                ok,
-                ...other,
-            },
+            { pre_checkout_query_id, ok, ...other },
             signal,
         );
     }
@@ -1869,13 +1839,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setGameScore(
-            {
-                chat_id,
-                message_id,
-                user_id,
-                score,
-                ...other,
-            },
+            { chat_id, message_id, user_id, score, ...other },
             signal,
         );
     }
@@ -1903,12 +1867,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setGameScore(
-            {
-                inline_message_id,
-                user_id,
-                score,
-                ...other,
-            },
+            { inline_message_id, user_id, score, ...other },
             signal,
         );
     }
@@ -1932,11 +1891,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getGameHighScores(
-            {
-                chat_id,
-                message_id,
-                user_id,
-            },
+            { chat_id, message_id, user_id },
             signal,
         );
     }
@@ -1958,10 +1913,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getGameHighScores(
-            {
-                inline_message_id,
-                user_id,
-            },
+            { inline_message_id, user_id },
             signal,
         );
     }
