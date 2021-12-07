@@ -170,11 +170,16 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get chat object from whereever possible. Alias for `(this.msg ??
-     * this.myChatMember ?? this.chatMember)?.chat`
+     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest)?.chat`
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
-        return (this.msg ?? this.myChatMember ?? this.chatMember)?.chat;
+        return (
+            this.msg ??
+                this.myChatMember ??
+                this.chatMember ??
+                this.chatJoinRequest
+        )?.chat;
     }
     /**
      * Get sender chat object from wherever possible. Alias for
@@ -187,7 +192,7 @@ export class Context implements RenamedUpdate {
      * Get message author from whereever possible. Alias for
      * `(ctx.callbackQuery?? ctx.inlineQuery ?? ctx.shippingQuery ??
      * ctx.preCheckoutQuery ?? ctx.chosenInlineResult ?? ctx.msg ??
-     * this.myChatMember ?? this.chatMember)?.from`
+     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest)?.from`
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -199,7 +204,8 @@ export class Context implements RenamedUpdate {
                 this.chosenInlineResult ??
                 this.msg ??
                 this.myChatMember ??
-                this.chatMember
+                this.chatMember ??
+                this.chatJoinRequest
         )?.from;
     }
     /**
