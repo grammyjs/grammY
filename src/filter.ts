@@ -472,6 +472,8 @@ interface Shortcuts<U extends Update> {
         : [U["my_chat_member"]] extends [SomeObject]
             ? U["my_chat_member"]["chat"]
         : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["chat"]
+        : [U["chat_join_request"]] extends [SomeObject]
+            ? U["chat_join_request"]["chat"]
         : undefined;
     // senderChat: disregarded here because always optional on 'Message'
     from: [U["callback_query"]] extends [SomeObject]
@@ -490,6 +492,8 @@ interface Shortcuts<U extends Update> {
         : [U["my_chat_member"]] extends [SomeObject]
             ? U["my_chat_member"]["from"]
         : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["from"]
+        : [U["chat_join_request"]] extends [SomeObject]
+            ? U["chat_join_request"]["from"]
         : undefined;
     // inlineMessageId: disregarded here because always optional on both types
 }
