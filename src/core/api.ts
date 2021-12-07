@@ -242,12 +242,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.forwardMessage(
-            {
-                chat_id,
-                from_chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, from_chat_id, message_id, ...other },
             signal,
         );
     }
@@ -271,12 +266,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.copyMessage(
-            {
-                chat_id,
-                from_chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, from_chat_id, message_id, ...other },
             signal,
         );
     }
@@ -493,13 +483,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageLiveLocation(
-            {
-                chat_id,
-                message_id,
-                latitude,
-                longitude,
-                ...other,
-            },
+            { chat_id, message_id, latitude, longitude, ...other },
             signal,
         );
     }
@@ -527,12 +511,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageLiveLocation(
-            {
-                inline_message_id,
-                latitude,
-                longitude,
-                ...other,
-            },
+            { inline_message_id, latitude, longitude, ...other },
             signal,
         );
     }
@@ -558,11 +537,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.stopMessageLiveLocation(
-            {
-                chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, message_id, ...other },
             signal,
         );
     }
@@ -618,14 +593,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.sendVenue(
-            {
-                chat_id,
-                latitude,
-                longitude,
-                title,
-                address,
-                ...other,
-            },
+            { chat_id, latitude, longitude, title, address, ...other },
             signal,
         );
     }
@@ -649,12 +617,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.sendContact(
-            {
-                chat_id,
-                phone_number,
-                first_name,
-                ...other,
-            },
+            { chat_id, phone_number, first_name, ...other },
             signal,
         );
     }
@@ -826,12 +789,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.restrictChatMember(
-            {
-                chat_id,
-                user_id,
-                permissions,
-                ...other,
-            },
+            { chat_id, user_id, permissions, ...other },
             signal,
         );
     }
@@ -875,11 +833,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setChatAdministratorCustomTitle(
-            {
-                chat_id,
-                user_id,
-                custom_title,
-            },
+            { chat_id, user_id, custom_title },
             signal,
         );
     }
@@ -1247,10 +1201,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setChatStickerSet(
-            {
-                chat_id,
-                sticker_set_name,
-            },
+            { chat_id, sticker_set_name },
             signal,
         );
     }
@@ -1439,12 +1390,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageMedia(
-            {
-                chat_id,
-                message_id,
-                media,
-                ...other,
-            },
+            { chat_id, message_id, media, ...other },
             signal,
         );
     }
@@ -1488,11 +1434,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageReplyMarkup(
-            {
-                chat_id,
-                message_id,
-                ...other,
-            },
+            { chat_id, message_id, ...other },
             signal,
         );
     }
@@ -1634,13 +1576,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.createNewStickerSet(
-            {
-                user_id,
-                name,
-                title,
-                emojis,
-                ...other,
-            },
+            { user_id, name, title, emojis, ...other },
             signal,
         );
     }
@@ -1737,11 +1673,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.answerInlineQuery(
-            {
-                inline_query_id,
-                results,
-                ...other,
-            },
+            { inline_query_id, results, ...other },
             signal,
         );
     }
@@ -1840,11 +1772,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.answerPreCheckoutQuery(
-            {
-                pre_checkout_query_id,
-                ok,
-                ...other,
-            },
+            { pre_checkout_query_id, ok, ...other },
             signal,
         );
     }
@@ -1911,13 +1839,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setGameScore(
-            {
-                chat_id,
-                message_id,
-                user_id,
-                score,
-                ...other,
-            },
+            { chat_id, message_id, user_id, score, ...other },
             signal,
         );
     }
@@ -1945,12 +1867,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.setGameScore(
-            {
-                inline_message_id,
-                user_id,
-                score,
-                ...other,
-            },
+            { inline_message_id, user_id, score, ...other },
             signal,
         );
     }
@@ -1974,11 +1891,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getGameHighScores(
-            {
-                chat_id,
-                message_id,
-                user_id,
-            },
+            { chat_id, message_id, user_id },
             signal,
         );
     }
@@ -2000,10 +1913,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getGameHighScores(
-            {
-                inline_message_id,
-                user_id,
-            },
+            { inline_message_id, user_id },
             signal,
         );
     }
