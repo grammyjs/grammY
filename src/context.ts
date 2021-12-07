@@ -950,17 +950,20 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.banChatSenderChat`. Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param sender_chat_id Unique identifier of the target sender chat
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
      */
     banChatSenderChat(
         sender_chat_id: number,
+        other?: Other<"promoteChatMember", "user_id">,
         signal?: AbortSignal,
     ) {
         return this.api.banChatSenderChat(
             orThrow(this.chat, "banChatSenderChat").id,
             sender_chat_id,
+            other,
             signal,
         );
     }

@@ -889,6 +889,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param sender_chat_id Unique identifier of the target sender chat
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
@@ -896,9 +897,13 @@ export class Api<R extends RawApi = RawApi> {
     banChatSenderChat(
         chat_id: number | string,
         sender_chat_id: number,
+        other?: Other<R, "banChatSenderChat", "sender_chat_id">,
         signal?: AbortSignal,
     ) {
-        return this.raw.banChatSenderChat({ chat_id, sender_chat_id }, signal);
+        return this.raw.banChatSenderChat(
+            { chat_id, sender_chat_id, ...other },
+            signal,
+        );
     }
 
     /**
