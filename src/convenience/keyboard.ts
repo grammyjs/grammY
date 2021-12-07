@@ -168,7 +168,7 @@ export class InlineKeyboard {
      * the button is pressed.
      *
      * @param text The text to display
-     * @param url HTTP or tg:// url to be opened when button is pressed
+     * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
      */
     url(text: string, url: string) {
         return this.add({ text, url });
@@ -258,7 +258,7 @@ export class InlineKeyboard {
     /**
      * Adds a new payment button, confer https://core.telegram.org/bots/api#payments
      *
-     * This type of button must always be the first button in the first row.
+     * This type of button must always be the first button in the first row and can only be used in invoice messages.
      *
      * @param text The text to display
      */

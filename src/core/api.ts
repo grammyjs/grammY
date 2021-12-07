@@ -885,6 +885,43 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
+     */
+    banChatSenderChat(
+        chat_id: number | string,
+        sender_chat_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.banChatSenderChat({ chat_id, sender_chat_id }, signal);
+    }
+
+    /**
+     * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unbanchatsenderchat
+     */
+    unbanChatSenderChat(
+        chat_id: number | string,
+        sender_chat_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.unbanChatSenderChat(
+            { chat_id, sender_chat_id },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
