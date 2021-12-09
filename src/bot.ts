@@ -425,8 +425,8 @@ you can circumvent this protection against memory leaks.`);
     async stop() {
         if (this.pollingRunning) {
             debug("Stopping bot, saving update offset");
-            this.pollingAbortController?.abort();
             this.pollingRunning = false;
+            this.pollingAbortController?.abort();
             const offset = this.lastTriedUpdateId + 1;
             await this.api.getUpdates({ offset, limit: 1 });
             this.pollingAbortController = undefined;
