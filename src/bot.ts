@@ -425,14 +425,10 @@ you can circumvent this protection against memory leaks.`);
     async stop() {
         if (this.pollingRunning) {
             debug("Stopping bot, saving update offset");
-            debug("+++++++++++++++++++++ aborting ");
             this.pollingAbortController?.abort();
             this.pollingRunning = false;
-            debug("+++++++++++++++++++++ incrementing ");
             const offset = this.lastTriedUpdateId + 1;
-            debug("+++++++++++++++++++++ syncing offset ");
             await this.api.getUpdates({ offset, limit: 1 });
-            debug("+++++++++++++++++++++ clearing ");
             this.pollingAbortController = undefined;
         } else {
             debug("Bot is not running!");
