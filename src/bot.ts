@@ -377,7 +377,8 @@ you can circumvent this protection against memory leaks.`);
                         this.pollingAbortController.signal,
                     );
                 } catch (error) {
-                    await handleErr(error);
+                    if (this.pollingRunning) await handleErr(error);
+                    else debug("Pending `getUpdates` request cancelled");
                 }
             } while (updates === undefined && this.pollingRunning);
             if (updates === undefined) break;
@@ -424,10 +425,14 @@ you can circumvent this protection against memory leaks.`);
     async stop() {
         if (this.pollingRunning) {
             debug("Stopping bot, saving update offset");
-            this.pollingRunning = false;
+            debug("+++++++++++++++++++++ aborting ");
             this.pollingAbortController?.abort();
+            this.pollingRunning = false;
+            debug("+++++++++++++++++++++ incrementing ");
             const offset = this.lastTriedUpdateId + 1;
+            debug("+++++++++++++++++++++ syncing offset ");
             await this.api.getUpdates({ offset, limit: 1 });
+            debug("+++++++++++++++++++++ clearing ");
             this.pollingAbortController = undefined;
         } else {
             debug("Bot is not running!");
