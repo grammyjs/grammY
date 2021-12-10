@@ -361,6 +361,17 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
         return value.session;
     }
 
+    /**
+     * Reads the values for all keys of the session storage, and returns them as
+     * an array.
+     */
+    readAll() {
+        return Array
+            .from(this.storage.keys())
+            .map((key) => this.read(key))
+            .filter((value): value is S => value !== undefined);
+    }
+
     write(key: string, value: S) {
         this.storage.set(key, this.addExpiryDate(value));
     }
