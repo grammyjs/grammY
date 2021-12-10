@@ -362,7 +362,7 @@ you can circumvent this protection against memory leaks.`);
                     throw error;
                 }
             } else debugErr(error);
-            debugErr("Call to `getUpdates` failed, retrying in 3 seconds ...");
+            debugErr("Call to getUpdates failed, retrying in 3 seconds ...");
             await new Promise((r) => setTimeout(r, 3000));
         };
 
@@ -377,7 +377,8 @@ you can circumvent this protection against memory leaks.`);
                         this.pollingAbortController.signal,
                     );
                 } catch (error) {
-                    await handleErr(error);
+                    if (this.pollingRunning) await handleErr(error);
+                    else debug("Pending getUpdates request cancelled");
                 }
             } while (updates === undefined && this.pollingRunning);
             if (updates === undefined) break;
