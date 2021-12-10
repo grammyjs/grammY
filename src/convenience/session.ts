@@ -335,7 +335,10 @@ function defaultGetSessionKey(ctx: Context): string | undefined {
  * `inital` option (or undefined) will be put into place.
  */
 export class MemorySessionStorage<S> implements StorageAdapter<S> {
-    private readonly storage = new Map<
+    /**
+     * Internally used `Map` instance that stores the session data
+     */
+    protected readonly storage = new Map<
         string,
         { session: S; expires?: number }
     >();
