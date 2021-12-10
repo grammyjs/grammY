@@ -1580,7 +1580,6 @@ export class Context implements RenamedUpdate {
             | "description"
             | "payload"
             | "provider_token"
-            | "start_parameter"
             | "currency"
             | "prices"
         >,

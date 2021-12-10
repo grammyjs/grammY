@@ -1703,7 +1703,6 @@ export class Api<R extends RawApi = RawApi> {
             | "description"
             | "payload"
             | "provider_token"
-            | "start_parameter"
             | "currency"
             | "prices"
         >,
