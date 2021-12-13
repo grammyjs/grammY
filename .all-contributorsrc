@@ -474,6 +474,16 @@
       "contributions": [
         "plugin"
       ]
+    },
+    {
+      "login": "glukki",
+      "name": "Vitaliy Meshchaninov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/140462?v=4",
+      "profile": "http://glukki.ru",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
