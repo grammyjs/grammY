@@ -384,10 +384,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             if (cmd.startsWith("/")) {
                 throw new Error(
                     `Do not include '/' when registering command handlers (use '${
-                        cmd.substr(
-                            0,
-                            1,
-                        )
+                        cmd.substr(1)
                     }' not '${cmd}')`,
                 );
             }
