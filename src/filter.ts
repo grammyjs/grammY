@@ -87,9 +87,7 @@ function preprocess(filter: string[]): string[][] {
     if (expanded.length === 0) {
         throw new Error(
             `Shortcuts in '${
-                filter.join(
-                    ":",
-                )
+                filter.join(":")
             }' do not expand to any valid filter query`,
         );
     }
@@ -108,9 +106,7 @@ function check(original: string[], preprocessed: string[][]): string[][] {
             `Invalid filter query '${
                 original.join(":")
             }'. There are ${errors.length} errors after expanding the contained shortcuts: ${
-                errors.join(
-                    "; ",
-                )
+                errors.join("; ")
             }`,
         );
     }
@@ -138,24 +134,17 @@ Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")}.`;
             permitted.length === 0
                 ? `No further filtering is possible after '${l1}:${l2}'.`
                 : `Permitted values are: ${
-                    permitted
-                        .map((k) => `'${k}'`)
-                        .join(", ")
+                    permitted.map((k) => `'${k}'`).join(", ")
                 }.`
         }`;
     }
     if (n.length === 0) return true;
     return `Cannot filter further than three levels, ':${
-        n.join(
-            ":",
-        )
+        n.join(":")
     }' is invalid!`;
 }
-
 interface LTree {
-    [l1: string]: {
-        [l2: string]: Set<string>;
-    };
+    [l1: string]: { [l2: string]: Set<string> };
 }
 function treeify(paths: string[][]): LTree {
     const tree: LTree = {};
