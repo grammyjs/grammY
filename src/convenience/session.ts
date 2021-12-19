@@ -267,7 +267,7 @@ export function lazySession<S, C extends Context>(
                     "Cannot access lazy session data because the session key was undefined!",
                 );
             }
-            let v = await storage.read(key);
+            let v: S | undefined = await storage.read(key);
             if (!fetching) return value;
             if (v === undefined) {
                 v = options.initial?.();
