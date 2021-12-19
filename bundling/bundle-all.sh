@@ -17,7 +17,7 @@ echo "Caching and bundling releases using $cores cores"
 curl --silent https://cdn.deno.land/grammy/meta/versions.json |
     jq --raw-output '.versions | .[] | select(startswith("v1"))' |
     xargs -P$cores -I% bash -c \
-        'deno cache --quiet https://deno.land/x/grammy@%/mod.ts &&
+        'deno cache --quiet --no-check https://deno.land/x/grammy@%/mod.ts &&
             echo "Cached %" &&
             deno run --unstable --allow-net --allow-write=bundles/ bundle-es.ts %'
 echo 'Done.'
