@@ -3,8 +3,8 @@ const isDeno = typeof Deno !== "undefined";
 
 // === Needed imports
 import { InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.4.5?dts";
-import { basename } from "https://deno.land/std@0.117.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.117.0/streams/mod.ts";
+import { basename } from "https://deno.land/std@0.118.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.118.0/streams/mod.ts";
 
 // === Export all API types
 export * from "https://cdn.skypack.dev/@grammyjs/types@v2.4.5?dts";
@@ -25,7 +25,7 @@ const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.117.0/streams/mod.ts";
+export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.118.0/streams/mod.ts";
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
