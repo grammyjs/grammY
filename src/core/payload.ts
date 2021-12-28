@@ -113,6 +113,7 @@ async function* payloadToMultipartItr(
     const separator = enc.encode(`\r\n--${boundary}\r\n`);
     let first = true;
     for (const [key, value] of Object.entries(payload)) {
+        if (value == null) continue;
         if (!first) yield separator;
         yield valuePart(key, typeof value === "object" ? str(value) : value);
         first = false;
