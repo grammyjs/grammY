@@ -484,6 +484,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "dilyanpalauzov",
+      "name": "Дилян Палаузов",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4992947?v=4",
+      "profile": "https://github.com/dilyanpalauzov",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
