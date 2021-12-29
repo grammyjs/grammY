@@ -393,10 +393,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         });
         return this.on("message:entities:bot_command").filter(
             (ctx): ctx is CommandContext<C> => {
-                const msg = ctx.message;
-                const txt = msg.text ?? msg.caption;
-                const entities = msg.entities ?? msg.caption_entities;
-                return entities.some((e) => {
+                const txt = ctx.message.text;
+                return ctx.message.entities.some((e) => {
                     if (e.type !== "bot_command") return false;
                     if (e.offset !== 0) return false;
                     const cmd = txt.substring(1, e.length);
