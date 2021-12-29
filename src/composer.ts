@@ -108,7 +108,7 @@ function generateBotErrorMessage(error: unknown) {
                 msg += `: ${error}`;
                 break;
             case "string":
-                msg += `: ${String(error).substr(0, 50)}`;
+                msg += `: ${String(error).substring(0, 50)}`;
                 break;
             default:
                 msg += "!";
@@ -384,7 +384,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             if (cmd.startsWith("/")) {
                 throw new Error(
                     `Do not include '/' when registering command handlers (use '${
-                        cmd.substr(1)
+                        cmd.substring(1)
                     }' not '${cmd}')`,
                 );
             }
@@ -401,7 +401,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     if (e.offset !== 0) return false;
                     const cmd = txt.substring(1, e.length);
                     if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                        ctx.match = txt.substr(cmd.length + 1).trimStart();
+                        ctx.match = txt.substring(cmd.length + 1).trimStart();
                         return true;
                     }
                     const index = cmd.indexOf("@");
@@ -410,7 +410,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     if (atTarget !== ctx.me.username) return false;
                     const atCommand = cmd.substring(0, index);
                     if (noAtCommands.has(atCommand)) {
-                        ctx.match = txt.substr(cmd.length + 1).trimStart();
+                        ctx.match = txt.substring(cmd.length + 1).trimStart();
                         return true;
                     }
                     return false;
