@@ -391,9 +391,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
             set.add(cmd);
         });
-        return this.on(":entities:bot_command").filter(
+        return this.on("message:entities:bot_command").filter(
             (ctx): ctx is CommandContext<C> => {
-                const msg = ctx.message ?? ctx.channelPost;
+                const msg = ctx.message;
                 const txt = msg.text ?? msg.caption;
                 const entities = msg.entities ?? msg.caption_entities;
                 return entities.some((e) => {
@@ -833,7 +833,7 @@ type HearsContext<C extends Context> = Filter<
 >;
 type CommandContext<C extends Context> = Filter<
     C & { match: string },
-    ":entities:bot_command"
+    "message:entities:bot_command"
 >;
 
 function match<C extends Context>(
