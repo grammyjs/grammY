@@ -219,6 +219,7 @@ const ENTITY_KEYS = {
     italic: {},
     underline: {},
     strikethrough: {},
+    spoiler: {},
     code: {},
     pre: {},
     text_link: {},
