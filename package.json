@@ -23,7 +23,7 @@
         "contribs": "all-contributors"
     },
     "dependencies": {
-        "@grammyjs/types": "^2.5.0",
+        "@grammyjs/types": "^2.5.1",
         "abort-controller": "^3.0.0",
         "debug": "^4.3.3",
         "node-fetch": "^2.6.5"
