@@ -33,7 +33,7 @@
         "@types/node": "^12.20.36",
         "@types/node-fetch": "^2.5.12",
         "all-contributors-cli": "^6.20.0",
-        "deno2node": "^1.0.0"
+        "deno2node": "^1.1.0"
     },
     "files": [
         "out/"
