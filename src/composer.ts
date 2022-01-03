@@ -171,6 +171,7 @@ export async function run<C extends Context>(
  */
 export class Composer<C extends Context> implements MiddlewareObj<C> {
     private handler: MiddlewareFn<C>;
+    private lastElse: Composer<C> | undefined;
 
     /**
      * Constructs a new composer based on the provided middleware. If no
@@ -583,8 +584,19 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<Middleware<C>>
     ) {
         const composer = new Composer(...middleware);
-        this.branch(predicate, composer, pass);
+        const falseBranch = new Composer<C>();
+        this.branch(predicate, composer, falseBranch);
+        this.lastElse = falseBranch;
         return composer;
+    }
+
+    else(...middleware: Array<Middleware<C>>) {
+        if (this.lastElse === undefined) {
+            throw new Error(
+                "Cannot use `else` without a previous `filter` call!",
+            );
+        }
+        return this.lastElse.use(...middleware);
     }
 
     /**
