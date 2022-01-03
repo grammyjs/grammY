@@ -512,6 +512,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "IlyaSemenov",
+      "name": "Ilya Semenov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/128121?v=4",
+      "profile": "https://github.com/IlyaSemenov",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
