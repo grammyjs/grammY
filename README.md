@@ -12,7 +12,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.5-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-49-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-50-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -190,6 +190,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/dilyanpalauzov"><img src="https://avatars.githubusercontent.com/u/4992947?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Дилян Палаузов</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Adilyanpalauzov" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=dilyanpalauzov" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/lmx-Hexagram"><img src="https://avatars.githubusercontent.com/u/52130356?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lmx-Hexagram</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=lmx-Hexagram" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/IlyaSemenov"><img src="https://avatars.githubusercontent.com/u/128121?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ilya Semenov</b></sub></a><br /><a href="#ideas-IlyaSemenov" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/abdollahzadehAli"><img src="https://avatars.githubusercontent.com/u/96317431?v=4?s=100" width="100px;" alt=""/><br /><sub><b>abdollahzadehAli</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=abdollahzadehAli" title="Documentation">📖</a> <a href="#example-abdollahzadehAli" title="Examples">💡</a></td>
   </tr>
 </table>
 

@@ -521,6 +521,16 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "abdollahzadehAli",
+      "name": "abdollahzadehAli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96317431?v=4",
+      "profile": "https://github.com/abdollahzadehAli",
+      "contributions": [
+        "doc",
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
