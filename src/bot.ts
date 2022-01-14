@@ -216,7 +216,7 @@ export class Bot<
      * @returns true if the bot is initialized, and false otherwise
      */
     isInited() {
-        return this.me === undefined;
+        return this.me !== undefined;
     }
 
     /**
