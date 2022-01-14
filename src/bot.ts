@@ -223,7 +223,8 @@ export class Bot<
 
     /**
      * Initializes the bot, i.e. fetches information about the bot itself. This
-     * method is called automatically, you usually don't have to call it manually.
+     * method is called automatically, you usually don't have to call it
+     * manually.
      */
     async init() {
         if (!this.isInited()) {
