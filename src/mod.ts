@@ -18,6 +18,10 @@ export type {
     MiddlewareFn,
     MiddlewareObj,
     NextFunction,
+    CommandContext,
+    CommandMiddleware,
+    HearsContext,
+    HearsMiddleware,
 } from "./composer.ts";
 
 export { matchFilter } from "./filter.ts";

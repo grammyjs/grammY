@@ -304,7 +304,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     hears(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<HearsContext<C>>>
+        ...middleware: Array<HearsMiddleware<C>>
     ): Composer<HearsContext<C>> {
         const trg = triggerFn(trigger);
         return this.on([":text", ":caption"]).filter(
@@ -376,7 +376,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
-        ...middleware: Array<Middleware<CommandContext<C>>>
+        ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         const atCommands = new Set<string>();
         const noAtCommands = new Set<string>();
@@ -826,13 +826,18 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
     );
 }
 
-type HearsContext<C extends Context> = Filter<
+export type HearsContext<C extends Context> = Filter<
     C & { match: string | RegExpMatchArray },
     ":text" | ":caption"
 >;
-type CommandContext<C extends Context> = Filter<
+export type HearsMiddleware<C extends Context> = Middleware<HearsContext<C>>;
+
+export type CommandContext<C extends Context> = Filter<
     C & { match: string },
     ":entities:bot_command"
+>;
+export type CommandMiddleware<C extends Context> = Middleware<
+    CommandContext<C>
 >;
 
 function match<C extends Context>(
