@@ -230,7 +230,7 @@ export class Bot<
         if (!this.isInited()) {
             debug("Initializing bot");
             const me = await this.api.getMe();
-            if (!this.isInited()) this.me = me;
+            if (this.me === undefined) this.me = me;
             else debug("Bot info was set manually by now, will not overwrite");
         }
         debug(`I am ${this.me!.username}!`);
