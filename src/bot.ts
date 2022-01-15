@@ -209,19 +209,31 @@ export class Bot<
     }
 
     /**
+     * Checks if the bot has been initialized. A bot is initialized if the bot
+     * information is set. The bot information can either be set automatically
+     * by calling `bot.init`, or manually through the bot constructor. Note that
+     * usually, initialization is done automatically and you do not have to care
+     * about this method.
+     *
+     * @returns true if the bot is initialized, and false otherwise
+     */
+    isInited() {
+        return this.me !== undefined;
+    }
+
+    /**
      * Initializes the bot, i.e. fetches information about the bot itself. This
-     * method is called automatically, you don't have to call it manually.
+     * method is called automatically, you usually don't have to call it
+     * manually.
      */
     async init() {
-        if (this.me === undefined) {
+        if (!this.isInited()) {
             debug("Initializing bot");
             const me = await this.api.getMe();
             if (this.me === undefined) this.me = me;
             else debug("Bot info was set manually by now, will not overwrite");
-        } else {
-            debug("Bot already initialized!");
         }
-        debug(`I am ${this.me.username}!`);
+        debug(`I am ${this.me!.username}!`);
     }
 
     /**
@@ -304,7 +316,7 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        await withRetries(() => this.init());
+        if (!this.isInited()) await withRetries(() => this.init());
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
