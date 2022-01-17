@@ -387,30 +387,7 @@ type NotUndefined = string | number | boolean | SomeObject;
  * Given a FilterQuery, returns an object that, when intersected with an Update,
  * marks those properties as required that are guaranteed to exist.
  */
-type RunQuery<Q extends string> = L1Combinations<Q, L1Parts<Q>>;
-
-// build up all combinations of all L1 fields
-type L1Combinations<Q extends string, L1 extends string> = Combine<
-    L1Fields<Q, L1>,
-    L1
->;
-// maps each L1 part of the filter query to an object
-type L1Fields<Q extends string, L1 extends string> = L1 extends unknown
-    ? Record<L1, L2Combinations<L2Parts<Q, L1>>>
-    : never;
-
-// build up all combinations of all L2 fields
-type L2Combinations<L2 extends string> = [L2] extends [never] ? NotUndefined // short-circuit L1 queries (L2 is never)
-    : Combine<L2Fields<L2>, L2>;
-// maps each L2 part of the filter query to an object and handles siblings
-type L2Fields<L2 extends string> = L2 extends unknown
-    ? Record<L2 | Twins<L2>, NotUndefined>
-    : never;
-
-// define additional fields on U with value `undefined`
-type Combine<U, K extends string> = U extends unknown
-    ? U & Partial<Record<Exclude<K, keyof U>, undefined>>
-    : never;
+type RunQuery<Q extends string> = L1Discriminator<Q, L1Parts<Q>>;
 
 // gets all L1 query snippets
 type L1Parts<Q extends string> = Q extends `${infer U}:${string}` ? U : Q;
@@ -420,6 +397,35 @@ type L2Parts<
     P extends string,
 > = Q extends `${P}:${infer U}:${string}` ? U
     : Q extends `${P}:${infer U}` ? U
+    : never;
+
+// build up all combinations of all L1 fields
+type L1Discriminator<Q extends string, L1 extends string> = Combine<
+    L1Fragment<Q, L1>,
+    L1
+>;
+// maps each L1 part of the filter query to an object
+type L1Fragment<Q extends string, L1 extends string> = L1 extends unknown
+    ? Record<L1, L2Discriminator<L1, L2Parts<Q, L1>>>
+    : never;
+
+// build up all combinations of all L2 fields
+type L2Discriminator<L1 extends string, L2 extends string> = [L2] extends
+    [never] ? L2ShallowFragment<L1> // short-circuit L1 queries (L2 is never), only add twins
+    : Combine<L2Fragment<L1, L2>, L2>;
+// maps each L2 part of the filter query to an object and handles siblings
+type L2Fragment<L1 extends string, L2 extends string> = L2 extends unknown
+    ? Record<L2 | AddTwins<L1, L2>, NotUndefined>
+    : never;
+// does the same as L1Fragment but without combining L2 properties
+type L2ShallowFragment<L1 extends string> = Record<
+    AddTwins<L1, never>,
+    NotUndefined
+>;
+
+// define additional fields on U with value `undefined`
+type Combine<U, K extends string> = U extends unknown
+    ? U & Partial<Record<Exclude<K, keyof U>, undefined>>
     : never;
 
 /**
@@ -466,7 +472,9 @@ interface Shortcuts<U extends Update> {
         : [U["chat_join_request"]] extends [SomeObject]
             ? U["chat_join_request"]["chat"]
         : undefined;
-    // senderChat: disregarded here because always optional on 'Message'
+    senderChat: [Shortcuts<U>["msg"]] extends [SomeObject]
+        ? Shortcuts<U>["msg"]["sender_chat"]
+        : undefined;
     from: [U["callback_query"]] extends [SomeObject]
         ? U["callback_query"]["from"]
         : [U["inline_query"]] extends [SomeObject] ? U["inline_query"]["from"]
@@ -524,15 +532,40 @@ type ExpandL2<S extends string> = S extends L2Shortcuts
     : S;
 
 // === Define some helpers for when one property implies the existence of others
-type Twins<V extends string> = V extends KeyOf<Equivalents> ? Equivalents[V]
-    : V;
-type Equivalents = {
+
+// merges twins based on L1 with those based on L1 and L2
+type AddTwins<L1 extends string, L2 extends string> =
+    | TwinsFromL1<L1, L2>
+    | TwinsFromL2<L1, L2>;
+
+// yields twins based on a given L1 property
+type TwinsFromL1<L1 extends string, L2 extends string> = L1 extends
+    KeyOf<L1Equivalents> ? L1Equivalents[L1]
+    : L2;
+type L1Equivalents = {
+    message: "from";
+    edited_message: "from" | "edit_date";
+    channel_post: "sender_chat";
+    edited_channel_post: "sender_chat" | "edit_date";
+};
+
+// yields twins based on given L1 and L2 properties
+type TwinsFromL2<L1 extends string, L2 extends string> = L1 extends
+    KeyOf<L2Equivalents>
+    ? L2 extends KeyOf<L2Equivalents[L1]> ? L2Equivalents[L1][L2] : L2
+    : L2;
+type L2Equivalents = {
+    message: MessageEquivalents;
+    edited_message: MessageEquivalents;
+    channel_post: MessageEquivalents;
+    edited_channel_post: MessageEquivalents;
+};
+type MessageEquivalents = {
     animation: "document";
-    entities: TextMessages;
+    entities: "text";
     caption: CaptionMessages;
     caption_entities: CaptionMessages;
 };
-type TextMessages = "text";
 type CaptionMessages =
     | "animation"
     | "audio"
