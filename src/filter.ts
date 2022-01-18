@@ -312,21 +312,23 @@ const UPDATE_KEYS = {
 // === Build up all possible filter queries from the above validation structure
 type KeyOf<T> = string & keyof T; // Emulate `keyofStringsOnly`
 
+// Suggestion building base structure
 type S = typeof UPDATE_KEYS;
 
-// E.g. 'message'
-type L1 = KeyOf<S>;
-// E.g. 'message:entities'
-type L2<K extends L1 = L1> = K extends unknown ? `${K}:${KeyOf<S[K]>}` : never;
-// E.g. 'message:entities:url'
-type L3<K0 extends L1 = L1> = K0 extends unknown ? L3_<K0> : never;
-type L3_<
-    K0 extends L1,
-    K1 extends KeyOf<S[K0]> = KeyOf<S[K0]>,
-> = K1 extends unknown ? `${K0}:${K1}:${KeyOf<S[K0][K1]>}` : never;
-// All three combined
-type L123 = L1 | L2 | L3;
-// E.g. 'message::url'
+// E.g. 'message' suggestions
+type L1S = KeyOf<S>;
+// E.g. 'message:entities' suggestions
+type L2S<L1 extends L1S = L1S> = L1 extends unknown ? `${L1}:${KeyOf<S[L1]>}`
+    : never;
+// E.g. 'message:entities:url' suggestions
+type L3S<L1 extends L1S = L1S> = L1 extends unknown ? L3S_<L1> : never;
+type L3S_<
+    L1 extends L1S,
+    L2 extends KeyOf<S[L1]> = KeyOf<S[L1]>,
+> = L2 extends unknown ? `${L1}:${L2}:${KeyOf<S[L1][L2]>}` : never;
+// Suggestions for all three combined
+type L123 = L1S | L2S | L3S;
+// E.g. 'message::url' generation
 type InjectShortcuts<Q extends L123 = L123> = Q extends
     `${infer R}:${infer S}:${infer T}`
     ? `${CollapseL1<R, L1Shortcuts>}:${CollapseL2<S, L2Shortcuts>}:${T}`
@@ -390,13 +392,13 @@ type NotUndefined = string | number | boolean | SomeObject;
 type RunQuery<Q extends string> = L1Discriminator<Q, L1Parts<Q>>;
 
 // gets all L1 query snippets
-type L1Parts<Q extends string> = Q extends `${infer U}:${string}` ? U : Q;
+type L1Parts<Q extends string> = Q extends `${infer L1}:${string}` ? L1 : Q;
 // gets all L2 query snippets for the given L1 part, or `never`
 type L2Parts<
     Q extends string,
-    P extends string,
-> = Q extends `${P}:${infer U}:${string}` ? U
-    : Q extends `${P}:${infer U}` ? U
+    L1 extends string,
+> = Q extends `${L1}:${infer L2}:${string}` ? L2
+    : Q extends `${L1}:${infer L2}` ? L2
     : never;
 
 // build up all combinations of all L1 fields
@@ -521,8 +523,9 @@ type L1Shortcuts = KeyOf<typeof L1_SHORTCUTS>;
 type L2Shortcuts = KeyOf<typeof L2_SHORTCUTS>;
 
 type ExpandShortcuts<Q extends string> = Q extends
-    `${infer R}:${infer S}:${infer T}` ? `${ExpandL1<R>}:${ExpandL2<S>}:${T}`
-    : Q extends `${infer R}:${infer S}` ? `${ExpandL1<R>}:${ExpandL2<S>}`
+    `${infer L1}:${infer L2}:${infer L3}`
+    ? `${ExpandL1<L1>}:${ExpandL2<L2>}:${L3}`
+    : Q extends `${infer L1}:${infer L2}` ? `${ExpandL1<L1>}:${ExpandL2<L2>}`
     : ExpandL1<Q>;
 type ExpandL1<S extends string> = S extends L1Shortcuts
     ? typeof L1_SHORTCUTS[S][number]
