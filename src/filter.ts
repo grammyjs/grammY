@@ -383,13 +383,16 @@ export type FilterQuery = AllValidFilterQueries;
  */
 // deno-lint-ignore ban-types
 type SomeObject = object;
-type NotUndefined = string | number | boolean | SomeObject;
 
 /**
  * Given a FilterQuery, returns an object that, when intersected with an Update,
  * marks those properties as required that are guaranteed to exist.
  */
-type RunQuery<Q extends string> = L1Discriminator<Q, L1Parts<Q>>;
+type RunQuery<C extends Context, Q extends string> = L1Discriminator<
+    C,
+    Q,
+    L1Parts<Q>
+>;
 
 // gets all L1 query snippets
 type L1Parts<Q extends string> = Q extends `${infer L1}:${string}` ? L1 : Q;
@@ -402,27 +405,57 @@ type L2Parts<
     : never;
 
 // build up all combinations of all L1 fields
-type L1Discriminator<Q extends string, L1 extends string> = Combine<
-    L1Fragment<Q, L1>,
-    L1
->;
+type L1Discriminator<
+    C extends Context,
+    Q extends string,
+    L1 extends string,
+> = Combine<L1Fragment<C, Q, L1>, L1>;
 // maps each L1 part of the filter query to an object
-type L1Fragment<Q extends string, L1 extends string> = L1 extends unknown
-    ? Record<L1, L2Discriminator<L1, L2Parts<Q, L1>>>
+type L1Fragment<
+    C extends Context,
+    Q extends string,
+    L1 extends string,
+> = L1 extends unknown ? Record<L1, L2Discriminator<C, L1, L2Parts<Q, L1>>>
     : never;
 
 // build up all combinations of all L2 fields
-type L2Discriminator<L1 extends string, L2 extends string> = [L2] extends
-    [never] ? L2ShallowFragment<L1> // short-circuit L1 queries (L2 is never), only add twins
-    : Combine<L2Fragment<L1, L2>, L2>;
+type L2Discriminator<
+    C extends Context,
+    L1 extends string,
+    L2 extends string,
+> = [L2] extends [never] ? L2ShallowFragment<C, L1> // short-circuit L1 queries (L2 is never), only add twins
+    : Combine<L2Fragment<C, L1, L2>, L2>;
+
+// same as Pick<>, but doesn't restrict K to keyof O
+type Pick2<O, K> = K extends keyof O ? Pick<O, K> : never;
+
+type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
+    ? `${T}${Capitalize<SnakeToCamelCase<U>>}`
+    : S;
+
+type AllUpdateTypes = Exclude<SnakeToCamelCase<keyof Update>, "updateId">;
+
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends
+    ((k: infer I) => void) ? I : never;
+
+// given a context, get all possible update types
+// to be kept updated with Bot API
+type AllUpdates<C extends Context> = UnionToIntersection<
+    NonNullable<C[AllUpdateTypes]>
+>;
+
 // maps each L2 part of the filter query to an object and handles siblings
-type L2Fragment<L1 extends string, L2 extends string> = L2 extends unknown
-    ? Record<L2 | AddTwins<L1, L2>, NotUndefined>
+type L2Fragment<
+    C extends Context,
+    L1 extends string,
+    L2 extends string,
+> = L2 extends unknown ? Pick2<AllUpdates<C>, L2 | AddTwins<L1, L2>>
     : never;
+
 // does the same as L1Fragment but without combining L2 properties
-type L2ShallowFragment<L1 extends string> = Record<
-    AddTwins<L1, never>,
-    NotUndefined
+type L2ShallowFragment<C extends Context, L1 extends string> = Pick2<
+    AllUpdates<C>,
+    AddTwins<L1, never>
 >;
 
 // define additional fields on U with value `undefined`
@@ -441,7 +474,7 @@ type Combine<U, K extends string> = U extends unknown
  */
 export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     C,
-    RunQuery<ExpandShortcuts<Q>>
+    RunQuery<C, ExpandShortcuts<Q>>
 >;
 // apply a query result by intersecting it with Update, and then injecting into C
 type PerformQuery<C extends Context, U extends SomeObject> = U extends unknown
@@ -543,8 +576,7 @@ type AddTwins<L1 extends string, L2 extends string> =
 
 // yields twins based on a given L1 property
 type TwinsFromL1<L1 extends string, L2 extends string> = L1 extends
-    KeyOf<L1Equivalents> ? L1Equivalents[L1]
-    : L2;
+    KeyOf<L1Equivalents> ? L1Equivalents[L1] : L2;
 type L1Equivalents = {
     message: "from";
     edited_message: "from" | "edit_date";
