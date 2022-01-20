@@ -1,22 +1,22 @@
 // deno-lint-ignore-file camelcase
-import { Api, Other as OtherApi } from "./core/api.ts";
-import { Methods, RawApi } from "./core/client.ts";
+import { type Api, type Other as OtherApi } from "./core/api.ts";
+import { type Methods, type RawApi } from "./core/client.ts";
 import {
-    Chat,
-    ChatPermissions,
-    InlineQueryResult,
-    InputFile,
-    InputMedia,
-    InputMediaAudio,
-    InputMediaDocument,
-    InputMediaPhoto,
-    InputMediaVideo,
-    LabeledPrice,
-    Message,
-    PassportElementError,
-    Update,
-    User,
-    UserFromGetMe,
+    type Chat,
+    type ChatPermissions,
+    type InlineQueryResult,
+    type InputFile,
+    type InputMedia,
+    type InputMediaAudio,
+    type InputMediaDocument,
+    type InputMediaPhoto,
+    type InputMediaVideo,
+    type LabeledPrice,
+    type Message,
+    type PassportElementError,
+    type Update,
+    type User,
+    type UserFromGetMe,
 } from "./platform.deno.ts";
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<

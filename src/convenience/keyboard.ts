@@ -1,7 +1,7 @@
 import {
-    InlineKeyboardButton,
-    KeyboardButton,
-    LoginUrl,
+    type InlineKeyboardButton,
+    type KeyboardButton,
+    type LoginUrl,
 } from "../platform.deno.ts";
 
 /**

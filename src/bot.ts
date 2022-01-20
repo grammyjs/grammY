@@ -2,9 +2,16 @@
 import { BotError, Composer, run } from "./composer.ts";
 import { Context } from "./context.ts";
 import { Api } from "./core/api.ts";
-import { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
+import {
+    type ApiClientOptions,
+    type WebhookReplyEnvelope,
+} from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
-import { debug as d, Update, UserFromGetMe } from "./platform.deno.ts";
+import {
+    debug as d,
+    type Update,
+    type UserFromGetMe,
+} from "./platform.deno.ts";
 const debug = d("grammy:bot");
 const debugErr = d("grammy:error");
 

@@ -1,5 +1,5 @@
-import { Context } from "./context.ts";
-import { Filter, FilterQuery, matchFilter } from "./filter.ts";
+import { type Context } from "./context.ts";
+import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 type MaybeArray<T> = T | T[];

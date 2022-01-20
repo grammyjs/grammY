@@ -1,5 +1,5 @@
-import { Context } from "../context.ts";
-import { MiddlewareFn } from "../composer.ts";
+import { type Context } from "../context.ts";
+import { type MiddlewareFn } from "../composer.ts";
 import { debug as d } from "../platform.deno.ts";
 const debug = d("grammy:session");
 
