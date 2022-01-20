@@ -1,9 +1,9 @@
 import {
-    ApiResponse,
+    type ApiResponse,
     baseFetchConfig,
     debug as d,
-    Opts,
-    Telegram,
+    type Opts,
+    type Telegram,
 } from "../platform.deno.ts";
 import { GrammyError, HttpError } from "./error.ts";
 import {
