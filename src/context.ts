@@ -1,22 +1,22 @@
 // deno-lint-ignore-file camelcase
-import { Api, Other as OtherApi } from "./core/api.ts";
-import { Methods, RawApi } from "./core/client.ts";
+import { type Api, type Other as OtherApi } from "./core/api.ts";
+import { type Methods, type RawApi } from "./core/client.ts";
 import {
-    Chat,
-    ChatPermissions,
-    InlineQueryResult,
-    InputFile,
-    InputMedia,
-    InputMediaAudio,
-    InputMediaDocument,
-    InputMediaPhoto,
-    InputMediaVideo,
-    LabeledPrice,
-    Message,
-    PassportElementError,
-    Update,
-    User,
-    UserFromGetMe,
+    type Chat,
+    type ChatPermissions,
+    type InlineQueryResult,
+    type InputFile,
+    type InputMedia,
+    type InputMediaAudio,
+    type InputMediaDocument,
+    type InputMediaPhoto,
+    type InputMediaVideo,
+    type LabeledPrice,
+    type Message,
+    type PassportElementError,
+    type Update,
+    type User,
+    type UserFromGetMe,
 } from "./platform.deno.ts";
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
@@ -947,23 +947,17 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.banChatSenderChat`. Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
+     * Context-aware alias for `api.banChatSenderChat`. Use this method to ban a channel chat in a supergroup or a channel. Until the chat is unbanned, the owner of the banned chat won't be able to send messages on behalf of any of their channels. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param sender_chat_id Unique identifier of the target sender chat
-     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
      */
-    banChatSenderChat(
-        sender_chat_id: number,
-        other?: Other<"banChatSenderChat", "sender_chat_id">,
-        signal?: AbortSignal,
-    ) {
+    banChatSenderChat(sender_chat_id: number, signal?: AbortSignal) {
         return this.api.banChatSenderChat(
             orThrow(this.chat, "banChatSenderChat").id,
             sender_chat_id,
-            other,
             signal,
         );
     }
@@ -1586,7 +1580,6 @@ export class Context implements RenamedUpdate {
             | "description"
             | "payload"
             | "provider_token"
-            | "start_parameter"
             | "currency"
             | "prices"
         >,

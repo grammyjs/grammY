@@ -21,12 +21,13 @@
         "doc",
         "design",
         "example",
-        "question",
         "test",
         "plugin",
         "platform",
         "review",
-        "mentoring"
+        "mentoring",
+        "projectManagement",
+        "infra"
       ]
     },
     {
@@ -36,7 +37,10 @@
       "profile": "https://github.com/Tecardo1",
       "contributions": [
         "plugin",
-        "userTesting"
+        "userTesting",
+        "example",
+        "doc",
+        "review"
       ]
     },
     {
@@ -48,7 +52,8 @@
         "ideas",
         "review",
         "infra",
-        "platform"
+        "platform",
+        "tool"
       ]
     },
     {
@@ -105,8 +110,7 @@
         "ideas",
         "review",
         "bug",
-        "code",
-        "question"
+        "code"
       ]
     },
     {
@@ -116,20 +120,23 @@
       "profile": "https://github.com/Amir-Zouerami",
       "contributions": [
         "doc",
-        "plugin"
+        "plugin",
+        "example"
       ]
     },
     {
-      "login": "rojserbest",
+      "login": "roj1512",
       "name": "Roj",
       "avatar_url": "https://avatars.githubusercontent.com/u/49933115?v=4",
-      "profile": "https://github.com/rojserbest",
+      "profile": "https://github.com/roj1512",
       "contributions": [
         "doc",
         "review",
         "infra",
         "translation",
-        "code"
+        "code",
+        "ideas",
+        "mentoring"
       ]
     },
     {
@@ -223,7 +230,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/42675886?v=4",
       "profile": "https://satont.js.org/",
       "contributions": [
-        "plugin"
+        "plugin",
+        "doc"
       ]
     },
     {
@@ -234,8 +242,7 @@
       "contributions": [
         "example",
         "doc",
-        "tutorial",
-        "question"
+        "tutorial"
       ]
     },
     {
@@ -414,7 +421,8 @@
         "bug",
         "code",
         "plugin",
-        "review"
+        "review",
+        "doc"
       ]
     },
     {
@@ -463,7 +471,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/34692207?v=4",
       "profile": "https://github.com/habemuscode",
       "contributions": [
-        "review"
+        "review",
+        "doc"
       ]
     },
     {
@@ -473,6 +482,55 @@
       "profile": "https://borodutch.com/",
       "contributions": [
         "plugin"
+      ]
+    },
+    {
+      "login": "glukki",
+      "name": "Vitaliy Meshchaninov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/140462?v=4",
+      "profile": "http://glukki.ru",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "dilyanpalauzov",
+      "name": "Дилян Палаузов",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4992947?v=4",
+      "profile": "https://github.com/dilyanpalauzov",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "lmx-Hexagram",
+      "name": "lmx-Hexagram",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52130356?v=4",
+      "profile": "https://github.com/lmx-Hexagram",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "IlyaSemenov",
+      "name": "Ilya Semenov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/128121?v=4",
+      "profile": "https://github.com/IlyaSemenov",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "abdollahzadehAli",
+      "name": "abdollahzadehAli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96317431?v=4",
+      "profile": "https://github.com/abdollahzadehAli",
+      "contributions": [
+        "doc",
+        "example"
       ]
     }
   ],

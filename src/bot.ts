@@ -2,9 +2,16 @@
 import { BotError, Composer, run } from "./composer.ts";
 import { Context } from "./context.ts";
 import { Api } from "./core/api.ts";
-import { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
+import {
+    type ApiClientOptions,
+    type WebhookReplyEnvelope,
+} from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
-import { debug as d, Update, UserFromGetMe } from "./platform.deno.ts";
+import {
+    debug as d,
+    type Update,
+    type UserFromGetMe,
+} from "./platform.deno.ts";
 const debug = d("grammy:bot");
 const debugErr = d("grammy:error");
 
@@ -209,19 +216,31 @@ export class Bot<
     }
 
     /**
+     * Checks if the bot has been initialized. A bot is initialized if the bot
+     * information is set. The bot information can either be set automatically
+     * by calling `bot.init`, or manually through the bot constructor. Note that
+     * usually, initialization is done automatically and you do not have to care
+     * about this method.
+     *
+     * @returns true if the bot is initialized, and false otherwise
+     */
+    isInited() {
+        return this.me !== undefined;
+    }
+
+    /**
      * Initializes the bot, i.e. fetches information about the bot itself. This
-     * method is called automatically, you don't have to call it manually.
+     * method is called automatically, you usually don't have to call it
+     * manually.
      */
     async init() {
-        if (this.me === undefined) {
+        if (!this.isInited()) {
             debug("Initializing bot");
             const me = await this.api.getMe();
             if (this.me === undefined) this.me = me;
             else debug("Bot info was set manually by now, will not overwrite");
-        } else {
-            debug("Bot already initialized!");
         }
-        debug(`I am ${this.me.username}!`);
+        debug(`I am ${this.me!.username}!`);
     }
 
     /**
@@ -304,7 +323,7 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        await withRetries(() => this.init());
+        if (!this.isInited()) await withRetries(() => this.init());
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
@@ -362,7 +381,7 @@ you can circumvent this protection against memory leaks.`);
                     throw error;
                 }
             } else debugErr(error);
-            debugErr("Call to `getUpdates` failed, retrying in 3 seconds ...");
+            debugErr("Call to getUpdates failed, retrying in 3 seconds ...");
             await new Promise((r) => setTimeout(r, 3000));
         };
 
@@ -377,7 +396,8 @@ you can circumvent this protection against memory leaks.`);
                         this.pollingAbortController.signal,
                     );
                 } catch (error) {
-                    await handleErr(error);
+                    if (this.pollingRunning) await handleErr(error);
+                    else debug("Pending getUpdates request cancelled");
                 }
             } while (updates === undefined && this.pollingRunning);
             if (updates === undefined) break;

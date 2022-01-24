@@ -1,25 +1,25 @@
 import {
-    InlineKeyboardButton,
-    KeyboardButton,
-    LoginUrl,
+    type InlineKeyboardButton,
+    type KeyboardButton,
+    type LoginUrl,
 } from "../platform.deno.ts";
 
 /**
- * Use this class to simplify building a keyboard (something like this:
+ * Use this class to simplify building a custom keyboard (something like this:
  * https://core.telegram.org/bots#keyboards).
  *
  * ```ts
- * // Build a keyboard:
+ * // Build a custom keyboard:
  * const keyboard = new Keyboard()
  *   .text('A').text('B').row()
  *   .text('C').text('D')
  *
  * // Now you can either pass it directly:
- * ctx.reply('Here is your keyboard!', {
+ * ctx.reply('Here is your custom keyboard!', {
  *   reply_markup: keyboard
  * })
  * // Or if you need to specify more options in `reply_markup`:
- * ctx.reply('Here is your keyboard!', {
+ * ctx.reply('Here is your custom keyboard!', {
  *   reply_markup: {
  *     keyboard: keyboard.build(), // note the `build` call
  *     one_time_keyboard: true,
@@ -28,12 +28,12 @@ import {
  * ```
  *
  * Be sure to check out the
- * [documentation](https://grammy.dev/plugins/keyboard.html#keyboards) on
- * keyboards in grammY.
+ * [documentation](https://grammy.dev/plugins/keyboard.html#custom-keyboards) on
+ * custom keyboards in grammY.
  */
 export class Keyboard {
     /**
-     * The nested array that holds the keyboard. It will be extended every time
+     * The nested array that holds the custom keyboard. It will be extended every time
      * you call one of the provided methods.
      */
     public readonly keyboard: KeyboardButton[][] = [[]];
@@ -102,8 +102,8 @@ export class Keyboard {
         return this.add({ text, request_poll: { type } });
     }
     /**
-     * Return the resulting keyboard that was built. May be called in the end if
-     * necessary so you can specify more options in `reply_markup`.
+     * Return the resulting custom keyboard that was built. May be called in the
+     * end if necessary so you can specify more options in `reply_markup`.
      */
     build() {
         return this.keyboard;

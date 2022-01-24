@@ -7,7 +7,7 @@ const bundled = await Deno.emit(source, { bundle: "module" });
 const bundledCode = bundled.files["deno:///bundle.js"];
 console.log("Bundled", release);
 // Transpile code
-for (const target of ["es3", "es5", "es6", "esnext"] as const) {
+for (const target of ["es6", "esnext"] as const) {
     const transpiled = await Deno.emit("/src.ts", {
         sources: { "/src.ts": bundledCode },
         compilerOptions: { target },

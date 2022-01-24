@@ -1,9 +1,9 @@
 import {
-    ApiResponse,
+    type ApiResponse,
     baseFetchConfig,
     debug as d,
-    Opts,
-    Telegram,
+    type Opts,
+    type Telegram,
 } from "../platform.deno.ts";
 import { GrammyError, toHttpError } from "./error.ts";
 import {
@@ -216,7 +216,7 @@ class ApiClient<R extends RawApi> {
         if (this.options.apiRoot.endsWith("/")) {
             throw new Error(
                 `Remove the trailing '/' from the 'apiRoot' option (use '${
-                    this.options.apiRoot.substr(
+                    this.options.apiRoot.substring(
                         0,
                         this.options.apiRoot.length - 1,
                     )

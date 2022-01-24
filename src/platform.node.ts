@@ -1,10 +1,11 @@
 // === Needed imports
-import { InputFileProxy } from "@grammyjs/types";
+import { type InputFileProxy } from "@grammyjs/types";
 import { Agent as HttpAgent } from "http";
 import { Agent as HttpsAgent } from "https";
+import fetch from "node-fetch";
 import { basename } from "path";
 import { Readable } from "stream";
-import type { ReadStream } from "fs";
+import { type ReadStream } from "fs";
 import { URL } from "url";
 import { createReadStream } from "fs";
 

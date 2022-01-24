@@ -1,26 +1,26 @@
 // deno-lint-ignore-file camelcase
 import {
-    BotCommand,
-    ChatPermissions,
-    InlineQueryResult,
-    InputFile,
-    InputMedia,
-    InputMediaAudio,
-    InputMediaDocument,
-    InputMediaPhoto,
-    InputMediaVideo,
-    LabeledPrice,
-    PassportElementError,
+    type BotCommand,
+    type ChatPermissions,
+    type InlineQueryResult,
+    type InputFile,
+    type InputMedia,
+    type InputMediaAudio,
+    type InputMediaDocument,
+    type InputMediaPhoto,
+    type InputMediaVideo,
+    type LabeledPrice,
+    type PassportElementError,
 } from "../platform.deno.ts";
 import {
-    ApiClientOptions,
+    type ApiClientOptions,
     createRawApi,
-    Methods,
-    Payload,
-    RawApi,
-    Transformer,
-    TransformerConsumer,
-    WebhookReplyEnvelope,
+    type Methods,
+    type Payload,
+    type RawApi,
+    type Transformer,
+    type TransformerConsumer,
+    type WebhookReplyEnvelope,
 } from "./client.ts";
 
 type AlwaysOmittedInOther = "chat_id";
@@ -839,11 +839,10 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
+     * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is unbanned, the owner of the banned chat won't be able to send messages on behalf of any of their channels. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param sender_chat_id Unique identifier of the target sender chat
-     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
@@ -851,13 +850,9 @@ export class Api<R extends RawApi = RawApi> {
     banChatSenderChat(
         chat_id: number | string,
         sender_chat_id: number,
-        other?: Other<R, "banChatSenderChat", "sender_chat_id">,
         signal?: AbortSignal,
     ) {
-        return this.raw.banChatSenderChat(
-            { chat_id, sender_chat_id, ...other },
-            signal,
-        );
+        return this.raw.banChatSenderChat({ chat_id, sender_chat_id }, signal);
     }
 
     /**
@@ -1708,7 +1703,6 @@ export class Api<R extends RawApi = RawApi> {
             | "description"
             | "payload"
             | "provider_token"
-            | "start_parameter"
             | "currency"
             | "prices"
         >,
