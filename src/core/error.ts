@@ -36,9 +36,9 @@ export class GrammyError extends Error implements ApiError {
     }
 }
 export function toGrammyError(
+    err: ApiError,
     method: string,
     payload: Record<string, unknown>,
-    err: ApiError,
 ) {
     return new GrammyError(
         `Call to '${method}' failed!`,

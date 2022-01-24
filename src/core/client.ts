@@ -248,7 +248,7 @@ class ApiClient<R extends RawApi> {
     private call: ApiCallFn<R> = async <M extends Methods<R>>(
         method: M,
         p: Payload<M, R>,
-        s?: AbortSignal,
+        signal?: AbortSignal,
     ) => {
         const payload = p ?? {};
         debug("Calling", method);
@@ -267,44 +267,28 @@ class ApiClient<R extends RawApi> {
             await this.webhookReplyEnvelope.send(config.body);
             return { ok: true, result: true as ApiCallResult<M, R> };
         }
-        // Handle timeout errors
-        const abortController = makeAbortable(s);
-        let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
-        const timeoutPromise = new Promise<never>((_, reject) => {
-            const timeoutSeconds = opts.timeoutSeconds;
-            timeoutHandle = setTimeout(() => {
-                const msg =
-                    `Request to '${method}' timed out after ${timeoutSeconds} seconds`;
-                reject(new Error(msg));
-                abortController.abort();
-            }, 1000 * timeoutSeconds);
-        });
-        // Handle errors in request stream
-        let onStreamError: (err: unknown) => void;
-        const streamErrorPromise = new Promise<never>((_, reject) => {
-            onStreamError = (err: unknown) => {
-                reject(err);
-                abortController.abort();
-            };
-        });
+        // Handle timeouts and errors in the underlying form-data stream
+        const controller = createAbortControllerFromSignal(signal);
+        const timeout = createTimeout(controller, opts.timeoutSeconds, method);
+        const streamErr = createStreamError(controller);
         // Build request URL and config
         const url = opts.buildUrl(opts.apiRoot, this.token, method);
         const config = formDataRequired
-            ? createFormDataPayload(payload, (err) => onStreamError(err))
+            ? createFormDataPayload(payload, (err) => streamErr.catch(err))
             : createJsonPayload(payload);
-        const signal = abortController.signal;
-        const options = { ...opts.baseFetchConfig, signal, ...config };
+        const sig = controller.signal;
+        const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
         const successPromise = fetch(url, options)
             .catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
-        const operations = [successPromise, streamErrorPromise, timeoutPromise];
+        const operations = [successPromise, streamErr.promise, timeout.promise];
         // Wait for result
         try {
             const res = await Promise.race(operations);
             return await res.json();
         } finally {
-            if (timeoutHandle !== undefined) clearTimeout(timeoutHandle);
+            if (timeout.handle !== undefined) clearTimeout(timeout.handle);
         }
     };
 
@@ -321,7 +305,7 @@ class ApiClient<R extends RawApi> {
     ) {
         const data = await this.call(method, payload, signal);
         if (data.ok) return data.result;
-        else throw toGrammyError(method, payload, data);
+        else throw toGrammyError(data, method, payload);
     }
 }
 
@@ -382,7 +366,56 @@ const proxyMethods = {
     },
 };
 
-function makeAbortable(signal?: AbortSignal): AbortController {
+/** A container for a rejecting promise */
+interface AsyncError {
+    promise: Promise<never>;
+}
+/** An async error caused by a timeout */
+interface Timeout extends AsyncError {
+    handle: ReturnType<typeof setTimeout> | undefined;
+}
+/** An async error caused by an error in an underlying resource stream */
+interface StreamError extends AsyncError {
+    catch: (err: unknown) => void;
+}
+
+/** Creates a timeout error which aborts a given controller */
+function createTimeout(
+    controller: AbortController,
+    seconds: number,
+    method: string,
+) {
+    const timeout: Timeout = {
+        handle: undefined,
+        promise: new Promise((_, reject) => {
+            timeout.handle = setTimeout(() => {
+                const msg =
+                    `Request to '${method}' timed out after ${seconds} seconds`;
+                reject(new Error(msg));
+                controller.abort();
+            }, 1000 * seconds);
+        }),
+    };
+    return timeout;
+}
+/** Creates a stream error which abort a given controller */
+function createStreamError(abortController: AbortController) {
+    const streamError: StreamError = {
+        catch: (err) => {
+            // Re-throw by default, but will be overwritten immediately
+            throw err;
+        },
+        promise: new Promise((_, reject) => {
+            streamError.catch = (err: unknown) => {
+                reject(err);
+                abortController.abort();
+            };
+        }),
+    };
+    return streamError;
+}
+
+function createAbortControllerFromSignal(signal?: AbortSignal) {
     const abortController = new AbortController();
     if (signal === undefined) return abortController;
     const sig = signal;
