@@ -134,6 +134,25 @@ export interface ApiClientOptions {
         method: string,
     ) => Parameters<typeof fetch>[0];
     /**
+     * Maximum number of seconds that a request to the Bot API server may take.
+     * If a request has not completed before this time has elapsed, grammY
+     * aborts the request and errors. Without such a timeout, networking issues
+     * may cause your bot to leave open a connection indefinitely, which may
+     * effectively make your bot freeze.
+     *
+     * You probably do not have to care about this option. In rare cases, you
+     * may want to adjust it if you are transferring large files via slow
+     * connections to your own Bot API server.
+     *
+     * The default number of seconds is `500`, which corresponds to 8 minutes
+     * and 20 seconds. Note that this is also the value that is hard-coded in
+     * the official Bot API server, so you cannot perform any successful
+     * requests that exceed this time frame (even if you would allow it in
+     * grammY). Setting this option to higher than the default only makes sense
+     * with a custom Bot API server.
+     */
+    timeoutSeconds?: number;
+    /**
      * If the bot is running on webhooks, as soon as the bot receives an update
      * from Telegram, it is possible to make up to one API call in the response
      * to the webhook request. As a benefit, this saves your bot from making up
@@ -206,6 +225,7 @@ class ApiClient<R extends RawApi> {
             apiRoot,
             buildUrl: options.buildUrl ??
                 ((root, token, method) => `${root}/bot${token}/${method}`),
+            timeoutSeconds: options.timeoutSeconds ?? 500,
             baseFetchConfig: {
                 ...baseFetchConfig(apiRoot),
                 ...options.baseFetchConfig,
@@ -251,12 +271,13 @@ class ApiClient<R extends RawApi> {
         const abortController = makeAbortable(s);
         let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
         const timeoutPromise = new Promise<never>((_, reject) => {
+            const timeoutSeconds = opts.timeoutSeconds;
             timeoutHandle = setTimeout(() => {
                 const msg =
-                    `Request to '${method}' timed out after 500 seconds`;
+                    `Request to '${method}' timed out after ${timeoutSeconds} seconds`;
                 reject(new Error(msg));
                 abortController.abort();
-            }, 500_000);
+            }, timeoutSeconds * 1000);
         });
         // Handle errors in request stream
         let onStreamError: (err: unknown) => void;
