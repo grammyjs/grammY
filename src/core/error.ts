@@ -35,6 +35,18 @@ export class GrammyError extends Error implements ApiError {
         this.parameters = err.parameters ?? {};
     }
 }
+export function toGrammyError(
+    method: string,
+    payload: Record<string, unknown>,
+    err: ApiError,
+) {
+    return new GrammyError(
+        `Call to '${method}' failed!`,
+        err,
+        method,
+        payload,
+    );
+}
 
 /**
  * This class represents errors that are thrown by grammY because an HTTP call

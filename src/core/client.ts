@@ -5,7 +5,7 @@ import {
     type Opts,
     type Telegram,
 } from "../platform.deno.ts";
-import { GrammyError, toHttpError } from "./error.ts";
+import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
@@ -228,14 +228,12 @@ class ApiClient<R extends RawApi> {
     private call: ApiCallFn<R> = async <M extends Methods<R>>(
         method: M,
         p: Payload<M, R>,
-        signal?: AbortSignal,
+        s?: AbortSignal,
     ) => {
         const payload = p ?? {};
-
         debug("Calling", method);
         // General config
         const opts = this.options;
-        const url = opts.buildUrl(opts.apiRoot, this.token, method);
         const formDataRequired = requiresFormDataUpload(payload);
         // Short-circuit on webhook reply
         if (
@@ -250,16 +248,14 @@ class ApiClient<R extends RawApi> {
             return { ok: true, result: true as ApiCallResult<M, R> };
         }
         // Handle timeout errors
-        const controller = new AbortController();
-        const abort = combineAborts(controller, signal);
-        const options = { ...opts.baseFetchConfig, signal: controller.signal };
+        const abortController = makeAbortable(s);
         let timeoutHandle: ReturnType<typeof setTimeout> | undefined;
         const timeoutPromise = new Promise<never>((_, reject) => {
             timeoutHandle = setTimeout(() => {
                 const msg =
                     `Request to '${method}' timed out after 500 seconds`;
                 reject(new Error(msg));
-                abort();
+                abortController.abort();
             }, 500_000);
         });
         // Handle errors in request stream
@@ -267,15 +263,18 @@ class ApiClient<R extends RawApi> {
         const streamErrorPromise = new Promise<never>((_, reject) => {
             onStreamError = (err: unknown) => {
                 reject(err);
-                abort();
+                abortController.abort();
             };
         });
-        // Build request config
+        // Build request URL and config
+        const url = opts.buildUrl(opts.apiRoot, this.token, method);
         const config = formDataRequired
             ? createFormDataPayload(payload, (err) => onStreamError(err))
             : createJsonPayload(payload);
+        const signal = abortController.signal;
+        const options = { ...opts.baseFetchConfig, signal, ...config };
         // Perform fetch call, and handle networking errors
-        const successPromise = fetch(url, { ...options, ...config })
+        const successPromise = fetch(url, options)
             .catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErrorPromise, timeoutPromise];
@@ -301,14 +300,7 @@ class ApiClient<R extends RawApi> {
     ) {
         const data = await this.call(method, payload, signal);
         if (data.ok) return data.result;
-        else {
-            throw new GrammyError(
-                `Call to '${method}' failed!`,
-                data,
-                method,
-                payload,
-            );
-        }
+        else throw toGrammyError(method, payload, data);
     }
 }
 
@@ -369,8 +361,9 @@ const proxyMethods = {
     },
 };
 
-function combineAborts(abortController: AbortController, signal?: AbortSignal) {
-    if (signal === undefined) return () => abortController.abort();
+function makeAbortable(signal?: AbortSignal): AbortController {
+    const abortController = new AbortController();
+    if (signal === undefined) return abortController;
     const sig = signal;
     function abort() {
         abortController.abort();
@@ -378,5 +371,5 @@ function combineAborts(abortController: AbortController, signal?: AbortSignal) {
     }
     if (sig.aborted) abort();
     else sig.addEventListener("abort", abort);
-    return abort;
+    return { abort, signal: abortController.signal };
 }
