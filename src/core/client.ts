@@ -384,35 +384,31 @@ function createTimeout(
     controller: AbortController,
     seconds: number,
     method: string,
-) {
-    const timeout: Timeout = {
-        handle: undefined,
-        promise: new Promise((_, reject) => {
-            timeout.handle = setTimeout(() => {
-                const msg =
-                    `Request to '${method}' timed out after ${seconds} seconds`;
-                reject(new Error(msg));
-                controller.abort();
-            }, 1000 * seconds);
-        }),
-    };
-    return timeout;
+): Timeout {
+    let handle: Timeout["handle"] = undefined;
+    const promise = new Promise<never>((_, reject) => {
+        handle = setTimeout(() => {
+            const msg =
+                `Request to '${method}' timed out after ${seconds} seconds`;
+            reject(new Error(msg));
+            controller.abort();
+        }, 1000 * seconds);
+    });
+    return { promise, handle };
 }
 /** Creates a stream error which abort a given controller */
-function createStreamError(abortController: AbortController) {
-    const streamError: StreamError = {
-        catch: (err) => {
-            // Re-throw by default, but will be overwritten immediately
-            throw err;
-        },
-        promise: new Promise((_, reject) => {
-            streamError.catch = (err: unknown) => {
-                reject(err);
-                abortController.abort();
-            };
-        }),
+function createStreamError(abortController: AbortController): StreamError {
+    let onError: StreamError["catch"] = (err) => {
+        // Re-throw by default, but will be overwritten immediately
+        throw err;
     };
-    return streamError;
+    const promise = new Promise<never>((_, reject) => {
+        onError = (err: unknown) => {
+            reject(err);
+            abortController.abort();
+        };
+    });
+    return { promise, catch: onError };
 }
 
 function createAbortControllerFromSignal(signal?: AbortSignal) {
