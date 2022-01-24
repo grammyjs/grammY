@@ -277,7 +277,7 @@ class ApiClient<R extends RawApi> {
                     `Request to '${method}' timed out after ${timeoutSeconds} seconds`;
                 reject(new Error(msg));
                 abortController.abort();
-            }, timeoutSeconds * 1000);
+            }, 1000 * timeoutSeconds);
         });
         // Handle errors in request stream
         let onStreamError: (err: unknown) => void;
