@@ -244,6 +244,31 @@ export class Bot<
     }
 
     /**
+     * Internal. Do not call. Handles an update batch sequentially by supplying
+     * it one-by-one to the middleware. Handles middleware errors and stores the
+     * last update identifier that was being tried to handle.
+     *
+     * @param updates An array of updates to handle
+     */
+    private async handleUpdates(updates: Update[]) {
+        // handle updates sequentially (!)
+        for (const update of updates) {
+            this.lastTriedUpdateId = update.update_id;
+            try {
+                await this.handleUpdate(update);
+            } catch (err) {
+                // should always be true
+                if (err instanceof BotError) {
+                    await this.errorHandler(err);
+                } else {
+                    console.error("FATAL: grammY unable to handle:", err);
+                    throw err;
+                }
+            }
+        }
+    }
+
+    /**
      * This is an internal method that you probably will not ever need to call.
      * It is used whenever a new update arrives from the Telegram servers that
      * your bot will handle.
@@ -351,75 +376,8 @@ you can circumvent this protection against memory leaks.`);
 
         // Start polling
         debug("Starting simple long polling");
-        this.pollingRunning = true;
-        this.pollingAbortController = new AbortController();
-
-        const limit = options?.limit;
-        const timeout = options?.timeout ?? 30; // seconds
-        let allowed_updates = options?.allowed_updates;
-        try {
-            options?.onStart?.(this.botInfo);
-        } catch (error) {
-            this.pollingRunning = false;
-            this.pollingAbortController = undefined;
-            throw error;
-        }
-
-        const handleErr = async (error: unknown) => {
-            if (!this.pollingRunning) throw error;
-            else if (error instanceof GrammyError) {
-                debugErr(error.message);
-                if (error.error_code === 401) {
-                    debugErr(
-                        "Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).",
-                    );
-                    throw error;
-                } else if (error.error_code === 409) {
-                    debugErr(
-                        "Consider revoking the bot token if you believe that no other instance is running.",
-                    );
-                    throw error;
-                }
-            } else debugErr(error);
-            debugErr("Call to getUpdates failed, retrying in 3 seconds ...");
-            await new Promise((r) => setTimeout(r, 3000));
-        };
-
-        while (this.pollingRunning) {
-            // fetch updates
-            const offset = this.lastTriedUpdateId + 1;
-            let updates: Update[] | undefined = undefined;
-            do {
-                try {
-                    updates = await this.api.getUpdates(
-                        { offset, limit, timeout, allowed_updates },
-                        this.pollingAbortController.signal,
-                    );
-                } catch (error) {
-                    if (this.pollingRunning) await handleErr(error);
-                    else debug("Pending getUpdates request cancelled");
-                }
-            } while (updates === undefined && this.pollingRunning);
-            if (updates === undefined) break;
-            // handle them sequentially (!)
-            for (const update of updates) {
-                this.lastTriedUpdateId = update.update_id;
-                try {
-                    await this.handleUpdate(update);
-                } catch (err) {
-                    // should always be true
-                    if (err instanceof BotError) {
-                        await this.errorHandler(err);
-                    } else {
-                        console.error("FATAL: grammY unable to handle:", err);
-                        throw err;
-                    }
-                }
-            }
-            // Telegram uses the last setting if `allowed_updates` is omitted so
-            // we can save same traffic by only sending it in the first request
-            allowed_updates = undefined;
-        }
+        options?.onStart?.(this.botInfo);
+        await this.loop(options);
         debug("Middleware is done running");
     }
 
@@ -469,8 +427,99 @@ you can circumvent this protection against memory leaks.`);
     catch(errorHandler: ErrorHandler<C>) {
         this.errorHandler = errorHandler;
     }
+
+    /**
+     * Internal. Do not call. Enters a loop that will perform long polling until
+     * the bot is stopped.
+     */
+    private async loop(options?: PollingOptions) {
+        this.pollingRunning = true;
+        this.pollingAbortController = new AbortController();
+
+        const limit = options?.limit;
+        const timeout = options?.timeout ?? 30; // seconds
+        let allowed_updates = options?.allowed_updates;
+
+        while (this.pollingRunning) {
+            // fetch updates
+            const updates = await this.fetchUpdates(
+                { limit, timeout, allowed_updates },
+            );
+            // check if polling stopped
+            if (updates === undefined) break;
+            // handle updates
+            await this.handleUpdates(updates);
+            // Telegram uses the last setting if `allowed_updates` is omitted so
+            // we can save same traffic by only sending it in the first request
+            allowed_updates = undefined;
+        }
+    }
+
+    /**
+     * Internal. Do not call. Reliably fetches an update batch via `getUpdates`.
+     * Handles all known errors. Returns `undefined` if the bot is stopped and
+     * the call gets cancelled.
+     *
+     * @param options Polling options
+     * @returns An array of updates, or `undefined` if the bot is stopped.
+     */
+    private async fetchUpdates(
+        { limit, timeout, allowed_updates }: PollingOptions,
+    ) {
+        const offset = this.lastTriedUpdateId + 1;
+        let updates: Update[] | undefined = undefined;
+        do {
+            try {
+                updates = await this.api.getUpdates(
+                    { offset, limit, timeout, allowed_updates },
+                    this.pollingAbortController?.signal,
+                );
+            } catch (error) {
+                await this.handlePollingError(error);
+            }
+        } while (updates === undefined && this.pollingRunning);
+        return updates;
+    }
+
+    /**
+     * Internal. Do not call. Handles an error that occurred during long
+     * polling.
+     */
+    private async handlePollingError(error: unknown) {
+        if (!this.pollingRunning) {
+            debug("Pending getUpdates request cancelled");
+            return;
+        }
+        let sleepSeconds = 3;
+        if (error instanceof GrammyError) {
+            debugErr(error.message);
+            if (error.error_code === 401) {
+                debugErr(
+                    "Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).",
+                );
+                throw error;
+            } else if (error.error_code === 409) {
+                debugErr(
+                    "Consider revoking the bot token if you believe that no other instance is running.",
+                );
+                throw error;
+            } else if (error.error_code === 429) {
+                debugErr("Bot API server is closing.");
+                sleepSeconds = error.parameters.retry_after ?? sleepSeconds;
+            }
+        } else debugErr(error);
+        debugErr(
+            `Call to getUpdates failed, retrying in ${sleepSeconds} seconds ...`,
+        );
+        await sleep(sleepSeconds);
+    }
 }
 
+/**
+ * Performs a network call task, retrying upon known errors until success.
+ *
+ * @param task Async task to perform
+ */
 async function withRetries(task: () => Promise<unknown>) {
     let success = false;
     while (!success) {
@@ -484,15 +533,18 @@ async function withRetries(task: () => Promise<unknown>) {
                 if (error.error_code >= 500) continue;
                 if (error.error_code === 429) {
                     const retryAfter = error.parameters.retry_after;
-                    if (retryAfter !== undefined) {
-                        await new Promise((resolve) =>
-                            setTimeout(resolve, 1000 * retryAfter)
-                        );
-                    }
+                    if (retryAfter !== undefined) await sleep(retryAfter);
                     continue;
                 }
             }
             throw error;
         }
     }
+}
+
+/**
+ * Returns a new promise that resolves after the specified number of seconds.
+ */
+function sleep(seconds: number) {
+    return new Promise((r) => setTimeout(r, 1000 * seconds));
 }
