@@ -391,7 +391,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
             set.add(cmd);
         });
-        return this.on([":entities:bot_command", ":caption_entities:bot_command"]).filter(
+        return this.on("::bot_command").filter(
             (ctx): ctx is CommandContext<C> => {
                 const msg = ctx.message ?? ctx.channelPost;
                 const txt = msg.text ?? msg.caption;
