@@ -1053,7 +1053,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     setChatDescription(
         chat_id: number | string,
-        description: string | undefined,
+        description?: string,
         signal?: AbortSignal,
     ) {
         return this.raw.setChatDescription({ chat_id, description }, signal);
