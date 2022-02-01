@@ -40,10 +40,6 @@
     ],
     "main": "./out/mod.js",
     "types": "./out/mod.d.ts",
-    "exports": {
-        ".": "./out/mod.js",
-        "./types": "./out/types.js"
-    },
     "keywords": [
         "telegram",
         "bot",
