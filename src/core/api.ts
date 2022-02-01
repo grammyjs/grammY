@@ -11,7 +11,7 @@ import {
     type InputMediaVideo,
     type LabeledPrice,
     type PassportElementError,
-} from "../platform.deno.ts";
+} from "../types.ts";
 import {
     type ApiClientOptions,
     createRawApi,

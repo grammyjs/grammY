@@ -2,7 +2,7 @@ import {
     type InlineKeyboardButton,
     type KeyboardButton,
     type LoginUrl,
-} from "../platform.deno.ts";
+} from "../types.ts";
 
 /**
  * Use this class to simplify building a custom keyboard (something like this:
