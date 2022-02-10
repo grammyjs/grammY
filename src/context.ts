@@ -35,7 +35,7 @@ type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
 /**
  * When your bot receives a message, Telegram sends an update object to your
  * bot. The update contains information about the chat, the user, and of course
- * the message itself. There a numerous other updates, too:
+ * the message itself. There are numerous other updates, too:
  * https://core.telegram.org/bots/api#update
  *
  * When grammY receives an update, it wraps this update into a context object

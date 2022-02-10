@@ -35,6 +35,18 @@ export class GrammyError extends Error implements ApiError {
         this.parameters = err.parameters ?? {};
     }
 }
+export function toGrammyError(
+    err: ApiError,
+    method: string,
+    payload: Record<string, unknown>,
+) {
+    return new GrammyError(
+        `Call to '${method}' failed!`,
+        err,
+        method,
+        payload,
+    );
+}
 
 /**
  * This class represents errors that are thrown by grammY because an HTTP call
@@ -58,4 +70,23 @@ export class HttpError extends Error {
         super(message);
         this.name = "HttpError";
     }
+}
+
+function isTelegramError(
+    err: unknown,
+): err is { status: string; statusText: string } {
+    return (
+        typeof err === "object" &&
+        err !== null &&
+        "status" in err &&
+        "statusText" in err
+    );
+}
+export function toHttpError(method: string, sensitiveLogs: boolean) {
+    return (err: unknown) => {
+        let msg = `Network request for '${method}' failed!`;
+        if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
+        if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
+        throw new HttpError(msg, err);
+    };
 }
