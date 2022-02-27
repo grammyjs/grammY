@@ -829,7 +829,8 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
 type HearsContext<C extends Context> = Filter<
     {
         [K in keyof C]: K extends "match"
-            ? Extract<C[K], string | RegExpMatchArray> : C[K];
+            ? Extract<C[K], string | RegExpMatchArray>
+            : C[K];
     },
     ":text" | ":caption"
 >;
