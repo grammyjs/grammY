@@ -131,7 +131,7 @@ export class InputFile {
 }
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
-    const { body } = await fetch(url);
+    const { body } = await fetch(url instanceof URL ? url.href : url);
     if (body === null) {
         throw new Error(`Download failed, no response body from '${url}'`);
     }
