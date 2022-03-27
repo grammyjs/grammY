@@ -128,11 +128,7 @@ export interface ApiClientOptions {
      * @param method The API method to be called, e.g. `getMe`
      * @returns The URL that will be fetched during the API call
      */
-    buildUrl?: (
-        root: string,
-        token: string,
-        method: string,
-    ) => Parameters<typeof fetch>[0];
+    buildUrl?: (root: string, token: string, method: string) => string | URL;
     /**
      * Maximum number of seconds that a request to the Bot API server may take.
      * If a request has not completed before this time has elapsed, grammY
@@ -279,7 +275,10 @@ class ApiClient<R extends RawApi> {
         const sig = controller.signal;
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
-        const successPromise = fetch(url, options)
+        const successPromise = fetch(
+            url instanceof URL ? url.href : url,
+            options,
+        )
             .catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];

@@ -71,7 +71,7 @@ export class InputFile {
         file:
             | string
             | Blob
-            | Deno.File
+            | Deno.FsFile
             | URL
             | URLLike
             | Uint8Array
@@ -131,14 +131,14 @@ export class InputFile {
 }
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
-    const { body } = await fetch(url);
+    const { body } = await fetch(url instanceof URL ? url.href : url);
     if (body === null) {
         throw new Error(`Download failed, no response body from '${url}'`);
     }
     yield* body;
 }
-function isDenoFile(data: unknown): data is Deno.File {
-    return isDeno && data instanceof Deno.File;
+function isDenoFile(data: unknown): data is Deno.FsFile {
+    return isDeno && data instanceof Deno.FsFile;
 }
 
 // === Export InputFile types
