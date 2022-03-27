@@ -71,7 +71,7 @@ export class InputFile {
         file:
             | string
             | Blob
-            | Deno.File
+            | Deno.FsFile
             | URL
             | URLLike
             | Uint8Array
@@ -137,8 +137,8 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     }
     yield* body;
 }
-function isDenoFile(data: unknown): data is Deno.File {
-    return isDeno && data instanceof Deno.File;
+function isDenoFile(data: unknown): data is Deno.FsFile {
+    return isDeno && data instanceof Deno.FsFile;
 }
 
 // === Export InputFile types
