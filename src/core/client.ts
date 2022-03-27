@@ -128,11 +128,7 @@ export interface ApiClientOptions {
      * @param method The API method to be called, e.g. `getMe`
      * @returns The URL that will be fetched during the API call
      */
-    buildUrl?: (
-        root: string,
-        token: string,
-        method: string,
-    ) => Parameters<typeof fetch>[0];
+    buildUrl?: (root: string, token: string, method: string) => string;
     /**
      * Maximum number of seconds that a request to the Bot API server may take.
      * If a request has not completed before this time has elapsed, grammY
