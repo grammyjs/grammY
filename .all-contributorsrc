@@ -533,6 +533,15 @@
         "doc",
         "example"
       ]
+    },
+    {
+      "login": "MrSaeedNasiri",
+      "name": "Saeed Nasiri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17780289?v=4",
+      "profile": "https://github.com/MrSaeedNasiri",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
