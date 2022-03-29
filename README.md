@@ -12,7 +12,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-5.7-blue?logo=telegram&style=flat-square)](https://core.telegram.org/bots/api)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat-square)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-51-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-52-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- deno-fmt-ignore-end -->
@@ -194,6 +194,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/abdollahzadehAli"><img src="https://avatars.githubusercontent.com/u/96317431?v=4?s=100" width="100px;" alt=""/><br /><sub><b>abdollahzadehAli</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=abdollahzadehAli" title="Documentation">📖</a> <a href="#example-abdollahzadehAli" title="Examples">💡</a></td>
     <td align="center"><a href="https://github.com/MrSaeedNasiri"><img src="https://avatars.githubusercontent.com/u/17780289?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saeed Nasiri</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=MrSaeedNasiri" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://youtu.be/dQw4w9WgXcQ"><img src="https://avatars.githubusercontent.com/u/37535505?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hesoyam</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Scrip7" title="Documentation">📖</a></td>
   </tr>
 </table>
 
