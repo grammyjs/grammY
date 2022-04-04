@@ -66,7 +66,7 @@ export type ErrorHandler<C extends Context = Context> = (
 ) => unknown;
 
 /**
- * Options to pass the bot when creating it.
+ * Options to pass to the bot when creating it.
  */
 export interface BotConfig<C extends Context> {
     /**
