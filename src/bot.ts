@@ -359,6 +359,9 @@ a known bot info object.",
             })
         );
 
+        // All async ops of setup complete, run callback
+        options?.onStart?.(this.botInfo);
+
         // Prevent common misuse that causes memory leak
         this.use = () => {
             throw new Error(`It looks like you are registering more listeners \
@@ -376,7 +379,6 @@ you can circumvent this protection against memory leaks.`);
 
         // Start polling
         debug("Starting simple long polling");
-        options?.onStart?.(this.botInfo);
         await this.loop(options);
         debug("Middleware is done running");
     }
