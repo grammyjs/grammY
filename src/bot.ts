@@ -47,12 +47,12 @@ export interface PollingOptions {
      */
     drop_pending_updates?: boolean;
     /**
-     * Potentially asynchronous callback function that is useful for logging (or
-     * setting up middleware if you did not do this before). It will be executed
-     * once the setup of the bot has completed, and immediately before the first
-     * updates are being fetched. The bot information `bot.botInfo` will be
-     * available when the function is run. For convenience, the callback
-     * function receives the value of `bot.botInfo` as an argument.
+     * A callback function that is useful for logging (or setting up middleware
+     * if you did not do this before). It will be executed after the setup of
+     * the bot has completed, and immediately before the first updates are being
+     * fetched. The bot information `bot.botInfo` will be available when the
+     * function is run. For convenience, the callback function receives the
+     * value of `bot.botInfo` as an argument.
      */
     onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
 }
