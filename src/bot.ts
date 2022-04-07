@@ -47,13 +47,14 @@ export interface PollingOptions {
      */
     drop_pending_updates?: boolean;
     /**
-     * Synchronous callback that is useful for logging. It will be executed once
-     * the setup of the bot has completed, and immediately before the first
-     * updates are being fetched. The bot information `bot.botInfo` will be
-     * available when the function is run. For convenience, the callback
-     * function receives the value of `bot.botInfo` as an argument.
+     * A callback function that is useful for logging (or setting up middleware
+     * if you did not do this before). It will be executed after the setup of
+     * the bot has completed, and immediately before the first updates are being
+     * fetched. The bot information `bot.botInfo` will be available when the
+     * function is run. For convenience, the callback function receives the
+     * value of `bot.botInfo` as an argument.
      */
-    onStart?: (botInfo: UserFromGetMe) => void;
+    onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
 }
 
 export { BotError };
@@ -359,6 +360,9 @@ a known bot info object.",
             })
         );
 
+        // All async ops of setup complete, run callback
+        await options?.onStart?.(this.botInfo);
+
         // Prevent common misuse that causes memory leak
         this.use = () => {
             throw new Error(`It looks like you are registering more listeners \
@@ -376,7 +380,6 @@ you can circumvent this protection against memory leaks.`);
 
         // Start polling
         debug("Starting simple long polling");
-        options?.onStart?.(this.botInfo);
         await this.loop(options);
         debug("Middleware is done running");
     }
