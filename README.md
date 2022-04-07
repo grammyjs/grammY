@@ -111,7 +111,7 @@ You may also be interested in [why we support Deno](https://grammy.dev/resources
 ## Browser Support
 
 The grammY core package in this repository is avaiable as a JavaScript bundle from the CDN at `get.grammy.dev`.
-Currently, we transpile all stable versions (all releases since v1.0) as well as the current `main` branch to ES3, ES5, ES6, and ESNext.
+Currently, we transpile all stable versions (all releases since v1.0) as well as the current `main` branch to ES6 and ESNext.
 
 You can download them from the URL `https://get.grammy.dev/[ES version lowercased]@[grammY version including v-prefix].js`.
 For example, the most recent source on `main` in ES6 is available from <https://get.grammy.dev/es6@dev.js>.
