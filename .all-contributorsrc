@@ -551,6 +551,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "yrzam",
+      "name": "yrzam",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96742416?v=4",
+      "profile": "http://yrz.am",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
