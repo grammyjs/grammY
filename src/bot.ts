@@ -239,8 +239,12 @@ export class Bot<
         if (!this.isInited()) {
             debug("Initializing bot");
             this.mePromise ??= withRetries(() => this.api.getMe());
-            const me = await this.mePromise;
-            this.mePromise = undefined;
+            let me: UserFromGetMe;
+            try {
+                me = await this.mePromise;
+            } finally {
+                this.mePromise = undefined;
+            }
             if (this.me === undefined) this.me = me;
             else debug("Bot info was set manually by now, will not overwrite");
         }
