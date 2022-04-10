@@ -137,6 +137,7 @@ export class Bot<
     public readonly api: A;
 
     private me: UserFromGetMe | undefined;
+    private mePromise: Promise<UserFromGetMe> | undefined;
     private readonly clientConfig: ApiClientOptions | undefined;
 
     private readonly ContextConstructor: new (
@@ -237,7 +238,9 @@ export class Bot<
     async init() {
         if (!this.isInited()) {
             debug("Initializing bot");
-            const me = await this.api.getMe();
+            this.mePromise ??= withRetries(() => this.api.getMe());
+            const me = await this.mePromise;
+            this.mePromise = undefined;
             if (this.me === undefined) this.me = me;
             else debug("Bot info was set manually by now, will not overwrite");
         }
@@ -349,7 +352,7 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        if (!this.isInited()) await withRetries(() => this.init());
+        if (!this.isInited()) await this.init();
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
@@ -523,12 +526,11 @@ you can circumvent this protection against memory leaks.`);
  *
  * @param task Async task to perform
  */
-async function withRetries(task: () => Promise<unknown>) {
-    let success = false;
-    while (!success) {
+async function withRetries<T>(task: () => Promise<T>): Promise<T> {
+    let result: { ok: false } | { ok: true; value: T } = { ok: false };
+    while (!result.ok) {
         try {
-            await task();
-            success = true;
+            result = { ok: true, value: await task() };
         } catch (error) {
             debugErr(error);
             if (error instanceof HttpError) continue;
@@ -543,6 +545,7 @@ async function withRetries(task: () => Promise<unknown>) {
             throw error;
         }
     }
+    return result.value;
 }
 
 /**
