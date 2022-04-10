@@ -246,7 +246,7 @@ export class Bot<
                 this.mePromise = undefined;
             }
             if (this.me === undefined) this.me = me;
-            else debug("Bot info was set manually by now, will not overwrite");
+            else debug("Bot info was set by now, will not overwrite");
         }
         debug(`I am ${this.me!.username}!`);
     }
