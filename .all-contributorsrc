@@ -560,6 +560,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "drmikecrowe",
+      "name": "drmikecrowe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90312?v=4",
+      "profile": "https://github.com/drmikecrowe",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
