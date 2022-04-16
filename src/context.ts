@@ -232,7 +232,7 @@ export class Context implements RenamedUpdate {
      */
     reply(
         text: string,
-        other?: Other<"sendMessage", "text">,
+        other?: Other<"sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
     ) {
         return this.api.sendMessage(
@@ -254,7 +254,10 @@ export class Context implements RenamedUpdate {
      */
     forwardMessage(
         chat_id: number | string,
-        other?: Other<"forwardMessage", "from_chat_id" | "message_id">,
+        other?: Other<
+            "forwardMessage",
+            "chat_id" | "from_chat_id" | "message_id"
+        >,
         signal?: AbortSignal,
     ) {
         return this.api.forwardMessage(
@@ -277,7 +280,7 @@ export class Context implements RenamedUpdate {
      */
     copyMessage(
         chat_id: number | string,
-        other?: Other<"copyMessage", "from_chat_id" | "message_id">,
+        other?: Other<"copyMessage", "chat_id" | "from_chat_id" | "message_id">,
         signal?: AbortSignal,
     ) {
         return this.api.copyMessage(
