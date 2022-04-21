@@ -5,7 +5,7 @@ import {
     type Opts,
     type Telegram,
 } from "../platform.deno.ts";
-import { GrammyError, HttpError } from "./error.ts";
+import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
@@ -128,11 +128,26 @@ export interface ApiClientOptions {
      * @param method The API method to be called, e.g. `getMe`
      * @returns The URL that will be fetched during the API call
      */
-    buildUrl?: (
-        root: string,
-        token: string,
-        method: string,
-    ) => Parameters<typeof fetch>[0];
+    buildUrl?: (root: string, token: string, method: string) => string | URL;
+    /**
+     * Maximum number of seconds that a request to the Bot API server may take.
+     * If a request has not completed before this time has elapsed, grammY
+     * aborts the request and errors. Without such a timeout, networking issues
+     * may cause your bot to leave open a connection indefinitely, which may
+     * effectively make your bot freeze.
+     *
+     * You probably do not have to care about this option. In rare cases, you
+     * may want to adjust it if you are transferring large files via slow
+     * connections to your own Bot API server.
+     *
+     * The default number of seconds is `500`, which corresponds to 8 minutes
+     * and 20 seconds. Note that this is also the value that is hard-coded in
+     * the official Bot API server, so you cannot perform any successful
+     * requests that exceed this time frame (even if you would allow it in
+     * grammY). Setting this option to higher than the default only makes sense
+     * with a custom Bot API server.
+     */
+    timeoutSeconds?: number;
     /**
      * If the bot is running on webhooks, as soon as the bot receives an update
      * from Telegram, it is possible to make up to one API call in the response
@@ -206,6 +221,7 @@ class ApiClient<R extends RawApi> {
             apiRoot,
             buildUrl: options.buildUrl ??
                 ((root, token, method) => `${root}/bot${token}/${method}`),
+            timeoutSeconds: options.timeoutSeconds ?? 500,
             baseFetchConfig: {
                 ...baseFetchConfig(apiRoot),
                 ...options.baseFetchConfig,
@@ -227,53 +243,50 @@ class ApiClient<R extends RawApi> {
 
     private call: ApiCallFn<R> = async <M extends Methods<R>>(
         method: M,
-        payload: Payload<M, R>,
+        p: Payload<M, R>,
         signal?: AbortSignal,
     ) => {
+        const payload = p ?? {};
         debug("Calling", method);
-        const url = this.options.buildUrl(
-            this.options.apiRoot,
-            this.token,
-            method,
-        );
+        // General config
+        const opts = this.options;
         const formDataRequired = requiresFormDataUpload(payload);
+        // Short-circuit on webhook reply
         if (
             this.webhookReplyEnvelope.send !== undefined &&
             !this.hasUsedWebhookReply &&
             !formDataRequired &&
-            this.options.canUseWebhookReply(method)
+            opts.canUseWebhookReply(method)
         ) {
             this.hasUsedWebhookReply = true;
             const config = createJsonPayload({ ...payload, method });
             await this.webhookReplyEnvelope.send(config.body);
             return { ok: true, result: true as ApiCallResult<M, R> };
-        } else {
-            const p = payload ?? {};
-            const sensLogs = this.options.sensitiveLogs;
-
-            const abortController = new AbortController();
-            const abort = combineAborts(abortController, signal);
-
-            const res = await new Promise<ApiResponse<ApiCallResult<M, R>>>(
-                (resolve, reject) => {
-                    function onStreamError(err: unknown) {
-                        abort();
-                        reject(err);
-                    }
-                    const onHttpError = toHttpError(method, sensLogs, reject);
-                    const config = formDataRequired
-                        ? createFormDataPayload(p, onStreamError)
-                        : createJsonPayload(p);
-                    const opts = {
-                        ...this.options.baseFetchConfig,
-                        signal: abortController.signal,
-                        ...config,
-                    };
-                    fetch(url, opts).then((res) => res.json()).then(resolve)
-                        .catch(onHttpError);
-                },
-            );
-            return res;
+        }
+        // Handle timeouts and errors in the underlying form-data stream
+        const controller = createAbortControllerFromSignal(signal);
+        const timeout = createTimeout(controller, opts.timeoutSeconds, method);
+        const streamErr = createStreamError(controller);
+        // Build request URL and config
+        const url = opts.buildUrl(opts.apiRoot, this.token, method);
+        const config = formDataRequired
+            ? createFormDataPayload(payload, (err) => streamErr.catch(err))
+            : createJsonPayload(payload);
+        const sig = controller.signal;
+        const options = { ...opts.baseFetchConfig, signal: sig, ...config };
+        // Perform fetch call, and handle networking errors
+        const successPromise = fetch(
+            url instanceof URL ? url.href : url,
+            options,
+        ).catch(toHttpError(method, opts.sensitiveLogs));
+        // Those are the three possible outcomes of the fetch call:
+        const operations = [successPromise, streamErr.promise, timeout.promise];
+        // Wait for result
+        try {
+            const res = await Promise.race(operations);
+            return await res.json();
+        } finally {
+            if (timeout.handle !== undefined) clearTimeout(timeout.handle);
         }
     };
 
@@ -290,14 +303,7 @@ class ApiClient<R extends RawApi> {
     ) {
         const data = await this.call(method, payload, signal);
         if (data.ok) return data.result;
-        else {
-            throw new GrammyError(
-                `Call to '${method}' failed!`,
-                data,
-                method,
-                payload,
-            );
-        }
+        else throw toGrammyError(data, method, payload);
     }
 }
 
@@ -358,30 +364,54 @@ const proxyMethods = {
     },
 };
 
-function isTelegramError(
-    err: unknown,
-): err is { status: string; statusText: string } {
-    return (
-        typeof err === "object" &&
-        err !== null &&
-        "status" in err &&
-        "statusText" in err
-    );
+/** A container for a rejecting promise */
+interface AsyncError {
+    promise: Promise<never>;
 }
-function toHttpError(
+/** An async error caused by a timeout */
+interface Timeout extends AsyncError {
+    handle: ReturnType<typeof setTimeout> | undefined;
+}
+/** An async error caused by an error in an underlying resource stream */
+interface StreamError extends AsyncError {
+    catch: (err: unknown) => void;
+}
+
+/** Creates a timeout error which aborts a given controller */
+function createTimeout(
+    controller: AbortController,
+    seconds: number,
     method: string,
-    sensitiveLogs: boolean,
-    reject: (err: unknown) => void,
-) {
-    return (err: unknown) => {
-        let msg = `Network request for '${method}' failed!`;
-        if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
-        if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
-        reject(new HttpError(msg, err));
-    };
+): Timeout {
+    let handle: Timeout["handle"] = undefined;
+    const promise = new Promise<never>((_, reject) => {
+        handle = setTimeout(() => {
+            const msg =
+                `Request to '${method}' timed out after ${seconds} seconds`;
+            reject(new Error(msg));
+            controller.abort();
+        }, 1000 * seconds);
+    });
+    return { promise, handle };
 }
-function combineAborts(abortController: AbortController, signal?: AbortSignal) {
-    if (signal === undefined) return () => abortController.abort();
+/** Creates a stream error which abort a given controller */
+function createStreamError(abortController: AbortController): StreamError {
+    let onError: StreamError["catch"] = (err) => {
+        // Re-throw by default, but will be overwritten immediately
+        throw err;
+    };
+    const promise = new Promise<never>((_, reject) => {
+        onError = (err: unknown) => {
+            reject(err);
+            abortController.abort();
+        };
+    });
+    return { promise, catch: onError };
+}
+
+function createAbortControllerFromSignal(signal?: AbortSignal) {
+    const abortController = new AbortController();
+    if (signal === undefined) return abortController;
     const sig = signal;
     function abort() {
         abortController.abort();
@@ -389,5 +419,5 @@ function combineAborts(abortController: AbortController, signal?: AbortSignal) {
     }
     if (sig.aborted) abort();
     else sig.addEventListener("abort", abort);
-    return abort;
+    return { abort, signal: abortController.signal };
 }
