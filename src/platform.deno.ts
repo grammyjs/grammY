@@ -14,11 +14,11 @@ import d from "https://cdn.skypack.dev/debug@4.3.4";
 export { d as debug };
 if (isDeno) {
     d.useColors = () => !Deno.noColor;
-    try {
+    const env = { name: "env", variable: "DEBUG" } as const;
+    const res = await Deno.permissions.query(env);
+    if (res.state === "granted") {
         const val = Deno.env.get("DEBUG");
         if (val) d.enable(val);
-    } catch {
-        // cannot access env var, treat as if it is not set
     }
 }
 const debug = d("grammy:warn");
