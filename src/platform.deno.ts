@@ -12,12 +12,13 @@ export * from "https://esm.sh/@grammyjs/types@v2.7.0";
 // === Export debug
 import d from "https://cdn.skypack.dev/debug@4.3.4";
 export { d as debug };
+const DEBUG = "DEBUG";
 if (isDeno) {
     d.useColors = () => !Deno.noColor;
-    const env = { name: "env", variable: "DEBUG" } as const;
+    const env = { name: "env", variable: DEBUG } as const;
     const res = await Deno.permissions.query(env);
     if (res.state === "granted") {
-        const val = Deno.env.get("DEBUG");
+        const val = Deno.env.get(DEBUG);
         if (val) d.enable(val);
     }
 }
