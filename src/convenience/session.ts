@@ -324,7 +324,7 @@ function undef<C extends Context>(
     const lazy = opts.lazy ?? false;
     const reason = getSessionKey === defaultGetSessionKey
         ? "this update does not belong to a chat, so the session key is undefined"
-        : "your custom `getSessionKey` function returned undefined for this update";
+        : "the custom `getSessionKey` function returned undefined for this update";
     return `Cannot ${op} ${lazy ? "lazy " : ""}session data because ${reason}!`;
 }
 
