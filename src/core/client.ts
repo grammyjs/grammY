@@ -247,7 +247,7 @@ class ApiClient<R extends RawApi> {
         signal?: AbortSignal,
     ) => {
         const payload = p ?? {};
-        debug("Calling", method);
+        debug(`Calling ${method}`);
         // General config
         const opts = this.options;
         const formDataRequired = requiresFormDataUpload(payload);
