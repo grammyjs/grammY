@@ -125,7 +125,7 @@ async function* payloadToMultipartItr(
         first = false;
     }
     // End multipart/form-data protocol
-    yield enc.encode(`\r\n--${boundary}--`);
+    yield enc.encode(`\r\n--${boundary}--\r\n`);
 }
 
 type ExtractedFile = { id: string; origin: string; file: InputFile };
