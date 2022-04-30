@@ -34,7 +34,7 @@ export function baseFetchConfig(apiRoot: string) {
 /** Something that looks like a URL. */
 interface URLLike {
     /**
-     * Identifier of the resouce. Must be in a format that can be parsed by the
+     * Identifier of the resource. Must be in a format that can be parsed by the
      * URL constructor.
      */
     url: string;
