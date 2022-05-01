@@ -23,7 +23,6 @@ import {
     type WebhookReplyEnvelope,
 } from "./client.ts";
 
-type AlwaysOmittedInOther = "chat_id";
 /**
  * Helper type to derive remaining properties of a given API method call M,
  * given that some properties X have already been specified.
@@ -32,8 +31,7 @@ export type Other<
     R extends RawApi,
     M extends Methods<R>,
     X extends string = never,
-> = Omit<Payload<M, R>, X | AlwaysOmittedInOther>;
-
+> = Omit<Payload<M, R>, X>;
 /**
  * This class provides access to the full Telegram Bot API. All methods of the
  * API have an equivalent on this class, with the most important parameters
@@ -217,7 +215,7 @@ export class Api<R extends RawApi = RawApi> {
     sendMessage(
         chat_id: number | string,
         text: string,
-        other?: Other<R, "sendMessage", "text">,
+        other?: Other<R, "sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendMessage({ chat_id, text, ...other }, signal);
@@ -238,7 +236,11 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         from_chat_id: number | string,
         message_id: number,
-        other?: Other<R, "forwardMessage", "from_chat_id" | "message_id">,
+        other?: Other<
+            R,
+            "forwardMessage",
+            "chat_id" | "from_chat_id" | "message_id"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.forwardMessage(
@@ -262,7 +264,11 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         from_chat_id: number | string,
         message_id: number,
-        other?: Other<R, "copyMessage", "from_chat_id" | "message_id">,
+        other?: Other<
+            R,
+            "copyMessage",
+            "chat_id" | "from_chat_id" | "message_id"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.copyMessage(
@@ -284,7 +290,7 @@ export class Api<R extends RawApi = RawApi> {
     sendPhoto(
         chat_id: number | string,
         photo: InputFile | string,
-        other?: Other<R, "sendPhoto", "photo">,
+        other?: Other<R, "sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendPhoto({ chat_id, photo, ...other }, signal);
@@ -305,7 +311,7 @@ export class Api<R extends RawApi = RawApi> {
     sendAudio(
         chat_id: number | string,
         audio: InputFile | string,
-        other?: Other<R, "sendAudio", "audio">,
+        other?: Other<R, "sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendAudio({ chat_id, audio, ...other }, signal);
@@ -324,7 +330,7 @@ export class Api<R extends RawApi = RawApi> {
     sendDocument(
         chat_id: number | string,
         document: InputFile | string,
-        other?: Other<R, "sendDocument", "document">,
+        other?: Other<R, "sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendDocument({ chat_id, document, ...other }, signal);
@@ -343,7 +349,7 @@ export class Api<R extends RawApi = RawApi> {
     sendVideo(
         chat_id: number | string,
         video: InputFile | string,
-        other?: Other<R, "sendVideo", "video">,
+        other?: Other<R, "sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendVideo({ chat_id, video, ...other }, signal);
@@ -362,7 +368,7 @@ export class Api<R extends RawApi = RawApi> {
     sendAnimation(
         chat_id: number | string,
         animation: InputFile | string,
-        other?: Other<R, "sendAnimation", "animation">,
+        other?: Other<R, "sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendAnimation({ chat_id, animation, ...other }, signal);
@@ -381,7 +387,7 @@ export class Api<R extends RawApi = RawApi> {
     sendVoice(
         chat_id: number | string,
         voice: InputFile | string,
-        other?: Other<R, "sendVoice", "voice">,
+        other?: Other<R, "sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendVoice({ chat_id, voice, ...other }, signal);
@@ -401,7 +407,7 @@ export class Api<R extends RawApi = RawApi> {
     sendVideoNote(
         chat_id: number | string,
         video_note: InputFile | string,
-        other?: Other<R, "sendVideoNote", "video_note">,
+        other?: Other<R, "sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendVideoNote(
@@ -428,7 +434,7 @@ export class Api<R extends RawApi = RawApi> {
             | InputMediaPhoto
             | InputMediaVideo
         >,
-        other?: Other<R, "sendMediaGroup", "media">,
+        other?: Other<R, "sendMediaGroup", "chat_id" | "media">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendMediaGroup({ chat_id, media, ...other }, signal);
@@ -449,7 +455,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         latitude: number,
         longitude: number,
-        other?: Other<R, "sendLocation", "latitude" | "longitude">,
+        other?: Other<R, "sendLocation", "chat_id" | "latitude" | "longitude">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendLocation(
@@ -478,7 +484,11 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "editMessageLiveLocation",
-            "message_id" | "inline_message_id" | "latitude" | "longitude"
+            | "chat_id"
+            | "message_id"
+            | "inline_message_id"
+            | "latitude"
+            | "longitude"
         >,
         signal?: AbortSignal,
     ) {
@@ -506,7 +516,11 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "editMessageLiveLocation",
-            "message_id" | "inline_message_id" | "latitude" | "longitude"
+            | "chat_id"
+            | "message_id"
+            | "inline_message_id"
+            | "latitude"
+            | "longitude"
         >,
         signal?: AbortSignal,
     ) {
@@ -532,7 +546,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "stopMessageLiveLocation",
-            "message_id" | "inline_message_id"
+            "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
     ) {
@@ -556,7 +570,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "stopMessageLiveLocation",
-            "message_id" | "inline_message_id"
+            "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
     ) {
@@ -588,7 +602,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "sendVenue",
-            "latitude" | "longitude" | "title" | "address"
+            "chat_id" | "latitude" | "longitude" | "title" | "address"
         >,
         signal?: AbortSignal,
     ) {
@@ -613,7 +627,11 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         phone_number: string,
         first_name: string,
-        other?: Other<R, "sendContact", "phone_number" | "first_name">,
+        other?: Other<
+            R,
+            "sendContact",
+            "chat_id" | "phone_number" | "first_name"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.sendContact(
@@ -637,7 +655,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         question: string,
         options: readonly string[],
-        other?: Other<R, "sendPoll", "question" | "options">,
+        other?: Other<R, "sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendPoll(
@@ -659,7 +677,7 @@ export class Api<R extends RawApi = RawApi> {
     sendDice(
         chat_id: number | string,
         emoji: string,
-        other?: Other<R, "sendDice", "emoji">,
+        other?: Other<R, "sendDice", "chat_id" | "emoji">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendDice({ chat_id, emoji, ...other }, signal);
@@ -745,7 +763,7 @@ export class Api<R extends RawApi = RawApi> {
     banChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Other<R, "banChatMember", "user_id">,
+        other?: Other<R, "banChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
     ) {
         return this.raw.banChatMember({ chat_id, user_id, ...other }, signal);
@@ -764,7 +782,7 @@ export class Api<R extends RawApi = RawApi> {
     unbanChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Other<R, "unbanChatMember", "user_id">,
+        other?: Other<R, "unbanChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
     ) {
         return this.raw.unbanChatMember({ chat_id, user_id, ...other }, signal);
@@ -785,7 +803,11 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         user_id: number,
         permissions: ChatPermissions,
-        other?: Other<R, "restrictChatMember", "user_id" | "permissions">,
+        other?: Other<
+            R,
+            "restrictChatMember",
+            "chat_id" | "user_id" | "permissions"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.restrictChatMember(
@@ -807,7 +829,7 @@ export class Api<R extends RawApi = RawApi> {
     promoteChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Other<R, "promoteChatMember", "user_id">,
+        other?: Other<R, "promoteChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
     ) {
         return this.raw.promoteChatMember(
@@ -917,7 +939,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     createChatInviteLink(
         chat_id: number | string,
-        other?: Other<R, "createChatInviteLink">,
+        other?: Other<R, "createChatInviteLink", "chat_id">,
         signal?: AbortSignal,
     ) {
         return this.raw.createChatInviteLink({ chat_id, ...other }, signal);
@@ -936,7 +958,7 @@ export class Api<R extends RawApi = RawApi> {
     editChatInviteLink(
         chat_id: number | string,
         invite_link: string,
-        other?: Other<R, "editChatInviteLink", "invite_link">,
+        other?: Other<R, "editChatInviteLink", "chat_id" | "invite_link">,
         signal?: AbortSignal,
     ) {
         return this.raw.editChatInviteLink(
@@ -1072,7 +1094,7 @@ export class Api<R extends RawApi = RawApi> {
     pinChatMessage(
         chat_id: number | string,
         message_id: number,
-        other?: Other<R, "pinChatMessage", "message_id">,
+        other?: Other<R, "pinChatMessage", "chat_id" | "message_id">,
         signal?: AbortSignal,
     ) {
         return this.raw.pinChatMessage(
@@ -1236,6 +1258,66 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchatmenubutton
+     */
+    setChatMenuButton(
+        other?: Other<R, "setChatMenuButton">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setChatMenuButton({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatmenubutton
+     */
+    getChatMenuButton(
+        other?: Other<R, "getChatMenuButton">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getChatMenuButton({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to the change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmydefaultadministratorrights
+     */
+    setMyDefaultAdministratorRights(
+        other?: Other<R, "setMyDefaultAdministratorRights">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setMyDefaultAdministratorRights({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmydefaultadministratorrights
+     */
+    getMyDefaultAdministratorRights(
+        other?: Other<R, "setMyDefaultAdministratorRights">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getMyDefaultAdministratorRights({ ...other }, signal);
+    }
+
+    /**
      * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.
      *
      * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
@@ -1294,7 +1376,11 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_id: number,
         text: string,
-        other?: Other<R, "editMessageText", "message_id" | "text">,
+        other?: Other<
+            R,
+            "editMessageText",
+            "chat_id" | "message_id" | "inline_message_id" | "text"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageText(
@@ -1315,7 +1401,11 @@ export class Api<R extends RawApi = RawApi> {
     editMessageTextInline(
         inline_message_id: string,
         text: string,
-        other?: Other<R, "editMessageText", "inline_message_id" | "text">,
+        other?: Other<
+            R,
+            "editMessageText",
+            "chat_id" | "message_id" | "inline_message_id" | "text"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageText(
@@ -1337,7 +1427,11 @@ export class Api<R extends RawApi = RawApi> {
     editMessageCaption(
         chat_id: number | string,
         message_id: number,
-        other?: Other<R, "editMessageCaption", "message_id">,
+        other?: Other<
+            R,
+            "editMessageCaption",
+            "chat_id" | "message_id" | "inline_message_id"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageCaption(
@@ -1357,7 +1451,11 @@ export class Api<R extends RawApi = RawApi> {
      */
     editMessageCaptionInline(
         inline_message_id: string,
-        other?: Other<R, "editMessageCaption", "inline_message_id">,
+        other?: Other<
+            R,
+            "editMessageCaption",
+            "chat_id" | "message_id" | "inline_message_id"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageCaption(
@@ -1381,7 +1479,11 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_id: number,
         media: InputMedia,
-        other?: Other<R, "editMessageMedia", "message_id" | "media">,
+        other?: Other<
+            R,
+            "editMessageMedia",
+            "chat_id" | "message_id" | "inline_message_id" | "media"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageMedia(
@@ -1403,7 +1505,11 @@ export class Api<R extends RawApi = RawApi> {
     editMessageMediaInline(
         inline_message_id: string,
         media: InputMedia,
-        other?: Other<R, "editMessageMedia", "inline_message_id" | "media">,
+        other?: Other<
+            R,
+            "editMessageMedia",
+            "chat_id" | "message_id" | "inline_message_id" | "media"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageMedia(
@@ -1425,7 +1531,11 @@ export class Api<R extends RawApi = RawApi> {
     editMessageReplyMarkup(
         chat_id: number | string,
         message_id: number,
-        other?: Other<R, "editMessageReplyMarkup", "message_id">,
+        other?: Other<
+            R,
+            "editMessageReplyMarkup",
+            "chat_id" | "message_id" | "inline_message_id"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageReplyMarkup(
@@ -1445,7 +1555,11 @@ export class Api<R extends RawApi = RawApi> {
      */
     editMessageReplyMarkupInline(
         inline_message_id: string,
-        other?: Other<R, "editMessageReplyMarkup", "inline_message_id">,
+        other?: Other<
+            R,
+            "editMessageReplyMarkup",
+            "chat_id" | "message_id" | "inline_message_id"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageReplyMarkup(
@@ -1467,7 +1581,7 @@ export class Api<R extends RawApi = RawApi> {
     stopPoll(
         chat_id: number | string,
         message_id: number,
-        other?: Other<R, "stopPoll", "message_id">,
+        other?: Other<R, "stopPoll", "chat_id" | "message_id">,
         signal?: AbortSignal,
     ) {
         return this.raw.stopPoll({ chat_id, message_id, ...other }, signal);
@@ -1511,7 +1625,7 @@ export class Api<R extends RawApi = RawApi> {
     sendSticker(
         chat_id: number | string,
         sticker: InputFile | string,
-        other?: Other<R, "sendSticker", "sticker">,
+        other?: Other<R, "sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendSticker({ chat_id, sticker, ...other }, signal);
@@ -1674,6 +1788,23 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a SentWebAppMessage object is returned.
+     *
+     * @param web_app_query_id Unique identifier for the query to be answered
+     * @param result An object describing the message to be sent
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerinlinequery
+     */
+    answerWebAppQuery(
+        web_app_query_id: string,
+        result: InlineQueryResult,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.answerWebAppQuery({ web_app_query_id, result }, signal);
+    }
+
+    /**
      * Use this method to send invoices. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -1699,6 +1830,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "sendInvoice",
+            | "chat_id"
             | "title"
             | "description"
             | "payload"
@@ -1803,7 +1935,7 @@ export class Api<R extends RawApi = RawApi> {
     sendGame(
         chat_id: number,
         game_short_name: string,
-        other?: Other<R, "sendGame", "game_short_name">,
+        other?: Other<R, "sendGame", "chat_id" | "game_short_name">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendGame(
@@ -1829,7 +1961,11 @@ export class Api<R extends RawApi = RawApi> {
         message_id: number,
         user_id: number,
         score: number,
-        other?: Other<R, "setGameScore", "message_id" | "user_id" | "score">,
+        other?: Other<
+            R,
+            "setGameScore",
+            "chat_id" | "message_id" | "inline_message_id" | "user_id" | "score"
+        >,
         signal?: AbortSignal,
     ) {
         return this.raw.setGameScore(
@@ -1856,7 +1992,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "setGameScore",
-            "inline_message_id" | "user_id" | "score"
+            "chat_id" | "message_id" | "inline_message_id" | "user_id" | "score"
         >,
         signal?: AbortSignal,
     ) {

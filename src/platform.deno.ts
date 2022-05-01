@@ -2,30 +2,31 @@
 const isDeno = typeof Deno !== "undefined";
 
 // === Needed imports
-import { type InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.6.0?dts";
-import { basename } from "https://deno.land/std@0.123.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.123.0/streams/mod.ts";
+import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@v2.7.0";
+import { basename } from "https://deno.land/std@0.136.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.136.0/streams/mod.ts";
 
 // === Export all API types
-export * from "https://cdn.skypack.dev/@grammyjs/types@v2.6.0?dts";
+export * from "https://esm.sh/@grammyjs/types@v2.7.0";
 
 // === Export debug
-import d from "https://cdn.skypack.dev/debug@^4.3.3";
+import d from "https://cdn.skypack.dev/debug@4.3.4";
 export { d as debug };
+const DEBUG = "DEBUG";
 if (isDeno) {
     d.useColors = () => !Deno.noColor;
-    try {
-        const val = Deno.env.get("DEBUG");
+    const env = { name: "env", variable: DEBUG } as const;
+    const res = await Deno.permissions.query(env);
+    if (res.state === "granted") {
+        const val = Deno.env.get(DEBUG);
         if (val) d.enable(val);
-    } catch {
-        // cannot access env var, treat as if it is not set
     }
 }
 const debug = d("grammy:warn");
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.123.0/streams/mod.ts";
+export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.136.0/streams/mod.ts";
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
@@ -33,7 +34,7 @@ export const baseFetchConfig = (_apiRoot: string) => ({});
 /** Something that looks like a URL. */
 interface URLLike {
     /**
-     * Identifier of the resouce. Must be in a format that can be parsed by the
+     * Identifier of the resource. Must be in a format that can be parsed by the
      * URL constructor.
      */
     url: string;
@@ -71,7 +72,7 @@ export class InputFile {
         file:
             | string
             | Blob
-            | Deno.File
+            | Deno.FsFile
             | URL
             | URLLike
             | Uint8Array
@@ -131,14 +132,14 @@ export class InputFile {
 }
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
-    const { body } = await fetch(url);
+    const { body } = await fetch(url instanceof URL ? url.href : url);
     if (body === null) {
         throw new Error(`Download failed, no response body from '${url}'`);
     }
     yield* body;
 }
-function isDenoFile(data: unknown): data is Deno.File {
-    return isDeno && data instanceof Deno.File;
+function isDenoFile(data: unknown): data is Deno.FsFile {
+    return isDeno && data instanceof Deno.FsFile;
 }
 
 // === Export InputFile types

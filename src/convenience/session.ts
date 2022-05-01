@@ -189,17 +189,15 @@ export function session<S, C extends Context>(
         Object.defineProperty(ctx, "session", {
             get() {
                 if (key === undefined) {
-                    throw new Error(
-                        "Cannot access session data because the session key was undefined!",
-                    );
+                    const msg = undef("access", getSessionKey);
+                    throw new Error(msg);
                 }
                 return value;
             },
             set(v) {
                 if (key === undefined) {
-                    throw new Error(
-                        "Cannot assign session data because the session key was undefined!",
-                    );
+                    const msg = undef("assign", getSessionKey);
+                    throw new Error(msg);
                 }
                 value = v;
             },
@@ -263,9 +261,8 @@ export function lazySession<S, C extends Context>(
 
         async function load() {
             if (key === undefined) {
-                throw new Error(
-                    "Cannot access lazy session data because the session key was undefined!",
-                );
+                const msg = undef("access", getSessionKey, { lazy: true });
+                throw new Error(msg);
             }
             let v: S | undefined = await storage.read(key);
             if (!fetching) return value;
@@ -293,9 +290,8 @@ export function lazySession<S, C extends Context>(
             },
             set(v) {
                 if (key === undefined) {
-                    throw new Error(
-                        "Cannot assign lazy session data because the session key was undefined!",
-                    );
+                    const msg = undef("assign", getSessionKey, { lazy: true });
+                    throw new Error(msg);
                 }
                 wrote = true;
                 fetching = false;
@@ -314,8 +310,22 @@ export function lazySession<S, C extends Context>(
     };
 }
 
+/** Stores session data per chat by default */
 function defaultGetSessionKey(ctx: Context): string | undefined {
     return ctx.chat?.id.toString();
+}
+
+/** Returns a useful error message for when the session key is undefined */
+function undef<C extends Context>(
+    op: "access" | "assign",
+    getSessionKey: SessionOptions<C>["getSessionKey"],
+    opts: { lazy?: boolean } = {},
+) {
+    const lazy = opts.lazy ?? false;
+    const reason = getSessionKey === defaultGetSessionKey
+        ? "this update does not belong to a chat, so the session key is undefined"
+        : "the custom `getSessionKey` function returned undefined for this update";
+    return `Cannot ${op} ${lazy ? "lazy " : ""}session data because ${reason}!`;
 }
 
 /**

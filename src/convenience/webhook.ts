@@ -45,8 +45,8 @@ interface ReqResHandler {
      */
     respond: (json: string) => unknown;
     /**
-     * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume
-     * that handler returns something
+     * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
+     * handler returns something
      */
     handlerReturn?: any;
 }
@@ -71,7 +71,7 @@ export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
  * about how to run your bot with webhooks.
  *
  * @param bot The bot for which to create a callback
- * @param framework An optional string identifying the framework (default: 'express')
+ * @param adapter An optional string identifying the framework (default: 'express')
  * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
  * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
  */
@@ -81,19 +81,14 @@ export function webhookCallback<C extends Context = Context>(
     onTimeout: "throw" | "return" | ((...args: any[]) => unknown) = "throw",
     timeoutMilliseconds = 10_000,
 ) {
-    let firstUpdate = true;
     let initialized = false;
-    let initCall: Promise<void> | undefined;
     const server: FrameworkAdapter = typeof adapter === "string"
         ? adapters[adapter]
         : adapter;
     return async (...args: any[]) => {
         if (!initialized) {
-            if (firstUpdate) {
-                initCall = bot.init();
-                firstUpdate = false;
-            }
-            await initCall;
+            // Will dedupe concurrently incoming calls from several updates
+            await bot.init();
             initialized = true;
         }
         const { update, respond, end, handlerReturn } = server(...args);
