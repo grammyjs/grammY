@@ -827,17 +827,11 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
 }
 
 type HearsContext<C extends Context> = Filter<
-    {
-        [K in keyof C]: K extends "match"
-            ? Extract<C[K], string | RegExpMatchArray>
-            : C[K];
-    },
+    Omit<C, 'match'> & { match: Extract<C['match'], string | RegExpMatchArray> },
     ":text" | ":caption"
 >;
 type CommandContext<C extends Context> = Filter<
-    {
-        [K in keyof C]: K extends "match" ? Extract<C[K], string> : C[K];
-    },
+    Omit<C, 'match'> & { match: Extract<C['match'], string> },
     ":entities:bot_command"
 >;
 
