@@ -57,11 +57,8 @@ export type ApiCallFn<R extends RawApi = RawApi> = <M extends Methods<R>>(
     signal?: AbortSignal,
 ) => Promise<ApiResponse<ApiCallResult<M, R>>>;
 
-type ApiCallResult<M extends Methods<R>, R extends RawApi> = R[M] extends (
-    ...args: unknown[]
-) => unknown ? Await<ReturnType<R[M]>>
-    : never;
-type Await<T> = T extends PromiseLike<infer V> ? V : T;
+type ApiCallResult<M extends Methods<R>, R extends RawApi> = R[M] extends
+    (...args: unknown[]) => unknown ? Awaited<ReturnType<R[M]>> : never;
 
 /**
  * API call transformers are functions that can access and modify the method and
