@@ -187,6 +187,7 @@ export function session<S, C extends Context>(
             ? undefined
             : (await storage.read(key)) ?? options.initial?.();
         Object.defineProperty(ctx, "session", {
+            enumerable: true,
             get() {
                 if (key === undefined) {
                     const msg = undef("access", getSessionKey);
@@ -279,6 +280,7 @@ export function lazySession<S, C extends Context>(
         }
 
         Object.defineProperty(ctx, "session", {
+            enumerable: true,
             get() {
                 if (wrote) return value;
                 read = true;
