@@ -10,7 +10,7 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-6.0-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-6.0-blue?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA%0AAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAH3SURBVHgBVVKxbhNBEH2zdySWjc2lACGCxClB%0AwmmQSUNBQZEeCTqgcPIBiEBHFeULkoiI1qEKP0CBhEQNDQYKJwIUS2BhUuSsxJGd5G4ms3t3VrJ3%0Ap529nfdm9u0jnBlhIwqKxXgR5NWF5AYERKAmjDT5xCxvPZ5o57mUB9XN3XnjmRUBLkFE80myBBJx%0AYY%2BTZHn7ydXVEXDmXVerKEj3tQQk5RRLkK1dDGNE4uSlBVN1819IxvuqrHmlUesWQPpKTpLWj4aD%0AwZQBzJK2EIiw7U2nBMKsEaPsC81NjmP9XoWqgadELCwSFArF5z5zXMvpM0qULwD1agn1WxctFcpj%0ABus%2FDgBm1w6D533dqeVt3b0yTjZ57noBnX6M19%2F38ex2xfG2ouNzF%2BBrb06IyZJHr2YrmJkYw9vt%0AA%2Fn4Z0Bv7l%2FW6oTW3rEWlvTImXC%2Bat3WzsNOn%2FHgfVcoVZo%2BPbzmQHb8PUzsmUcgIPlm2GAjVdsJ%0AQna239MPXXzuDl3qVnTk%2FtksRyBoUtjYCXyDHUUFZw%2Fh7k7VejRVoi%2F%2Fh%2BgcxpkPqJfwcNaVv9n4%0ArQaQFRmZyUksuRP0yUCAR3jxsz69Zuzi18L0KhMvahilrYqTPhVO15xY%2F%2FQgiQOd82pq8lbokbek%0A91%2FTjVpmvrbacYPRX2sv3OnluaelJggysA4zeQAAAABJRU5ErkJggg%3D%3D&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-54-orange.svg?style=flat&labelColor=000&color=3b82f6)](#contributors-)
