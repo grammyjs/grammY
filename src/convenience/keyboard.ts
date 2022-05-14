@@ -1,7 +1,7 @@
 import {
-    InlineKeyboardButton,
-    KeyboardButton,
-    LoginUrl,
+    type InlineKeyboardButton,
+    type KeyboardButton,
+    type LoginUrl,
 } from "../platform.deno.ts";
 
 /**
@@ -33,8 +33,8 @@ import {
  */
 export class Keyboard {
     /**
-     * The nested array that holds the custom keyboard. It will be extended every time
-     * you call one of the provided methods.
+     * The nested array that holds the custom keyboard. It will be extended
+     * every time you call one of the provided methods.
      */
     public readonly keyboard: KeyboardButton[][] = [[]];
 
@@ -100,6 +100,17 @@ export class Keyboard {
      */
     requestPoll(text: string, type?: "quiz" | "regular") {
         return this.add({ text, request_poll: { type } });
+    }
+    /**
+     * Adds a new web app button. The Web App that will be launched when the
+     * user presses the button. The Web App will be able to send a
+     * “web_app_data” service message. Available in private chats only.
+     *
+     * @param text Text text to display
+     * @param url An HTTPS URL of a Web App to be opened with additional data
+     */
+    webApp(text: string, url: string) {
+        return this.add({ text, web_app: { url } });
     }
     /**
      * Return the resulting custom keyboard that was built. May be called in the
@@ -174,22 +185,6 @@ export class InlineKeyboard {
         return this.add({ text, url });
     }
     /**
-     * Adds a new login button. This can be used as a replacement for the
-     * Telegram Login Widget. You must specify an HTTP URL used to automatically
-     * authorize the user.
-     *
-     * @param text The text to display
-     * @param loginUrl The login URL as string or `LoginUrl` object
-     */
-    login(text: string, loginUrl: string | LoginUrl) {
-        return this.add({
-            text,
-            login_url: typeof loginUrl === "string"
-                ? { url: loginUrl }
-                : loginUrl,
-        });
-    }
-    /**
      * Adds a new callback query button. The button contains a text and a custom
      * payload. This payload will be sent back to your bot when the button is
      * pressed. If you omit the payload, the display text will be sent back to
@@ -209,6 +204,31 @@ export class InlineKeyboard {
      */
     text(text: string, data = text) {
         return this.add({ text, callback_data: data });
+    }
+    /**
+     * Adds a new web app button, confer https://core.telegram.org/bots/webapps
+     *
+     * @param text The text to display
+     * @param url An HTTPS URL of a Web App to be opened with additional data
+     */
+    webApp(text: string, url: string) {
+        return this.add({ text, web_app: { url } });
+    }
+    /**
+     * Adds a new login button. This can be used as a replacement for the
+     * Telegram Login Widget. You must specify an HTTP URL used to automatically
+     * authorize the user.
+     *
+     * @param text The text to display
+     * @param loginUrl The login URL as string or `LoginUrl` object
+     */
+    login(text: string, loginUrl: string | LoginUrl) {
+        return this.add({
+            text,
+            login_url: typeof loginUrl === "string"
+                ? { url: loginUrl }
+                : loginUrl,
+        });
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -246,7 +266,8 @@ export class InlineKeyboard {
         return this.add({ text, switch_inline_query_current_chat: query });
     }
     /**
-     * Adds a new game query button, confer https://core.telegram.org/bots/api#games
+     * Adds a new game query button, confer
+     * https://core.telegram.org/bots/api#games
      *
      * This type of button must always be the first button in the first row.
      *
@@ -256,9 +277,11 @@ export class InlineKeyboard {
         return this.add({ text, callback_game: {} });
     }
     /**
-     * Adds a new payment button, confer https://core.telegram.org/bots/api#payments
+     * Adds a new payment button, confer
+     * https://core.telegram.org/bots/api#payments
      *
-     * This type of button must always be the first button in the first row and can only be used in invoice messages.
+     * This type of button must always be the first button in the first row and
+     * can only be used in invoice messages.
      *
      * @param text The text to display
      */

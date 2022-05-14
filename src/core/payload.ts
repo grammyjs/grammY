@@ -125,7 +125,7 @@ async function* payloadToMultipartItr(
         first = false;
     }
     // End multipart/form-data protocol
-    yield enc.encode(`\r\n--${boundary}--`);
+    yield enc.encode(`\r\n--${boundary}--\r\n`);
 }
 
 type ExtractedFile = { id: string; origin: string; file: InputFile };
@@ -178,7 +178,7 @@ ${filename}
         );
     }
     yield enc.encode(
-        `content-disposition:form-data;name="${id}";filename=${filename}\r\n\r\n`,
+        `content-disposition:form-data;name="${id}";filename=${filename}\r\ncontent-type:application/octet-stream\r\n\r\n`,
     );
     const data = await input[toRaw]();
     if (data instanceof Uint8Array) yield data;

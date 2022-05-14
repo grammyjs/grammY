@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import type { IncomingMessage, ServerResponse } from "http";
+import { type IncomingMessage, type ServerResponse } from "http";
 
 /** Node.js native 'http' and 'https' modules */
 const http = (req: IncomingMessage, res: ServerResponse) => ({

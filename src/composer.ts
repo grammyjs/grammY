@@ -1,5 +1,5 @@
-import { Context } from "./context.ts";
-import { Filter, FilterQuery, matchFilter } from "./filter.ts";
+import { type Context } from "./context.ts";
+import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 type MaybeArray<T> = T | T[];
@@ -827,13 +827,17 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
 }
 
 export type HearsContext<C extends Context> = Filter<
-    C & { match: string | RegExpMatchArray },
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string | RegExpMatchArray>;
+    },
     ":text" | ":caption"
 >;
 export type HearsMiddleware<C extends Context> = Middleware<HearsContext<C>>;
 
 export type CommandContext<C extends Context> = Filter<
-    C & { match: string },
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string>;
+    },
     ":entities:bot_command"
 >;
 export type CommandMiddleware<C extends Context> = Middleware<

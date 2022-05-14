@@ -2,9 +2,16 @@
 import { BotError, Composer, run } from "./composer.ts";
 import { Context } from "./context.ts";
 import { Api } from "./core/api.ts";
-import { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
+import {
+    type ApiClientOptions,
+    type WebhookReplyEnvelope,
+} from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
-import { debug as d, Update, UserFromGetMe } from "./platform.deno.ts";
+import {
+    debug as d,
+    type Update,
+    type UserFromGetMe,
+} from "./platform.deno.ts";
 const debug = d("grammy:bot");
 const debugErr = d("grammy:error");
 
@@ -40,13 +47,14 @@ export interface PollingOptions {
      */
     drop_pending_updates?: boolean;
     /**
-     * Synchronous callback that is useful for logging. It will be executed once
-     * the setup of the bot has completed, and immediately before the first
-     * updates are being fetched. The bot information `bot.botInfo` will be
-     * available when the function is run. For convenience, the callback
-     * function receives the value of `bot.botInfo` as an argument.
+     * A callback function that is useful for logging (or setting up middleware
+     * if you did not do this before). It will be executed after the setup of
+     * the bot has completed, and immediately before the first updates are being
+     * fetched. The bot information `bot.botInfo` will be available when the
+     * function is run. For convenience, the callback function receives the
+     * value of `bot.botInfo` as an argument.
      */
-    onStart?: (botInfo: UserFromGetMe) => void;
+    onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
 }
 
 export { BotError };
@@ -59,7 +67,7 @@ export type ErrorHandler<C extends Context = Context> = (
 ) => unknown;
 
 /**
- * Options to pass the bot when creating it.
+ * Options to pass to the bot when creating it.
  */
 export interface BotConfig<C extends Context> {
     /**
@@ -129,6 +137,7 @@ export class Bot<
     public readonly api: A;
 
     private me: UserFromGetMe | undefined;
+    private mePromise: Promise<UserFromGetMe> | undefined;
     private readonly clientConfig: ApiClientOptions | undefined;
 
     private readonly ContextConstructor: new (
@@ -209,19 +218,62 @@ export class Bot<
     }
 
     /**
+     * Checks if the bot has been initialized. A bot is initialized if the bot
+     * information is set. The bot information can either be set automatically
+     * by calling `bot.init`, or manually through the bot constructor. Note that
+     * usually, initialization is done automatically and you do not have to care
+     * about this method.
+     *
+     * @returns true if the bot is initialized, and false otherwise
+     */
+    isInited() {
+        return this.me !== undefined;
+    }
+
+    /**
      * Initializes the bot, i.e. fetches information about the bot itself. This
-     * method is called automatically, you don't have to call it manually.
+     * method is called automatically, you usually don't have to call it
+     * manually.
      */
     async init() {
-        if (this.me === undefined) {
+        if (!this.isInited()) {
             debug("Initializing bot");
-            const me = await this.api.getMe();
+            this.mePromise ??= withRetries(() => this.api.getMe());
+            let me: UserFromGetMe;
+            try {
+                me = await this.mePromise;
+            } finally {
+                this.mePromise = undefined;
+            }
             if (this.me === undefined) this.me = me;
-            else debug("Bot info was set manually by now, will not overwrite");
-        } else {
-            debug("Bot already initialized!");
+            else debug("Bot info was set by now, will not overwrite");
         }
-        debug(`I am ${this.me.username}!`);
+        debug(`I am ${this.me!.username}!`);
+    }
+
+    /**
+     * Internal. Do not call. Handles an update batch sequentially by supplying
+     * it one-by-one to the middleware. Handles middleware errors and stores the
+     * last update identifier that was being tried to handle.
+     *
+     * @param updates An array of updates to handle
+     */
+    private async handleUpdates(updates: Update[]) {
+        // handle updates sequentially (!)
+        for (const update of updates) {
+            this.lastTriedUpdateId = update.update_id;
+            try {
+                await this.handleUpdate(update);
+            } catch (err) {
+                // should always be true
+                if (err instanceof BotError) {
+                    await this.errorHandler(err);
+                } else {
+                    console.error("FATAL: grammY unable to handle:", err);
+                    throw err;
+                }
+            }
+        }
     }
 
     /**
@@ -304,7 +356,7 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        await withRetries(() => this.init());
+        if (!this.isInited()) await this.init();
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
@@ -314,6 +366,9 @@ a known bot info object.",
                 drop_pending_updates: options?.drop_pending_updates,
             })
         );
+
+        // All async ops of setup complete, run callback
+        await options?.onStart?.(this.botInfo);
 
         // Prevent common misuse that causes memory leak
         this.use = () => {
@@ -332,75 +387,7 @@ you can circumvent this protection against memory leaks.`);
 
         // Start polling
         debug("Starting simple long polling");
-        this.pollingRunning = true;
-        this.pollingAbortController = new AbortController();
-
-        const limit = options?.limit;
-        const timeout = options?.timeout ?? 30; // seconds
-        let allowed_updates = options?.allowed_updates;
-        try {
-            options?.onStart?.(this.botInfo);
-        } catch (error) {
-            this.pollingRunning = false;
-            this.pollingAbortController = undefined;
-            throw error;
-        }
-
-        const handleErr = async (error: unknown) => {
-            if (!this.pollingRunning) throw error;
-            else if (error instanceof GrammyError) {
-                debugErr(error.message);
-                if (error.error_code === 401) {
-                    debugErr(
-                        "Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).",
-                    );
-                    throw error;
-                } else if (error.error_code === 409) {
-                    debugErr(
-                        "Consider revoking the bot token if you believe that no other instance is running.",
-                    );
-                    throw error;
-                }
-            } else debugErr(error);
-            debugErr("Call to getUpdates failed, retrying in 3 seconds ...");
-            await new Promise((r) => setTimeout(r, 3000));
-        };
-
-        while (this.pollingRunning) {
-            // fetch updates
-            const offset = this.lastTriedUpdateId + 1;
-            let updates: Update[] | undefined = undefined;
-            do {
-                try {
-                    updates = await this.api.getUpdates(
-                        { offset, limit, timeout, allowed_updates },
-                        this.pollingAbortController.signal,
-                    );
-                } catch (error) {
-                    if (this.pollingRunning) await handleErr(error);
-                    else debug("Pending getUpdates request cancelled");
-                }
-            } while (updates === undefined && this.pollingRunning);
-            if (updates === undefined) break;
-            // handle them sequentially (!)
-            for (const update of updates) {
-                this.lastTriedUpdateId = update.update_id;
-                try {
-                    await this.handleUpdate(update);
-                } catch (err) {
-                    // should always be true
-                    if (err instanceof BotError) {
-                        await this.errorHandler(err);
-                    } else {
-                        console.error("FATAL: grammY unable to handle:", err);
-                        throw err;
-                    }
-                }
-            }
-            // Telegram uses the last setting if `allowed_updates` is omitted so
-            // we can save same traffic by only sending it in the first request
-            allowed_updates = undefined;
-        }
+        await this.loop(options);
         debug("Middleware is done running");
     }
 
@@ -450,14 +437,104 @@ you can circumvent this protection against memory leaks.`);
     catch(errorHandler: ErrorHandler<C>) {
         this.errorHandler = errorHandler;
     }
+
+    /**
+     * Internal. Do not call. Enters a loop that will perform long polling until
+     * the bot is stopped.
+     */
+    private async loop(options?: PollingOptions) {
+        this.pollingRunning = true;
+        this.pollingAbortController = new AbortController();
+
+        const limit = options?.limit;
+        const timeout = options?.timeout ?? 30; // seconds
+        let allowed_updates = options?.allowed_updates;
+
+        while (this.pollingRunning) {
+            // fetch updates
+            const updates = await this.fetchUpdates(
+                { limit, timeout, allowed_updates },
+            );
+            // check if polling stopped
+            if (updates === undefined) break;
+            // handle updates
+            await this.handleUpdates(updates);
+            // Telegram uses the last setting if `allowed_updates` is omitted so
+            // we can save same traffic by only sending it in the first request
+            allowed_updates = undefined;
+        }
+    }
+
+    /**
+     * Internal. Do not call. Reliably fetches an update batch via `getUpdates`.
+     * Handles all known errors. Returns `undefined` if the bot is stopped and
+     * the call gets cancelled.
+     *
+     * @param options Polling options
+     * @returns An array of updates, or `undefined` if the bot is stopped.
+     */
+    private async fetchUpdates(
+        { limit, timeout, allowed_updates }: PollingOptions,
+    ) {
+        const offset = this.lastTriedUpdateId + 1;
+        let updates: Update[] | undefined = undefined;
+        do {
+            try {
+                updates = await this.api.getUpdates(
+                    { offset, limit, timeout, allowed_updates },
+                    this.pollingAbortController?.signal,
+                );
+            } catch (error) {
+                await this.handlePollingError(error);
+            }
+        } while (updates === undefined && this.pollingRunning);
+        return updates;
+    }
+
+    /**
+     * Internal. Do not call. Handles an error that occurred during long
+     * polling.
+     */
+    private async handlePollingError(error: unknown) {
+        if (!this.pollingRunning) {
+            debug("Pending getUpdates request cancelled");
+            return;
+        }
+        let sleepSeconds = 3;
+        if (error instanceof GrammyError) {
+            debugErr(error.message);
+            if (error.error_code === 401) {
+                debugErr(
+                    "Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).",
+                );
+                throw error;
+            } else if (error.error_code === 409) {
+                debugErr(
+                    "Consider revoking the bot token if you believe that no other instance is running.",
+                );
+                throw error;
+            } else if (error.error_code === 429) {
+                debugErr("Bot API server is closing.");
+                sleepSeconds = error.parameters.retry_after ?? sleepSeconds;
+            }
+        } else debugErr(error);
+        debugErr(
+            `Call to getUpdates failed, retrying in ${sleepSeconds} seconds ...`,
+        );
+        await sleep(sleepSeconds);
+    }
 }
 
-async function withRetries(task: () => Promise<unknown>) {
-    let success = false;
-    while (!success) {
+/**
+ * Performs a network call task, retrying upon known errors until success.
+ *
+ * @param task Async task to perform
+ */
+async function withRetries<T>(task: () => Promise<T>): Promise<T> {
+    let result: { ok: false } | { ok: true; value: T } = { ok: false };
+    while (!result.ok) {
         try {
-            await task();
-            success = true;
+            result = { ok: true, value: await task() };
         } catch (error) {
             debugErr(error);
             if (error instanceof HttpError) continue;
@@ -465,15 +542,19 @@ async function withRetries(task: () => Promise<unknown>) {
                 if (error.error_code >= 500) continue;
                 if (error.error_code === 429) {
                     const retryAfter = error.parameters.retry_after;
-                    if (retryAfter !== undefined) {
-                        await new Promise((resolve) =>
-                            setTimeout(resolve, 1000 * retryAfter)
-                        );
-                    }
+                    if (retryAfter !== undefined) await sleep(retryAfter);
                     continue;
                 }
             }
             throw error;
         }
     }
+    return result.value;
+}
+
+/**
+ * Returns a new promise that resolves after the specified number of seconds.
+ */
+function sleep(seconds: number) {
+    return new Promise((r) => setTimeout(r, 1000 * seconds));
 }

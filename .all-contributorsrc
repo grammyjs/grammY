@@ -409,7 +409,8 @@
       "profile": "https://darve.sh",
       "contributions": [
         "bug",
-        "code"
+        "code",
+        "review"
       ]
     },
     {
@@ -472,7 +473,8 @@
       "profile": "https://github.com/habemuscode",
       "contributions": [
         "review",
-        "doc"
+        "doc",
+        "translation"
       ]
     },
     {
@@ -519,7 +521,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/128121?v=4",
       "profile": "https://github.com/IlyaSemenov",
       "contributions": [
-        "ideas"
+        "ideas",
+        "review"
       ]
     },
     {
@@ -530,6 +533,42 @@
       "contributions": [
         "doc",
         "example"
+      ]
+    },
+    {
+      "login": "MrSaeedNasiri",
+      "name": "Saeed Nasiri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17780289?v=4",
+      "profile": "https://github.com/MrSaeedNasiri",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Scrip7",
+      "name": "Hesoyam",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37535505?v=4",
+      "profile": "https://github.com/Scrip7",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "yrzam",
+      "name": "yrzam",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96742416?v=4",
+      "profile": "http://yrz.am",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "drmikecrowe",
+      "name": "drmikecrowe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90312?v=4",
+      "profile": "https://github.com/drmikecrowe",
+      "contributions": [
+        "review"
       ]
     }
   ],
