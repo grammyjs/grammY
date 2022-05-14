@@ -1,13 +1,13 @@
 // === Needed imports
-import { type InputFileProxy } from "https://cdn.skypack.dev/@grammyjs/types@v2.6.0?dts";
+import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@v2.7.1";
 import { debug as d, isDeno, toRaw } from "./platform.deno.ts";
-import { basename } from "https://deno.land/std@0.123.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.123.0/streams/mod.ts";
+import { basename } from "https://deno.land/std@0.139.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.139.0/streams/mod.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://cdn.skypack.dev/@grammyjs/types@v2.6.0?dts";
+export * from "https://esm.sh/@grammyjs/types@v2.7.1";
 
 /** Something that looks like a URL. */
 interface URLLike {
@@ -47,7 +47,7 @@ export class InputFile {
         file:
             | string
             | Blob
-            | Deno.File
+            | Deno.FsFile
             | URL
             | URLLike
             | Uint8Array
@@ -113,8 +113,8 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     }
     yield* body;
 }
-function isDenoFile(data: unknown): data is Deno.File {
-    return isDeno && data instanceof Deno.File;
+function isDenoFile(data: unknown): data is Deno.FsFile {
+    return isDeno && data instanceof Deno.FsFile;
 }
 
 // === Export InputFile types

@@ -1,8 +1,5 @@
 /** Are we running on Deno or in a web browser? */
-const isDeno = typeof Deno !== "undefined";
-
-// === Export all API types
-export * from "https://esm.sh/@grammyjs/types@v2.7.0";
+export const isDeno = typeof Deno !== "undefined";
 
 // === Export debug
 import d from "https://cdn.skypack.dev/debug@4.3.4";
@@ -20,7 +17,7 @@ if (isDeno) {
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.136.0/streams/mod.ts";
+export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.139.0/streams/mod.ts";
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
