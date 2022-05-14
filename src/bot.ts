@@ -44,13 +44,14 @@ export interface PollingOptions {
      */
     drop_pending_updates?: boolean;
     /**
-     * Synchronous callback that is useful for logging. It will be executed once
-     * the setup of the bot has completed, and immediately before the first
-     * updates are being fetched. The bot information `bot.botInfo` will be
-     * available when the function is run. For convenience, the callback
-     * function receives the value of `bot.botInfo` as an argument.
+     * A callback function that is useful for logging (or setting up middleware
+     * if you did not do this before). It will be executed after the setup of
+     * the bot has completed, and immediately before the first updates are being
+     * fetched. The bot information `bot.botInfo` will be available when the
+     * function is run. For convenience, the callback function receives the
+     * value of `bot.botInfo` as an argument.
      */
-    onStart?: (botInfo: UserFromGetMe) => void;
+    onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
 }
 
 export { BotError };
@@ -63,7 +64,7 @@ export type ErrorHandler<C extends Context = Context> = (
 ) => unknown;
 
 /**
- * Options to pass the bot when creating it.
+ * Options to pass to the bot when creating it.
  */
 export interface BotConfig<C extends Context> {
     /**
@@ -133,6 +134,7 @@ export class Bot<
     public readonly api: A;
 
     private me: UserFromGetMe | undefined;
+    private mePromise: Promise<UserFromGetMe> | undefined;
     private readonly clientConfig: ApiClientOptions | undefined;
 
     private readonly ContextConstructor: new (
@@ -233,9 +235,15 @@ export class Bot<
     async init() {
         if (!this.isInited()) {
             debug("Initializing bot");
-            const me = await this.api.getMe();
+            this.mePromise ??= withRetries(() => this.api.getMe());
+            let me: UserFromGetMe;
+            try {
+                me = await this.mePromise;
+            } finally {
+                this.mePromise = undefined;
+            }
             if (this.me === undefined) this.me = me;
-            else debug("Bot info was set manually by now, will not overwrite");
+            else debug("Bot info was set by now, will not overwrite");
         }
         debug(`I am ${this.me!.username}!`);
     }
@@ -345,7 +353,7 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        if (!this.isInited()) await withRetries(() => this.init());
+        if (!this.isInited()) await this.init();
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
@@ -355,6 +363,9 @@ a known bot info object.",
                 drop_pending_updates: options?.drop_pending_updates,
             })
         );
+
+        // All async ops of setup complete, run callback
+        await options?.onStart?.(this.botInfo);
 
         // Prevent common misuse that causes memory leak
         this.use = () => {
@@ -373,7 +384,6 @@ you can circumvent this protection against memory leaks.`);
 
         // Start polling
         debug("Starting simple long polling");
-        options?.onStart?.(this.botInfo);
         await this.loop(options);
         debug("Middleware is done running");
     }
@@ -517,12 +527,11 @@ you can circumvent this protection against memory leaks.`);
  *
  * @param task Async task to perform
  */
-async function withRetries(task: () => Promise<unknown>) {
-    let success = false;
-    while (!success) {
+async function withRetries<T>(task: () => Promise<T>): Promise<T> {
+    let result: { ok: false } | { ok: true; value: T } = { ok: false };
+    while (!result.ok) {
         try {
-            await task();
-            success = true;
+            result = { ok: true, value: await task() };
         } catch (error) {
             debugErr(error);
             if (error instanceof HttpError) continue;
@@ -537,6 +546,7 @@ async function withRetries(task: () => Promise<unknown>) {
             throw error;
         }
     }
+    return result.value;
 }
 
 /**
