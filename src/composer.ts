@@ -1,5 +1,6 @@
 import { type Context } from "./context.ts";
 import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
+import { type Chat } from "./platform.deno.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 type MaybeArray<T> = T | T[];
@@ -415,6 +416,19 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     return false;
                 });
             },
+            ...middleware,
+        );
+    }
+
+    // TODO: add docs
+    chatType(
+        chatType: MaybeArray<Chat["type"]>,
+        ...middleware: Array<Middleware<C>>
+    ): Composer<C> {
+        const set = new Set(toArray(chatType));
+        return this.filter(
+            // TODO: turn into type prediate
+            (ctx) => ctx.chat?.type !== undefined && set.has(ctx.chat.type),
             ...middleware,
         );
     }
