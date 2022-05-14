@@ -1,7 +1,7 @@
 // === Needed imports
-import { Readable } from "stream";
 import { Agent as HttpAgent } from "http";
 import { Agent as HttpsAgent } from "https";
+import { Readable } from "stream";
 
 // === Export debug
 import { debug as d } from "debug";
