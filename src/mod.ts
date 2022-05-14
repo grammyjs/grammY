@@ -18,11 +18,17 @@ export * from "./convenience/webhook.ts";
 
 // A little more advanced stuff
 export {
+    type CallbackQueryContext,
+    type CallbackQueryMiddleware,
     type CommandContext,
     type CommandMiddleware,
     Composer,
+    type GameQueryContext,
+    type GameQueryMiddleware,
     type HearsContext,
     type HearsMiddleware,
+    type InlineQueryContext,
+    type InlineQueryMiddleware,
     type Middleware,
     type MiddlewareFn,
     type MiddlewareObj,
