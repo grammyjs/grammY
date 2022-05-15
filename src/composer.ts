@@ -815,7 +815,28 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         });
         return composer;
     }
+
+    static static = new Proxy({} as ComposerStatic, {
+        get<C extends Context>(_: unknown, op: keyof ComposerStatic) {
+            return (...args: Parameters<Composer<C>[typeof op]>) => {
+                const composer = new Composer<C>();
+                // @ts-ignore fails to check overlapping function signatures
+                composer[op](...args);
+                return composer;
+            };
+        },
+    });
 }
+
+Composer.static.on("message", (ctx) => {
+    const t = ctx.message.text;
+});
+
+export type ComposerStatic = {
+    [op in keyof Omit<Composer<Context>, "middleware">]: <C extends Context>(
+        ...args: Parameters<Composer<C>[op]>
+    ) => ReturnType<Composer<C>[op]>;
+};
 
 // === Util functions and types
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
