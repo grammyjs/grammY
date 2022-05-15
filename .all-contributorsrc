@@ -473,7 +473,8 @@
       "profile": "https://github.com/habemuscode",
       "contributions": [
         "review",
-        "doc"
+        "doc",
+        "translation"
       ]
     },
     {
@@ -568,6 +569,15 @@
       "profile": "https://github.com/drmikecrowe",
       "contributions": [
         "review"
+      ]
+    },
+    {
+      "login": "C0rn3j",
+      "name": "Martin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1641362?v=4",
+      "profile": "https://rys.pw",
+      "contributions": [
+        "doc"
       ]
     }
   ],
