@@ -154,7 +154,7 @@ export class Context implements RenamedUpdate {
     // AGGREGATION SHORTCUTS
 
     /**
-     * Get message object from whereever possible. Alias for `ctx.message ??
+     * Get message object from wherever possible. Alias for `ctx.message ??
      * ctx.editedMessage ?? ctx.callbackQuery?.message ?? ctx.channelPost ??
      * ctx.editedChannelPost`
      */
@@ -169,7 +169,7 @@ export class Context implements RenamedUpdate {
         );
     }
     /**
-     * Get chat object from whereever possible. Alias for `(ctx.msg ??
+     * Get chat object from wherever possible. Alias for `(ctx.msg ??
      * ctx.myChatMember ?? ctx.chatMember ?? ctx.chatJoinRequest)?.chat`
      */
     get chat(): Chat | undefined {
@@ -189,7 +189,7 @@ export class Context implements RenamedUpdate {
         return this.msg?.sender_chat;
     }
     /**
-     * Get message author from whereever possible. Alias for
+     * Get message author from wherever possible. Alias for
      * `(ctx.callbackQuery?? ctx.inlineQuery ?? ctx.shippingQuery ??
      * ctx.preCheckoutQuery ?? ctx.chosenInlineResult ?? ctx.msg ??
      * ctx.myChatMember ?? ctx.chatMember ?? ctx.chatJoinRequest)?.from`
@@ -209,7 +209,7 @@ export class Context implements RenamedUpdate {
         )?.from;
     }
     /**
-     * Get inline message ID from whereever possible. Alias for
+     * Get inline message ID from wherever possible. Alias for
      * `(ctx.callbackQuery ?? ctx.chosenInlineResult)?.inline_message_id`
      */
     get inlineMessageId(): string | undefined {
