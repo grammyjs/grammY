@@ -1,5 +1,11 @@
-import { InputMedia, InputMediaAnimation, InputMediaAudio, InputMediaDocument, InputMediaPhoto, InputMediaVideo } from "../../platform.deno.ts";
-
+import {
+    InputMedia,
+    InputMediaAnimation,
+    InputMediaAudio,
+    InputMediaDocument,
+    InputMediaPhoto,
+    InputMediaVideo,
+} from "../../platform.deno.ts";
 
 export class InputMediaBuilder {
     /**
@@ -21,8 +27,8 @@ export class InputMediaBuilder {
      *
      * @param photo The photo to add
      */
-    photo(photo: Omit<InputMediaPhoto, 'type'>) {
-        this.add({ type: 'photo', ...photo });
+    photo(photo: Omit<InputMediaPhoto, "type">) {
+        this.add({ type: "photo", ...photo });
     }
 
     /**
@@ -30,8 +36,8 @@ export class InputMediaBuilder {
      *
      * @param video The video to add
      */
-    video(video: Omit<InputMediaVideo, 'type'>) {
-        this.add({ type: 'video', ...video });
+    video(video: Omit<InputMediaVideo, "type">) {
+        this.add({ type: "video", ...video });
     }
 
     /**
@@ -39,8 +45,8 @@ export class InputMediaBuilder {
      *
      * @param animation The animation to add
      */
-    animation(animation: Omit<InputMediaAnimation, 'type'>) {
-        this.add({ type: 'animation', ...animation });
+    animation(animation: Omit<InputMediaAnimation, "type">) {
+        this.add({ type: "animation", ...animation });
     }
 
     /**
@@ -48,8 +54,8 @@ export class InputMediaBuilder {
      *
      * @param audio The audio to add
      */
-    audio(audio: Omit<InputMediaAudio, 'type'>) {
-        this.add({ type: 'audio', ...audio });
+    audio(audio: Omit<InputMediaAudio, "type">) {
+        this.add({ type: "audio", ...audio });
     }
 
     /**
@@ -57,8 +63,8 @@ export class InputMediaBuilder {
      *
      * @param document The document to add
      */
-    document(document: Omit<InputMediaDocument, 'type'>) {
-        this.add({ type: 'document', ...document });
+    document(document: Omit<InputMediaDocument, "type">) {
+        this.add({ type: "document", ...document });
     }
 
     /**
