@@ -37,6 +37,23 @@ export class Keyboard {
      * every time you call one of the provided methods.
      */
     public readonly keyboard: KeyboardButton[][] = [[]];
+    /**
+     * Show the current keyboard only to those users that are @-mentioned in
+     * the text of the message object.
+     */
+    public selective = false;
+    /**
+     * Hidden current keyboard immediately after the first button was pressed.
+     */
+    public one_time_keyboard = false;
+    /**
+     * Resized current keyboard according to the buttons it contains.
+     */
+    public resize_keyboard = false;
+    /**
+     * Placeholder to be shown in the input field when the keyboard is active.
+     */
+    public input_field_placeholder = "";
 
     /**
      * Allows you to add your own `KeyboardButton` objects if you already have
@@ -111,6 +128,43 @@ export class Keyboard {
      */
     webApp(text: string, url: string) {
         return this.add({ text, web_app: { url } });
+    }
+    /**
+     * Make current keyboard selective.
+     * See https://grammy.dev/plugins/keyboard.html#sending-a-custom-keyboard
+     * for more detail.
+     */
+    selectived() {
+        this.selective = true;
+        return this;
+    }
+    /**
+     * Make current keyboard one time.
+     * See https://grammy.dev/plugins/keyboard.html#sending-a-custom-keyboard
+     * for more detail.
+     */
+    oneTime() {
+        this.one_time_keyboard = true;
+        return this;
+    }
+    /**
+     * Make current keyboard resizeable.
+     * See https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard
+     * for more detail.
+     */
+    resized() {
+        this.resize_keyboard = true;
+        return this;
+    }
+    /**
+     * Set current keyboard input field placeholder.
+     * See https://grammy.dev/plugins/keyboard.html#input-field-placeholder
+     * for more detail.
+     * @param value placeholder text
+     */
+    placeholder(value: string) {
+        this.input_field_placeholder = value;
+        return this;
     }
     /**
      * Return the resulting custom keyboard that was built. May be called in the
