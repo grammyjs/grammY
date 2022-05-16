@@ -19,6 +19,7 @@ export class InputMediaBuilder {
      */
     add(...media: InputMedia[]) {
         this.media.push(...media);
+        return this;
     }
     /**
      * Add a `InputMediaPhoto`.
@@ -26,7 +27,7 @@ export class InputMediaBuilder {
      * @param photo The photo to add
      */
     photo(photo: Omit<InputMediaPhoto, "type">) {
-        this.add({ type: "photo", ...photo });
+        return this.add({ type: "photo", ...photo });
     }
     /**
      * Add a `InputMediaVideo`.
@@ -34,7 +35,7 @@ export class InputMediaBuilder {
      * @param video The video to add
      */
     video(video: Omit<InputMediaVideo, "type">) {
-        this.add({ type: "video", ...video });
+        return this.add({ type: "video", ...video });
     }
     /**
      * Add a `InputMediaAnimation`.
@@ -42,7 +43,7 @@ export class InputMediaBuilder {
      * @param animation The animation to add
      */
     animation(animation: Omit<InputMediaAnimation, "type">) {
-        this.add({ type: "animation", ...animation });
+        return this.add({ type: "animation", ...animation });
     }
     /**
      * Add a `InputMediaAudio`.
@@ -50,7 +51,7 @@ export class InputMediaBuilder {
      * @param audio The audio to add
      */
     audio(audio: Omit<InputMediaAudio, "type">) {
-        this.add({ type: "audio", ...audio });
+        return this.add({ type: "audio", ...audio });
     }
     /**
      * Add a `InputMediaDocument`.
@@ -58,7 +59,7 @@ export class InputMediaBuilder {
      * @param document The document to add
      */
     document(document: Omit<InputMediaDocument, "type">) {
-        this.add({ type: "document", ...document });
+        return this.add({ type: "document", ...document });
     }
     /**
      * Return an array of `InputMedia` objects. You can use it
