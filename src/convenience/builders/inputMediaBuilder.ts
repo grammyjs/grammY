@@ -12,7 +12,6 @@ export class InputMediaBuilder {
      * The nested array that holds the media.
      */
     public readonly media: InputMedia[] = [];
-
     /**
      * Allows you to add a `InputMedia`.
      *
@@ -21,7 +20,6 @@ export class InputMediaBuilder {
     add(...media: InputMedia[]) {
         this.media.push(...media);
     }
-
     /**
      * Add a `InputMediaPhoto`.
      *
@@ -30,7 +28,6 @@ export class InputMediaBuilder {
     photo(photo: Omit<InputMediaPhoto, "type">) {
         this.add({ type: "photo", ...photo });
     }
-
     /**
      * Add a `InputMediaVideo`.
      *
@@ -39,7 +36,6 @@ export class InputMediaBuilder {
     video(video: Omit<InputMediaVideo, "type">) {
         this.add({ type: "video", ...video });
     }
-
     /**
      * Add a `InputMediaAnimation`.
      *
@@ -48,7 +44,6 @@ export class InputMediaBuilder {
     animation(animation: Omit<InputMediaAnimation, "type">) {
         this.add({ type: "animation", ...animation });
     }
-
     /**
      * Add a `InputMediaAudio`.
      *
@@ -57,7 +52,6 @@ export class InputMediaBuilder {
     audio(audio: Omit<InputMediaAudio, "type">) {
         this.add({ type: "audio", ...audio });
     }
-
     /**
      * Add a `InputMediaDocument`.
      *
@@ -66,12 +60,21 @@ export class InputMediaBuilder {
     document(document: Omit<InputMediaDocument, "type">) {
         this.add({ type: "document", ...document });
     }
-
     /**
      * Return an array of `InputMedia` objects. You can use it
      * in `sendMediaGroup`.
      */
     build() {
         return this.media;
+    }
+    /**
+     * Staic method to create an `InputMediaBuilder`.
+     *
+     * @param media The media to add
+     */
+    static from(media: InputMedia[]) {
+        const builder = new InputMediaBuilder();
+        builder.add(...media);
+        return builder;
     }
 }
