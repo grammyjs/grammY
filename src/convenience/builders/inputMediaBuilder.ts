@@ -5,7 +5,7 @@ export class InputMediaBuilder {
     /**
      * The nested array that holds the media.
      */
-    public readonly media: InputMedia[] = []
+    public readonly media: InputMedia[] = [];
 
     /**
      * Allows you to add a `InputMedia`.
@@ -22,7 +22,7 @@ export class InputMediaBuilder {
      * @param photo The photo to add
      */
     photo(photo: Omit<InputMediaPhoto, 'type'>) {
-        this.media.push({ type: 'photo', ...photo });
+        this.add({ type: 'photo', ...photo });
     }
 
     /**
@@ -31,7 +31,7 @@ export class InputMediaBuilder {
      * @param video The video to add
      */
     video(video: Omit<InputMediaVideo, 'type'>) {
-        this.media.push({ type: 'video', ...video });
+        this.add({ type: 'video', ...video });
     }
 
     /**
@@ -40,7 +40,7 @@ export class InputMediaBuilder {
      * @param animation The animation to add
      */
     animation(animation: Omit<InputMediaAnimation, 'type'>) {
-        this.media.push({ type: 'animation', ...animation });
+        this.add({ type: 'animation', ...animation });
     }
 
     /**
@@ -49,7 +49,7 @@ export class InputMediaBuilder {
      * @param audio The audio to add
      */
     audio(audio: Omit<InputMediaAudio, 'type'>) {
-        this.media.push({ type: 'audio', ...audio });
+        this.add({ type: 'audio', ...audio });
     }
 
     /**
@@ -58,7 +58,7 @@ export class InputMediaBuilder {
      * @param document The document to add
      */
     document(document: Omit<InputMediaDocument, 'type'>) {
-        this.media.push({ type: 'document', ...document });
+        this.add({ type: 'document', ...document });
     }
 
     /**
