@@ -12,6 +12,17 @@ export class InputMediaBuilder {
      * The nested array that holds the media.
      */
     public readonly media: InputMedia[] = [];
+
+    /**
+     * Initialize a new `InputMediaBuilder` with optional `InputMedia` array.
+     *
+     * @param media The media to initialize the builder with
+     */
+    constructor(media?: InputMedia[]) {
+        if (media) {
+            this.media = media;
+        }
+    }
     /**
      * Allows you to add a `InputMedia`.
      *
@@ -74,8 +85,6 @@ export class InputMediaBuilder {
      * @param media The media to add
      */
     static from(media: InputMedia[]) {
-        const builder = new InputMediaBuilder();
-        builder.add(...media);
-        return builder;
+        return new InputMediaBuilder(media);
     }
 }
