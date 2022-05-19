@@ -882,7 +882,7 @@ export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & { chat?: { type?: T }; msg?: { chat?: { type?: T } } }
     & { update: ChatTypeUpdate<T> }
     & AliasProps<ChatTypeUpdate<T>>;
-type ChatTypeUpdate<T extends Chat["ype"]> =
+type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
         | "message"
         | "edited_message"
