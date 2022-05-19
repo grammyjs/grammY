@@ -134,7 +134,7 @@ export class Keyboard {
      * See https://grammy.dev/plugins/keyboard.html#sending-a-custom-keyboard
      * for more detail.
      */
-    selectived() {
+    selected() {
         this.selective = true;
         return this;
     }
