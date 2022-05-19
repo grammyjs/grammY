@@ -24,11 +24,14 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
 
 // === Base configuration for `fetch` calls
 export function baseFetchConfig(apiRoot: string) {
+    const agentConfig = { keepAlive: true, keepAliveMsecs: 10_000 };
     if (apiRoot.startsWith("https:")) {
-        return { compress: true, agent: new HttpsAgent({ keepAlive: true }) };
+        return { compress: true, agent: new HttpsAgent(agentConfig) };
     } else if (apiRoot.startsWith("http:")) {
-        return { agent: new HttpAgent({ keepAlive: true }) };
-    } else return {};
+        return { agent: new HttpAgent(agentConfig) };
+    } else {
+        return {};
+    }
 }
 
 /** Something that looks like a URL. */
