@@ -420,7 +420,30 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         );
     }
 
-    // TODO: add docs
+    /**
+     * Registers some middleware for certain chat types only. For example, you
+     * can use this method to only receive updates from private chats. The four
+     * chat types are `"channel"`, `"supergroup"`, `"group"`, and `"private"`.
+     *
+     * ```ts
+     * // Private chats only
+     * bot.chatType("private", ctx => { ... });
+     * // Channels only
+     * bot.chatType("channel", ctx => { ... });
+     * // Groups and supergroups only
+     * bot.chatType(["group", "supergroup"], ctx => { ... });
+     * ```
+     * Note that this combines very well with other filtering logic. This is how
+     * can you respond to `/start` commands from private chats:
+     * ```ts
+     * bot.chatType("private").command("start")
+     * ```
+     * [Remember](https://grammy.dev/guide/context.html#shortcuts) also that you
+     * can access the chat type via `ctx.chat.type`.
+     *
+     * @param chatType The chat type
+     * @param middleware The middleware to register
+     */
     chatType<T extends Chat["type"]>(
         chatType: MaybeArray<T>,
         ...middleware: Array<Middleware<ChatTypeContext<C, T>>>
