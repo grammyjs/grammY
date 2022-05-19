@@ -1,4 +1,4 @@
-import { type Context } from "./context.ts";
+import { type AliasProps, type Context } from "./context.ts";
 import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
 import { type Chat } from "./platform.deno.ts";
 
@@ -421,14 +421,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     // TODO: add docs
-    chatType(
-        chatType: MaybeArray<Chat["type"]>,
-        ...middleware: Array<Middleware<C>>
-    ): Composer<C> {
-        const set = new Set(toArray(chatType));
+    chatType<T extends Chat["type"]>(
+        chatType: MaybeArray<T>,
+        ...middleware: Array<Middleware<ChatTypeContext<C, T>>>
+    ): Composer<ChatTypeContext<C, T>> {
+        const set = new Set<Chat["type"]>(toArray(chatType));
         return this.filter(
-            // TODO: turn into type prediate
-            (ctx) => ctx.chat?.type !== undefined && set.has(ctx.chat.type),
+            (ctx): ctx is ChatTypeContext<C, T> =>
+                ctx.chat?.type !== undefined && set.has(ctx.chat.type),
             ...middleware,
         );
     }
@@ -854,6 +854,26 @@ export type InlineQueryContext<C extends Context> = Filter<
     C,
     "inline_query"
 >;
+export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
+    & C
+    & { chat?: { type?: T }; msg?: { chat?: { type?: T } } }
+    & { update: ChatTypeUpdate<T> }
+    & AliasProps<ChatTypeUpdate<T>>;
+type ChatTypeUpdate<T extends Chat["ype"]> =
+    & ChatTypeRecord<
+        | "message"
+        | "edited_message"
+        | "channel_post"
+        | "edited_channel_post"
+        | "my_chat_member"
+        | "chat_member"
+        | "chat_join_request",
+        T
+    >
+    & { callback_query?: ChatTypeRecord<"message", T> };
+type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
+    Record<K, { chat?: { type?: T } }>
+>;
 
 // === Filtered context middleware types
 export type HearsMiddleware<C extends Context> = Middleware<
@@ -871,6 +891,8 @@ export type GameQueryMiddleware<C extends Context> = Middleware<
 export type InlineQueryMiddleware<C extends Context> = Middleware<
     InlineQueryContext<C>
 >;
+export type ChatTypeMiddleware<C extends Context, T extends Chat["type"]> =
+    Middleware<ChatTypeContext<C, T>>;
 
 // === Util functions
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
