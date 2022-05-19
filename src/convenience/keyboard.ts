@@ -224,7 +224,7 @@ export class InlineKeyboard {
      *
      * @param inline_keyboard The initial inline keyboard
      */
-     constructor(inline_keyboard?: InlineKeyboardButton[][]) {
+    constructor(inline_keyboard?: InlineKeyboardButton[][]) {
         if (inline_keyboard) {
             this.inline_keyboard = inline_keyboard;
         }
