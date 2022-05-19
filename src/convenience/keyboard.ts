@@ -133,27 +133,33 @@ export class Keyboard {
      * Make current keyboard selective.
      * See https://grammy.dev/plugins/keyboard.html#sending-a-custom-keyboard
      * for more detail.
+     *
+     * @param isEnabled Determine if the keyboard should be selective. Default to true.
      */
-    selected() {
-        this.selective = true;
+    selected(isEnabled = true) {
+        this.selective = isEnabled;
         return this;
     }
     /**
      * Make current keyboard one time.
      * See https://grammy.dev/plugins/keyboard.html#sending-a-custom-keyboard
      * for more detail.
+     *
+     * @param isEnabled Determine if the keyboard should be one time. Default to true.
      */
-    oneTime() {
-        this.one_time_keyboard = true;
+    oneTime(isEnabled = true) {
+        this.one_time_keyboard = isEnabled;
         return this;
     }
     /**
      * Make current keyboard resizeable.
      * See https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard
      * for more detail.
+     *
+     * @param isEnabled Determine if the keyboard should be resizeable. Default to true.
      */
-    resized() {
-        this.resize_keyboard = true;
+    resized(isEnabled = true) {
+        this.resize_keyboard = isEnabled;
         return this;
     }
     /**
