@@ -56,6 +56,16 @@ export class Keyboard {
     public input_field_placeholder = "";
 
     /**
+     * Initalize a new `Keyboard` with optional `KeyboardButton`.
+     *
+     * @param keyboard The initial keyboard
+     */
+    constructor(keyboard?: KeyboardButton[][]) {
+        if (keyboard) {
+            this.keyboard = keyboard;
+        }
+    }
+    /**
      * Allows you to add your own `KeyboardButton` objects if you already have
      * them for some reason. You most likely want to call one of the other
      * methods.
@@ -209,6 +219,16 @@ export class InlineKeyboard {
      */
     public readonly inline_keyboard: InlineKeyboardButton[][] = [[]];
 
+    /**
+     * Initalize a new `InlineKeyboard` with optional `InlineKeyboardButton`.
+     *
+     * @param inline_keyboard The initial inline keyboard
+     */
+     constructor(inline_keyboard?: InlineKeyboardButton[][]) {
+        if (inline_keyboard) {
+            this.inline_keyboard = inline_keyboard;
+        }
+    }
     /**
      * Allows you to add your own `InlineKeyboardButton` objects if you already
      * have them for some reason. You most likely want to call one of the other
