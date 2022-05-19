@@ -305,7 +305,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     hears(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<HearsContext<C>>>
+        ...middleware: Array<HearsMiddleware<C>>
     ): Composer<HearsContext<C>> {
         const trg = triggerFn(trigger);
         return this.on([":text", ":caption"]).filter(
@@ -377,7 +377,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
-        ...middleware: Array<Middleware<CommandContext<C>>>
+        ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         const atCommands = new Set<string>();
         const noAtCommands = new Set<string>();
@@ -475,8 +475,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, "callback_query:data">>>
-    ): Composer<Filter<C, "callback_query:data">> {
+        ...middleware: Array<CallbackQueryMiddleware<C>>
+    ): Composer<CallbackQueryContext<C>> {
         const trg = triggerFn(trigger);
         return this.on("callback_query:data").filter(
             (ctx) => match(ctx, ctx.callbackQuery.data, trg),
@@ -504,10 +504,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     gameQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<
-            Middleware<Filter<C, "callback_query:game_short_name">>
-        >
-    ): Composer<Filter<C, "callback_query:game_short_name">> {
+        ...middleware: Array<GameQueryMiddleware<C>>
+    ): Composer<GameQueryContext<C>> {
         const trg = triggerFn(trigger);
         return this.on("callback_query:game_short_name").filter(
             (ctx) => match(ctx, ctx.callbackQuery.game_short_name, trg),
@@ -539,8 +537,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, "inline_query">>>
-    ): Composer<Filter<C, "inline_query">> {
+        ...middleware: Array<InlineQueryMiddleware<C>>
+    ): Composer<InlineQueryContext<C>> {
         const trg = triggerFn(trigger);
         return this.on("inline_query").filter(
             (ctx) => match(ctx, ctx.inlineQuery.query, trg),
@@ -831,7 +829,50 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 }
 
-// === Util functions and types
+// === Filtered context types
+export type HearsContext<C extends Context> = Filter<
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string | RegExpMatchArray>;
+    },
+    ":text" | ":caption"
+>;
+export type CommandContext<C extends Context> = Filter<
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string>;
+    },
+    ":entities:bot_command"
+>;
+export type CallbackQueryContext<C extends Context> = Filter<
+    C,
+    "callback_query:data"
+>;
+export type GameQueryContext<C extends Context> = Filter<
+    C,
+    "callback_query:game_short_name"
+>;
+export type InlineQueryContext<C extends Context> = Filter<
+    C,
+    "inline_query"
+>;
+
+// === Filtered context middleware types
+export type HearsMiddleware<C extends Context> = Middleware<
+    HearsContext<C>
+>;
+export type CommandMiddleware<C extends Context> = Middleware<
+    CommandContext<C>
+>;
+export type CallbackQueryMiddleware<C extends Context> = Middleware<
+    CallbackQueryContext<C>
+>;
+export type GameQueryMiddleware<C extends Context> = Middleware<
+    GameQueryContext<C>
+>;
+export type InlineQueryMiddleware<C extends Context> = Middleware<
+    InlineQueryContext<C>
+>;
+
+// === Util functions
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map((t) =>
         typeof t === "string"
@@ -839,17 +880,6 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
             : (txt: string) => txt.match(t)
     );
 }
-
-type HearsContext<C extends Context> = Filter<
-    Omit<C, "match"> & {
-        match: Extract<C["match"], string | RegExpMatchArray>;
-    },
-    ":text" | ":caption"
->;
-type CommandContext<C extends Context> = Filter<
-    Omit<C, "match"> & { match: Extract<C["match"], string> },
-    ":entities:bot_command"
->;
 
 function match<C extends Context>(
     ctx: C,
