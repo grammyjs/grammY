@@ -58,7 +58,7 @@ export class Keyboard {
     /**
      * Initalize a new `Keyboard` with optional `KeyboardButton`.
      *
-     * @param keyboard The initial keyboard
+     * @param keyboard An optional keyboard
      */
     constructor(keyboard?: KeyboardButton[][]) {
         if (keyboard) {
@@ -141,32 +141,35 @@ export class Keyboard {
     }
     /**
      * Make current keyboard selective.
-     * See https://grammy.dev/plugins/keyboard.html#sending-a-custom-keyboard
-     * for more detail.
+     * See https://grammy.dev/plugins/keyboard.html#selectively-send-custom-keyboards
+     * for more details.
      *
-     * @param isEnabled Determine if the keyboard should be selective. Default to true.
+     * @param isEnabled Determines if the keyboard should be selective.
+     * Defaults to `true`.
      */
     selected(isEnabled = true) {
         this.selective = isEnabled;
         return this;
     }
     /**
-     * Make current keyboard one time.
-     * See https://grammy.dev/plugins/keyboard.html#sending-a-custom-keyboard
-     * for more detail.
+     * Make current keyboard one-time.
+     * See https://grammy.dev/plugins/keyboard.html#one-time-custom-keyboards
+     * for more details.
      *
-     * @param isEnabled Determine if the keyboard should be one time. Default to true.
+     * @param isEnabled Determines if the keyboard should be one time.
+     * Defaults to `true`.
      */
     oneTime(isEnabled = true) {
         this.one_time_keyboard = isEnabled;
         return this;
     }
     /**
-     * Make current keyboard resizeable.
+     * Make current keyboard resizable.
      * See https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard
-     * for more detail.
+     * for more details.
      *
-     * @param isEnabled Determine if the keyboard should be resizeable. Default to true.
+     * @param isEnabled Determines if the keyboard should be resizable.
+     * Defaults to `true`.
      */
     resized(isEnabled = true) {
         this.resize_keyboard = isEnabled;
@@ -175,8 +178,9 @@ export class Keyboard {
     /**
      * Set current keyboard input field placeholder.
      * See https://grammy.dev/plugins/keyboard.html#input-field-placeholder
-     * for more detail.
-     * @param value placeholder text
+     * for more details.
+     *
+     * @param value Placeholder text
      */
     placeholder(value: string) {
         this.input_field_placeholder = value;
