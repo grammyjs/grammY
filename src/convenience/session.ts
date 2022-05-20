@@ -90,6 +90,7 @@ export interface StorageAdapter<T> {
  * Options for session middleware.
  */
 export interface SessionOptions<S> {
+    type?: "single";
     /**
      * **Recommended to use.**
      *
@@ -125,6 +126,14 @@ export interface SessionOptions<S> {
      */
     storage?: StorageAdapter<S>;
 }
+
+type MultiSessionOptions<S> = S extends Record<string, unknown>
+    ? { type: "multi" } & MultiSessionOptionsRecord<S>
+    : never;
+type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
+    [K in keyof S]: SessionOptions<S[K]>;
+};
+
 /**
  * Session middleware provides a persistent data storage for your bot. You can
  * use it to let your bot remember any data you want, for example the messages
@@ -173,14 +182,17 @@ export interface SessionOptions<S> {
  * @param options Optional configuration to pass to the session middleware
  */
 export function session<S, C extends Context>(
-    options: SessionOptions<S> = {},
+    options: SessionOptions<S> | MultiSessionOptions<S> = {},
 ): MiddlewareFn<C & SessionFlavor<S>> {
-    const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
-    const storage = options.storage ??
-        (debug(
-            "Storing session data in memory, all data will be lost when the bot restarts.",
-        ),
-            new MemorySessionStorage());
+    return options.type === "multi"
+        ? multiSession(options)
+        : singleSession(options);
+}
+
+function singleSession<S, C extends Context>(
+    options: SessionOptions<S>,
+): MiddlewareFn<C & SessionFlavor<S>> {
+    const { getSessionKey, storage } = fillDefaults(options);
     return async (ctx, next) => {
         const key = await getSessionKey(ctx);
         let value = key === undefined
@@ -209,6 +221,75 @@ export function session<S, C extends Context>(
             else await storage.write(key, value);
         }
     };
+}
+
+function multiSession<S, C extends Context>(
+    options: MultiSessionOptions<S>,
+): MiddlewareFn<C & SessionFlavor<S>> {
+    const opts = Object.fromEntries(
+        Object.entries(options)
+            .filter((kv): kv is [string, Exclude<typeof kv[1], "multi">] =>
+                kv[0] !== "type"
+            )
+            .map(([k, v]) => [k, fillDefaults(v)]),
+    );
+    return async (ctx, next) => {
+        async function read(prop: string) {
+            const key = await opts[prop].getSessionKey(ctx);
+            const value = key === undefined
+                ? undefined
+                : (await opts[prop].storage.read(key)) ??
+                    opts[prop].initial?.();
+            const kv = { key, value };
+            return [prop, kv] as const;
+        }
+        const props = Object.fromEntries(
+            await Promise.all(Object.keys(opts).map(read)),
+        );
+
+        ctx.session = {} as S;
+        for (const prop of Object.keys(options)) {
+            Object.defineProperty(session, prop, {
+                enumerable: true,
+                get() {
+                    if (props[prop].key === undefined) {
+                        const msg = undef("access", opts[prop].getSessionKey);
+                        throw new Error(msg);
+                    }
+                    return props[prop].value;
+                },
+                set(v) {
+                    if (props[prop].key === undefined) {
+                        const msg = undef("assign", opts[prop].getSessionKey);
+                        throw new Error(msg);
+                    }
+                    props[prop].value = v;
+                },
+            });
+        }
+        await next(); // no catch: do not write back if middleware throws
+
+        async function write(prop: string) {
+            const { key, value } = props[prop];
+            if (key !== undefined) {
+                const storage = opts[prop].storage;
+                if (value == null) await storage.delete(key);
+                else await storage.write(key, value);
+            }
+        }
+        await Promise.all(Object.keys(opts).map(write));
+    };
+}
+
+function fillDefaults<S>(opts: SessionOptions<S>) {
+    let { getSessionKey = defaultGetSessionKey, initial, storage } = opts;
+    if (storage == null) {
+        debug(
+            "Storing session data in memory, all data will be lost when the bot restarts.",
+        );
+        storage = new MemorySessionStorage();
+    }
+    return { getSessionKey, initial, storage };
 }
 
 /**
@@ -300,7 +381,7 @@ export function lazySession<S, C extends Context>(
                 value = v;
             },
         });
-        await next(); // no catch: do not wrote back if middleware throws
+        await next(); // no catch: do not write back if middleware throws
         if (key !== undefined) {
             if (read) await promise;
             if (read || wrote) {
