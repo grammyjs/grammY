@@ -41,19 +41,19 @@ export class Keyboard {
      * Show the current keyboard only to those users that are @-mentioned in
      * the text of the message object.
      */
-    public selective = false;
+    public selective?: boolean;
     /**
      * Hidden current keyboard immediately after the first button was pressed.
      */
-    public one_time_keyboard = false;
+    public one_time_keyboard?: boolean;
     /**
      * Resized current keyboard according to the buttons it contains.
      */
-    public resize_keyboard = false;
+    public resize_keyboard?: boolean;
     /**
      * Placeholder to be shown in the input field when the keyboard is active.
      */
-    public input_field_placeholder = "";
+    public input_field_placeholder?: string;
 
     /**
      * Initalize a new `Keyboard` with optional `KeyboardButton`.
