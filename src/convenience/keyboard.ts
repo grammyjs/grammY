@@ -38,11 +38,11 @@ export class Keyboard {
      */
     public selective?: boolean;
     /**
-     * Hidden current keyboard immediately after the first button was pressed.
+     * Hide the keyboard after a button is pressed.
      */
     public one_time_keyboard?: boolean;
     /**
-     * Resized current keyboard according to the buttons it contains.
+     * Resize the current keyboard according to its buttons.
      */
     public resize_keyboard?: boolean;
     /**
@@ -134,43 +134,43 @@ export class Keyboard {
         return this.add({ text, web_app: { url } });
     }
     /**
-     * Make current keyboard selective.
+     * Make the current keyboard selective.
      * See https://grammy.dev/plugins/keyboard.html#selectively-send-custom-keyboards
      * for more details.
      *
      * @param isEnabled Determines if the keyboard should be selective.
-     * Defaults to `true`.
+     * Default to `true`, you can pass `false` to disable it.
      */
     selected(isEnabled = true) {
         this.selective = isEnabled;
         return this;
     }
     /**
-     * Make current keyboard one-time.
+     * Make the current keyboard one-time.
      * See https://grammy.dev/plugins/keyboard.html#one-time-custom-keyboards
      * for more details.
      *
      * @param isEnabled Determines if the keyboard should be one time.
-     * Defaults to `true`.
+     * Default to `true`, you can pass `false` to disable it.
      */
     oneTime(isEnabled = true) {
         this.one_time_keyboard = isEnabled;
         return this;
     }
     /**
-     * Make current keyboard resizable.
+     * Make the current keyboard resizable.
      * See https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard
      * for more details.
      *
      * @param isEnabled Determines if the keyboard should be resizable.
-     * Defaults to `true`.
+     * Default to `true`, you can pass `false` to disable it.
      */
     resized(isEnabled = true) {
         this.resize_keyboard = isEnabled;
         return this;
     }
     /**
-     * Set current keyboard input field placeholder.
+     * Set the current keyboard's input field placeholder.
      * See https://grammy.dev/plugins/keyboard.html#input-field-placeholder
      * for more details.
      *
