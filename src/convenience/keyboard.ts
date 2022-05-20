@@ -33,11 +33,6 @@ import {
  */
 export class Keyboard {
     /**
-     * The nested array that holds the custom keyboard. It will be extended
-     * every time you call one of the provided methods.
-     */
-    public readonly keyboard: KeyboardButton[][] = [[]];
-    /**
      * Show the current keyboard only to those users that are @-mentioned in
      * the text of the message object.
      */
@@ -58,12 +53,11 @@ export class Keyboard {
     /**
      * Initalize a new `Keyboard` with optional `KeyboardButton`.
      *
-     * @param keyboard An optional keyboard
+     * @param keyboard The initial keyboard.
+     * The nested array that holds the custom keyboard. It will be extended
+     * every time you call one of the provided methods.
      */
-    constructor(keyboard?: KeyboardButton[][]) {
-        if (keyboard) {
-            this.keyboard = keyboard;
-        }
+    constructor(public readonly keyboard: KeyboardButton[][] = [[]]) {
     }
     /**
      * Allows you to add your own `KeyboardButton` objects if you already have
@@ -218,20 +212,15 @@ export class Keyboard {
  */
 export class InlineKeyboard {
     /**
+     * Initalize a new `InlineKeyboard` with optional `InlineKeyboardButton`.
+     *
+     * @param inline_keyboard The initial inline keyboard.
      * The nested array that holds the inline keyboard. It will be extended
      * every time you call one of the provided methods.
      */
-    public readonly inline_keyboard: InlineKeyboardButton[][] = [[]];
-
-    /**
-     * Initalize a new `InlineKeyboard` with optional `InlineKeyboardButton`.
-     *
-     * @param inline_keyboard The initial inline keyboard
-     */
-    constructor(inline_keyboard?: InlineKeyboardButton[][]) {
-        if (inline_keyboard) {
-            this.inline_keyboard = inline_keyboard;
-        }
+    constructor(
+        public readonly inline_keyboard: InlineKeyboardButton[][] = [[]],
+    ) {
     }
     /**
      * Allows you to add your own `InlineKeyboardButton` objects if you already
