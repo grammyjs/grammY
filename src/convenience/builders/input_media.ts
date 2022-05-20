@@ -1,10 +1,10 @@
 import {
-    InputMedia,
-    InputMediaAnimation,
-    InputMediaAudio,
-    InputMediaDocument,
-    InputMediaPhoto,
-    InputMediaVideo,
+    type InputMedia,
+    type InputMediaAnimation,
+    type InputMediaAudio,
+    type InputMediaDocument,
+    type InputMediaPhoto,
+    type InputMediaVideo,
 } from "../../platform.deno.ts";
 
 export class InputMediaBuilder {
