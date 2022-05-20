@@ -273,7 +273,7 @@ class ApiClient<R extends RawApi> {
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
         const successPromise = fetch(
-            url instanceof URL ? url.href : url,
+            url instanceof URL ? url : new URL(url),
             options,
         ).catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
