@@ -138,8 +138,11 @@ export class Keyboard {
      * See https://grammy.dev/plugins/keyboard.html#selectively-send-custom-keyboards
      * for more details.
      *
+     * Keyboards are non-selective by default,
+     * use this function to enable it(without any param or pass a `true`).
+     * And you can pass `false` to `isEnabled` to force them non-selective.
+     *
      * @param isEnabled Determines if the keyboard should be selective.
-     * Default to `true`, you can pass `false` to disable it.
      */
     selected(isEnabled = true) {
         this.selective = isEnabled;
@@ -150,8 +153,11 @@ export class Keyboard {
      * See https://grammy.dev/plugins/keyboard.html#one-time-custom-keyboards
      * for more details.
      *
-     * @param isEnabled Determines if the keyboard should be one time.
-     * Default to `true`, you can pass `false` to disable it.
+     * Keyboards are non-one-time by default,
+     * use this function to enable it(without any param or pass a `true`).
+     * And you can pass `false` to `isEnabled` to force them non-one-time.
+     *
+     * @param isEnabled Determines if the keyboard should be one-time.
      */
     oneTime(isEnabled = true) {
         this.one_time_keyboard = isEnabled;
@@ -162,8 +168,11 @@ export class Keyboard {
      * See https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard
      * for more details.
      *
+     * Keyboards are non-resizeable by default,
+     * use this function to enable it(without any param or pass a `true`).
+     * And you can pass `false` to `isEnabled` to force them non-resizable.
+     *
      * @param isEnabled Determines if the keyboard should be resizable.
-     * Default to `true`, you can pass `false` to disable it.
      */
     resized(isEnabled = true) {
         this.resize_keyboard = isEnabled;
