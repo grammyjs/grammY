@@ -33,7 +33,7 @@ import {
  */
 export class Keyboard {
     /**
-     * Show the current keyboard only to those users that are @-mentioned in
+     * Show the current keyboard only to those users that are mentioned in
      * the text of the message object.
      */
     public selective?: boolean;
@@ -139,7 +139,7 @@ export class Keyboard {
      * for more details.
      *
      * Keyboards are non-selective by default,
-     * use this function to enable it(without any param or pass a `true`).
+     * use this function to enable it (without any parameters or pass `true`).
      * And you can pass `false` to `isEnabled` to force them non-selective.
      *
      * @param isEnabled Determines if the keyboard should be selective.
@@ -154,7 +154,7 @@ export class Keyboard {
      * for more details.
      *
      * Keyboards are non-one-time by default,
-     * use this function to enable it(without any param or pass a `true`).
+     * use this function to enable it (without any parameters or pass `true`).
      * And you can pass `false` to `isEnabled` to force them non-one-time.
      *
      * @param isEnabled Determines if the keyboard should be one-time.
@@ -169,7 +169,7 @@ export class Keyboard {
      * for more details.
      *
      * Keyboards are non-resizeable by default,
-     * use this function to enable it(without any param or pass a `true`).
+     * use this function to enable it (without any parameters or pass `true`).
      * And you can pass `false` to `isEnabled` to force them non-resizable.
      *
      * @param isEnabled Determines if the keyboard should be resizable.
