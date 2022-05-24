@@ -1,10 +1,16 @@
-import { type Context } from "./context.ts";
-import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
+import {
+    type CallbackQueryContext,
+    type CommandContext,
+    Context,
+    type GameQueryContext,
+    type HearsContext,
+    type InlineQueryContext,
+    type MaybeArray,
+    type StringWithSuggestions,
+} from "./context.ts";
+import { type Filter, type FilterQuery } from "./filter.ts";
 
 type MaybePromise<T> = T | Promise<T>;
-type MaybeArray<T> = T | T[];
-// deno-lint-ignore ban-types
-type StringWithSuggestions<S extends string> = (string & {}) | S; // permits `string` but gives hints
 
 // === Middleware types
 /**
@@ -268,7 +274,12 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
     ): Composer<Filter<C, Q>> {
-        return this.filter(matchFilter<C, Q>(filter), ...middleware);
+        const pred = Context.has.query(filter);
+        return this.filter(
+            // TODO: use instantiation expression as soon as TS 4.7 lands
+            (ctx: C): ctx is Filter<C, Q> => pred(ctx),
+            ...middleware,
+        );
     }
 
     /**
@@ -306,15 +317,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<HearsMiddleware<C>>
     ): Composer<HearsContext<C>> {
-        const trg = triggerFn(trigger);
-        return this.on([":text", ":caption"]).filter(
-            (ctx): ctx is HearsContext<C> => {
-                const msg = ctx.message ?? ctx.channelPost;
-                const txt = msg.text ?? msg.caption;
-                return match(ctx, txt, trg);
-            },
-            ...middleware,
-        );
+        return this.filter(Context.has.text(trigger), ...middleware);
     }
 
     /**
@@ -378,45 +381,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         >,
         ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
-        const atCommands = new Set<string>();
-        const noAtCommands = new Set<string>();
-        toArray(command).forEach((cmd) => {
-            if (cmd.startsWith("/")) {
-                throw new Error(
-                    `Do not include '/' when registering command handlers (use '${
-                        cmd.substring(1)
-                    }' not '${cmd}')`,
-                );
-            }
-            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
-            set.add(cmd);
-        });
-        return this.on(":entities:bot_command").filter(
-            (ctx): ctx is CommandContext<C> => {
-                const msg = ctx.message ?? ctx.channelPost;
-                const txt = msg.text;
-                return msg.entities.some((e) => {
-                    if (e.type !== "bot_command") return false;
-                    if (e.offset !== 0) return false;
-                    const cmd = txt.substring(1, e.length);
-                    if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                        ctx.match = txt.substring(cmd.length + 1).trimStart();
-                        return true;
-                    }
-                    const index = cmd.indexOf("@");
-                    if (index === -1) return false;
-                    const atTarget = cmd.substring(index + 1);
-                    if (atTarget !== ctx.me.username) return false;
-                    const atCommand = cmd.substring(0, index);
-                    if (noAtCommands.has(atCommand)) {
-                        ctx.match = txt.substring(cmd.length + 1).trimStart();
-                        return true;
-                    }
-                    return false;
-                });
-            },
-            ...middleware,
-        );
+        return this.filter(Context.has.command(command), ...middleware);
     }
 
     /**
@@ -814,32 +779,6 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         return composer;
     }
 }
-
-// === Filtered context types
-export type HearsContext<C extends Context> = Filter<
-    Omit<C, "match"> & {
-        match: Extract<C["match"], string | RegExpMatchArray>;
-    },
-    ":text" | ":caption"
->;
-export type CommandContext<C extends Context> = Filter<
-    Omit<C, "match"> & {
-        match: Extract<C["match"], string>;
-    },
-    ":entities:bot_command"
->;
-export type CallbackQueryContext<C extends Context> = Filter<
-    C,
-    "callback_query:data"
->;
-export type GameQueryContext<C extends Context> = Filter<
-    C,
-    "callback_query:game_short_name"
->;
-export type InlineQueryContext<C extends Context> = Filter<
-    C,
-    "inline_query"
->;
 
 // === Filtered context middleware types
 export type HearsMiddleware<C extends Context> = Middleware<

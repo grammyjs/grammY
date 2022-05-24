@@ -187,7 +187,7 @@ export class Bot<
         this.me = config?.botInfo;
         this.clientConfig = config?.client;
         this.ContextConstructor = config?.ContextConstructor ??
-            (Context as new (
+            (Context as unknown as new (
                 ...args: ConstructorParameters<typeof Context>
             ) => C);
         this.api = new Api(token, this.clientConfig) as A;

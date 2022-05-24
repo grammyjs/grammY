@@ -1,6 +1,7 @@
 // deno-lint-ignore-file camelcase
 import { type Api, type Other as OtherApi } from "./core/api.ts";
 import { type Methods, type RawApi } from "./core/client.ts";
+import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
 import {
     type Chat,
     type ChatPermissions,
@@ -19,6 +20,10 @@ import {
     type UserFromGetMe,
 } from "./platform.deno.ts";
 
+export type MaybeArray<T> = T | T[];
+// deno-lint-ignore ban-types
+export type StringWithSuggestions<S extends string> = (string & {}) | S; // permits `string` but gives hints
+
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
     RawApi,
     M,
@@ -31,6 +36,70 @@ export type AliasProps<U> = {
     [key in string & keyof U as SnakeToCamelCase<key>]: U[key];
 };
 type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
+
+const checker = {
+    query<Q extends FilterQuery>(filter: Q | Q[]) {
+        return matchFilter(filter);
+    },
+
+    text(
+        trigger: MaybeArray<string | RegExp>,
+    ) {
+        const hasText = checker.query([":text", ":caption"]);
+        const trg = triggerFn(trigger);
+        return <C extends Context>(ctx: C): ctx is HearsContext<C> => {
+            if (!hasText(ctx)) return false;
+            const msg = ctx.message ?? ctx.channelPost;
+            const txt = msg.text ?? msg.caption;
+            return match(ctx, txt, trg);
+        };
+    },
+
+    command<S extends string>(
+        command: MaybeArray<
+            StringWithSuggestions<S | "start" | "help" | "settings">
+        >,
+    ) {
+        const hasEntities = checker.query(":entities:bot_command");
+        const atCommands = new Set<string>();
+        const noAtCommands = new Set<string>();
+        toArray(command).forEach((cmd) => {
+            if (cmd.startsWith("/")) {
+                throw new Error(
+                    `Do not include '/' when registering command handlers (use '${
+                        cmd.substring(1)
+                    }' not '${cmd}')`,
+                );
+            }
+            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
+            set.add(cmd);
+        });
+        return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
+            if (!hasEntities(ctx)) return false;
+            const msg = ctx.message ?? ctx.channelPost;
+            const txt = msg.text ?? msg.caption;
+            return msg.entities.some((e) => {
+                if (e.type !== "bot_command") return false;
+                if (e.offset !== 0) return false;
+                const cmd = txt.substring(1, e.length);
+                if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
+                    ctx.match = txt.substring(cmd.length + 1).trimStart();
+                    return true;
+                }
+                const index = cmd.indexOf("@");
+                if (index === -1) return false;
+                const atTarget = cmd.substring(index + 1);
+                if (atTarget !== ctx.me.username) return false;
+                const atCommand = cmd.substring(0, index);
+                if (noAtCommands.has(atCommand)) {
+                    ctx.match = txt.substring(cmd.length + 1).trimStart();
+                    return true;
+                }
+                return false;
+            });
+        };
+    },
+};
 
 /**
  * When your bot receives a message, Telegram sends an update object to your
@@ -218,6 +287,23 @@ export class Context implements RenamedUpdate {
                 this.chosenInlineResult?.inline_message_id
         );
     }
+
+    // PROBING SHORTCUTS
+
+    static has = checker;
+    has = {
+        query: <Q extends FilterQuery>(
+            filter: Q | Q[],
+        ): this is Filter<this, Q> => Context.has.query(filter)(this),
+        text: (
+            trigger: MaybeArray<string | RegExp>,
+        ): this is HearsContext<this> => Context.has.text(trigger)(this),
+        command: <S extends string>(
+            command: MaybeArray<
+                StringWithSuggestions<S | "start" | "help" | "settings">
+            >,
+        ): this is CommandContext<this> => Context.has.command(command)(this),
+    };
 
     // API
 
@@ -1774,4 +1860,51 @@ function orThrow<T>(value: T | undefined, method: string): T {
         throw new Error(`Missing information for API call to ${method}`);
     }
     return value;
+}
+
+// === Filtered context types
+export type HearsContext<C extends Context> =
+    & Filter<C, ":text" | ":caption">
+    & { match: string | RegExpMatchArray };
+export type CommandContext<C extends Context> =
+    & Filter<C, ":entities:bot_command">
+    & { match: string };
+export type CallbackQueryContext<C extends Context> = Filter<
+    C,
+    "callback_query:data"
+>;
+export type GameQueryContext<C extends Context> = Filter<
+    C,
+    "callback_query:game_short_name"
+>;
+export type InlineQueryContext<C extends Context> = Filter<
+    C,
+    "inline_query"
+>;
+
+// === Util functions
+function triggerFn(trigger: MaybeArray<string | RegExp>) {
+    return toArray(trigger).map((t) =>
+        typeof t === "string"
+            ? (txt: string) => (txt === t ? t : null)
+            : (txt: string) => txt.match(t)
+    );
+}
+
+function match<C extends Context>(
+    ctx: C,
+    content: string,
+    triggers: Array<(content: string) => string | RegExpMatchArray | null>,
+): boolean {
+    for (const t of triggers) {
+        const res = t(content);
+        if (res) {
+            ctx.match = res;
+            return true;
+        }
+    }
+    return false;
+}
+function toArray<E>(e: MaybeArray<E>): E[] {
+    return Array.isArray(e) ? e : [e];
 }
