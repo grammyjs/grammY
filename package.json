@@ -41,12 +41,12 @@
     "main": "./out/mod.js",
     "types": "./out/mod.d.ts",
     "exports": {
-        ".": {
-            "require": "./out/mod.js",
-            "types": "./out/mod.d.ts"
-        },
         "./types": {
             "types": "./out/types.d.ts"
+        },
+        ".": {
+            "types": "./out/mod.d.ts",
+            "require": "./out/mod.js"
         }
     },
     "keywords": [
