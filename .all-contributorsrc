@@ -603,6 +603,15 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "x066it",
+      "name": "x066it",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75589380?v=4",
+      "profile": "https://github.com/x066it",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
