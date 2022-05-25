@@ -1,7 +1,7 @@
 changelog:
-  exclude:
-    authors:
-      - dependabot
-      - all-contributors
-    labels:
-      - documentation
+    exclude:
+        authors:
+            - dependabot
+            - all-contributors
+        labels:
+            - documentation
