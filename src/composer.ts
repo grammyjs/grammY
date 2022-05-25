@@ -879,9 +879,10 @@ export type InlineQueryContext<C extends Context> = Filter<
 >;
 export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & C
-    & { chat?: { type?: T }; msg?: { chat?: { type?: T } } }
-    & { update: ChatTypeUpdate<T> }
-    & AliasProps<ChatTypeUpdate<T>>;
+    & Record<"update", ChatTypeUpdate<T>> // ctx.update
+    & ChatType<T> // ctx.chat
+    & ChatTypeRecord<"msg", T> // ctx.msg
+    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
         | "message"
@@ -893,10 +894,13 @@ type ChatTypeUpdate<T extends Chat["type"]> =
         | "chat_join_request",
         T
     >
-    & { callback_query?: ChatTypeRecord<"message", T> };
+    & Partial<Record<"callback_query", ChatTypeRecord<"message", T>>>;
 type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
-    Record<K, { chat?: { type?: T } }>
+    Record<K, ChatType<T>>
 >;
+interface ChatType<T extends Chat["type"]> {
+    chat: { type: T };
+}
 
 // === Filtered context middleware types
 export type HearsMiddleware<C extends Context> = Middleware<
