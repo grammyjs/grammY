@@ -1,7 +1,6 @@
 changelog:
     exclude:
         authors:
-            - dependabot
-            - all-contributors
+            - allcontributors[bot]
         labels:
             - documentation
