@@ -1,0 +1,19 @@
+name: Lint Commit Messages
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    commitlint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Check commit message
+              uses: wagoid/commitlint-github-action@v4
