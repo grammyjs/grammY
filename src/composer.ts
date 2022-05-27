@@ -425,8 +425,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * can use this method to only receive updates from private chats. The four
      * chat types are `"channel"`, `"supergroup"`, `"group"`, and `"private"`.
      * This is especially useful when combined with other filtering logic. For
-     * example, this is how can you respond to `/start` commands from private
-     * chats:
+     * example, this is how can you respond to `/start` commands only from
+     * private chats:
      * ```ts
      * bot.chatType("private").command("start", ctx => { ... })
      * ```
