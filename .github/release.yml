@@ -1,0 +1,6 @@
+changelog:
+    exclude:
+        authors:
+            - allcontributors[bot]
+        labels:
+            - documentation

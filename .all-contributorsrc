@@ -136,7 +136,8 @@
         "translation",
         "code",
         "ideas",
-        "mentoring"
+        "mentoring",
+        "example"
       ]
     },
     {
@@ -174,7 +175,10 @@
       "contributions": [
         "doc",
         "bug",
-        "ideas"
+        "ideas",
+        "design",
+        "question",
+        "review"
       ]
     },
     {
@@ -423,7 +427,9 @@
         "code",
         "plugin",
         "review",
-        "doc"
+        "doc",
+        "ideas",
+        "infra"
       ]
     },
     {
@@ -522,7 +528,8 @@
       "profile": "https://github.com/IlyaSemenov",
       "contributions": [
         "ideas",
-        "review"
+        "review",
+        "code"
       ]
     },
     {
@@ -578,6 +585,52 @@
       "profile": "https://rys.pw",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "PavelPolyakov",
+      "name": "Pavel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/839290?v=4",
+      "profile": "http://pavelpolyakov.com/",
+      "contributions": [
+        "example"
+      ]
+    },
+    {
+      "login": "thorwebdev",
+      "name": "Thor 雷神 Schaeff",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5748289?v=4",
+      "profile": "https://youtube.com/thorwebdev",
+      "contributions": [
+        "example"
+      ]
+    },
+    {
+      "login": "x066it",
+      "name": "x066it",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75589380?v=4",
+      "profile": "https://github.com/x066it",
+      "contributions": [
+        "bug",
+        "review"
+      ]
+    },
+    {
+      "login": "kolay-v",
+      "name": "kolay",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49853802?v=4",
+      "profile": "https://github.com/kolay-v",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "pizzaeater",
+      "name": "Evgeny Nepomnyashchiy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2511553?v=4",
+      "profile": "https://enepom.com/",
+      "contributions": [
+        "review"
       ]
     }
   ],
