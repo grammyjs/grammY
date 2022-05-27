@@ -20,6 +20,8 @@ export * from "./convenience/webhook.ts";
 export {
     type CallbackQueryContext,
     type CallbackQueryMiddleware,
+    type ChatTypeContext,
+    type ChatTypeMiddleware,
     type CommandContext,
     type CommandMiddleware,
     Composer,

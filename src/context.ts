@@ -28,7 +28,7 @@ type SnakeToCamelCase<S extends string> = S extends `${infer L}_${infer R}`
     ? `${L}${Capitalize<SnakeToCamelCase<R>>}`
     : S;
 export type AliasProps<U> = {
-    [key in string & keyof U as SnakeToCamelCase<key>]: U[key];
+    [K in string & keyof U as SnakeToCamelCase<K>]: U[K];
 };
 type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
 
