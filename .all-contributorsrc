@@ -136,7 +136,8 @@
         "translation",
         "code",
         "ideas",
-        "mentoring"
+        "mentoring",
+        "example"
       ]
     },
     {
@@ -619,6 +620,15 @@
       "name": "kolay",
       "avatar_url": "https://avatars.githubusercontent.com/u/49853802?v=4",
       "profile": "https://github.com/kolay-v",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "pizzaeater",
+      "name": "Evgeny Nepomnyashchiy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2511553?v=4",
+      "profile": "https://enepom.com/",
       "contributions": [
         "review"
       ]
