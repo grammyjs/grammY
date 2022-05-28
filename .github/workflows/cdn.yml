@@ -9,11 +9,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Setup repo
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - uses: denoland/setup-deno@main
               with:
-                  deno-version: v1.x
+                  deno-version: v1.21
 
             - name: Bundle
               run: ./bundle-all.sh
