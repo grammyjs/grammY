@@ -36,14 +36,11 @@ describe("requiresFormDataUpload", () => {
         assertFalse(requiresFormDataUpload(new Response("")));
     });
 
-    it("should ignore InputFiles at the top level or in arrays", () => {
-        assertFalse(requiresFormDataUpload(new InputFile("")));
-        assertFalse(requiresFormDataUpload({ x: [0, 1, new InputFile("")] }));
-    });
-
     it("should detect InputFiles inside objects", () => {
+        assert(requiresFormDataUpload(new InputFile("")));
         assert(requiresFormDataUpload({ data: new InputFile("") }));
         assert(requiresFormDataUpload([0, 1, new InputFile("")]));
+        assert(requiresFormDataUpload({ x: [0, 1, new InputFile("")] }));
         assert(requiresFormDataUpload({ x: [0, 1, { y: new InputFile("") }] }));
     });
 
