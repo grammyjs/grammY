@@ -2,12 +2,12 @@
 const isDeno = typeof Deno !== "undefined";
 
 // === Needed imports
-import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@v2.7.0";
+import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@v2.7.1";
 import { basename } from "https://deno.land/std@0.141.0/path/mod.ts";
 import { iterateReader } from "https://deno.land/std@0.141.0/streams/mod.ts";
 
 // === Export all API types
-export * from "https://esm.sh/@grammyjs/types@2.7.0";
+export * from "https://esm.sh/@grammyjs/types@2.7.1";
 
 // === Export debug
 import d from "https://cdn.skypack.dev/debug@4.3.4";
