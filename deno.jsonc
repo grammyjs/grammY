@@ -1,4 +1,10 @@
 {
+    "tasks": {
+        "setup": "npm install && deno cache --check src/mod.ts",
+        "backport": "npm run backport",
+        "test": "deno test ./test/",
+        "bundle": "cd bundling && ./bundle-all.sh"
+    },
     "fmt": {
         "options": {
             "indentWidth": 4,
