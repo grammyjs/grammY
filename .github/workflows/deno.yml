@@ -81,6 +81,8 @@ jobs:
               run: deno task test
 
             - name: Code Coverage Report
-              uses: mszlgr/lcov-reporter-action@v0.2.23
+              uses: andybelltree/lcov-reporter-action@v1.0.0
               with:
+                  title: Code Coverage Report
                   lcov-file: ./lcov.info
+                  delete-old-comments: true
