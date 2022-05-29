@@ -65,7 +65,7 @@ jobs:
               run: deno task test
 
             - name: Code Coverage Report
-              uses: romeovs/lcov-reporter-action@v0.2.11
+              uses: andybelltree/lcov-reporter-action@v1.0.0
               with:
                   lcov-file: ./lcov.info
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  filter-changed-files: true
