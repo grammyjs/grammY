@@ -15,15 +15,16 @@
     "scripts": {
         "prepare": "npm run backport",
         "cache": "deno cache src/mod.ts",
-        "lint": "deno lint --config deno.json",
-        "fmt": "deno fmt --config deno.json",
-        "test": "deno test ./test/",
-        "bundle": "cd bundling && ./bundle-all.sh",
+        "lint": "deno lint",
+        "fmt": "deno fmt",
+        "test": "deno task test",
+        "coverage": "deno task coverage",
+        "bundle": "deno task bundle",
         "backport": "deno2node tsconfig.json",
         "contribs": "all-contributors"
     },
     "dependencies": {
-        "@grammyjs/types": "^2.7.0",
+        "@grammyjs/types": "^2.7.1",
         "abort-controller": "^3.0.0",
         "debug": "^4.3.4",
         "node-fetch": "^2.6.7"
