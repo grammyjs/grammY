@@ -63,3 +63,21 @@ jobs:
 
             - name: Run Tests
               run: deno task test
+
+    coverage:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v3
+
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
+
+            - name: Create coverage files
+                run: deno task coverage
+
+            - name: Collect coverage
+              uses: codecov/codecov-action@v1.0.10 # upload the report on Codecov
+              with:
+                  file: ./coverage.lcov

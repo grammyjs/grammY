@@ -48,46 +48,44 @@ describe("requiresFormDataUpload", () => {
 
     it("builds multipart/form-data streams", async () => {
         const fileContent = "abc";
-        const payload = createFormDataPayload({
-            chat_id: 42,
-            document: new InputFile(new TextEncoder().encode(fileContent)),
-        }, (err) => {
-            throw err;
-        });
+        const buffer = new TextEncoder().encode(fileContent);
+        const document = new InputFile(buffer, "my-file");
+        const payload = createFormDataPayload(
+            { chat_id: 42, document },
+            (err) => {
+                // cannot happen
+                throw err;
+            },
+        );
+
+        // based on testing seed which generates stable randomness
+        const boundary = "----------a7tvrr8hjhi2q5kkuoh9kabvsgsu6ywp";
+        const attachId = "dam8u60sbhdqvv6m";
+
         assertEquals(payload.method, "POST");
-        assertEquals(payload.headers.connection, "keep-alive");
-        const prefix = "multipart/form-data; boundary=";
-        assert(payload.headers["content-type"].startsWith(prefix));
-        const boundary = payload.headers["content-type"]
-            .substring(prefix.length);
+        const headers = {
+            "content-type": `multipart/form-data; boundary=${boundary}`,
+            connection: "keep-alive",
+        };
+        assertEquals(payload.headers, headers);
         const body = await readAll(readerFromIterable(payload.body));
-        let text = new TextDecoder().decode(body);
-        const start = `--${boundary}\r
+        const actual = new TextDecoder().decode(body);
+        const expected = `--${boundary}\r
 content-disposition:form-data;name="chat_id"\r
 \r
 42\r
 --${boundary}\r
 content-disposition:form-data;name="document"\r
 \r
-attach://`;
-        assert(text.startsWith(start));
-        text = text.substring(start.length);
-        const id = text.substring(0, 16);
-        text = text.substring(16);
-        const mid = `\r
+attach://${attachId}\r
 --${boundary}\r
-content-disposition:form-data;name="`;
-        assert(text.startsWith(mid));
-        text = text.substring(mid.length);
-        assert(text.startsWith(id));
-        text = text.substring(id.length);
-        const end = `";filename=document.dat\r
+content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
 content-type:application/octet-stream\r
 \r
 ${fileContent}\r
 --${boundary}--\r
 `;
-        assertEquals(text, end);
+        assertEquals(actual, expected);
     });
 });
 

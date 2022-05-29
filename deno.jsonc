@@ -2,8 +2,8 @@
     "tasks": {
         "setup": "npm install && deno cache --check src/mod.ts",
         "backport": "npm run backport",
-        "test": "deno test --coverage=./test/cov_profile ./test/ && deno task coverage",
-        "coverage": "deno coverage --lcov --output=./lcov.info ./test/cov_profile",
+        "test": "deno test --seed=123456 ./test/",
+        "coverage": "deno task test --coverage=./test/cov_profile && deno coverage --lcov --output=./coverage.lcov ./test/cov_profile",
         "bundle": "cd bundling && ./bundle-all.sh"
     },
     "fmt": {

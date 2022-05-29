@@ -22,7 +22,7 @@ package-lock.json
 
 # Test coverage
 test/cov_profile
-lcov.info
+coverage.lcov
 
 # Build output
 out/
