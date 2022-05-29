@@ -63,26 +63,3 @@ jobs:
 
             - name: Run Tests
               run: deno task test
-
-    coverage:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Setup repo
-              uses: actions/checkout@v3
-
-            - uses: denoland/setup-deno@main
-              with:
-                  deno-version: v1.x
-
-            - name: Cache Dependencies
-              run: deno cache src/mod.ts
-
-            - name: Run Tests
-              run: deno task test
-
-            - name: Code Coverage Report
-              uses: andybelltree/lcov-reporter-action@v1.0.0
-              with:
-                  title: Code Coverage Report
-                  lcov-file: ./lcov.info
-                  delete-old-comments: true
