@@ -75,7 +75,7 @@ jobs:
                   deno-version: v1.x
 
             - name: Create coverage files
-                run: deno task coverage
+                  run: deno task coverage
 
             - name: Collect coverage
               uses: codecov/codecov-action@v1.0.10 # upload the report on Codecov
