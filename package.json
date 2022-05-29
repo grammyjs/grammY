@@ -17,7 +17,7 @@
         "cache": "deno cache src/mod.ts",
         "lint": "deno lint",
         "fmt": "deno fmt",
-        "test": "deno test ./test/",
+        "test": "deno task test",
         "bundle": "cd bundling && ./bundle-all.sh",
         "backport": "deno2node tsconfig.json",
         "contribs": "all-contributors"

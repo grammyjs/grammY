@@ -38,10 +38,10 @@ jobs:
                   deno-version: v1.21
 
             - name: Check Format
-              run: npm run fmt -- --check
+              run: deno fmt --check
 
             - name: Lint
-              run: npm run lint
+              run: deno lint
 
     test:
         runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
@@ -59,7 +59,12 @@ jobs:
                   deno-version: v1.21
 
             - name: Cache Dependencies
-              run: npm run cache
+              run: deno cache src/mod.ts
 
             - name: Run Tests
-              run: npm test
+              run: deno task test
+
+            - name: Code Coverage Report
+              uses: romeovs/lcov-reporter-action@v0.2.11
+              with:
+                  lcov-file: ./lcov.info

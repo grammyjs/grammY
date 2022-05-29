@@ -20,5 +20,9 @@ package-lock.json
 # Output of 'npm pack'
 *.tgz
 
+# Test coverage
+test/cov_profile
+lcov.info
+
 # Build output
 out/
