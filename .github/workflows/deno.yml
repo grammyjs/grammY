@@ -84,3 +84,4 @@ jobs:
               uses: andybelltree/lcov-reporter-action@v1.0.0
               with:
                   lcov-file: ./lcov.info
+                  filter-changed-files: false
