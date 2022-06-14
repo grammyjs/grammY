@@ -205,6 +205,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/x066it"><img src="https://avatars.githubusercontent.com/u/75589380?v=4?s=100" width="100px;" alt=""/><br /><sub><b>x066it</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Ax066it" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Ax066it" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/kolay-v"><img src="https://avatars.githubusercontent.com/u/49853802?v=4?s=100" width="100px;" alt=""/><br /><sub><b>kolay</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Akolay-v" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://enepom.com/"><img src="https://avatars.githubusercontent.com/u/2511553?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Evgeny Nepomnyashchiy</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Apizzaeater" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/anantakrishna"><img src="https://avatars.githubusercontent.com/u/6065071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ananta Krsna dasa</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=anantakrishna" title="Documentation">📖</a></td>
   </tr>
 </table>
 
