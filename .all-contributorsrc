@@ -632,6 +632,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "anantakrishna",
+      "name": "Ananta Krsna dasa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6065071?v=4",
+      "profile": "https://github.com/anantakrishna",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
