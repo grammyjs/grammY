@@ -228,6 +228,8 @@ const ENTITY_KEYS = {
 const USER_KEYS = {
     me: {},
     is_bot: {},
+    is_premium: {},
+    added_to_attachment_menu: {},
 } as const;
 
 // L2
