@@ -21,9 +21,8 @@ const stdHttp = (req: Request) => {
         },
         unauthorized: () => {
             if (resolveResponse) {
-                const res = new Response('"unauthorized"', {
+                const res = new Response("secret token is wrong", {
                     status: 401,
-                    statusText: "secret token is wrong",
                 });
                 resolveResponse(res);
             }

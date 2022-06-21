@@ -140,7 +140,9 @@ export function webhookCallback<C extends Context = Context>(
             server(...args);
         if (header !== token) {
             await unauthorized();
-            return;
+            // TODO: investigate deno bug that happens when this console logging is removed
+            console.log(handlerReturn);
+            return handlerReturn;
         }
         let usedWebhookReply = false;
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
@@ -154,7 +156,7 @@ export function webhookCallback<C extends Context = Context>(
             typeof timeout === "function" ? () => timeout(...args) : timeout,
             ms,
         );
-        if (end !== undefined && !usedWebhookReply) end();
+        if (!usedWebhookReply) end?.();
         return handlerReturn;
     };
 }
