@@ -12,7 +12,7 @@ const http = (req: IncomingMessage, res: ServerResponse) => ({
             resolve(JSON.parse(raw));
         }).once("error", reject);
     }),
-    header: req.getHeader(SECRET_HEADER),
+    header: String(req.headers[SECRET_HEADER.toLowerCase()]),
     end: () => res.end(),
     respond: (json: string) =>
         res.writeHead(200, { "Content-Type": "application/json" }).end(json),
