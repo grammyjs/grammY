@@ -16,7 +16,8 @@
                 "./node_modules/",
                 "./out/",
                 "./package-lock.json",
-                "./bundling/bundles"
+                "./bundling/bundles",
+                "./test/cov_profile"
             ]
         }
     },

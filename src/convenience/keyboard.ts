@@ -216,8 +216,8 @@ export class InlineKeyboard {
     }
     /**
      * Adds a new login button. This can be used as a replacement for the
-     * Telegram Login Widget. You must specify an HTTP URL used to automatically
-     * authorize the user.
+     * Telegram Login Widget. You must specify an HTTPS URL used to
+     * automatically authorize the user.
      *
      * @param text The text to display
      * @param loginUrl The login URL as string or `LoginUrl` object

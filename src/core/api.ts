@@ -121,16 +121,16 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.
+     * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.
      *
-     * If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot's token, you can be pretty sure it's us.
+     * If you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter secret_token. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
      *
      * Notes
      * 1. You will not be able to receive updates using getUpdates for as long as an outgoing webhook is set up.
      * 2. To use a self-signed certificate, you need to upload your public key certificate using certificate parameter. Please upload as InputFile, sending a String will not work.
      * 3. Ports currently supported for Webhooks: 443, 80, 88, 8443.
      *
-     * NEW! If you're having any trouble setting up webhooks, please check out this amazing guide to Webhooks.
+     * If you're having any trouble setting up webhooks, please check out this amazing guide to webhooks.
      *
      * @param url HTTPS url to send updates to. Use an empty string to remove webhook integration
      * @param other Optional remaining parameters, confer the official reference below
@@ -1840,19 +1840,60 @@ export class Api<R extends RawApi = RawApi> {
         >,
         signal?: AbortSignal,
     ) {
-        return this.raw.sendInvoice(
-            {
-                chat_id,
-                title,
-                description,
-                payload,
-                provider_token,
-                currency,
-                prices,
-                ...other,
-            },
-            signal,
-        );
+        return this.raw.sendInvoice({
+            chat_id,
+            title,
+            description,
+            payload,
+            provider_token,
+            currency,
+            prices,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to create a link for an invoice. Returns the created invoice link as String on success.
+     *
+     * @param title Product name, 1-32 characters
+     * @param description Product description, 1-255 characters
+     * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
+     * @param provider_token Payment provider token, obtained via BotFather
+     * @param currency Three-letter ISO 4217 currency code, see more on currencies
+     * @param prices Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createinvoicelink
+     */
+    createInvoiceLink(
+        title: string,
+        description: string,
+        payload: string,
+        provider_token: string,
+        currency: string,
+        prices: LabeledPrice[],
+        other?: Other<
+            R,
+            "createInvoiceLink",
+            | "title"
+            | "description"
+            | "payload"
+            | "provider_token"
+            | "currency"
+            | "prices"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.createInvoiceLink({
+            title,
+            description,
+            payload,
+            provider_token,
+            currency,
+            prices,
+            ...other,
+        }, signal);
     }
 
     /**
