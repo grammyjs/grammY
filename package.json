@@ -18,7 +18,7 @@
         "contribs": "all-contributors"
     },
     "dependencies": {
-        "@grammyjs/types": "^2.7.1",
+        "@grammyjs/types": "^2.8.0",
         "abort-controller": "^3.0.0",
         "debug": "^4.3.4",
         "node-fetch": "^2.6.7"
@@ -26,7 +26,7 @@
     "devDependencies": {
         "@types/debug": "^4.1.7",
         "@types/node": "^12.20.50",
-        "@types/node-fetch": "^2.6.1",
+        "@types/node-fetch": "^2.6.2",
         "all-contributors-cli": "^6.20.0",
         "deno2node": "^1.3.0"
     },
