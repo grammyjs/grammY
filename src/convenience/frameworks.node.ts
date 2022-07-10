@@ -52,7 +52,7 @@ const koa = (ctx: any) => ({
 /** fastify web framework */
 const fastify = (req: any, reply: any) => ({
     update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER],
+    header: req.headers[SECRET_HEADER.toLowerCase()],
     end: () => reply.status(200).send(),
     respond: (json: string) => reply.send(json),
     unauthorized: () => reply.code(401).send("secret token is wrong"),
