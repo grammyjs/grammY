@@ -4,8 +4,6 @@
 
 ---
 
-_<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_curl: API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts) | [:busts_in_silhouette: Group Chat](https://telegram.me/grammyjs) | [:new: News](https://telegram.me/grammyjs_news)</h2>_
-
 <div align="center">
 
 <!-- deno-fmt-ignore-start -->
@@ -18,6 +16,8 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 <!-- deno-fmt-ignore-end -->
 
 </div>
+
+_<h2 align="center"> [docs.](https://grammy.dev) [reference.](https://doc.deno.land/https://deno.land/x/grammy/mod.ts) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)</h2>_
 
 **grammY makes it easy to create Telegram bots.** Both for beginners and at scale.
 
@@ -77,24 +77,29 @@ Here are some more resources to support you:
 ### [grammY Website](https://grammy.dev)
 
 —main project website and documentation.
+Gets you started and explains all concepts.
 
 ### [grammY API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts)
 
 —reference of everything that grammY exports.
+Useful to look up descriptions about any element of grammY.
 
 ### [grammY Example Bots](https://github.com/grammyjs/examples)
 
-—repository full of example bots. Includes a setup to easily run any of them.
+—repository full of example bots.
+Includes a setup to easily run any of them.
 
 ### [grammY Telegram Chat](https://t.me/grammyjs)
 
-—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas, and contributions!
+—Telegram chat where you can ask any question about grammY or bots in general.
+We are also open for feedback, ideas, and contributions!
 
 The Russian commnity chat can be found [here](https://t.me/grammyjs_ru).
 
 ### [grammY News Channel](https://t.me/grammyjs_news)
 
 —Telegram channel where updates to grammY and the ecosystem are posted.
+We are also [on Twitter](https://twitter.com/grammy_js).
 
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
 
