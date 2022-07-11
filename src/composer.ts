@@ -1,14 +1,16 @@
 import {
-    type CallbackQueryContext,
-    type CommandContext,
+    CallbackQueryContext,
+    ChatTypeContext,
+    CommandContext,
     Context,
-    type GameQueryContext,
-    type HearsContext,
-    type InlineQueryContext,
-    type MaybeArray,
-    type StringWithSuggestions,
+    GameQueryContext,
+    HearsContext,
+    InlineQueryContext,
+    MaybeArray,
+    StringWithSuggestions,
 } from "./context.ts";
-import { type Filter, type FilterQuery } from "./filter.ts";
+import { Filter, FilterQuery } from "./filter.ts";
+import { Chat } from "./platform.deno.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 
@@ -377,6 +379,49 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         return this.filter(Context.has.command(command), ...middleware);
+    }
+
+    /**
+     * Registers some middleware for certain chat types only. For example, you
+     * can use this method to only receive updates from private chats. The four
+     * chat types are `"channel"`, `"supergroup"`, `"group"`, and `"private"`.
+     * This is especially useful when combined with other filtering logic. For
+     * example, this is how can you respond to `/start` commands only from
+     * private chats:
+     * ```ts
+     * bot.chatType("private").command("start", ctx => { ... })
+     * ```
+     *
+     * Naturally, you can also use this method on its own.
+     * ```ts
+     * // Private chats only
+     * bot.chatType("private", ctx => { ... });
+     * // Channels only
+     * bot.chatType("channel", ctx => { ... });
+     * ```
+     *
+     * You can pass an array of chat types if you want your middleware to run
+     * for any of several provided chat types.
+     * ```ts
+     * // Groups and supergroups only
+     * bot.chatType(["group", "supergroup"], ctx => { ... });
+     * ```
+     * [Remember](https://grammy.dev/guide/context.html#shortcuts) also that you
+     * can access the chat type via `ctx.chat.type`.
+     *
+     * @param chatType The chat type
+     * @param middleware The middleware to register
+     */
+    chatType<T extends Chat["type"]>(
+        chatType: MaybeArray<T>,
+        ...middleware: Array<Middleware<ChatTypeContext<C, T>>>
+    ): Composer<ChatTypeContext<C, T>> {
+        const set = new Set<Chat["type"]>(toArray(chatType));
+        return this.filter(
+            (ctx): ctx is ChatTypeContext<C, T> =>
+                ctx.chat?.type !== undefined && set.has(ctx.chat.type),
+            ...middleware,
+        );
     }
 
     /**
@@ -791,6 +836,8 @@ export type GameQueryMiddleware<C extends Context> = Middleware<
 export type InlineQueryMiddleware<C extends Context> = Middleware<
     InlineQueryContext<C>
 >;
+export type ChatTypeMiddleware<C extends Context, T extends Chat["type"]> =
+    Middleware<ChatTypeContext<C, T>>;
 
 // === Util functions
 function triggerFn(trigger: MaybeArray<string | RegExp>) {

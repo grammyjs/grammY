@@ -11,6 +11,7 @@ export { InputFile } from "./platform.deno.ts";
 
 export {
     type CallbackQueryContext,
+    type ChatTypeContext,
     type CommandContext,
     Context,
     type GameQueryContext,
@@ -18,7 +19,7 @@ export {
     type InlineQueryContext,
 } from "./context.ts";
 
-// Convenience stuff and helpers
+// Convenience stuff, built-in plugins, and helpers
 export * from "./convenience/keyboard.ts";
 export * from "./convenience/session.ts";
 export * from "./convenience/webhook.ts";
@@ -26,6 +27,7 @@ export * from "./convenience/webhook.ts";
 // A little more advanced stuff
 export {
     type CallbackQueryMiddleware,
+    type ChatTypeMiddleware,
     type CommandMiddleware,
     Composer,
     type GameQueryMiddleware,

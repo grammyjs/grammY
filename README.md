@@ -1,21 +1,23 @@
-# <h1 align="center"> [![grammY](https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png)](https://grammy.dev)</h1>
+<div align="center"><a href="https://grammy.dev"><img src="https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png" alt="grammY"></a></h1></div>
 
-**<h1 align="right">The Telegram Bot Framework.</h1>**
+<div align="right">
 
----
+# The Telegram Bot Framework.
 
-_<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_curl: API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts) | [:busts_in_silhouette: Group Chat](https://telegram.me/grammyjs) | [:new: News](https://telegram.me/grammyjs_news)</h2>_
+</div>
 
 <div align="center">
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-6.0-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-6.1-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
 
 <!-- deno-fmt-ignore-end -->
+
+## _[docs.](https://grammy.dev) [reference.](https://doc.deno.land/https://deno.land/x/grammy/mod.ts) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)_
 
 </div>
 
@@ -77,24 +79,29 @@ Here are some more resources to support you:
 ### [grammY Website](https://grammy.dev)
 
 —main project website and documentation.
+Gets you started and explains all concepts.
 
 ### [grammY API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts)
 
 —reference of everything that grammY exports.
+Useful to look up descriptions about any element of grammY.
 
 ### [grammY Example Bots](https://github.com/grammyjs/examples)
 
-—repository full of example bots. Includes a setup to easily run any of them.
+—repository full of example bots.
+Includes a setup to easily run any of them.
 
 ### [grammY Telegram Chat](https://t.me/grammyjs)
 
-—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas, and contributions!
+—Telegram chat where you can ask any question about grammY or bots in general.
+We are also open for feedback, ideas, and contributions!
 
 The Russian commnity chat can be found [here](https://t.me/grammyjs_ru).
 
 ### [grammY News Channel](https://t.me/grammyjs_news)
 
 —Telegram channel where updates to grammY and the ecosystem are posted.
+We are also [on Twitter](https://twitter.com/grammy_js).
 
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
 
@@ -140,7 +147,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://edjopato.de/"><img src="https://avatars.githubusercontent.com/u/7953011?v=4?s=100" width="100px;" alt=""/><br /><sub><b>EdJoPaTo</b></sub></a><br /><a href="#plugin-EdJoPaTo" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/grammyjs/grammY/commits?author=EdJoPaTo" title="Documentation">📖</a> <a href="#ideas-EdJoPaTo" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3AEdJoPaTo" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/grammyjs/grammY/issues?q=author%3AEdJoPaTo" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=EdJoPaTo" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Amir-Zouerami"><img src="https://avatars.githubusercontent.com/u/53701884?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Amir Zouerami</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Amir-Zouerami" title="Documentation">📖</a> <a href="#plugin-Amir-Zouerami" title="Plugin/utility libraries">🔌</a> <a href="#example-Amir-Zouerami" title="Examples">💡</a></td>
-    <td align="center"><a href="https://github.com/roj1512"><img src="https://avatars.githubusercontent.com/u/49933115?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Roj</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=roj1512" title="Documentation">📖</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Aroj1512" title="Reviewed Pull Requests">👀</a> <a href="#infra-roj1512" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#translation-roj1512" title="Translation">🌍</a> <a href="https://github.com/grammyjs/grammY/commits?author=roj1512" title="Code">💻</a> <a href="#ideas-roj1512" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-roj1512" title="Mentoring">🧑‍🏫</a></td>
+    <td align="center"><a href="https://github.com/roj1512"><img src="https://avatars.githubusercontent.com/u/49933115?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Roj</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=roj1512" title="Documentation">📖</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Aroj1512" title="Reviewed Pull Requests">👀</a> <a href="#infra-roj1512" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#translation-roj1512" title="Translation">🌍</a> <a href="https://github.com/grammyjs/grammY/commits?author=roj1512" title="Code">💻</a> <a href="#ideas-roj1512" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-roj1512" title="Mentoring">🧑‍🏫</a> <a href="#example-roj1512" title="Examples">💡</a></td>
     <td align="center"><a href="https://github.com/jokasimr"><img src="https://avatars.githubusercontent.com/u/20954731?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jokasimr</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Ajokasimr" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/CikiMomogi"><img src="https://avatars.githubusercontent.com/u/74030149?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ciki Momogi</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=CikiMomogi" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/AndreoliBR"><img src="https://avatars.githubusercontent.com/u/15970011?v=4?s=100" width="100px;" alt=""/><br /><sub><b>AndreoliBR</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3AAndreoliBR" title="Reviewed Pull Requests">👀</a></td>
@@ -202,6 +209,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://youtube.com/thorwebdev"><img src="https://avatars.githubusercontent.com/u/5748289?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thor 雷神 Schaeff</b></sub></a><br /><a href="#example-thorwebdev" title="Examples">💡</a></td>
+    <td align="center"><a href="https://github.com/x066it"><img src="https://avatars.githubusercontent.com/u/75589380?v=4?s=100" width="100px;" alt=""/><br /><sub><b>x066it</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Ax066it" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Ax066it" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/kolay-v"><img src="https://avatars.githubusercontent.com/u/49853802?v=4?s=100" width="100px;" alt=""/><br /><sub><b>kolay</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Akolay-v" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://enepom.com/"><img src="https://avatars.githubusercontent.com/u/2511553?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Evgeny Nepomnyashchiy</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Apizzaeater" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/anantakrishna"><img src="https://avatars.githubusercontent.com/u/6065071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ananta Krsna dasa</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=anantakrishna" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/Mi3liX9"><img src="https://avatars.githubusercontent.com/u/26169870?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mighty Ali</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Mi3liX9" title="Code">💻</a></td>
+    <td align="center"><a href="https://oott123.com"><img src="https://avatars.githubusercontent.com/u/905663?v=4?s=100" width="100px;" alt=""/><br /><sub><b>三三</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Aoott123" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=oott123" title="Code">💻</a></td>
   </tr>
 </table>
 

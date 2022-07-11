@@ -33,7 +33,7 @@ type SnakeToCamelCase<S extends string> = S extends `${infer L}_${infer R}`
     ? `${L}${Capitalize<SnakeToCamelCase<R>>}`
     : S;
 export type AliasProps<U> = {
-    [key in string & keyof U as SnakeToCamelCase<key>]: U[key];
+    [K in string & keyof U as SnakeToCamelCase<K>]: U[K];
 };
 type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
 
@@ -1864,12 +1864,18 @@ function orThrow<T>(value: T | undefined, method: string): T {
 }
 
 // === Filtered context types
-export type HearsContext<C extends Context> =
-    & Filter<C, ":text" | ":caption">
-    & { match: string | RegExpMatchArray };
-export type CommandContext<C extends Context> =
-    & Filter<C, ":entities:bot_command">
-    & { match: string };
+export type HearsContext<C extends Context> = Filter<
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string | RegExpMatchArray>;
+    },
+    ":text" | ":caption"
+>;
+export type CommandContext<C extends Context> = Filter<
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string>;
+    },
+    ":entities:bot_command"
+>;
 export type CallbackQueryContext<C extends Context> = Filter<
     C,
     "callback_query:data"
@@ -1882,6 +1888,30 @@ export type InlineQueryContext<C extends Context> = Filter<
     C,
     "inline_query"
 >;
+export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
+    & C
+    & Record<"update", ChatTypeUpdate<T>> // ctx.update
+    & ChatType<T> // ctx.chat
+    & ChatTypeRecord<"msg", T> // ctx.msg
+    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
+type ChatTypeUpdate<T extends Chat["type"]> =
+    & ChatTypeRecord<
+        | "message"
+        | "edited_message"
+        | "channel_post"
+        | "edited_channel_post"
+        | "my_chat_member"
+        | "chat_member"
+        | "chat_join_request",
+        T
+    >
+    & Partial<Record<"callback_query", ChatTypeRecord<"message", T>>>;
+type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
+    Record<K, ChatType<T>>
+>;
+interface ChatType<T extends Chat["type"]> {
+    chat: { type: T };
+}
 
 // === Util functions
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
