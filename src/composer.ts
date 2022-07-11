@@ -274,12 +274,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
     ): Composer<Filter<C, Q>> {
-        const pred = Context.has.query(filter);
-        return this.filter(
-            // TODO: use instantiation expression as soon as TS 4.7 lands
-            (ctx: C): ctx is Filter<C, Q> => pred(ctx),
-            ...middleware,
-        );
+        return this.filter(Context.has.query(filter), ...middleware);
     }
 
     /**

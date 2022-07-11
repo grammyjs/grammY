@@ -39,7 +39,8 @@ type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
 
 const checker = {
     query<Q extends FilterQuery>(filter: Q | Q[]) {
-        return matchFilter(filter);
+        const pred = matchFilter(filter);
+        return <C extends Context>(ctx: C): ctx is Filter<C, Q> => pred(ctx);
     },
 
     text(
