@@ -1,10 +1,10 @@
-# <h1 align="center"> [![grammY](https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png)](https://grammy.dev)</h1>
+<div align="center"><a href="https://grammy.dev"><img src="https://raw.githubusercontent.com/grammyjs/website/main/logos/grammY.png" alt="grammY"></a></h1></div>
 
-**<h1 align="right">The Telegram Bot Framework.</h1>**
+<div align="right">
 
----
+# The Telegram Bot Framework.
 
-_<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_curl: API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts) | [:busts_in_silhouette: Group Chat](https://telegram.me/grammyjs) | [:new: News](https://telegram.me/grammyjs_news)</h2>_
+</div>
 
 <div align="center">
 
@@ -16,6 +16,8 @@ _<h2 align="center"> [:mag: Documentation](https://grammy.dev) | [:page_with_cur
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
 
 <!-- deno-fmt-ignore-end -->
+
+## _[docs.](https://grammy.dev) [reference.](https://doc.deno.land/https://deno.land/x/grammy/mod.ts) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)_
 
 </div>
 
@@ -77,24 +79,29 @@ Here are some more resources to support you:
 ### [grammY Website](https://grammy.dev)
 
 —main project website and documentation.
+Gets you started and explains all concepts.
 
 ### [grammY API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts)
 
 —reference of everything that grammY exports.
+Useful to look up descriptions about any element of grammY.
 
 ### [grammY Example Bots](https://github.com/grammyjs/examples)
 
-—repository full of example bots. Includes a setup to easily run any of them.
+—repository full of example bots.
+Includes a setup to easily run any of them.
 
 ### [grammY Telegram Chat](https://t.me/grammyjs)
 
-—Telegram chat where you can ask any question about grammY or bots in general. We are also open for feedback, ideas, and contributions!
+—Telegram chat where you can ask any question about grammY or bots in general.
+We are also open for feedback, ideas, and contributions!
 
 The Russian commnity chat can be found [here](https://t.me/grammyjs_ru).
 
 ### [grammY News Channel](https://t.me/grammyjs_news)
 
 —Telegram channel where updates to grammY and the ecosystem are posted.
+We are also [on Twitter](https://twitter.com/grammy_js).
 
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
 
