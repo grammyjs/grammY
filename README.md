@@ -2,8 +2,6 @@
 
 **<h1 align="right">The Telegram Bot Framework.</h1>**
 
----
-
 <div align="center">
 
 <!-- deno-fmt-ignore-start -->
