@@ -37,7 +37,20 @@ export type AliasProps<U> = {
 };
 type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
 
-const checker = {
+interface StaticHas {
+    query<Q extends FilterQuery>(
+        filter: Q | Q[],
+    ): <C extends Context>(ctx: C) => ctx is Filter<C, Q>;
+    text(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is HearsContext<C>;
+    command<S extends string>(
+        command: MaybeArray<
+            StringWithSuggestions<S | "start" | "help" | "settings">
+        >,
+    ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
+}
+const checker: StaticHas = {
     query<Q extends FilterQuery>(filter: Q | Q[]) {
         const pred = matchFilter(filter);
         return <C extends Context>(ctx: C): ctx is Filter<C, Q> => pred(ctx);
@@ -292,19 +305,19 @@ export class Context implements RenamedUpdate {
     // PROBING SHORTCUTS
 
     static has = checker;
-    has = {
-        query: <Q extends FilterQuery>(
-            filter: Q | Q[],
-        ): this is Filter<this, Q> => Context.has.query(filter)(this),
-        text: (
-            trigger: MaybeArray<string | RegExp>,
-        ): this is HearsContext<this> => Context.has.text(trigger)(this),
-        command: <S extends string>(
-            command: MaybeArray<
-                StringWithSuggestions<S | "start" | "help" | "settings">
-            >,
-        ): this is CommandContext<this> => Context.has.command(command)(this),
-    };
+    hasQuery<Q extends FilterQuery>(filter: Q | Q[]): this is Filter<this, Q> {
+        return Context.has.query(filter)(this);
+    }
+    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContext<this> {
+        return Context.has.text(trigger)(this);
+    }
+    hasCommand<S extends string>(
+        command: MaybeArray<
+            StringWithSuggestions<S | "start" | "help" | "settings">
+        >,
+    ): this is CommandContext<this> {
+        return Context.has.command(command)(this);
+    }
 
     // API
 
