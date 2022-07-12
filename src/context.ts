@@ -1865,17 +1865,16 @@ function orThrow<T>(value: T | undefined, method: string): T {
 
 // === Filtered context types
 export type HearsContext<C extends Context> = Filter<
-    Omit<C, "match"> & {
-        match: Extract<C["match"], string | RegExpMatchArray>;
-    },
+    NarrowMatch<C, string | RegExpMatchArray>,
     ":text" | ":caption"
 >;
 export type CommandContext<C extends Context> = Filter<
-    Omit<C, "match"> & {
-        match: Extract<C["match"], string>;
-    },
+    NarrowMatch<C, string>,
     ":entities:bot_command"
 >;
+type NarrowMatch<C extends Context, T extends C["match"]> = {
+    [K in keyof C]: K extends "match" ? (T extends C[K] ? T : never) : C[K];
+};
 export type CallbackQueryContext<C extends Context> = Filter<
     C,
     "callback_query:data"
