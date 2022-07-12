@@ -49,16 +49,25 @@ interface StaticHas {
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
+    chatType<T extends Chat["type"]>(
+        chatType: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is ChatTypeContext<C, T>;
+    callbackQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is CallbackQueryContext<C>;
+    gameQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is GameQueryContext<C>;
+    inlineQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C>;
 }
 const checker: StaticHas = {
     query<Q extends FilterQuery>(filter: Q | Q[]) {
         const pred = matchFilter(filter);
         return <C extends Context>(ctx: C): ctx is Filter<C, Q> => pred(ctx);
     },
-
-    text(
-        trigger: MaybeArray<string | RegExp>,
-    ) {
+    text(trigger) {
         const hasText = checker.query([":text", ":caption"]);
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is HearsContext<C> => {
@@ -68,12 +77,7 @@ const checker: StaticHas = {
             return match(ctx, txt, trg);
         };
     },
-
-    command<S extends string>(
-        command: MaybeArray<
-            StringWithSuggestions<S | "start" | "help" | "settings">
-        >,
-    ) {
+    command(command) {
         const hasEntities = checker.query(":entities:bot_command");
         const atCommands = new Set<string>();
         const noAtCommands = new Set<string>();
@@ -112,6 +116,32 @@ const checker: StaticHas = {
                 return false;
             });
         };
+    },
+    chatType<T extends Chat["type"]>(chatType: MaybeArray<T>) {
+        const set = new Set<Chat["type"]>(toArray(chatType));
+        return <C extends Context>(ctx: C): ctx is ChatTypeContext<C, T> =>
+            ctx.chat?.type !== undefined && set.has(ctx.chat.type);
+    },
+    callbackQuery(trigger) {
+        const hasCallbackQuery = checker.query("callback_query:data");
+        const trg = triggerFn(trigger);
+        return <C extends Context>(ctx: C): ctx is CallbackQueryContext<C> =>
+            hasCallbackQuery(ctx) && match(ctx, ctx.callbackQuery.data, trg);
+    },
+    gameQuery(trigger) {
+        const hasCallbackQuery = checker.query(
+            "callback_query:game_short_name",
+        );
+        const trg = triggerFn(trigger);
+        return <C extends Context>(ctx: C): ctx is GameQueryContext<C> =>
+            hasCallbackQuery(ctx) &&
+            match(ctx, ctx.callbackQuery.game_short_name, trg);
+    },
+    inlineQuery(trigger) {
+        const hasCallbackQuery = checker.query("inline_query");
+        const trg = triggerFn(trigger);
+        return <C extends Context>(ctx: C): ctx is InlineQueryContext<C> =>
+            hasCallbackQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
     },
 };
 
@@ -317,6 +347,26 @@ export class Context implements RenamedUpdate {
         >,
     ): this is CommandContext<this> {
         return Context.has.command(command)(this);
+    }
+    hasChatType<T extends Chat["type"]>(
+        chatType: MaybeArray<T>,
+    ): this is ChatTypeContext<this, T> {
+        return Context.has.chatType(chatType)(this);
+    }
+    hasCallbackQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is CallbackQueryContext<this> {
+        return Context.has.callbackQuery(trigger)(this);
+    }
+    hasGameQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is GameQueryContext<this> {
+        return Context.has.gameQuery(trigger)(this);
+    }
+    hasInlineQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is InlineQueryContext<this> {
+        return Context.has.inlineQuery(trigger)(this);
     }
 
     // API

@@ -416,12 +416,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         chatType: MaybeArray<T>,
         ...middleware: Array<Middleware<ChatTypeContext<C, T>>>
     ): Composer<ChatTypeContext<C, T>> {
-        const set = new Set<Chat["type"]>(toArray(chatType));
-        return this.filter(
-            (ctx): ctx is ChatTypeContext<C, T> =>
-                ctx.chat?.type !== undefined && set.has(ctx.chat.type),
-            ...middleware,
-        );
+        return this.filter(Context.has.chatType(chatType), ...middleware);
     }
 
     /**
@@ -468,11 +463,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<CallbackQueryMiddleware<C>>
     ): Composer<CallbackQueryContext<C>> {
-        const trg = triggerFn(trigger);
-        return this.on("callback_query:data").filter(
-            (ctx) => match(ctx, ctx.callbackQuery.data, trg),
-            ...middleware,
-        );
+        return this.filter(Context.has.callbackQuery(trigger), ...middleware);
     }
 
     /**
@@ -497,11 +488,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<GameQueryMiddleware<C>>
     ): Composer<GameQueryContext<C>> {
-        const trg = triggerFn(trigger);
-        return this.on("callback_query:game_short_name").filter(
-            (ctx) => match(ctx, ctx.callbackQuery.game_short_name, trg),
-            ...middleware,
-        );
+        return this.filter(Context.has.gameQuery(trigger), ...middleware);
     }
 
     /**
@@ -530,11 +517,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         trigger: MaybeArray<string | RegExp>,
         ...middleware: Array<InlineQueryMiddleware<C>>
     ): Composer<InlineQueryContext<C>> {
-        const trg = triggerFn(trigger);
-        return this.on("inline_query").filter(
-            (ctx) => match(ctx, ctx.inlineQuery.query, trg),
-            ...middleware,
-        );
+        return this.filter(Context.has.inlineQuery(trigger), ...middleware);
     }
 
     /**
@@ -838,31 +821,3 @@ export type InlineQueryMiddleware<C extends Context> = Middleware<
 >;
 export type ChatTypeMiddleware<C extends Context, T extends Chat["type"]> =
     Middleware<ChatTypeContext<C, T>>;
-
-// === Util functions
-function triggerFn(trigger: MaybeArray<string | RegExp>) {
-    return toArray(trigger).map((t) =>
-        typeof t === "string"
-            ? (txt: string) => (txt === t ? t : null)
-            : (txt: string) => txt.match(t)
-    );
-}
-
-function match<C extends Context>(
-    ctx: C,
-    content: string,
-    triggers: Array<(content: string) => string | RegExpMatchArray | null>,
-): boolean {
-    for (const t of triggers) {
-        const res = t(content);
-        if (res) {
-            ctx.match = res;
-            return true;
-        }
-    }
-    return false;
-}
-
-function toArray<E>(e: MaybeArray<E>): E[] {
-    return Array.isArray(e) ? e : [e];
-}
