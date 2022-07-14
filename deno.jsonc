@@ -1,0 +1,34 @@
+{
+    "tasks": {
+        "setup": "deno cache --check src/mod.ts",
+        "backport": "deno run --no-prompt --allow-read=. --allow-write=. https://deno.land/x/deno2node@v1.4.0/src/cli.ts tsconfig.json",
+        "test": "deno test --seed=123456 ./test/",
+        "coverage": "deno task test --coverage=./test/cov_profile && deno coverage --lcov --output=./coverage.lcov ./test/cov_profile",
+        "bundle": "cd bundling && ./bundle-all.sh"
+    },
+    "fmt": {
+        "options": {
+            "indentWidth": 4,
+            "proseWrap": "preserve"
+        },
+        "files": {
+            "exclude": [
+                "./node_modules/",
+                "./out/",
+                "./package-lock.json",
+                "./bundling/bundles",
+                "./test/cov_profile"
+            ]
+        }
+    },
+    "lint": {
+        "files": {
+            "exclude": [
+                "./node_modules/",
+                "./out/",
+                "./package-lock.json",
+                "./bundling/bundles"
+            ]
+        }
+    }
+}

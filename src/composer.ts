@@ -1,5 +1,6 @@
-import { type Context } from "./context.ts";
+import { type AliasProps, type Context } from "./context.ts";
 import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
+import { type Chat } from "./platform.deno.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 type MaybeArray<T> = T | T[];
@@ -304,7 +305,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     hears(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<HearsContext<C>>>
+        ...middleware: Array<HearsMiddleware<C>>
     ): Composer<HearsContext<C>> {
         const trg = triggerFn(trigger);
         return this.on([":text", ":caption"]).filter(
@@ -376,7 +377,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
-        ...middleware: Array<Middleware<CommandContext<C>>>
+        ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         const atCommands = new Set<string>();
         const noAtCommands = new Set<string>();
@@ -415,6 +416,49 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
                     return false;
                 });
             },
+            ...middleware,
+        );
+    }
+
+    /**
+     * Registers some middleware for certain chat types only. For example, you
+     * can use this method to only receive updates from private chats. The four
+     * chat types are `"channel"`, `"supergroup"`, `"group"`, and `"private"`.
+     * This is especially useful when combined with other filtering logic. For
+     * example, this is how can you respond to `/start` commands only from
+     * private chats:
+     * ```ts
+     * bot.chatType("private").command("start", ctx => { ... })
+     * ```
+     *
+     * Naturally, you can also use this method on its own.
+     * ```ts
+     * // Private chats only
+     * bot.chatType("private", ctx => { ... });
+     * // Channels only
+     * bot.chatType("channel", ctx => { ... });
+     * ```
+     *
+     * You can pass an array of chat types if you want your middleware to run
+     * for any of several provided chat types.
+     * ```ts
+     * // Groups and supergroups only
+     * bot.chatType(["group", "supergroup"], ctx => { ... });
+     * ```
+     * [Remember](https://grammy.dev/guide/context.html#shortcuts) also that you
+     * can access the chat type via `ctx.chat.type`.
+     *
+     * @param chatType The chat type
+     * @param middleware The middleware to register
+     */
+    chatType<T extends Chat["type"]>(
+        chatType: MaybeArray<T>,
+        ...middleware: Array<Middleware<ChatTypeContext<C, T>>>
+    ): Composer<ChatTypeContext<C, T>> {
+        const set = new Set<Chat["type"]>(toArray(chatType));
+        return this.filter(
+            (ctx): ctx is ChatTypeContext<C, T> =>
+                ctx.chat?.type !== undefined && set.has(ctx.chat.type),
             ...middleware,
         );
     }
@@ -461,8 +505,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, "callback_query:data">>>
-    ): Composer<Filter<C, "callback_query:data">> {
+        ...middleware: Array<CallbackQueryMiddleware<C>>
+    ): Composer<CallbackQueryContext<C>> {
         const trg = triggerFn(trigger);
         return this.on("callback_query:data").filter(
             (ctx) => match(ctx, ctx.callbackQuery.data, trg),
@@ -490,10 +534,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     gameQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<
-            Middleware<Filter<C, "callback_query:game_short_name">>
-        >
-    ): Composer<Filter<C, "callback_query:game_short_name">> {
+        ...middleware: Array<GameQueryMiddleware<C>>
+    ): Composer<GameQueryContext<C>> {
         const trg = triggerFn(trigger);
         return this.on("callback_query:game_short_name").filter(
             (ctx) => match(ctx, ctx.callbackQuery.game_short_name, trg),
@@ -525,8 +567,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, "inline_query">>>
-    ): Composer<Filter<C, "inline_query">> {
+        ...middleware: Array<InlineQueryMiddleware<C>>
+    ): Composer<InlineQueryContext<C>> {
         const trg = triggerFn(trigger);
         return this.on("inline_query").filter(
             (ctx) => match(ctx, ctx.inlineQuery.query, trg),
@@ -817,7 +859,76 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 }
 
-// === Util functions and types
+// === Filtered context types
+export type HearsContext<C extends Context> = Filter<
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string | RegExpMatchArray>;
+    },
+    ":text" | ":caption"
+>;
+export type CommandContext<C extends Context> = Filter<
+    Omit<C, "match"> & {
+        match: Extract<C["match"], string>;
+    },
+    ":entities:bot_command"
+>;
+export type CallbackQueryContext<C extends Context> = Filter<
+    C,
+    "callback_query:data"
+>;
+export type GameQueryContext<C extends Context> = Filter<
+    C,
+    "callback_query:game_short_name"
+>;
+export type InlineQueryContext<C extends Context> = Filter<
+    C,
+    "inline_query"
+>;
+export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
+    & C
+    & Record<"update", ChatTypeUpdate<T>> // ctx.update
+    & ChatType<T> // ctx.chat
+    & ChatTypeRecord<"msg", T> // ctx.msg
+    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
+type ChatTypeUpdate<T extends Chat["type"]> =
+    & ChatTypeRecord<
+        | "message"
+        | "edited_message"
+        | "channel_post"
+        | "edited_channel_post"
+        | "my_chat_member"
+        | "chat_member"
+        | "chat_join_request",
+        T
+    >
+    & Partial<Record<"callback_query", ChatTypeRecord<"message", T>>>;
+type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
+    Record<K, ChatType<T>>
+>;
+interface ChatType<T extends Chat["type"]> {
+    chat: { type: T };
+}
+
+// === Filtered context middleware types
+export type HearsMiddleware<C extends Context> = Middleware<
+    HearsContext<C>
+>;
+export type CommandMiddleware<C extends Context> = Middleware<
+    CommandContext<C>
+>;
+export type CallbackQueryMiddleware<C extends Context> = Middleware<
+    CallbackQueryContext<C>
+>;
+export type GameQueryMiddleware<C extends Context> = Middleware<
+    GameQueryContext<C>
+>;
+export type InlineQueryMiddleware<C extends Context> = Middleware<
+    InlineQueryContext<C>
+>;
+export type ChatTypeMiddleware<C extends Context, T extends Chat["type"]> =
+    Middleware<ChatTypeContext<C, T>>;
+
+// === Util functions
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map((t) =>
         typeof t === "string"
@@ -825,17 +936,6 @@ function triggerFn(trigger: MaybeArray<string | RegExp>) {
             : (txt: string) => txt.match(t)
     );
 }
-
-type HearsContext<C extends Context> = Filter<
-    Omit<C, "match"> & {
-        match: Extract<C["match"], string | RegExpMatchArray>;
-    },
-    ":text" | ":caption"
->;
-type CommandContext<C extends Context> = Filter<
-    Omit<C, "match"> & { match: Extract<C["match"], string> },
-    ":entities:bot_command"
->;
 
 function match<C extends Context>(
     ctx: C,
