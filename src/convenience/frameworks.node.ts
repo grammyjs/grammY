@@ -7,12 +7,14 @@ const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 const http = (req: IncomingMessage, res: ServerResponse) => ({
     update: new Promise<any>((resolve, reject) => {
         const chunks: Buffer[] = [];
-        req.on("data", (chunk) => chunks.push(chunk)).once("end", () => {
-            const raw = Buffer.concat(chunks).toString("utf-8");
-            resolve(JSON.parse(raw));
-        }).once("error", reject);
+        req.on("data", (chunk) => chunks.push(chunk))
+            .once("end", () => {
+                const raw = Buffer.concat(chunks).toString("utf-8");
+                resolve(JSON.parse(raw));
+            })
+            .once("error", reject);
     }),
-    header: String(req.headers[SECRET_HEADER.toLowerCase()]),
+    header: req.headers[SECRET_HEADER.toLowerCase()],
     end: () => res.end(),
     respond: (json: string) =>
         res.writeHead(200, { "Content-Type": "application/json" }).end(json),
