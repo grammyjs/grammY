@@ -4,20 +4,30 @@ import { type IncomingMessage, type ServerResponse } from "http";
 const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 
 /** Node.js native 'http' and 'https' modules */
-const http = (req: IncomingMessage, res: ServerResponse) => ({
-    update: new Promise<any>((resolve, reject) => {
-        const chunks: Buffer[] = [];
-        req.on("data", (chunk) => chunks.push(chunk)).once("end", () => {
-            const raw = Buffer.concat(chunks).toString("utf-8");
-            resolve(JSON.parse(raw));
-        }).once("error", reject);
-    }),
-    header: String(req.headers[SECRET_HEADER.toLowerCase()]),
-    end: () => res.end(),
-    respond: (json: string) =>
-        res.writeHead(200, { "Content-Type": "application/json" }).end(json),
-    unauthorized: () => res.writeHead(401).end("secret token is wrong"),
-});
+const http = (req: IncomingMessage, res: ServerResponse) => {
+    const secretHeaderFromRequest = req.headers[SECRET_HEADER.toLowerCase()];
+
+    return {
+        update: new Promise<any>((resolve, reject) => {
+            const chunks: Buffer[] = [];
+            req.on("data", (chunk) => chunks.push(chunk))
+                .once("end", () => {
+                    const raw = Buffer.concat(chunks).toString("utf-8");
+                    resolve(JSON.parse(raw));
+                })
+                .once("error", reject);
+        }),
+        header: Array.isArray(secretHeaderFromRequest)
+            ? secretHeaderFromRequest[0]
+            : secretHeaderFromRequest,
+        end: () => res.end(),
+        respond: (json: string) =>
+            res
+                .writeHead(200, { "Content-Type": "application/json" })
+                .end(json),
+        unauthorized: () => res.writeHead(401).end("secret token is wrong"),
+    };
+};
 
 /** express web framework */
 const express = (req: any, res: any) => ({
