@@ -661,6 +661,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "roziscoding",
+      "name": "Roz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3948961?v=4",
+      "profile": "http://roz.ninja",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

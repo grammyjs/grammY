@@ -216,6 +216,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Mi3liX9"><img src="https://avatars.githubusercontent.com/u/26169870?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mighty Ali</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Mi3liX9" title="Code">💻</a></td>
     <td align="center"><a href="https://oott123.com"><img src="https://avatars.githubusercontent.com/u/905663?v=4?s=100" width="100px;" alt=""/><br /><sub><b>三三</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Aoott123" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=oott123" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://roz.ninja"><img src="https://avatars.githubusercontent.com/u/3948961?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Roz</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Aroziscoding" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=roziscoding" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
