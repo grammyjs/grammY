@@ -387,7 +387,10 @@
       "profile": "https://blog.limx.dev/",
       "contributions": [
         "doc",
-        "translation"
+        "translation",
+        "code",
+        "plugin",
+        "ideas"
       ]
     },
     {
