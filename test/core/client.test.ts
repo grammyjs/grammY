@@ -1,5 +1,5 @@
 import { createRawApi, type TransformableApi } from "../../src/core/client.ts";
-import { type ApiResponse } from "../../src/platform.deno.ts";
+import { type ApiResponse } from "../../src/types.ts";
 import {
     assertEquals,
     assertRejects,
