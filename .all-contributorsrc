@@ -31,10 +31,10 @@
       ]
     },
     {
-      "login": "Tecardo1",
-      "name": "Tecardo1",
+      "login": "HeeroML",
+      "name": "Heero",
       "avatar_url": "https://avatars.githubusercontent.com/u/42873000?v=4",
-      "profile": "https://github.com/Tecardo1",
+      "profile": "https://github.com/HeeroML",
       "contributions": [
         "plugin",
         "userTesting",
@@ -197,7 +197,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/73625149?v=4",
       "profile": "https://github.com/code-withAshish",
       "contributions": [
-        "doc"
+        "doc",
+        "question"
       ]
     },
     {
@@ -658,6 +659,25 @@
       "profile": "https://oott123.com",
       "contributions": [
         "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "roziscoding",
+      "name": "Roz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3948961?v=4",
+      "profile": "http://roz.ninja",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "daniharo",
+      "name": "Dani Haro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47931084?v=4",
+      "profile": "https://github.com/daniharo",
+      "contributions": [
         "code"
       ]
     }
