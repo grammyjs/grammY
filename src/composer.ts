@@ -659,7 +659,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     ): Composer<C> {
         return this.use(async (ctx, next) => {
             const middleware = await middlewareFactory(ctx);
-            const arr = toArray(middleware);
+            const arr = Array.isArray(middleware) ? middleware : [middleware];
             await flatten(new Composer(...arr))(ctx, next);
         });
     }
