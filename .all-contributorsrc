@@ -31,10 +31,10 @@
       ]
     },
     {
-      "login": "Tecardo1",
-      "name": "Tecardo1",
+      "login": "HeeroML",
+      "name": "Heero",
       "avatar_url": "https://avatars.githubusercontent.com/u/42873000?v=4",
-      "profile": "https://github.com/Tecardo1",
+      "profile": "https://github.com/HeeroML",
       "contributions": [
         "plugin",
         "userTesting",
@@ -197,7 +197,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/73625149?v=4",
       "profile": "https://github.com/code-withAshish",
       "contributions": [
-        "doc"
+        "doc",
+        "question"
       ]
     },
     {
@@ -631,6 +632,53 @@
       "profile": "https://enepom.com/",
       "contributions": [
         "review"
+      ]
+    },
+    {
+      "login": "anantakrishna",
+      "name": "Ananta Krsna dasa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6065071?v=4",
+      "profile": "https://github.com/anantakrishna",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Mi3liX9",
+      "name": "Mighty Ali",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26169870?v=4",
+      "profile": "https://github.com/Mi3liX9",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "oott123",
+      "name": "三三",
+      "avatar_url": "https://avatars.githubusercontent.com/u/905663?v=4",
+      "profile": "https://oott123.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "roziscoding",
+      "name": "Roz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3948961?v=4",
+      "profile": "http://roz.ninja",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "daniharo",
+      "name": "Dani Haro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47931084?v=4",
+      "profile": "https://github.com/daniharo",
+      "contributions": [
+        "code"
       ]
     }
   ],

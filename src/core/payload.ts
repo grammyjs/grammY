@@ -10,7 +10,7 @@ import { itrToStream, toRaw } from "../platform.deno.ts";
  * @param payload The payload to analyse
  */
 export function requiresFormDataUpload(payload: unknown): boolean {
-    return (
+    return payload instanceof InputFile || (
         typeof payload === "object" &&
         payload !== null &&
         Object.values(payload).some((v) =>

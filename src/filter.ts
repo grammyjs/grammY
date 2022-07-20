@@ -228,6 +228,8 @@ const ENTITY_KEYS = {
 const USER_KEYS = {
     me: {},
     is_bot: {},
+    is_premium: {},
+    added_to_attachment_menu: {},
 } as const;
 
 // L2
@@ -343,7 +345,7 @@ type CollapseL1<
 > =
     | Q
     | (L extends string ? Q extends typeof L1_SHORTCUTS[L][number] ? L
-    : never
+        : never
         : never);
 // Add L2 shortcuts
 type CollapseL2<
@@ -352,7 +354,7 @@ type CollapseL2<
 > =
     | Q
     | (L extends string ? Q extends typeof L2_SHORTCUTS[L][number] ? L
-    : never
+        : never
         : never);
 // All queries
 type AllValidFilterQueries = InjectShortcuts;

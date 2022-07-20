@@ -11,7 +11,7 @@ export { InputFile } from "./types.ts";
 
 export { Context } from "./context.ts";
 
-// Convenience stuff and helpers
+// Convenience stuff, built-in plugins, and helpers
 export * from "./convenience/keyboard.ts";
 export * from "./convenience/session.ts";
 export * from "./convenience/webhook.ts";
@@ -20,6 +20,8 @@ export * from "./convenience/webhook.ts";
 export {
     type CallbackQueryContext,
     type CallbackQueryMiddleware,
+    type ChatTypeContext,
+    type ChatTypeMiddleware,
     type CommandContext,
     type CommandMiddleware,
     Composer,
