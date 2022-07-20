@@ -3,7 +3,6 @@ import { type InputFileProxy } from "@grammyjs/types";
 import { debug as d, toRaw } from "./platform.node";
 import { basename } from "path";
 import fetch from "node-fetch";
-import { URL } from "url";
 import { createReadStream, type ReadStream } from "fs";
 
 const debug = d("grammy:warn");
