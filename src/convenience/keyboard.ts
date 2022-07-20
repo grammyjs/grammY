@@ -240,7 +240,6 @@ export class InlineKeyboard {
      *
      * @param buttons The buttons to add
      */
-
     add(...buttons: InlineKeyboardButton[]) {
         this.inline_keyboard[this.inline_keyboard.length - 1]?.push(...buttons);
         return this;
