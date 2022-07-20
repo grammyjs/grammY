@@ -66,7 +66,6 @@ If you want to read or modify grammY's code, you can do the following.
 You are now ready to work on grammY.
 
 Before you open a PR, make sure to run `deno test`, `deno fmt` and `deno lint` on the Deno codebase.
-Specify `--config deno.json` for the latter two commands.
 
 ### Working on the Core of grammY using Node.js
 

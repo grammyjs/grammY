@@ -11,7 +11,7 @@ export { InputFile } from "./platform.deno.ts";
 
 export { Context } from "./context.ts";
 
-// Convenience stuff and helpers
+// Convenience stuff, built-in plugins, and helpers
 export * from "./convenience/keyboard.ts";
 export * from "./convenience/session.ts";
 export * from "./convenience/webhook.ts";
