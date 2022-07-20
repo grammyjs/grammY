@@ -164,15 +164,15 @@ export class Keyboard {
         return this;
     }
     /**
-     * Make the current keyboard resizable.
+     * Make the current keyboard resized.
      * See https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard
      * for more details.
      *
-     * Keyboards are non-resizeable by default,
+     * Keyboards are non-resized by default,
      * use this function to enable it (without any parameters or pass `true`).
-     * And you can pass `false` to `isEnabled` to force them non-resizable.
+     * And you can pass `false` to `isEnabled` to force them non-resized.
      *
-     * @param isEnabled Determines if the keyboard should be resizable.
+     * @param isEnabled Determines if the keyboard should be resized.
      */
     resized(isEnabled = true) {
         this.resize_keyboard = isEnabled;
