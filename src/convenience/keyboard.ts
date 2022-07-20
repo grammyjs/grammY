@@ -33,8 +33,8 @@ import {
  */
 export class Keyboard {
     /**
-     * Show the current keyboard only to those users that are mentioned in
-     * the text of the message object.
+     * Show the current keyboard only to those users that are mentioned in the
+     * text of the message object.
      */
     public selective?: boolean;
     /**
@@ -42,7 +42,8 @@ export class Keyboard {
      */
     public one_time_keyboard?: boolean;
     /**
-     * Resize the current keyboard according to its buttons.
+     * Resize the current keyboard according to its buttons. Usually, this will
+     * make the keyboard smaller.
      */
     public resize_keyboard?: boolean;
     /**
@@ -51,11 +52,12 @@ export class Keyboard {
     public input_field_placeholder?: string;
 
     /**
-     * Initalize a new `Keyboard` with optional `KeyboardButton`.
+     * Initalize a new `Keyboard` with an optional two-dimensional array of
+     * `KeyboardButton` objects. This is the nested array that holds the custom
+     * keyboard. It will be extended every time you call one of the provided
+     * methods.
      *
-     * @param keyboard The initial keyboard.
-     * The nested array that holds the custom keyboard. It will be extended
-     * every time you call one of the provided methods.
+     * @param keyboard The initial custom keyboard
      */
     constructor(public readonly keyboard: KeyboardButton[][] = [[]]) {
     }
@@ -134,56 +136,56 @@ export class Keyboard {
         return this.add({ text, web_app: { url } });
     }
     /**
-     * Make the current keyboard selective.
-     * See https://grammy.dev/plugins/keyboard.html#selectively-send-custom-keyboards
+     * Make the current keyboard selective. See
+     * https://grammy.dev/plugins/keyboard.html#selectively-send-custom-keyboards
      * for more details.
      *
-     * Keyboards are non-selective by default,
-     * use this function to enable it (without any parameters or pass `true`).
-     * And you can pass `false` to `isEnabled` to force them non-selective.
+     * Keyboards are non-selective by default, use this function to enable it
+     * (without any parameters or pass `true`). Pass `false` to force the
+     * keyboard to be non-selective.
      *
-     * @param isEnabled Determines if the keyboard should be selective.
+     * @param isEnabled `true` if the keyboard should be selective, and `false` otherwise
      */
     selected(isEnabled = true) {
         this.selective = isEnabled;
         return this;
     }
     /**
-     * Make the current keyboard one-time.
-     * See https://grammy.dev/plugins/keyboard.html#one-time-custom-keyboards
-     * for more details.
+     * Make the current keyboard one-time. See
+     * https://grammy.dev/plugins/keyboard.html#one-time-custom-keyboards for
+     * more details.
      *
-     * Keyboards are non-one-time by default,
-     * use this function to enable it (without any parameters or pass `true`).
-     * And you can pass `false` to `isEnabled` to force them non-one-time.
+     * Keyboards are non-one-time by default, use this function to enable it
+     * (without any parameters or pass `true`). Pass `false` to force the
+     * keyboard to be non-one-time.
      *
-     * @param isEnabled Determines if the keyboard should be one-time.
+     * @param isEnabled `true` if the keyboard should be one-time, and `false` otherwise
      */
     oneTime(isEnabled = true) {
         this.one_time_keyboard = isEnabled;
         return this;
     }
     /**
-     * Make the current keyboard resized.
-     * See https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard
-     * for more details.
+     * Make the current keyboard resized. See
+     * https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard for more
+     * details.
      *
-     * Keyboards are non-resized by default,
-     * use this function to enable it (without any parameters or pass `true`).
-     * And you can pass `false` to `isEnabled` to force them non-resized.
+     * Keyboards are non-resized by default, use this function to enable it
+     * (without any parameters or pass `true`). Pass `false` to force the
+     * keyboard to be non-resized.
      *
-     * @param isEnabled Determines if the keyboard should be resized.
+     * @param isEnabled `true` if the keyboard should be resized, and `false` otherwise
      */
     resized(isEnabled = true) {
         this.resize_keyboard = isEnabled;
         return this;
     }
     /**
-     * Set the current keyboard's input field placeholder.
-     * See https://grammy.dev/plugins/keyboard.html#input-field-placeholder
-     * for more details.
+     * Set the current keyboard's input field placeholder. See
+     * https://grammy.dev/plugins/keyboard.html#input-field-placeholder for more
+     * details.
      *
-     * @param value Placeholder text
+     * @param value The placeholder text
      */
     placeholder(value: string) {
         this.input_field_placeholder = value;
@@ -221,16 +223,16 @@ export class Keyboard {
  */
 export class InlineKeyboard {
     /**
-     * Initalize a new `InlineKeyboard` with optional `InlineKeyboardButton`.
+     * Initalize a new `InlineKeyboard` with an optional two-dimensional array
+     * of `InlineKeyboardButton` objects. This is the nested array that holds
+     * the inline keyboard. It will be extended every time you call one of the
+     * provided methods.
      *
-     * @param inline_keyboard The initial inline keyboard.
-     * The nested array that holds the inline keyboard. It will be extended
-     * every time you call one of the provided methods.
+     * @param inline_keyboard The initial inline keyboard
      */
     constructor(
         public readonly inline_keyboard: InlineKeyboardButton[][] = [[]],
-    ) {
-    }
+    ) {}
     /**
      * Allows you to add your own `InlineKeyboardButton` objects if you already
      * have them for some reason. You most likely want to call one of the other
@@ -238,6 +240,7 @@ export class InlineKeyboard {
      *
      * @param buttons The buttons to add
      */
+
     add(...buttons: InlineKeyboardButton[]) {
         this.inline_keyboard[this.inline_keyboard.length - 1]?.push(...buttons);
         return this;
