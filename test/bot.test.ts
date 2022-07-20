@@ -2,7 +2,7 @@ import { Bot } from "../src/bot.ts";
 import {
     assertEquals,
     assertThrows,
-} from "https://deno.land/std@0.147.0/testing/asserts.ts";
+} from "https://deno.land/std@0.148.0/testing/asserts.ts";
 
 function createBot(token: string) {
     return new Bot(token);
