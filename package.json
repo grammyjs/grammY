@@ -41,7 +41,7 @@
         },
         ".": {
             "types": "./out/mod.d.ts",
-            "require": "./out/mod.js"
+            "default": "./out/mod.js"
         }
     },
     "keywords": [
