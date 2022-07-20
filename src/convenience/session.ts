@@ -63,6 +63,12 @@ export interface LazySessionFlavor<S> {
     get session(): MaybePromise<S>;
     set session(session: MaybePromise<S | null | undefined>);
 }
+export type LazyMultiSessionFlavor<S> = S extends Record<string, unknown>
+    ? LazySessionRecord<S>
+    : never;
+interface LazySessionRecord<S extends Record<string, unknown>> {
+    session: { [K in keyof S]: S[K] | Promise<S[K]> };
+}
 
 /**
  * A storage adapter is an abstraction that provides read, write, and delete
@@ -185,11 +191,11 @@ export function session<S, C extends Context>(
     options: SessionOptions<S> | MultiSessionOptions<S> = {},
 ): MiddlewareFn<C & SessionFlavor<S>> {
     return options.type === "multi"
-        ? multiSession(options)
-        : singleSession(options);
+        ? strictMultiSession(options)
+        : strictSingleSession(options);
 }
 
-function singleSession<S, C extends Context>(
+function strictSingleSession<S, C extends Context>(
     options: SessionOptions<S>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
     const { getSessionKey, storage } = fillDefaults(options);
@@ -223,7 +229,7 @@ function singleSession<S, C extends Context>(
     };
 }
 
-function multiSession<S, C extends Context>(
+function strictMultiSession<S, C extends Context>(
     options: MultiSessionOptions<S>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
     const opts = Object.fromEntries(
@@ -234,6 +240,13 @@ function multiSession<S, C extends Context>(
             .map(([k, v]) => [k, fillDefaults(v)]),
     );
     return async (ctx, next) => {
+        // TODO: implement based on property store with the interface
+        // constructor(obj, propName) {
+        //   async init()
+        //   get()
+        //   set(value)
+        //   async finish()
+        // }
         async function read(prop: string) {
             const key = await opts[prop].getSessionKey(ctx);
             const value = key === undefined
@@ -248,8 +261,8 @@ function multiSession<S, C extends Context>(
         );
 
         ctx.session = {} as S;
-        for (const prop of Object.keys(options)) {
-            Object.defineProperty(session, prop, {
+        for (const prop of Object.keys(opts)) {
+            Object.defineProperty(ctx.session, prop, {
                 enumerable: true,
                 get() {
                     if (props[prop].key === undefined) {
@@ -325,7 +338,21 @@ function fillDefaults<S>(opts: SessionOptions<S>) {
  * @param options Optional configuration to pass to the session middleware
  */
 export function lazySession<S, C extends Context>(
-    options: SessionOptions<S> = {},
+    options: SessionOptions<S>,
+): MiddlewareFn<C & LazySessionFlavor<S>>;
+export function lazySession<S, C extends Context>(
+    options: MultiSessionOptions<S>,
+): MiddlewareFn<C & LazyMultiSessionFlavor<S>>;
+export function lazySession<S>(
+    options: SessionOptions<S> | MultiSessionOptions<S> = {},
+) {
+    return options.type === "multi"
+        ? lazyMultiSession(options)
+        : lazySingleSession(options);
+}
+
+function lazySingleSession<S, C extends Context>(
+    options: SessionOptions<S>,
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
     const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
     const storage = options.storage ??
@@ -390,6 +417,27 @@ export function lazySession<S, C extends Context>(
                 else await storage.write(key, value);
             }
         }
+    };
+}
+
+function lazyMultiSession<S, C extends Context>(
+    options: MultiSessionOptions<S>,
+): MiddlewareFn<C & LazyMultiSessionFlavor<S>> {
+    const opts = Object.fromEntries(
+        Object.entries(options)
+            .filter((kv): kv is [string, Exclude<typeof kv[1], "multi">] =>
+                kv[0] !== "type"
+            )
+            .map(([k, v]) => [k, fillDefaults(v)]),
+    );
+    return async (ctx, next) => {
+        // TODO: implement based on property store with the interface
+        // constructor(obj, propName) {
+        //   async init()
+        //   async get()
+        //   set(value)
+        //   async finish()
+        // }
     };
 }
 
