@@ -207,7 +207,7 @@ function strictSingleSession<S, C extends Context>(
             initial,
         );
         const key = await getSessionKey(ctx);
-        await propSession.init(key, { custom });
+        await propSession.init(key, { custom, lazy: false });
         await next(); // no catch: do not write back if middleware throws
         await propSession.finish();
     };
@@ -225,14 +225,14 @@ function strictMultiSession<S, C extends Context>(
         const propSessions = await Promise.all(props.map(async (prop) => {
             const { initial, storage, getSessionKey, custom } = defaults[prop];
             const entry = new PropertySession(
-                // deno-lint-ignore no-explicit-any
-                storage as any, // cannot express that the storage works for a concrete prop
+                // @ts-ignore cannot express that the storage works for a concrete prop
+                storage,
                 ctx.session,
                 prop,
                 initial,
             );
             const key = await getSessionKey(ctx);
-            await entry.init(key, { custom });
+            await entry.init(key, { custom, lazy: false });
             return entry;
         }));
         await next(); // no catch: do not write back if middleware throws
@@ -289,102 +289,57 @@ export function lazySession<S>(
 function lazySingleSession<S, C extends Context>(
     options: SessionOptions<S>,
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
-    const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
-    const storage = options.storage ??
-        (debug(
-            "Storing session data in memory, all data will be lost when the bot restarts.",
-        ),
-            new MemorySessionStorage());
+    const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
+        const propSession = new PropertySession(
+            // @ts-ignore suppress promise nature of values
+            storage,
+            ctx,
+            "session",
+            initial,
+        );
         const key = await getSessionKey(ctx);
-        let value: MaybePromise<S | undefined> = undefined;
-        let promise: Promise<S | undefined> | undefined = undefined;
-        let fetching = false;
-        let read = false;
-        let wrote = false;
-
-        async function load() {
-            if (key === undefined) {
-                const msg = undef("access", {
-                    custom: getSessionKey !== defaultGetSessionKey,
-                    lazy: true,
-                });
-                throw new Error(msg);
-            }
-            let v: S | undefined = await storage.read(key);
-            if (!fetching) return value;
-            if (v === undefined) {
-                v = options.initial?.();
-                if (v !== undefined) {
-                    wrote = true;
-                    value = v;
-                }
-            } else {
-                value = v;
-            }
-            return value;
-        }
-
-        Object.defineProperty(ctx, "session", {
-            enumerable: true,
-            get() {
-                if (wrote) return value;
-                read = true;
-                if (promise === undefined) {
-                    fetching = true;
-                    promise = load();
-                }
-                return promise;
-            },
-            set(v) {
-                if (key === undefined) {
-                    const msg = undef("assign", {
-                        custom: getSessionKey !== defaultGetSessionKey,
-                        lazy: true,
-                    });
-                    throw new Error(msg);
-                }
-                wrote = true;
-                fetching = false;
-                value = v;
-            },
-        });
+        await propSession.init(key, { custom, lazy: true });
         await next(); // no catch: do not write back if middleware throws
-        if (key !== undefined) {
-            if (read) await promise;
-            if (read || wrote) {
-                value = await value;
-                if (value == null) await storage.delete(key);
-                else await storage.write(key, value);
-            }
-        }
+        await propSession.finish();
     };
 }
 
 function lazyMultiSession<S, C extends Context>(
     options: MultiSessionOptions<S>,
 ): MiddlewareFn<C & LazyMultiSessionFlavor<S>> {
-    const opts = Object.fromEntries(
-        Object.entries(options)
-            .filter((kv): kv is [string, Exclude<typeof kv[1], "multi">] =>
-                kv[0] !== "type"
-            )
-            .map(([k, v]) => [k, fillDefaults(v)]),
+    const props = Object.keys(options).filter((k) => k !== "type");
+    const defaults = Object.fromEntries(
+        props.map((prop) => [prop, fillDefaults(options[prop])]),
     );
     return async (ctx, next) => {
-        // TODO: implement based on property store with the interface
-        // constructor(obj, propName) {
-        //   async init()
-        //   async get()
-        //   set(value)
-        //   async finish()
-        // }
+        ctx.session = {} as S;
+        const propSessions = await Promise.all(props.map(async (prop) => {
+            const { initial, storage, getSessionKey, custom } = defaults[prop];
+            const entry = new PropertySession(
+                // @ts-ignore cannot express that the storage works for a concrete prop
+                storage,
+                ctx.session,
+                prop,
+                initial,
+            );
+            const key = await getSessionKey(ctx);
+            await entry.init(key, { custom, lazy: true });
+            return entry;
+        }));
+        await next(); // no catch: do not write back if middleware throws
+        await Promise.all(propSessions.map((entry) => entry.finish()));
     };
 }
 
 class PropertySession<O, P extends keyof O> {
     private key?: string;
     private value: O[P] | undefined;
+    private promise: Promise<O[P] | undefined> | undefined;
+
+    private fetching = false;
+    private read = false;
+    private wrote = false;
 
     constructor(
         private storage: StorageAdapter<O[P]>,
@@ -393,25 +348,70 @@ class PropertySession<O, P extends keyof O> {
         private initial?: () => O[P],
     ) {}
 
-    async init(key: string | undefined, opts: { custom: boolean }) {
+    /** Performs a read op and stores the result in `this.value` */
+    private load() {
+        if (this.key === undefined) {
+            // No session key provided, cannot load
+            return;
+        }
+        if (this.wrote) {
+            // Value was set, no need to load
+            return;
+        }
+        // Perform read op if not cached
+        if (this.promise === undefined) {
+            this.fetching = true;
+            this.promise = Promise.resolve(this.storage.read(this.key))
+                .then((val) => {
+                    this.fetching = false;
+                    // Check for write op in the meantime
+                    if (this.wrote) {
+                        // Discard read op
+                        return this.value;
+                    }
+                    // Store received value in `this.value`
+                    if (val !== undefined) {
+                        this.value = val;
+                        return val;
+                    }
+                    // No value, need to initialize
+                    val = this.initial?.();
+                    if (val !== undefined) {
+                        // Wrote initial value
+                        this.wrote = true;
+                        this.value = val;
+                    }
+                    return val;
+                });
+        }
+        return this.promise;
+    }
+
+    async init(
+        key: string | undefined,
+        opts: { custom: boolean; lazy: boolean },
+    ) {
         this.key = key;
-        this.value = key === undefined
-            ? undefined
-            : (await this.storage.read(key)) ?? this.initial?.();
+        if (!opts.lazy) await this.load();
         Object.defineProperty(this.obj, this.prop, {
             enumerable: true,
-            get() {
+            get: () => {
                 if (key === undefined) {
                     const msg = undef("access", opts);
                     throw new Error(msg);
                 }
-                return this.value;
+                this.read = true;
+                if (!opts.lazy || this.wrote) return this.value;
+                this.load();
+                return this.fetching ? this.promise : this.value;
             },
-            set(v) {
+            set: (v) => {
                 if (key === undefined) {
                     const msg = undef("assign", opts);
                     throw new Error(msg);
                 }
+                this.wrote = true;
+                this.fetching = false;
                 this.value = v;
             },
         });
@@ -419,8 +419,12 @@ class PropertySession<O, P extends keyof O> {
 
     async finish() {
         if (this.key !== undefined) {
-            if (this.value == null) await this.storage.delete(this.key);
-            else await this.storage.write(this.key, this.value);
+            if (this.read) await this.load();
+            if (this.read || this.wrote) {
+                const value = await this.value;
+                if (value == null) await this.storage.delete(this.key);
+                else await this.storage.write(this.key, value);
+            }
         }
     }
 }
@@ -445,9 +449,9 @@ function defaultGetSessionKey(ctx: Context): string | undefined {
 /** Returns a useful error message for when the session key is undefined */
 function undef(
     op: "access" | "assign",
-    opts: { custom?: boolean; lazy?: boolean } = {},
+    opts: { custom: boolean; lazy?: boolean },
 ) {
-    const { lazy = false, custom = false } = opts;
+    const { lazy = false, custom } = opts;
     const reason = custom
         ? "the custom `getSessionKey` function returned undefined for this update"
         : "this update does not belong to a chat, so the session key is undefined";
