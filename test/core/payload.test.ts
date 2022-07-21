@@ -2,7 +2,7 @@ import {
     createFormDataPayload,
     requiresFormDataUpload,
 } from "../../src/core/payload.ts";
-import { InputFile } from "../../src/platform.deno.ts";
+import { InputFile } from "../../src/mod.ts";
 import {
     assert,
     assertEquals,
