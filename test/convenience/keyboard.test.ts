@@ -1,4 +1,5 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
+import { type LoginUrl } from "../../src/platform.deno.ts";
 import { assertEquals } from "https://deno.land/std@0.147.0/testing/asserts.ts";
 import { describe, it } from "https://deno.land/std@0.147.0/testing/bdd.ts";
 
@@ -69,12 +70,19 @@ describe("InlineKeyboard", () => {
     });
 
     it("should support different buttons", () => {
+        const url: LoginUrl = {
+            url: "https://grammy.dev",
+            forward_text: "forward",
+            bot_username: "bot",
+            request_write_access: true,
+        };
         const keyboard = new InlineKeyboard()
             .url("url", "https://grammy.dev")
             .text("button")
             .text("button", "data")
             .webApp("web app", "https://grammy.dev")
             .login("login", "https://grammy.dev")
+            .login("login", url)
             .switchInline("inline")
             .switchInline("inline", "query")
             .switchInlineCurrent("inline current")
@@ -88,6 +96,7 @@ describe("InlineKeyboard", () => {
                 { text: "button", callback_data: "data" },
                 { text: "web app", web_app: { url: "https://grammy.dev" } },
                 { text: "login", login_url: { url: "https://grammy.dev" } },
+                { text: "login", login_url: url },
                 { text: "inline", switch_inline_query: "" },
                 { text: "inline", switch_inline_query: "query" },
                 {
