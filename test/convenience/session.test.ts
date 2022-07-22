@@ -492,12 +492,10 @@ describe("MemorySessionStorage", () => {
         assertEquals(store.readAll(), [42, 43, 44]);
     });
     it("should support timeouts", async () => {
-        const store = new MemorySessionStorage<number>(1.5 * TICK_MS);
+        const store = new MemorySessionStorage<number>(TICK_MS);
         store.write("k", 42);
         assertEquals(store.read("k"), 42);
-        await tick();
-        assertEquals(store.read("k"), 42);
-        await tick();
+        await tick(2);
         assertEquals(store.read("k"), undefined);
         store.write("k", 42);
         assertEquals(store.read("k"), 42);
