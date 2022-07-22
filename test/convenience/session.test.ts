@@ -226,7 +226,10 @@ describe("multi session", () => {
         type C = Context & SessionFlavor<{ prop: number }>;
         let composer = new Composer<C>();
         const ctx = {} as C;
-        composer.use(session({ type: "multi" }), () => ctx.session.prop);
+        composer.use(
+            session({ type: "multi", prop: {} }),
+            () => ctx.session.prop,
+        );
         await assertRejects(async () => {
             await composer.middleware()(ctx, next);
         });
@@ -713,7 +716,7 @@ describe("lazy multi session", () => {
         const composer = new Composer<C>();
         const ctx = { chat: { id: 42 } } as C;
         const middleware = spy((_ctx) => {});
-        composer.use(lazySession<SessionData, C>({ type: "multi" }))
+        composer.use(lazySession<SessionData, C>({ type: "multi", prop: {} }))
             .use(middleware);
         await composer.middleware()(ctx, next);
         assertEquals(middleware.calls[0].args[0], ctx);
@@ -727,7 +730,7 @@ describe("lazy multi session", () => {
         let composer = new Composer<C>();
         const ctx = {} as C;
         composer.use(
-            lazySession<SessionData, C>({ type: "multi" }),
+            lazySession<SessionData, C>({ type: "multi", prop: {} }),
             () => ctx.session.prop,
         );
         await assertRejects(async () => {
