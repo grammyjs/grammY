@@ -1,11 +1,9 @@
-import { Composer, type MiddlewareFn } from "../src/composer.ts";
-import { type Context } from "../src/context.ts";
+import { Composer, type Context, type MiddlewareFn } from "../src/mod.ts";
 import {
     assertEquals,
     assertRejects,
 } from "https://deno.land/std@0.147.0/testing/asserts.ts";
 import { type Spy, spy } from "https://deno.land/std@0.147.0/testing/mock.ts";
-
 import {
     beforeEach,
     describe,
