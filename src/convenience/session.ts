@@ -142,7 +142,7 @@ export type MultiSessionOptions<S> = S extends Record<string, any> // unknown br
     ? { type: "multi" } & MultiSessionOptionsRecord<S>
     : never;
 type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
-    [K in keyof S]?: SessionOptions<S[K]>;
+    [K in keyof S]: SessionOptions<S[K]>;
 };
 
 /**
