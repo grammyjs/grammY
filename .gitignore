@@ -21,6 +21,7 @@ package-lock.json
 *.tgz
 
 # Test coverage
+test/coverage
 test/cov_profile
 coverage.lcov
 
