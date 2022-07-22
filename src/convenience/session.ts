@@ -273,10 +273,10 @@ function strictMultiSession<S, C extends Context>(
  * @param options Optional configuration to pass to the session middleware
  */
 export function lazySession<S, C extends Context>(
-    options: SessionOptions<S>,
+    options?: SessionOptions<S>,
 ): MiddlewareFn<C & LazySessionFlavor<S>>;
 export function lazySession<S, C extends Context>(
-    options: MultiSessionOptions<S>,
+    options?: MultiSessionOptions<S>,
 ): MiddlewareFn<C & LazyMultiSessionFlavor<S>>;
 export function lazySession<S>(
     options: SessionOptions<S> | MultiSessionOptions<S> = {},
