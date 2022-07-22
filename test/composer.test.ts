@@ -1,4 +1,5 @@
-import { Composer, type Context, type MiddlewareFn } from "../src/mod.ts";
+import { Composer, type MiddlewareFn } from "../src/composer.ts";
+import { type Context } from "../src/mod.ts";
 import {
     assertEquals,
     assertRejects,

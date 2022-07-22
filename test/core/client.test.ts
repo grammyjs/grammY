@@ -1,6 +1,6 @@
 import { createRawApi, type TransformableApi } from "../../src/core/client.ts";
-import { type ApiResponse } from "../../src/platform.deno.ts";
 import { GrammyError } from "../../src/mod.ts";
+import { type ApiResponse } from "../../src/platform.deno.ts";
 import {
     assertEquals,
     assertRejects,

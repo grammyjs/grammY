@@ -1,10 +1,5 @@
-import {
-    Composer,
-    type Context,
-    type MiddlewareFn,
-    session,
-    type SessionFlavor,
-} from "../../src/mod.ts";
+import { session, type SessionFlavor } from "../../src/convenience/session.ts";
+import { Composer, type Context, type MiddlewareFn } from "../../src/mod.ts";
 import { assertEquals } from "https://deno.land/std@0.147.0/testing/asserts.ts";
 import { type Spy, spy } from "https://deno.land/std@0.147.0/testing/mock.ts";
 import {
