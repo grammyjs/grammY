@@ -63,11 +63,15 @@ export interface LazySessionFlavor<S> {
     get session(): MaybePromise<S>;
     set session(session: MaybePromise<S | null | undefined>);
 }
-export type LazyMultiSessionFlavor<S> = S extends Record<string, unknown>
+// deno-lint-ignore no-explicit-any
+export type LazyMultiSessionFlavor<S> = S extends Record<string, any> // unknown breaks extends
     ? LazySessionRecord<S>
     : never;
 interface LazySessionRecord<S extends Record<string, unknown>> {
-    session: { [K in keyof S]: S[K] | Promise<S[K]> };
+    get session(): { [K in keyof S]: MaybePromise<S[K]> };
+    set session(
+        session: { [K in keyof S]: MaybePromise<S[K]> } | null | undefined,
+    );
 }
 
 /**
@@ -133,11 +137,12 @@ export interface SessionOptions<S> {
     storage?: StorageAdapter<S>;
 }
 
-type MultiSessionOptions<S> = S extends Record<string, unknown>
+// deno-lint-ignore no-explicit-any
+export type MultiSessionOptions<S> = S extends Record<string, any> // unknown breaks extends
     ? { type: "multi" } & MultiSessionOptionsRecord<S>
     : never;
 type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
-    [K in keyof S]: SessionOptions<S[K]>;
+    [K in keyof S]?: SessionOptions<S[K]>;
 };
 
 /**
@@ -224,7 +229,7 @@ function strictMultiSession<S, C extends Context>(
         ctx.session = {} as S;
         const propSessions = await Promise.all(props.map(async (prop) => {
             const { initial, storage, getSessionKey, custom } = defaults[prop];
-            const entry = new PropertySession(
+            const s = new PropertySession(
                 // @ts-ignore cannot express that the storage works for a concrete prop
                 storage,
                 ctx.session,
@@ -232,11 +237,12 @@ function strictMultiSession<S, C extends Context>(
                 initial,
             );
             const key = await getSessionKey(ctx);
-            await entry.init(key, { custom, lazy: false });
-            return entry;
+            await s.init(key, { custom, lazy: false });
+            return s;
         }));
         await next(); // no catch: do not write back if middleware throws
-        await Promise.all(propSessions.map((entry) => entry.finish()));
+        if (ctx.session == null) propSessions.forEach((s) => s.delete());
+        await Promise.all(propSessions.map((s) => s.finish()));
     };
 }
 
@@ -316,7 +322,7 @@ function lazyMultiSession<S, C extends Context>(
         ctx.session = {} as S;
         const propSessions = await Promise.all(props.map(async (prop) => {
             const { initial, storage, getSessionKey, custom } = defaults[prop];
-            const entry = new PropertySession(
+            const s = new PropertySession(
                 // @ts-ignore cannot express that the storage works for a concrete prop
                 storage,
                 ctx.session,
@@ -324,11 +330,12 @@ function lazyMultiSession<S, C extends Context>(
                 initial,
             );
             const key = await getSessionKey(ctx);
-            await entry.init(key, { custom, lazy: true });
-            return entry;
+            await s.init(key, { custom, lazy: true });
+            return s;
         }));
         await next(); // no catch: do not write back if middleware throws
-        await Promise.all(propSessions.map((entry) => entry.finish()));
+        if (ctx.session == null) propSessions.forEach((s) => s.delete());
+        await Promise.all(propSessions.map((s) => s.finish()));
     };
 }
 
@@ -417,6 +424,10 @@ class PropertySession<O, P extends keyof O> {
         });
     }
 
+    delete() {
+        Object.assign(this.obj, { [this.prop]: undefined });
+    }
+
     async finish() {
         if (this.key !== undefined) {
             if (this.read) await this.load();
@@ -429,7 +440,7 @@ class PropertySession<O, P extends keyof O> {
     }
 }
 
-function fillDefaults<S>(opts: SessionOptions<S>) {
+function fillDefaults<S>(opts: SessionOptions<S> = {}) {
     let { getSessionKey = defaultGetSessionKey, initial, storage } = opts;
     if (storage == null) {
         debug(
