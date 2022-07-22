@@ -1,5 +1,6 @@
 import { createRawApi, type TransformableApi } from "../../src/core/client.ts";
 import { type ApiResponse } from "../../src/types.ts";
+import { GrammyError } from "../../src/mod.ts";
 import {
     assertEquals,
     assertRejects,
@@ -11,7 +12,6 @@ import {
     describe,
     it,
 } from "https://deno.land/std@0.148.0/testing/bdd.ts";
-import { GrammyError } from "../../src/core/error.ts";
 
 const token = "secret-token";
 

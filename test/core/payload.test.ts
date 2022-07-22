@@ -2,6 +2,7 @@ import {
     createFormDataPayload,
     requiresFormDataUpload,
 } from "../../src/core/payload.ts";
+import { InputFile } from "../../src/mod.ts";
 import {
     assert,
     assertEquals,
@@ -12,7 +13,6 @@ import {
     readAll,
     readerFromIterable,
 } from "https://deno.land/std@0.148.0/streams/conversion.ts";
-import { InputFile } from "../../src/types.ts";
 
 describe("requiresFormDataUpload", () => {
     it("should ignore primitives", () => {
