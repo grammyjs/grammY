@@ -16,7 +16,8 @@ import {
 import { spy } from "https://deno.land/std@0.147.0/testing/mock.ts";
 import { describe, it } from "https://deno.land/std@0.147.0/testing/bdd.ts";
 
-const tick = (n = 1) => new Promise((r) => setTimeout(r, 10 * n));
+const TICK_MS = 30;
+const tick = (n = 1) => new Promise((r) => setTimeout(r, n * TICK_MS));
 
 describe("session", () => {
     const next = () => Promise.resolve();
@@ -491,12 +492,12 @@ describe("MemorySessionStorage", () => {
         assertEquals(store.readAll(), [42, 43, 44]);
     });
     it("should support timeouts", async () => {
-        const store = new MemorySessionStorage<number>(30); // 3 ticks
+        const store = new MemorySessionStorage<number>(1.5 * TICK_MS); // 1.5 ticks
         store.write("k", 42);
         assertEquals(store.read("k"), 42);
-        await tick(2);
+        await tick();
         assertEquals(store.read("k"), 42);
-        await tick(2);
+        await tick();
         assertEquals(store.read("k"), undefined);
         store.write("k", 42);
         assertEquals(store.read("k"), 42);
