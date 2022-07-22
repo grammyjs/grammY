@@ -683,7 +683,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/47931084?v=4",
       "profile": "https://github.com/daniharo",
       "contributions": [
-        "code"
+        "code",
+        "plugin",
+        "doc"
       ]
     }
   ],
