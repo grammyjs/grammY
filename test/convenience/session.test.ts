@@ -33,8 +33,14 @@ describe("session", () => {
 
     it("should throw when reading from empty session key", async () => {
         type C = Context & SessionFlavor<number>;
-        const composer = new Composer<C>();
+        let composer = new Composer<C>();
         const ctx = {} as C;
+        composer.use(session(), () => ctx.session);
+        await assertRejects(async () => {
+            await composer.middleware()(ctx, next);
+        });
+
+        composer = new Composer<C>();
         composer.use(
             session({ getSessionKey: () => undefined }),
             () => ctx.session,
@@ -203,8 +209,6 @@ describe("session", () => {
     });
 });
 
-type X = { a: string } extends Record<string, unknown> ? true : false;
-
 describe("multi session", () => {
     const next = () => Promise.resolve();
 
@@ -220,8 +224,14 @@ describe("multi session", () => {
 
     it("should throw when reading from empty session key", async () => {
         type C = Context & SessionFlavor<{ prop: number }>;
-        const composer = new Composer<C>();
+        let composer = new Composer<C>();
         const ctx = {} as C;
+        composer.use(session({ type: "multi" }), () => ctx.session.prop);
+        await assertRejects(async () => {
+            await composer.middleware()(ctx, next);
+        });
+
+        composer = new Composer<C>();
         composer.use(
             session({
                 type: "multi",
@@ -429,8 +439,14 @@ describe("lazy session", () => {
 
     it("should throw when reading from empty session key", async () => {
         type C = Context & LazySessionFlavor<number>;
-        const composer = new Composer<C>();
+        let composer = new Composer<C>();
         const ctx = {} as C;
+        composer.use(lazySession(), () => ctx.session);
+        await assertRejects(async () => {
+            await composer.middleware()(ctx, next);
+        });
+
+        composer = new Composer<C>();
         composer.use(
             lazySession({ getSessionKey: () => undefined }),
             () => ctx.session,
@@ -708,8 +724,17 @@ describe("lazy multi session", () => {
             prop: number;
         }
         type C = Context & LazyMultiSessionFlavor<SessionData>;
-        const composer = new Composer<C>();
+        let composer = new Composer<C>();
         const ctx = {} as C;
+        composer.use(
+            lazySession<SessionData, C>({ type: "multi" }),
+            () => ctx.session.prop,
+        );
+        await assertRejects(async () => {
+            await composer.middleware()(ctx, next);
+        });
+
+        composer = new Composer<C>();
         composer.use(
             lazySession<SessionData, C>({
                 type: "multi",
