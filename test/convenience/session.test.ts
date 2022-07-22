@@ -16,7 +16,7 @@ import {
 import { spy } from "https://deno.land/std@0.147.0/testing/mock.ts";
 import { describe, it } from "https://deno.land/std@0.147.0/testing/bdd.ts";
 
-const TICK_MS = 100;
+const TICK_MS = 50;
 const tick = (n = 1) => new Promise((r) => setTimeout(r, n * TICK_MS));
 
 describe("session", () => {
