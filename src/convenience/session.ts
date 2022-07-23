@@ -502,16 +502,23 @@ export function enhanceStorage<T>(
     const count = versions.length;
     if (count === 0) throw new Error("No migrations given!");
     const earliest = versions[0];
-    const latest = versions[count - 1];
+    const last = count - 1;
+    const latest = versions[last];
     const index = new Map<number, number>();
     versions.forEach((v, i) => index.set(v, i)); // inverse array lookup
+    function nextAfter(current: number) {
+        // TODO: use `findLastIndex` with Node 18
+        let i = last;
+        while (current <= versions[i]) i--;
+        return i;
+        // return versions.findLastIndex((v) => v < current)
+    }
     function migrate(old: T | Enhance<T>): T {
         let { __d: value, __v: current = earliest - 1 } =
             typeof old === "object" && old !== null && "__d" in old
                 ? old
                 : { __d: old };
-        let i = 1 + (index.get(current) ??
-            versions.findLastIndex((v) => v < current));
+        let i = 1 + (index.get(current) ?? nextAfter(current));
         for (; i < count; i++) value = migrations[versions[i]](value);
         return value;
     }
