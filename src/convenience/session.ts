@@ -5,6 +5,7 @@ const debug = d("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;
 
+// === Main session plugin
 /**
  * A session flavor is a context flavor that holds session data under
  * `ctx.session`.
@@ -352,7 +353,7 @@ class PropertySession<O, P extends keyof O> {
         private storage: StorageAdapter<O[P]>,
         private obj: O,
         private prop: P,
-        private initial?: () => O[P],
+        private initial: (() => O[P]) | undefined,
     ) {}
 
     /** Performs a read op and stores the result in `this.value` */
@@ -469,6 +470,62 @@ function undef(
     return `Cannot ${op} ${lazy ? "lazy " : ""}session data because ${reason}!`;
 }
 
+// === Session migrations
+export interface Enhance<T> {
+    __v?: number;
+    __d: T;
+}
+export interface MigrationOptions<T> {
+    migrations?: Migrations;
+    storage: StorageAdapter<Enhance<T>>;
+}
+export interface Migrations {
+    // deno-lint-ignore no-explicit-any
+    [version: number]: (old: any) => any;
+}
+
+export function enhanceStorage<T>(
+    options: MigrationOptions<T>,
+): StorageAdapter<T> {
+    const { migrations: m, storage } = options;
+    if (m === undefined) {
+        return {
+            read: (k) => Promise.resolve(storage.read(k)).then((v) => v?.__d),
+            write: (k, v) => storage.write(k, { __d: v }),
+            delete: (k) => storage.delete(k),
+        };
+    }
+    const migrations = m;
+    const versions = Object.keys(migrations)
+        .map((v) => parseInt(v))
+        .sort((a, b) => a - b);
+    const count = versions.length;
+    if (count === 0) throw new Error("No migrations given!");
+    const earliest = versions[0];
+    const latest = versions[count - 1];
+    const index = new Map<number, number>();
+    versions.forEach((v, i) => index.set(v, i)); // inverse array lookup
+    function migrate(old: T | Enhance<T>): T {
+        let { __d: value, __v: current = earliest - 1 } =
+            typeof old === "object" && old !== null && "__d" in old
+                ? old
+                : { __d: old };
+        let i = 1 + (index.get(current) ??
+            versions.findLastIndex((v) => v < current));
+        for (; i < count; i++) value = migrations[versions[i]](value);
+        return value;
+    }
+    return {
+        read: async (k) => {
+            const value = await storage.read(k);
+            return value === undefined ? undefined : migrate(value);
+        },
+        write: (k, v) => storage.write(k, { __v: latest, __d: v }),
+        delete: (k) => storage.delete(k),
+    };
+}
+
+// === Memory storage adapter
 /**
  * The memory session storage is a built-in storage adapter that saves your
  * session data in RAM using a regular JavaScript `Map` object. If you use this

@@ -1,4 +1,5 @@
 import {
+    enhanceStorage,
     LazyMultiSessionFlavor,
     lazySession,
     type LazySessionFlavor,
@@ -11,6 +12,7 @@ import {
     assert,
     assertEquals,
     assertRejects,
+    assertThrows,
 } from "https://deno.land/std@0.147.0/testing/asserts.ts";
 import { spy } from "https://deno.land/std@0.147.0/testing/mock.ts";
 import { describe, it } from "https://deno.land/std@0.147.0/testing/bdd.ts";
@@ -1066,6 +1068,146 @@ describe("lazy multi session", () => {
         assertEquals(storage1.write.calls.length, 1);
         assertEquals(storage1.write.calls[0].args, ["42", 0]);
         await p;
+    });
+});
+
+describe("enhanceStorage", () => {
+    it("should require migrations", () => {
+        const storage = {
+            read: spy((_key: string) => ({ __d: { __d: 42 } })),
+            write: spy((_key: string, _value: { __d: { __d: number } }) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        assertThrows(
+            () => enhanceStorage({ storage, migrations: {} }),
+            Error,
+            "No migrations given!",
+        );
+    });
+
+    it("should support reading and writing __d", async () => {
+        const storage = {
+            read: spy((_key: string) => ({ __d: { __d: 42 } })),
+            write: spy((_key: string, _value: { __d: { __d: number } }) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({ storage });
+        assertEquals(await enhanced.read("key"), { __d: 42 });
+        assertEquals(storage.read.calls[0].args, ["key"]);
+        await enhanced.write("key", { __d: 42 });
+        assertEquals(
+            storage.write.calls[0].args,
+            ["key", { __d: { __d: 42 } }],
+        );
+        await enhanced.delete("key");
+        assertEquals(storage.delete.calls[0].args, ["key"]);
+    });
+
+    it("should not migrate undefined values", async () => {
+        const storage = {
+            read: spy((_key: string) => undefined),
+            write: spy((_key: string, _value: { __d: number }) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({
+            storage,
+            migrations: {
+                1: () => {
+                    throw new Error("nope");
+                },
+            },
+        });
+        assertEquals(await enhanced.read("key"), undefined);
+    });
+
+    it("should not modify write and delete calls", async () => {
+        const storage = {
+            read: spy((_key: string) => undefined),
+            write: spy(
+                (_key: string, _value: { __d: number; __v?: number }) => {},
+            ),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({
+            storage,
+            migrations: {
+                1: () => {
+                    throw new Error("nope");
+                },
+            },
+        });
+        await enhanced.write("key", 42);
+        assertEquals(storage.write.calls[0].args, ["key", { __d: 42, __v: 1 }]);
+        await enhanced.delete("key");
+        assertEquals(storage.delete.calls[0].args, ["key"]);
+    });
+
+    it("should run migration functions from the start", async () => {
+        const storage = {
+            read: spy((_key: string) => 0 as unknown as { __d: number }),
+            write: spy((_key: string, _value: { __d: number }) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({
+            storage,
+            migrations: {
+                3: (old: number) => old *= 2,
+                12: (old: number) => old **= 2,
+                1: (old: number) => old += 10,
+            },
+        });
+        assertEquals(await enhanced.read("key"), 400);
+    });
+
+    it("should run migration functions from the middle", async () => {
+        const storage = {
+            read: spy((_key: string) => ({ __d: 5, __v: 3 })),
+            write: spy((_key: string, _value: { __d: number }) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({
+            storage,
+            migrations: {
+                3: (old: number) => old *= 2,
+                12: (old: number) => old **= 2,
+                1: (old: number) => old += 10,
+            },
+        });
+        assertEquals(await enhanced.read("key"), 25);
+    });
+
+    it("should not migrate up-to-date values", async () => {
+        const storage = {
+            read: spy((_key: string) => ({ __d: 42, __v: 12 })),
+            write: spy((_key: string, _value: { __d: number }) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({
+            storage,
+            migrations: {
+                3: (old: number) => old *= 2,
+                12: (old: number) => old **= 2,
+                1: (old: number) => old += 10,
+            },
+        });
+        assertEquals(await enhanced.read("key"), 42);
+    });
+
+    it("should handle missing migrations", async () => {
+        const storage = {
+            read: spy((_key: string) => ({ __d: 5, __v: 8 })),
+            write: spy((_key: string, _value: { __d: number }) => {}),
+            delete: spy((_key: string) => {}),
+        };
+        const enhanced = enhanceStorage({
+            storage,
+            migrations: {
+                3: (old: number) => old *= 2,
+                12: (old: number) => old **= 2,
+                1: (old: number) => old += 10,
+            },
+        });
+        assertEquals(await enhanced.read("key"), 25);
     });
 });
 
