@@ -472,12 +472,21 @@ function undef(
 
 // === Session migrations
 export interface Enhance<T> {
-    __v?: number;
+    /** Version */
+    v?: number;
+    /** Data */
     __d: T;
+    /** Expiry date */
+    e?: number;
+}
+function isEnhance<T>(value?: T | Enhance<T>): value is Enhance<T> | undefined {
+    return value === undefined ||
+        typeof value === "object" && value !== null && "__d" in value;
 }
 export interface MigrationOptions<T> {
-    migrations?: Migrations;
     storage: StorageAdapter<Enhance<T>>;
+    migrations?: Migrations;
+    timeToLive?: number;
 }
 export interface Migrations {
     // deno-lint-ignore no-explicit-any
@@ -487,15 +496,60 @@ export interface Migrations {
 export function enhanceStorage<T>(
     options: MigrationOptions<T>,
 ): StorageAdapter<T> {
-    const { migrations: m, storage } = options;
-    if (m === undefined) {
-        return {
-            read: (k) => Promise.resolve(storage.read(k)).then((v) => v?.__d),
-            write: (k, v) => storage.write(k, { __d: v }),
-            delete: (k) => storage.delete(k),
-        };
+    let { storage, timeToLive, migrations } = options;
+    storage = compatStorage(storage);
+    if (timeToLive !== undefined) {
+        storage = timeoutStorage(storage, timeToLive);
     }
-    const migrations = m;
+    if (migrations !== undefined) {
+        storage = migrationStorage(storage, migrations);
+    }
+    return wrapStorage(storage);
+}
+
+function compatStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+): StorageAdapter<Enhance<T>> {
+    return {
+        read: async (k) => {
+            const v = await storage.read(k);
+            return isEnhance(v) ? v : { __d: v };
+        },
+        write: (k, v) => storage.write(k, v),
+        delete: (k) => storage.delete(k),
+    };
+}
+
+function timeoutStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+    timeToLive: number,
+): StorageAdapter<Enhance<T>> {
+    const ttlStorage: StorageAdapter<Enhance<T>> = {
+        read: async (k) => {
+            const value = await storage.read(k);
+            if (value === undefined) return undefined;
+            if (value.e === undefined) {
+                await ttlStorage.write(k, value);
+                return value;
+            }
+            if (value.e < Date.now()) {
+                await ttlStorage.delete(k);
+                return undefined;
+            }
+            return value;
+        },
+        write: async (k, v) => {
+            v.e = addExpiryDate(v, timeToLive).expires;
+            await storage.write(k, v);
+        },
+        delete: (k) => storage.delete(k),
+    };
+    return ttlStorage;
+}
+function migrationStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+    migrations: Migrations,
+): StorageAdapter<Enhance<T>> {
     const versions = Object.keys(migrations)
         .map((v) => parseInt(v))
         .sort((a, b) => a - b);
@@ -513,21 +567,25 @@ export function enhanceStorage<T>(
         return i;
         // return versions.findLastIndex((v) => v < current)
     }
-    function migrate(old: T | Enhance<T>): T {
-        let { __d: value, __v: current = earliest - 1 } =
-            typeof old === "object" && old !== null && "__d" in old
-                ? old
-                : { __d: old };
-        let i = 1 + (index.get(current) ?? nextAfter(current));
-        for (; i < count; i++) value = migrations[versions[i]](value);
-        return value;
-    }
     return {
         read: async (k) => {
-            const value = await storage.read(k);
-            return value === undefined ? undefined : migrate(value);
+            const val = await storage.read(k);
+            if (val === undefined) return val;
+            let { __d: value, v: current = earliest - 1 } = val;
+            let i = 1 + (index.get(current) ?? nextAfter(current));
+            for (; i < count; i++) value = migrations[versions[i]](value);
+            return { ...val, v: latest, __d: value };
         },
-        write: (k, v) => storage.write(k, { __v: latest, __d: v }),
+        write: (k, v) => storage.write(k, { v: latest, ...v }),
+        delete: (k) => storage.delete(k),
+    };
+}
+function wrapStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+): StorageAdapter<T> {
+    return {
+        read: (k) => Promise.resolve(storage.read(k)).then((v) => v?.__d),
+        write: (k, v) => storage.write(k, { __d: v }),
         delete: (k) => storage.delete(k),
     };
 }
@@ -588,20 +646,19 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     }
 
     write(key: string, value: S) {
-        this.storage.set(key, this.addExpiryDate(value));
-    }
-
-    private addExpiryDate(value: S) {
-        const ttl = this.timeToLive;
-        if (ttl !== undefined && ttl < Infinity) {
-            const now = Date.now();
-            return { session: value, expires: now + ttl };
-        } else {
-            return { session: value };
-        }
+        this.storage.set(key, addExpiryDate(value, this.timeToLive));
     }
 
     delete(key: string) {
         this.storage.delete(key);
+    }
+}
+
+function addExpiryDate<T>(value: T, ttl: number) {
+    if (ttl !== undefined && ttl < Infinity) {
+        const now = Date.now();
+        return { session: value, expires: now + ttl };
+    } else {
+        return { session: value };
     }
 }
