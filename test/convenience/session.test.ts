@@ -1094,7 +1094,7 @@ describe("enhanceStorage", () => {
     it("should support timeouts", async () => {
         const store = enhanceStorage({
             storage: new MemorySessionStorage<Enhance<number>>(),
-            timeToLive: TICK_MS,
+            millisecondsToLive: TICK_MS,
         });
         await store.write("k", 42);
         assertEquals(await store.read("k"), 42);
@@ -1228,7 +1228,7 @@ describe("enhanceStorage", () => {
         const storage = new MemorySessionStorage<Enhance<number>>();
         const enhanced = enhanceStorage({
             storage,
-            timeToLive: TICK_MS,
+            millisecondsToLive: TICK_MS,
             migrations: {
                 3: (old: number) => old *= 2,
                 12: (old: number) => old **= 2,
