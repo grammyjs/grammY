@@ -64,6 +64,24 @@ export interface LazySessionFlavor<S> {
     get session(): MaybePromise<S>;
     set session(session: MaybePromise<S | null | undefined>);
 }
+/**
+ * A lazy multi session flavor is a context flavor that holds a promise of some
+ * session data under every property inside `ctx.session`.
+ *
+ * Lazy multi session middleware will provide these promises lazily on the
+ * context object. Once you access `ctx.session.foo`, the storage will be
+ * queried and the session data becomes available. If you access
+ * `ctx.session.foo` again for the same context object, the cached value will be
+ * used. Check out the
+ * [documentation](https://doc.deno.land/https://deno.land/x/grammy/mod.ts/~/lazySession)
+ * on lazy session middleware to know more, and read the section about lazy
+ * sessions on the
+ * [website](https://grammy.dev/plugins/session.html#lazy-sessions).
+ *
+ * Each property can be queried individually by accessing its respective
+ * property. As a result, you can load only some data from the data storage, and
+ * skip loading the other data.
+ */
 // deno-lint-ignore no-explicit-any
 export type LazyMultiSessionFlavor<S> = S extends Record<string, any> // unknown breaks extends
     ? LazySessionRecord<S>
@@ -138,6 +156,10 @@ export interface SessionOptions<S> {
     storage?: StorageAdapter<S>;
 }
 
+/**
+ * Options for session middleware if multi sessions are used. Specify `"type":
+ * "multi"` in the options to use multi sessions.
+ */
 // deno-lint-ignore no-explicit-any
 export type MultiSessionOptions<S> = S extends Record<string, any> // unknown breaks extends
     ? { type: "multi" } & MultiSessionOptionsRecord<S>
@@ -218,7 +240,6 @@ function strictSingleSession<S, C extends Context>(
         await propSession.finish();
     };
 }
-
 function strictMultiSession<S, C extends Context>(
     options: MultiSessionOptions<S>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
@@ -311,7 +332,6 @@ function lazySingleSession<S, C extends Context>(
         await propSession.finish();
     };
 }
-
 function lazyMultiSession<S, C extends Context>(
     options: MultiSessionOptions<S>,
 ): MiddlewareFn<C & LazyMultiSessionFlavor<S>> {
@@ -340,6 +360,11 @@ function lazyMultiSession<S, C extends Context>(
     };
 }
 
+/**
+ * Internal class that manages a single property on the session. Can be used
+ * both in a strict and a lazy way. Works by using `Object.defineProperty` to
+ * install `O[P]`.
+ */
 class PropertySession<O, P extends keyof O> {
     private key?: string;
     private value: O[P] | undefined;
@@ -471,6 +496,14 @@ function undef(
 }
 
 // === Session migrations
+/**
+ * When enhancing a storage adapter, it needs to be able to store additional
+ * information. It does this by wrapping the actual data inside an object, and
+ * adding more properties to this wrapper.
+ *
+ * This interface defines the additional properties that need to be stored by a
+ * storage adapter that supports enhanced sessions.
+ */
 export interface Enhance<T> {
     /** Version */
     v?: number;
@@ -483,23 +516,62 @@ function isEnhance<T>(value?: T | Enhance<T>): value is Enhance<T> | undefined {
     return value === undefined ||
         typeof value === "object" && value !== null && "__d" in value;
 }
+/** Options for enhanced sessions */
 export interface MigrationOptions<T> {
+    /** The original storage adapter that will be enhanced */
     storage: StorageAdapter<Enhance<T>>;
+    /**
+     * A set of session migrations, defined as an object mapping from version
+     * numbers to migration functions that transform data to the respective
+     * version.
+     */
     migrations?: Migrations;
-    timeToLive?: number;
+    /**
+     * Number of milliseconds after the last write operation until the session
+     * data expires.
+     */
+    millisecondsToLive?: number;
 }
+/**
+ * A mapping from version numbers to session migration functions. Each entry in
+ * this object has a version number as a key, and a function as a value.
+ *
+ * For a key `n`, the respective value should be a function that takes the
+ * previous session data and migrates it to conform with the data that is used
+ * by version `n`. The previous session data is defined by the next key less
+ * than `n`, such as `n-1`. Versions don't have to be integers, nor do all
+ * versions have to be adjacent. For example, you can use `[1, 1.5, 4]` as
+ * versions. If `n` is the lowest value in the set of keys, the function stored
+ * for `n` can be used to migrate session data that was stored before migrations
+ * were used.
+ */
 export interface Migrations {
     // deno-lint-ignore no-explicit-any
     [version: number]: (old: any) => any;
 }
 
+/**
+ * You can use this function to transform an existing storage adapter, and add
+ * more features to it. Currently, you can add session migrations and expiry
+ * dates.
+ *
+ * You can use this function like so:
+ * ```ts
+ * const storage = ... // define your storage adapter
+ * const enhanced = enhanceStorage({ storage, millisecondsToLive: 500 })
+ * bot.use(session({ storage: enhanced }))
+ * ```
+ *
+ * @param options Session enhancing options
+ * @returns The enhanced storage adapter
+ */
 export function enhanceStorage<T>(
     options: MigrationOptions<T>,
 ): StorageAdapter<T> {
-    let { storage, timeToLive, migrations } = options;
+    let { storage, millisecondsToLive, migrations } = options;
     storage = compatStorage(storage);
-    if (timeToLive !== undefined) {
-        storage = timeoutStorage(storage, timeToLive);
+    if (millisecondsToLive !== undefined) {
+        storage = timeoutStorage(storage, millisecondsToLive);
     }
     if (migrations !== undefined) {
         storage = migrationStorage(storage, migrations);
@@ -522,7 +594,7 @@ function compatStorage<T>(
 
 function timeoutStorage<T>(
     storage: StorageAdapter<Enhance<T>>,
-    timeToLive: number,
+    millisecondsToLive: number,
 ): StorageAdapter<Enhance<T>> {
     const ttlStorage: StorageAdapter<Enhance<T>> = {
         read: async (k) => {
@@ -539,7 +611,7 @@ function timeoutStorage<T>(
             return value;
         },
         write: async (k, v) => {
-            v.e = addExpiryDate(v, timeToLive).expires;
+            v.e = addExpiryDate(v, millisecondsToLive).expires;
             await storage.write(k, v);
         },
         delete: (k) => storage.delete(k),
