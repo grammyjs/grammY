@@ -1,7 +1,7 @@
 import {
     lazySession,
     type LazySessionFlavor,
-    type MemorySessionStorage,
+    MemorySessionStorage,
     session,
     type SessionFlavor,
 } from "../../src/convenience/session.ts";
