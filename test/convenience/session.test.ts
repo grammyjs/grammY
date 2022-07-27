@@ -1,4 +1,10 @@
-import { session, type SessionFlavor } from "../../src/convenience/session.ts";
+import {
+    lazySession,
+    type LazySessionFlavor,
+    type MemorySessionStorage,
+    session,
+    type SessionFlavor,
+} from "../../src/convenience/session.ts";
 import { Composer, type Context, type MiddlewareFn } from "../../src/mod.ts";
 import {
     assert,
