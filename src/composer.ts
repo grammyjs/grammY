@@ -804,20 +804,68 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
 }
 
 // === Filtered context middleware types
+/**
+ * Type of the middleware that can be passed to `bot.hears`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.hears` in a different place. For instance, this allows for more modular
+ * code where handlers are defined in separate files.
+ */
 export type HearsMiddleware<C extends Context> = Middleware<
     HearsContext<C>
 >;
+/**
+ * Type of the middleware that can be passed to `bot.command`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.command` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
 export type CommandMiddleware<C extends Context> = Middleware<
     CommandContext<C>
 >;
+/**
+ * Type of the middleware that can be passed to `bot.callbackQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.callbackQuery` in a different plac For instance, this allows for more
+ * modular code where handlers are defined in separate files.e.
+ */
 export type CallbackQueryMiddleware<C extends Context> = Middleware<
     CallbackQueryContext<C>
 >;
+/**
+ * Type of the middleware that can be passed to `bot.gameQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.gameQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
 export type GameQueryMiddleware<C extends Context> = Middleware<
     GameQueryContext<C>
 >;
+/**
+ * Type of the middleware that can be passed to `bot.inlineQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.inlineQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
 export type InlineQueryMiddleware<C extends Context> = Middleware<
     InlineQueryContext<C>
 >;
+/**
+ * Type of the middleware that can be passed to `bot.chatType`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.chatType` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
 export type ChatTypeMiddleware<C extends Context, T extends Chat["type"]> =
     Middleware<ChatTypeContext<C, T>>;

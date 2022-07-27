@@ -1927,10 +1927,30 @@ function orThrow<T>(value: T | undefined, method: string): T {
 }
 
 // === Filtered context types
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.hears`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * `bot.hears` does it. This allows you to annotate context objects in
+ * middleware that is not directly passed to `bot.hears`, hence not inferring
+ * the correct type automatically. That way, handlers can be defined in separate
+ * files and still have the correct types.
+ */
 export type HearsContext<C extends Context> = Filter<
     NarrowMatch<C, string | RegExpMatchArray>,
     ":text" | ":caption"
 >;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.command`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * `bot.command` does it. This allows you to annotate context objects in
+ * middleware that is not directly passed to `bot.command`, hence not inferring
+ * the correct type automatically. That way, handlers can be defined in separate
+ * files and still have the correct types.
+ */
 export type CommandContext<C extends Context> = Filter<
     NarrowMatch<C, string>,
     ":entities:bot_command"
@@ -1938,18 +1958,58 @@ export type CommandContext<C extends Context> = Filter<
 type NarrowMatch<C extends Context, T extends C["match"]> = {
     [K in keyof C]: K extends "match" ? (T extends C[K] ? T : never) : C[K];
 };
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.callbackQuery`.
+ *
+ * This helper type can be used to annotate narrow down context objects the same
+ * way `bot.callbackQuery` does it. This allows you to how context objects in
+ * middleware that is not directly passed to `bot.callbackQuery`, hence not
+ * inferring the correct type automatically. That way, handlers can be defined
+ * in separate files and still have the correct types.
+ */
 export type CallbackQueryContext<C extends Context> = Filter<
     C,
     "callback_query:data"
 >;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.gameQuery`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * `bot.gameQuery` does it. This allows you to annotate context objects in
+ * middleware that is not directly passed to `bot.gameQuery`, hence not
+ * inferring the correct type automatically. That way, handlers can be defined
+ * in separate files and still have the correct types.
+ */
 export type GameQueryContext<C extends Context> = Filter<
     C,
     "callback_query:game_short_name"
 >;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.inlineQuery`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * annotate `bot.inlineQuery` does it. This allows you to context objects in
+ * middleware that is not directly passed to `bot.inlineQuery`, hence not
+ * inferring the correct type automatically. That way, handlers can be defined
+ * in separate files and still have the correct types.
+ */
 export type InlineQueryContext<C extends Context> = Filter<
     C,
     "inline_query"
 >;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.chatType`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * `bot.chatType` does it. This allows you to annotate context objects in
+ * middleware that is not directly passed to `bot.chatType`, hence not inferring
+ * the correct type automatically. That way, handlers can be defined in separate
+ * files and still have the correct types.
+ */
 export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & C
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
