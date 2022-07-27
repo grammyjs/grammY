@@ -15,11 +15,11 @@ import {
  *   .text('C').text('D')
  *
  * // Now you can either pass it directly:
- * ctx.reply('Here is your custom keyboard!', {
+ * await ctx.reply('Here is your custom keyboard!', {
  *   reply_markup: keyboard
  * })
  * // Or if you need to specify more options in `reply_markup`:
- * ctx.reply('Here is your custom keyboard!', {
+ * await ctx.reply('Here is your custom keyboard!', {
  *   reply_markup: {
  *     keyboard: keyboard.build(), // note the `build` call
  *     one_time_keyboard: true,
@@ -212,7 +212,7 @@ export class Keyboard {
  *   .url('Telegram', 'telegram.org')
  *
  * // Send the keyboard:
- * ctx.reply('Here is your inline keyboard!', {
+ * await ctx.reply('Here is your inline keyboard!', {
  *   reply_markup: keyboard
  * })
  * ```
