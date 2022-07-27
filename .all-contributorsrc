@@ -435,7 +435,8 @@
         "review",
         "doc",
         "ideas",
-        "infra"
+        "infra",
+        "tool"
       ]
     },
     {
@@ -674,7 +675,8 @@
       "profile": "http://roz.ninja",
       "contributions": [
         "bug",
-        "code"
+        "code",
+        "review"
       ]
     },
     {
