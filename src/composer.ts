@@ -392,11 +392,12 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
             set.add(cmd);
         });
-        return this.on(":entities:bot_command").filter(
+        return this.on("::bot_command").filter(
             (ctx): ctx is CommandContext<C> => {
                 const msg = ctx.message ?? ctx.channelPost;
-                const txt = msg.text;
-                return msg.entities.some((e) => {
+                const txt = msg.text ?? msg.caption;
+                const entities = msg.entities ?? msg.caption_entities;
+                return entities.some((e) => {
                     if (e.type !== "bot_command") return false;
                     if (e.offset !== 0) return false;
                     const cmd = txt.substring(1, e.length);
