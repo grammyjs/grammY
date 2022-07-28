@@ -20,6 +20,7 @@ import {
     type UserFromGetMe,
 } from "./platform.deno.ts";
 
+// === Util types
 export type MaybeArray<T> = T | T[];
 // deno-lint-ignore ban-types
 export type StringWithSuggestions<S extends string> = (string & {}) | S; // permits `string` but gives hints
@@ -37,27 +38,76 @@ export type AliasProps<U> = {
 };
 type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
 
+// === Context probing logic
 interface StaticHas {
+    /**
+     * Generates a predicate function that can test context objects for matching
+     * the given filter query. This uses the same logic as `bot.on`.
+     *
+     * @param filter The filter query to check
+     */
     query<Q extends FilterQuery>(
         filter: Q | Q[],
     ): <C extends Context>(ctx: C) => ctx is Filter<C, Q>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing the given text, or for the text to match the given regular
+     * expression. This uses the same logic as `bot.hears`.
+     *
+     * @param trigger The string or regex to match
+     */
     text(
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is HearsContext<C>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing a command. This uses the same logic as `bot.command`.
+     *
+     * @param command The command to match
+     */
     command<S extends string>(
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * belonging to a chat with the given chat type. This uses the same logic as
+     * `bot.chatType`.
+     *
+     * @param chatType The chat type to match
+     */
     chatType<T extends Chat["type"]>(
         chatType: MaybeArray<T>,
     ): <C extends Context>(ctx: C) => ctx is ChatTypeContext<C, T>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing the given callback query, or for the callback query data to
+     * match the given regular expression. This uses the same logic as
+     * `bot.callbackQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is CallbackQueryContext<C>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing the given game query, or for the game name to match the given
+     * regular expression. This uses the same logic as `bot.gameQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
     gameQuery(
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is GameQueryContext<C>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing the given inline query, or for the inline query to match the
+     * given regular expression. This uses the same logic as `bot.inlineQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C>;
@@ -145,6 +195,7 @@ const checker: StaticHas = {
     },
 };
 
+// === Context class
 /**
  * When your bot receives a message, Telegram sends an update object to your
  * bot. The update contains information about the chat, the user, and of course
@@ -334,13 +385,51 @@ export class Context implements RenamedUpdate {
 
     // PROBING SHORTCUTS
 
+    /**
+     * `Context.has` is an object that contains a number of useful functions for
+     * probing context objects. Each of these functions can generate a predicate
+     * function, to which you can pass context objects in order to check if a
+     * condition holds for the respective context object.
+     *
+     * For example, you can call `Context.has.query(":text")` to generate a
+     * predicate function that tests context objects for containing text:
+     * ```ts
+     * const hasText = Context.has.query(":text");
+     *
+     * if (hasText(ctx0)) {} // `ctx0` matches the filter query `:text`
+     * if (hasText(ctx1)) {} // `ctx1` matches the filter query `:text`
+     * if (hasText(ctx2)) {} // `ctx2` matches the filter query `:text`
+     * ```
+     * These predicate funtions are used internally by the has-methods that are
+     * installed on every context object. This means that calling
+     * `ctx.has(":text")` is equivalent to `Context.has.query(":text")(ctx)`.
+     */
     static has = checker;
-    hasQuery<Q extends FilterQuery>(filter: Q | Q[]): this is Filter<this, Q> {
+    /**
+     * Returns `true` if this context object matches the given filter query, and
+     * `false` otherwise. This uses the same logic as `bot.on`.
+     *
+     * @param filter The filter query to check
+     */
+    has<Q extends FilterQuery>(filter: Q | Q[]): this is Filter<this, Q> {
         return Context.has.query(filter)(this);
     }
+    /**
+     * Returns `true` if this context object contains the given text, or if it
+     * contains text that matches the given regular expression. It returns
+     * `false` otherwise. This uses the same logic as `bot.hears`.
+     *
+     * @param trigger The string or regex to match
+     */
     hasText(trigger: MaybeArray<string | RegExp>): this is HearsContext<this> {
         return Context.has.text(trigger)(this);
     }
+    /**
+     * Returns `true` if this context object contains the given command, and
+     * `false` otherwise. This uses the same logic as `bot.command`.
+     *
+     * @param command The command to match
+     */
     hasCommand<S extends string>(
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
@@ -348,21 +437,50 @@ export class Context implements RenamedUpdate {
     ): this is CommandContext<this> {
         return Context.has.command(command)(this);
     }
+    /**
+     * Returns `true` if this context object belongs to a chat with the given
+     * chat type, and `false` otherwise. This uses the same logic as
+     * `bot.chatType`.
+     *
+     * @param chatType The chat type to match
+     */
     hasChatType<T extends Chat["type"]>(
         chatType: MaybeArray<T>,
     ): this is ChatTypeContext<this, T> {
         return Context.has.chatType(chatType)(this);
     }
+    /**
+     * Returns `true` if this context object contains the given callback query,
+     * or if the contained callback query data matches the given regular
+     * expression. It returns `false` otherwise. This uses the same logic as
+     * `bot.callbackQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
     hasCallbackQuery(
         trigger: MaybeArray<string | RegExp>,
     ): this is CallbackQueryContext<this> {
         return Context.has.callbackQuery(trigger)(this);
     }
+    /**
+     * Returns `true` if this context object contains the given game query, or
+     * if the contained game query matches the given regular expression. It
+     * returns `false` otherwise. This uses the same logic as `bot.gameQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
     hasGameQuery(
         trigger: MaybeArray<string | RegExp>,
     ): this is GameQueryContext<this> {
         return Context.has.gameQuery(trigger)(this);
     }
+    /**
+     * Returns `true` if this context object contains the given inline query, or
+     * if the contained inline query matches the given regular expression. It
+     * returns `false` otherwise. This uses the same logic as `bot.inlineQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
     hasInlineQuery(
         trigger: MaybeArray<string | RegExp>,
     ): this is InlineQueryContext<this> {
@@ -1919,13 +2037,6 @@ export class Context implements RenamedUpdate {
     }
 }
 
-function orThrow<T>(value: T | undefined, method: string): T {
-    if (value === undefined) {
-        throw new Error(`Missing information for API call to ${method}`);
-    }
-    return value;
-}
-
 // === Filtered context types
 /**
  * Type of the context object that is available inside the handlers for
@@ -2036,6 +2147,13 @@ interface ChatType<T extends Chat["type"]> {
 }
 
 // === Util functions
+function orThrow<T>(value: T | undefined, method: string): T {
+    if (value === undefined) {
+        throw new Error(`Missing information for API call to ${method}`);
+    }
+    return value;
+}
+
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map((t) =>
         typeof t === "string"
