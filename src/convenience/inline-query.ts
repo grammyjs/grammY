@@ -30,6 +30,33 @@ type QueryResult<
     Result extends InlineQueryResult
 > = Cached extends true ? WithoutType<CachedResult> : WithoutType<Result>;
 
+/**
+ * Use this class to simply building inline query result objects.
+ *
+ * ```ts
+ * const queries = new InlineQueryResultBuilder()
+ *    .article({
+ *        id: "article-id-00",
+ *        title: "Article Title 00",
+ *        input_message_content: {
+ *            message_text: "Some Input Message Content",
+ *        },
+ *    })
+ *    .voice<true>({
+ *        id: "voice-cached-id-00",
+ *        title: "Voice Cached Title 00",
+ *        voice_file_id: "voice-cached-file-id-00",
+ *    })
+ *    .voiceCache({
+ *        id: "voice-cached-id-01",
+ *        title: "Voice Cached Title 01",
+ *        voice_file_id: "voice-cached-file-id-01",
+ *    })
+ *    .build()
+ * ```
+ *
+ * Be sure to check the [documentation](https://core.telegram.org/bots/api#inlinequeryresult) on inline query result in grammY.
+ */
 export class InlineQueryResultBuilder {
     constructor(
         private readonly inline_query_results: Array<InlineQueryResult> = []
@@ -207,3 +234,22 @@ export class InlineQueryResultBuilder {
         return this.voice<true>(options);
     }
 }
+
+const queries = new InlineQueryResultBuilder()
+    .article({
+        id: "article-id-00",
+        title: "Article Title 00",
+        input_message_content: {
+            message_text: "Some Input Message Content",
+        },
+    })
+    .voice<true>({
+        id: "voice-cached-id-00",
+        title: "Voice Cached Title 00",
+        voice_file_id: "voice-cached-file-id-00",
+    })
+    .voiceCache({
+        id: "voice-cached-id-01",
+        title: "Voice Cached Title 01",
+        voice_file_id: "voice-cached-file-id-01",
+    });
