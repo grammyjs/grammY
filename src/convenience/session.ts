@@ -694,7 +694,7 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
      *
      * @param timeToLive TTL in milliseconds, default is `Infinity`
      */
-    constructor(private readonly timeToLive = Infinity) {}
+    constructor(private readonly timeToLive?: number) {}
 
     read(key: string) {
         const value = this.storage.get(key);
@@ -726,7 +726,7 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     }
 }
 
-function addExpiryDate<T>(value: T, ttl: number) {
+function addExpiryDate<T>(value: T, ttl?: number) {
     if (ttl !== undefined && ttl < Infinity) {
         const now = Date.now();
         return { session: value, expires: now + ttl };
