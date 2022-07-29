@@ -310,9 +310,9 @@ describe("Context", () => {
         const ctx = new Context(update, api, me);
 
         assert(Context.has.query(":text")(ctx));
-        assert(ctx.hasQuery(":text"));
+        assert(ctx.has(":text"));
         assertFalse(Context.has.query(":photo")(ctx));
-        assertFalse(ctx.hasQuery(":photo"));
+        assertFalse(ctx.has(":photo"));
     });
 
     it("should be able to check for text", () => {
