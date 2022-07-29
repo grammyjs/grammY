@@ -20,15 +20,22 @@ import {
     type InlineQueryResultVideo,
     type InlineQueryResultCachedSticker,
     type InlineQueryResultCachedVoice,
-} from "../platform.deno.ts";
+} from "../../platform.deno.ts";
 
 type WithoutType<T extends InlineQueryResult> = Omit<T, "type">;
 
+export enum UseCache {
+    No,
+    Yes,
+}
+
 type QueryResult<
-    Cached extends boolean,
+    Cached extends UseCache,
     CachedResult extends InlineQueryResult,
     Result extends InlineQueryResult
-> = Cached extends true ? WithoutType<CachedResult> : WithoutType<Result>;
+> = Cached extends UseCache.Yes
+    ? WithoutType<CachedResult>
+    : WithoutType<Result>;
 
 /**
  * Use this class to simply building inline query result objects.
@@ -79,7 +86,7 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    audio<Cached extends boolean = false>(
+    audio<Cached extends string>(
         options: QueryResult<
             Cached,
             InlineQueryResultCachedAudio,
@@ -107,7 +114,7 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    document<Cached extends boolean = false>(
+    document<Cached extends UseCache = UseCache.No>(
         options: QueryResult<
             Cached,
             InlineQueryResultCachedDocument,
@@ -120,10 +127,6 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    documentCache(options: WithoutType<InlineQueryResultCachedDocument>) {
-        return this.document<true>(options);
-    }
-
     game(options: WithoutType<InlineQueryResultGame>) {
         return this.add({
             type: "game",
@@ -131,7 +134,7 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    gif<Cached extends boolean = false>(
+    gif<Cached extends UseCache = UseCache.No>(
         options: QueryResult<
             Cached,
             InlineQueryResultCachedGif,
@@ -144,10 +147,6 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    gifCache(options: WithoutType<InlineQueryResultCachedGif>) {
-        return this.gif<true>(options);
-    }
-
     location(options: WithoutType<InlineQueryResultLocation>) {
         return this.add({
             type: "location",
@@ -155,7 +154,7 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    mpeg4gif<Cached extends boolean = false>(
+    mpeg4gif<Cached extends UseCache = UseCache.No>(
         options: QueryResult<
             Cached,
             InlineQueryResultCachedMpeg4Gif,
@@ -168,11 +167,7 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    mpeg4gifCache(options: WithoutType<InlineQueryResultCachedMpeg4Gif>) {
-        return this.mpeg4gif<true>(options);
-    }
-
-    photo<Cached extends boolean = false>(
+    photo<Cached extends UseCache = UseCache.No>(
         options: QueryResult<
             Cached,
             InlineQueryResultCachedPhoto,
@@ -185,15 +180,11 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    photoCache(options: WithoutType<InlineQueryResultCachedPhoto>) {
-        return this.photo<true>(options);
-    }
-
     venue(options: WithoutType<InlineQueryResultVenue>) {
         return this.add({ type: "venue", ...options });
     }
 
-    video<Cached extends boolean = false>(
+    video<Cached extends UseCache = UseCache.No>(
         options: QueryResult<
             Cached,
             InlineQueryResultCachedVideo,
@@ -217,7 +208,7 @@ export class InlineQueryResultBuilder {
         });
     }
 
-    voice<Cached extends boolean = false>(
+    voice<Cached extends UseCache = UseCache.No>(
         options: QueryResult<
             Cached,
             InlineQueryResultCachedVoice,
@@ -229,27 +220,4 @@ export class InlineQueryResultBuilder {
             ...options,
         });
     }
-
-    voiceCache(options: WithoutType<InlineQueryResultCachedVoice>) {
-        return this.voice<true>(options);
-    }
 }
-
-const queries = new InlineQueryResultBuilder()
-    .article({
-        id: "article-id-00",
-        title: "Article Title 00",
-        input_message_content: {
-            message_text: "Some Input Message Content",
-        },
-    })
-    .voice<true>({
-        id: "voice-cached-id-00",
-        title: "Voice Cached Title 00",
-        voice_file_id: "voice-cached-file-id-00",
-    })
-    .voiceCache({
-        id: "voice-cached-id-01",
-        title: "Voice Cached Title 01",
-        voice_file_id: "voice-cached-file-id-01",
-    });
