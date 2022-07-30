@@ -689,6 +689,15 @@
         "plugin",
         "doc"
       ]
+    },
+    {
+      "login": "Ryukaizen",
+      "name": "Ryukaizen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55140313?v=4",
+      "profile": "https://github.com/Ryukaizen",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
