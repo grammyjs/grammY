@@ -179,19 +179,19 @@ const checker: StaticHas = {
             hasCallbackQuery(ctx) && match(ctx, ctx.callbackQuery.data, trg);
     },
     gameQuery(trigger) {
-        const hasCallbackQuery = checker.filterQuery(
+        const hasGameQuery = checker.filterQuery(
             "callback_query:game_short_name",
         );
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is GameQueryContext<C> =>
-            hasCallbackQuery(ctx) &&
+            hasGameQuery(ctx) &&
             match(ctx, ctx.callbackQuery.game_short_name, trg);
     },
     inlineQuery(trigger) {
-        const hasCallbackQuery = checker.filterQuery("inline_query");
+        const hasInlineQuery = checker.filterQuery("inline_query");
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is InlineQueryContext<C> =>
-            hasCallbackQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
+            hasInlineQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
     },
 };
 
