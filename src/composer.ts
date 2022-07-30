@@ -276,7 +276,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
     ): Composer<Filter<C, Q>> {
-        return this.filter(Context.has.query(filter), ...middleware);
+        return this.filter(Context.has.filterQuery(filter), ...middleware);
     }
 
     /**

@@ -309,9 +309,9 @@ describe("Context", () => {
     it("should be able to match filter queries", () => {
         const ctx = new Context(update, api, me);
 
-        assert(Context.has.query(":text")(ctx));
+        assert(Context.has.filterQuery(":text")(ctx));
         assert(ctx.has(":text"));
-        assertFalse(Context.has.query(":photo")(ctx));
+        assertFalse(Context.has.filterQuery(":photo")(ctx));
         assertFalse(ctx.has(":photo"));
     });
 

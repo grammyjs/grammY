@@ -46,7 +46,7 @@ interface StaticHas {
      *
      * @param filter The filter query to check
      */
-    query<Q extends FilterQuery>(
+    filterQuery<Q extends FilterQuery>(
         filter: Q | Q[],
     ): <C extends Context>(ctx: C) => ctx is Filter<C, Q>;
     /**
@@ -113,12 +113,12 @@ interface StaticHas {
     ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C>;
 }
 const checker: StaticHas = {
-    query<Q extends FilterQuery>(filter: Q | Q[]) {
+    filterQuery<Q extends FilterQuery>(filter: Q | Q[]) {
         const pred = matchFilter(filter);
         return <C extends Context>(ctx: C): ctx is Filter<C, Q> => pred(ctx);
     },
     text(trigger) {
-        const hasText = checker.query([":text", ":caption"]);
+        const hasText = checker.filterQuery([":text", ":caption"]);
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is HearsContext<C> => {
             if (!hasText(ctx)) return false;
@@ -128,7 +128,7 @@ const checker: StaticHas = {
         };
     },
     command(command) {
-        const hasEntities = checker.query(":entities:bot_command");
+        const hasEntities = checker.filterQuery(":entities:bot_command");
         const atCommands = new Set<string>();
         const noAtCommands = new Set<string>();
         toArray(command).forEach((cmd) => {
@@ -173,13 +173,13 @@ const checker: StaticHas = {
             ctx.chat?.type !== undefined && set.has(ctx.chat.type);
     },
     callbackQuery(trigger) {
-        const hasCallbackQuery = checker.query("callback_query:data");
+        const hasCallbackQuery = checker.filterQuery("callback_query:data");
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is CallbackQueryContext<C> =>
             hasCallbackQuery(ctx) && match(ctx, ctx.callbackQuery.data, trg);
     },
     gameQuery(trigger) {
-        const hasCallbackQuery = checker.query(
+        const hasCallbackQuery = checker.filterQuery(
             "callback_query:game_short_name",
         );
         const trg = triggerFn(trigger);
@@ -188,7 +188,7 @@ const checker: StaticHas = {
             match(ctx, ctx.callbackQuery.game_short_name, trg);
     },
     inlineQuery(trigger) {
-        const hasCallbackQuery = checker.query("inline_query");
+        const hasCallbackQuery = checker.filterQuery("inline_query");
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is InlineQueryContext<C> =>
             hasCallbackQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
@@ -391,10 +391,10 @@ export class Context implements RenamedUpdate {
      * function, to which you can pass context objects in order to check if a
      * condition holds for the respective context object.
      *
-     * For example, you can call `Context.has.query(":text")` to generate a
-     * predicate function that tests context objects for containing text:
+     * For example, you can call `Context.has.filterQuery(":text")` to generate
+     * a predicate function that tests context objects for containing text:
      * ```ts
-     * const hasText = Context.has.query(":text");
+     * const hasText = Context.has.filterQuery(":text");
      *
      * if (hasText(ctx0)) {} // `ctx0` matches the filter query `:text`
      * if (hasText(ctx1)) {} // `ctx1` matches the filter query `:text`
@@ -402,7 +402,8 @@ export class Context implements RenamedUpdate {
      * ```
      * These predicate funtions are used internally by the has-methods that are
      * installed on every context object. This means that calling
-     * `ctx.has(":text")` is equivalent to `Context.has.query(":text")(ctx)`.
+     * `ctx.has(":text")` is equivalent to
+     * `Context.has.filterQuery(":text")(ctx)`.
      */
     static has = checker;
     /**
@@ -412,7 +413,7 @@ export class Context implements RenamedUpdate {
      * @param filter The filter query to check
      */
     has<Q extends FilterQuery>(filter: Q | Q[]): this is Filter<this, Q> {
-        return Context.has.query(filter)(this);
+        return Context.has.filterQuery(filter)(this);
     }
     /**
      * Returns `true` if this context object contains the given text, or if it
