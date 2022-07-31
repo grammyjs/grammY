@@ -1,4 +1,4 @@
-import { Bot } from "../src/mod.ts";
+import { Bot } from "../src/bot.ts";
 import {
     assertEquals,
     assertThrows,

@@ -1,13 +1,11 @@
 import {
-    Composer,
-    type Context,
     lazySession,
     type LazySessionFlavor,
     MemorySessionStorage,
-    type MiddlewareFn,
     session,
     type SessionFlavor,
-} from "../../src/mod.ts";
+} from "../../src/convenience/session.ts";
+import { Composer, type Context, type MiddlewareFn } from "../../src/mod.ts";
 import {
     assert,
     assertEquals,

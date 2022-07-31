@@ -1,4 +1,5 @@
-import { type Context, type FilterQuery, matchFilter } from "../src/mod.ts";
+import { type FilterQuery, matchFilter } from "../src/mod.ts";
+import { type Context } from "../src/mod.ts";
 import {
     assert,
     assertThrows,
