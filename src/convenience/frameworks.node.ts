@@ -1,8 +1,9 @@
 // deno-lint-ignore-file no-explicit-any
-import { adapters as sharedAdapters } from "./frameworks.shared.ts";
+import {
+    adapters as sharedAdapters,
+    SECRET_HEADER,
+} from "./frameworks.shared.ts";
 import { type IncomingMessage, type ServerResponse } from "http";
-
-const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 
 /** Node.js native 'http' and 'https' modules */
 const http = (req: IncomingMessage, res: ServerResponse) => {

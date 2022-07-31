@@ -1,7 +1,9 @@
 // deno-lint-ignore-file no-explicit-any
-import { adapters as sharedAdapters } from "./frameworks.shared.ts";
 
-const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
+import {
+    adapters as sharedAdapters,
+    SECRET_HEADER,
+} from "./frameworks.shared.ts";
 
 /** std/http web server */
 const stdHttp = (req: Request) => {

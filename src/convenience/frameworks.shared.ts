@@ -1,3 +1,7 @@
+// deno-lint-ignore-file no-explicit-any
+
+export const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
+
 /** express web framework */
 const express = (req: any, res: any) => ({
     update: Promise.resolve(req.body),
