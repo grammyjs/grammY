@@ -1,16 +1,16 @@
 import {
-    CallbackQueryContext,
-    ChatTypeContext,
-    CommandContext,
+    type CallbackQueryContext,
+    type ChatTypeContext,
+    type CommandContext,
     Context,
-    GameQueryContext,
-    HearsContext,
-    InlineQueryContext,
-    MaybeArray,
-    StringWithSuggestions,
+    type GameQueryContext,
+    type HearsContext,
+    type InlineQueryContext,
+    type MaybeArray,
+    type StringWithSuggestions,
 } from "./context.ts";
 import { Filter, FilterQuery } from "./filter.ts";
-import { Chat } from "./platform.deno.ts";
+import { type Chat } from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 

@@ -1,6 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
 import { type Bot } from "../bot.ts";
-import { debug as d, type Update } from "../platform.deno.ts";
+import { debug as d } from "../platform.deno.ts";
+import { type Update } from "../types.ts";
 import { type WebhookReplyEnvelope } from "../core/client.ts";
 import { type Context } from "../context.ts";
 import {

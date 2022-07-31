@@ -18,7 +18,7 @@ import {
     type Update,
     type User,
     type UserFromGetMe,
-} from "./platform.deno.ts";
+} from "./types.ts";
 
 // === Util types
 export type MaybeArray<T> = T | T[];
