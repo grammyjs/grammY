@@ -1,6 +1,6 @@
 import { type AliasProps, type Context } from "./context.ts";
 import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
-import { type Chat } from "./platform.deno.ts";
+import { type Chat } from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 type MaybeArray<T> = T | T[];

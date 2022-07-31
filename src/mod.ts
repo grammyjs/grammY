@@ -7,7 +7,7 @@ export {
     type PollingOptions,
 } from "./bot.ts";
 
-export { InputFile } from "./platform.deno.ts";
+export { InputFile } from "./types.ts";
 
 export { Context } from "./context.ts";
 

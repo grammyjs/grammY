@@ -1,21 +1,17 @@
 import { createRawApi, type TransformableApi } from "../../src/core/client.ts";
-import { type ApiResponse } from "../../src/platform.deno.ts";
+import { type ApiResponse } from "../../src/types.ts";
 import { GrammyError } from "../../src/mod.ts";
 import {
     assertEquals,
     assertRejects,
-} from "https://deno.land/std@0.147.0/testing/asserts.ts";
-import {
-    spy,
-    type Stub,
-    stub,
-} from "https://deno.land/std@0.147.0/testing/mock.ts";
+} from "https://deno.land/std@0.148.0/testing/asserts.ts";
+import { spy, Stub, stub } from "https://deno.land/std@0.148.0/testing/mock.ts";
 import {
     afterEach,
     beforeEach,
     describe,
     it,
-} from "https://deno.land/std@0.147.0/testing/bdd.ts";
+} from "https://deno.land/std@0.148.0/testing/bdd.ts";
 
 const token = "secret-token";
 

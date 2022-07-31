@@ -17,7 +17,7 @@ import {
     type Update,
     type User,
     type UserFromGetMe,
-} from "./platform.deno.ts";
+} from "./types.ts";
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
     RawApi,
