@@ -591,7 +591,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1641362?v=4",
       "profile": "https://rys.pw",
       "contributions": [
-        "doc"
+        "doc",
+        "bug",
+        "review"
       ]
     },
     {
