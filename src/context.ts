@@ -2130,16 +2130,23 @@ export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
-        | "message"
-        | "edited_message"
         | "channel_post"
         | "edited_channel_post"
+        | "message"
+        | "edited_message"
         | "my_chat_member"
         | "chat_member"
         | "chat_join_request",
         T
     >
-    & Partial<Record<"callback_query", ChatTypeRecord<"message", T>>>;
+    & Partial<Record<"callback_query", ChatTypeRecord<"message", T>>>
+    & ConstrainUpdatesByChatType<T>;
+type ConstrainUpdatesByChatType<T extends Chat["type"]> = Record<
+    [T] extends ["channel"] ? "message" | "edited_message"
+        : "channel_post" | "edited_channel_post",
+    undefined
+>;
+
 type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
     Record<K, ChatType<T>>
 >;
