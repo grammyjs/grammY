@@ -3,8 +3,8 @@ import { type Context } from "../src/mod.ts";
 import {
     assert,
     assertThrows,
-} from "https://deno.land/std@0.148.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.148.0/testing/bdd.ts";
+} from "https://deno.land/std@0.150.0/testing/asserts.ts";
+import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
 
 describe("matchFilter", () => {
     it("should reject empty filters", () => {
