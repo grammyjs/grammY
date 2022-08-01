@@ -64,34 +64,6 @@ export interface LazySessionFlavor<S> {
     get session(): MaybePromise<S>;
     set session(session: MaybePromise<S | null | undefined>);
 }
-/**
- * A lazy multi session flavor is a context flavor that holds a promise of some
- * session data under every property inside `ctx.session`.
- *
- * Lazy multi session middleware will provide these promises lazily on the
- * context object. Once you access `ctx.session.foo`, the storage will be
- * queried and the session data becomes available. If you access
- * `ctx.session.foo` again for the same context object, the cached value will be
- * used. Check out the
- * [documentation](https://doc.deno.land/https://deno.land/x/grammy/mod.ts/~/lazySession)
- * on lazy session middleware to know more, and read the section about lazy
- * sessions on the
- * [website](https://grammy.dev/plugins/session.html#lazy-sessions).
- *
- * Each property can be queried individually by accessing its respective
- * property. As a result, you can load only some data from the data storage, and
- * skip loading the other data.
- */
-// deno-lint-ignore no-explicit-any
-export type LazyMultiSessionFlavor<S> = S extends Record<string, any> // unknown breaks extends
-    ? LazySessionRecord<S>
-    : never;
-interface LazySessionRecord<S extends Record<string, unknown>> {
-    get session(): { [K in keyof S]: MaybePromise<S[K]> };
-    set session(
-        session: { [K in keyof S]: MaybePromise<S[K]> } | null | undefined,
-    );
-}
 
 /**
  * A storage adapter is an abstraction that provides read, write, and delete
@@ -301,21 +273,7 @@ function strictMultiSession<S, C extends Context>(
  * @param options Optional configuration to pass to the session middleware
  */
 export function lazySession<S, C extends Context>(
-    options?: SessionOptions<S>,
-): MiddlewareFn<C & LazySessionFlavor<S>>;
-export function lazySession<S, C extends Context>(
-    options?: MultiSessionOptions<S>,
-): MiddlewareFn<C & LazyMultiSessionFlavor<S>>;
-export function lazySession<S>(
-    options: SessionOptions<S> | MultiSessionOptions<S> = {},
-) {
-    return options.type === "multi"
-        ? lazyMultiSession(options)
-        : lazySingleSession(options);
-}
-
-function lazySingleSession<S, C extends Context>(
-    options: SessionOptions<S>,
+    options: SessionOptions<S> = {},
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
     const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
@@ -330,33 +288,6 @@ function lazySingleSession<S, C extends Context>(
         await propSession.init(key, { custom, lazy: true });
         await next(); // no catch: do not write back if middleware throws
         await propSession.finish();
-    };
-}
-function lazyMultiSession<S, C extends Context>(
-    options: MultiSessionOptions<S>,
-): MiddlewareFn<C & LazyMultiSessionFlavor<S>> {
-    const props = Object.keys(options).filter((k) => k !== "type");
-    const defaults = Object.fromEntries(
-        props.map((prop) => [prop, fillDefaults(options[prop])]),
-    );
-    return async (ctx, next) => {
-        ctx.session = {} as S;
-        const propSessions = await Promise.all(props.map(async (prop) => {
-            const { initial, storage, getSessionKey, custom } = defaults[prop];
-            const s = new PropertySession(
-                // @ts-ignore cannot express that the storage works for a concrete prop
-                storage,
-                ctx.session,
-                prop,
-                initial,
-            );
-            const key = await getSessionKey(ctx);
-            await s.init(key, { custom, lazy: true });
-            return s;
-        }));
-        await next(); // no catch: do not write back if middleware throws
-        if (ctx.session == null) propSessions.forEach((s) => s.delete());
-        await Promise.all(propSessions.map((s) => s.finish()));
     };
 }
 
