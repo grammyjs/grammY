@@ -5,6 +5,7 @@ const debug = d("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;
 
+// === Main session plugin
 /**
  * A session flavor is a context flavor that holds session data under
  * `ctx.session`.
@@ -90,6 +91,7 @@ export interface StorageAdapter<T> {
  * Options for session middleware.
  */
 export interface SessionOptions<S> {
+    type?: "single";
     /**
      * **Recommended to use.**
      *
@@ -125,6 +127,19 @@ export interface SessionOptions<S> {
      */
     storage?: StorageAdapter<S>;
 }
+
+/**
+ * Options for session middleware if multi sessions are used. Specify `"type":
+ * "multi"` in the options to use multi sessions.
+ */
+// deno-lint-ignore no-explicit-any
+export type MultiSessionOptions<S> = S extends Record<string, any> // unknown breaks extends
+    ? { type: "multi" } & MultiSessionOptionsRecord<S>
+    : never;
+type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
+    [K in keyof S]: SessionOptions<S[K]>;
+};
+
 /**
  * Session middleware provides a persistent data storage for your bot. You can
  * use it to let your bot remember any data you want, for example the messages
@@ -173,41 +188,55 @@ export interface SessionOptions<S> {
  * @param options Optional configuration to pass to the session middleware
  */
 export function session<S, C extends Context>(
-    options: SessionOptions<S> = {},
+    options: SessionOptions<S> | MultiSessionOptions<S> = {},
 ): MiddlewareFn<C & SessionFlavor<S>> {
-    const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
-    const storage = options.storage ??
-        (debug(
-            "Storing session data in memory, all data will be lost when the bot restarts.",
-        ),
-            new MemorySessionStorage());
+    return options.type === "multi"
+        ? strictMultiSession(options)
+        : strictSingleSession(options);
+}
+
+function strictSingleSession<S, C extends Context>(
+    options: SessionOptions<S>,
+): MiddlewareFn<C & SessionFlavor<S>> {
+    const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
+        const propSession = new PropertySession<SessionFlavor<S>, "session">(
+            storage,
+            ctx,
+            "session",
+            initial,
+        );
         const key = await getSessionKey(ctx);
-        let value = key === undefined
-            ? undefined
-            : (await storage.read(key)) ?? options.initial?.();
-        Object.defineProperty(ctx, "session", {
-            enumerable: true,
-            get() {
-                if (key === undefined) {
-                    const msg = undef("access", getSessionKey);
-                    throw new Error(msg);
-                }
-                return value;
-            },
-            set(v) {
-                if (key === undefined) {
-                    const msg = undef("assign", getSessionKey);
-                    throw new Error(msg);
-                }
-                value = v;
-            },
-        });
+        await propSession.init(key, { custom, lazy: false });
         await next(); // no catch: do not write back if middleware throws
-        if (key !== undefined) {
-            if (value == null) await storage.delete(key);
-            else await storage.write(key, value);
-        }
+        await propSession.finish();
+    };
+}
+function strictMultiSession<S, C extends Context>(
+    options: MultiSessionOptions<S>,
+): MiddlewareFn<C & SessionFlavor<S>> {
+    const props = Object.keys(options).filter((k) => k !== "type");
+    const defaults = Object.fromEntries(
+        props.map((prop) => [prop, fillDefaults(options[prop])]),
+    );
+    return async (ctx, next) => {
+        ctx.session = {} as S;
+        const propSessions = await Promise.all(props.map(async (prop) => {
+            const { initial, storage, getSessionKey, custom } = defaults[prop];
+            const s = new PropertySession(
+                // @ts-ignore cannot express that the storage works for a concrete prop
+                storage,
+                ctx.session,
+                prop,
+                initial,
+            );
+            const key = await getSessionKey(ctx);
+            await s.init(key, { custom, lazy: false });
+            return s;
+        }));
+        await next(); // no catch: do not write back if middleware throws
+        if (ctx.session == null) propSessions.forEach((s) => s.delete());
+        await Promise.all(propSessions.map((s) => s.finish()));
     };
 }
 
@@ -246,70 +275,138 @@ export function session<S, C extends Context>(
 export function lazySession<S, C extends Context>(
     options: SessionOptions<S> = {},
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
-    const getSessionKey = options.getSessionKey ?? defaultGetSessionKey;
-    const storage = options.storage ??
-        (debug(
-            "Storing session data in memory, all data will be lost when the bot restarts.",
-        ),
-            new MemorySessionStorage());
+    const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
+        const propSession = new PropertySession(
+            // @ts-ignore suppress promise nature of values
+            storage,
+            ctx,
+            "session",
+            initial,
+        );
         const key = await getSessionKey(ctx);
-        let value: MaybePromise<S | undefined> = undefined;
-        let promise: Promise<S | undefined> | undefined = undefined;
-        let fetching = false;
-        let read = false;
-        let wrote = false;
+        await propSession.init(key, { custom, lazy: true });
+        await next(); // no catch: do not write back if middleware throws
+        await propSession.finish();
+    };
+}
 
-        async function load() {
-            if (key === undefined) {
-                const msg = undef("access", getSessionKey, { lazy: true });
-                throw new Error(msg);
-            }
-            let v: S | undefined = await storage.read(key);
-            if (!fetching) return value;
-            if (v === undefined) {
-                v = options.initial?.();
-                if (v !== undefined) {
-                    wrote = true;
-                    value = v;
-                }
-            } else {
-                value = v;
-            }
-            return value;
+/**
+ * Internal class that manages a single property on the session. Can be used
+ * both in a strict and a lazy way. Works by using `Object.defineProperty` to
+ * install `O[P]`.
+ */
+class PropertySession<O, P extends keyof O> {
+    private key?: string;
+    private value: O[P] | undefined;
+    private promise: Promise<O[P] | undefined> | undefined;
+
+    private fetching = false;
+    private read = false;
+    private wrote = false;
+
+    constructor(
+        private storage: StorageAdapter<O[P]>,
+        private obj: O,
+        private prop: P,
+        private initial: (() => O[P]) | undefined,
+    ) {}
+
+    /** Performs a read op and stores the result in `this.value` */
+    private load() {
+        if (this.key === undefined) {
+            // No session key provided, cannot load
+            return;
         }
+        if (this.wrote) {
+            // Value was set, no need to load
+            return;
+        }
+        // Perform read op if not cached
+        if (this.promise === undefined) {
+            this.fetching = true;
+            this.promise = Promise.resolve(this.storage.read(this.key))
+                .then((val) => {
+                    this.fetching = false;
+                    // Check for write op in the meantime
+                    if (this.wrote) {
+                        // Discard read op
+                        return this.value;
+                    }
+                    // Store received value in `this.value`
+                    if (val !== undefined) {
+                        this.value = val;
+                        return val;
+                    }
+                    // No value, need to initialize
+                    val = this.initial?.();
+                    if (val !== undefined) {
+                        // Wrote initial value
+                        this.wrote = true;
+                        this.value = val;
+                    }
+                    return val;
+                });
+        }
+        return this.promise;
+    }
 
-        Object.defineProperty(ctx, "session", {
+    async init(
+        key: string | undefined,
+        opts: { custom: boolean; lazy: boolean },
+    ) {
+        this.key = key;
+        if (!opts.lazy) await this.load();
+        Object.defineProperty(this.obj, this.prop, {
             enumerable: true,
-            get() {
-                if (wrote) return value;
-                read = true;
-                if (promise === undefined) {
-                    fetching = true;
-                    promise = load();
-                }
-                return promise;
-            },
-            set(v) {
+            get: () => {
                 if (key === undefined) {
-                    const msg = undef("assign", getSessionKey, { lazy: true });
+                    const msg = undef("access", opts);
                     throw new Error(msg);
                 }
-                wrote = true;
-                fetching = false;
-                value = v;
+                this.read = true;
+                if (!opts.lazy || this.wrote) return this.value;
+                this.load();
+                return this.fetching ? this.promise : this.value;
+            },
+            set: (v) => {
+                if (key === undefined) {
+                    const msg = undef("assign", opts);
+                    throw new Error(msg);
+                }
+                this.wrote = true;
+                this.fetching = false;
+                this.value = v;
             },
         });
-        await next(); // no catch: do not wrote back if middleware throws
-        if (key !== undefined) {
-            if (read) await promise;
-            if (read || wrote) {
-                value = await value;
-                if (value == null) await storage.delete(key);
-                else await storage.write(key, value);
+    }
+
+    delete() {
+        Object.assign(this.obj, { [this.prop]: undefined });
+    }
+
+    async finish() {
+        if (this.key !== undefined) {
+            if (this.read) await this.load();
+            if (this.read || this.wrote) {
+                const value = await this.value;
+                if (value == null) await this.storage.delete(this.key);
+                else await this.storage.write(this.key, value);
             }
         }
-    };
+    }
+}
+
+function fillDefaults<S>(opts: SessionOptions<S> = {}) {
+    let { getSessionKey = defaultGetSessionKey, initial, storage } = opts;
+    if (storage == null) {
+        debug(
+            "Storing session data in memory, all data will be lost when the bot restarts.",
+        );
+        storage = new MemorySessionStorage();
+    }
+    const custom = getSessionKey !== defaultGetSessionKey;
+    return { initial, storage, getSessionKey, custom };
 }
 
 /** Stores session data per chat by default */
@@ -318,18 +415,185 @@ function defaultGetSessionKey(ctx: Context): string | undefined {
 }
 
 /** Returns a useful error message for when the session key is undefined */
-function undef<C extends Context>(
+function undef(
     op: "access" | "assign",
-    getSessionKey: SessionOptions<C>["getSessionKey"],
-    opts: { lazy?: boolean } = {},
+    opts: { custom: boolean; lazy?: boolean },
 ) {
-    const lazy = opts.lazy ?? false;
-    const reason = getSessionKey === defaultGetSessionKey
-        ? "this update does not belong to a chat, so the session key is undefined"
-        : "the custom `getSessionKey` function returned undefined for this update";
+    const { lazy = false, custom } = opts;
+    const reason = custom
+        ? "the custom `getSessionKey` function returned undefined for this update"
+        : "this update does not belong to a chat, so the session key is undefined";
     return `Cannot ${op} ${lazy ? "lazy " : ""}session data because ${reason}!`;
 }
 
+// === Session migrations
+/**
+ * When enhancing a storage adapter, it needs to be able to store additional
+ * information. It does this by wrapping the actual data inside an object, and
+ * adding more properties to this wrapper.
+ *
+ * This interface defines the additional properties that need to be stored by a
+ * storage adapter that supports enhanced sessions.
+ */
+export interface Enhance<T> {
+    /** Version */
+    v?: number;
+    /** Data */
+    __d: T;
+    /** Expiry date */
+    e?: number;
+}
+function isEnhance<T>(value?: T | Enhance<T>): value is Enhance<T> | undefined {
+    return value === undefined ||
+        typeof value === "object" && value !== null && "__d" in value;
+}
+/** Options for enhanced sessions */
+export interface MigrationOptions<T> {
+    /** The original storage adapter that will be enhanced */
+    storage: StorageAdapter<Enhance<T>>;
+    /**
+     * A set of session migrations, defined as an object mapping from version
+     * numbers to migration functions that transform data to the respective
+     * version.
+     */
+    migrations?: Migrations;
+    /**
+     * Number of milliseconds after the last write operation until the session
+     * data expires.
+     */
+    millisecondsToLive?: number;
+}
+/**
+ * A mapping from version numbers to session migration functions. Each entry in
+ * this object has a version number as a key, and a function as a value.
+ *
+ * For a key `n`, the respective value should be a function that takes the
+ * previous session data and migrates it to conform with the data that is used
+ * by version `n`. The previous session data is defined by the next key less
+ * than `n`, such as `n-1`. Versions don't have to be integers, nor do all
+ * versions have to be adjacent. For example, you can use `[1, 1.5, 4]` as
+ * versions. If `n` is the lowest value in the set of keys, the function stored
+ * for `n` can be used to migrate session data that was stored before migrations
+ * were used.
+ */
+export interface Migrations {
+    // deno-lint-ignore no-explicit-any
+    [version: number]: (old: any) => any;
+}
+
+/**
+ * You can use this function to transform an existing storage adapter, and add
+ * more features to it. Currently, you can add session migrations and expiry
+ * dates.
+ *
+ * You can use this function like so:
+ * ```ts
+ * const storage = ... // define your storage adapter
+ * const enhanced = enhanceStorage({ storage, millisecondsToLive: 500 })
+ * bot.use(session({ storage: enhanced }))
+ * ```
+ *
+ * @param options Session enhancing options
+ * @returns The enhanced storage adapter
+ */
+export function enhanceStorage<T>(
+    options: MigrationOptions<T>,
+): StorageAdapter<T> {
+    let { storage, millisecondsToLive, migrations } = options;
+    storage = compatStorage(storage);
+    if (millisecondsToLive !== undefined) {
+        storage = timeoutStorage(storage, millisecondsToLive);
+    }
+    if (migrations !== undefined) {
+        storage = migrationStorage(storage, migrations);
+    }
+    return wrapStorage(storage);
+}
+
+function compatStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+): StorageAdapter<Enhance<T>> {
+    return {
+        read: async (k) => {
+            const v = await storage.read(k);
+            return isEnhance(v) ? v : { __d: v };
+        },
+        write: (k, v) => storage.write(k, v),
+        delete: (k) => storage.delete(k),
+    };
+}
+
+function timeoutStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+    millisecondsToLive: number,
+): StorageAdapter<Enhance<T>> {
+    const ttlStorage: StorageAdapter<Enhance<T>> = {
+        read: async (k) => {
+            const value = await storage.read(k);
+            if (value === undefined) return undefined;
+            if (value.e === undefined) {
+                await ttlStorage.write(k, value);
+                return value;
+            }
+            if (value.e < Date.now()) {
+                await ttlStorage.delete(k);
+                return undefined;
+            }
+            return value;
+        },
+        write: async (k, v) => {
+            v.e = addExpiryDate(v, millisecondsToLive).expires;
+            await storage.write(k, v);
+        },
+        delete: (k) => storage.delete(k),
+    };
+    return ttlStorage;
+}
+function migrationStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+    migrations: Migrations,
+): StorageAdapter<Enhance<T>> {
+    const versions = Object.keys(migrations)
+        .map((v) => parseInt(v))
+        .sort((a, b) => a - b);
+    const count = versions.length;
+    if (count === 0) throw new Error("No migrations given!");
+    const earliest = versions[0];
+    const last = count - 1;
+    const latest = versions[last];
+    const index = new Map<number, number>();
+    versions.forEach((v, i) => index.set(v, i)); // inverse array lookup
+    function nextAfter(current: number) {
+        // TODO: use `findLastIndex` with Node 18
+        let i = last;
+        while (current <= versions[i]) i--;
+        return i;
+        // return versions.findLastIndex((v) => v < current)
+    }
+    return {
+        read: async (k) => {
+            const val = await storage.read(k);
+            if (val === undefined) return val;
+            let { __d: value, v: current = earliest - 1 } = val;
+            let i = 1 + (index.get(current) ?? nextAfter(current));
+            for (; i < count; i++) value = migrations[versions[i]](value);
+            return { ...val, v: latest, __d: value };
+        },
+        write: (k, v) => storage.write(k, { v: latest, ...v }),
+        delete: (k) => storage.delete(k),
+    };
+}
+function wrapStorage<T>(
+    storage: StorageAdapter<Enhance<T>>,
+): StorageAdapter<T> {
+    return {
+        read: (k) => Promise.resolve(storage.read(k)).then((v) => v?.__d),
+        write: (k, v) => storage.write(k, { __d: v }),
+        delete: (k) => storage.delete(k),
+    };
+}
+
+// === Memory storage adapter
 /**
  * The memory session storage is a built-in storage adapter that saves your
  * session data in RAM using a regular JavaScript `Map` object. If you use this
@@ -361,7 +625,7 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
      *
      * @param timeToLive TTL in milliseconds, default is `Infinity`
      */
-    constructor(private readonly timeToLive = Infinity) {}
+    constructor(private readonly timeToLive?: number) {}
 
     read(key: string) {
         const value = this.storage.get(key);
@@ -385,20 +649,19 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     }
 
     write(key: string, value: S) {
-        this.storage.set(key, this.addExpiryDate(value));
-    }
-
-    private addExpiryDate(value: S) {
-        const ttl = this.timeToLive;
-        if (ttl !== undefined && ttl < Infinity) {
-            const now = Date.now();
-            return { session: value, expires: now + ttl };
-        } else {
-            return { session: value };
-        }
+        this.storage.set(key, addExpiryDate(value, this.timeToLive));
     }
 
     delete(key: string) {
         this.storage.delete(key);
+    }
+}
+
+function addExpiryDate<T>(value: T, ttl?: number) {
+    if (ttl !== undefined && ttl < Infinity) {
+        const now = Date.now();
+        return { session: value, expires: now + ttl };
+    } else {
+        return { session: value };
     }
 }

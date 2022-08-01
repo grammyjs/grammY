@@ -56,16 +56,28 @@ There are several areas of contributions, and they have different ways to get yo
 If you just want to build from the newest version of the source code on GitHub, you can directly import from `https://raw.githubusercontent.com/grammyjs/grammY/main/src/mod.ts`.
 (Naturally, you can replace main by another branch name, e.g. in order to test a PR.)
 
+#### Coding
+
 If you want to read or modify grammY's code, you can do the following.
 
 1. Install Deno from <https://deno.land>.
 2. Use <https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno> or a similar extension if you are using a different editor.
 3. Clone this repo.
-4. Run `deno cache src/mod.ts` in the root directory of the repo.
+4. Run `deno task check` in the root directory of the repo.
+   This will download and cache all dependencies and typecheck the complete code base.
 
 You are now ready to work on grammY.
+Before you open a PR, make sure to run `deno task dev` on the Deno codebase.
 
-Before you open a PR, make sure to run `deno test`, `deno fmt` and `deno lint` on the Deno codebase.
+#### Test Coverage
+
+A CI job will determine the test coverage for your changes, and comment them on GitHub.
+If you want to see the code coverage locally, you need to have [LCOV](https://github.com/linux-test-project/lcov) installed (trying installing the `lcov` package).
+This should give you `genhtml`, a tool to display LCOV code coverage.
+
+1. Run `deno task coverage` to generate test coverage files.
+2. Run `deno task report` to generate an HTML report for the coverage.
+3. Point your browser to `./test/coverage/index.html` to view the test coverage.
 
 ### Working on the Core of grammY using Node.js
 
@@ -86,6 +98,7 @@ If you want to read or modify grammY's code, you can do the following.
 2. Install the dependencies via `npm install`.
    This will also compile the project for you.
 3. Use [`npm link`](https://docs.npmjs.com/cli/v7/commands/npm-link) to integrate grammY into your bot project.
+4. After changing the code, you can run `npm run backport` to compile the code.
 
 ### Working on an Official Plugin of grammY
 
