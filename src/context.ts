@@ -2130,10 +2130,10 @@ export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
-        | "channel_post"
-        | "edited_channel_post"
         | "message"
         | "edited_message"
+        | "channel_post"
+        | "edited_channel_post"
         | "my_chat_member"
         | "chat_member"
         | "chat_join_request",
