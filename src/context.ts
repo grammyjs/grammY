@@ -2139,7 +2139,14 @@ type ChatTypeUpdate<T extends Chat["type"]> =
         | "chat_join_request",
         T
     >
-    & Partial<Record<"callback_query", ChatTypeRecord<"message", T>>>;
+    & Partial<Record<"callback_query", ChatTypeRecord<"message", T>>>
+    & ConstrainUpdatesByChatType<T>;
+type ConstrainUpdatesByChatType<T extends Chat["type"]> = Record<
+    [T] extends ["channel"] ? "message" | "edited_message"
+        : "channel_post" | "edited_channel_post",
+    undefined
+>;
+
 type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
     Record<K, ChatType<T>>
 >;
