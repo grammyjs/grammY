@@ -591,7 +591,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1641362?v=4",
       "profile": "https://rys.pw",
       "contributions": [
-        "doc"
+        "doc",
+        "bug",
+        "review"
       ]
     },
     {
@@ -687,6 +689,15 @@
       "contributions": [
         "code",
         "plugin",
+        "doc"
+      ]
+    },
+    {
+      "login": "Ryukaizen",
+      "name": "Ryukaizen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55140313?v=4",
+      "profile": "https://github.com/Ryukaizen",
+      "contributions": [
         "doc"
       ]
     }

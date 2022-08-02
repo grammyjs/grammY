@@ -1,7 +1,7 @@
 {
     "name": "grammy",
     "description": "The Telegram Bot Framework.",
-    "version": "1.9.2",
+    "version": "1.10.0",
     "author": "KnorpelSenf",
     "license": "MIT",
     "engines": {
@@ -18,14 +18,14 @@
         "contribs": "all-contributors"
     },
     "dependencies": {
-        "@grammyjs/types": "^2.8.1",
+        "@grammyjs/types": "^2.8.2",
         "abort-controller": "^3.0.0",
         "debug": "^4.3.4",
         "node-fetch": "^2.6.7"
     },
     "devDependencies": {
         "@types/debug": "^4.1.7",
-        "@types/node": "^12.20.50",
+        "@types/node": "^12.20.55",
         "@types/node-fetch": "^2.6.2",
         "all-contributors-cli": "^6.20.0",
         "deno2node": "^1.4.0"
@@ -35,6 +35,15 @@
     ],
     "main": "./out/mod.js",
     "types": "./out/mod.d.ts",
+    "exports": {
+        "./types": {
+            "types": "./out/types.d.ts"
+        },
+        ".": {
+            "types": "./out/mod.d.ts",
+            "default": "./out/mod.js"
+        }
+    },
     "keywords": [
         "telegram",
         "bot",
