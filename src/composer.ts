@@ -1,10 +1,18 @@
-import { type Context } from "./context.ts";
-import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
+import {
+    type CallbackQueryContext,
+    type ChatTypeContext,
+    type CommandContext,
+    Context,
+    type GameQueryContext,
+    type HearsContext,
+    type InlineQueryContext,
+    type MaybeArray,
+    type StringWithSuggestions,
+} from "./context.ts";
+import { Filter, FilterQuery } from "./filter.ts";
+import { type Chat } from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
-type MaybeArray<T> = T | T[];
-// deno-lint-ignore ban-types
-type StringWithSuggestions<S extends string> = (string & {}) | S; // permits `string` but gives hints
 
 // === Middleware types
 /**
@@ -268,7 +276,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
     ): Composer<Filter<C, Q>> {
-        return this.filter(matchFilter<C, Q>(filter), ...middleware);
+        return this.filter(Context.has.filterQuery(filter), ...middleware);
     }
 
     /**
@@ -304,17 +312,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     hears(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<HearsContext<C>>>
+        ...middleware: Array<HearsMiddleware<C>>
     ): Composer<HearsContext<C>> {
-        const trg = triggerFn(trigger);
-        return this.on([":text", ":caption"]).filter(
-            (ctx): ctx is HearsContext<C> => {
-                const msg = ctx.message ?? ctx.channelPost;
-                const txt = msg.text ?? msg.caption;
-                return match(ctx, txt, trg);
-            },
-            ...middleware,
-        );
+        return this.filter(Context.has.text(trigger), ...middleware);
     }
 
     /**
@@ -376,47 +376,47 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
-        ...middleware: Array<Middleware<CommandContext<C>>>
+        ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
-        const atCommands = new Set<string>();
-        const noAtCommands = new Set<string>();
-        toArray(command).forEach((cmd) => {
-            if (cmd.startsWith("/")) {
-                throw new Error(
-                    `Do not include '/' when registering command handlers (use '${
-                        cmd.substring(1)
-                    }' not '${cmd}')`,
-                );
-            }
-            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
-            set.add(cmd);
-        });
-        return this.on(":entities:bot_command").filter(
-            (ctx): ctx is CommandContext<C> => {
-                const msg = ctx.message ?? ctx.channelPost;
-                const txt = msg.text;
-                return msg.entities.some((e) => {
-                    if (e.type !== "bot_command") return false;
-                    if (e.offset !== 0) return false;
-                    const cmd = txt.substring(1, e.length);
-                    if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                        ctx.match = txt.substring(cmd.length + 1).trimStart();
-                        return true;
-                    }
-                    const index = cmd.indexOf("@");
-                    if (index === -1) return false;
-                    const atTarget = cmd.substring(index + 1);
-                    if (atTarget !== ctx.me.username) return false;
-                    const atCommand = cmd.substring(0, index);
-                    if (noAtCommands.has(atCommand)) {
-                        ctx.match = txt.substring(cmd.length + 1).trimStart();
-                        return true;
-                    }
-                    return false;
-                });
-            },
-            ...middleware,
-        );
+        return this.filter(Context.has.command(command), ...middleware);
+    }
+
+    /**
+     * Registers some middleware for certain chat types only. For example, you
+     * can use this method to only receive updates from private chats. The four
+     * chat types are `"channel"`, `"supergroup"`, `"group"`, and `"private"`.
+     * This is especially useful when combined with other filtering logic. For
+     * example, this is how can you respond to `/start` commands only from
+     * private chats:
+     * ```ts
+     * bot.chatType("private").command("start", ctx => { ... })
+     * ```
+     *
+     * Naturally, you can also use this method on its own.
+     * ```ts
+     * // Private chats only
+     * bot.chatType("private", ctx => { ... });
+     * // Channels only
+     * bot.chatType("channel", ctx => { ... });
+     * ```
+     *
+     * You can pass an array of chat types if you want your middleware to run
+     * for any of several provided chat types.
+     * ```ts
+     * // Groups and supergroups only
+     * bot.chatType(["group", "supergroup"], ctx => { ... });
+     * ```
+     * [Remember](https://grammy.dev/guide/context.html#shortcuts) also that you
+     * can access the chat type via `ctx.chat.type`.
+     *
+     * @param chatType The chat type
+     * @param middleware The middleware to register
+     */
+    chatType<T extends Chat["type"]>(
+        chatType: MaybeArray<T>,
+        ...middleware: Array<Middleware<ChatTypeContext<C, T>>>
+    ): Composer<ChatTypeContext<C, T>> {
+        return this.filter(Context.has.chatType(chatType), ...middleware);
     }
 
     /**
@@ -461,13 +461,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     callbackQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, "callback_query:data">>>
-    ): Composer<Filter<C, "callback_query:data">> {
-        const trg = triggerFn(trigger);
-        return this.on("callback_query:data").filter(
-            (ctx) => match(ctx, ctx.callbackQuery.data, trg),
-            ...middleware,
-        );
+        ...middleware: Array<CallbackQueryMiddleware<C>>
+    ): Composer<CallbackQueryContext<C>> {
+        return this.filter(Context.has.callbackQuery(trigger), ...middleware);
     }
 
     /**
@@ -490,15 +486,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     gameQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<
-            Middleware<Filter<C, "callback_query:game_short_name">>
-        >
-    ): Composer<Filter<C, "callback_query:game_short_name">> {
-        const trg = triggerFn(trigger);
-        return this.on("callback_query:game_short_name").filter(
-            (ctx) => match(ctx, ctx.callbackQuery.game_short_name, trg),
-            ...middleware,
-        );
+        ...middleware: Array<GameQueryMiddleware<C>>
+    ): Composer<GameQueryContext<C>> {
+        return this.filter(Context.has.gameQuery(trigger), ...middleware);
     }
 
     /**
@@ -525,13 +515,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<Middleware<Filter<C, "inline_query">>>
-    ): Composer<Filter<C, "inline_query">> {
-        const trg = triggerFn(trigger);
-        return this.on("inline_query").filter(
-            (ctx) => match(ctx, ctx.inlineQuery.query, trg),
-            ...middleware,
-        );
+        ...middleware: Array<InlineQueryMiddleware<C>>
+    ): Composer<InlineQueryContext<C>> {
+        return this.filter(Context.has.inlineQuery(trigger), ...middleware);
     }
 
     /**
@@ -673,7 +659,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     ): Composer<C> {
         return this.use(async (ctx, next) => {
             const middleware = await middlewareFactory(ctx);
-            const arr = toArray(middleware);
+            const arr = Array.isArray(middleware) ? middleware : [middleware];
             await flatten(new Composer(...arr))(ctx, next);
         });
     }
@@ -817,41 +803,69 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 }
 
-// === Util functions and types
-function triggerFn(trigger: MaybeArray<string | RegExp>) {
-    return toArray(trigger).map((t) =>
-        typeof t === "string"
-            ? (txt: string) => (txt === t ? t : null)
-            : (txt: string) => txt.match(t)
-    );
-}
-
-type HearsContext<C extends Context> = Filter<
-    Omit<C, "match"> & {
-        match: Extract<C["match"], string | RegExpMatchArray>;
-    },
-    ":text" | ":caption"
+// === Filtered context middleware types
+/**
+ * Type of the middleware that can be passed to `bot.hears`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.hears` in a different place. For instance, this allows for more modular
+ * code where handlers are defined in separate files.
+ */
+export type HearsMiddleware<C extends Context> = Middleware<
+    HearsContext<C>
 >;
-type CommandContext<C extends Context> = Filter<
-    Omit<C, "match"> & { match: Extract<C["match"], string> },
-    ":entities:bot_command"
+/**
+ * Type of the middleware that can be passed to `bot.command`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.command` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type CommandMiddleware<C extends Context> = Middleware<
+    CommandContext<C>
 >;
-
-function match<C extends Context>(
-    ctx: C,
-    content: string,
-    triggers: Array<(content: string) => string | RegExpMatchArray | null>,
-): boolean {
-    for (const t of triggers) {
-        const res = t(content);
-        if (res) {
-            ctx.match = res;
-            return true;
-        }
-    }
-    return false;
-}
-
-function toArray<E>(e: MaybeArray<E>): E[] {
-    return Array.isArray(e) ? e : [e];
-}
+/**
+ * Type of the middleware that can be passed to `bot.callbackQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.callbackQuery` in a different plac For instance, this allows for more
+ * modular code where handlers are defined in separate files.e.
+ */
+export type CallbackQueryMiddleware<C extends Context> = Middleware<
+    CallbackQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.gameQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.gameQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type GameQueryMiddleware<C extends Context> = Middleware<
+    GameQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.inlineQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.inlineQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type InlineQueryMiddleware<C extends Context> = Middleware<
+    InlineQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.chatType`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.chatType` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type ChatTypeMiddleware<C extends Context, T extends Chat["type"]> =
+    Middleware<ChatTypeContext<C, T>>;

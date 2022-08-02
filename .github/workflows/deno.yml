@@ -19,7 +19,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Setup repo
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Install dependencies
               run: npm install --ignore-scripts
@@ -31,17 +31,17 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Setup repo
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - uses: denoland/setup-deno@main
               with:
                   deno-version: v1.x
 
             - name: Check Format
-              run: npm run fmt -- --check
+              run: deno fmt --check
 
             - name: Lint
-              run: npm run lint
+              run: deno lint
 
     test:
         runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
@@ -52,14 +52,34 @@ jobs:
 
         steps:
             - name: Setup repo
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - uses: denoland/setup-deno@main
               with:
                   deno-version: v1.x
 
             - name: Cache Dependencies
-              run: npm run cache
+              run: deno cache src/mod.ts
 
             - name: Run Tests
-              run: npm test
+              run: deno task test
+
+    coverage:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup repo
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
+
+            - name: Create coverage files
+              run: deno task coverage
+
+            - name: Collect coverage
+              uses: codecov/codecov-action@v1.0.10 # upload the report on Codecov
+              with:
+                  file: ./coverage.lcov

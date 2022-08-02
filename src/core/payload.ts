@@ -1,4 +1,5 @@
-import { InputFile, itrToStream, toRaw } from "../platform.deno.ts";
+import { InputFile } from "../types.ts";
+import { itrToStream, toRaw } from "../platform.deno.ts";
 
 // === Payload types (JSON vs. form data)
 /**
@@ -9,7 +10,7 @@ import { InputFile, itrToStream, toRaw } from "../platform.deno.ts";
  * @param payload The payload to analyse
  */
 export function requiresFormDataUpload(payload: unknown): boolean {
-    return (
+    return payload instanceof InputFile || (
         typeof payload === "object" &&
         payload !== null &&
         Object.values(payload).some((v) =>

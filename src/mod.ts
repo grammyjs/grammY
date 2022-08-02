@@ -7,18 +7,32 @@ export {
     type PollingOptions,
 } from "./bot.ts";
 
-export { InputFile } from "./platform.deno.ts";
+export { InputFile } from "./types.ts";
 
-export { Context } from "./context.ts";
+export {
+    type CallbackQueryContext,
+    type ChatTypeContext,
+    type CommandContext,
+    Context,
+    type GameQueryContext,
+    type HearsContext,
+    type InlineQueryContext,
+} from "./context.ts";
 
-// Convenience stuff and helpers
+// Convenience stuff, built-in plugins, and helpers
 export * from "./convenience/keyboard.ts";
 export * from "./convenience/session.ts";
 export * from "./convenience/webhook.ts";
 
 // A little more advanced stuff
 export {
+    type CallbackQueryMiddleware,
+    type ChatTypeMiddleware,
+    type CommandMiddleware,
     Composer,
+    type GameQueryMiddleware,
+    type HearsMiddleware,
+    type InlineQueryMiddleware,
     type Middleware,
     type MiddlewareFn,
     type MiddlewareObj,

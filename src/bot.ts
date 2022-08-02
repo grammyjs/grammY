@@ -7,11 +7,8 @@ import {
     type WebhookReplyEnvelope,
 } from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
-import {
-    debug as d,
-    type Update,
-    type UserFromGetMe,
-} from "./platform.deno.ts";
+import { debug as d } from "./platform.deno.ts";
+import { type Update, type UserFromGetMe } from "./types.ts";
 const debug = d("grammy:bot");
 const debugErr = d("grammy:error");
 
@@ -187,7 +184,7 @@ export class Bot<
         this.me = config?.botInfo;
         this.clientConfig = config?.client;
         this.ContextConstructor = config?.ContextConstructor ??
-            (Context as new (
+            (Context as unknown as new (
                 ...args: ConstructorParameters<typeof Context>
             ) => C);
         this.api = new Api(token, this.clientConfig) as A;

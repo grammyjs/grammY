@@ -31,10 +31,10 @@
       ]
     },
     {
-      "login": "Tecardo1",
-      "name": "Tecardo1",
+      "login": "HeeroML",
+      "name": "Heero",
       "avatar_url": "https://avatars.githubusercontent.com/u/42873000?v=4",
-      "profile": "https://github.com/Tecardo1",
+      "profile": "https://github.com/HeeroML",
       "contributions": [
         "plugin",
         "userTesting",
@@ -136,7 +136,8 @@
         "translation",
         "code",
         "ideas",
-        "mentoring"
+        "mentoring",
+        "example"
       ]
     },
     {
@@ -174,7 +175,12 @@
       "contributions": [
         "doc",
         "bug",
-        "ideas"
+        "ideas",
+        "design",
+        "question",
+        "review",
+        "code",
+        "plugin"
       ]
     },
     {
@@ -193,7 +199,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/73625149?v=4",
       "profile": "https://github.com/code-withAshish",
       "contributions": [
-        "doc"
+        "doc",
+        "question"
       ]
     },
     {
@@ -380,7 +387,10 @@
       "profile": "https://blog.limx.dev/",
       "contributions": [
         "doc",
-        "translation"
+        "translation",
+        "code",
+        "plugin",
+        "ideas"
       ]
     },
     {
@@ -423,7 +433,10 @@
         "code",
         "plugin",
         "review",
-        "doc"
+        "doc",
+        "ideas",
+        "infra",
+        "tool"
       ]
     },
     {
@@ -522,7 +535,8 @@
       "profile": "https://github.com/IlyaSemenov",
       "contributions": [
         "ideas",
-        "review"
+        "review",
+        "code"
       ]
     },
     {
@@ -576,6 +590,113 @@
       "name": "Martin",
       "avatar_url": "https://avatars.githubusercontent.com/u/1641362?v=4",
       "profile": "https://rys.pw",
+      "contributions": [
+        "doc",
+        "bug",
+        "review"
+      ]
+    },
+    {
+      "login": "PavelPolyakov",
+      "name": "Pavel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/839290?v=4",
+      "profile": "http://pavelpolyakov.com/",
+      "contributions": [
+        "example"
+      ]
+    },
+    {
+      "login": "thorwebdev",
+      "name": "Thor 雷神 Schaeff",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5748289?v=4",
+      "profile": "https://youtube.com/thorwebdev",
+      "contributions": [
+        "example"
+      ]
+    },
+    {
+      "login": "x066it",
+      "name": "x066it",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75589380?v=4",
+      "profile": "https://github.com/x066it",
+      "contributions": [
+        "bug",
+        "review"
+      ]
+    },
+    {
+      "login": "kolay-v",
+      "name": "kolay",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49853802?v=4",
+      "profile": "https://github.com/kolay-v",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "pizzaeater",
+      "name": "Evgeny Nepomnyashchiy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2511553?v=4",
+      "profile": "https://enepom.com/",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "anantakrishna",
+      "name": "Ananta Krsna dasa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6065071?v=4",
+      "profile": "https://github.com/anantakrishna",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Mi3liX9",
+      "name": "Mighty Ali",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26169870?v=4",
+      "profile": "https://github.com/Mi3liX9",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "oott123",
+      "name": "三三",
+      "avatar_url": "https://avatars.githubusercontent.com/u/905663?v=4",
+      "profile": "https://oott123.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "roziscoding",
+      "name": "Roz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3948961?v=4",
+      "profile": "http://roz.ninja",
+      "contributions": [
+        "bug",
+        "code",
+        "review"
+      ]
+    },
+    {
+      "login": "daniharo",
+      "name": "Dani Haro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47931084?v=4",
+      "profile": "https://github.com/daniharo",
+      "contributions": [
+        "code",
+        "plugin",
+        "doc"
+      ]
+    },
+    {
+      "login": "Ryukaizen",
+      "name": "Ryukaizen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55140313?v=4",
+      "profile": "https://github.com/Ryukaizen",
       "contributions": [
         "doc"
       ]
