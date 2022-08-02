@@ -238,7 +238,7 @@ export class Context implements RenamedUpdate {
      * Used by some middleware to store information about how a certain string
      * or regular expression was matched.
      */
-    public match: string | RegExpMatchArray | undefined = undefined;
+    public match: string | RegExpMatchArray | undefined;
 
     constructor(
         /**
