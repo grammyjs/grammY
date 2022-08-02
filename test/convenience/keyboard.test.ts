@@ -1,5 +1,5 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
-import { type LoginUrl } from "../../src/platform.deno.ts";
+import { type LoginUrl } from "../../src/types.ts";
 import { assertEquals } from "https://deno.land/std@0.150.0/testing/asserts.ts";
 import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
 
