@@ -72,7 +72,7 @@ export const adapters = {
     https: http,
     worktop,
     "aws-lambda": awsLambda,
-    azure: azure,
+    azure,
     ...sharedAdapters,
 };
 export const defaultAdapter = "express";
