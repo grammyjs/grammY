@@ -196,6 +196,9 @@ export class Keyboard {
      * end if necessary so you can specify more options in `reply_markup`.
      */
     build() {
+        if (this.selective || this.one_time_keyboard || this.resized || this.input_field_placeholder) {
+            console.warn("You are calling keyboard.build(), but you've set some of the extra properties. Note that they won't be applied. Learn more here: *insert link to docs*")
+        }
         return this.keyboard;
     }
 }
