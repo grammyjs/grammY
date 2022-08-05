@@ -53,9 +53,10 @@ const awsLambda = (event: any, _context: any, callback: any) => ({
 const azure = (context: any, req: any) => ({
     update: Promise.resolve(req.body),
     header: context.res.headers[SECRET_HEADER],
-    end: () => context.res = {
+    end: () =>
+    context.res = {
         status: 200,
-        body: ''
+        body: ""
     },
     respond: (json: string) => {
         context.res.set("Content-Type", "application/json");
