@@ -50,7 +50,7 @@ const awsLambda = (event: any, _context: any, callback: any) => ({
 });
 
 /** Azure Functions */
-const azure = (context, req) => ({
+const azure = (context: any, req: any) => ({
     update: Promise.resolve(req.body),
     header: context.res.headers[SECRET_HEADER],
     end: () => context.res = {
