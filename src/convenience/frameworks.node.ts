@@ -57,7 +57,7 @@ const azure = (context: any, req: any) => ({
         status: 200,
         body: ''
     },
-    respond: (json) => {
+    respond: (json: string) => {
         context.res.set("Content-Type", "application/json");
         context.res.send(json);
     },
