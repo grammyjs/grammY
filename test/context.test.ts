@@ -1,12 +1,12 @@
 import { Context } from "../src/context.ts";
 import { Api } from "../src/mod.ts";
 import {
-    Chat,
+    type Chat,
     type Message,
     type Update,
     type User,
     type UserFromGetMe,
-} from "../src/platform.deno.ts";
+} from "../src/types.ts";
 import {
     assert,
     assertEquals,
