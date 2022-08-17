@@ -7,7 +7,7 @@ This library would not be possible without you.
 We believe it is a strength of grammY to provide an integrated experience to its users.
 Important plugins have a dedicated page right inside the main documentation, and they are published under @grammyjs both on GitHub and on npm.
 If you have a good idea, don't hesitate to tell us in the group chat!
-We can grant you access to the GitHub Organization, so you can get a dedicated repository under our name, and publish your code as an offcial plugin of grammY.
+We can grant you access to the GitHub Organization, so you can get a dedicated repository under our name, and publish your code as an official plugin of grammY.
 You will be responsible for maintaining it.
 
 ## A Few Words on Deno and Node
@@ -44,7 +44,7 @@ There are several areas of contributions, and they have different ways to get yo
   Third-party plugins are independent and anyone can do them however they want.
   If a third-party plugin was to be listed on the website, some docs would be nice.
 - **Storage adapters.**
-  Please send a message to the [group chat](https://telegram.me/grammyjs) if you want to create an offical storage adapter for the [session plugin](https://grammy.dev/plugins/session.html).
+  Please send a message to the [group chat](https://telegram.me/grammyjs) if you want to create an official storage adapter for the [session plugin](https://grammy.dev/plugins/session.html).
   You will be granted all necessary permissions, and the repository will be listed [here](https://grammy.dev/plugins/session.html#official).
   Consider checking out an existing implementation to make your life easier, e.g. [this one](https://github.com/grammyjs/storage-firestore/blob/main/src/index.ts).
 - **Issues, bugs, and everything else.**
@@ -104,5 +104,5 @@ If you want to read or modify grammY's code, you can do the following.
 
 This works analogously to the grammY core development.
 
-If you want to publish a new official plugin, a quick message in the [group chat](https://telegram.me/grammyjs) is enough and you will be granted the necessary permissions to work on a repository under the [@grammyjs](https://github.com/grammyjs) organisation on GitHub, and to publish your plugin on npm.
+If you want to publish a new official plugin, a quick message in the [group chat](https://telegram.me/grammyjs) is enough and you will be granted the necessary permissions to work on a repository under the [@grammyjs](https://github.com/grammyjs) organization on GitHub, and to publish your plugin on npm.
 You will be responsible for maintaining it, but perhaps other people will join in.
