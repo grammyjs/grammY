@@ -54,7 +54,7 @@ const adonis = (req: any, res: any) => ({
     update: Promise.resolve(req.body() as Update),
     header: req.header('X-Telegram-Bot-Api-Secret-Token'),
     end: () => {
-        res.send()
+        res.finish()
     },
     respond: (json: string) => res.json(json),
     unauthorized: () => res.unauthorized('secret token is wrong'),
