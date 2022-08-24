@@ -49,11 +49,23 @@ const awsLambda = (event: any, _context: any, callback: any) => ({
     unauthorized: () => callback(null, { statusCode: 401 }),
 });
 
+/* AdonisJS */
+const adonis = (req: any, res: any) => ({
+    update: Promise.resolve(req.body() as Update),
+    header: req.header('X-Telegram-Bot-Api-Secret-Token'),
+    end: () => {
+        res.send()
+    },
+    respond: (json: string) => res.json(json),
+    unauthorized: () => res.unauthorized('secret token is wrong'),
+})
+
 // please open a PR if you want to add another
 export const adapters = {
     http,
     https: http,
     worktop,
+    adonis,
     "aws-lambda": awsLambda,
     ...sharedAdapters,
 };
