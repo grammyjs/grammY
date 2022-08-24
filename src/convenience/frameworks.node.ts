@@ -52,7 +52,7 @@ const awsLambda = (event: any, _context: any, callback: any) => ({
 /* AdonisJS */
 const adonis = (req: any, res: any) => ({
     update: Promise.resolve(req.body() as Update),
-    header: req.header('X-Telegram-Bot-Api-Secret-Token'),
+    header: req.header(SECRET_HEADER),
     end: () => {
         res.finish()
     },
