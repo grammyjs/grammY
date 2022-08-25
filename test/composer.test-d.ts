@@ -1,6 +1,6 @@
 import { Composer, Context } from "../src/mod.ts";
 
-function f<C extends Context>() {
+function _f<C extends Context>() {
     const c = new Composer<C & { state: 1 }>();
     c.use((ctx) => {
         if (ctx.has(":contact")) {

@@ -2116,7 +2116,7 @@ export type GameQueryContext<C extends Context> = Filter<
     "callback_query:game_short_name"
 >;
 
-type InlineQueryContextE = FilterE<'inline_query'>
+type InlineQueryContextE = FilterE<"inline_query">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.inlineQuery`.
