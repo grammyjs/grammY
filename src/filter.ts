@@ -433,8 +433,9 @@ type Combine<U, K extends string> = U extends unknown
     ? U & Partial<Record<Exclude<K, keyof U>, undefined>>
     : never;
 
-
-export type FilterE<Q extends FilterQuery> = PerformQueryE<RunQuery<ExpandShortcuts<Q>>>
+export type FilterE<Q extends FilterQuery> = PerformQueryE<
+    RunQuery<ExpandShortcuts<Q>>
+>;
 
 /**
  * This type infers which properties will be present on the given context object
