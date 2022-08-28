@@ -1,5 +1,4 @@
 // deno-lint-ignore-file no-explicit-any
-
 import {
     adapters as sharedAdapters,
     SECRET_HEADER,
