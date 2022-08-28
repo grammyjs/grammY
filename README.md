@@ -96,7 +96,7 @@ Includes a setup to easily run any of them.
 —Telegram chat where you can ask any question about grammY or bots in general.
 We are also open for feedback, ideas, and contributions!
 
-The Russian commnity chat can be found [here](https://t.me/grammyjs_ru).
+The Russian community chat can be found [here](https://t.me/grammyjs_ru).
 
 ### [grammY News Channel](https://t.me/grammyjs_news)
 

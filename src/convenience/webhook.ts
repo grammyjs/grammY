@@ -30,7 +30,7 @@ const adapters = { ...nativeAdapters, callback: callbackAdapter };
 type SupportedFrameworks = keyof typeof adapters;
 
 /**
- * Abstraction over a request-response cycle, provding access to the update, as
+ * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
  */
 interface ReqResHandler {

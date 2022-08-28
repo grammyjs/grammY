@@ -34,7 +34,7 @@ export class InputFile {
      * Optional name of the constructed `InputFile` instance.
      *
      * Check out the
-     * [documenation](https://grammy.dev/guide/files.html#uploading-your-own-file)
+     * [documentation](https://grammy.dev/guide/files.html#uploading-your-own-file)
      * on sending files with `InputFile`.
      */
     public readonly filename?: string;

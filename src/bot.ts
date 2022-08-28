@@ -199,7 +199,7 @@ export class Bot<
      * unless a manual value is already set.
      *
      * Note that the recommended way to set a custom bot information object is
-     * to pass it to the configuration object of the `new Bot()` instatiation,
+     * to pass it to the configuration object of the `new Bot()` instantiation,
      * rather than assigning this property.
      */
     public set botInfo(botInfo: UserFromGetMe) {
