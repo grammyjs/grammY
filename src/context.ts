@@ -3,7 +3,7 @@ import { type Api, type Other as OtherApi } from "./core/api.ts";
 import { type Methods, type RawApi } from "./core/client.ts";
 import {
     type Filter,
-    type FilterE,
+    type FilterCore,
     type FilterQuery,
     matchFilter,
 } from "./filter.ts";
@@ -417,7 +417,7 @@ export class Context implements RenamedUpdate {
      *
      * @param filter The filter query to check
      */
-    has<Q extends FilterQuery>(filter: Q | Q[]): this is FilterE<Q> {
+    has<Q extends FilterQuery>(filter: Q | Q[]): this is FilterCore<Q> {
         return Context.has.filterQuery(filter)(this);
     }
     /**
@@ -427,7 +427,7 @@ export class Context implements RenamedUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContextE {
+    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContextCore {
         return Context.has.text(trigger)(this);
     }
     /**
@@ -440,7 +440,7 @@ export class Context implements RenamedUpdate {
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
-    ): this is CommandContextE {
+    ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }
     /**
@@ -452,7 +452,7 @@ export class Context implements RenamedUpdate {
      */
     hasChatType<T extends Chat["type"]>(
         chatType: MaybeArray<T>,
-    ): this is ChatTypeContextE<T> {
+    ): this is ChatTypeContextCore<T> {
         return Context.has.chatType(chatType)(this);
     }
     /**
@@ -465,7 +465,7 @@ export class Context implements RenamedUpdate {
      */
     hasCallbackQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is CallbackQueryContextE {
+    ): this is CallbackQueryContextCore {
         return Context.has.callbackQuery(trigger)(this);
     }
     /**
@@ -477,7 +477,7 @@ export class Context implements RenamedUpdate {
      */
     hasGameQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is GameQueryContextE {
+    ): this is GameQueryContextCore {
         return Context.has.gameQuery(trigger)(this);
     }
     /**
@@ -489,7 +489,7 @@ export class Context implements RenamedUpdate {
      */
     hasInlineQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is InlineQueryContextE {
+    ): this is InlineQueryContextCore {
         return Context.has.inlineQuery(trigger)(this);
     }
 
@@ -2044,9 +2044,9 @@ export class Context implements RenamedUpdate {
 }
 
 // === Filtered context types
-type HearsContextE =
-    & FilterE<":text" | ":caption">
-    & NarrowMatchE<string | RegExpMatchArray>;
+type HearsContextCore =
+    & FilterCore<":text" | ":caption">
+    & NarrowMatchCore<string | RegExpMatchArray>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.hears`.
@@ -2062,9 +2062,9 @@ export type HearsContext<C extends Context> = Filter<
     ":text" | ":caption"
 >;
 
-type CommandContextE =
-    & FilterE<":entities:bot_command">
-    & NarrowMatchE<string>;
+type CommandContextCore =
+    & FilterCore<":entities:bot_command">
+    & NarrowMatchCore<string>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.command`.
@@ -2079,12 +2079,12 @@ export type CommandContext<C extends Context> = Filter<
     NarrowMatch<C, string>,
     ":entities:bot_command"
 >;
-type NarrowMatchE<T extends Context["match"]> = { match: T };
+type NarrowMatchCore<T extends Context["match"]> = { match: T };
 type NarrowMatch<C extends Context, T extends C["match"]> = {
     [K in keyof C]: K extends "match" ? (T extends C[K] ? T : never) : C[K];
 };
 
-type CallbackQueryContextE = FilterE<"callback_query:data">;
+type CallbackQueryContextCore = FilterCore<"callback_query:data">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.callbackQuery`.
@@ -2100,7 +2100,7 @@ export type CallbackQueryContext<C extends Context> = Filter<
     "callback_query:data"
 >;
 
-type GameQueryContextE = FilterE<"callback_query:game_short_name">;
+type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.gameQuery`.
@@ -2116,7 +2116,7 @@ export type GameQueryContext<C extends Context> = Filter<
     "callback_query:game_short_name"
 >;
 
-type InlineQueryContextE = FilterE<"inline_query">;
+type InlineQueryContextCore = FilterCore<"inline_query">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.inlineQuery`.
@@ -2132,7 +2132,7 @@ export type InlineQueryContext<C extends Context> = Filter<
     "inline_query"
 >;
 
-type ChatTypeContextE<T extends Chat["type"]> =
+type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
     & ChatType<T> // ctx.chat
     & ChatTypeRecord<"msg", T> // ctx.msg
@@ -2149,7 +2149,7 @@ type ChatTypeContextE<T extends Chat["type"]> =
  */
 export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & C
-    & ChatTypeContextE<T>; // ctx.message etc
+    & ChatTypeContextCore<T>; // ctx.message etc
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
         | "message"
