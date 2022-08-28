@@ -54,10 +54,10 @@ const azure = (context: any, req: any) => ({
     update: Promise.resolve(req.body),
     header: context.res.headers[SECRET_HEADER],
     end: () =>
-    context.res = {
-        status: 200,
-        body: ""
-    },
+        context.res = {
+            status: 200,
+            body: "",
+        },
     respond: (json: string) => {
         context.res.set("Content-Type", "application/json");
         context.res.send(json);
