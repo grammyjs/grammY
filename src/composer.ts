@@ -428,7 +428,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * ```ts
      * bot.on('callback_query:data', ctx => { ... })
      * ```
-     * but it also allows you match the query data agains a given text or
+     * but it also allows you to match the query data against a given text or
      * regular expression.
      *
      * ```ts
@@ -475,7 +475,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * ```ts
      * bot.on('callback_query:game_short_name', ctx => { ... })
      * ```
-     * but it also allows you match the query data agains a given text or
+     * but it also allows you to match the query data against a given text or
      * regular expression.
      *
      * You can pass an array of triggers. Your middleware will be executed if at
@@ -530,7 +530,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * skipped and the next middleware will be executed.
      *
      * This method has two signatures. The first one is straightforward, it is
-     * the one described above. Note that the predicate may be asyncronous, i.e.
+     * the one described above. Note that the predicate may be asynchronous, i.e.
      * it can return a Promise of a boolean.
      *
      * Alternatively, you can pass a function that has a type predicate as
@@ -581,7 +581,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * other words, the middleware will only be executed if the given predicate
      * returns `false` for the given context object. Otherwise, it will be
      * skipped and the next middleware will be executed. Note that the predicate
-     * may be asyncronous, i.e. it can return a Promise of a boolean.
+     * may be asynchronous, i.e. it can return a Promise of a boolean.
      *
      * This method is the same using `filter` (normal usage) with a negated
      * predicate.
@@ -696,7 +696,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * middleware if your route function returns `undefined`, or if the key
      * returned by your router has no middleware associated with it.
      *
-     * This method may need less setup than first instanciating a `Router`, but
+     * This method may need less setup than first instantiating a `Router`, but
      * for more complex setups, having a `Router` may be more readable.
      *
      * @param router The routing function to use
@@ -724,7 +724,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * This method takes a predicate function that is tested once per context
      * object. If it returns `true`, the first supplied middleware is executed.
      * If it returns `false`, the second supplied middleware is executed. Note
-     * that the predicate may be asyncronous, i.e. it can return a Promise of a
+     * that the predicate may be asynchronous, i.e. it can return a Promise of a
      * boolean.
      *
      * @param predicate The predicate to check
@@ -831,8 +831,8 @@ export type CommandMiddleware<C extends Context> = Middleware<
  *
  * This helper type can be used to annotate middleware functions that are
  * defined in one place, so that they have the correct type when passed to
- * `bot.callbackQuery` in a different plac For instance, this allows for more
- * modular code where handlers are defined in separate files.e.
+ * `bot.callbackQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
  */
 export type CallbackQueryMiddleware<C extends Context> = Middleware<
     CallbackQueryContext<C>
