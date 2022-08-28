@@ -221,6 +221,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/daniharo"><img src="https://avatars.githubusercontent.com/u/47931084?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dani Haro</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=daniharo" title="Code">💻</a> <a href="#plugin-daniharo" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/grammyjs/grammY/commits?author=daniharo" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/Ryukaizen"><img src="https://avatars.githubusercontent.com/u/55140313?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ryukaizen</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Ryukaizen" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/mcpeblocker"><img src="https://avatars.githubusercontent.com/u/59408255?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alisher Ortiqov</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=mcpeblocker" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/tonytkachenko"><img src="https://avatars.githubusercontent.com/u/103267335?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tony Tkachenko</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=tonytkachenko" title="Documentation">📖</a></td>
   </tr>
 </table>
 
