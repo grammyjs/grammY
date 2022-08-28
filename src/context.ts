@@ -2136,7 +2136,7 @@ type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
     & ChatType<T> // ctx.chat
     & ChatTypeRecord<"msg", T> // ctx.msg
-    & AliasProps<ChatTypeUpdate<T>>;
+    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.chatType`.
@@ -2149,7 +2149,7 @@ type ChatTypeContextCore<T extends Chat["type"]> =
  */
 export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & C
-    & ChatTypeContextCore<T>; // ctx.message etc
+    & ChatTypeContextCore<T>;
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
         | "message"
