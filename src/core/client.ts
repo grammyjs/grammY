@@ -82,7 +82,7 @@ export type TransformerConsumer<R extends RawApi = RawApi> = TransformableApi<
  */
 export interface TransformableApi<R extends RawApi = RawApi> {
     /**
-     * Access to the raw API that the tranformers will be installed on.
+     * Access to the raw API that the transformers will be installed on.
      */
     raw: R;
     /**

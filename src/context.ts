@@ -1,7 +1,12 @@
 // deno-lint-ignore-file camelcase
 import { type Api, type Other as OtherApi } from "./core/api.ts";
 import { type Methods, type RawApi } from "./core/client.ts";
-import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
+import {
+    type Filter,
+    type FilterCore,
+    type FilterQuery,
+    matchFilter,
+} from "./filter.ts";
 import {
     type Chat,
     type ChatPermissions,
@@ -400,7 +405,7 @@ export class Context implements RenamedUpdate {
      * if (hasText(ctx1)) {} // `ctx1` matches the filter query `:text`
      * if (hasText(ctx2)) {} // `ctx2` matches the filter query `:text`
      * ```
-     * These predicate funtions are used internally by the has-methods that are
+     * These predicate functions are used internally by the has-methods that are
      * installed on every context object. This means that calling
      * `ctx.has(":text")` is equivalent to
      * `Context.has.filterQuery(":text")(ctx)`.
@@ -412,7 +417,7 @@ export class Context implements RenamedUpdate {
      *
      * @param filter The filter query to check
      */
-    has<Q extends FilterQuery>(filter: Q | Q[]): this is Filter<this, Q> {
+    has<Q extends FilterQuery>(filter: Q | Q[]): this is FilterCore<Q> {
         return Context.has.filterQuery(filter)(this);
     }
     /**
@@ -422,7 +427,7 @@ export class Context implements RenamedUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContext<this> {
+    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContextCore {
         return Context.has.text(trigger)(this);
     }
     /**
@@ -435,7 +440,7 @@ export class Context implements RenamedUpdate {
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
-    ): this is CommandContext<this> {
+    ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }
     /**
@@ -447,7 +452,7 @@ export class Context implements RenamedUpdate {
      */
     hasChatType<T extends Chat["type"]>(
         chatType: MaybeArray<T>,
-    ): this is ChatTypeContext<this, T> {
+    ): this is ChatTypeContextCore<T> {
         return Context.has.chatType(chatType)(this);
     }
     /**
@@ -460,7 +465,7 @@ export class Context implements RenamedUpdate {
      */
     hasCallbackQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is CallbackQueryContext<this> {
+    ): this is CallbackQueryContextCore {
         return Context.has.callbackQuery(trigger)(this);
     }
     /**
@@ -472,7 +477,7 @@ export class Context implements RenamedUpdate {
      */
     hasGameQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is GameQueryContext<this> {
+    ): this is GameQueryContextCore {
         return Context.has.gameQuery(trigger)(this);
     }
     /**
@@ -484,7 +489,7 @@ export class Context implements RenamedUpdate {
      */
     hasInlineQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is InlineQueryContext<this> {
+    ): this is InlineQueryContextCore {
         return Context.has.inlineQuery(trigger)(this);
     }
 
@@ -1625,7 +1630,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.answerCallbackQuery`. Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
-     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @Botfather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
+     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1907,7 +1912,7 @@ export class Context implements RenamedUpdate {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payments provider token, obtained via Botfather
+     * @param provider_token Payments provider token, obtained via BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -2018,7 +2023,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.sendGame`. Use this method to send a game. On success, the sent Message is returned.
      *
-     * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
+     * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2039,6 +2044,9 @@ export class Context implements RenamedUpdate {
 }
 
 // === Filtered context types
+type HearsContextCore =
+    & FilterCore<":text" | ":caption">
+    & NarrowMatchCore<string | RegExpMatchArray>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.hears`.
@@ -2053,6 +2061,10 @@ export type HearsContext<C extends Context> = Filter<
     NarrowMatch<C, string | RegExpMatchArray>,
     ":text" | ":caption"
 >;
+
+type CommandContextCore =
+    & FilterCore<":entities:bot_command">
+    & NarrowMatchCore<string>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.command`.
@@ -2067,9 +2079,12 @@ export type CommandContext<C extends Context> = Filter<
     NarrowMatch<C, string>,
     ":entities:bot_command"
 >;
+type NarrowMatchCore<T extends Context["match"]> = { match: T };
 type NarrowMatch<C extends Context, T extends C["match"]> = {
     [K in keyof C]: K extends "match" ? (T extends C[K] ? T : never) : C[K];
 };
+
+type CallbackQueryContextCore = FilterCore<"callback_query:data">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.callbackQuery`.
@@ -2084,6 +2099,8 @@ export type CallbackQueryContext<C extends Context> = Filter<
     C,
     "callback_query:data"
 >;
+
+type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.gameQuery`.
@@ -2098,6 +2115,8 @@ export type GameQueryContext<C extends Context> = Filter<
     C,
     "callback_query:game_short_name"
 >;
+
+type InlineQueryContextCore = FilterCore<"inline_query">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.inlineQuery`.
@@ -2112,6 +2131,12 @@ export type InlineQueryContext<C extends Context> = Filter<
     C,
     "inline_query"
 >;
+
+type ChatTypeContextCore<T extends Chat["type"]> =
+    & Record<"update", ChatTypeUpdate<T>> // ctx.update
+    & ChatType<T> // ctx.chat
+    & ChatTypeRecord<"msg", T> // ctx.msg
+    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.chatType`.
@@ -2124,10 +2149,7 @@ export type InlineQueryContext<C extends Context> = Filter<
  */
 export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & C
-    & Record<"update", ChatTypeUpdate<T>> // ctx.update
-    & ChatType<T> // ctx.chat
-    & ChatTypeRecord<"msg", T> // ctx.msg
-    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
+    & ChatTypeContextCore<T>;
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
         | "message"
