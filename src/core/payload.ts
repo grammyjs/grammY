@@ -1,5 +1,5 @@
-import { InputFile } from "../types.ts";
 import { itrToStream, toRaw } from "../platform.deno.ts";
+import { InputFile } from "../types.ts";
 
 // === Payload types (JSON vs. form data)
 /**

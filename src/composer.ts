@@ -9,7 +9,7 @@ import {
     type MaybeArray,
     type StringWithSuggestions,
 } from "./context.ts";
-import { Filter, FilterQuery } from "./filter.ts";
+import { type Filter, type FilterQuery } from "./filter.ts";
 import { type Chat } from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;

@@ -224,6 +224,7 @@ const ENTITY_KEYS = {
     pre: {},
     text_link: {},
     text_mention: {},
+    custom_emoji: {},
 } as const;
 const USER_KEYS = {
     me: {},
