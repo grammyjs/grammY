@@ -388,6 +388,44 @@ export class Context implements RenamedUpdate {
                 this.chosenInlineResult?.inline_message_id
         );
     }
+    /**
+     * Get entities and their text. Extracts the text from `ctx.msg.text`.
+     * Returns an empty array if one of `ctx.msg`, `ctx.msg.text`
+     * or `ctx.msg.entities` is undefined.
+     *
+     * You can filter specific entity types by passing the `types` parameter. Example:
+     *
+     * ```ts
+     * ctx.entities() // Returns all entity types
+     * ctx.entities('url') // Returns only url entities
+     * ctx.enttities(['url', 'email']) // Returns url and email entities
+     * ```
+     *
+     * @param types Types of entities to filter for. Ommit to get all entities
+     * @returns Array of entities and their texts, or empty array when there's no text
+     */
+    entities(
+        types?: MaybeArray<MessageEntity["type"]>,
+    ): Array<MessageEntity & { text: string }> {
+        const message = this.msg;
+
+        if (!message || !message.text || !message.entities) return [];
+
+        const filters = types ? (Array.isArray(types) ? types : [types]) : null;
+        const messageEntities = filters
+            ? message.entities!.filter((entity) =>
+                filters.includes(entity.type)
+            )
+            : message.entities!;
+
+        return messageEntities.map((entity) => ({
+            ...entity,
+            text: message.text!.substring(
+                entity.offset,
+                entity.offset + entity.length,
+            ),
+        }));
+    }
 
     // PROBING SHORTCUTS
 
