@@ -408,19 +408,22 @@ export class Context implements RenamedUpdate {
         types?: MaybeArray<MessageEntity["type"]>,
     ): Array<MessageEntity & { text: string }> {
         const message = this.msg;
-
-        if (!message || !message.text || !message.entities) return [];
+        if (!message) return [];
+        
+        const text = message.text;
+        const entities = message.entities;
+        if (!text || !entities) return [];
 
         const filters = types ? (Array.isArray(types) ? types : [types]) : null;
         const messageEntities = filters
-            ? message.entities!.filter((entity) =>
+            ? entities.filter((entity) =>
                 filters.includes(entity.type)
             )
-            : message.entities!;
+            : entities;
 
         return messageEntities.map((entity) => ({
             ...entity,
-            text: message.text!.substring(
+            text: text.substring(
                 entity.offset,
                 entity.offset + entity.length,
             ),
