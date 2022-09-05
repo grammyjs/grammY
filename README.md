@@ -10,7 +10,7 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-6.1-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-6.2-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
@@ -96,7 +96,7 @@ Includes a setup to easily run any of them.
 —Telegram chat where you can ask any question about grammY or bots in general.
 We are also open for feedback, ideas, and contributions!
 
-The Russian commnity chat can be found [here](https://t.me/grammyjs_ru).
+The Russian community chat can be found [here](https://t.me/grammyjs_ru).
 
 ### [grammY News Channel](https://t.me/grammyjs_news)
 
@@ -221,6 +221,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/daniharo"><img src="https://avatars.githubusercontent.com/u/47931084?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dani Haro</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=daniharo" title="Code">💻</a> <a href="#plugin-daniharo" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/grammyjs/grammY/commits?author=daniharo" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/Ryukaizen"><img src="https://avatars.githubusercontent.com/u/55140313?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ryukaizen</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Ryukaizen" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/mcpeblocker"><img src="https://avatars.githubusercontent.com/u/59408255?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alisher Ortiqov</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=mcpeblocker" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/tonytkachenko"><img src="https://avatars.githubusercontent.com/u/103267335?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tony Tkachenko</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=tonytkachenko" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/rainrisa"><img src="https://avatars.githubusercontent.com/u/108156134?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ra</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=rainrisa" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/sartoshi-foot-dao"><img src="https://avatars.githubusercontent.com/u/99770068?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sartoshi-foot-dao</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=sartoshi-foot-dao" title="Documentation">📖</a></td>
   </tr>
 </table>
 

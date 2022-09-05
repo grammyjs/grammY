@@ -105,7 +105,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
+     * Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
      *
      * Notes
      * 1. This method will not work if an outgoing webhook is set up.
@@ -250,7 +250,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -1158,7 +1158,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
+     * Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1238,7 +1238,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
-     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @Botfather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
+     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @param callback_query_id Unique identifier for the query to be answered
      * @param other Optional remaining parameters, confer the official reference below
@@ -1350,7 +1350,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get the current list of the bot's commands for the given scope and user language. Returns Array of BotCommand on success. If commands aren't set, an empty list is returned.
+     * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1644,6 +1644,18 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
+     *
+     * @param custom_emoji_ids List of custom emoji identifiers
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
+     */
+    getCustomEmojiStickers(custom_emoji_ids: string[], signal?: AbortSignal) {
+        return this.raw.getCustomEmojiStickers({ custom_emoji_ids }, signal);
+    }
+
+    /**
      * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
      *
      * @param user_id User identifier of sticker file owner
@@ -1811,7 +1823,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payments provider token, obtained via Botfather
+     * @param provider_token Payments provider token, obtained via BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -1900,7 +1912,7 @@ export class Api<R extends RawApi = RawApi> {
      * If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
      *
      * @param shipping_query_id Unique identifier for the query to be answered
-     * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1967,7 +1979,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to send a game. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat
-     * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
+     * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2044,7 +2056,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. On success, returns an Array of GameHighScore objects.
+     * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of GameHighScore objects.
      *
      * This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
      *

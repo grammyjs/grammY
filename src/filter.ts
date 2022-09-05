@@ -224,6 +224,7 @@ const ENTITY_KEYS = {
     pre: {},
     text_link: {},
     text_mention: {},
+    custom_emoji: {},
 } as const;
 const USER_KEYS = {
     me: {},
@@ -433,6 +434,10 @@ type Combine<U, K extends string> = U extends unknown
     ? U & Partial<Record<Exclude<K, keyof U>, undefined>>
     : never;
 
+export type FilterCore<Q extends FilterQuery> = PerformQueryCore<
+    RunQuery<ExpandShortcuts<Q>>
+>;
+
 /**
  * This type infers which properties will be present on the given context object
  * provided it matches the given filter query. If the filter query is a union
@@ -446,16 +451,23 @@ export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     C,
     RunQuery<ExpandShortcuts<Q>>
 >;
+type PerformQueryCore<U extends SomeObject> = U extends unknown
+    ? FilteredContextCore<Update & U>
+    : never;
 // apply a query result by intersecting it with Update, and then injecting into C
 type PerformQuery<C extends Context, U extends SomeObject> = U extends unknown
     ? FilteredContext<C, Update & U>
     : never;
-// set the given update into a given context object, and adjust the aliases
-type FilteredContext<C extends Context, U extends Update> =
-    & C
+
+type FilteredContextCore<U extends Update> =
     & Record<"update", U>
     & AliasProps<Omit<U, "update_id">>
     & Shortcuts<U>;
+
+// set the given update into a given context object, and adjust the aliases
+type FilteredContext<C extends Context, U extends Update> =
+    & C
+    & FilteredContextCore<U>;
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {

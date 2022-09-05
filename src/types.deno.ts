@@ -1,18 +1,18 @@
 // === Needed imports
-import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.8.2";
+import { basename } from "https://deno.land/std@0.153.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.153.0/streams/mod.ts";
+import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.9.1";
 import { debug as d, isDeno, toRaw } from "./platform.deno.ts";
-import { basename } from "https://deno.land/std@0.148.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.148.0/streams/mod.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://esm.sh/@grammyjs/types@2.8.2";
+export * from "https://esm.sh/@grammyjs/types@2.9.1";
 
 /** Something that looks like a URL. */
 interface URLLike {
     /**
-     * Identifier of the resouce. Must be in a format that can be parsed by the
+     * Identifier of the resource. Must be in a format that can be parsed by the
      * URL constructor.
      */
     url: string;
@@ -33,7 +33,7 @@ export class InputFile {
      * Optional name of the constructed `InputFile` instance.
      *
      * Check out the
-     * [documenation](https://grammy.dev/guide/files.html#uploading-your-own-file)
+     * [documentation](https://grammy.dev/guide/files.html#uploading-your-own-file)
      * on sending files with `InputFile`.
      */
     public readonly filename?: string;

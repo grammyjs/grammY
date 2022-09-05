@@ -1,7 +1,12 @@
 // deno-lint-ignore-file camelcase
 import { type Api, type Other as OtherApi } from "./core/api.ts";
 import { type Methods, type RawApi } from "./core/client.ts";
-import { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
+import {
+    type Filter,
+    type FilterCore,
+    type FilterQuery,
+    matchFilter,
+} from "./filter.ts";
 import {
     type Chat,
     type ChatPermissions,
@@ -14,6 +19,7 @@ import {
     type InputMediaVideo,
     type LabeledPrice,
     type Message,
+    type MessageEntity,
     type PassportElementError,
     type Update,
     type User,
@@ -400,7 +406,7 @@ export class Context implements RenamedUpdate {
      * if (hasText(ctx1)) {} // `ctx1` matches the filter query `:text`
      * if (hasText(ctx2)) {} // `ctx2` matches the filter query `:text`
      * ```
-     * These predicate funtions are used internally by the has-methods that are
+     * These predicate functions are used internally by the has-methods that are
      * installed on every context object. This means that calling
      * `ctx.has(":text")` is equivalent to
      * `Context.has.filterQuery(":text")(ctx)`.
@@ -412,7 +418,7 @@ export class Context implements RenamedUpdate {
      *
      * @param filter The filter query to check
      */
-    has<Q extends FilterQuery>(filter: Q | Q[]): this is Filter<this, Q> {
+    has<Q extends FilterQuery>(filter: Q | Q[]): this is FilterCore<Q> {
         return Context.has.filterQuery(filter)(this);
     }
     /**
@@ -422,7 +428,7 @@ export class Context implements RenamedUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContext<this> {
+    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContextCore {
         return Context.has.text(trigger)(this);
     }
     /**
@@ -435,7 +441,7 @@ export class Context implements RenamedUpdate {
         command: MaybeArray<
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
-    ): this is CommandContext<this> {
+    ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }
     /**
@@ -447,7 +453,7 @@ export class Context implements RenamedUpdate {
      */
     hasChatType<T extends Chat["type"]>(
         chatType: MaybeArray<T>,
-    ): this is ChatTypeContext<this, T> {
+    ): this is ChatTypeContextCore<T> {
         return Context.has.chatType(chatType)(this);
     }
     /**
@@ -460,7 +466,7 @@ export class Context implements RenamedUpdate {
      */
     hasCallbackQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is CallbackQueryContext<this> {
+    ): this is CallbackQueryContextCore {
         return Context.has.callbackQuery(trigger)(this);
     }
     /**
@@ -472,7 +478,7 @@ export class Context implements RenamedUpdate {
      */
     hasGameQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is GameQueryContext<this> {
+    ): this is GameQueryContextCore {
         return Context.has.gameQuery(trigger)(this);
     }
     /**
@@ -484,7 +490,7 @@ export class Context implements RenamedUpdate {
      */
     hasInlineQuery(
         trigger: MaybeArray<string | RegExp>,
-    ): this is InlineQueryContext<this> {
+    ): this is InlineQueryContextCore {
         return Context.has.inlineQuery(trigger)(this);
     }
 
@@ -539,7 +545,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param other Optional remaining parameters, confer the official reference below
@@ -1529,7 +1535,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatAdministrators`. Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
+     * Context-aware alias for `api.getChatAdministrators`. Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1625,7 +1631,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.answerCallbackQuery`. Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
-     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @Botfather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
+     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1877,6 +1883,24 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
+     *
+     * @param custom_emoji_ids List of custom emoji identifiers
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
+     */
+    getCustomEmojiStickers(signal?: AbortSignal) {
+        type Emoji = MessageEntity.CustomEmojiMessageEntity;
+        return this.api.getCustomEmojiStickers(
+            (this.msg?.entities ?? [])
+                .filter((e): e is Emoji => e.type === "custom_emoji")
+                .map((e) => e.custom_emoji_id),
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.answerInlineQuery`. Use this method to send answers to an inline query. On success, True is returned.
      * No more than 50 results per query are allowed.
      *
@@ -1907,7 +1931,7 @@ export class Context implements RenamedUpdate {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payments provider token, obtained via Botfather
+     * @param provider_token Payments provider token, obtained via BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -1951,7 +1975,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.answerShippingQuery`. If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
      *
      * @param shipping_query_id Unique identifier for the query to be answered
-     * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2018,7 +2042,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.sendGame`. Use this method to send a game. On success, the sent Message is returned.
      *
-     * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.
+     * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2039,6 +2063,9 @@ export class Context implements RenamedUpdate {
 }
 
 // === Filtered context types
+type HearsContextCore =
+    & FilterCore<":text" | ":caption">
+    & NarrowMatchCore<string | RegExpMatchArray>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.hears`.
@@ -2053,6 +2080,10 @@ export type HearsContext<C extends Context> = Filter<
     NarrowMatch<C, string | RegExpMatchArray>,
     ":text" | ":caption"
 >;
+
+type CommandContextCore =
+    & FilterCore<":entities:bot_command">
+    & NarrowMatchCore<string>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.command`.
@@ -2067,9 +2098,12 @@ export type CommandContext<C extends Context> = Filter<
     NarrowMatch<C, string>,
     ":entities:bot_command"
 >;
+type NarrowMatchCore<T extends Context["match"]> = { match: T };
 type NarrowMatch<C extends Context, T extends C["match"]> = {
     [K in keyof C]: K extends "match" ? (T extends C[K] ? T : never) : C[K];
 };
+
+type CallbackQueryContextCore = FilterCore<"callback_query:data">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.callbackQuery`.
@@ -2084,6 +2118,8 @@ export type CallbackQueryContext<C extends Context> = Filter<
     C,
     "callback_query:data"
 >;
+
+type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.gameQuery`.
@@ -2098,6 +2134,8 @@ export type GameQueryContext<C extends Context> = Filter<
     C,
     "callback_query:game_short_name"
 >;
+
+type InlineQueryContextCore = FilterCore<"inline_query">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.inlineQuery`.
@@ -2112,6 +2150,12 @@ export type InlineQueryContext<C extends Context> = Filter<
     C,
     "inline_query"
 >;
+
+type ChatTypeContextCore<T extends Chat["type"]> =
+    & Record<"update", ChatTypeUpdate<T>> // ctx.update
+    & ChatType<T> // ctx.chat
+    & ChatTypeRecord<"msg", T> // ctx.msg
+    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.chatType`.
@@ -2124,10 +2168,7 @@ export type InlineQueryContext<C extends Context> = Filter<
  */
 export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
     & C
-    & Record<"update", ChatTypeUpdate<T>> // ctx.update
-    & ChatType<T> // ctx.chat
-    & ChatTypeRecord<"msg", T> // ctx.msg
-    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
+    & ChatTypeContextCore<T>;
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
         | "message"

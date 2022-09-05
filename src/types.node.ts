@@ -1,9 +1,9 @@
 // === Needed imports
 import { type InputFileProxy } from "@grammyjs/types";
-import { debug as d, toRaw } from "./platform.node";
-import { basename } from "path";
-import fetch from "node-fetch";
 import { createReadStream, type ReadStream } from "fs";
+import fetch from "node-fetch";
+import { basename } from "path";
+import { debug as d, toRaw } from "./platform.node";
 
 const debug = d("grammy:warn");
 
@@ -34,7 +34,7 @@ export class InputFile {
      * Optional name of the constructed `InputFile` instance.
      *
      * Check out the
-     * [documenation](https://grammy.dev/guide/files.html#uploading-your-own-file)
+     * [documentation](https://grammy.dev/guide/files.html#uploading-your-own-file)
      * on sending files with `InputFile`.
      */
     public readonly filename?: string;

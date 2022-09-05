@@ -52,7 +52,7 @@ export class Keyboard {
     public input_field_placeholder?: string;
 
     /**
-     * Initalize a new `Keyboard` with an optional two-dimensional array of
+     * Initialize a new `Keyboard` with an optional two-dimensional array of
      * `KeyboardButton` objects. This is the nested array that holds the custom
      * keyboard. It will be extended every time you call one of the provided
      * methods.
@@ -215,7 +215,7 @@ export class Keyboard {
  * ```ts
  * // Build an inline keyboard:
  * const keyboard = new InlineKeyboard()
- *   .text('A').text('B', 'callack-data').row()
+ *   .text('A').text('B', 'callback-data').row()
  *   .text('C').text('D').row()
  *   .url('Telegram', 'telegram.org')
  *
@@ -231,7 +231,7 @@ export class Keyboard {
  */
 export class InlineKeyboard {
     /**
-     * Initalize a new `InlineKeyboard` with an optional two-dimensional array
+     * Initialize a new `InlineKeyboard` with an optional two-dimensional array
      * of `InlineKeyboardButton` objects. This is the nested array that holds
      * the inline keyboard. It will be extended every time you call one of the
      * provided methods.

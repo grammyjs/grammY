@@ -1,5 +1,5 @@
-import { type Context } from "../context.ts";
 import { type MiddlewareFn } from "../composer.ts";
+import { type Context } from "../context.ts";
 import { debug as d } from "../platform.deno.ts";
 const debug = d("grammy:session");
 
@@ -176,7 +176,7 @@ type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
  * })
  * ```
  *
- * It is recommended to make use of the `inital` option in the configuration
+ * It is recommended to make use of the `initial` option in the configuration
  * object, which correctly initializes session objects for new chats.
  *
  * You can delete the session data by setting `ctx.session` to `null` or
@@ -604,11 +604,11 @@ function wrapStorage<T>(
  * This class is used as default if you do not provide a storage adapter, e.g.
  * to your database.
  *
- * This storage adapter features expiring sessions. When instatiating this class
+ * This storage adapter features expiring sessions. When instantiating this class
  * yourself, you can pass a time to live in milliseconds that will be used for
  * each session object. If a session for a user expired, the session data will
  * be discarded on its first read, and a fresh session object as returned by the
- * `inital` option (or undefined) will be put into place.
+ * `initial` option (or undefined) will be put into place.
  */
 export class MemorySessionStorage<S> implements StorageAdapter<S> {
     /**

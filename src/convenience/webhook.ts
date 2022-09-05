@@ -1,9 +1,9 @@
 // deno-lint-ignore-file no-explicit-any
 import { type Bot } from "../bot.ts";
+import { type Context } from "../context.ts";
+import { type WebhookReplyEnvelope } from "../core/client.ts";
 import { debug as d } from "../platform.deno.ts";
 import { type Update } from "../types.ts";
-import { type WebhookReplyEnvelope } from "../core/client.ts";
-import { type Context } from "../context.ts";
 import {
     adapters as nativeAdapters,
     defaultAdapter,
@@ -30,7 +30,7 @@ const adapters = { ...nativeAdapters, callback: callbackAdapter };
 type SupportedFrameworks = keyof typeof adapters;
 
 /**
- * Abstraction over a request-response cycle, provding access to the update, as
+ * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
  */
 interface ReqResHandler {
