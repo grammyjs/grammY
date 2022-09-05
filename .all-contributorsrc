@@ -718,6 +718,24 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "rainrisa",
+      "name": "Ra",
+      "avatar_url": "https://avatars.githubusercontent.com/u/108156134?v=4",
+      "profile": "https://github.com/rainrisa",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sartoshi-foot-dao",
+      "name": "sartoshi-foot-dao",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99770068?v=4",
+      "profile": "https://github.com/sartoshi-foot-dao",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
