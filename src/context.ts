@@ -403,14 +403,14 @@ export class Context implements RenamedUpdate {
      * ctx.enttities(['url', 'email']) // Returns url and email entities
      * ```
      *
-     * @param types Types of entities to filter for. Ommit to get all entities
+     * @param types Types of entities to return. Omit to get all entities.
      * @returns Array of entities and their texts, or empty array when there's no text
      */
     entities(
         types?: MaybeArray<MessageEntity["type"]>,
     ): Array<MessageEntity & { text: string }> {
         const message = this.msg;
-        if (!message) return [];
+        if (message === undefined) return [];
 
         const text = message.text ?? message.caption;
         const entities = message.entities ?? message.caption_entities;
