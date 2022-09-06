@@ -678,7 +678,9 @@
       "contributions": [
         "bug",
         "code",
-        "review"
+        "review",
+        "infra",
+        "ideas"
       ]
     },
     {
