@@ -412,8 +412,8 @@ export class Context implements RenamedUpdate {
         const message = this.msg;
         if (!message) return [];
 
-        const text = message.text;
-        const entities = message.entities;
+        const text = message.text ?? message.caption;
+        const entities = message.entities ?? message.caption_entities;
         if (!text || !entities) return [];
 
         const filters = types ? (Array.isArray(types) ? types : [types]) : null;
