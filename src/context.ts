@@ -141,9 +141,7 @@ const checker: StaticHas = {
             if (cmd.startsWith("/")) {
                 throw new Error(
                     `Do not include '/' when registering command handlers (use '${
-                        cmd.substring(
-                            1,
-                        )
+                        cmd.substring(1)
                     }' not '${cmd}')`,
                 );
             }
@@ -391,7 +389,7 @@ export class Context implements RenamedUpdate {
         );
     }
     /**
-     * Get entities and their text. Extracts the text from `ctx.msg.text`.
+     * Get entities and their text. Extracts the text from `ctx.msg.text` or `ctx.msg.caption`.
      * Returns an empty array if one of `ctx.msg`, `ctx.msg.text`
      * or `ctx.msg.entities` is undefined.
      *
@@ -1298,7 +1296,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unbanchatsenderchat
      */
-    unbanChatSenderChat(sender_chat_id: number, signal?: AbortSignal) {
+    unbanChatSenderChat(
+        sender_chat_id: number,
+        signal?: AbortSignal,
+    ) {
         return this.api.unbanChatSenderChat(
             orThrow(this.chat, "unbanChatSenderChat").id,
             sender_chat_id,
@@ -1403,7 +1404,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#approvechatjoinrequest
      */
-    approveChatJoinRequest(user_id: number, signal?: AbortSignal) {
+    approveChatJoinRequest(
+        user_id: number,
+        signal?: AbortSignal,
+    ) {
         return this.api.approveChatJoinRequest(
             orThrow(this.chat, "approveChatJoinRequest").id,
             user_id,
@@ -1419,7 +1423,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#declinechatjoinrequest
      */
-    declineChatJoinRequest(user_id: number, signal?: AbortSignal) {
+    declineChatJoinRequest(
+        user_id: number,
+        signal?: AbortSignal,
+    ) {
         return this.api.declineChatJoinRequest(
             orThrow(this.chat, "declineChatJoinRequest").id,
             user_id,
@@ -2175,19 +2182,16 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type InlineQueryContext<C extends Context> = Filter<C, "inline_query">;
+export type InlineQueryContext<C extends Context> = Filter<
+    C,
+    "inline_query"
+>;
 
 type ChatTypeContextCore<T extends Chat["type"]> =
-    & Record<
-        "update",
-        ChatTypeUpdate<T>
-    >
-    & // ctx.update
-    ChatType<T>
-    & // ctx.chat
-    ChatTypeRecord<"msg", T>
-    & // ctx.msg
-    AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
+    & Record<"update", ChatTypeUpdate<T>> // ctx.update
+    & ChatType<T> // ctx.chat
+    & ChatTypeRecord<"msg", T> // ctx.msg
+    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.chatType`.
