@@ -1,10 +1,3 @@
-import {
-    assert,
-    assertEquals,
-    assertFalse,
-    assertThrows,
-} from "https://deno.land/std@0.150.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
 import { Context } from "../src/context.ts";
 import { Api } from "../src/mod.ts";
 import {
@@ -14,6 +7,13 @@ import {
     type User,
     type UserFromGetMe,
 } from "../src/types.ts";
+import {
+    assert,
+    assertEquals,
+    assertFalse,
+    assertThrows,
+} from "https://deno.land/std@0.150.0/testing/asserts.ts";
+import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
 
 describe("Context", () => {
     const u = { id: 42, first_name: "bot", is_bot: true } as User;
@@ -240,13 +240,11 @@ describe("Context", () => {
         let up = {
             message: {
                 text: "/start args",
-                entities: [
-                    {
-                        type: "bot_command",
-                        offset: 0,
-                        length: "/start".length,
-                    },
-                ],
+                entities: [{
+                    type: "bot_command",
+                    offset: 0,
+                    length: "/start".length,
+                }],
             },
         } as Update;
         let ctx = new Context(up, api, me);
@@ -267,13 +265,11 @@ describe("Context", () => {
         up = {
             message: {
                 text: "Test with /start args",
-                entities: [
-                    {
-                        type: "bot_command",
-                        offset: "Test with ".length,
-                        length: "/start".length,
-                    },
-                ],
+                entities: [{
+                    type: "bot_command",
+                    offset: "Test with ".length,
+                    length: "/start".length,
+                }],
             },
         } as Update;
         ctx = new Context(up, api, me);
@@ -362,12 +358,10 @@ describe("Context", () => {
                 text: "some@email.com",
             },
         ]);
-        assertEquals(ctx.entities("email"), [
-            {
-                ...up.message!.entities![1],
-                text: "some@email.com",
-            },
-        ]);
+        assertEquals(ctx.entities("email"), [{
+            ...up.message!.entities![1],
+            text: "some@email.com",
+        }]);
 
         up = {
             message: {
@@ -388,23 +382,19 @@ describe("Context", () => {
         up = {
             message: {
                 caption: "some@email.com",
-                caption_entities: [
-                    {
-                        type: "email",
-                        offset: 0,
-                        length: "some@email.com".length,
-                    },
-                ],
+                caption_entities: [{
+                    type: "email",
+                    offset: 0,
+                    length: "some@email.com".length,
+                }],
             },
         } as Update;
         ctx = new Context(up, api, me);
-        assertEquals(ctx.entities(), [
-            {
-                type: "email",
-                offset: 0,
-                length: "some@email.com".length,
-                text: "some@email.com",
-            },
-        ]);
+        assertEquals(ctx.entities(), [{
+            type: "email",
+            offset: 0,
+            length: "some@email.com".length,
+            text: "some@email.com",
+        }]);
     });
 });
