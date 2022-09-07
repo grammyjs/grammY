@@ -192,18 +192,11 @@ export class Keyboard {
         return this;
     }
     /**
-     * Return the resulting custom keyboard that was built. May be called in the
-     * end if necessary so you can specify more options in `reply_markup`.
+     * Returns the keyboard that was build.
+     * Note that it doesn't return resize_keyboard or other options that may be set.
+     * You don't usually need to use this method.
      */
     build() {
-        if (
-            this.selective || this.one_time_keyboard || this.resize_keyboard ||
-            this.input_field_placeholder
-        ) {
-            console.warn(
-                "You are calling keyboard.build(), but you've set some of the extra properties. Note that they won't be applied. Learn more here: *insert link to docs*",
-            );
-        }
         return this.keyboard;
     }
 }
