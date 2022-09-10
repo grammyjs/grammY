@@ -411,15 +411,15 @@ export class Context implements RenamedUpdate {
         if (message === undefined) return [];
 
         const text = message.text ?? message.caption;
-        const entities = message.entities ?? message.caption_entities;
-        if (!text || !entities) return [];
+        if (text === undefined) return [];
+        let entities = message.entities ?? message.caption_entities;
+        if (entities === undefined) return [];
+        if (types !== undefined) {
+            const filters = new Set(toArray(types));
+            entities = entities.filter((entity) => filters.has(entity.type));
+        }
 
-        const filters = types ? (Array.isArray(types) ? types : [types]) : null;
-        const messageEntities = filters
-            ? entities.filter((entity) => filters.includes(entity.type))
-            : entities;
-
-        return messageEntities.map((entity) => ({
+        return entities.map((entity) => ({
             ...entity,
             text: text.substring(entity.offset, entity.offset + entity.length),
         }));
