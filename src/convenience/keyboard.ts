@@ -192,9 +192,9 @@ export class Keyboard {
         return this;
     }
     /**
-     * Returns the keyboard that was build.
-     * Note that it doesn't return resize_keyboard or other options that may be set.
-     * You don't usually need to use this method.
+     * Returns the keyboard that was build. Note that it doesn't return
+     * `resize_keyboard` or other options that may be set. You don't usually
+     * need to call this method. It is no longer useful.
      */
     build() {
         return this.keyboard;
