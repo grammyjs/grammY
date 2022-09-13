@@ -19,6 +19,7 @@ import {
     type InputMediaVideo,
     type LabeledPrice,
     type Message,
+    type MessageEntity,
     type PassportElementError,
     type Update,
     type User,
@@ -544,7 +545,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param other Optional remaining parameters, confer the official reference below
@@ -1534,7 +1535,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatAdministrators`. Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
+     * Context-aware alias for `api.getChatAdministrators`. Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1882,6 +1883,24 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
+     *
+     * @param custom_emoji_ids List of custom emoji identifiers
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
+     */
+    getCustomEmojiStickers(signal?: AbortSignal) {
+        type Emoji = MessageEntity.CustomEmojiMessageEntity;
+        return this.api.getCustomEmojiStickers(
+            (this.msg?.entities ?? [])
+                .filter((e): e is Emoji => e.type === "custom_emoji")
+                .map((e) => e.custom_emoji_id),
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.answerInlineQuery`. Use this method to send answers to an inline query. On success, True is returned.
      * No more than 50 results per query are allowed.
      *
@@ -1956,7 +1975,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.answerShippingQuery`. If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
      *
      * @param shipping_query_id Unique identifier for the query to be answered
-     * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *

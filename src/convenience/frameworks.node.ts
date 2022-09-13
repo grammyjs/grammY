@@ -1,9 +1,9 @@
 // deno-lint-ignore-file no-explicit-any
+import { type IncomingMessage, type ServerResponse } from "http";
 import {
     adapters as sharedAdapters,
     SECRET_HEADER,
 } from "./frameworks.shared.ts";
-import { type IncomingMessage, type ServerResponse } from "http";
 
 /** Node.js native 'http' and 'https' modules */
 const http = (req: IncomingMessage, res: ServerResponse) => {
