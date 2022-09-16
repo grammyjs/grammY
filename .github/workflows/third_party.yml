@@ -1,10 +1,14 @@
 on:
     push:
-        paths: [src/]
         branches: [main]
+        paths:
+            - src/
+            - .github/workflows/third_party.yml
     pull_request:
-        paths: [src/]
         branches: [main]
+        paths:
+            - src/
+            - .github/workflows/third_party.yml
 
 jobs:
     deno:
