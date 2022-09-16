@@ -1,3 +1,5 @@
+name: Third-party bots
+
 on:
     push:
         branches: [main]
