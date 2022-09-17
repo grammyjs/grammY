@@ -39,7 +39,7 @@ jobs:
                 jq '
                     (.latest / ".")[0] as $major
                     | .versions
-                    | map(select(startswith("\($major).")) | {
+                    | map(select(startswith($major + ".")) | {
                         key: @uri "https://deno.land/x/grammy@\(.)/mod.ts",
                         value: @uri "https://raw.githubusercontent.com/grammyjs/grammY/\(env.GITHUB_SHA)/src/mod.ts"
                     })
