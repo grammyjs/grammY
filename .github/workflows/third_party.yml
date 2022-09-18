@@ -1,4 +1,4 @@
-name: Third-party bots
+name: Type-check third-party bots
 
 on:
     push:
