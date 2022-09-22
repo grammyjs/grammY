@@ -227,6 +227,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/yn4v4s"><img src="https://avatars.githubusercontent.com/u/35275827?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yoel Navas E.</b></sub></a><br /><a href="#ideas-yn4v4s" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/vitorleo"><img src="https://avatars.githubusercontent.com/u/5118352?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vitor Gomes</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Avitorleo" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
