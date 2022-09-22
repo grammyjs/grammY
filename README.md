@@ -225,6 +225,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/rainrisa"><img src="https://avatars.githubusercontent.com/u/108156134?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ra</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=rainrisa" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/sartoshi-foot-dao"><img src="https://avatars.githubusercontent.com/u/99770068?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sartoshi-foot-dao</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=sartoshi-foot-dao" title="Documentation">📖</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/yn4v4s"><img src="https://avatars.githubusercontent.com/u/35275827?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yoel Navas E.</b></sub></a><br /><a href="#ideas-yn4v4s" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
