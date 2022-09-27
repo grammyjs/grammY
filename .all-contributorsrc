@@ -760,6 +760,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "xditya",
+      "name": "Aditya",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58950863?v=4",
+      "profile": "http://xditya.me/",
+      "contributions": [
+        "bug",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,

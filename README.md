@@ -228,6 +228,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/yn4v4s"><img src="https://avatars.githubusercontent.com/u/35275827?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yoel Navas E.</b></sub></a><br /><a href="#ideas-yn4v4s" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/vitorleo"><img src="https://avatars.githubusercontent.com/u/5118352?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vitor Gomes</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Avitorleo" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://xditya.me/"><img src="https://avatars.githubusercontent.com/u/58950863?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aditya</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Axditya" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Axditya" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
