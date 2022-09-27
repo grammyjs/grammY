@@ -404,9 +404,9 @@ export class Context implements RenamedUpdate {
      * @param types Types of entities to return. Omit to get all entities.
      * @returns Array of entities and their texts, or empty array when there's no text
      */
-    entities(
-        types?: MaybeArray<MessageEntity["type"]>,
-    ): Array<MessageEntity & { text: string }> {
+    entities<T extends MessageEntity["type"]>(
+        types?: MaybeArray<T>,
+    ): Array<MessageEntity & { type: T; text: string }> {
         const message = this.msg;
         if (message === undefined) return [];
 
