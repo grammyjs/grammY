@@ -40,7 +40,9 @@
         "userTesting",
         "example",
         "doc",
-        "review"
+        "review",
+        "code",
+        "ideas"
       ]
     },
     {
@@ -657,7 +659,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/26169870?v=4",
       "profile": "https://github.com/Mi3liX9",
       "contributions": [
-        "code"
+        "code",
+        "review",
+        "ideas"
       ]
     },
     {
@@ -737,6 +741,34 @@
       "profile": "https://github.com/sartoshi-foot-dao",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "yn4v4s",
+      "name": "Yoel Navas E.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35275827?v=4",
+      "profile": "https://github.com/yn4v4s",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "vitorleo",
+      "name": "Vitor Gomes",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5118352?v=4",
+      "profile": "https://github.com/vitorleo",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "xditya",
+      "name": "Aditya",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58950863?v=4",
+      "profile": "http://xditya.me/",
+      "contributions": [
+        "bug",
+        "review"
       ]
     }
   ],
