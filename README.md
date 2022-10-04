@@ -94,7 +94,7 @@ Includes a setup to easily run any of them.
 ### [Awesome grammY](https://github.com/grammyjs/awesome-grammY)
 
 —list of awesome projects built with grammY.
-Helpful if you want to see some real world usage.
+Helpful if you want to see some real-world usage.
 
 ### [grammY Telegram Chat](https://t.me/grammyjs)
 
