@@ -192,8 +192,9 @@ export class Keyboard {
         return this;
     }
     /**
-     * Return the resulting custom keyboard that was built. May be called in the
-     * end if necessary so you can specify more options in `reply_markup`.
+     * Returns the keyboard that was build. Note that it doesn't return
+     * `resize_keyboard` or other options that may be set. You don't usually
+     * need to call this method. It is no longer useful.
      */
     build() {
         return this.keyboard;
