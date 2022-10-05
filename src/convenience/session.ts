@@ -296,7 +296,8 @@ export function lazySession<S, C extends Context>(
  * both in a strict and a lazy way. Works by using `Object.defineProperty` to
  * install `O[P]`.
  */
-class PropertySession<O, P extends keyof O> {
+// deno-lint-ignore ban-types
+class PropertySession<O extends {}, P extends keyof O> {
     private key?: string;
     private value: O[P] | undefined;
     private promise: Promise<O[P] | undefined> | undefined;
