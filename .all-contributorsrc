@@ -770,6 +770,15 @@
         "bug",
         "review"
       ]
+    },
+    {
+      "login": "uditkarode",
+      "name": "Udit Karode",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30829387?v=4",
+      "profile": "http://uditkaro.de",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
