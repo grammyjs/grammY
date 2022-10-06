@@ -770,6 +770,15 @@
         "bug",
         "review"
       ]
+    },
+    {
+      "login": "mikerockett",
+      "name": "Mike Rockétt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4586280?v=4",
+      "profile": "https://rockett.pw",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
