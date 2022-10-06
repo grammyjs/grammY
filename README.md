@@ -91,6 +91,11 @@ Useful to look up descriptions about any element of grammY.
 —repository full of example bots.
 Includes a setup to easily run any of them.
 
+### [Awesome grammY](https://github.com/grammyjs/awesome-grammY)
+
+—list of awesome projects built with grammY.
+Helpful if you want to see some real-world usage.
+
 ### [grammY Telegram Chat](https://t.me/grammyjs)
 
 —Telegram chat where you can ask any question about grammY or bots in general.
