@@ -49,12 +49,31 @@ const awsLambda = (event: any, _context: any, callback: any) => ({
     unauthorized: () => callback(null, { statusCode: 401 }),
 });
 
+/** Azure Functions */
+const azure = (context: any, req: any) => ({
+    update: Promise.resolve(req.body),
+    header: context.res.headers[SECRET_HEADER],
+    end: () =>
+        context.res = {
+            status: 200,
+            body: "",
+        },
+    respond: (json: string) => {
+        context.res.set("Content-Type", "application/json");
+        context.res.send(json);
+    },
+    unauthorized: () => {
+        context.res.send(401, "secret token is wrong");
+    },
+});
+
 // please open a PR if you want to add another
 export const adapters = {
     http,
     https: http,
     worktop,
     "aws-lambda": awsLambda,
+    azure,
     ...sharedAdapters,
 };
 export const defaultAdapter = "express";
