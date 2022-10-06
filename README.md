@@ -236,6 +236,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/vitorleo"><img src="https://avatars.githubusercontent.com/u/5118352?v=4?s=100" width="100px;" alt="Vitor Gomes"/><br /><sub><b>Vitor Gomes</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Avitorleo" title="Bug reports">🐛</a></td>
       <td align="center"><a href="http://xditya.me/"><img src="https://avatars.githubusercontent.com/u/58950863?v=4?s=100" width="100px;" alt="Aditya"/><br /><sub><b>Aditya</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Axditya" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Axditya" title="Reviewed Pull Requests">👀</a></td>
       <td align="center"><a href="http://uditkaro.de"><img src="https://avatars.githubusercontent.com/u/30829387?v=4?s=100" width="100px;" alt="Udit Karode"/><br /><sub><b>Udit Karode</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Auditkarode" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center"><a href="https://rockett.pw"><img src="https://avatars.githubusercontent.com/u/4586280?v=4?s=100" width="100px;" alt="Mike Rockétt"/><br /><sub><b>Mike Rockétt</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Amikerockett" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
