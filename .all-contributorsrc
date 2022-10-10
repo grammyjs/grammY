@@ -758,7 +758,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/5118352?v=4",
       "profile": "https://github.com/vitorleo",
       "contributions": [
-        "bug"
+        "bug",
+        "code"
       ]
     },
     {
@@ -768,6 +769,24 @@
       "profile": "http://xditya.me/",
       "contributions": [
         "bug",
+        "review"
+      ]
+    },
+    {
+      "login": "uditkarode",
+      "name": "Udit Karode",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30829387?v=4",
+      "profile": "http://uditkaro.de",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "mikerockett",
+      "name": "Mike Rockétt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4586280?v=4",
+      "profile": "https://rockett.pw",
+      "contributions": [
         "review"
       ]
     }
