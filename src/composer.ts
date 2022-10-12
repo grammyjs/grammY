@@ -520,6 +520,12 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         return this.filter(Context.has.inlineQuery(trigger), ...middleware);
     }
 
+    chosenInlineResult(trigger: MaybeArray<string | RegExp>,
+        ...middleware: Array<InlineQueryMiddleware<C>>
+    ): Composer<InlineQueryContext<C>> {
+        return this.filter(Context.has.chosenInlineResult(trigger), ...middleware);
+    }
+
     /**
      * > This is an advanced method of grammY.
      *
