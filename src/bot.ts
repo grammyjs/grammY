@@ -231,11 +231,25 @@ export class Bot<
      * Initializes the bot, i.e. fetches information about the bot itself. This
      * method is called automatically, you usually don't have to call it
      * manually.
+     *
+     * This method allows you to pass `{ unreliable: true }` which will make the
+     * method work unreliably. This means that it could initialize the bot in
+     * some random cases, and throw an error in other cases. This is because
+     * errors of the underlying API calls will not be handled correctly. Flood
+     * waits will be ignored, temporary internal server issues will cause
+     * crashes, and intermediate network outages will not be anticipated. You
+     * might want to use this option if you care about the underlying errors in
+     * order to build your own reliability system around the initialization
+     * process.
+     *
+     * @param options Optional options object
      */
-    async init() {
+    async init({ unreliable }: { unreliable?: boolean } = {}) {
         if (!this.isInited()) {
             debug("Initializing bot");
-            this.mePromise ??= withRetries(() => this.api.getMe());
+            this.mePromise ??= unreliable
+                ? this.api.getMe()
+                : withRetries(() => this.api.getMe());
             let me: UserFromGetMe;
             try {
                 me = await this.mePromise;
