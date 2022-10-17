@@ -10,7 +10,6 @@ import {
 import {
     type Chat,
     type ChatPermissions,
-    type InlineQueryResult,
     type InputFile,
     type InputMedia,
     type InputMediaAudio,
@@ -202,10 +201,10 @@ const checker: StaticHas = {
             hasInlineQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
     },
     chosenInlineResult(trigger) {
-        const hasInlineQuery = checker.filterQuery("inline_query");
+        const hasChosenInlineResult = checker.filterQuery("chosen_inline_result");
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is InlineQueryContext<C> =>
-            hasInlineQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
+            hasChosenInlineResult(ctx) && match(ctx, ctx.chosenInlineResult.result_id, trg);
     }
 };
 
