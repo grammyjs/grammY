@@ -8,6 +8,7 @@ import {
     matchFilter,
 } from "./filter.ts";
 import {
+    InlineQueryResult,
     type Chat,
     type ChatPermissions,
     type InputFile,
