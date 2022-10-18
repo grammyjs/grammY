@@ -520,10 +520,35 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         return this.filter(Context.has.inlineQuery(trigger), ...middleware);
     }
 
-    chosenInlineResult(trigger: MaybeArray<string | RegExp>,
+    /**
+     * Registers middleware for the chosen inline result of an inline query that
+     * was chosen by the user and sent to their chat partner. Telegram sends an
+     * inline query to your bot whenever a user types “@your_bot_name ...” into
+     * a text field in Telegram. You bot will then receive the entered search
+     * query and can respond with a number of results (text, images, etc) that
+     * the user can pick from to send a message _via_ your bot to the respective
+     * chat. Check out https://core.telegram.org/bots/inline to read more about
+     * inline bots.
+     *
+     * > Note that you have to enable inline mode for you bot by contacting
+     * > @BotFather first.
+     *
+     * ```ts
+     * // Listen for users typing “@your_bot_name query”
+     * bot.chosenInlineResult('id', async ctx => {
+     *   // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
+     *   const id = ctx.inlineQuery.id;
+     *   // Your code
+     * })
+     * ```
+     *
+     * @param resultId An id or array of ids
+     * @param middleware The middleware to register
+     */
+    chosenInlineResult(resultId: MaybeArray<string | RegExp>,
         ...middleware: Array<InlineQueryMiddleware<C>>
     ): Composer<InlineQueryContext<C>> {
-        return this.filter(Context.has.chosenInlineResult(trigger), ...middleware);
+        return this.filter(Context.has.chosenInlineResult(resultId), ...middleware);
     }
 
     /**

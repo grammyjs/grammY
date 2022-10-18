@@ -117,7 +117,13 @@ interface StaticHas {
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C>;
-
+    /**
+    * Generates a predicate function that can test context objects for
+    * containing the chosen inline result, or for the chosen inline result to
+    * match the given regular expression.
+    *
+    * @param trigger The string or regex to match
+    */
     chosenInlineResult(trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C>;
 }
