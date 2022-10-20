@@ -44,6 +44,12 @@ export interface PollingOptions {
      */
     drop_pending_updates?: boolean;
     /**
+     * Pass False to prevent webhook deletion on the start of long polling.
+     * Note that this will result in immediate error response from Telegram
+     * server is webhook is set somewhere else.
+     */
+    delete_webhook_on_polling?: boolean;
+    /**
      * A callback function that is useful for logging (or setting up middleware
      * if you did not do this before). It will be executed after the setup of
      * the bot has completed, and immediately before the first updates are being
@@ -120,6 +126,7 @@ export class Bot<
     private pollingRunning = false;
     private pollingAbortController: AbortController | undefined;
     private lastTriedUpdateId = 0;
+    private deleteWebhookOnPolling = true;
 
     /**
      * Gives you full access to the Telegram Bot API.
@@ -358,11 +365,17 @@ a known bot info object.",
             debug("Simple long polling already running!");
             return;
         }
-        await withRetries(() =>
-            this.api.deleteWebhook({
-                drop_pending_updates: options?.drop_pending_updates,
-            })
-        );
+
+        if (options?.delete_webhook_on_polling === false) {
+            await withRetries(() =>
+                this.api.deleteWebhook({
+                    drop_pending_updates: options?.drop_pending_updates,
+                })
+            );
+        }
+        else {
+            debug("deleteWebhook is skipped");
+        }
 
         // All async ops of setup complete, run callback
         await options?.onStart?.(this.botInfo);
