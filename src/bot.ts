@@ -46,7 +46,7 @@ export interface PollingOptions {
     /**
      * Pass False to prevent webhook deletion on the start of long polling.
      * Note that this will result in immediate error response from Telegram
-     * server is webhook is set somewhere else.
+     * server if webhook is set somewhere else.
      */
     delete_webhook_on_polling?: boolean;
     /**
