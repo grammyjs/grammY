@@ -532,7 +532,6 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * ```ts
      * bot.chosenInlineResult('id', async ctx => {
-     *   // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
      *   const id = ctx.inlineQuery.id;
      *   // Your code
      * })
