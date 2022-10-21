@@ -6,6 +6,7 @@ import {
     type GameQueryContext,
     type HearsContext,
     type InlineQueryContext,
+    type ChosenInlineResult,
     type MaybeArray,
     type StringWithSuggestions,
 } from "./context.ts";
@@ -548,7 +549,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     chosenInlineResult(
         resultId: MaybeArray<string | RegExp>,
         ...middleware: Array<InlineQueryMiddleware<C>>
-    ): Composer<InlineQueryContext<C>> {
+    ): Composer<ChosenInlineResult<C>> {
         return this.filter(
             Context.has.chosenInlineResult(resultId),
             ...middleware,

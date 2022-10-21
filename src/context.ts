@@ -150,8 +150,7 @@ const checker: StaticHas = {
         toArray(command).forEach((cmd) => {
             if (cmd.startsWith("/")) {
                 throw new Error(
-                    `Do not include '/' when registering command handlers (use '${
-                        cmd.substring(1)
+                    `Do not include '/' when registering command handlers (use '${cmd.substring(1)
                     }' not '${cmd}')`,
                 );
             }
@@ -279,7 +278,7 @@ export class Context implements RenamedUpdate {
          * Information about the bot itself.
          */
         public readonly me: UserFromGetMe,
-    ) {}
+    ) { }
 
     // UPDATE SHORTCUTS
 
@@ -351,10 +350,10 @@ export class Context implements RenamedUpdate {
         // Keep in sync with types in `filter.ts`.
         return (
             this.message ??
-                this.editedMessage ??
-                this.callbackQuery?.message ??
-                this.channelPost ??
-                this.editedChannelPost
+            this.editedMessage ??
+            this.callbackQuery?.message ??
+            this.channelPost ??
+            this.editedChannelPost
         );
     }
     /**
@@ -365,9 +364,9 @@ export class Context implements RenamedUpdate {
         // Keep in sync with types in `filter.ts`.
         return (
             this.msg ??
-                this.myChatMember ??
-                this.chatMember ??
-                this.chatJoinRequest
+            this.myChatMember ??
+            this.chatMember ??
+            this.chatJoinRequest
         )?.chat;
     }
     /**
@@ -387,14 +386,14 @@ export class Context implements RenamedUpdate {
         // Keep in sync with types in `filter.ts`.
         return (
             this.callbackQuery ??
-                this.inlineQuery ??
-                this.shippingQuery ??
-                this.preCheckoutQuery ??
-                this.chosenInlineResult ??
-                this.msg ??
-                this.myChatMember ??
-                this.chatMember ??
-                this.chatJoinRequest
+            this.inlineQuery ??
+            this.shippingQuery ??
+            this.preCheckoutQuery ??
+            this.chosenInlineResult ??
+            this.msg ??
+            this.myChatMember ??
+            this.chatMember ??
+            this.chatJoinRequest
         )?.from;
     }
     /**
@@ -404,7 +403,7 @@ export class Context implements RenamedUpdate {
     get inlineMessageId(): string | undefined {
         return (
             this.callbackQuery?.inline_message_id ??
-                this.chosenInlineResult?.inline_message_id
+            this.chosenInlineResult?.inline_message_id
         );
     }
 
@@ -1035,12 +1034,12 @@ export class Context implements RenamedUpdate {
         const file = m.photo !== undefined
             ? m.photo[m.photo.length - 1]
             : m.animation ??
-                m.audio ??
-                m.document ??
-                m.video ??
-                m.video_note ??
-                m.voice ??
-                m.sticker;
+            m.audio ??
+            m.document ??
+            m.video ??
+            m.video_note ??
+            m.voice ??
+            m.sticker;
         return this.api.getFile(orThrow(file, "getFile").file_id, signal);
     }
 
@@ -2169,6 +2168,20 @@ export type InlineQueryContext<C extends Context> = Filter<
     C,
     "inline_query"
 >;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.chosenInlineResult`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * annotate `bot.chosenInlineResult` does it. This allows you to context objects in
+ * middleware that is not directly passed to `bot.chosenInlineResult`, hence not
+ * inferring the correct type automatically. That way, handlers can be defined
+ * in separate files and still have the correct types.
+ */
+export type ChosenInlineResult<C extends Context> = Filter<
+    C,
+    "chosen_inline_result"
+>;
 
 type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
@@ -2203,7 +2216,7 @@ type ChatTypeUpdate<T extends Chat["type"]> =
     & ConstrainUpdatesByChatType<T>;
 type ConstrainUpdatesByChatType<T extends Chat["type"]> = Record<
     [T] extends ["channel"] ? "message" | "edited_message"
-        : "channel_post" | "edited_channel_post",
+    : "channel_post" | "edited_channel_post",
     undefined
 >;
 
