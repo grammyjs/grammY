@@ -1,12 +1,12 @@
 import {
     type CallbackQueryContext,
     type ChatTypeContext,
+    type ChosenInlineResult,
     type CommandContext,
     Context,
     type GameQueryContext,
     type HearsContext,
     type InlineQueryContext,
-    type ChosenInlineResult,
     type MaybeArray,
     type StringWithSuggestions,
 } from "./context.ts";
@@ -522,20 +522,15 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
-     * Registers middleware for the chosen inline result of an inline query that
-     * was chosen by the user and sent to their chat partner. Telegram sends an
-     * inline query to your bot whenever a user types “@your_bot_name ...” into
-     * a text field in Telegram. You bot will then receive the entered search
-     * query and can respond with a number of results (text, images, etc) that
-     * the user can pick from to send a message _via_ your bot to the respective
-     * chat. Check out https://core.telegram.org/bots/inline to read more about
-     * inline bots.
-     *
-     * > Note that you have to enable inline mode for you bot by contacting
-     * > @BotFather first.
+     * Registers middleware for InlineQueryResults by the given id or ids.
+     * Telegram sends an inline query to your bot whenever a user types
+     * “@your_bot_name ...” into a text field in Telegram. The response to
+     * this query can be a number of items (text, images, etc). This response
+     * is stored as the chosen inline result.
+     * Check out https://core.telegram.org/bots/api#choseninlineresult to
+     * read more about chosen inline results.
      *
      * ```ts
-     * // Listen for users typing “@your_bot_name query”
      * bot.chosenInlineResult('id', async ctx => {
      *   // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
      *   const id = ctx.inlineQuery.id;
