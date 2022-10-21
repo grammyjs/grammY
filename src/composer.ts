@@ -545,10 +545,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param resultId An id or array of ids
      * @param middleware The middleware to register
      */
-    chosenInlineResult(resultId: MaybeArray<string | RegExp>,
+    chosenInlineResult(
+        resultId: MaybeArray<string | RegExp>,
         ...middleware: Array<InlineQueryMiddleware<C>>
     ): Composer<InlineQueryContext<C>> {
-        return this.filter(Context.has.chosenInlineResult(resultId), ...middleware);
+        return this.filter(
+            Context.has.chosenInlineResult(resultId),
+            ...middleware,
+        );
     }
 
     /**
