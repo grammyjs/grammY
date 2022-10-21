@@ -69,7 +69,7 @@ const azure = (context: any, req: any) => ({
 /** Vercel/Next.js Serverless Functions */
 const vercel = (req: any, res: any) => ({
     update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER] as string,
+    header: req.headers[SECRET_HEADER],
     end: () => res.end(),
     respond: (json: string) => res.status(200).json(json),
     unauthorized: () => res.status(401).send("secret token is wrong"),
