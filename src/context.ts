@@ -10,7 +10,7 @@ import {
 import {
     type Chat,
     type ChatPermissions,
-    InlineQueryResult,
+    type InlineQueryResult,
     type InputFile,
     type InputMedia,
     type InputMediaAudio,
@@ -2179,7 +2179,7 @@ export type InlineQueryContext<C extends Context> = Filter<
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type ChosenInlineResult<C extends Context> = Filter<
+export type ChosenInlineResultContext<C extends Context> = Filter<
     C,
     "chosen_inline_result"
 >;

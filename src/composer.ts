@@ -1,7 +1,7 @@
 import {
     type CallbackQueryContext,
     type ChatTypeContext,
-    type ChosenInlineResult,
+    type ChosenInlineResultContext,
     type CommandContext,
     Context,
     type GameQueryContext,
@@ -543,7 +543,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     chosenInlineResult(
         resultId: MaybeArray<string | RegExp>,
         ...middleware: Array<InlineQueryMiddleware<C>>
-    ): Composer<ChosenInlineResult<C>> {
+    ): Composer<ChosenInlineResultContext<C>> {
         return this.filter(
             Context.has.chosenInlineResult(resultId),
             ...middleware,
