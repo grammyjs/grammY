@@ -53,10 +53,11 @@ const awsLambda = (event: any, _context: any, callback: any) => ({
 const azure = (context: any, req: any) => ({
     update: Promise.resolve(req.body),
     header: context.res.headers[SECRET_HEADER],
-    end: () => (context.res = {
-        status: 200,
-        body: "",
-    }),
+    end: () =>
+        (context.res = {
+            status: 200,
+            body: "",
+        }),
     respond: (json: string) => {
         context.res.set("Content-Type", "application/json");
         context.res.send(json);
@@ -66,8 +67,8 @@ const azure = (context: any, req: any) => ({
     },
 });
 
-/** Vercel/Next.js Serverless Functions */
-const vercel = (req: any, res: any) => ({
+/** Next.js Serverless Functions */
+const nextJs = (req: any, res: any) => ({
     update: Promise.resolve(req.body),
     header: req.headers[SECRET_HEADER],
     end: () => res.end(),
@@ -82,7 +83,7 @@ export const adapters = {
     worktop,
     "aws-lambda": awsLambda,
     azure,
-    vercel,
+    "next-js": nextJs,
     ...sharedAdapters,
 };
 export const defaultAdapter = "express";
