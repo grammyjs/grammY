@@ -522,17 +522,15 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
-     * Registers middleware for InlineQueryResults by the given id or ids.
-     * Telegram sends an inline query to your bot whenever a user types
-     * “@your_bot_name ...” into a text field in Telegram. The response to
-     * this query can be a number of items (text, images, etc). This response
-     * is stored as the chosen inline result.
-     * Check out https://core.telegram.org/bots/api#choseninlineresult to
-     * read more about chosen inline results.
+     * Registers middleware for the ChosenInlineResult by the given id or ids.
+     * ChosenInlineResult represents a result of an inline query that was
+     * chosen by the user and sent to their chat partner. Check out
+     * https://core.telegram.org/bots/api#choseninlineresult to read more
+     * about chosen inline results.
      *
      * ```ts
      * bot.chosenInlineResult('id', async ctx => {
-     *   const id = ctx.inlineQuery.id;
+     *   const id = ctx.result_id;
      *   // Your code
      * })
      * ```
