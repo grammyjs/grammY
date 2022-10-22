@@ -53,11 +53,10 @@ const awsLambda = (event: any, _context: any, callback: any) => ({
 const azure = (context: any, req: any) => ({
     update: Promise.resolve(req.body),
     header: context.res.headers[SECRET_HEADER],
-    end: () =>
-        context.res = {
-            status: 200,
-            body: "",
-        },
+    end: () => (context.res = {
+        status: 200,
+        body: "",
+    }),
     respond: (json: string) => {
         context.res.set("Content-Type", "application/json");
         context.res.send(json);
@@ -67,6 +66,15 @@ const azure = (context: any, req: any) => ({
     },
 });
 
+/** Next.js Serverless Functions */
+const nextJs = (req: any, res: any) => ({
+    update: Promise.resolve(req.body),
+    header: req.headers[SECRET_HEADER],
+    end: () => res.end(),
+    respond: (json: string) => res.status(200).json(json),
+    unauthorized: () => res.status(401).send("secret token is wrong"),
+});
+
 // please open a PR if you want to add another
 export const adapters = {
     http,
@@ -74,6 +82,7 @@ export const adapters = {
     worktop,
     "aws-lambda": awsLambda,
     azure,
+    "next-js": nextJs,
     ...sharedAdapters,
 };
 export const defaultAdapter = "express";
