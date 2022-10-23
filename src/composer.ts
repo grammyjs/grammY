@@ -540,7 +540,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     chosenInlineResult(
         resultId: MaybeArray<string | RegExp>,
-        ...middleware: Array<InlineQueryMiddleware<C>>
+        ...middleware: Array<ChosenInlineResultMiddleware<C>>
     ): Composer<ChosenInlineResultContext<C>> {
         return this.filter(
             Context.has.chosenInlineResult(resultId),
@@ -886,6 +886,17 @@ export type GameQueryMiddleware<C extends Context> = Middleware<
  */
 export type InlineQueryMiddleware<C extends Context> = Middleware<
     InlineQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.chosenInlineResult`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.inlineQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
+    ChosenInlineResultContext<C>
 >;
 /**
  * Type of the middleware that can be passed to `bot.chatType`.
