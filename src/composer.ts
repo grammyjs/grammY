@@ -892,7 +892,7 @@ export type InlineQueryMiddleware<C extends Context> = Middleware<
  *
  * This helper type can be used to annotate middleware functions that are
  * defined in one place, so that they have the correct type when passed to
- * `bot.inlineQuery` in a different place. For instance, this allows for more
+ * `bot.chosenInlineResult` in a different place. For instance, this allows for more
  * modular code where handlers are defined in separate files.
  */
 export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
