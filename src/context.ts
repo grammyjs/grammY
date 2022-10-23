@@ -150,7 +150,8 @@ const checker: StaticHas = {
         toArray(command).forEach((cmd) => {
             if (cmd.startsWith("/")) {
                 throw new Error(
-                    `Do not include '/' when registering command handlers (use '${cmd.substring(1)
+                    `Do not include '/' when registering command handlers (use '${
+                        cmd.substring(1)
                     }' not '${cmd}')`,
                 );
             }
@@ -213,7 +214,9 @@ const checker: StaticHas = {
             "chosen_inline_result",
         );
         const trg = triggerFn(trigger);
-        return <C extends Context>(ctx: C): ctx is ChosenInlineResultContext<C> =>
+        return <C extends Context>(
+            ctx: C,
+        ): ctx is ChosenInlineResultContext<C> =>
             hasChosenInlineResult(ctx) &&
             match(ctx, ctx.chosenInlineResult.result_id, trg);
     },
@@ -278,7 +281,7 @@ export class Context implements RenamedUpdate {
          * Information about the bot itself.
          */
         public readonly me: UserFromGetMe,
-    ) { }
+    ) {}
 
     // UPDATE SHORTCUTS
 
@@ -350,10 +353,10 @@ export class Context implements RenamedUpdate {
         // Keep in sync with types in `filter.ts`.
         return (
             this.message ??
-            this.editedMessage ??
-            this.callbackQuery?.message ??
-            this.channelPost ??
-            this.editedChannelPost
+                this.editedMessage ??
+                this.callbackQuery?.message ??
+                this.channelPost ??
+                this.editedChannelPost
         );
     }
     /**
@@ -364,9 +367,9 @@ export class Context implements RenamedUpdate {
         // Keep in sync with types in `filter.ts`.
         return (
             this.msg ??
-            this.myChatMember ??
-            this.chatMember ??
-            this.chatJoinRequest
+                this.myChatMember ??
+                this.chatMember ??
+                this.chatJoinRequest
         )?.chat;
     }
     /**
@@ -386,14 +389,14 @@ export class Context implements RenamedUpdate {
         // Keep in sync with types in `filter.ts`.
         return (
             this.callbackQuery ??
-            this.inlineQuery ??
-            this.shippingQuery ??
-            this.preCheckoutQuery ??
-            this.chosenInlineResult ??
-            this.msg ??
-            this.myChatMember ??
-            this.chatMember ??
-            this.chatJoinRequest
+                this.inlineQuery ??
+                this.shippingQuery ??
+                this.preCheckoutQuery ??
+                this.chosenInlineResult ??
+                this.msg ??
+                this.myChatMember ??
+                this.chatMember ??
+                this.chatJoinRequest
         )?.from;
     }
     /**
@@ -403,7 +406,7 @@ export class Context implements RenamedUpdate {
     get inlineMessageId(): string | undefined {
         return (
             this.callbackQuery?.inline_message_id ??
-            this.chosenInlineResult?.inline_message_id
+                this.chosenInlineResult?.inline_message_id
         );
     }
 
@@ -1034,12 +1037,12 @@ export class Context implements RenamedUpdate {
         const file = m.photo !== undefined
             ? m.photo[m.photo.length - 1]
             : m.animation ??
-            m.audio ??
-            m.document ??
-            m.video ??
-            m.video_note ??
-            m.voice ??
-            m.sticker;
+                m.audio ??
+                m.document ??
+                m.video ??
+                m.video_note ??
+                m.voice ??
+                m.sticker;
         return this.api.getFile(orThrow(file, "getFile").file_id, signal);
     }
 
@@ -2216,7 +2219,7 @@ type ChatTypeUpdate<T extends Chat["type"]> =
     & ConstrainUpdatesByChatType<T>;
 type ConstrainUpdatesByChatType<T extends Chat["type"]> = Record<
     [T] extends ["channel"] ? "message" | "edited_message"
-    : "channel_post" | "edited_channel_post",
+        : "channel_post" | "edited_channel_post",
     undefined
 >;
 
