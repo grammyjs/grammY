@@ -25,7 +25,7 @@ describe("Context", () => {
         channel_post: m,
         edited_channel_post: m,
         inline_query: { id: "b", from: u, query: "iq" },
-        chosen_inline_result: { from: u, inline_message_id: "x" },
+        chosen_inline_result: { from: u, inline_message_id: "x", result_id: "p" },
         callback_query: {
             data: "cb",
             game_short_name: "game",
@@ -304,6 +304,18 @@ describe("Context", () => {
         assert(ctx.hasInlineQuery(/^i./));
         assertFalse(Context.has.inlineQuery("cb")(ctx));
         assertFalse(ctx.hasInlineQuery("cb"));
+    });
+
+    it("should be able to check the chosen inline result", () => {
+        const ctx = new Context(update, api, me);
+
+        assert(Context.has.chosenInlineResult("p")(ctx));
+        assert(ctx.hasChosenInlineResult("p"));
+        assert(Context.has.chosenInlineResult(/^p/)(ctx));
+        assertEquals(ctx.match, "p".match(/^p/));
+        assert(ctx.hasChosenInlineResult(/^p/));
+        assertFalse(Context.has.chosenInlineResult("q")(ctx));
+        assertFalse(ctx.hasChosenInlineResult("q"));
     });
 
     it("should be able to match filter queries", () => {
