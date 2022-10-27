@@ -25,7 +25,11 @@ describe("Context", () => {
         channel_post: m,
         edited_channel_post: m,
         inline_query: { id: "b", from: u, query: "iq" },
-        chosen_inline_result: { from: u, inline_message_id: "x", result_id: "p" },
+        chosen_inline_result: {
+            from: u,
+            inline_message_id: "x",
+            result_id: "p",
+        },
         callback_query: {
             data: "cb",
             game_short_name: "game",
