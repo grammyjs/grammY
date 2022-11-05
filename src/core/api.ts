@@ -1236,6 +1236,139 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getforumtopiciconstickers
+     */
+    getForumTopicIconStickers(signal?: AbortSignal) {
+        return this.raw.getForumTopicIconStickers(signal);
+    }
+
+    /**
+     * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param name Topic name, 1-128 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createforumtopic
+     */
+    createForumTopic(
+        chat_id: number | string,
+        name: string,
+        other?: Other<R, "createForumTopic", "chat_id" | "name">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.createForumTopic({ chat_id, name, ...other }, signal);
+    }
+
+    /**
+     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param name New topic name, 1-128 characters
+     * @param icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
+     */
+    editForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        name: string,
+        icon_custom_emoji_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editForumTopic({
+            chat_id,
+            message_thread_id,
+            name,
+            icon_custom_emoji_id,
+        }, signal);
+    }
+
+    /**
+     * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closeforumtopic
+     */
+    closeForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.closeForumTopic({ chat_id, message_thread_id }, signal);
+    }
+
+    /**
+     * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopenforumtopic
+     */
+    reopenForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.reopenForumTopic(
+            { chat_id, message_thread_id },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteforumtopic
+     */
+    deleteForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteForumTopic(
+            { chat_id, message_thread_id },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unpinallforumtopicmessages
+     */
+    unpinAllForumTopicMessages(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.unpinAllForumTopicMessages(
+            { chat_id, message_thread_id },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
      * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
