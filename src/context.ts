@@ -1688,7 +1688,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
      * @param name New topic name, 1-128 characters
-     * @param icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers
+     * @param icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
@@ -2255,7 +2255,7 @@ type CallbackQueryContextCore = FilterCore<"callback_query:data">;
  * in separate files and still have the correct types.
  */
 export type CallbackQueryContext<C extends Context> = Filter<
-    C,
+    NarrowMatch<C, string | RegExpMatchArray>,
     "callback_query:data"
 >;
 
