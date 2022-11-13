@@ -2221,7 +2221,7 @@ type CallbackQueryContextCore = FilterCore<"callback_query:data">;
  * in separate files and still have the correct types.
  */
 export type CallbackQueryContext<C extends Context> = Filter<
-    C,
+    NarrowMatch<C, string | RegExpMatchArray>,
     "callback_query:data"
 >;
 
