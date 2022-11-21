@@ -14,7 +14,8 @@ pids
 # Dependency directories
 node_modules/
 
-# package-lock.json will not be published, so no need to store it
+# lock files will not be published, so no need to store it
+deno.lock
 package-lock.json
 
 # Output of 'npm pack'
