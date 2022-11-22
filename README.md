@@ -122,13 +122,14 @@ You may also be interested in [why we support Deno](https://grammy.dev/resources
 
 ## Browser Support
 
-The grammY core package in this repository is available as a JavaScript bundle from the CDN at `get.grammy.dev`.
-Currently, we transpile all stable versions (all releases since v1.0) as well as the current `main` branch to ES6 and ESNext.
+The grammY core package in this repository is available as an ESM module under the `@grammyjs/web` npm package.
 
-You can download them from the URL `https://get.grammy.dev/[ES version lowercased]@[grammY version including v-prefix].js`.
-For example, the most recent source on `main` in ES6 is available from <https://get.grammy.dev/es6@dev.js>.
+You can just install it with npm or yarn and use it in place of the `grammy` package.
 
-So far, this is mainly useful for running bots on Cloudflare Workers.
+If you need a CDN, you can use jsDelivr or UNPKG like with the following URLs:
+
+jsDelivr: `https://cdn.jsdelivr.net/npm/@grammyjs/web@<grammy-version>`
+UNPKG: `https://unpkg.com/@grammyjs/web@1.12.0@<grammy-version>`
 
 ## [Contribution Guide »](./CONTRIBUTING.md)
 
