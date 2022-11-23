@@ -129,7 +129,7 @@ You can just install it with npm or yarn and use it in place of the `grammy` pac
 If you need a CDN, you can use jsDelivr or UNPKG like with the following URLs:
 
 jsDelivr: `https://cdn.jsdelivr.net/npm/@grammyjs/web@<grammy-version>`
-UNPKG: `https://unpkg.com/@grammyjs/web@1.12.0@<grammy-version>`
+UNPKG: `https://unpkg.com/@grammyjs/web@<grammy-version>`
 
 ## [Contribution Guide »](./CONTRIBUTING.md)
 

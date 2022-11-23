@@ -6,8 +6,9 @@ sed -i~ 's/^if (isDeno)/if (false)/' ../src/platform.deno.ts
 trap 'mv ../src/platform.deno.ts~ ../src/platform.deno.ts' EXIT
 
 echo "Removing old bundle directory"
+rm -rf bundle/out
 
-if [ -d "out" ]; then
+if [ -d "../out" ]; then
   echo "Found node files. Skipping d2n step"
 else
   echo "Running d2n"
@@ -18,9 +19,11 @@ echo "Creating bundle folder"
 mkdir -p bundle/out
 
 echo "Generating bundle package.json"
-sed 's/".\/out\/mod.js"/".\/out\/grammy.js"/g' ../package.json > bundle/package.json
-sed -i 's/"name": "grammy"/"name": "@grammyjs\/web"/' bundle/package.json
-sed -i 's/        "prepare": "npm run backport",//' bundle/package.json
+jq '. + {
+  "name": "@grammyjs/web",
+  "dependencies": {},
+  "scripts": {},
+}' <../package.json >bundle/package.json
 
 echo "Copying node files"
 cp -R ../out bundle/
@@ -30,6 +33,6 @@ shopt -s globstar
 rm bundle/**/*.js
 
 echo "Bundling source"
-deno bundle ../src/mod.ts bundle/out/grammy.js
+deno bundle ../src/mod.ts bundle/out/mod.js
 
 echo "Done."
