@@ -128,9 +128,18 @@ You can just install it with npm or yarn and use it in place of the `grammy` pac
 
 If you need a CDN, you can use jsDelivr or UNPKG like with the following URLs:
 
-grammY: `https://get.grammy.dev/es6@<grammy-version>.js`
 jsDelivr: `https://cdn.jsdelivr.net/npm/@grammyjs/web@<grammy-version>`
 UNPKG: `https://unpkg.com/@grammyjs/web@<grammy-version>`
+[grammY](#grammy-cdn): `https://get.grammy.dev/es6@<grammy-version>.js`
+
+### grammY CDN
+
+Although it works, this is no longer the preferred way of using grammY in the web, and this is only here so we don't break codebases that already use it. If you can, use the `@grammyjs/web` package from npm. An article explaining this further should come to the official docs soon™️.
+
+Currently, we provide all stable versions (all releases since v1.0) as well as the current `main` branch as ES6 and ESNext.
+
+You can download them from the URL `https://get.grammy.dev/[ES version lowercased]@[grammY version including v-prefix].js`.
+For example, the most recent source on `main` in ES6 is available from <https://get.grammy.dev/es6@dev.js>.
 
 ## [Contribution Guide »](./CONTRIBUTING.md)
 
