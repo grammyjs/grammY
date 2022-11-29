@@ -26,9 +26,7 @@ jq '. + {
 }' <../package.json >bundle/package.json
 
 echo "Copying node files"
-cp -R ../out bundle/
-cp ../LICENSE bundle/
-cp ../README.md bundle/
+cp -rv ../LICENSE ../README.md ../out bundle/
 shopt -s globstar
 rm bundle/**/*.js
 
