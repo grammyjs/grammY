@@ -238,6 +238,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="http://uditkaro.de"><img src="https://avatars.githubusercontent.com/u/30829387?v=4?s=100" width="100px;" alt="Udit Karode"/><br /><sub><b>Udit Karode</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Auditkarode" title="Reviewed Pull Requests">👀</a></td>
       <td align="center"><a href="https://rockett.pw"><img src="https://avatars.githubusercontent.com/u/4586280?v=4?s=100" width="100px;" alt="Mike Rockétt"/><br /><sub><b>Mike Rockétt</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Amikerockett" title="Reviewed Pull Requests">👀</a></td>
       <td align="center"><a href="https://github.com/MrVSiK"><img src="https://avatars.githubusercontent.com/u/79159341?v=4?s=100" width="100px;" alt="Srinivasa IK Varanasi"/><br /><sub><b>Srinivasa IK Varanasi</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=MrVSiK" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/abdoo9"><img src="https://avatars.githubusercontent.com/u/63903814?v=4?s=100" width="100px;" alt="abdoo9"/><br /><sub><b>abdoo9</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Aabdoo9" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=abdoo9" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
