@@ -10,7 +10,7 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-6.2-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-6.3-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
@@ -237,6 +237,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="http://xditya.me/"><img src="https://avatars.githubusercontent.com/u/58950863?v=4?s=100" width="100px;" alt="Aditya"/><br /><sub><b>Aditya</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Axditya" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Axditya" title="Reviewed Pull Requests">👀</a></td>
       <td align="center"><a href="http://uditkaro.de"><img src="https://avatars.githubusercontent.com/u/30829387?v=4?s=100" width="100px;" alt="Udit Karode"/><br /><sub><b>Udit Karode</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Auditkarode" title="Reviewed Pull Requests">👀</a></td>
       <td align="center"><a href="https://rockett.pw"><img src="https://avatars.githubusercontent.com/u/4586280?v=4?s=100" width="100px;" alt="Mike Rockétt"/><br /><sub><b>Mike Rockétt</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Amikerockett" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center"><a href="https://github.com/MrVSiK"><img src="https://avatars.githubusercontent.com/u/79159341?v=4?s=100" width="100px;" alt="Srinivasa IK Varanasi"/><br /><sub><b>Srinivasa IK Varanasi</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=MrVSiK" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
