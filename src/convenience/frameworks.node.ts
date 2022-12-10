@@ -76,13 +76,35 @@ const nextJs = (req: any, res: any) => ({
 });
 
 /** Sveltekit Serverless Functions */
-const sveltekit = (event: any) => ({
-    update: Promise.resolve(event.request.json()),
-    header: event.request.headers[SECRET_HEADER],
-    end: () => event.respond.end(),
-    respond: (json: string) => event.respond.status(200).json(json),
-    unauthorized: () => event.request.status(401).send("secret token is wrong"),
-});
+const sveltekit = ({ request }: { request: Request }) => {
+    let resolveResponse: (res: Response) => void;
+    return {
+        update: Promise.resolve(request.json()),
+        header: request.headers.get(SECRET_HEADER),
+        end: () => {
+            if (resolveResponse) resolveResponse(new Response());
+        },
+        respond: (json: string) => {
+            if (resolveResponse) {
+                const res = new Response(json, {
+                    headers: { "Content-Type": "application/json" },
+                });
+                resolveResponse(res);
+            }
+        },
+        unauthorized: () => {
+            if (resolveResponse) {
+                const res = new Response("secret token is wrong", {
+                    status: 401,
+                });
+                resolveResponse(res);
+            }
+        },
+        handlerReturn: new Promise((resolve) => {
+            resolveResponse = resolve;
+        }),
+    };
+};
 
 // please open a PR if you want to add another
 export const adapters = {
