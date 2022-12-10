@@ -412,8 +412,8 @@ you can circumvent this protection against memory leaks.`);
             this.pollingRunning = false;
             this.pollingAbortController?.abort();
             const offset = this.lastTriedUpdateId + 1;
-            await this.api.getUpdates({ offset, limit: 1 });
-            this.pollingAbortController = undefined;
+            await this.api.getUpdates({ offset, limit: 1 })
+                .finally(() => this.pollingAbortController = undefined);
         } else {
             debug("Bot is not running!");
         }
