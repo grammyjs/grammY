@@ -75,6 +75,15 @@ const nextJs = (req: any, res: any) => ({
     unauthorized: () => res.status(401).send("secret token is wrong"),
 });
 
+/** Sveltekit Serverless Functions */
+const sveltekit = (event: any) => ({
+    update: Promise.resolve(event.request.json()),
+    header: event.request.headers[SECRET_HEADER],
+    end: () => event.respond.end(),
+    respond: (json: string) => event.respond.status(200).json(json),
+    unauthorized: () => event.request.status(401).send("secret token is wrong"),
+});
+
 // please open a PR if you want to add another
 export const adapters = {
     http,
@@ -83,6 +92,7 @@ export const adapters = {
     "aws-lambda": awsLambda,
     azure,
     "next-js": nextJs,
+    sveltekit,
     ...sharedAdapters,
 };
 export const defaultAdapter = "express";
