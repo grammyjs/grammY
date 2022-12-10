@@ -80,7 +80,7 @@ const sveltekit = ({ request }: { request: Request }) => {
     let resolveResponse: (res: Response) => void;
     return {
         update: Promise.resolve(request.json()),
-        header: request.headers.get(SECRET_HEADER),
+        header: request.headers.get(SECRET_HEADER) ?? undefined,
         end: () => {
             if (resolveResponse) resolveResponse(new Response());
         },
