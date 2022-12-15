@@ -15,7 +15,6 @@ pids
 node_modules/
 
 # lock files will not be published, so no need to store it
-deno.lock
 package-lock.json
 
 # Output of 'npm pack'
