@@ -327,7 +327,7 @@ class PropertySession<O extends {}, P extends keyof O> {
         if (this.promise === undefined) {
             this.fetching = true;
             this.promise = Promise.resolve(this.storage.read(this.key))
-                .then((val) => {
+                .then((val?: O[P]) => {
                     this.fetching = false;
                     // Check for write op in the meantime
                     if (this.wrote) {
