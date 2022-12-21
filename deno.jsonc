@@ -1,4 +1,5 @@
 {
+    "lock": false,
     "tasks": {
         "check": "deno cache --check=all src/mod.ts",
         "backport": "deno run --no-prompt --allow-read=. --allow-write=. https://deno.land/x/deno2node@v1.4.0/src/cli.ts tsconfig.json",
