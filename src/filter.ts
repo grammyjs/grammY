@@ -233,9 +233,9 @@ const USER_KEYS = {
     added_to_attachment_menu: {},
 } as const;
 const STICKER_KEYS = {
-	is_video: {},
+    is_video: {},
     is_animated: {},
-	premium_animation: {},
+    premium_animation: {},
 } as const;
 
 // L2
