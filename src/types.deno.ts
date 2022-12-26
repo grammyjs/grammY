@@ -1,6 +1,6 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.162.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.162.0/streams/mod.ts";
+import { basename } from "https://deno.land/std@0.170.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.170.0/streams/mod.ts";
 import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.10.2";
 import { debug as d, isDeno, toRaw } from "./platform.deno.ts";
 

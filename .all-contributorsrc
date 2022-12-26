@@ -808,6 +808,24 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "ak4zh",
+      "name": "ak4zh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26350053?v=4",
+      "profile": "http://ak4zh.com",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "nlapshin",
+      "name": "Nikolay Lapshin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39495311?v=4",
+      "profile": "https://github.com/nlapshin",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
