@@ -36,12 +36,23 @@
     "main": "./out/mod.js",
     "types": "./out/mod.d.ts",
     "exports": {
-        "./types": {
-            "types": "./out/types.d.ts"
-        },
         ".": {
             "types": "./out/mod.d.ts",
             "default": "./out/mod.js"
+        },
+        "./types": {
+            "types": "./out/types.d.ts"
+        },
+        "./web": {
+            "types": "./out/web.d.ts",
+            "default": "./out/web.js"
+        }
+    },
+    "typesVersions": {
+        "*": {
+            "web": [
+                "out/web"
+            ]
         }
     },
     "keywords": [
