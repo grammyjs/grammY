@@ -1,5 +1,5 @@
 /** Are we running on Deno or in a web browser? */
-export const isDeno = typeof Deno !== "undefined";
+export const isDeno = typeof Deno !== "undefined"; // TODO: remove for next major
 
 // === Export debug
 import d from "https://cdn.skypack.dev/debug@4.3.4";
