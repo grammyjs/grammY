@@ -26,4 +26,5 @@ test/cov_profile
 coverage.lcov
 
 # Build output
+deno_cache/
 out/
