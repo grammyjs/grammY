@@ -432,6 +432,13 @@ describe("multi session", () => {
 describe("lazy session", () => {
     const next = () => Promise.resolve();
 
+    it("should throw when used with multi sessions", () => {
+        assertThrows(
+            () => lazySession({ type: "multi" as unknown as "single" }),
+            "Cannot use lazy multi sessions",
+        );
+    });
+
     it("should pass through updates", async () => {
         type C = Context & SessionFlavor<never>;
         const composer = new Composer<C>();
