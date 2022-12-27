@@ -9,7 +9,7 @@
         "report": "genhtml ./coverage.lcov --output-directory ./test/coverage/ && echo 'Point your browser to test/coverage/index.html to see the test coverage report.'",
         "bundle": "cd bundling && ./bundle-all.sh",
         "bundle-web": "mkdir -p out && cd bundling && deno run --unstable --quiet --allow-net --allow-read --allow-env=DENO_DIR,XDG_CACHE_HOME,HOME,DENO_AUTH_TOKENS --allow-write=../out bundle-web.ts dev ../src/mod.ts",
-        "release": "deno task dev && deon task backport && deno task bundle-web"
+        "release": "deno task dev && deno task backport && deno task bundle-web"
     },
     "fmt": {
         "options": {
