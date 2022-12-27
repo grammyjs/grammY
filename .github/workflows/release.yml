@@ -13,14 +13,14 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Backport
-              run: npm ci --ignore-scripts && npm run backport
+            - run: npm ci --ignore-scripts
+            - run: npm run backport
 
             - name: Publish to npm
               run: |
                 npm config set //registry.npmjs.org/:_authToken '${NPM_TOKEN}'
-                npm publish
-              env :
+                npm publish --ignore-scripts
+              env:
                 NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Release
