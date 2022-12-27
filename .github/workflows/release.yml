@@ -15,6 +15,14 @@ jobs:
 
             - run: npm ci --ignore-scripts
             - run: npm run backport
+            
+            # Setup deno so we can bundle for the web
+            
+            - uses: denoland/setup-deno@main
+              with:
+                  deno-version: v1.x
+            
+            - run: deno task bundle-web
 
             - name: Publish to npm
               run: |
