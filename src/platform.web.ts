@@ -1,4 +1,5 @@
-export { d as debug } from "https://cdn.skypack.dev/debug@4.3.4";
+import d from "https://cdn.skypack.dev/debug@4.3.4";
+export { d as debug };
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
