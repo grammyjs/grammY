@@ -13,10 +13,10 @@ const load = (specifier: string) => {
         const baseLength = specifier.length - ".deno.ts".length;
         specifier = specifier.substring(0, baseLength) + ".web.ts";
     }
-    console.log(specifier); // TODO: remove
     return cache.load(specifier);
 };
 
+console.log(`Bundling version '${release}' from ${source} ...`);
 // Bundle code
 const { code: bundledCode } = await bundle(source, {
     load,
@@ -27,12 +27,15 @@ const { code: bundledCode } = await bundle(source, {
     },
 });
 
+console.log("Emitting ...");
 // Strip the huge inline source map which is somehow generated anyway
 await Deno.writeTextFile(
-    "../out/web.js",
+    "../out/web.mjs",
     bundledCode.replace(/\/\/# sourceMappingURL=.*\n/, ""),
 );
 await Deno.writeTextFile(
     "../out/web.d.ts",
     'export * from "./mod";\n',
 );
+
+console.log("Done.");

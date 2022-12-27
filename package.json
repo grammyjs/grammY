@@ -45,7 +45,7 @@
         },
         "./web": {
             "types": "./out/web.d.ts",
-            "default": "./out/web.js"
+            "default": "./out/web.mjs"
         }
     },
     "typesVersions": {
