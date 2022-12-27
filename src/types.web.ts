@@ -37,7 +37,7 @@ export class InputFile {
     /**
      * Constructs an `InputFile` that can be used in the API to send files.
      *
-     * @param file A path to a local file or a `Buffer` or a `ReadableStream` that specifies the file data
+     * @param file A URL to a file or a `Blob` or any form of `Uint8Array` that specifies the file data
      * @param filename Optional name of the file
      */
     constructor(
