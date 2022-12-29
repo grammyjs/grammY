@@ -275,6 +275,9 @@ function strictMultiSession<S, C extends Context>(
 export function lazySession<S, C extends Context>(
     options: SessionOptions<S> = {},
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
+    if (options.type !== undefined && options.type !== "single") {
+        throw new Error("Cannot use lazy multi sessions!");
+    }
     const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
         const propSession = new PropertySession(
