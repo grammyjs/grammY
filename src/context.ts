@@ -388,6 +388,44 @@ export class Context implements RenamedUpdate {
                 this.chosenInlineResult?.inline_message_id
         );
     }
+    /**
+     * Get entities and their text. Extracts the text from `ctx.msg.text` or `ctx.msg.caption`.
+     * Returns an empty array if one of `ctx.msg`, `ctx.msg.text`
+     * or `ctx.msg.entities` is undefined.
+     *
+     * You can filter specific entity types by passing the `types` parameter. Example:
+     *
+     * ```ts
+     * ctx.entities() // Returns all entity types
+     * ctx.entities('url') // Returns only url entities
+     * ctx.enttities(['url', 'email']) // Returns url and email entities
+     * ```
+     *
+     * @param types Types of entities to return. Omit to get all entities.
+     * @returns Array of entities and their texts, or empty array when there's no text
+     */
+    entities(): Array<MessageEntity & { text: string }>;
+    entities<T extends MessageEntity["type"]>(
+        types: MaybeArray<T>,
+    ): Array<MessageEntity & { type: T; text: string }>;
+    entities(types?: MaybeArray<MessageEntity["type"]>) {
+        const message = this.msg;
+        if (message === undefined) return [];
+
+        const text = message.text ?? message.caption;
+        if (text === undefined) return [];
+        let entities = message.entities ?? message.caption_entities;
+        if (entities === undefined) return [];
+        if (types !== undefined) {
+            const filters = new Set(toArray(types));
+            entities = entities.filter((entity) => filters.has(entity.type));
+        }
+
+        return entities.map((entity) => ({
+            ...entity,
+            text: text.substring(entity.offset, entity.offset + entity.length),
+        }));
+    }
 
     // PROBING SHORTCUTS
 
