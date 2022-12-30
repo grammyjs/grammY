@@ -10,6 +10,19 @@ If you have a good idea, don't hesitate to tell us in the group chat!
 We can grant you access to the GitHub Organization, so you can get a dedicated repository under our name, and publish your code as an official plugin of grammY.
 You will be responsible for maintaining it.
 
+## What Can I Do?
+
+In short: anything you find useful!
+
+If you’re unsure whether your changes are welcome, open an issue on GitHub or preferably ask in the [Telegram chat](https://t.me/grammyjs).
+
+In case you’d like to get some inspiration what we're working on, we have
+
+- a [project board tracking many active issues and pull requests](https://github.com/orgs/grammyjs/projects/3), and
+- an [issue with plugin ideas](https://github.com/grammyjs/grammY/issues/110).
+
+There’s usually also a [pinned issue](https://github.com/grammyjs/grammY/issues) which tells you what the next release is about.
+
 ## A Few Words on Deno and Node
 
 **TL;DR** working on grammY means working on a Deno project, and that is a good thing.
@@ -35,6 +48,7 @@ There are several areas of contributions, and they have different ways to get yo
 - **Docs.**
   You can always just edit the documentation by clicking the link at the bottom of the respective page.
   This will open a pull request on GitHub.
+  (Related: [docs contribution guide](https://github.com/grammyjs/website/blob/main/CONTRIBUTING.md))
 - **Core.**
   We are happy to take pull requests of any kind against the core code base of grammY.
   If you're unsure whether or not your work goes in the right direction, simply ask about it in an issue or in the [Telegram chat](https://telegram.me/grammyjs).
