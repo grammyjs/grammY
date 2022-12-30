@@ -14,14 +14,14 @@ You will be responsible for maintaining it.
 
 In short: anything you find useful!
 
-If you're unsure whether your changes are welcome, open an issue on GitHub or ask in the [Telegram chat](https://t.me/grammyjs).
+If you’re unsure whether your changes are welcome, open an issue on GitHub or preferably ask in the [Telegram chat](https://t.me/grammyjs).
 
-In case you'd like to get some inspiration what we're working on, we have
+In case you’d like to get some inspiration what we're working on, we have
 
 - a [project board tracking many active issues and pull requests](https://github.com/orgs/grammyjs/projects/3), and
 - an [issue with plugin ideas](https://github.com/grammyjs/grammY/issues/110).
 
-There's usually also a [pinned issue](https://github.com/grammyjs/grammY/issues) which tells you what the next release is about.
+There’s usually also a [pinned issue](https://github.com/grammyjs/grammY/issues) which tells you what the next release is about.
 
 ## A Few Words on Deno and Node
 
