@@ -1,10 +1,7 @@
 // === Needed imports
 import { basename } from "https://deno.land/std@0.170.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.170.0/streams/mod.ts";
 import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.10.2";
-import { debug as d, isDeno, toRaw } from "./platform.deno.ts";
-
-const debug = d("grammy:warn");
+import { toRaw } from "./platform.deno.ts";
 
 // === Export all API types
 export * from "https://esm.sh/@grammyjs/types@2.10.2";
@@ -40,14 +37,12 @@ export class InputFile {
     /**
      * Constructs an `InputFile` that can be used in the API to send files.
      *
-     * @param file A path to a local file or a `Buffer` or a `ReadableStream` that specifies the file data
+     * @param file A URL to a file or a `Blob` or other forms of file data
      * @param filename Optional name of the file
      */
     constructor(
         file:
-            | string
             | Blob
-            | Deno.FsFile
             | URL
             | URLLike
             | Uint8Array
@@ -59,14 +54,6 @@ export class InputFile {
         this.fileData = file;
         filename ??= this.guessFilename(file);
         this.filename = filename;
-        if (
-            typeof file === "string" &&
-            (file.startsWith("http:") || file.startsWith("https:"))
-        ) {
-            debug(
-                `InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`,
-            );
-        }
     }
     private guessFilename(
         file: ConstructorParameters<typeof InputFile>[0],
@@ -77,25 +64,13 @@ export class InputFile {
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
     }
-    async [toRaw](): Promise<
-        Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>
-    > {
+    [toRaw](): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
         const data = this.fileData;
         // Handle local files
-        if (typeof data === "string") {
-            if (!isDeno) {
-                throw new Error(
-                    "Reading files by path requires a Deno environment",
-                );
-            }
-            const file = await Deno.open(data);
-            return iterateReader(file);
-        }
         if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) return iterateReader(data);
         // Handle URL and URLLike objects
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
@@ -112,9 +87,6 @@ async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
         throw new Error(`Download failed, no response body from '${url}'`);
     }
     yield* body;
-}
-function isDenoFile(data: unknown): data is Deno.FsFile {
-    return isDeno && data instanceof Deno.FsFile;
 }
 
 // === Export InputFile types

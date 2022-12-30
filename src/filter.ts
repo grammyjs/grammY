@@ -232,6 +232,11 @@ const USER_KEYS = {
     is_premium: {},
     added_to_attachment_menu: {},
 } as const;
+const STICKER_KEYS = {
+    is_video: {},
+    is_animated: {},
+    premium_animation: {},
+} as const;
 
 // L2
 const EDITABLE_MESSAGE_KEYS = {
@@ -252,7 +257,7 @@ const EDITABLE_MESSAGE_KEYS = {
 const COMMON_MESSAGE_KEYS = {
     ...EDITABLE_MESSAGE_KEYS,
 
-    sticker: {},
+    sticker: STICKER_KEYS,
     video_note: {},
     voice: {},
     contact: {},
@@ -267,6 +272,9 @@ const COMMON_MESSAGE_KEYS = {
     pinned_message: {},
     invoice: {},
     proximity_alert_triggered: {},
+    forum_topic_created: {},
+    forum_topic_closed: {},
+    forum_topic_reopened: {},
     video_chat_scheduled: {},
     video_chat_started: {},
     video_chat_ended: {},
@@ -274,6 +282,7 @@ const COMMON_MESSAGE_KEYS = {
     web_app_data: {},
 
     forward_date: {},
+    is_topic_message: {},
     is_automatic_forward: {},
 } as const;
 const MESSAGE_KEYS = {

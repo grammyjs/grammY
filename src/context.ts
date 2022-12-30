@@ -1008,6 +1008,7 @@ export class Context implements RenamedUpdate {
             | "record_voice"
             | "upload_voice"
             | "upload_document"
+            | "choose_sticker"
             | "find_location"
             | "record_video_note"
             | "upload_video_note",
@@ -1667,6 +1668,112 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.createForumTopic`. Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
+     *
+     * @param name Topic name, 1-128 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createforumtopic
+     */
+    createForumTopic(
+        name: string,
+        other?: Other<"createForumTopic", "chat_id" | "name">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.createForumTopic(
+            orThrow(this.chat, "createForumTopic").id,
+            name,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param name New topic name, 1-128 characters
+     * @param icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
+     */
+    editForumTopic(
+        name: string,
+        icon_custom_emoji_id: string,
+        signal?: AbortSignal,
+    ) {
+        const message = orThrow(this.msg, "editForumTopic");
+        const thread = orThrow(message.message_thread_id, "editForumTopic");
+        return this.api.editForumTopic(
+            message.chat.id,
+            thread,
+            name,
+            icon_custom_emoji_id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.closeForumTopic`. Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closeforumtopic
+     */
+    closeForumTopic(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "closeForumTopic");
+        const thread = orThrow(message.message_thread_id, "closeForumTopic");
+        return this.api.closeForumTopic(message.chat.id, thread, signal);
+    }
+
+    /**
+     * Context-aware alias for `api.reopenForumTopic`. Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopenforumtopic
+     */
+    reopenForumTopic(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "reopenForumTopic");
+        const thread = orThrow(message.message_thread_id, "reopenForumTopic");
+        return this.api.reopenForumTopic(message.chat.id, thread, signal);
+    }
+
+    /**
+     * Context-aware alias for `api.deleteForumTopic`. Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteforumtopic
+     */
+    deleteForumTopic(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "deleteForumTopic");
+        const thread = orThrow(message.message_thread_id, "deleteForumTopic");
+        return this.api.deleteForumTopic(message.chat.id, thread, signal);
+    }
+
+    /**
+     * Context-aware alias for `api.unpinAllForumTopicMessages`. Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unpinallforumtopicmessages
+     */
+    unpinAllForumTopicMessages(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "unpinAllForumTopicMessages");
+        const thread = orThrow(
+            message.message_thread_id,
+            "unpinAllForumTopicMessages",
+        );
+        return this.api.unpinAllForumTopicMessages(
+            message.chat.id,
+            thread,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.answerCallbackQuery`. Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
      * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
@@ -2153,7 +2260,7 @@ type CallbackQueryContextCore = FilterCore<"callback_query:data">;
  * in separate files and still have the correct types.
  */
 export type CallbackQueryContext<C extends Context> = Filter<
-    C,
+    NarrowMatch<C, string | RegExpMatchArray>,
     "callback_query:data"
 >;
 
@@ -2184,10 +2291,7 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type InlineQueryContext<C extends Context> = Filter<
-    C,
-    "inline_query"
->;
+export type InlineQueryContext<C extends Context> = Filter<C, "inline_query">;
 
 type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update

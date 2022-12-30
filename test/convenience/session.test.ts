@@ -13,9 +13,9 @@ import {
     assertEquals,
     assertRejects,
     assertThrows,
-} from "https://deno.land/std@0.150.0/testing/asserts.ts";
-import { spy } from "https://deno.land/std@0.150.0/testing/mock.ts";
-import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
+} from "https://deno.land/std@0.170.0/testing/asserts.ts";
+import { spy } from "https://deno.land/std@0.170.0/testing/mock.ts";
+import { describe, it } from "https://deno.land/std@0.170.0/testing/bdd.ts";
 
 const TICK_MS = 50;
 const tick = (n = 1) => new Promise((r) => setTimeout(r, n * TICK_MS));
@@ -431,6 +431,13 @@ describe("multi session", () => {
 
 describe("lazy session", () => {
     const next = () => Promise.resolve();
+
+    it("should throw when used with multi sessions", () => {
+        assertThrows(
+            () => lazySession({ type: "multi" as unknown as "single" }),
+            "Cannot use lazy multi sessions",
+        );
+    });
 
     it("should pass through updates", async () => {
         type C = Context & SessionFlavor<never>;

@@ -12,6 +12,11 @@ echo "Cached ../src/mod.ts"
 deno run --unstable --quiet --allow-net --allow-read=../src/ --allow-write=bundles/ \
     bundle-es.ts dev ../src/mod.ts
 
+mkdir -p ../out
+deno run --unstable --quiet --allow-net --allow-read \
+    --allow-env=DENO_DIR,XDG_CACHE_HOME,HOME,DENO_AUTH_TOKENS \
+    --allow-write=../out bundle-web.ts dev ../src/mod.ts
+
 cores=$(grep -c ^processor /proc/cpuinfo)
 echo "Caching and bundling releases using $cores cores"
 curl --silent https://cdn.deno.land/grammy/meta/versions.json |

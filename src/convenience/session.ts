@@ -275,6 +275,9 @@ function strictMultiSession<S, C extends Context>(
 export function lazySession<S, C extends Context>(
     options: SessionOptions<S> = {},
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
+    if (options.type !== undefined && options.type !== "single") {
+        throw new Error("Cannot use lazy multi sessions!");
+    }
     const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
         const propSession = new PropertySession(
@@ -327,7 +330,7 @@ class PropertySession<O extends {}, P extends keyof O> {
         if (this.promise === undefined) {
             this.fetching = true;
             this.promise = Promise.resolve(this.storage.read(this.key))
-                .then((val) => {
+                .then((val?: O[P]) => {
                     this.fetching = false;
                     // Check for write op in the meantime
                     if (this.wrote) {

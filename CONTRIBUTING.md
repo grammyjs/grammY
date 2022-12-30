@@ -10,6 +10,19 @@ If you have a good idea, don't hesitate to tell us in the group chat!
 We can grant you access to the GitHub Organization, so you can get a dedicated repository under our name, and publish your code as an official plugin of grammY.
 You will be responsible for maintaining it.
 
+## What Can I Do?
+
+In short: anything you find useful!
+
+If you’re unsure whether your changes are welcome, open an issue on GitHub or preferably ask in the [Telegram chat](https://t.me/grammyjs).
+
+In case you’d like to get some inspiration what we're working on, we have
+
+- a [project board tracking many active issues and pull requests](https://github.com/orgs/grammyjs/projects/3), and
+- an [issue with plugin ideas](https://github.com/grammyjs/grammY/issues/110).
+
+There’s usually also a [pinned issue](https://github.com/grammyjs/grammY/issues) which tells you what the next release is about.
+
 ## A Few Words on Deno and Node
 
 **TL;DR** working on grammY means working on a Deno project, and that is a good thing.
@@ -35,6 +48,7 @@ There are several areas of contributions, and they have different ways to get yo
 - **Docs.**
   You can always just edit the documentation by clicking the link at the bottom of the respective page.
   This will open a pull request on GitHub.
+  (Related: [docs contribution guide](https://github.com/grammyjs/website/blob/main/CONTRIBUTING.md))
 - **Core.**
   We are happy to take pull requests of any kind against the core code base of grammY.
   If you're unsure whether or not your work goes in the right direction, simply ask about it in an issue or in the [Telegram chat](https://telegram.me/grammyjs).
@@ -45,7 +59,8 @@ There are several areas of contributions, and they have different ways to get yo
   If a third-party plugin was to be listed on the website, some docs would be nice.
 - **Storage adapters.**
   Please send a message to the [group chat](https://telegram.me/grammyjs) if you want to create an official storage adapter for the [session plugin](https://grammy.dev/plugins/session.html).
-  You will be granted all necessary permissions, and the repository will be listed [here](https://grammy.dev/plugins/session.html#official).
+  All storage adapters are collected in [this repo](https://github.com/grammyjs/storages).
+  You can simply open a pull request to add a new adapter.
   Consider checking out an existing implementation to make your life easier, e.g. [this one](https://github.com/grammyjs/storage-firestore/blob/main/src/index.ts).
 - **Issues, bugs, and everything else.**
   We're happy to hear from you if you want to report a bug, request a feature, or contribute anything else—also if it is not code.
@@ -67,7 +82,7 @@ If you want to read or modify grammY's code, you can do the following.
    This will download and cache all dependencies and typecheck the complete code base.
 
 You are now ready to work on grammY.
-Before you open a PR, make sure to run `deno task dev` on the Deno codebase.
+Before you open a PR, make sure to run `deno task dev` on the grammY codebase.
 
 #### Test Coverage
 

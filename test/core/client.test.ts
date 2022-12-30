@@ -4,14 +4,14 @@ import { type ApiResponse } from "../../src/types.ts";
 import {
     assertEquals,
     assertRejects,
-} from "https://deno.land/std@0.150.0/testing/asserts.ts";
-import { spy, Stub, stub } from "https://deno.land/std@0.150.0/testing/mock.ts";
+} from "https://deno.land/std@0.170.0/testing/asserts.ts";
+import { spy, Stub, stub } from "https://deno.land/std@0.170.0/testing/mock.ts";
 import {
     afterEach,
     beforeEach,
     describe,
     it,
-} from "https://deno.land/std@0.150.0/testing/bdd.ts";
+} from "https://deno.land/std@0.170.0/testing/bdd.ts";
 
 const token = "secret-token";
 
