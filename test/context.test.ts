@@ -323,4 +323,78 @@ describe("Context", () => {
         assertFalse(Context.has.text("b")(ctx));
         assertFalse(ctx.hasText("b"));
     });
+
+    it("should be able to extract entity text", () => {
+        let up = {
+            message: {
+                text: "/start some@email.com",
+                entities: [
+                    {
+                        type: "bot_command",
+                        offset: 0,
+                        length: "/start".length,
+                    },
+                    {
+                        type: "email",
+                        offset: "/start ".length,
+                        length: "some@email.com".length,
+                    },
+                ],
+            },
+        } as Update;
+        let ctx = new Context(up, api, me);
+
+        assertEquals(ctx.entities(), [
+            {
+                type: "bot_command",
+                offset: 0,
+                length: "/start".length,
+                text: "/start",
+            },
+            {
+                type: "email",
+                offset: "/start ".length,
+                length: "some@email.com".length,
+                text: "some@email.com",
+            },
+        ]);
+        assertEquals(ctx.entities("email"), [{
+            ...up.message!.entities![1],
+            text: "some@email.com",
+        }]);
+
+        up = {
+            message: {
+                text: "/start some@email.com",
+            },
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.entities(), []);
+
+        up = { message: {} } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.entities(), []);
+
+        up = {} as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.entities(), []);
+
+        up = {
+            message: {
+                caption: "some@email.com",
+                caption_entities: [{
+                    type: "email",
+                    offset: 0,
+                    length: "some@email.com".length,
+                }],
+            },
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.entities(), [{
+            type: "email",
+            offset: 0,
+            length: "some@email.com".length,
+            text: "some@email.com",
+        }]);
+    });
 });
