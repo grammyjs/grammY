@@ -252,6 +252,8 @@ const EDITABLE_MESSAGE_KEYS = {
     entities: ENTITY_KEYS,
     caption_entities: ENTITY_KEYS,
 
+    has_media_spoiler: {},
+
     caption: {},
 } as const;
 const COMMON_MESSAGE_KEYS = {
@@ -272,9 +274,6 @@ const COMMON_MESSAGE_KEYS = {
     pinned_message: {},
     invoice: {},
     proximity_alert_triggered: {},
-    forum_topic_created: {},
-    forum_topic_closed: {},
-    forum_topic_reopened: {},
     video_chat_scheduled: {},
     video_chat_started: {},
     video_chat_ended: {},
@@ -295,7 +294,14 @@ const MESSAGE_KEYS = {
     migrate_from_chat_id: {},
     successful_payment: {},
     connected_website: {},
+    write_access_allowed: {},
     passport_data: {},
+    forum_topic_created: {},
+    forum_topic_edited: { name: {}, icon_custom_emoji_id: {} },
+    forum_topic_closed: {},
+    forum_topic_reopened: {},
+    general_forum_topic_hidden: {},
+    general_forum_topic_unhidden: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,

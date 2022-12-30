@@ -37,13 +37,18 @@ describe("Keyboard", () => {
 
     it("should support reply markup options", () => {
         const keyboard = new Keyboard();
+        assertEquals(keyboard.is_persistent, undefined);
         assertEquals(keyboard.selective, undefined);
         assertEquals(keyboard.one_time_keyboard, undefined);
         assertEquals(keyboard.resize_keyboard, undefined);
         assertEquals(keyboard.input_field_placeholder, undefined);
         keyboard
-            .selected(false).oneTime(true)
-            .resized(false).placeholder("placeholder");
+            .persistent()
+            .selected(false)
+            .oneTime(true)
+            .resized(false)
+            .placeholder("placeholder");
+        assertEquals(keyboard.is_persistent, true);
         assertEquals(keyboard.selective, false);
         assertEquals(keyboard.one_time_keyboard, true);
         assertEquals(keyboard.resize_keyboard, false);
