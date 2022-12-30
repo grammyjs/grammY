@@ -957,6 +957,7 @@ export class Context implements RenamedUpdate {
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
@@ -974,11 +975,13 @@ export class Context implements RenamedUpdate {
             | "find_location"
             | "record_video_note"
             | "upload_video_note",
+        other?: Other<"sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
     ) {
         return this.api.sendChatAction(
             orThrow(this.chat, "sendChatAction").id,
             action,
+            other,
             signal,
         );
     }
@@ -1569,7 +1572,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1584,7 +1587,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param user_id Unique identifier of the target user
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1654,26 +1657,18 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
-     * @param name New topic name, 1-128 characters
-     * @param icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
      */
     editForumTopic(
-        name: string,
-        icon_custom_emoji_id: string,
+        other?: Other<"editForumTopic", "chat_id" | "message_thread_id">,
         signal?: AbortSignal,
     ) {
         const message = orThrow(this.msg, "editForumTopic");
         const thread = orThrow(message.message_thread_id, "editForumTopic");
-        return this.api.editForumTopic(
-            message.chat.id,
-            thread,
-            name,
-            icon_custom_emoji_id,
-            signal,
-        );
+        return this.api.editForumTopic(message.chat.id, thread, other, signal);
     }
 
     /**
@@ -1731,6 +1726,78 @@ export class Context implements RenamedUpdate {
         return this.api.unpinAllForumTopicMessages(
             message.chat.id,
             thread,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editGeneralForumTopic`. Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param name New topic name, 1-128 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editgeneralforumtopic
+     */
+    editGeneralForumTopic(name: string, signal?: AbortSignal) {
+        return this.api.editGeneralForumTopic(
+            orThrow(this.chat, "editGeneralForumTopic").id,
+            name,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.closeGeneralForumTopic`. Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
+     */
+    closeGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.closeGeneralForumTopic(
+            orThrow(this.chat, "closeGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.reopenGeneralForumTopic`. Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success.     *
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
+     */
+    reopenGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.reopenGeneralForumTopic(
+            orThrow(this.chat, "reopenGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.hideGeneralForumTopic`. Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
+     */
+    hideGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.hideGeneralForumTopic(
+            orThrow(this.chat, "hideGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.unhideGeneralForumTopic`. Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
+     */
+    unhideGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.unhideGeneralForumTopic(
+            orThrow(this.chat, "unhideGeneralForumTopic").id,
             signal,
         );
     }

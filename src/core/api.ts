@@ -692,6 +692,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
@@ -710,9 +711,10 @@ export class Api<R extends RawApi = RawApi> {
             | "find_location"
             | "record_video_note"
             | "upload_video_note",
+        other?: Other<R, "sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
     ) {
-        return this.raw.sendChatAction({ chat_id, action }, signal);
+        return this.raw.sendChatAction({ chat_id, action, ...other }, signal);
     }
 
     /**
@@ -1188,7 +1190,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      * @param user_id Unique identifier of the target user
@@ -1271,8 +1273,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
-     * @param name New topic name, 1-128 characters
-     * @param icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
@@ -1280,16 +1281,13 @@ export class Api<R extends RawApi = RawApi> {
     editForumTopic(
         chat_id: number | string,
         message_thread_id: number,
-        name: string,
-        icon_custom_emoji_id: string,
+        other?: Other<R, "editForumTopic", "chat_id" | "message_thread_id">,
         signal?: AbortSignal,
     ) {
-        return this.raw.editForumTopic({
-            chat_id,
-            message_thread_id,
-            name,
-            icon_custom_emoji_id,
-        }, signal);
+        return this.raw.editForumTopic(
+            { chat_id, message_thread_id, ...other },
+            signal,
+        );
     }
 
     /**
@@ -1367,6 +1365,71 @@ export class Api<R extends RawApi = RawApi> {
             { chat_id, message_thread_id },
             signal,
         );
+    }
+
+    /**
+     * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param name New topic name, 1-128 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editgeneralforumtopic
+     */
+    editGeneralForumTopic(
+        chat_id: number | string,
+        name: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editGeneralForumTopic({ chat_id, name }, signal);
+    }
+
+    /**
+     * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
+     */
+    closeGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.closeGeneralForumTopic({ chat_id }, signal);
+    }
+
+    /**
+     * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success.     *
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
+     */
+    reopenGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.reopenGeneralForumTopic({ chat_id }, signal);
+    }
+
+    /**
+     * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
+     */
+    hideGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.hideGeneralForumTopic({ chat_id }, signal);
+    }
+
+    /**
+     * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
+     */
+    unhideGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.unhideGeneralForumTopic({ chat_id }, signal);
     }
 
     /**

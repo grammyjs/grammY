@@ -33,6 +33,12 @@ import {
  */
 export class Keyboard {
     /**
+     * Requests clients to always show the keyboard when the regular keyboard is
+     * hidden. Defaults to false, in which case the custom keyboard can be
+     * hidden and opened with a keyboard icon.
+     */
+    public is_persistent?: boolean;
+    /**
      * Show the current keyboard only to those users that are mentioned in the
      * text of the message object.
      */
@@ -134,6 +140,21 @@ export class Keyboard {
      */
     webApp(text: string, url: string) {
         return this.add({ text, web_app: { url } });
+    }
+    /**
+     * Make the current keyboard persistent. See
+     * https://grammy.dev/plugins/keyboard.html#persistent-keyboards for more
+     * details.
+     *
+     * Keyboards are not persistent by default, use this function to enable it
+     * (without any parameters or pass `true`). Pass `false` to force the
+     * keyboard to not persist.
+     *
+     * @param isEnabled `true` if the keyboard should persist, and `false` otherwise
+     */
+    persistent(isEnabled = true) {
+        this.is_persistent = isEnabled;
+        return this;
     }
     /**
      * Make the current keyboard selective. See
