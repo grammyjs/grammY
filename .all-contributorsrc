@@ -899,6 +899,15 @@
         "ideas",
         "code"
       ]
+    },
+    {
+      "login": "Madnex",
+      "name": "Madnex",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14137610?v=4",
+      "profile": "https://github.com/Madnex",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
