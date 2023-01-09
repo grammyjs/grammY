@@ -157,7 +157,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/74030149?v=4",
       "profile": "https://github.com/CikiMomogi",
       "contributions": [
-        "doc"
+        "doc",
+        "translation"
       ]
     },
     {
@@ -251,7 +252,8 @@
       "contributions": [
         "example",
         "doc",
-        "tutorial"
+        "tutorial",
+        "bug"
       ]
     },
     {
@@ -826,6 +828,74 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/39495311?v=4",
       "profile": "https://github.com/nlapshin",
       "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Aquathing",
+      "name": "Aquatica",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81624781?v=4",
+      "profile": "https://github.com/Aquathing",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "fadzikri",
+      "name": "Fa Dzikri",
+      "avatar_url": "https://avatars.githubusercontent.com/u/109416385?v=4",
+      "profile": "https://github.com/fadzikri",
+      "contributions": [
+        "review",
+        "doc",
+        "translation"
+      ]
+    },
+    {
+      "login": "solidprinciples",
+      "name": "Chandler Lattin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7939765?v=4",
+      "profile": "https://github.com/solidprinciples",
+      "contributions": [
+        "code",
+        "review",
+        "plugin"
+      ]
+    },
+    {
+      "login": "sparfenyuk",
+      "name": "Sergey Parfenyuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/134065?v=4",
+      "profile": "https://github.com/sparfenyuk",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "felinto-dev",
+      "name": "Émerson Felinto",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32253743?v=4",
+      "profile": "https://github.com/felinto-dev",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "stPitty",
+      "name": "Petr Stankin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/85024641?v=4",
+      "profile": "https://github.com/stPitty",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "ByMsx",
+      "name": "Maxim Lebedev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5565836?v=4",
+      "profile": "https://github.com/ByMsx",
+      "contributions": [
+        "ideas",
         "code"
       ]
     }
