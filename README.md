@@ -128,7 +128,9 @@ Currently, we transpile all stable versions (all releases since v1.0) as well as
 You can download them from the URL `https://get.grammy.dev/[ES version lowercased]@[grammY version including v-prefix].js`.
 For example, the most recent source on `main` in ES6 is available from <https://get.grammy.dev/es6@dev.js>.
 
-So far, this is mainly useful for running bots on Cloudflare Workers.
+Being compatible is especially useful for running bots on Cloudflare Workers.
+For this reason, we include the web bundle in our npm package.
+You can simply do `import { Bot } from "grammy/web"`.
 
 ## [Contribution Guide »](./CONTRIBUTING.md)
 
