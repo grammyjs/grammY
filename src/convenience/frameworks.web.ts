@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { SECRET_HEADER } from "./frameworks.shared.ts";
 
 /** Native CloudFlare workers */
