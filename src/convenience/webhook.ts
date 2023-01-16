@@ -132,13 +132,13 @@ export function webhookCallback<C extends Context = Context>(
         ? adapters[adapter]
         : adapter;
     return async (...args: any[]) => {
+        const { update, respond, unauthorized, end, handlerReturn, header } =
+            server(...args);
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
             initialized = true;
         }
-        const { update, respond, unauthorized, end, handlerReturn, header } =
-            server(...args);
         if (header !== token) {
             await unauthorized();
             // TODO: investigate deno bug that happens when this console logging is removed
