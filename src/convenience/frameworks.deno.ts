@@ -6,10 +6,14 @@ import {
 const serveHttp = (requestEvent: Deno.RequestEvent) => ({
     update: requestEvent.request.json(),
     header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
-    end: () =>
-        requestEvent.respondWith(new Response(undefined, { status: 200 })),
+    end: () => requestEvent.respondWith(new Response(null, { status: 200 })),
     respond: (json: string) =>
-        requestEvent.respondWith(new Response(json, { status: 200 })),
+        requestEvent.respondWith(
+            new Response(json, {
+                status: 200,
+                headers: { "Content-Type": "application/json" },
+            }),
+        ),
     unauthorized: () =>
         requestEvent.respondWith(
             new Response('"unauthorized"', {
