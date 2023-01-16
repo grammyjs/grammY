@@ -48,11 +48,14 @@ const stdHttp = (req: Request) => {
         update: req.json(),
         header: req.headers.get(SECRET_HEADER) || undefined,
         end: () => {
-            if (resolveResponse) resolveResponse(new Response());
+            if (resolveResponse) {
+                resolveResponse(new Response(null, { status: 200 }));
+            }
         },
         respond: (json: string) => {
             if (resolveResponse) {
                 const res = new Response(json, {
+                    status: 200,
                     headers: { "Content-Type": "application/json" },
                 });
                 resolveResponse(res);
@@ -60,8 +63,9 @@ const stdHttp = (req: Request) => {
         },
         unauthorized: () => {
             if (resolveResponse) {
-                const res = new Response("secret token is wrong", {
+                const res = new Response('"unauthorized"', {
                     status: 401,
+                    statusText: "secret token is wrong",
                 });
                 resolveResponse(res);
             }

@@ -31,15 +31,6 @@ const http = (req: IncomingMessage, res: ServerResponse) => {
     };
 };
 
-/** worktop CloudFlare workers framework */
-const worktop = (req: any, res: any) => ({
-    update: Promise.resolve(req.body.json()),
-    header: req.headers.get(SECRET_HEADER),
-    end: () => res.end(),
-    respond: (json: string) => res.send(200, json),
-    unauthorized: () => res.send(401, "secret token is wrong"),
-});
-
 /** AWS lambda serverless functions */
 const awsLambda = (event: any, _context: any, callback: any) => ({
     update: JSON.parse(event.body),
@@ -80,13 +71,16 @@ const sveltekit = ({ request }: { request: Request }) => {
     let resolveResponse: (res: Response) => void;
     return {
         update: Promise.resolve(request.json()),
-        header: request.headers.get(SECRET_HEADER) ?? undefined,
+        header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
-            if (resolveResponse) resolveResponse(new Response());
+            if (resolveResponse) {
+                resolveResponse(new Response(null, { status: 200 }));
+            }
         },
         respond: (json: string) => {
             if (resolveResponse) {
                 const res = new Response(json, {
+                    status: 200,
                     headers: { "Content-Type": "application/json" },
                 });
                 resolveResponse(res);
@@ -94,8 +88,9 @@ const sveltekit = ({ request }: { request: Request }) => {
         },
         unauthorized: () => {
             if (resolveResponse) {
-                const res = new Response("secret token is wrong", {
+                const res = new Response('"unauthorized"', {
                     status: 401,
+                    statusText: "secret token is wrong",
                 });
                 resolveResponse(res);
             }
@@ -110,7 +105,6 @@ const sveltekit = ({ request }: { request: Request }) => {
 export const adapters = {
     http,
     https: http,
-    worktop,
     "aws-lambda": awsLambda,
     azure,
     "next-js": nextJs,
