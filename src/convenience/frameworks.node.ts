@@ -31,6 +31,24 @@ const http = (req: IncomingMessage, res: ServerResponse) => {
     };
 };
 
+/** Native CloudFlare workers */
+const cloudflare = (
+    event: { request: Request; respondWith: (res: Response) => void },
+) => ({
+    update: event.request.json(),
+    header: event.request.headers.get(SECRET_HEADER) || undefined,
+    respond: (json: string) =>
+        event.respondWith(new Response(json, { status: 200 })),
+    end: () => event.respondWith(new Response(undefined, { status: 200 })),
+    unauthorized: () =>
+        event.respondWith(
+            new Response('"unauthorized"', {
+                status: 401,
+                statusText: "secret token is wrong",
+            }),
+        ),
+});
+
 /** worktop CloudFlare workers framework */
 const worktop = (req: any, res: any) => ({
     update: Promise.resolve(req.body.json()),
@@ -110,6 +128,7 @@ const sveltekit = ({ request }: { request: Request }) => {
 export const adapters = {
     http,
     https: http,
+    cloudflare,
     worktop,
     "aws-lambda": awsLambda,
     azure,
