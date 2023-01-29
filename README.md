@@ -255,6 +255,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/stPitty"><img src="https://avatars.githubusercontent.com/u/85024641?v=4?s=100" width="100px;" alt="Petr Stankin"/><br /><sub><b>Petr Stankin</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3AstPitty" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ByMsx"><img src="https://avatars.githubusercontent.com/u/5565836?v=4?s=100" width="100px;" alt="Maxim Lebedev"/><br /><sub><b>Maxim Lebedev</b></sub></a><br /><a href="#ideas-ByMsx" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=ByMsx" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Madnex"><img src="https://avatars.githubusercontent.com/u/14137610?v=4?s=100" width="100px;" alt="Madnex"/><br /><sub><b>Madnex</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Madnex" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tup4ienko"><img src="https://avatars.githubusercontent.com/u/89318613?v=4?s=100" width="100px;" alt="Svyatoslav Tupchienko"/><br /><sub><b>Svyatoslav Tupchienko</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=tup4ienko" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
