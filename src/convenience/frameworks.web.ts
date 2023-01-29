@@ -36,7 +36,7 @@ const cloudflare = (
 
 /** Native CloudFlare workers (module worker) */
 const cloudflare_module = (
-    request: Request
+    request: Request,
 ) => {
     let resolveResponse: (res: Response) => void;
     return {
@@ -61,7 +61,31 @@ const cloudflare_module = (
         },
         handlerReturn: new Promise<Response>((resolve) => {
             resolveResponse = resolve;
-        })
+        }),
+    };
+};
+
+/** hono web framework */
+const hono = (ctx: any) => {
+    let resolveResponse: (res: Response) => void;
+    return {
+        update: ctx.req.json(),
+        header: ctx.req.headers.get(SECRET_HEADER) || undefined,
+        end: () => {
+            resolveResponse(ctx.body());
+        },
+        respond: (json: string) => {
+            ctx.header('Content-Type", "application/json');
+            resolveResponse(ctx.body(json));
+        },
+        unauthorized: () => {
+            ctx.status(401);
+            ctx.statusText("secret token is wrong");
+            resolveResponse(ctx.body());
+        },
+        handlerReturn: new Promise<Response>((resolve) => {
+            resolveResponse = resolve;
+        }),
     };
 };
 
@@ -74,4 +98,9 @@ const worktop = (req: any, res: any) => ({
     unauthorized: () => res.send(401, "secret token is wrong"),
 });
 
-export const adapters = { cloudflare, "cloudflare-mod": cloudflare_module, worktop };
+export const adapters = {
+    cloudflare,
+    "cloudflare-mod": cloudflare_module,
+    hono,
+    worktop,
+};
