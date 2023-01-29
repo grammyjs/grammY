@@ -17,7 +17,7 @@
 
 <!-- deno-fmt-ignore-end -->
 
-## _[docs.](https://grammy.dev) [reference.](https://doc.deno.land/https://deno.land/x/grammy/mod.ts) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)_
+## _[docs.](https://grammy.dev) [reference.](https://deno.land/x/grammy/mod.ts) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)_
 
 </div>
 
