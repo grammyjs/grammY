@@ -35,7 +35,7 @@ const cloudflare = (
 };
 
 /** Native CloudFlare workers (module worker) */
-const cloudflare_module = (
+const cloudflareModule = (
     request: Request,
 ) => {
     let resolveResponse: (res: Response) => void;
@@ -100,7 +100,7 @@ const worktop = (req: any, res: any) => ({
 
 export const adapters = {
     cloudflare,
-    "cloudflare-mod": cloudflare_module,
+    "cloudflare-mod": cloudflareModule,
     hono,
     worktop,
 };
