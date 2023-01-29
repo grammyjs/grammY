@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
+import { adapters as webAdapters } from "./frameworks.web.ts";
 
 export const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 
@@ -90,35 +91,11 @@ const oak = (ctx: any) => ({
     },
 });
 
-/** hono web framework */
-const hono = (ctx: any) => {
-    let resolveResponse: (res: Response) => void;
-    return {
-        update: ctx.req.json(),
-        header: ctx.req.headers.get(SECRET_HEADER) || undefined,
-        end: () => {
-            resolveResponse(ctx.body());
-        },
-        respond: (json: string) => {
-            ctx.header('Content-Type", "application/json');
-            resolveResponse(ctx.body(json));
-        },
-        unauthorized: () => {
-            ctx.status(401);
-            ctx.statusText("secret token is wrong");
-            resolveResponse(ctx.body());
-        },
-        handlerReturn: new Promise<Response>((resolve) => {
-            resolveResponse = resolve;
-        }),
-    };
-};
-
 export const adapters = {
     express,
     koa,
     fastify,
     "std/http": stdHttp,
     oak,
-    hono,
+    hono: webAdapters.hono,
 };
