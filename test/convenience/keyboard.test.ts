@@ -25,13 +25,23 @@ describe("Keyboard", () => {
             .requestContact("contact")
             .requestLocation("location")
             .requestPoll("poll", "quiz")
-            .webApp("web app", "https://grammy.dev");
+            .webApp("web app", "https://grammy.dev")
+            .requestUser("user", 12, { user_is_bot: true })
+            .requestChat("chat", 42);
         assertEquals(keyboard.build(), [[
             { text: "button" },
             { text: "contact", request_contact: true },
             { text: "location", request_location: true },
             { text: "poll", request_poll: { type: "quiz" } },
             { text: "web app", web_app: { url: "https://grammy.dev" } },
+            {
+                text: "user",
+                request_user: { request_id: 12, user_is_bot: true },
+            },
+            {
+                text: "chat",
+                request_chat: { request_id: 42, chat_is_channel: false },
+            },
         ]]);
     });
 
