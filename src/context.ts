@@ -549,7 +549,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendMessage(
-            orThrow(this.chat, "sendMessage").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendMessage",
+            ),
             text,
             other,
             signal,
@@ -620,7 +623,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendPhoto(
-            orThrow(this.chat, "sendPhoto").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendPhoto",
+            ),
             photo,
             other,
             signal,
@@ -644,7 +650,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendAudio(
-            orThrow(this.chat, "sendAudio").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendAudio",
+            ),
             audio,
             other,
             signal,
@@ -666,7 +675,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendDocument(
-            orThrow(this.chat, "sendDocument").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendDocument",
+            ),
             document,
             other,
             signal,
@@ -688,7 +700,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendVideo(
-            orThrow(this.chat, "sendVideo").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendVideo",
+            ),
             video,
             other,
             signal,
@@ -710,7 +725,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendAnimation(
-            orThrow(this.chat, "sendAnimation").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendAnimation",
+            ),
             animation,
             other,
             signal,
@@ -732,7 +750,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendVoice(
-            orThrow(this.chat, "sendVoice").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendVoice",
+            ),
             voice,
             other,
             signal,
@@ -755,7 +776,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendVideoNote(
-            orThrow(this.chat, "sendVideoNote").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendVideoNote",
+            ),
             video_note,
             other,
             signal,
@@ -782,7 +806,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendMediaGroup(
-            orThrow(this.chat, "sendMediaGroup").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendMediaGroup",
+            ),
             media,
             other,
             signal,
@@ -806,7 +833,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendLocation(
-            orThrow(this.chat, "sendLocation").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendLocation",
+            ),
             latitude,
             longitude,
             other,
@@ -905,7 +935,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendVenue(
-            orThrow(this.chat, "sendVenue").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendVenue",
+            ),
             latitude,
             longitude,
             title,
@@ -932,7 +965,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendContact(
-            orThrow(this.chat, "sendContact").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendContact",
+            ),
             phone_number,
             first_name,
             other,
@@ -957,7 +993,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendPoll(
-            orThrow(this.chat, "sendPoll").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendPoll",
+            ),
             question,
             options,
             other,
@@ -980,7 +1019,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendDice(
-            orThrow(this.chat, "sendDice").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendDice",
+            ),
             emoji,
             other,
             signal,
@@ -1017,7 +1059,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendChatAction(
-            orThrow(this.chat, "sendChatAction").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendChatAction",
+            ),
             action,
             other,
             signal,
@@ -2087,7 +2132,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendSticker(
-            orThrow(this.chat, "sendSticker").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendSticker",
+            ),
             sticker,
             other,
             signal,
@@ -2171,7 +2219,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendInvoice(
-            orThrow(this.chat, "sendInvoice").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendInvoice",
+            ),
             title,
             description,
             payload,
@@ -2266,7 +2317,10 @@ export class Context implements RenamedUpdate {
         signal?: AbortSignal,
     ) {
         return this.api.sendGame(
-            orThrow(this.chat, "sendGame").id,
+            orThrow(
+                this.chatJoinRequest?.user_chat_id ?? this.chat?.id,
+                "sendGame",
+            ),
             game_short_name,
             other,
             signal,
