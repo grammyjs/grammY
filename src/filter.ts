@@ -279,6 +279,8 @@ const COMMON_MESSAGE_KEYS = {
     video_chat_ended: {},
     video_chat_participants_invited: {},
     web_app_data: {},
+    user_shared: {},
+    chat_shared: {},
 
     forward_date: {},
     is_topic_message: {},
