@@ -186,6 +186,48 @@ export class Keyboard {
         return this.add({ text, web_app: { url } });
     }
     /**
+     * Adds a new request user button. When the user presses the button, a list
+     * of suitable users will be opened. Tapping on any user will send their
+     * identifier to the bot in a “user_shared” service message. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    requestUser(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestUser, "request_id"> = {},
+    ) {
+        return this.add({
+            text,
+            request_user: { request_id: requestId, ...options },
+        });
+    }
+    /**
+     * Adds a new request chat button. When the user presses the button, a list
+     * of suitable users will be opened. Tapping on a chat will send its
+     * identifier to the bot in a “chat_shared” service message. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    requestChat(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestChat, "request_id"> = {
+            chat_is_channel: false,
+        },
+    ) {
+        return this.add({
+            text,
+            request_chat: { request_id: requestId, ...options },
+        });
+    }
+    /**
      * Make the current keyboard persistent. See
      * https://grammy.dev/plugins/keyboard.html#persistent-keyboards for more
      * details.
