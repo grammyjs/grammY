@@ -279,8 +279,6 @@ const COMMON_MESSAGE_KEYS = {
     video_chat_ended: {},
     video_chat_participants_invited: {},
     web_app_data: {},
-    user_shared: {},
-    chat_shared: {},
 
     forward_date: {},
     is_topic_message: {},
@@ -295,6 +293,8 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
+    user_shared: {},
+    chat_shared: {},
     connected_website: {},
     write_access_allowed: {},
     passport_data: {},
