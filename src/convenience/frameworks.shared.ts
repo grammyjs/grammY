@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
+import { adapters as webAdapters } from "./frameworks.web.ts";
 
 export const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 
@@ -96,4 +97,5 @@ export const adapters = {
     fastify,
     "std/http": stdHttp,
     oak,
+    hono: webAdapters.hono,
 };
