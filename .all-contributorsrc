@@ -927,6 +927,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "kashyapndps00",
+      "name": "Kashyap Sharma",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98746601?v=4",
+      "profile": "https://github.com/kashyapndps00",
+      "contributions": [
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
