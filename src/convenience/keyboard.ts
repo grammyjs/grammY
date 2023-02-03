@@ -1,6 +1,8 @@
 import {
     type InlineKeyboardButton,
     type KeyboardButton,
+    type KeyboardButtonRequestChat,
+    type KeyboardButtonRequestUser,
     type LoginUrl,
 } from "../types.ts";
 
@@ -102,6 +104,48 @@ export class Keyboard {
         return this.add({ text });
     }
     /**
+     * Adds a new request user button. When the user presses the button, a list
+     * of suitable users will be opened. Tapping on any user will send their
+     * identifier to the bot in a “user_shared” service message. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    requestUser(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestUser, "request_id"> = {},
+    ) {
+        return this.add({
+            text,
+            request_user: { request_id: requestId, ...options },
+        });
+    }
+    /**
+     * Adds a new request chat button. When the user presses the button, a list
+     * of suitable users will be opened. Tapping on a chat will send its
+     * identifier to the bot in a “chat_shared” service message. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    requestChat(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestChat, "request_id"> = {
+            chat_is_channel: false,
+        },
+    ) {
+        return this.add({
+            text,
+            request_chat: { request_id: requestId, ...options },
+        });
+    }
+    /**
      * Adds a new contact request button. The user's phone number will be sent
      * as a contact when the button is pressed. Available in private chats only.
      *
@@ -135,7 +179,7 @@ export class Keyboard {
      * user presses the button. The Web App will be able to send a
      * “web_app_data” service message. Available in private chats only.
      *
-     * @param text Text text to display
+     * @param text The text to display
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
     webApp(text: string, url: string) {

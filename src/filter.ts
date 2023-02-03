@@ -293,6 +293,8 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
+    user_shared: {},
+    chat_shared: {},
     connected_website: {},
     write_access_allowed: {},
     passport_data: {},

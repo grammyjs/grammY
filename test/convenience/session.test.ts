@@ -739,6 +739,7 @@ describe("enhanceStorage", () => {
             storage: new MemorySessionStorage<Enhance<number>>(),
             millisecondsToLive: TICK_MS,
         });
+        assertEquals(await store.read("k"), undefined);
         await store.write("k", 42);
         assertEquals(await store.read("k"), 42);
         await tick(2);
