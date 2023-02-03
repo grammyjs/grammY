@@ -1,13 +1,13 @@
 // === Needed imports
 import { basename } from "https://deno.land/std@0.176.0/path/mod.ts";
 import { iterateReader } from "https://deno.land/std@0.176.0/streams/mod.ts";
-import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.12.0";
+import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.12.1";
 import { debug as d, isDeno, toRaw } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://esm.sh/@grammyjs/types@2.12.0";
+export * from "https://esm.sh/@grammyjs/types@2.12.1";
 
 /** Something that looks like a URL. */
 interface URLLike {

@@ -1,10 +1,10 @@
 // === Needed imports
 import { basename } from "https://deno.land/std@0.176.0/path/mod.ts";
-import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.12.0";
+import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.12.1";
 import { toRaw } from "./platform.deno.ts";
 
 // === Export all API types
-export * from "https://esm.sh/@grammyjs/types@2.12.0";
+export * from "https://esm.sh/@grammyjs/types@2.12.1";
 
 /** Something that looks like a URL. */
 interface URLLike {
