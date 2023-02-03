@@ -104,46 +104,6 @@ export class Keyboard {
         return this.add({ text });
     }
     /**
-     * Adds a new contact request button. The user's phone number will be sent
-     * as a contact when the button is pressed. Available in private chats only.
-     *
-     * @param text The text to display
-     */
-    requestContact(text: string) {
-        return this.add({ text, request_contact: true });
-    }
-    /**
-     * Adds a new location request button. The user's current location will be
-     * sent when the button is pressed. Available in private chats only.
-     *
-     * @param text The text to display
-     */
-    requestLocation(text: string) {
-        return this.add({ text, request_location: true });
-    }
-    /**
-     * Adds a new poll request button. The user will be asked to create a poll
-     * and send it to the bot when the button is pressed. Available in private
-     * chats only.
-     *
-     * @param text The text to display
-     * @param type The type of permitted polls to create, omit if the user may send a poll of any type
-     */
-    requestPoll(text: string, type?: "quiz" | "regular") {
-        return this.add({ text, request_poll: { type } });
-    }
-    /**
-     * Adds a new web app button. The Web App that will be launched when the
-     * user presses the button. The Web App will be able to send a
-     * “web_app_data” service message. Available in private chats only.
-     *
-     * @param text The text to display
-     * @param url An HTTPS URL of a Web App to be opened with additional data
-     */
-    webApp(text: string, url: string) {
-        return this.add({ text, web_app: { url } });
-    }
-    /**
      * Adds a new request user button. When the user presses the button, a list
      * of suitable users will be opened. Tapping on any user will send their
      * identifier to the bot in a “user_shared” service message. Available in
@@ -184,6 +144,46 @@ export class Keyboard {
             text,
             request_chat: { request_id: requestId, ...options },
         });
+    }
+    /**
+     * Adds a new contact request button. The user's phone number will be sent
+     * as a contact when the button is pressed. Available in private chats only.
+     *
+     * @param text The text to display
+     */
+    requestContact(text: string) {
+        return this.add({ text, request_contact: true });
+    }
+    /**
+     * Adds a new location request button. The user's current location will be
+     * sent when the button is pressed. Available in private chats only.
+     *
+     * @param text The text to display
+     */
+    requestLocation(text: string) {
+        return this.add({ text, request_location: true });
+    }
+    /**
+     * Adds a new poll request button. The user will be asked to create a poll
+     * and send it to the bot when the button is pressed. Available in private
+     * chats only.
+     *
+     * @param text The text to display
+     * @param type The type of permitted polls to create, omit if the user may send a poll of any type
+     */
+    requestPoll(text: string, type?: "quiz" | "regular") {
+        return this.add({ text, request_poll: { type } });
+    }
+    /**
+     * Adds a new web app button. The Web App that will be launched when the
+     * user presses the button. The Web App will be able to send a
+     * “web_app_data” service message. Available in private chats only.
+     *
+     * @param text The text to display
+     * @param url An HTTPS URL of a Web App to be opened with additional data
+     */
+    webApp(text: string, url: string) {
+        return this.add({ text, web_app: { url } });
     }
     /**
      * Make the current keyboard persistent. See
