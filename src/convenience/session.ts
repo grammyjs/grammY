@@ -85,6 +85,14 @@ export interface StorageAdapter<T> {
      * Deletes a value for the given key from the storage.
      */
     delete: (key: string) => MaybePromise<void>;
+    /**
+     * Checks whether a key exists in the storage
+     */
+    has?: (key: string) => MaybePromise<boolean>;
+    /**
+     * Lists all keys
+     */
+    readAll?: () => Iterable<T> | AsyncIterable<T>;
 }
 
 /**
@@ -407,7 +415,7 @@ function fillDefaults<S>(opts: SessionOptions<S> = {}) {
         debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
         );
-        storage = new MemorySessionStorage();
+        storage = new MemorySessionStorage<S>();
     }
     const custom = getSessionKey !== defaultGetSessionKey;
     return { initial, storage, getSessionKey, custom };
@@ -650,6 +658,10 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
             .from(this.storage.keys())
             .map((key) => this.read(key))
             .filter((value): value is S => value !== undefined);
+    }
+
+    has(key: string) {
+        return this.storage.has(key);
     }
 
     write(key: string, value: S) {
