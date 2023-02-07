@@ -936,6 +936,34 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "AlexOwl",
+      "name": "AlexOwl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47189254?v=4",
+      "profile": "https://github.com/AlexOwl",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "SpEcHiDe",
+      "name": "Shrimadhav U K",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6317196?v=4",
+      "profile": "https://www.shrimadhavuk.me/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "binamralamsal",
+      "name": "Binamra Lamsal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61900781?v=4",
+      "profile": "https://github.com/binamralamsal",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
