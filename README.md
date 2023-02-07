@@ -262,6 +262,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://www.shrimadhavuk.me/"><img src="https://avatars.githubusercontent.com/u/6317196?v=4?s=100" width="100px;" alt="Shrimadhav U K"/><br /><sub><b>Shrimadhav U K</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=SpEcHiDe" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/binamralamsal"><img src="https://avatars.githubusercontent.com/u/61900781?v=4?s=100" width="100px;" alt="Binamra Lamsal"/><br /><sub><b>Binamra Lamsal</b></sub></a><br /><a href="#ideas-binamralamsal" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
