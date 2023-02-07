@@ -260,6 +260,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kashyapndps00"><img src="https://avatars.githubusercontent.com/u/98746601?v=4?s=100" width="100px;" alt="Kashyap Sharma"/><br /><sub><b>Kashyap Sharma</b></sub></a><br /><a href="#example-kashyapndps00" title="Examples">💡</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/AlexOwl"><img src="https://avatars.githubusercontent.com/u/47189254?v=4?s=100" width="100px;" alt="AlexOwl"/><br /><sub><b>AlexOwl</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3AAlexOwl" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=AlexOwl" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.shrimadhavuk.me/"><img src="https://avatars.githubusercontent.com/u/6317196?v=4?s=100" width="100px;" alt="Shrimadhav U K"/><br /><sub><b>Shrimadhav U K</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=SpEcHiDe" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
