@@ -10,17 +10,15 @@ import {
     type InputMediaPhoto,
     type InputMediaVideo,
     type LabeledPrice,
-    type PassportElementError,
+    type PassportElementError
 } from "../types.ts";
 import {
-    type ApiClientOptions,
-    createRawApi,
-    type Methods,
+    createRawApi, type ApiClientOptions, type Methods,
     type Payload,
     type RawApi,
     type Transformer,
     type TransformerConsumer,
-    type WebhookReplyEnvelope,
+    type WebhookReplyEnvelope
 } from "./client.ts";
 
 /**
@@ -2022,7 +2020,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
      * @param provider_token Payments provider token, obtained via BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
-     * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+     * @param prices Price breakdown, a list of components (e.g. product price and name), max 15 objects.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2069,7 +2067,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
      * @param provider_token Payment provider token, obtained via BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
-     * @param prices Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+     * @param prices Price breakdown, a JSON-serialized list of components (e.g. product price and name), max 15 objects.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
