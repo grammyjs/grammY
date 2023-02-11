@@ -92,7 +92,23 @@ export interface StorageAdapter<T> {
     /**
      * Lists all keys
      */
-    readAll?: () => Iterable<T> | AsyncIterable<T>;
+    readAllKeys?: () => Iterable<string> | AsyncIterable<string>;
+    /**
+     * Lists all values
+     */
+    readAllValues?: () => Iterable<T> | AsyncIterable<T>;
+    /**
+     * Lists all keys with their values
+     */
+    readAllEntries?: () =>
+        | Iterable<[key: string, value: T]>
+        | AsyncIterable<[key: string, value: T]>;
+    /**
+     * Lists the values for all the keys that match the RegExp pattern
+     * @param pattern RegExp to match keys against
+     * @returns Values with a matching key
+     */
+    readManyValues?: (pattern: RegExp) => Iterable<T> | AsyncIterable<T>;
 }
 
 /**
