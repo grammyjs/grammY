@@ -16,6 +16,7 @@ node_modules/
 
 # lock files will not be published, so no need to store it
 package-lock.json
+pnpm-lock.yaml
 
 # Output of 'npm pack'
 *.tgz
