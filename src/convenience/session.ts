@@ -85,6 +85,24 @@ export interface StorageAdapter<T> {
      * Deletes a value for the given key from the storage.
      */
     delete: (key: string) => MaybePromise<void>;
+    /**
+     * Checks whether a key exists in the storage.
+     */
+    has?: (key: string) => MaybePromise<boolean>;
+    /**
+     * Lists all keys.
+     */
+    readAllKeys?: () => Iterable<string> | AsyncIterable<string>;
+    /**
+     * Lists all values.
+     */
+    readAllValues?: () => Iterable<T> | AsyncIterable<T>;
+    /**
+     * Lists all keys with their values.
+     */
+    readAllEntries?: () =>
+        | Iterable<[key: string, value: T]>
+        | AsyncIterable<[key: string, value: T]>;
 }
 
 /**
@@ -407,7 +425,7 @@ function fillDefaults<S>(opts: SessionOptions<S> = {}) {
         debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
         );
-        storage = new MemorySessionStorage();
+        storage = new MemorySessionStorage<S>();
     }
     const custom = getSessionKey !== defaultGetSessionKey;
     return { initial, storage, getSessionKey, custom };
@@ -642,14 +660,31 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     }
 
     /**
-     * Reads the values for all keys of the session storage, and returns them as
-     * an array.
+     * @deprecated Use {@link readAllValues} instead
      */
     readAll() {
+        return this.readAllValues();
+    }
+
+    readAllKeys() {
+        return Array.from(this.storage.keys());
+    }
+
+    readAllValues() {
         return Array
             .from(this.storage.keys())
             .map((key) => this.read(key))
             .filter((value): value is S => value !== undefined);
+    }
+
+    readAllEntries() {
+        return Array.from(this.storage.keys())
+            .map((key) => [key, this.read(key)])
+            .filter((pair): pair is [string, S] => pair[1] !== undefined);
+    }
+
+    has(key: string) {
+        return this.storage.has(key);
     }
 
     write(key: string, value: S) {
