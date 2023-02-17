@@ -660,14 +660,27 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     }
 
     /**
-     * Reads the values for all keys of the session storage, and returns them as
-     * an array.
+     * @deprecated Use {@link readAllValues} instead
      */
     readAll() {
+        return this.readAllValues();
+    }
+
+    readAllKeys() {
+        return Array.from(this.storage.keys());
+    }
+
+    readAllValues() {
         return Array
             .from(this.storage.keys())
             .map((key) => this.read(key))
             .filter((value): value is S => value !== undefined);
+    }
+
+    readAllEntries() {
+        return Array.from(this.storage.keys())
+            .map((key) => [key, this.read(key)])
+            .filter((pair): pair is [string, S] => pair[1] !== undefined);
     }
 
     has(key: string) {
