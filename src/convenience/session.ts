@@ -86,19 +86,19 @@ export interface StorageAdapter<T> {
      */
     delete: (key: string) => MaybePromise<void>;
     /**
-     * Checks whether a key exists in the storage
+     * Checks whether a key exists in the storage.
      */
     has?: (key: string) => MaybePromise<boolean>;
     /**
-     * Lists all keys
+     * Lists all keys.
      */
     readAllKeys?: () => Iterable<string> | AsyncIterable<string>;
     /**
-     * Lists all values
+     * Lists all values.
      */
     readAllValues?: () => Iterable<T> | AsyncIterable<T>;
     /**
-     * Lists all keys with their values
+     * Lists all keys with their values.
      */
     readAllEntries?: () =>
         | Iterable<[key: string, value: T]>
