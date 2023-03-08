@@ -1,7 +1,7 @@
 # Contributing to grammY
 
 First of all, thanks for your interest in helping out!
-We appreciate any kind of support, be it small bug fixes, large feature contributions, or even just if you drop us a message with some constructive criticism how grammY can be improved for your use case.
+We appreciate any kind of support, be it small bug fixes, large feature contributions, or even just if you drop us a message with some constructive criticism on how grammY can be improved for your use case.
 This library would not be possible without you.
 
 We believe it is a strength of grammY to provide an integrated experience to its users.
