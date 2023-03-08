@@ -1508,7 +1508,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#getmydefaultadministratorrights
      */
     getMyDefaultAdministratorRights(
-        other?: Other<R, "setMyDefaultAdministratorRights">,
+        other?: Other<R, "getMyDefaultAdministratorRights">,
         signal?: AbortSignal,
     ) {
         return this.raw.getMyDefaultAdministratorRights({ ...other }, signal);
