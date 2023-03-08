@@ -12,7 +12,7 @@ import { describe, it } from "https://deno.land/std@0.178.0/testing/bdd.ts";
 import {
     readAll,
     readerFromIterable,
-} from "https://deno.land/std@0.178.0/streams/conversion.ts";
+} from "https://deno.land/std@0.178.0/streams/mod.ts";
 
 describe("requiresFormDataUpload", () => {
     it("should ignore primitives", () => {
