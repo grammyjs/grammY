@@ -574,7 +574,7 @@ async function withRetries<T>(
                 strategy = "retry";
             } else if (error.error_code === 429) {
                 const retryAfter = error.parameters.retry_after;
-                if (retryAfter !== undefined) {
+                if (typeof retryAfter === 'number') {
                     // sleep directly, don't let this affect the backoff
                     await sleep(retryAfter, signal);
                 } else {
@@ -589,8 +589,8 @@ async function withRetries<T>(
             if (lastDelay !== INITIAL_DELAY) {
                 await sleep(lastDelay, signal);
             }
-            const oneHour = 1 * 60 * 60 * 1000; // ms
-            lastDelay = Math.min(oneHour, 2 * lastDelay);
+            const ONE_HOUR = 1 * 60 * 60 * 1000; // ms
+            lastDelay = Math.min(ONE_HOUR, 2 * lastDelay);
         }
 
         return strategy;
