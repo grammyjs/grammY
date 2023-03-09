@@ -525,13 +525,24 @@ you can circumvent this protection against memory leaks.`);
 /**
  * Performs a network call task, retrying upon known errors until success.
  *
+ * If the task errors and a retry_after value can be used, a subsequent retry
+ * will be delayed by the specified period of time.
+ *
+ * Otherwise, if the first attempt at running the task fails, the task is
+ * retried immediately. If second attempt fails, too, waits for 100 ms, and then
+ * doubles this delay for every subsequent attemt. Never waits longer than 1
+ * hour before retrying.
+ *
  * @param task Async task to perform
  */
 async function withRetries<T>(task: () => Promise<T>): Promise<T> {
     let result: { ok: false } | { ok: true; value: T } = { ok: false };
+    let delay = 100; // ms
     while (!result.ok) {
+        let mustDelay = true;
         try {
             result = { ok: true, value: await task() };
+            mustDelay = false;
         } catch (error) {
             debugErr(error);
             if (error instanceof HttpError) continue;
@@ -539,11 +550,22 @@ async function withRetries<T>(task: () => Promise<T>): Promise<T> {
                 if (error.error_code >= 500) continue;
                 if (error.error_code === 429) {
                     const retryAfter = error.parameters.retry_after;
-                    if (retryAfter !== undefined) await sleep(retryAfter);
+                    if (retryAfter !== undefined) {
+                        await sleep(retryAfter);
+                        mustDelay = false;
+                    }
                     continue;
                 }
             }
             throw error;
+        } finally {
+            if (mustDelay) {
+                if (delay !== 100) {
+                    await sleep(delay);
+                }
+                // double the next delay but cap it at 1 hour
+                delay = Math.min(1 * 60 * 60 * 1000, delay + delay);
+            }
         }
     }
     return result.value;
