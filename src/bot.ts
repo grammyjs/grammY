@@ -552,42 +552,65 @@ async function withRetries<T>(
     task: () => Promise<T>,
     signal?: AbortSignal,
 ): Promise<T> {
+    // Set up delays between retries
+    const INITIAL_DELAY = 50; // ms
+    let lastDelay = INITIAL_DELAY;
+
+    // Define error handler
+    /**
+     * Determines the error handling strategy based on various error types.
+     * Sleeps if necessary, and returns whether to retry or rethrow an error.
+     */
+    async function handleError(error: unknown) {
+        let delay = false;
+        let strategy: "retry" | "rethrow" = "rethrow";
+
+        if (error instanceof HttpError) {
+            delay = true;
+            strategy = "retry";
+        } else if (error instanceof GrammyError) {
+            if (error.error_code >= 500) {
+                delay = true;
+                strategy = "retry";
+            } else if (error.error_code === 429) {
+                const retryAfter = error.parameters.retry_after;
+                if (retryAfter !== undefined) {
+                    // sleep directly, don't let this affect the backoff
+                    await sleep(retryAfter, signal);
+                } else {
+                    delay = true;
+                }
+                strategy = "retry";
+            } else {
+                //
+            }
+        }
+
+        if (delay) {
+            if (lastDelay !== INITIAL_DELAY) {
+                // Do not sleep for the first retry
+                await sleep(lastDelay, signal);
+            }
+            const oneHour = 1 * 60 * 60 * 1000; // ms
+            lastDelay = Math.min(oneHour, 2 * lastDelay);
+        }
+
+        return strategy;
+    }
+
+    // Perform the actual task with retries
     let result: { ok: false } | { ok: true; value: T } = { ok: false };
-    const INITIAL_DELAY = 100; // ms
-    let delay = INITIAL_DELAY;
     while (!result.ok) {
-        let mustDelay = false; // handled in `finally`
         try {
             result = { ok: true, value: await task() };
         } catch (error) {
             debugErr(error);
-            if (error instanceof HttpError) {
-                mustDelay = true;
-                continue;
-            }
-            if (error instanceof GrammyError) {
-                if (error.error_code >= 500) {
-                    mustDelay = true;
+            const strategy = await handleError(error);
+            switch (strategy) {
+                case "retry":
                     continue;
-                }
-                if (error.error_code === 429) {
-                    const retryAfter = error.parameters.retry_after;
-                    if (retryAfter !== undefined) {
-                        await sleep(retryAfter, signal);
-                    } else {
-                        mustDelay = true;
-                    }
-                    continue;
-                }
-            }
-            throw error;
-        } finally {
-            if (mustDelay) {
-                if (delay !== INITIAL_DELAY) {
-                    await sleep(delay, signal);
-                }
-                // double the next delay but cap it at 1 hour
-                delay = Math.min(1 * 60 * 60 * 1000, delay + delay);
+                case "rethrow":
+                    throw error;
             }
         }
     }
