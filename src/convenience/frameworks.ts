@@ -1,7 +1,19 @@
 import { type Update } from "../types.ts";
 
-// deno-lint-ignore-file no-explicit-any
-export const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
+const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
+
+const WRONG_TOKEN_ERROR = "secret token is wrong";
+const ok = () => new Response(null, { status: 200 });
+const okJson = (json: string) =>
+    new Response(json, {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+    });
+const unauthorized = () =>
+    new Response('"unauthorized"', {
+        status: 401,
+        statusText: WRONG_TOKEN_ERROR,
+    });
 
 /**
  * HTTP Web frameworks for which grammY provides compatible callback out of the
@@ -63,7 +75,7 @@ const express: FrameworkAdapter = (req, res) => ({
         res.send(json);
     },
     unauthorized: () => {
-        res.send(401, "secret token is wrong");
+        res.send(401, WRONG_TOKEN_ERROR);
     },
 });
 
@@ -89,27 +101,15 @@ const fastify: FrameworkAdapter = (req, reply) => ({
     header: req.headers[SECRET_HEADER.toLowerCase()],
     end: () => reply.status(200).send(),
     respond: (json) => reply.send(json),
-    unauthorized: () => reply.code(401).send("secret token is wrong"),
+    unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
 });
 
 const serveHttp: FrameworkAdapter = (requestEvent) => ({
     update: requestEvent.request.json(),
     header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
-    end: () => requestEvent.respondWith(new Response(null, { status: 200 })),
-    respond: (json) =>
-        requestEvent.respondWith(
-            new Response(json, {
-                status: 200,
-                headers: { "Content-Type": "application/json" },
-            }),
-        ),
-    unauthorized: () =>
-        requestEvent.respondWith(
-            new Response('"unauthorized"', {
-                status: 401,
-                statusText: "secret token is wrong",
-            }),
-        ),
+    end: () => requestEvent.respondWith(ok()),
+    respond: (json) => requestEvent.respondWith(okJson(json)),
+    unauthorized: () => requestEvent.respondWith(unauthorized()),
 });
 
 /** std/http web server */
@@ -119,27 +119,13 @@ const stdHttp: FrameworkAdapter = (req: Request) => {
         update: req.json(),
         header: req.headers.get(SECRET_HEADER) || undefined,
         end: () => {
-            if (resolveResponse) {
-                resolveResponse(new Response(null, { status: 200 }));
-            }
+            if (resolveResponse) resolveResponse(ok());
         },
         respond: (json) => {
-            if (resolveResponse) {
-                const res = new Response(json, {
-                    status: 200,
-                    headers: { "Content-Type": "application/json" },
-                });
-                resolveResponse(res);
-            }
+            if (resolveResponse) resolveResponse(okJson(json));
         },
         unauthorized: () => {
-            if (resolveResponse) {
-                const res = new Response('"unauthorized"', {
-                    status: 401,
-                    statusText: "secret token is wrong",
-                });
-                resolveResponse(res);
-            }
+            if (resolveResponse) resolveResponse(unauthorized());
         },
         handlerReturn: new Promise((resolve) => {
             resolveResponse = resolve;
@@ -151,7 +137,9 @@ const stdHttp: FrameworkAdapter = (req: Request) => {
 const oak: FrameworkAdapter = (ctx) => ({
     update: ctx.request.body({ type: "json" }).value,
     header: ctx.request.headers.get(SECRET_HEADER) || undefined,
-    end: () => (ctx.response.status = 200),
+    end: () => {
+        ctx.response.status = 200;
+    },
     respond: (json) => {
         ctx.response.type = "json";
         ctx.response.body = json;
@@ -185,7 +173,7 @@ const http: FrameworkAdapter = (req, res) => {
             res
                 .writeHead(200, { "Content-Type": "application/json" })
                 .end(json),
-        unauthorized: () => res.writeHead(401).end("secret token is wrong"),
+        unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
     };
 };
 
@@ -211,7 +199,7 @@ const azure: FrameworkAdapter = (context, req) => ({
         context.res.send(json);
     },
     unauthorized: () => {
-        context.res.send(401, "secret token is wrong");
+        context.res.send(401, WRONG_TOKEN_ERROR);
     },
 });
 
@@ -221,7 +209,7 @@ const nextJs: FrameworkAdapter = (req, res) => ({
     header: req.headers[SECRET_HEADER],
     end: () => res.end(),
     respond: (json) => res.status(200).json(json),
-    unauthorized: () => res.status(401).send("secret token is wrong"),
+    unauthorized: () => res.status(401).send(WRONG_TOKEN_ERROR),
 });
 
 /** Sveltekit Serverless Functions */
@@ -231,27 +219,13 @@ const sveltekit: FrameworkAdapter = ({ request }: { request: Request }) => {
         update: Promise.resolve(request.json()),
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
-            if (resolveResponse) {
-                resolveResponse(new Response(null, { status: 200 }));
-            }
+            if (resolveResponse) resolveResponse(ok());
         },
         respond: (json) => {
-            if (resolveResponse) {
-                const res = new Response(json, {
-                    status: 200,
-                    headers: { "Content-Type": "application/json" },
-                });
-                resolveResponse(res);
-            }
+            if (resolveResponse) resolveResponse(okJson(json));
         },
         unauthorized: () => {
-            if (resolveResponse) {
-                const res = new Response('"unauthorized"', {
-                    status: 401,
-                    statusText: "secret token is wrong",
-                });
-                resolveResponse(res);
-            }
+            if (resolveResponse) resolveResponse(unauthorized());
         },
         handlerReturn: new Promise((resolve) => {
             resolveResponse = resolve;
@@ -274,21 +248,13 @@ const cloudflare: FrameworkAdapter = (event: {
         update: event.request.json(),
         header: event.request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
-            resolveResponse(new Response(null, { status: 200 }));
+            resolveResponse(ok());
         },
         respond: (json) => {
-            const res = new Response(json, {
-                status: 200,
-                headers: { "Content-Type": "application/json" },
-            });
-            resolveResponse(res);
+            resolveResponse(okJson(json));
         },
         unauthorized: () => {
-            const res = new Response('"unauthorized"', {
-                status: 401,
-                statusText: "secret token is wrong",
-            });
-            resolveResponse(res);
+            resolveResponse(unauthorized());
         },
     };
 };
@@ -300,21 +266,13 @@ const cloudflareModule: FrameworkAdapter = (request: Request) => {
         update: request.json(),
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
-            resolveResponse(new Response(null, { status: 200 }));
+            resolveResponse(ok());
         },
         respond: (json) => {
-            const res = new Response(json, {
-                status: 200,
-                headers: { "Content-Type": "application/json" },
-            });
-            resolveResponse(res);
+            resolveResponse(okJson(json));
         },
         unauthorized: () => {
-            const res = new Response('"unauthorized"', {
-                status: 401,
-                statusText: "secret token is wrong",
-            });
-            resolveResponse(res);
+            resolveResponse(unauthorized());
         },
         handlerReturn: new Promise<Response>((resolve) => {
             resolveResponse = resolve;
@@ -337,7 +295,7 @@ const hono: FrameworkAdapter = (ctx) => {
         },
         unauthorized: () => {
             ctx.status(401);
-            ctx.statusText("secret token is wrong");
+            ctx.statusText(WRONG_TOKEN_ERROR);
             resolveResponse(ctx.body());
         },
         handlerReturn: new Promise<Response>((resolve) => {
@@ -352,7 +310,7 @@ const worktop: FrameworkAdapter = (req, res) => ({
     header: req.headers.get(SECRET_HEADER),
     end: () => res.end(),
     respond: (json) => res.send(200, json),
-    unauthorized: () => res.send(401, "secret token is wrong"),
+    unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
 });
 
 // Please open a PR if you want to add another adapter
