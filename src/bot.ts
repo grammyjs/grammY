@@ -581,8 +581,6 @@ async function withRetries<T>(
                     delay = true;
                 }
                 strategy = "retry";
-            } else {
-                //
             }
         }
 
