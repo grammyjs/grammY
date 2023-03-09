@@ -537,7 +537,8 @@ you can circumvent this protection against memory leaks.`);
  */
 async function withRetries<T>(task: () => Promise<T>): Promise<T> {
     let result: { ok: false } | { ok: true; value: T } = { ok: false };
-    let delay = 100; // ms
+    const INITIAL_DELAY = 100; // ms
+    let delay = INITIAL_DELAY;
     while (!result.ok) {
         let mustDelay = true;
         try {
@@ -560,7 +561,7 @@ async function withRetries<T>(task: () => Promise<T>): Promise<T> {
             throw error;
         } finally {
             if (mustDelay) {
-                if (delay !== 100) {
+                if (delay !== INITIAL_DELAY) {
                     await sleep(delay);
                 }
                 // double the next delay but cap it at 1 hour
