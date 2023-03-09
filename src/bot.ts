@@ -556,7 +556,7 @@ async function withRetries<T>(
     const INITIAL_DELAY = 100; // ms
     let delay = INITIAL_DELAY;
     while (!result.ok) {
-        let mustDelay = false;
+        let mustDelay = false; // handled in `finally`
         try {
             result = { ok: true, value: await task() };
         } catch (error) {
