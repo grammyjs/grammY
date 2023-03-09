@@ -17,6 +17,7 @@
         },
         "files": {
             "exclude": [
+                "./deno_cache/",
                 "./node_modules/",
                 "./out/",
                 "./package-lock.json",
@@ -28,6 +29,7 @@
     "lint": {
         "files": {
             "exclude": [
+                "./deno_cache/",
                 "./node_modules/",
                 "./out/",
                 "./package-lock.json",
