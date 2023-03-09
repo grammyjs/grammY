@@ -556,20 +556,26 @@ async function withRetries<T>(
     const INITIAL_DELAY = 100; // ms
     let delay = INITIAL_DELAY;
     while (!result.ok) {
-        let mustDelay = true;
+        let mustDelay = false;
         try {
             result = { ok: true, value: await task() };
-            mustDelay = false;
         } catch (error) {
             debugErr(error);
-            if (error instanceof HttpError) continue;
+            if (error instanceof HttpError) {
+                mustDelay = true;
+                continue;
+            }
             if (error instanceof GrammyError) {
-                if (error.error_code >= 500) continue;
+                if (error.error_code >= 500) {
+                    mustDelay = true;
+                    continue;
+                }
                 if (error.error_code === 429) {
                     const retryAfter = error.parameters.retry_after;
                     if (retryAfter !== undefined) {
                         await sleep(retryAfter, signal);
-                        mustDelay = false;
+                    } else {
+                        mustDelay = true;
                     }
                     continue;
                 }
