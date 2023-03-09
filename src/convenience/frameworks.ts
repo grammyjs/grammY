@@ -258,6 +258,7 @@ const sveltekit: FrameworkAdapter = ({ request }: { request: Request }) => {
         }),
     };
 };
+
 /** Native CloudFlare workers (service worker) */
 const cloudflare: FrameworkAdapter = (event: {
     request: Request;
