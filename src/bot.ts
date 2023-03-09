@@ -585,8 +585,8 @@ async function withRetries<T>(
         }
 
         if (delay) {
+            // Do not sleep for the first retry
             if (lastDelay !== INITIAL_DELAY) {
-                // Do not sleep for the first retry
                 await sleep(lastDelay, signal);
             }
             const oneHour = 1 * 60 * 60 * 1000; // ms
