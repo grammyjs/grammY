@@ -2,12 +2,13 @@
 import { type Bot } from "../bot.ts";
 import { type Context } from "../context.ts";
 import { type WebhookReplyEnvelope } from "../core/client.ts";
-import { debug as d } from "../platform.deno.ts";
+import { debug as d, defaultAdapter } from "../platform.deno.ts";
 import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
-    defaultAdapter,
-} from "./frameworks.deno.ts";
+    type FrameworkAdapter,
+    type SupportedFrameworks,
+} from "./frameworks.ts";
 const debugErr = d("grammy:error");
 
 const callbackAdapter: FrameworkAdapter = (
@@ -22,54 +23,6 @@ const callbackAdapter: FrameworkAdapter = (
     unauthorized,
 });
 const adapters = { ...nativeAdapters, callback: callbackAdapter };
-
-/**
- * HTTP Web frameworks for which grammY provides compatible callback out of the
- * box.
- */
-type SupportedFrameworks = keyof typeof adapters;
-
-/**
- * Abstraction over a request-response cycle, providing access to the update, as
- * well as a mechanism for responding to the request and to end it.
- */
-interface ReqResHandler {
-    /**
-     * The update object sent from Telegram, usually resolves the request's JSON
-     * body
-     */
-    update: Promise<Update>;
-    /**
-     * X-Telegram-Bot-Api-Secret-Token header of the request, or undefined if
-     * not present
-     */
-    header?: string;
-    /**
-     * Ends the request immediately without body, called after every request
-     * unless a webhook reply was performed
-     */
-    end?: () => void;
-    /**
-     * Sends the specified JSON as a payload in the body, used for webhook
-     * replies
-     */
-    respond: (json: string) => unknown | Promise<unknown>;
-    /**
-     * Responds that the request is unauthorized due to mismatching
-     * X-Telegram-Bot-Api-Secret-Token headers
-     */
-    unauthorized: () => unknown | Promise<unknown>;
-    /**
-     * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
-     * handler returns something
-     */
-    handlerReturn?: any;
-}
-/**
- * Middleware for a web framework. Creates a request-response handler for a
- * request. The handler will be used to integrate with the compatible framework.
- */
-export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 
 export interface WebhookOptions {
     /** An optional strategy to handle timeouts (default: 'throw') */

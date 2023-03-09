@@ -22,6 +22,9 @@ export { readableStreamFromIterable as itrToStream } from "https://deno.land/std
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
 
+// === Default webhook adapter
+export const defaultAdapter = "oak";
+
 // === InputFile handling and File augmenting
 // Accessor for file data in `InputFile` instances
 export const toRaw = Symbol("InputFile data");
