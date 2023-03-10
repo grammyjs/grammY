@@ -52,6 +52,9 @@
         "*": {
             "web": [
                 "out/web"
+            ],
+            "types": [
+                "out/types"
             ]
         }
     },
