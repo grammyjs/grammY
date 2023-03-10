@@ -9,7 +9,3 @@ export { readableStreamFromIterable as itrToStream } from "https://deno.land/std
 export const baseFetchConfig = (_apiRoot: string) => ({});
 
 export const defaultAdapter = "cloudflare";
-
-// === InputFile handling and File augmenting
-// Accessor for file data in `InputFile` instances
-export const toRaw = Symbol("InputFile data");

@@ -23,7 +23,3 @@ export function baseFetchConfig(apiRoot: string) {
 
 // === Default webhook adapter
 export const defaultAdapter = "express";
-
-// === InputFile handling and File augmenting
-// Accessor for file data in `InputFile` instances
-export const toRaw = Symbol("InputFile data");

@@ -24,7 +24,3 @@ export const baseFetchConfig = (_apiRoot: string) => ({});
 
 // === Default webhook adapter
 export const defaultAdapter = "oak";
-
-// === InputFile handling and File augmenting
-// Accessor for file data in `InputFile` instances
-export const toRaw = Symbol("InputFile data");
