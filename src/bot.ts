@@ -574,9 +574,10 @@ async function withRetries<T>(
                 strategy = "retry";
             } else if (error.error_code === 429) {
                 const retryAfter = error.parameters.retry_after;
-                if (typeof retryAfter === 'number') {
-                    // sleep directly, don't let this affect the backoff
+                if (typeof retryAfter === "number") {
+                    // ignore the backoff for sleep, then reset it
                     await sleep(retryAfter, signal);
+                    lastDelay = INITIAL_DELAY;
                 } else {
                     delay = true;
                 }
