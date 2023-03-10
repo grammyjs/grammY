@@ -11,7 +11,6 @@ import {
     type InputSticker as InputStickerF,
     type Opts as OptsF,
 } from "https://deno.land/x/grammy_types@v3.0.0/mod.ts";
-import { toRaw } from "./platform.deno.ts";
 
 // === Export all API types
 export * from "https://deno.land/x/grammy_types@v3.0.0/mod.ts";
@@ -74,7 +73,7 @@ export class InputFile {
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
     }
-    [toRaw](): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
+    toRaw(): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }

@@ -1,7 +1,6 @@
 // === Needed imports
 import { basename } from "https://deno.land/std@0.178.0/path/mod.ts";
 import { iterateReader } from "https://deno.land/std@0.178.0/streams/mod.ts";
-import { debug as d, isDeno, toRaw } from "./platform.deno.ts";
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -13,6 +12,7 @@ import {
     type InputSticker as InputStickerF,
     type Opts as OptsF,
 } from "https://deno.land/x/grammy_types@v3.0.0/mod.ts";
+import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
@@ -87,7 +87,7 @@ export class InputFile {
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
     }
-    async [toRaw](): Promise<
+    async toRaw(): Promise<
         Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>
     > {
         if (this.consumed) {

@@ -13,7 +13,7 @@ import {
 import { createReadStream, type ReadStream } from "fs";
 import fetch from "node-fetch";
 import { basename } from "path";
-import { debug as d, toRaw } from "./platform.node";
+import { debug as d } from "./platform.node";
 
 const debug = d("grammy:warn");
 
@@ -86,7 +86,7 @@ export class InputFile {
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
     }
-    [toRaw](): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
+    toRaw(): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
