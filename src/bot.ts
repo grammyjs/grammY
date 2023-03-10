@@ -590,8 +590,8 @@ async function withRetries<T>(
             if (lastDelay !== INITIAL_DELAY) {
                 await sleep(lastDelay, signal);
             }
-            const ONE_HOUR = 1 * 60 * 60 * 1000; // ms
-            lastDelay = Math.min(ONE_HOUR, 2 * lastDelay);
+            const TWENTY_MINUTES = 20 * 60 * 1000; // ms
+            lastDelay = Math.min(TWENTY_MINUTES, 2 * lastDelay);
         }
 
         return strategy;
