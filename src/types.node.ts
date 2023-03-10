@@ -86,6 +86,12 @@ export class InputFile {
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
     }
+    /**
+     * Internal method. Do not use.
+     *
+     * Converts this instance into a binary representation that can be sent to
+     * the Bot API server in the request body.
+     */
     toRaw(): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
