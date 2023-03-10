@@ -1,4 +1,4 @@
-import { itrToStream, toRaw } from "../platform.deno.ts";
+import { itrToStream } from "../platform.deno.ts";
 import { InputFile } from "../types.ts";
 
 // === Payload types (JSON vs. form data)
@@ -181,7 +181,7 @@ ${filename}
     yield enc.encode(
         `content-disposition:form-data;name="${id}";filename=${filename}\r\ncontent-type:application/octet-stream\r\n\r\n`,
     );
-    const data = await input[toRaw]();
+    const data = await input.toRaw();
     if (data instanceof Uint8Array) yield data;
     else yield* data;
 }
