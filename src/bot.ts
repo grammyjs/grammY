@@ -364,6 +364,9 @@ a known bot info object.",
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
+        } else {
+            this.pollingRunning = true;
+            this.pollingAbortController = new AbortController();
         }
         await withRetries(
             () =>
@@ -452,9 +455,6 @@ you can circumvent this protection against memory leaks.`);
      * the bot is stopped.
      */
     private async loop(options?: PollingOptions) {
-        this.pollingRunning = true;
-        this.pollingAbortController = new AbortController();
-
         const limit = options?.limit;
         const timeout = options?.timeout ?? 30; // seconds
         let allowed_updates = options?.allowed_updates;
