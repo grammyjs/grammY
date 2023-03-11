@@ -129,7 +129,15 @@ async function* payloadToMultipartItr(
     yield enc.encode(`\r\n--${boundary}--\r\n`);
 }
 
-type ExtractedFile = { id: string; origin: string; file: InputFile };
+/** Information about a file extracted from a payload */
+type ExtractedFile = {
+    /** To be used in the attach:// string */
+    id: string;
+    /** Hints about where the file came from, useful for filename guessing */
+    origin: string;
+    /** The extracted file */
+    file: InputFile;
+};
 /**
  * Replaces all instances of `InputFile` in a given payload by attach://
  * strings. This alters the passed object. After calling this method, the
@@ -143,16 +151,20 @@ type ExtractedFile = { id: string; origin: string; file: InputFile };
  * @param key the origin key of the payload object, if a part of it is passed
  * @returns the cleaned payload object
  */
-function extractFiles(value: unknown, key?: string): ExtractedFile[] {
+function extractFiles(value: unknown): ExtractedFile[] {
     if (typeof value !== "object" || value === null) return [];
     return Object.entries(value).flatMap(([k, v]) => {
-        const origin = key ?? k;
-        if (Array.isArray(v)) return v.flatMap((p) => extractFiles(p, origin));
+        if (Array.isArray(v)) return v.flatMap((p) => extractFiles(p));
         else if (v instanceof InputFile) {
             const id = randomId();
+            // Overwrite `InputFile` instance with attach:// string
             Object.assign(value, { [k]: `attach://${id}` });
+            const origin = k === "media" &&
+                    "type" in value && typeof value.type === "string"
+                ? value.type // use `type` for `InputMedia*`
+                : k; // use property key otherwise
             return { id, origin, file: v };
-        } else return extractFiles(v, origin);
+        } else return extractFiles(v);
     });
 }
 
@@ -188,7 +200,10 @@ ${filename}
 /** Returns the default file extension for an API property name */
 function getExt(key: string) {
     switch (key) {
+        case "certificate":
+            return "pem";
         case "photo":
+        case "thumbnail":
             return "jpg";
         case "voice":
             return "ogg";
