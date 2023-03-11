@@ -1960,7 +1960,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         name: string,
         title: string,
-        stickers: InputSticker,
+        stickers: InputSticker[],
         sticker_format: "static" | "animated" | "video",
         other?: Other<
             R,
