@@ -1949,8 +1949,8 @@ export class Api<R extends RawApi = RawApi> {
      * @param user_id User identifier of created sticker set owner
      * @param name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in `_by_<bot_username>`. `<bot_username>` is case insensitive. 1-64 characters.
      * @param title Sticker set title, 1-64 characters
-     * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
      * @param stickers A list of 1-50 initial stickers to be added to the sticker set
+     * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1960,7 +1960,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         name: string,
         title: string,
-        stickers: InputSticker,
+        stickers: InputSticker[],
         sticker_format: "static" | "animated" | "video",
         other?: Other<
             R,
