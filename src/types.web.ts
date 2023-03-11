@@ -10,11 +10,10 @@ import {
     type InputMediaVideo as InputMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.0.0/mod.ts";
-import { toRaw } from "./platform.deno.ts";
+} from "https://deno.land/x/grammy_types@v3.0.1/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.0.0/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.0.1/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
@@ -74,7 +73,13 @@ export class InputFile {
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
     }
-    [toRaw](): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
+    /**
+     * Internal method. Do not use.
+     *
+     * Converts this instance into a binary representation that can be sent to
+     * the Bot API server in the request body.
+     */
+    toRaw(): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
