@@ -120,16 +120,14 @@ However, given that most bot developers are still using Node.js, all documentati
 
 You may also be interested in [why we support Deno](https://grammy.dev/resources/faq.html#why-do-you-support-deno).
 
-## Browser Support
+## JavaScript Bundles
 
-The grammY core package in this repository is available as a JavaScript bundle from the CDN at `get.grammy.dev`.
-Currently, we transpile all stable versions (all releases since v1.0) as well as the current `main` branch to ES6 and ESNext.
-
-You can download them from the URL `https://get.grammy.dev/[ES version lowercased]@[grammY version including v-prefix].js`.
-For example, the most recent source on `main` in ES6 is available from <https://get.grammy.dev/es6@dev.js>.
+The grammY core package in this repository is available as a JavaScript bundle via <https://bundle.deno.dev/>.
+This lets you transpile all published versions including current `main` branch to standalone JavaScript files.
+For example, the most recent source on `main` is available from <https://bundle.deno.dev/https://raw.githubusercontent.com/grammyjs/grammY/main/src/mod.ts>.
 
 Being compatible with browsers is especially useful for running bots on Cloudflare Workers.
-For this reason, we include the web bundle in our npm package.
+For this reason, we also include a web bundle in our npm package.
 You can simply do `import { Bot } from "grammy/web"`.
 
 ## [Contribution Guide »](./CONTRIBUTING.md)
