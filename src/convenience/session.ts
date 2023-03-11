@@ -131,7 +131,7 @@ export interface SessionOptions<S, C extends Context> {
      * The default implementation will store sessions per chat, as determined by
      * `ctx.chat?.id`.
      */
-    getSessionKey?: (ctx: C) => MaybePromise<string | undefined>;
+    getSessionKey?: (ctx: Omit<C, "session">) => MaybePromise<string | undefined>;
     /**
      * A storage adapter to your storage solution. Provides read, write, and
      * delete access to the session middleware.
