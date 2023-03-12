@@ -108,7 +108,7 @@ export interface StorageAdapter<T> {
 /**
  * Options for session middleware.
  */
-export interface SessionOptions<S> {
+export interface SessionOptions<S, C extends Context = Context> {
     type?: "single";
     /**
      * **Recommended to use.**
@@ -131,7 +131,9 @@ export interface SessionOptions<S> {
      * The default implementation will store sessions per chat, as determined by
      * `ctx.chat?.id`.
      */
-    getSessionKey?: (ctx: Context) => MaybePromise<string | undefined>;
+    getSessionKey?: (
+        ctx: Omit<C, "session">,
+    ) => MaybePromise<string | undefined>;
     /**
      * A storage adapter to your storage solution. Provides read, write, and
      * delete access to the session middleware.
@@ -150,12 +152,16 @@ export interface SessionOptions<S> {
  * Options for session middleware if multi sessions are used. Specify `"type":
  * "multi"` in the options to use multi sessions.
  */
-// deno-lint-ignore no-explicit-any
-export type MultiSessionOptions<S> = S extends Record<string, any> // unknown breaks extends
-    ? { type: "multi" } & MultiSessionOptionsRecord<S>
-    : never;
-type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
-    [K in keyof S]: SessionOptions<S[K]>;
+export type MultiSessionOptions<S, C extends Context> =
+    // deno-lint-ignore no-explicit-any
+    S extends Record<string, any> // unknown breaks extends
+        ? { type: "multi" } & MultiSessionOptionsRecord<S, C>
+        : never;
+type MultiSessionOptionsRecord<
+    S extends Record<string, unknown>,
+    C extends Context,
+> = {
+    [K in keyof S]: SessionOptions<S[K], C>;
 };
 
 /**
@@ -206,7 +212,7 @@ type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
  * @param options Optional configuration to pass to the session middleware
  */
 export function session<S, C extends Context>(
-    options: SessionOptions<S> | MultiSessionOptions<S> = {},
+    options: SessionOptions<S, C> | MultiSessionOptions<S, C> = {},
 ): MiddlewareFn<C & SessionFlavor<S>> {
     return options.type === "multi"
         ? strictMultiSession(options)
@@ -214,7 +220,7 @@ export function session<S, C extends Context>(
 }
 
 function strictSingleSession<S, C extends Context>(
-    options: SessionOptions<S>,
+    options: SessionOptions<S, C>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
     const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
@@ -231,7 +237,7 @@ function strictSingleSession<S, C extends Context>(
     };
 }
 function strictMultiSession<S, C extends Context>(
-    options: MultiSessionOptions<S>,
+    options: MultiSessionOptions<S, C>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
     const props = Object.keys(options).filter((k) => k !== "type");
     const defaults = Object.fromEntries(
@@ -291,7 +297,7 @@ function strictMultiSession<S, C extends Context>(
  * @param options Optional configuration to pass to the session middleware
  */
 export function lazySession<S, C extends Context>(
-    options: SessionOptions<S> = {},
+    options: SessionOptions<S, C> = {},
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
     if (options.type !== undefined && options.type !== "single") {
         throw new Error("Cannot use lazy multi sessions!");
@@ -419,7 +425,7 @@ class PropertySession<O extends {}, P extends keyof O> {
     }
 }
 
-function fillDefaults<S>(opts: SessionOptions<S> = {}) {
+function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
     let { getSessionKey = defaultGetSessionKey, initial, storage } = opts;
     if (storage == null) {
         debug(
