@@ -1,11 +1,11 @@
+import { debug as d } from "../src/platform.deno.ts";
+import { InputFile } from "../src/types.ts";
 import {
     assertEquals,
     assertRejects,
     assertStringIncludes,
-} from "https://deno.land/std@0.178.0/testing/asserts.ts";
-import { stub } from "https://deno.land/std@0.179.0/testing/mock.ts";
-import { debug as d } from "../src/platform.deno.ts";
-import { InputFile } from "../src/types.ts";
+    stub,
+} from "./deps.test.ts";
 
 Deno.test({
     name: "file name inference",
