@@ -108,7 +108,7 @@ export interface StorageAdapter<T> {
 /**
  * Options for session middleware.
  */
-export interface SessionOptions<S, C extends Context> {
+export interface SessionOptions<S, C extends Context = Context> {
     type?: "single";
     /**
      * **Recommended to use.**
