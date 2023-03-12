@@ -1,7 +1,6 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
 import { type LoginUrl } from "../../src/types.ts";
-import { assertEquals } from "https://deno.land/std@0.178.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.178.0/testing/bdd.ts";
+import { assertEquals, describe, it } from "../deps.test.ts";
 
 describe("Keyboard", () => {
     it("should take initial buttons", () => {

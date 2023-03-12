@@ -12,8 +12,9 @@ import {
     assertEquals,
     assertFalse,
     assertThrows,
-} from "https://deno.land/std@0.178.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.178.0/testing/bdd.ts";
+    describe,
+    it,
+} from "./deps.test.ts";
 
 describe("Context", () => {
     const u = { id: 42, first_name: "bot", is_bot: true } as User;
