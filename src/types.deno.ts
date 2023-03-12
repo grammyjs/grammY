@@ -82,7 +82,6 @@ export class InputFile {
         file: ConstructorParameters<typeof InputFile>[0],
     ): string | undefined {
         if (typeof file === "string") return basename(file);
-        if (typeof file !== "object") return undefined;
         if ("url" in file) return basename(file.url);
         if (!(file instanceof URL)) return undefined;
         return basename(file.pathname) || basename(file.hostname);
