@@ -18,7 +18,7 @@
         "contribs": "all-contributors"
     },
     "dependencies": {
-        "@grammyjs/types": "3.0.2",
+        "@grammyjs/types": "3.0.3",
         "abort-controller": "^3.0.0",
         "debug": "^4.3.4",
         "node-fetch": "^2.6.9"
