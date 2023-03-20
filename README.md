@@ -267,6 +267,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mrmaster009"><img src="https://avatars.githubusercontent.com/u/81420490?v=4?s=100" width="100px;" alt="mrmaster009"/><br /><sub><b>mrmaster009</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=mrmaster009" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://lwjerri.dev/"><img src="https://avatars.githubusercontent.com/u/50290430?v=4?s=100" width="100px;" alt="Andrey Zontov"/><br /><sub><b>Andrey Zontov</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3ALWJerri" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=LWJerri" title="Code">💻</a> <a href="#question-LWJerri" title="Answering Questions">💬</a> <a href="#ideas-LWJerri" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/AbbassAlmusawi"><img src="https://avatars.githubusercontent.com/u/73327881?v=4?s=100" width="100px;" alt="Abbass Al-Musawi"/><br /><sub><b>Abbass Al-Musawi</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=AbbassAlmusawi" title="Documentation">📖</a></td>
+    </tr>
   </tbody>
 </table>
 
