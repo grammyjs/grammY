@@ -2363,6 +2363,7 @@ export type InlineQueryContext<C extends Context> = Filter<C, "inline_query">;
 type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
     & ChatType<T> // ctx.chat
+    & ChatFrom<T> // ctx.from
     & ChatTypeRecord<"msg", T> // ctx.msg
     & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 /**
@@ -2402,6 +2403,10 @@ type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
 >;
 interface ChatType<T extends Chat["type"]> {
     chat: { type: T };
+}
+interface ChatFrom<T extends Chat["type"]> {
+    // deno-lint-ignore ban-types
+    from: [T] extends ["private"] ? {} : unknown;
 }
 
 // === Util functions
