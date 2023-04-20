@@ -101,6 +101,10 @@ describe("InlineKeyboard", () => {
             .switchInline("inline", "query")
             .switchInlineCurrent("inline current")
             .switchInlineCurrent("inline current", "query")
+            .switchInlineChosenChat("inline chosen chat")
+            .switchInlineChosenChat("inline chosen chat", {
+                allow_bot_chats: true,
+            })
             .game("game")
             .pay("pay");
         assertEquals(keyboard.inline_keyboard, [
@@ -120,6 +124,14 @@ describe("InlineKeyboard", () => {
                 {
                     switch_inline_query_current_chat: "query",
                     text: "inline current",
+                },
+                {
+                    switch_inline_query_chosen_chat: {},
+                    text: "inline chosen chat",
+                },
+                {
+                    switch_inline_query_chosen_chat: { allow_bot_chats: true },
+                    text: "inline chosen chat",
                 },
                 { text: "game", callback_game: {} },
                 { text: "pay", pay: true },
