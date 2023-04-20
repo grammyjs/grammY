@@ -1025,6 +1025,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "inji-gg",
+      "name": "ArunR",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5071242?v=4",
+      "profile": "https://github.com/inji-gg",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
