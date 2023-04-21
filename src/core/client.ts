@@ -269,7 +269,11 @@ class ApiClient<R extends RawApi> {
             ? createFormDataPayload(payload, (err) => streamErr.catch(err))
             : createJsonPayload(payload);
         const sig = controller.signal;
-        const options = { ...opts.baseFetchConfig, signal: sig, ...config };
+        const options = {
+            ...opts.baseFetchConfig,
+            signal: sig as any,
+            ...config,
+        };
         // Perform fetch call, and handle networking errors
         const successPromise = fetch(
             url instanceof URL ? url.href : url,
