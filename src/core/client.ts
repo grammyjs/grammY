@@ -271,6 +271,7 @@ class ApiClient<R extends RawApi> {
         const sig = controller.signal;
         const options = {
             ...opts.baseFetchConfig,
+            // deno-lint-ignore no-explicit-any
             signal: sig as any,
             ...config,
         };
