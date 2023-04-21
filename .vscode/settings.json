@@ -1,8 +1,11 @@
 {
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": { "source.fixAll": true },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
     "deno.enable": true,
     "deno.lint": true,
     "deno.config": "./deno.jsonc",
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "vue.features.codeActions.enable": false
 }
