@@ -432,7 +432,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param query The query object describing which chats can be picked
      */
-    switchInlineChosenChat(
+    switchInlineChosen(
         text: string,
         query: SwitchInlineQueryChosenChat = {},
     ) {

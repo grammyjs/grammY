@@ -101,8 +101,8 @@ describe("InlineKeyboard", () => {
             .switchInline("inline", "query")
             .switchInlineCurrent("inline current")
             .switchInlineCurrent("inline current", "query")
-            .switchInlineChosenChat("inline chosen chat")
-            .switchInlineChosenChat("inline chosen chat", {
+            .switchInlineChosen("inline chosen chat")
+            .switchInlineChosen("inline chosen chat", {
                 allow_bot_chats: true,
             })
             .game("game")
