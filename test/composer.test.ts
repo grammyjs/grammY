@@ -14,14 +14,8 @@ import {
 } from "./deps.test.ts";
 
 describe("BotError", () => {
-    const ctx = new Context(
-        // deno-lint-ignore no-explicit-any
-        { message: { text: "test" } } as any,
-        // deno-lint-ignore no-explicit-any
-        0 as any,
-        // deno-lint-ignore no-explicit-any
-        0 as any,
-    );
+    // @ts-ignore-error this message is missing many properties
+    const ctx = new Context({ message: { text: "test" } }, 0, 0);
     it("should copy stack and message", () => {
         const e = new Error("nope");
         const err = new BotError(e, ctx);

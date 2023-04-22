@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "charset": "utf8",
         "forceConsistentCasingInFileNames": true,
         "newLine": "lf",
         "noFallthroughCasesInSwitch": true,
