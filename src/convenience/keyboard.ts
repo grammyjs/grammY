@@ -4,6 +4,7 @@ import {
     type KeyboardButtonRequestChat,
     type KeyboardButtonRequestUser,
     type LoginUrl,
+    type SwitchInlineQueryChosenChat,
 } from "../types.ts";
 
 /**
@@ -399,9 +400,10 @@ export class InlineKeyboard {
         return this.add({ text, switch_inline_query: query });
     }
     /**
-     * Adds a new inline query button that act on the current chat. The selected
-     * chat will be prefilled with the name of your bot. You may provide a text
-     * that is specified along with it. This will start an inline query.
+     * Adds a new inline query button that acts on the current chat. The
+     * selected chat will be prefilled with the name of your bot. You may
+     * provide a text that is specified along with it. This will start an inline
+     * query.
      *
      * Your bot will in turn receive updates for inline queries. You can listen
      * to inline query updates like this:
@@ -414,6 +416,27 @@ export class InlineKeyboard {
      */
     switchInlineCurrent(text: string, query = "") {
         return this.add({ text, switch_inline_query_current_chat: query });
+    }
+    /**
+     * Adds a new inline query button. Telegram clients will let the user pick a
+     * chat when this button is pressed. This will start an inline query. The
+     * selected chat will be prefilled with the name of your bot. You may
+     * provide a text that is specified along with it.
+     *
+     * Your bot will in turn receive updates for inline queries. You can listen
+     * to inline query updates like this:
+     * ```ts
+     * bot.on('inline_query', ctx => { ... })
+     * ```
+     *
+     * @param text The text to display
+     * @param query The query object describing which chats can be picked
+     */
+    switchInlineChosen(
+        text: string,
+        query: SwitchInlineQueryChosenChat = {},
+    ) {
+        return this.add({ text, switch_inline_query_chosen_chat: query });
     }
     /**
      * Adds a new game query button, confer
