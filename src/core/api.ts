@@ -1482,7 +1482,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#getmyname
      */
     getMyName(other?: Other<R, "getMyName">, signal?: AbortSignal) {
-        return this.raw.getMyName(other, signal);
+        return this.raw.getMyName(other ?? {}, signal);
     }
 
     /**
