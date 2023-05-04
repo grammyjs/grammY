@@ -1,7 +1,6 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
 import { type LoginUrl } from "../../src/types.ts";
-import { assertEquals } from "https://deno.land/std@0.150.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
+import { assertEquals, describe, it } from "../deps.test.ts";
 
 describe("Keyboard", () => {
     it("should take initial buttons", () => {
@@ -25,25 +24,40 @@ describe("Keyboard", () => {
             .requestContact("contact")
             .requestLocation("location")
             .requestPoll("poll", "quiz")
-            .webApp("web app", "https://grammy.dev");
+            .webApp("web app", "https://grammy.dev")
+            .requestUser("user", 12, { user_is_bot: true })
+            .requestChat("chat", 42);
         assertEquals(keyboard.build(), [[
             { text: "button" },
             { text: "contact", request_contact: true },
             { text: "location", request_location: true },
             { text: "poll", request_poll: { type: "quiz" } },
             { text: "web app", web_app: { url: "https://grammy.dev" } },
+            {
+                text: "user",
+                request_user: { request_id: 12, user_is_bot: true },
+            },
+            {
+                text: "chat",
+                request_chat: { request_id: 42, chat_is_channel: false },
+            },
         ]]);
     });
 
     it("should support reply markup options", () => {
         const keyboard = new Keyboard();
+        assertEquals(keyboard.is_persistent, undefined);
         assertEquals(keyboard.selective, undefined);
         assertEquals(keyboard.one_time_keyboard, undefined);
         assertEquals(keyboard.resize_keyboard, undefined);
         assertEquals(keyboard.input_field_placeholder, undefined);
         keyboard
-            .selected(false).oneTime(true)
-            .resized(false).placeholder("placeholder");
+            .persistent()
+            .selected(false)
+            .oneTime(true)
+            .resized(false)
+            .placeholder("placeholder");
+        assertEquals(keyboard.is_persistent, true);
         assertEquals(keyboard.selective, false);
         assertEquals(keyboard.one_time_keyboard, true);
         assertEquals(keyboard.resize_keyboard, false);
@@ -87,6 +101,10 @@ describe("InlineKeyboard", () => {
             .switchInline("inline", "query")
             .switchInlineCurrent("inline current")
             .switchInlineCurrent("inline current", "query")
+            .switchInlineChosen("inline chosen chat")
+            .switchInlineChosen("inline chosen chat", {
+                allow_bot_chats: true,
+            })
             .game("game")
             .pay("pay");
         assertEquals(keyboard.inline_keyboard, [
@@ -106,6 +124,14 @@ describe("InlineKeyboard", () => {
                 {
                     switch_inline_query_current_chat: "query",
                     text: "inline current",
+                },
+                {
+                    switch_inline_query_chosen_chat: {},
+                    text: "inline chosen chat",
+                },
+                {
+                    switch_inline_query_chosen_chat: { allow_bot_chats: true },
+                    text: "inline chosen chat",
                 },
                 { text: "game", callback_game: {} },
                 { text: "pay", pay: true },

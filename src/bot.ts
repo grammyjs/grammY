@@ -231,11 +231,16 @@ export class Bot<
      * Initializes the bot, i.e. fetches information about the bot itself. This
      * method is called automatically, you usually don't have to call it
      * manually.
+     *
+     * @param signal Optional `AbortSignal` to cancel the initialization
      */
-    async init() {
+    async init(signal?: AbortSignal) {
         if (!this.isInited()) {
             debug("Initializing bot");
-            this.mePromise ??= withRetries(() => this.api.getMe());
+            this.mePromise ??= withRetries(
+                () => this.api.getMe(signal),
+                signal,
+            );
             let me: UserFromGetMe;
             try {
                 me = await this.mePromise;
@@ -353,19 +358,29 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        if (!this.isInited()) await this.init();
+        if (!this.isInited()) {
+            await this.init(this.pollingAbortController?.signal);
+        }
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
+        } else {
+            this.pollingRunning = true;
+            this.pollingAbortController = new AbortController();
         }
-        await withRetries(() =>
-            this.api.deleteWebhook({
-                drop_pending_updates: options?.drop_pending_updates,
-            })
+        await withRetries(
+            () =>
+                this.api.deleteWebhook({
+                    drop_pending_updates: options?.drop_pending_updates,
+                }, this.pollingAbortController?.signal),
+            this.pollingAbortController?.signal,
         );
 
         // All async ops of setup complete, run callback
         await options?.onStart?.(this.botInfo);
+
+        // Bot was stopped during `onStart`
+        if (!this.pollingRunning) return;
 
         // Prevent common misuse that causes memory leak
         this.use = () => {
@@ -412,8 +427,8 @@ you can circumvent this protection against memory leaks.`);
             this.pollingRunning = false;
             this.pollingAbortController?.abort();
             const offset = this.lastTriedUpdateId + 1;
-            await this.api.getUpdates({ offset, limit: 1 });
-            this.pollingAbortController = undefined;
+            await this.api.getUpdates({ offset, limit: 1 })
+                .finally(() => this.pollingAbortController = undefined);
         } else {
             debug("Bot is not running!");
         }
@@ -440,9 +455,6 @@ you can circumvent this protection against memory leaks.`);
      * the bot is stopped.
      */
     private async loop(options?: PollingOptions) {
-        this.pollingRunning = true;
-        this.pollingAbortController = new AbortController();
-
         const limit = options?.limit;
         const timeout = options?.timeout ?? 30; // seconds
         let allowed_updates = options?.allowed_updates;
@@ -525,33 +537,107 @@ you can circumvent this protection against memory leaks.`);
 /**
  * Performs a network call task, retrying upon known errors until success.
  *
+ * If the task errors and a retry_after value can be used, a subsequent retry
+ * will be delayed by the specified period of time.
+ *
+ * Otherwise, if the first attempt at running the task fails, the task is
+ * retried immediately. If second attempt fails, too, waits for 100 ms, and then
+ * doubles this delay for every subsequent attemt. Never waits longer than 1
+ * hour before retrying.
+ *
  * @param task Async task to perform
+ * @param signal Optional `AbortSignal` to prevent further retries
  */
-async function withRetries<T>(task: () => Promise<T>): Promise<T> {
+async function withRetries<T>(
+    task: () => Promise<T>,
+    signal?: AbortSignal,
+): Promise<T> {
+    // Set up delays between retries
+    const INITIAL_DELAY = 50; // ms
+    let lastDelay = INITIAL_DELAY;
+
+    // Define error handler
+    /**
+     * Determines the error handling strategy based on various error types.
+     * Sleeps if necessary, and returns whether to retry or rethrow an error.
+     */
+    async function handleError(error: unknown) {
+        let delay = false;
+        let strategy: "retry" | "rethrow" = "rethrow";
+
+        if (error instanceof HttpError) {
+            delay = true;
+            strategy = "retry";
+        } else if (error instanceof GrammyError) {
+            if (error.error_code >= 500) {
+                delay = true;
+                strategy = "retry";
+            } else if (error.error_code === 429) {
+                const retryAfter = error.parameters.retry_after;
+                if (typeof retryAfter === "number") {
+                    // ignore the backoff for sleep, then reset it
+                    await sleep(retryAfter, signal);
+                    lastDelay = INITIAL_DELAY;
+                } else {
+                    delay = true;
+                }
+                strategy = "retry";
+            }
+        }
+
+        if (delay) {
+            // Do not sleep for the first retry
+            if (lastDelay !== INITIAL_DELAY) {
+                await sleep(lastDelay, signal);
+            }
+            const TWENTY_MINUTES = 20 * 60 * 1000; // ms
+            lastDelay = Math.min(TWENTY_MINUTES, 2 * lastDelay);
+        }
+
+        return strategy;
+    }
+
+    // Perform the actual task with retries
     let result: { ok: false } | { ok: true; value: T } = { ok: false };
     while (!result.ok) {
         try {
             result = { ok: true, value: await task() };
         } catch (error) {
             debugErr(error);
-            if (error instanceof HttpError) continue;
-            if (error instanceof GrammyError) {
-                if (error.error_code >= 500) continue;
-                if (error.error_code === 429) {
-                    const retryAfter = error.parameters.retry_after;
-                    if (retryAfter !== undefined) await sleep(retryAfter);
+            const strategy = await handleError(error);
+            switch (strategy) {
+                case "retry":
                     continue;
-                }
+                case "rethrow":
+                    throw error;
             }
-            throw error;
         }
     }
     return result.value;
 }
 
 /**
- * Returns a new promise that resolves after the specified number of seconds.
+ * Returns a new promise that resolves after the specified number of seconds, or
+ * rejects as soon as the given signal is aborted.
  */
-function sleep(seconds: number) {
-    return new Promise((r) => setTimeout(r, 1000 * seconds));
+async function sleep(seconds: number, signal?: AbortSignal) {
+    let handle: number | undefined;
+    let reject: ((err: Error) => void) | undefined;
+    function abort() {
+        reject?.(new Error("Aborted delay"));
+        if (handle !== undefined) clearTimeout(handle);
+    }
+    try {
+        await new Promise<void>((res, rej) => {
+            reject = rej;
+            if (signal?.aborted) {
+                abort();
+                return;
+            }
+            signal?.addEventListener("abort", abort);
+            handle = setTimeout(res, 1000 * seconds);
+        });
+    } finally {
+        signal?.removeEventListener("abort", abort);
+    }
 }

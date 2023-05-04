@@ -9,7 +9,7 @@ import {
     type MaybeArray,
     type StringWithSuggestions,
 } from "./context.ts";
-import { Filter, FilterQuery } from "./filter.ts";
+import { type Filter, type FilterQuery } from "./filter.ts";
 import { type Chat } from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
@@ -703,7 +703,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param routeHandlers Handlers for every route
      * @param fallback Optional fallback middleware if no route matches
      */
-    route<R extends Record<string, Middleware<C>>>(
+    route<R extends Record<PropertyKey, Middleware<C>>>(
         router: (ctx: C) => MaybePromise<undefined | keyof R>,
         routeHandlers: R,
         fallback: Middleware<C> = pass,

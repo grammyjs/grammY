@@ -1,0 +1,49 @@
+name: Type-check third-party bots
+
+on:
+    push:
+        branches: [main]
+        paths:
+            - src/
+            - .github/workflows/third_party.yml
+    pull_request:
+        branches: [main]
+        paths:
+            - src/
+            - .github/workflows/third_party.yml
+
+jobs:
+    deno:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                url:
+                    # please keep sorted
+                    - https://raw.githubusercontent.com/dcdunkan/ryportbot/main/main.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/commands.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/hello-world.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/inline-keyboards.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/message-formatting.ts
+                    - https://raw.githubusercontent.com/grammyjs/docs-bot/main/bot.ts
+
+        steps:
+            - uses: denoland/setup-deno@v1
+              with:
+                deno-version: v1.x
+
+            - name: Create import_map.json
+              run: |
+                set -o pipefail;
+                curl --silent https://cdn.deno.land/grammy/meta/versions.json |
+                jq '
+                    (.latest / ".")[0] as $major
+                    | .versions
+                    | map(select(startswith($major + ".")) | {
+                        key: @uri "https://deno.land/x/grammy@\(.)/mod.ts",
+                        value: @uri "https://raw.githubusercontent.com/grammyjs/grammY/\(env.GITHUB_SHA)/src/mod.ts"
+                    })
+                    | { imports: from_entries }
+                ' > import_map.json
+
+            - run: deno check --import-map=import_map.json --remote ${{ matrix.url }}

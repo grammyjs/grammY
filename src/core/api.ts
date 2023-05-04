@@ -9,7 +9,9 @@ import {
     type InputMediaDocument,
     type InputMediaPhoto,
     type InputMediaVideo,
+    type InputSticker,
     type LabeledPrice,
+    type MaskPosition,
     type PassportElementError,
 } from "../types.ts";
 import {
@@ -105,7 +107,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.
+     * Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
      *
      * Notes
      * 1. This method will not work if an outgoing webhook is set up.
@@ -250,7 +252,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -692,6 +694,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
@@ -706,12 +709,14 @@ export class Api<R extends RawApi = RawApi> {
             | "record_voice"
             | "upload_voice"
             | "upload_document"
+            | "choose_sticker"
             | "find_location"
             | "record_video_note"
             | "upload_video_note",
+        other?: Other<R, "sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
     ) {
-        return this.raw.sendChatAction({ chat_id, action }, signal);
+        return this.raw.sendChatAction({ chat_id, action, ...other }, signal);
     }
 
     /**
@@ -732,7 +737,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
+     * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`, where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
      *
      * Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
      *
@@ -1158,7 +1163,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
+     * Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1187,7 +1192,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      * @param user_id Unique identifier of the target user
@@ -1236,6 +1241,200 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getforumtopiciconstickers
+     */
+    getForumTopicIconStickers(signal?: AbortSignal) {
+        return this.raw.getForumTopicIconStickers(signal);
+    }
+
+    /**
+     * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param name Topic name, 1-128 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createforumtopic
+     */
+    createForumTopic(
+        chat_id: number | string,
+        name: string,
+        other?: Other<R, "createForumTopic", "chat_id" | "name">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.createForumTopic({ chat_id, name, ...other }, signal);
+    }
+
+    /**
+     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
+     */
+    editForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        other?: Other<R, "editForumTopic", "chat_id" | "message_thread_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editForumTopic(
+            { chat_id, message_thread_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closeforumtopic
+     */
+    closeForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.closeForumTopic({ chat_id, message_thread_id }, signal);
+    }
+
+    /**
+     * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopenforumtopic
+     */
+    reopenForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.reopenForumTopic(
+            { chat_id, message_thread_id },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteforumtopic
+     */
+    deleteForumTopic(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteForumTopic(
+            { chat_id, message_thread_id },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param message_thread_id Unique identifier for the target message thread of the forum topic
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unpinallforumtopicmessages
+     */
+    unpinAllForumTopicMessages(
+        chat_id: number | string,
+        message_thread_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.unpinAllForumTopicMessages(
+            { chat_id, message_thread_id },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param name New topic name, 1-128 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editgeneralforumtopic
+     */
+    editGeneralForumTopic(
+        chat_id: number | string,
+        name: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editGeneralForumTopic({ chat_id, name }, signal);
+    }
+
+    /**
+     * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
+     */
+    closeGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.closeGeneralForumTopic({ chat_id }, signal);
+    }
+
+    /**
+     * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success.     *
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
+     */
+    reopenGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.reopenGeneralForumTopic({ chat_id }, signal);
+    }
+
+    /**
+     * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
+     */
+    hideGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.hideGeneralForumTopic({ chat_id }, signal);
+    }
+
+    /**
+     * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
+     */
+    unhideGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+        return this.raw.unhideGeneralForumTopic({ chat_id }, signal);
+    }
+
+    /**
      * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
      *
      * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.
@@ -1255,6 +1454,146 @@ export class Api<R extends RawApi = RawApi> {
             { callback_query_id, ...other },
             signal,
         );
+    }
+
+    /**
+     * Use this method to change the bot's name. Returns True on success.
+     *
+     * @param name New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmyname
+     */
+    setMyName(
+        name: string,
+        other?: Other<R, "setMyName", "name">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setMyName({ name, ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the current bot name for the given user language. Returns BotName on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmyname
+     */
+    getMyName(other?: Other<R, "getMyName">, signal?: AbortSignal) {
+        return this.raw.getMyName(other ?? {}, signal);
+    }
+
+    /**
+     * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.
+     *
+     * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmycommands
+     */
+    setMyCommands(
+        commands: readonly BotCommand[],
+        other?: Other<R, "setMyCommands", "commands">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setMyCommands({ commands, ...other }, signal);
+    }
+
+    /**
+     * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, higher level commands will be shown to affected users. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemycommands
+     */
+    deleteMyCommands(
+        other?: Other<R, "deleteMyCommands">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteMyCommands({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmycommands
+     */
+    getMyCommands(other?: Other<R, "getMyCommands">, signal?: AbortSignal) {
+        return this.raw.getMyCommands({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success.
+     *
+     * @param description New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.
+     * @param other Optional remaining paramters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmydescription
+     */
+    setMyDescription(
+        description: string,
+        other?: Other<R, "setMyDescription", "description">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setMyDescription({ description, ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the current bot description for the given user language. Returns BotDescription on success.
+     *
+     * @param other Optional remaining paramters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmydescription
+     */
+    getMyDescription(
+        other?: Other<R, "getMyDescription">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getMyDescription({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success.
+     *
+     * @param short_description New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.
+     * @param other Optional remaining paramters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmyshortdescription
+     */
+    setMyShortDescription(
+        short_description: string,
+        other?: Other<R, "setMyShortDescription", "short_description">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setMyShortDescription(
+            { short_description, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.
+     *
+     * @param other Optional remaining paramters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmyshortdescription
+     */
+    getMyShortDescription(
+        other?: Other<R, "getMyShortDescription">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getMyShortDescription({ ...other }, signal);
     }
 
     /**
@@ -1311,54 +1650,10 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#getmydefaultadministratorrights
      */
     getMyDefaultAdministratorRights(
-        other?: Other<R, "setMyDefaultAdministratorRights">,
+        other?: Other<R, "getMyDefaultAdministratorRights">,
         signal?: AbortSignal,
     ) {
         return this.raw.getMyDefaultAdministratorRights({ ...other }, signal);
-    }
-
-    /**
-     * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.
-     *
-     * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#setmycommands
-     */
-    setMyCommands(
-        commands: readonly BotCommand[],
-        other?: Other<R, "setMyCommands", "commands">,
-        signal?: AbortSignal,
-    ) {
-        return this.raw.setMyCommands({ commands, ...other }, signal);
-    }
-
-    /**
-     * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, higher level commands will be shown to affected users. Returns True on success.
-     *
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#deletemycommands
-     */
-    deleteMyCommands(
-        other?: Other<R, "deleteMyCommands">,
-        signal?: AbortSignal,
-    ) {
-        return this.raw.deleteMyCommands({ ...other }, signal);
-    }
-
-    /**
-     * Use this method to get the current list of the bot's commands for the given scope and user language. Returns Array of BotCommand on success. If commands aren't set, an empty list is returned.
-     *
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#getmycommands
-     */
-    getMyCommands(other?: Other<R, "getMyCommands">, signal?: AbortSignal) {
-        return this.raw.getMyCommands({ ...other }, signal);
     }
 
     /**
@@ -1616,7 +1911,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data.
+     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1644,29 +1939,47 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.
+     * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
+     *
+     * @param custom_emoji_ids List of custom emoji identifiers
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
+     */
+    getCustomEmojiStickers(custom_emoji_ids: string[], signal?: AbortSignal) {
+        return this.raw.getCustomEmojiStickers({ custom_emoji_ids }, signal);
+    }
+
+    /**
+     * Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success.
      *
      * @param user_id User identifier of sticker file owner
-     * @param png_sticker PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px.
+     * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
+     * @param sticker A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#uploadstickerfile
      */
     uploadStickerFile(
         user_id: number,
-        png_sticker: InputFile,
+        sticker_format: "static" | "animated" | "video",
+        sticker: InputFile,
         signal?: AbortSignal,
     ) {
-        return this.raw.uploadStickerFile({ user_id, png_sticker }, signal);
+        return this.raw.uploadStickerFile(
+            { user_id, sticker_format, sticker },
+            signal,
+        );
     }
 
     /**
-     * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Returns True on success.
+     * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns True on success.
      *
      * @param user_id User identifier of created sticker set owner
-     * @param name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters.
+     * @param name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in `_by_<bot_username>`. `<bot_username>` is case insensitive. 1-64 characters.
      * @param title Sticker set title, 1-64 characters
-     * @param emojis One or more emoji corresponding to the sticker
+     * @param stickers A list of 1-50 initial stickers to be added to the sticker set
+     * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1676,27 +1989,31 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         name: string,
         title: string,
-        emojis: string,
+        stickers: InputSticker[],
+        sticker_format: "static" | "animated" | "video",
         other?: Other<
             R,
             "createNewStickerSet",
-            "user_id" | "name" | "title" | "emojis"
+            | "user_id"
+            | "name"
+            | "title"
+            | "sticker_format"
+            | "stickers"
         >,
         signal?: AbortSignal,
     ) {
         return this.raw.createNewStickerSet(
-            { user_id, name, title, emojis, ...other },
+            { user_id, name, title, stickers, sticker_format, ...other },
             signal,
         );
     }
 
     /**
-     * Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.
+     * Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.
      *
      * @param user_id User identifier of sticker set owner
      * @param name Sticker set name
-     * @param emojis One or more emoji corresponding to the sticker
-     * @param other Optional remaining parameters, confer the official reference below
+     * @param sticker An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#addstickertoset
@@ -1704,12 +2021,11 @@ export class Api<R extends RawApi = RawApi> {
     addStickerToSet(
         user_id: number,
         name: string,
-        emojis: string,
-        other?: Other<R, "addStickerToSet", "user_id" | "name" | "emojis">,
+        sticker: InputSticker,
         signal?: AbortSignal,
     ) {
         return this.raw.addStickerToSet(
-            { user_id, name, emojis, ...other },
+            { user_id, name, sticker },
             signal,
         );
     }
@@ -1744,22 +2060,124 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only. Returns True on success.
+     * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.
+     *
+     * @param sticker File identifier of the sticker
+     * @param emoji_list A list of 1-20 emoji associated with the sticker
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setstickeremojilist
+     */
+    setStickerEmojiList(
+        sticker: string,
+        emoji_list: string[],
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setStickerEmojiList({ sticker, emoji_list }, signal);
+    }
+
+    /**
+     * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.
+     *
+     * @param sticker File identifier of the sticker
+     * @param keywords A list of 0-20 search keywords for the sticker with total length of up to 64 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setstickerkeywords
+     */
+    setStickerKeywords(
+        sticker: string,
+        keywords: string[],
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setStickerKeywords({ sticker, keywords }, signal);
+    }
+
+    /**
+     * Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns True on success.
+     *
+     * @param sticker File identifier of the sticker
+     * @param mask_position An object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setstickermaskposition
+     */
+    setStickerMaskPosition(
+        sticker: string,
+        mask_position?: MaskPosition,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setStickerMaskPosition(
+            { sticker, mask_position },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to set the title of a created sticker set. Returns True on success.
+     *
+     * @param name Sticker set name
+     * @param title Sticker set title, 1-64 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setstickersettitle
+     */
+    setStickerSetTitle(name: string, title: string, signal?: AbortSignal) {
+        return this.raw.setStickerSetTitle({ name, title }, signal);
+    }
+
+    /**
+     * Use this method to delete a sticker set that was created by the bot. Returns True on success.
+     *
+     * @param name Sticker set name
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletestickerset
+     */
+    deleteStickerSet(name: string, signal?: AbortSignal) {
+        return this.raw.deleteStickerSet({ name }, signal);
+    }
+
+    /**
+     * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns True on success.
      *
      * @param name Sticker set name
      * @param user_id User identifier of the sticker set owner
-     * @param thumb A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files ». Animated sticker set thumbnails can't be uploaded via HTTP URL.
+     * @param thumbnail A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#setstickersetthumb
+     * **Official reference:** https://core.telegram.org/bots/api#setstickersetthumbnail
      */
-    setStickerSetThumb(
+    setStickerSetThumbnail(
         name: string,
         user_id: number,
-        thumb?: InputFile | string,
+        thumbnail: InputFile | string | undefined,
         signal?: AbortSignal,
     ) {
-        return this.raw.setStickerSetThumb({ name, user_id, thumb }, signal);
+        return this.raw.setStickerSetThumbnail(
+            { name, user_id, thumbnail },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success.
+     *
+     * @param name Sticker set name
+     * @param custom_emoji_id Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+     */
+    setCustomEmojiStickerSetThumbnail(
+        name: string,
+        custom_emoji_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setCustomEmojiStickerSetThumbnail({
+            name,
+            custom_emoji_id,
+        }, signal);
     }
 
     /**
@@ -1811,7 +2229,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payments provider token, obtained via BotFather
+     * @param provider_token Payment provider token, obtained via @BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -1860,7 +2278,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
      * @param provider_token Payment provider token, obtained via BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
-     * @param prices Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
+     * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1900,7 +2318,7 @@ export class Api<R extends RawApi = RawApi> {
      * If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
      *
      * @param shipping_query_id Unique identifier for the query to be answered
-     * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2044,7 +2462,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. On success, returns an Array of GameHighScore objects.
+     * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of GameHighScore objects.
      *
      * This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and his neighbors are not among them. Please note that this behavior is subject to change.
      *

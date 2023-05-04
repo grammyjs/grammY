@@ -1,8 +1,5 @@
 import { Bot } from "../src/bot.ts";
-import {
-    assertEquals,
-    assertThrows,
-} from "https://deno.land/std@0.150.0/testing/asserts.ts";
+import { assertEquals, assertThrows } from "./deps.test.ts";
 
 function createBot(token: string) {
     return new Bot(token);

@@ -7,12 +7,11 @@ import {
     assert,
     assertEquals,
     assertFalse,
-} from "https://deno.land/std@0.150.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
-import {
+    describe,
+    it,
     readAll,
     readerFromIterable,
-} from "https://deno.land/std@0.150.0/streams/conversion.ts";
+} from "../deps.test.ts";
 
 describe("requiresFormDataUpload", () => {
     it("should ignore primitives", () => {

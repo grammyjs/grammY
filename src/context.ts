@@ -19,6 +19,7 @@ import {
     type InputMediaVideo,
     type LabeledPrice,
     type Message,
+    type MessageEntity,
     type PassportElementError,
     type Update,
     type User,
@@ -387,6 +388,44 @@ export class Context implements RenamedUpdate {
                 this.chosenInlineResult?.inline_message_id
         );
     }
+    /**
+     * Get entities and their text. Extracts the text from `ctx.msg.text` or `ctx.msg.caption`.
+     * Returns an empty array if one of `ctx.msg`, `ctx.msg.text`
+     * or `ctx.msg.entities` is undefined.
+     *
+     * You can filter specific entity types by passing the `types` parameter. Example:
+     *
+     * ```ts
+     * ctx.entities() // Returns all entity types
+     * ctx.entities('url') // Returns only url entities
+     * ctx.enttities(['url', 'email']) // Returns url and email entities
+     * ```
+     *
+     * @param types Types of entities to return. Omit to get all entities.
+     * @returns Array of entities and their texts, or empty array when there's no text
+     */
+    entities(): Array<MessageEntity & { text: string }>;
+    entities<T extends MessageEntity["type"]>(
+        types: MaybeArray<T>,
+    ): Array<MessageEntity & { type: T; text: string }>;
+    entities(types?: MaybeArray<MessageEntity["type"]>) {
+        const message = this.msg;
+        if (message === undefined) return [];
+
+        const text = message.text ?? message.caption;
+        if (text === undefined) return [];
+        let entities = message.entities ?? message.caption_entities;
+        if (entities === undefined) return [];
+        if (types !== undefined) {
+            const filters = new Set(toArray(types));
+            entities = entities.filter((entity) => filters.has(entity.type));
+        }
+
+        return entities.map((entity) => ({
+            ...entity,
+            text: text.substring(entity.offset, entity.offset + entity.length),
+        }));
+    }
 
     // PROBING SHORTCUTS
 
@@ -544,7 +583,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param other Optional remaining parameters, confer the official reference below
@@ -956,6 +995,7 @@ export class Context implements RenamedUpdate {
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
@@ -969,14 +1009,17 @@ export class Context implements RenamedUpdate {
             | "record_voice"
             | "upload_voice"
             | "upload_document"
+            | "choose_sticker"
             | "find_location"
             | "record_video_note"
             | "upload_video_note",
+        other?: Other<"sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
     ) {
         return this.api.sendChatAction(
             orThrow(this.chat, "sendChatAction").id,
             action,
+            other,
             signal,
         );
     }
@@ -1534,7 +1577,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatAdministrators`. Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
+     * Context-aware alias for `api.getChatAdministrators`. Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1567,7 +1610,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1582,7 +1625,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param user_id Unique identifier of the target user
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1623,6 +1666,176 @@ export class Context implements RenamedUpdate {
     deleteChatStickerSet(signal?: AbortSignal) {
         return this.api.deleteChatStickerSet(
             orThrow(this.chat, "deleteChatStickerSet").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.createForumTopic`. Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
+     *
+     * @param name Topic name, 1-128 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createforumtopic
+     */
+    createForumTopic(
+        name: string,
+        other?: Other<"createForumTopic", "chat_id" | "name">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.createForumTopic(
+            orThrow(this.chat, "createForumTopic").id,
+            name,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
+     */
+    editForumTopic(
+        other?: Other<"editForumTopic", "chat_id" | "message_thread_id">,
+        signal?: AbortSignal,
+    ) {
+        const message = orThrow(this.msg, "editForumTopic");
+        const thread = orThrow(message.message_thread_id, "editForumTopic");
+        return this.api.editForumTopic(message.chat.id, thread, other, signal);
+    }
+
+    /**
+     * Context-aware alias for `api.closeForumTopic`. Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closeforumtopic
+     */
+    closeForumTopic(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "closeForumTopic");
+        const thread = orThrow(message.message_thread_id, "closeForumTopic");
+        return this.api.closeForumTopic(message.chat.id, thread, signal);
+    }
+
+    /**
+     * Context-aware alias for `api.reopenForumTopic`. Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopenforumtopic
+     */
+    reopenForumTopic(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "reopenForumTopic");
+        const thread = orThrow(message.message_thread_id, "reopenForumTopic");
+        return this.api.reopenForumTopic(message.chat.id, thread, signal);
+    }
+
+    /**
+     * Context-aware alias for `api.deleteForumTopic`. Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteforumtopic
+     */
+    deleteForumTopic(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "deleteForumTopic");
+        const thread = orThrow(message.message_thread_id, "deleteForumTopic");
+        return this.api.deleteForumTopic(message.chat.id, thread, signal);
+    }
+
+    /**
+     * Context-aware alias for `api.unpinAllForumTopicMessages`. Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unpinallforumtopicmessages
+     */
+    unpinAllForumTopicMessages(signal?: AbortSignal) {
+        const message = orThrow(this.msg, "unpinAllForumTopicMessages");
+        const thread = orThrow(
+            message.message_thread_id,
+            "unpinAllForumTopicMessages",
+        );
+        return this.api.unpinAllForumTopicMessages(
+            message.chat.id,
+            thread,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editGeneralForumTopic`. Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param name New topic name, 1-128 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editgeneralforumtopic
+     */
+    editGeneralForumTopic(name: string, signal?: AbortSignal) {
+        return this.api.editGeneralForumTopic(
+            orThrow(this.chat, "editGeneralForumTopic").id,
+            name,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.closeGeneralForumTopic`. Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
+     */
+    closeGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.closeGeneralForumTopic(
+            orThrow(this.chat, "closeGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.reopenGeneralForumTopic`. Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success.     *
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
+     */
+    reopenGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.reopenGeneralForumTopic(
+            orThrow(this.chat, "reopenGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.hideGeneralForumTopic`. Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
+     */
+    hideGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.hideGeneralForumTopic(
+            orThrow(this.chat, "hideGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.unhideGeneralForumTopic`. Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
+     */
+    unhideGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.unhideGeneralForumTopic(
+            orThrow(this.chat, "unhideGeneralForumTopic").id,
             signal,
         );
     }
@@ -1882,6 +2095,24 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
+     *
+     * @param custom_emoji_ids List of custom emoji identifiers
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
+     */
+    getCustomEmojiStickers(signal?: AbortSignal) {
+        type Emoji = MessageEntity.CustomEmojiMessageEntity;
+        return this.api.getCustomEmojiStickers(
+            (this.msg?.entities ?? [])
+                .filter((e): e is Emoji => e.type === "custom_emoji")
+                .map((e) => e.custom_emoji_id),
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.answerInlineQuery`. Use this method to send answers to an inline query. On success, True is returned.
      * No more than 50 results per query are allowed.
      *
@@ -1912,7 +2143,7 @@ export class Context implements RenamedUpdate {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payments provider token, obtained via BotFather
+     * @param provider_token Payment provider token, obtained via @BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -1956,7 +2187,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.answerShippingQuery`. If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.
      *
      * @param shipping_query_id Unique identifier for the query to be answered
-     * @param ok Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param ok Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2096,7 +2327,7 @@ type CallbackQueryContextCore = FilterCore<"callback_query:data">;
  * in separate files and still have the correct types.
  */
 export type CallbackQueryContext<C extends Context> = Filter<
-    C,
+    NarrowMatch<C, string | RegExpMatchArray>,
     "callback_query:data"
 >;
 
@@ -2127,14 +2358,12 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type InlineQueryContext<C extends Context> = Filter<
-    C,
-    "inline_query"
->;
+export type InlineQueryContext<C extends Context> = Filter<C, "inline_query">;
 
 type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
     & ChatType<T> // ctx.chat
+    & ChatFrom<T> // ctx.from
     & ChatTypeRecord<"msg", T> // ctx.msg
     & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 /**
@@ -2174,6 +2403,10 @@ type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
 >;
 interface ChatType<T extends Chat["type"]> {
     chat: { type: T };
+}
+interface ChatFrom<T extends Chat["type"]> {
+    // deno-lint-ignore ban-types
+    from: [T] extends ["private"] ? {} : unknown;
 }
 
 // === Util functions

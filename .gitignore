@@ -14,7 +14,7 @@ pids
 # Dependency directories
 node_modules/
 
-# package-lock.json will not be published, so no need to store it
+# lock files will not be published, so no need to store it
 package-lock.json
 
 # Output of 'npm pack'
@@ -26,4 +26,5 @@ test/cov_profile
 coverage.lcov
 
 # Build output
+deno_cache/
 out/

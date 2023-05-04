@@ -1,7 +1,10 @@
 import {
     type InlineKeyboardButton,
     type KeyboardButton,
+    type KeyboardButtonRequestChat,
+    type KeyboardButtonRequestUser,
     type LoginUrl,
+    type SwitchInlineQueryChosenChat,
 } from "../types.ts";
 
 /**
@@ -32,6 +35,12 @@ import {
  * custom keyboards in grammY.
  */
 export class Keyboard {
+    /**
+     * Requests clients to always show the keyboard when the regular keyboard is
+     * hidden. Defaults to false, in which case the custom keyboard can be
+     * hidden and opened with a keyboard icon.
+     */
+    public is_persistent?: boolean;
     /**
      * Show the current keyboard only to those users that are mentioned in the
      * text of the message object.
@@ -96,6 +105,48 @@ export class Keyboard {
         return this.add({ text });
     }
     /**
+     * Adds a new request user button. When the user presses the button, a list
+     * of suitable users will be opened. Tapping on any user will send their
+     * identifier to the bot in a “user_shared” service message. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    requestUser(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestUser, "request_id"> = {},
+    ) {
+        return this.add({
+            text,
+            request_user: { request_id: requestId, ...options },
+        });
+    }
+    /**
+     * Adds a new request chat button. When the user presses the button, a list
+     * of suitable users will be opened. Tapping on a chat will send its
+     * identifier to the bot in a “chat_shared” service message. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    requestChat(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestChat, "request_id"> = {
+            chat_is_channel: false,
+        },
+    ) {
+        return this.add({
+            text,
+            request_chat: { request_id: requestId, ...options },
+        });
+    }
+    /**
      * Adds a new contact request button. The user's phone number will be sent
      * as a contact when the button is pressed. Available in private chats only.
      *
@@ -129,11 +180,26 @@ export class Keyboard {
      * user presses the button. The Web App will be able to send a
      * “web_app_data” service message. Available in private chats only.
      *
-     * @param text Text text to display
+     * @param text The text to display
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
     webApp(text: string, url: string) {
         return this.add({ text, web_app: { url } });
+    }
+    /**
+     * Make the current keyboard persistent. See
+     * https://grammy.dev/plugins/keyboard.html#persistent-keyboards for more
+     * details.
+     *
+     * Keyboards are not persistent by default, use this function to enable it
+     * (without any parameters or pass `true`). Pass `false` to force the
+     * keyboard to not persist.
+     *
+     * @param isEnabled `true` if the keyboard should persist, and `false` otherwise
+     */
+    persistent(isEnabled = true) {
+        this.is_persistent = isEnabled;
+        return this;
     }
     /**
      * Make the current keyboard selective. See
@@ -192,8 +258,9 @@ export class Keyboard {
         return this;
     }
     /**
-     * Return the resulting custom keyboard that was built. May be called in the
-     * end if necessary so you can specify more options in `reply_markup`.
+     * Returns the keyboard that was build. Note that it doesn't return
+     * `resize_keyboard` or other options that may be set. You don't usually
+     * need to call this method. It is no longer useful.
      */
     build() {
         return this.keyboard;
@@ -333,9 +400,10 @@ export class InlineKeyboard {
         return this.add({ text, switch_inline_query: query });
     }
     /**
-     * Adds a new inline query button that act on the current chat. The selected
-     * chat will be prefilled with the name of your bot. You may provide a text
-     * that is specified along with it. This will start an inline query.
+     * Adds a new inline query button that acts on the current chat. The
+     * selected chat will be prefilled with the name of your bot. You may
+     * provide a text that is specified along with it. This will start an inline
+     * query.
      *
      * Your bot will in turn receive updates for inline queries. You can listen
      * to inline query updates like this:
@@ -348,6 +416,27 @@ export class InlineKeyboard {
      */
     switchInlineCurrent(text: string, query = "") {
         return this.add({ text, switch_inline_query_current_chat: query });
+    }
+    /**
+     * Adds a new inline query button. Telegram clients will let the user pick a
+     * chat when this button is pressed. This will start an inline query. The
+     * selected chat will be prefilled with the name of your bot. You may
+     * provide a text that is specified along with it.
+     *
+     * Your bot will in turn receive updates for inline queries. You can listen
+     * to inline query updates like this:
+     * ```ts
+     * bot.on('inline_query', ctx => { ... })
+     * ```
+     *
+     * @param text The text to display
+     * @param query The query object describing which chats can be picked
+     */
+    switchInlineChosen(
+        text: string,
+        query: SwitchInlineQueryChosenChat = {},
+    ) {
+        return this.add({ text, switch_inline_query_chosen_chat: query });
     }
     /**
      * Adds a new game query button, confer

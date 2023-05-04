@@ -1,13 +1,23 @@
 // === Needed imports
-import { type InputFileProxy } from "https://esm.sh/@grammyjs/types@2.8.2";
-import { debug as d, isDeno, toRaw } from "./platform.deno.ts";
-import { basename } from "https://deno.land/std@0.148.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.148.0/streams/mod.ts";
+import { basename } from "https://deno.land/std@0.184.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.184.0/streams/mod.ts";
+import {
+    type ApiMethods as ApiMethodsF,
+    type InputMedia as InputMediaF,
+    type InputMediaAnimation as InputMediaAnimationF,
+    type InputMediaAudio as InputMediaAudioF,
+    type InputMediaDocument as InputMediaDocumentF,
+    type InputMediaPhoto as InputMediaPhotoF,
+    type InputMediaVideo as InputMediaVideoF,
+    type InputSticker as InputStickerF,
+    type Opts as OptsF,
+} from "https://deno.land/x/grammy_types@v3.1.1/mod.ts";
+import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://esm.sh/@grammyjs/types@2.8.2";
+export * from "https://deno.land/x/grammy_types@v3.1.1/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
@@ -72,12 +82,21 @@ export class InputFile {
         file: ConstructorParameters<typeof InputFile>[0],
     ): string | undefined {
         if (typeof file === "string") return basename(file);
-        if (typeof file !== "object") return undefined;
         if ("url" in file) return basename(file.url);
         if (!(file instanceof URL)) return undefined;
-        return basename(file.pathname) || basename(file.hostname);
+        if (file.pathname !== "/") {
+            const filename = basename(file.pathname);
+            if (filename) return filename;
+        }
+        return basename(file.hostname);
     }
-    async [toRaw](): Promise<
+    /**
+     * Internal method. Do not use.
+     *
+     * Converts this instance into a binary representation that can be sent to
+     * the Bot API server in the request body.
+     */
+    async toRaw(): Promise<
         Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>
     > {
         if (this.consumed) {
@@ -118,14 +137,14 @@ function isDenoFile(data: unknown): data is Deno.FsFile {
 }
 
 // === Export InputFile types
-type GrammyTypes = InputFileProxy<InputFile>;
-
 /** Wrapper type to bundle all methods of the Telegram API */
-export type ApiMethods = GrammyTypes["Telegram"];
+export type ApiMethods = ApiMethodsF<InputFile>;
 
 /** Utility type providing the argument type for the given method name or `{}` if the method does not take any parameters */
-export type Opts<M extends keyof GrammyTypes["Telegram"]> =
-    GrammyTypes["Opts"][M];
+export type Opts<M extends keyof ApiMethods> = OptsF<InputFile>[M];
+
+/** This object describes a sticker to be added to a sticker set. */
+export type InputSticker = InputStickerF<InputFile>;
 
 /** This object represents the content of a media message to be sent. It should be one of
 - InputMediaAnimation
@@ -133,14 +152,14 @@ export type Opts<M extends keyof GrammyTypes["Telegram"]> =
 - InputMediaAudio
 - InputMediaPhoto
 - InputMediaVideo */
-export type InputMedia = GrammyTypes["InputMedia"];
+export type InputMedia = InputMediaF<InputFile>;
 /** Represents a photo to be sent. */
-export type InputMediaPhoto = GrammyTypes["InputMediaPhoto"];
+export type InputMediaPhoto = InputMediaPhotoF<InputFile>;
 /** Represents a video to be sent. */
-export type InputMediaVideo = GrammyTypes["InputMediaVideo"];
+export type InputMediaVideo = InputMediaVideoF<InputFile>;
 /** Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent. */
-export type InputMediaAnimation = GrammyTypes["InputMediaAnimation"];
+export type InputMediaAnimation = InputMediaAnimationF<InputFile>;
 /** Represents an audio file to be treated as music to be sent. */
-export type InputMediaAudio = GrammyTypes["InputMediaAudio"];
+export type InputMediaAudio = InputMediaAudioF<InputFile>;
 /** Represents a general file to be sent. */
-export type InputMediaDocument = GrammyTypes["InputMediaDocument"];
+export type InputMediaDocument = InputMediaDocumentF<InputFile>;

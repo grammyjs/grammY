@@ -224,12 +224,18 @@ const ENTITY_KEYS = {
     pre: {},
     text_link: {},
     text_mention: {},
+    custom_emoji: {},
 } as const;
 const USER_KEYS = {
     me: {},
     is_bot: {},
     is_premium: {},
     added_to_attachment_menu: {},
+} as const;
+const STICKER_KEYS = {
+    is_video: {},
+    is_animated: {},
+    premium_animation: {},
 } as const;
 
 // L2
@@ -246,12 +252,14 @@ const EDITABLE_MESSAGE_KEYS = {
     entities: ENTITY_KEYS,
     caption_entities: ENTITY_KEYS,
 
+    has_media_spoiler: {},
+
     caption: {},
 } as const;
 const COMMON_MESSAGE_KEYS = {
     ...EDITABLE_MESSAGE_KEYS,
 
-    sticker: {},
+    sticker: STICKER_KEYS,
     video_note: {},
     voice: {},
     contact: {},
@@ -273,6 +281,7 @@ const COMMON_MESSAGE_KEYS = {
     web_app_data: {},
 
     forward_date: {},
+    is_topic_message: {},
     is_automatic_forward: {},
 } as const;
 const MESSAGE_KEYS = {
@@ -284,8 +293,17 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
+    user_shared: {},
+    chat_shared: {},
     connected_website: {},
+    write_access_allowed: {},
     passport_data: {},
+    forum_topic_created: {},
+    forum_topic_edited: { name: {}, icon_custom_emoji_id: {} },
+    forum_topic_closed: {},
+    forum_topic_reopened: {},
+    general_forum_topic_hidden: {},
+    general_forum_topic_unhidden: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,

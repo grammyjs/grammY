@@ -1,4 +1,5 @@
 // === Needed imports
+import { basename } from "https://deno.land/std@0.184.0/path/mod.ts";
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -9,17 +10,11 @@ import {
     type InputMediaVideo as InputMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "@grammyjs/types";
-import { createReadStream, type ReadStream } from "fs";
-import fetch from "node-fetch";
-import { basename } from "path";
-import { debug as d } from "./platform.node";
-
-const debug = d("grammy:warn");
-
-export * from "@grammyjs/types";
+} from "https://deno.land/x/grammy_types@v3.1.1/mod.ts";
 
 // === Export all API types
+export * from "https://deno.land/x/grammy_types@v3.1.1/mod.ts";
+
 /** Something that looks like a URL. */
 interface URLLike {
     /**
@@ -51,16 +46,16 @@ export class InputFile {
     /**
      * Constructs an `InputFile` that can be used in the API to send files.
      *
-     * @param file A path to a local file or a `Buffer` or a `fs.ReadStream` that specifies the file data
+     * @param file A URL to a file or a `Blob` or other forms of file data
      * @param filename Optional name of the file
      */
     constructor(
         file:
-            | string
+            | Blob
             | URL
             | URLLike
             | Uint8Array
-            | ReadStream
+            | ReadableStream<Uint8Array>
             | Iterable<Uint8Array>
             | AsyncIterable<Uint8Array>,
         filename?: string,
@@ -68,26 +63,15 @@ export class InputFile {
         this.fileData = file;
         filename ??= this.guessFilename(file);
         this.filename = filename;
-        if (
-            typeof file === "string" &&
-            (file.startsWith("http:") || file.startsWith("https:"))
-        ) {
-            debug(
-                `InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`,
-            );
-        }
     }
     private guessFilename(
         file: ConstructorParameters<typeof InputFile>[0],
     ): string | undefined {
         if (typeof file === "string") return basename(file);
+        if (typeof file !== "object") return undefined;
         if ("url" in file) return basename(file.url);
         if (!(file instanceof URL)) return undefined;
-        if (file.pathname !== "/") {
-            const filename = basename(file.pathname);
-            if (filename) return filename;
-        }
-        return basename(file.hostname);
+        return basename(file.pathname) || basename(file.hostname);
     }
     /**
      * Internal method. Do not use.
@@ -101,13 +85,9 @@ export class InputFile {
         }
         const data = this.fileData;
         // Handle local files
-        if (typeof data === "string") return createReadStream(data);
-        // Handle URLs and URLLike objects
-        if (data instanceof URL) {
-            return data.protocol === "file" // node-fetch does not support file URLs
-                ? createReadStream(data.pathname)
-                : fetchFile(data);
-        }
+        if (data instanceof Blob) return data.stream();
+        // Handle URL and URLLike objects
+        if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
         // Mark streams and iterators as consumed
         if (!(data instanceof Uint8Array)) this.consumed = true;
@@ -118,14 +98,10 @@ export class InputFile {
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
     const { body } = await fetch(url);
-    for await (const chunk of body) {
-        if (typeof chunk === "string") {
-            throw new Error(
-                `Could not transfer file, received string data instead of bytes from '${url}'`,
-            );
-        }
-        yield chunk;
+    if (body === null) {
+        throw new Error(`Download failed, no response body from '${url}'`);
     }
+    yield* body;
 }
 
 // === Export InputFile types
