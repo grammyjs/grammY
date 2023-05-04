@@ -20,7 +20,7 @@ import {
     type InlineQueryResultVenue,
     type InlineQueryResultVideo,
     type InlineQueryResultVoice,
-} from "../platform.deno.ts";
+} from "../types.ts";
 
 export type WithoutType<T extends InlineQueryResult> = Omit<T, "type">;
 
@@ -35,7 +35,7 @@ export type WithoutType<T extends InlineQueryResult> = Omit<T, "type">;
  */
 export class InlineQueryResultBuilder {
     private static build<T extends InlineQueryResult = InlineQueryResult>(
-        options: T
+        options: T,
     ): T {
         return options;
     }
@@ -76,7 +76,7 @@ export class InlineQueryResultBuilder {
     }
 
     static documentCache(
-        options: WithoutType<InlineQueryResultCachedDocument>
+        options: WithoutType<InlineQueryResultCachedDocument>,
     ) {
         return this.build<InlineQueryResultCachedDocument>({
             type: "document",
@@ -120,7 +120,7 @@ export class InlineQueryResultBuilder {
     }
 
     static mpeg4gifCache(
-        options: WithoutType<InlineQueryResultCachedMpeg4Gif>
+        options: WithoutType<InlineQueryResultCachedMpeg4Gif>,
     ) {
         return this.build<InlineQueryResultCachedMpeg4Gif>({
             type: "mpeg4_gif",
