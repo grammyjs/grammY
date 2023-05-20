@@ -206,7 +206,7 @@ const azure: FrameworkAdapter = (context, req) => ({
 /** Next.js Serverless Functions */
 const nextJs: FrameworkAdapter = (req, res) => ({
     update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER],
+    header: req.headers[SECRET_HEADER.toLowerCase()],
     end: () => res.end(),
     respond: (json) => res.status(200).json(json),
     unauthorized: () => res.status(401).send(WRONG_TOKEN_ERROR),
