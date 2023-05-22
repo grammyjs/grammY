@@ -65,6 +65,10 @@ export interface LazySessionFlavor<S> {
     set session(session: MaybePromise<S | null | undefined>);
 }
 
+type CascadingKey = string[];
+type Key = string | CascadingKey;
+type MaybeAsyncIterable<T> = Iterable<T> | AsyncIterable<T>;
+
 /**
  * A storage adapter is an abstraction that provides read, write, and delete
  * access to a storage solution of any kind. Storage adapters are used to keep
@@ -76,34 +80,38 @@ export interface StorageAdapter<T> {
      * Reads a value for the given key from the storage. May return the value or
      * undefined, or a promise of either.
      */
-    read: (key: string) => MaybePromise<T | undefined>;
+    read: (key: Key) => MaybePromise<T | undefined>;
     /**
      * Writes a value for the given key to the storage.
      */
-    write: (key: string, value: T) => MaybePromise<void>;
+    write: (key: Key, value: T) => MaybePromise<void>;
     /**
      * Deletes a value for the given key from the storage.
      */
-    delete: (key: string) => MaybePromise<void>;
+    delete: (key: Key) => MaybePromise<void>;
     /**
      * Checks whether a key exists in the storage.
      */
-    has?: (key: string) => MaybePromise<boolean>;
-    /**
-     * Lists all keys.
-     */
-    readAllKeys?: () => Iterable<string> | AsyncIterable<string>;
-    /**
-     * Lists all values.
-     */
-    readAllValues?: () => Iterable<T> | AsyncIterable<T>;
-    /**
-     * Lists all keys with their values.
-     */
-    readAllEntries?: () =>
-        | Iterable<[key: string, value: T]>
-        | AsyncIterable<[key: string, value: T]>;
+    has?: (key: Key) => MaybePromise<boolean>;
+    list?: (prefix?: Key) => MaybeAsyncIterable<T>;
+    listKeys?: (prefix?: Key) => MaybeAsyncIterable<CascadingKey>;
 }
+
+// +++ CHAT MEMBERS +++
+// ["user", user_id, { ...user }]
+// ["chat", chat_id, { ...chat }]
+// ["chat_member", chat_id, user_id, { ...chat_member }]
+
+// Use cases we can cover:
+// - get user info
+// - get chat info
+// - get chat membership info
+// - list all users of the bot
+// - list all chats of the bot
+// - list all users in a chat
+//
+// Use cases we cannot cover:
+// - get chats in common with the bot
 
 /**
  * Options for session middleware.
