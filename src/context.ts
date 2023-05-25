@@ -1054,17 +1054,21 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#getfile
      */
     getFile(signal?: AbortSignal) {
-        const m = orThrow(this.msg, "getFile");
-        const file = m.photo !== undefined
+        const file = this.getFileData();
+        return this.api.getFile(orThrow(file, "getFile").file_id, signal);
+    }
+
+    getFileData() {
+        const m = orThrow(this.msg, "getFileData");
+        return m.photo !== undefined
             ? m.photo[m.photo.length - 1]
             : m.animation ??
-                m.audio ??
-                m.document ??
-                m.video ??
-                m.video_note ??
-                m.voice ??
-                m.sticker;
-        return this.api.getFile(orThrow(file, "getFile").file_id, signal);
+            m.audio ??
+            m.document ??
+            m.video ??
+            m.video_note ??
+            m.voice ??
+            m.sticker;
     }
 
     /** @deprecated Use `banAuthor` instead. */
