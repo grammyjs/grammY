@@ -51,4 +51,9 @@ export {
     type Transformer,
     type WebhookReplyEnvelope,
 } from "./core/client.ts";
+export {
+    createJsonPayload,
+    createFormDataPayload,
+    requiresFormDataUpload
+} from "./core/payload.ts";
 export { GrammyError, HttpError } from "./core/error.ts";
