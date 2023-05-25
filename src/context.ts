@@ -408,8 +408,8 @@ export class Context implements RenamedUpdate {
     entities<T extends MessageEntity["type"]>(
         types: MaybeArray<T>,
     ): Array<MessageEntity & { type: T; text: string }>;
-    entities(types?: MaybeArray<MessageEntity["type"]>) {
-        const message = this.msg;
+    entities(types?: MaybeArray<MessageEntity["type"]>, fromReply?: boolean) {
+        const message = fromReply ? this.msg?.reply_to_message : this.msg;
         if (message === undefined) return [];
 
         const text = message.text ?? message.caption;
