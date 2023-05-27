@@ -1063,12 +1063,12 @@ export class Context implements RenamedUpdate {
         return m.photo !== undefined
             ? m.photo[m.photo.length - 1]
             : m.animation ??
-            m.audio ??
-            m.document ??
-            m.video ??
-            m.video_note ??
-            m.voice ??
-            m.sticker;
+                m.audio ??
+                m.document ??
+                m.video ??
+                m.video_note ??
+                m.voice ??
+                m.sticker;
     }
 
     /** @deprecated Use `banAuthor` instead. */
