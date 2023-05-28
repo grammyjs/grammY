@@ -1055,8 +1055,18 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "chrisandrewcl",
+      "name": "Chris Andrew C. L.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/368831?v=4",
+      "profile": "https://chrisandrew.cl",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": false
+  "skipCi": false,
+  "commitType": "docs"
 }
