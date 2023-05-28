@@ -1035,6 +1035,17 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "ndatg",
+      "name": "NDA",
+      "avatar_url": "https://avatars.githubusercontent.com/u/108090198?v=4",
+      "profile": "https://github.com/ndatg",
+      "contributions": [
+        "bug",
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
