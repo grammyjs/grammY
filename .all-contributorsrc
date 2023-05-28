@@ -995,8 +995,78 @@
         "bug",
         "review"
       ]
+    },
+    {
+      "login": "mrmaster009",
+      "name": "mrmaster009",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81420490?v=4",
+      "profile": "https://github.com/mrmaster009",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "LWJerri",
+      "name": "Andrey Zontov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50290430?v=4",
+      "profile": "https://lwjerri.dev/",
+      "contributions": [
+        "bug",
+        "code",
+        "question",
+        "ideas"
+      ]
+    },
+    {
+      "login": "AbbassAlmusawi",
+      "name": "Abbass Al-Musawi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73327881?v=4",
+      "profile": "https://github.com/AbbassAlmusawi",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "inji-gg",
+      "name": "ArunR",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5071242?v=4",
+      "profile": "https://github.com/inji-gg",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "ndatg",
+      "name": "NDA",
+      "avatar_url": "https://avatars.githubusercontent.com/u/108090198?v=4",
+      "profile": "https://github.com/ndatg",
+      "contributions": [
+        "bug",
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "MatyiFKBT",
+      "name": "MatyiFKBT",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6183867?v=4",
+      "profile": "https://github.com/MatyiFKBT",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "chrisandrewcl",
+      "name": "Chris Andrew C. L.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/368831?v=4",
+      "profile": "https://chrisandrew.cl",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": false
+  "skipCi": false,
+  "commitType": "docs"
 }

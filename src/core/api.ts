@@ -1457,33 +1457,76 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
+     * Use this method to change the bot's name. Returns True on success.
      *
+     * @param name New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#setchatmenubutton
+     * **Official reference:** https://core.telegram.org/bots/api#setmyname
      */
-    setChatMenuButton(
-        other?: Other<R, "setChatMenuButton">,
+    setMyName(
+        name: string,
+        other?: Other<R, "setMyName", "name">,
         signal?: AbortSignal,
     ) {
-        return this.raw.setChatMenuButton({ ...other }, signal);
+        return this.raw.setMyName({ name, ...other }, signal);
     }
 
     /**
-     * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
+     * Use this method to get the current bot name for the given user language. Returns BotName on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#getchatmenubutton
+     * **Official reference:** https://core.telegram.org/bots/api#getmyname
      */
-    getChatMenuButton(
-        other?: Other<R, "getChatMenuButton">,
+    getMyName(other?: Other<R, "getMyName">, signal?: AbortSignal) {
+        return this.raw.getMyName(other ?? {}, signal);
+    }
+
+    /**
+     * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.
+     *
+     * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmycommands
+     */
+    setMyCommands(
+        commands: readonly BotCommand[],
+        other?: Other<R, "setMyCommands", "commands">,
         signal?: AbortSignal,
     ) {
-        return this.raw.getChatMenuButton({ ...other }, signal);
+        return this.raw.setMyCommands({ commands, ...other }, signal);
+    }
+
+    /**
+     * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, higher level commands will be shown to affected users. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemycommands
+     */
+    deleteMyCommands(
+        other?: Other<R, "deleteMyCommands">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteMyCommands({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmycommands
+     */
+    getMyCommands(other?: Other<R, "getMyCommands">, signal?: AbortSignal) {
+        return this.raw.getMyCommands({ ...other }, signal);
     }
 
     /**
@@ -1554,6 +1597,36 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setchatmenubutton
+     */
+    setChatMenuButton(
+        other?: Other<R, "setChatMenuButton">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setChatMenuButton({ ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatmenubutton
+     */
+    getChatMenuButton(
+        other?: Other<R, "getChatMenuButton">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getChatMenuButton({ ...other }, signal);
+    }
+
+    /**
      * Use this method to the change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
@@ -1581,50 +1654,6 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getMyDefaultAdministratorRights({ ...other }, signal);
-    }
-
-    /**
-     * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.
-     *
-     * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#setmycommands
-     */
-    setMyCommands(
-        commands: readonly BotCommand[],
-        other?: Other<R, "setMyCommands", "commands">,
-        signal?: AbortSignal,
-    ) {
-        return this.raw.setMyCommands({ commands, ...other }, signal);
-    }
-
-    /**
-     * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, higher level commands will be shown to affected users. Returns True on success.
-     *
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#deletemycommands
-     */
-    deleteMyCommands(
-        other?: Other<R, "deleteMyCommands">,
-        signal?: AbortSignal,
-    ) {
-        return this.raw.deleteMyCommands({ ...other }, signal);
-    }
-
-    /**
-     * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.
-     *
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#getmycommands
-     */
-    getMyCommands(other?: Other<R, "getMyCommands">, signal?: AbortSignal) {
-        return this.raw.getMyCommands({ ...other }, signal);
     }
 
     /**
