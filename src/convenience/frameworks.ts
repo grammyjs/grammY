@@ -1,6 +1,7 @@
 import { type Update } from "../types.ts";
 
 const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
+const SECRET_HEADER_LOWERCASE = SECRET_HEADER.toLowerCase();
 
 const WRONG_TOKEN_ERROR = "secret token is wrong";
 const ok = () => new Response(null, { status: 200 });
@@ -98,7 +99,7 @@ const koa: FrameworkAdapter = (ctx) => ({
 /** fastify web framework */
 const fastify: FrameworkAdapter = (req, reply) => ({
     update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER.toLowerCase()],
+    header: req.headers[SECRET_HEADER_LOWERCASE],
     end: () => reply.status(200).send(),
     respond: (json) => reply.send(json),
     unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
@@ -151,7 +152,7 @@ const oak: FrameworkAdapter = (ctx) => ({
 
 /** Node.js native 'http' and 'https' modules */
 const http: FrameworkAdapter = (req, res) => {
-    const secretHeaderFromRequest = req.headers[SECRET_HEADER.toLowerCase()];
+    const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
     return {
         update: new Promise((resolve, reject) => {
             // deno-lint-ignore no-explicit-any
@@ -186,6 +187,27 @@ const awsLambda: FrameworkAdapter = (event, _context, callback) => ({
     unauthorized: () => callback(null, { statusCode: 401 }),
 });
 
+/** AWS lambda async/await serverless functions */
+const awsLambdaAsync: FrameworkAdapter = (event, _context) => {
+    let resolveResponse: (response: unknown) => void;
+
+    return {
+        update: JSON.parse(event.body),
+        header: event.headers[SECRET_HEADER_LOWERCASE],
+        end: () => resolveResponse({ statusCode: 200 }),
+        respond: (json) =>
+            resolveResponse({
+                statusCode: 200,
+                headers: { "Content-Type": "application/json" },
+                body: json,
+            }),
+        unauthorized: () => resolveResponse({ statusCode: 401 }),
+        handlerReturn: new Promise((resolve) => {
+            resolveResponse = resolve;
+        }),
+    };
+};
+
 /** Azure Functions */
 const azure: FrameworkAdapter = (context, req) => ({
     update: Promise.resolve(req.body),
@@ -206,7 +228,7 @@ const azure: FrameworkAdapter = (context, req) => ({
 /** Next.js Serverless Functions */
 const nextJs: FrameworkAdapter = (req, res) => ({
     update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER.toLowerCase()],
+    header: req.headers[SECRET_HEADER_LOWERCASE],
     end: () => res.end(),
     respond: (json) => res.status(200).json(json),
     unauthorized: () => res.status(401).send(WRONG_TOKEN_ERROR),
@@ -324,6 +346,7 @@ export const adapters = {
     http,
     https: http,
     "aws-lambda": awsLambda,
+    "aws-lambda-async": awsLambdaAsync,
     azure,
     "next-js": nextJs,
     sveltekit,
