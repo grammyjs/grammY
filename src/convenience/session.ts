@@ -629,6 +629,16 @@ function wrapStorage<T>(
     };
 }
 
+interface StoreRecord<T> {
+    session: T;
+    expires?: number;
+}
+interface Node<T> {
+    children?: Store<T>;
+    data?: StoreRecord<T>;
+}
+type Store<T> = Map<string, Node<T>>;
+
 // === Memory storage adapter
 /**
  * The memory session storage is a built-in storage adapter that saves your
@@ -655,6 +665,8 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
         { session: S; expires?: number }
     >();
 
+    protected readonly store: Store<S>;
+
     /**
      * Constructs a new memory session storage with the given time to live. Note
      * that this storage adapter will not store your data permanently.
@@ -663,8 +675,25 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
      */
     constructor(private readonly timeToLive?: number) {}
 
-    read(key: string) {
-        const value = this.storage.get(key);
+    private readCascadingKey(
+        key: CascadingKey,
+        store: Store<S> = this.store,
+    ): StoreRecord<S> | undefined {
+        const [lastSegment] = key.slice(-1);
+
+        for (const segment of key) {
+            const record = store.get(segment);
+            if (segment === lastSegment) return record?.data;
+            if (!record?.children) return undefined;
+
+            return this.readCascadingKey(key.toSpliced(0, 1), record?.children);
+        }
+    }
+
+    read(key: Key) {
+        const cascadingKey = Array.isArray(key) ? key : [key];
+        const value = this.readCascadingKey(cascadingKey);
+
         if (value === undefined) return undefined;
         if (value.expires !== undefined && value.expires < Date.now()) {
             this.delete(key);
@@ -697,15 +726,15 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
             .filter((pair): pair is [string, S] => pair[1] !== undefined);
     }
 
-    has(key: string) {
+    has(key: Key) {
         return this.storage.has(key);
     }
 
-    write(key: string, value: S) {
+    write(key: Key, value: S) {
         this.storage.set(key, addExpiryDate(value, this.timeToLive));
     }
 
-    delete(key: string) {
+    delete(key: Key) {
         this.storage.delete(key);
     }
 }
