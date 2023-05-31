@@ -530,8 +530,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * skipped and the next middleware will be executed.
      *
      * This method has two signatures. The first one is straightforward, it is
-     * the one described above. Note that the predicate may be asynchronous, i.e.
-     * it can return a Promise of a boolean.
+     * the one described above. Note that the predicate may be asynchronous,
+     * i.e. it can return a Promise of a boolean.
      *
      * Alternatively, you can pass a function that has a type predicate as
      * return type. This will allow you to narrow down the context object. The
