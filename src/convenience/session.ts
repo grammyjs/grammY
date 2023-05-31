@@ -67,7 +67,11 @@ export interface LazySessionFlavor<S> {
 
 type CascadingKey = string[];
 type Key = string | CascadingKey;
+function cascade(key: Key): CascadingKey {
+    return Array.isArray(key) ? key : [key];
+}
 type MaybeAsyncIterable<T> = Iterable<T> | AsyncIterable<T>;
+type KV<T> = [key: CascadingKey, value: T];
 
 /**
  * A storage adapter is an abstraction that provides read, write, and delete
@@ -93,8 +97,21 @@ export interface StorageAdapter<T> {
      * Checks whether a key exists in the storage.
      */
     has?: (key: Key) => MaybePromise<boolean>;
-    list?: (prefix?: Key) => MaybeAsyncIterable<T>;
-    listKeys?: (prefix?: Key) => MaybeAsyncIterable<CascadingKey>;
+    /**
+     * Lists all keys via an iterator. Optionally, only lists keys that start
+     * with a given prefix.
+     */
+    keys?: (prefix?: Key) => MaybeAsyncIterable<CascadingKey>;
+    /**
+     * Lists all values via an iterator. Optionally, only lists values for keys
+     * that start with a given prefix.
+     */
+    values?: (prefix?: Key) => MaybeAsyncIterable<T>;
+    /**
+     * Lists all key-value pairs via an iterator. Optionally, only lists pairs
+     * with keys that start with a given prefix.
+     */
+    entries?: (prefix?: Key) => MaybeAsyncIterable<KV<T>>;
 }
 
 // +++ CHAT MEMBERS +++
@@ -639,6 +656,99 @@ interface Node<T> {
 }
 type Store<T> = Map<string, Node<T>>;
 
+interface TrieNode<T> {
+    children: Map<string, TrieNode<T>> | undefined;
+    value: T | undefined;
+}
+class Trie<T> {
+    private root: TrieNode<T> = { children: undefined, value: undefined };
+    private at(key: string[]): TrieNode<T> | undefined {
+        const len = key.length;
+        let node = this.root;
+        for (let i = 0; i < len; i++) {
+            const n = node.children?.get(key[i]);
+            if (n === undefined) /* fast path */ return undefined;
+            node = n;
+        }
+        return node;
+    }
+    get(key: string[]): T | undefined {
+        return this.at(key)?.value;
+    }
+    set(key: string[], value: T): void {
+        const len = key.length;
+        let node = this.root;
+        for (let i = 0; i < len; i++) {
+            const seg = key[i];
+            let children = node.children;
+            if (children === undefined) {
+                children = new Map();
+                node.children = children;
+            }
+            let n = children.get(seg);
+            if (n === undefined) {
+                n = { children: undefined, value: undefined };
+                children.set(seg, n);
+            }
+            node = n;
+        }
+        node.value = value;
+    }
+    delete(key: string[]): void {
+        const len = key.length;
+        const path = [this.root];
+        for (let i = 0; i < len; i++) {
+            const n = path[i].children?.get(key[i]);
+            if (n === undefined) /* fast path */ return;
+            path.push(n);
+        }
+        const last = path.length - 1;
+        const lastNode = path[last];
+        lastNode.value = undefined;
+        if (lastNode.children !== undefined) {
+            return;
+        }
+        for (let i = last; i > 0 && path[i].value === undefined; i--) {
+            const parent = path[i - 1];
+            const siblings = parent.children!;
+            siblings.delete(key[i]);
+            if (siblings.size > 0) {
+                break;
+            }
+            parent.children = undefined;
+        }
+    }
+    *entries(prefix: string[] = []): Generator<[string[], T]> {
+        const root = this.at(prefix);
+        if (root === undefined) return;
+        const cursors = [(function* () {
+            yield [prefix.slice(), root] as const;
+        })()];
+        while (cursors.length > 0) {
+            const cursor = cursors[cursors.length - 1];
+            const step = cursor.next();
+            if (step.done) {
+                cursors.pop();
+            } else {
+                const [key, { value, children }] = step.value;
+                if (value !== undefined) {
+                    yield [key, value];
+                }
+                if (children !== undefined) {
+                    cursors.push((function* () {
+                        for (const [seg, child] of children.entries()) {
+                            yield [key.concat(seg), child];
+                        }
+                    })());
+                }
+            }
+        }
+    }
+    *keys(prefix: string[] = []): Generator<string[]> {
+        for (const [k] of this.entries(prefix)) yield k;
+    }
+}
+
 // === Memory storage adapter
 /**
  * The memory session storage is a built-in storage adapter that saves your
@@ -658,14 +768,9 @@ type Store<T> = Map<string, Node<T>>;
  */
 export class MemorySessionStorage<S> implements StorageAdapter<S> {
     /**
-     * Internally used `Map` instance that stores the session data
+     * Internally used `Trie` instance that stores the session data
      */
-    protected readonly storage = new Map<
-        string,
-        { session: S; expires?: number }
-    >();
-
-    protected readonly store: Store<S>;
+    protected readonly storage = new Trie<{ session: S; expires?: number }>();
 
     /**
      * Constructs a new memory session storage with the given time to live. Note
@@ -675,24 +780,8 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
      */
     constructor(private readonly timeToLive?: number) {}
 
-    private readCascadingKey(
-        key: CascadingKey,
-        store: Store<S> = this.store,
-    ): StoreRecord<S> | undefined {
-        const [lastSegment] = key.slice(-1);
-
-        for (const segment of key) {
-            const record = store.get(segment);
-            if (segment === lastSegment) return record?.data;
-            if (!record?.children) return undefined;
-
-            return this.readCascadingKey(key.toSpliced(0, 1), record?.children);
-        }
-    }
-
     read(key: Key) {
-        const cascadingKey = Array.isArray(key) ? key : [key];
-        const value = this.readCascadingKey(cascadingKey);
+        const value = this.storage.get(cascade(key));
 
         if (value === undefined) return undefined;
         if (value.expires !== undefined && value.expires < Date.now()) {
@@ -708,34 +797,51 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     readAll() {
         return this.readAllValues();
     }
-
+    /**
+     * @deprecated Use {@link keys} instead
+     */
     readAllKeys() {
-        return Array.from(this.storage.keys());
+        return Array.from(this.keys());
     }
-
+    /**
+     * @deprecated Use {@link values} instead
+     */
     readAllValues() {
-        return Array
-            .from(this.storage.keys())
-            .map((key) => this.read(key))
-            .filter((value): value is S => value !== undefined);
+        return Array.from(this.values());
     }
-
+    /**
+     * @deprecated Use {@link entries} instead
+     */
     readAllEntries() {
-        return Array.from(this.storage.keys())
-            .map((key) => [key, this.read(key)])
-            .filter((pair): pair is [string, S] => pair[1] !== undefined);
+        return Array.from(this.entries());
     }
 
     has(key: Key) {
-        return this.storage.has(key);
+        return this.read(key) !== undefined;
     }
 
     write(key: Key, value: S) {
-        this.storage.set(key, addExpiryDate(value, this.timeToLive));
+        this.storage.set(cascade(key), addExpiryDate(value, this.timeToLive));
     }
 
     delete(key: Key) {
-        this.storage.delete(key);
+        this.storage.delete(cascade(key));
+    }
+
+    *keys(prefix?: Key) {
+        for (const key of this.storage.keys(cascade(prefix ?? []))) yield key;
+    }
+    *entries(prefix?: Key) {
+        for (const key of this.keys(prefix)) {
+            const value = this.read(key);
+            if (value !== undefined) {
+                const entry: [CascadingKey, S] = [key, value];
+                yield entry;
+            }
+        }
+    }
+    *values(prefix?: Key) {
+        for (const [, value] of this.entries(prefix)) yield value;
     }
 }
 
