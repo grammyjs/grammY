@@ -470,10 +470,11 @@ export class Keyboard {
      * Appends the buttons of the given keyboards to this keyboard. If other
      * options are given in these keyboards, they will override our options.
      *
-     * @param keyboards A number of keyboards to append
+     * @param sources A number of keyboards to append
      */
-    append(...keyboards: Keyboard[]) {
-        for (const keyboard of keyboards) {
+    append(...sources: Array<(string | KeyboardButton)[][] | Keyboard>) {
+        for (const source of sources) {
+            const keyboard = Keyboard.from(source);
             this.keyboard.push(...keyboard.keyboard.map((row) => row.slice()));
             this.is_persistent = keyboard.is_persistent ??
                 this.is_persistent;
@@ -501,18 +502,19 @@ export class Keyboard {
      * You can use the static button builder methods to create keyboard button
      * objects.
      *
-     * @param buttons A two-dimensional button array
+     * @param source A two-dimensional button array
      * @param options Optional options for the custom keyboard
      */
     static from(
-        buttons: (string | KeyboardButton)[][],
+        source: (string | KeyboardButton)[][] | Keyboard,
         options: Omit<ReplyKeyboardMarkup, "keyboard"> = {},
     ): Keyboard {
+        if (source instanceof Keyboard) return source;
         function toButton(btn: string | KeyboardButton) {
             return typeof btn === "string" ? Keyboard.text(btn) : btn;
         }
         return Object.assign(
-            new Keyboard(buttons.map((row) => row.map(toButton))),
+            new Keyboard(source.map((row) => row.map(toButton))),
             options,
         );
     }
@@ -521,10 +523,10 @@ export class Keyboard {
      * You can use the static button builder methods to create keyboard button
      * objects.
      *
-     * @param buttons A number of button rows
+     * @param rows A number of button rows
      */
-    static fromRows(...buttons: (string | KeyboardButton)[][]) {
-        return Keyboard.from(buttons);
+    static fromRows(...rows: (string | KeyboardButton)[][]) {
+        return Keyboard.from(rows);
     }
     /**
      * Takes a number of button columns and creates a custom keyboard from them.
@@ -537,10 +539,10 @@ export class Keyboard {
      * You can use the static button builder methods to create keyboard button
      * objects.
      *
-     * @param buttons A number of button rows
+     * @param columns A number of button columns
      */
-    static fromColumns(...buttons: (string | KeyboardButton)[][]) {
-        return Keyboard.from(buttons).transpose();
+    static fromColumns(...columns: (string | KeyboardButton)[][]) {
+        return Keyboard.from(columns).transpose();
     }
 }
 
