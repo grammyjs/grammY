@@ -646,16 +646,6 @@ function wrapStorage<T>(
     };
 }
 
-interface StoreRecord<T> {
-    session: T;
-    expires?: number;
-}
-interface Node<T> {
-    children?: Store<T>;
-    data?: StoreRecord<T>;
-}
-type Store<T> = Map<string, Node<T>>;
-
 interface TrieNode<T> {
     children: Map<string, TrieNode<T>> | undefined;
     value: T | undefined;
