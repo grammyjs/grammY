@@ -17,9 +17,11 @@ import { debug as d } from "./platform.node";
 
 const debug = d("grammy:warn");
 
+// === Export all API types
 export * from "@grammyjs/types";
 
-// === Export all API types
+/** A value, or a potentially async function supplying that value */
+type MaybeSupplier<T> = T | (() => T | Promise<T>);
 /** Something that looks like a URL. */
 interface URLLike {
     /**
@@ -55,14 +57,15 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file:
+        file: MaybeSupplier<
             | string
             | URL
             | URLLike
             | Uint8Array
             | ReadStream
             | Iterable<Uint8Array>
-            | AsyncIterable<Uint8Array>,
+            | AsyncIterable<Uint8Array>
+        >,
         filename?: string,
     ) {
         this.fileData = file;
@@ -95,11 +98,24 @@ export class InputFile {
      * Converts this instance into a binary representation that can be sent to
      * the Bot API server in the request body.
      */
-    toRaw(): Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array> {
-        if (this.consumed) {
+    toRaw(): Promise<
+        Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>
+    > {
+        return InputFile.toRaw(this);
+    }
+    /**
+     * Internal method. Do not use.
+     *
+     * Converts this instance into a binary representation that can be sent to
+     * the Bot API server in the request body.
+     */
+    static async toRaw(
+        file: InputFile,
+    ): Promise<Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>> {
+        if (file.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = this.fileData;
+        const data = file.fileData;
         // Handle local files
         if (typeof data === "string") return createReadStream(data);
         // Handle URLs and URLLike objects
@@ -109,9 +125,14 @@ export class InputFile {
                 : fetchFile(data);
         }
         if ("url" in data) return fetchFile(data.url);
-        // Mark streams and iterators as consumed
-        if (!(data instanceof Uint8Array)) this.consumed = true;
-        // Return buffers and byte streams as-is
+        // Return buffers as-is
+        if (data instanceof Uint8Array) return data;
+        // Unwrap supplier functions
+        if (typeof data === "function") {
+            return new InputFile(await data()).toRaw();
+        }
+        // Mark streams and iterators as consumed and return them as-is
+        file.consumed = true;
         return data;
     }
 }
