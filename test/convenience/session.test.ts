@@ -20,6 +20,7 @@ import {
 
 const TICK_MS = 50;
 const tick = (n = 1) => new Promise((r) => setTimeout(r, n * TICK_MS));
+type Key = string | string[];
 
 describe("session", () => {
     const next = () => Promise.resolve();
@@ -69,9 +70,9 @@ describe("session", () => {
     it("should skip write upon error", async () => {
         type C = Context & SessionFlavor<number>;
         const storage = {
-            read: spy((_key: string) => 0),
-            write: spy((_key: string, _value: number) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => 0),
+            write: spy((_key: Key, _value: number) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const composer = new Composer<C>();
         const ctx = { chat: { id: 42 } } as C;
@@ -92,11 +93,11 @@ describe("session", () => {
     it("should do IO with primitives", async () => {
         let val: number | undefined = 0;
         const storage = {
-            read: spy((_key: string) => val),
-            write: spy((_key: string, value: number) => {
+            read: spy((_key: Key) => val),
+            write: spy((_key: Key, value: number) => {
                 val = value;
             }),
-            delete: spy((_key: string) => {
+            delete: spy((_key: Key) => {
                 val = undefined;
             }),
         };
@@ -129,11 +130,11 @@ describe("session", () => {
     it("should do IO with objects", async () => {
         let val: Record<string, number> | undefined;
         const storage = {
-            read: spy((_key: string) => val),
-            write: spy((_key: string, value: Record<string, number>) => {
+            read: spy((_key: Key) => val),
+            write: spy((_key: Key, value: Record<string, number>) => {
                 val = value;
             }),
-            delete: spy((_key: string) => {
+            delete: spy((_key: Key) => {
                 val = undefined;
             }),
         };
@@ -269,9 +270,9 @@ describe("multi session", () => {
     it("should skip write upon error", async () => {
         type C = Context & SessionFlavor<{ prop: number }>;
         const storage = {
-            read: spy((_key: string) => 0),
-            write: spy((_key: string, _value: number) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => 0),
+            write: spy((_key: Key, _value: number) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const composer = new Composer<C>();
         const ctx = { chat: { id: 42 } } as C;
@@ -293,20 +294,20 @@ describe("multi session", () => {
         let val0: Record<string, number> | undefined;
         let val1: Record<string, number> | undefined;
         const storage0 = {
-            read: spy((_key: string) => val0),
-            write: spy((_key: string, value: Record<string, number>) => {
+            read: spy((_key: Key) => val0),
+            write: spy((_key: Key, value: Record<string, number>) => {
                 val0 = value;
             }),
-            delete: spy((_key: string) => {
+            delete: spy((_key: Key) => {
                 val0 = undefined;
             }),
         };
         const storage1 = {
-            read: spy((_key: string) => val1),
-            write: spy((_key: string, value: Record<string, number>) => {
+            read: spy((_key: Key) => val1),
+            write: spy((_key: Key, value: Record<string, number>) => {
                 val1 = value;
             }),
-            delete: spy((_key: string) => {
+            delete: spy((_key: Key) => {
                 val1 = undefined;
             }),
         };
@@ -485,9 +486,9 @@ describe("lazy session", () => {
     it("should skip write upon error", async () => {
         type C = Context & LazySessionFlavor<number>;
         const storage = {
-            read: spy((_key: string) => 0),
-            write: spy((_key: string, _value: number) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => 0),
+            write: spy((_key: Key, _value: number) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const composer = new Composer<C>();
         const ctx = { chat: { id: 42 } } as C;
@@ -509,11 +510,11 @@ describe("lazy session", () => {
     it("should do IO with primitives", async () => {
         let val: number | undefined = 0;
         const storage = {
-            read: spy((_key: string) => val),
-            write: spy((_key: string, value: number) => {
+            read: spy((_key: Key) => val),
+            write: spy((_key: Key, value: number) => {
                 val = value;
             }),
-            delete: spy((_key: string) => {
+            delete: spy((_key: Key) => {
                 val = undefined;
             }),
         };
@@ -546,11 +547,11 @@ describe("lazy session", () => {
     it("should do IO with objects", async () => {
         let val: Record<string, number> | undefined;
         const storage = {
-            read: spy((_key: string) => val),
-            write: spy((_key: string, value: Record<string, number>) => {
+            read: spy((_key: Key) => val),
+            write: spy((_key: Key, value: Record<string, number>) => {
                 val = value;
             }),
-            delete: spy((_key: string) => {
+            delete: spy((_key: Key) => {
                 val = undefined;
             }),
         };
@@ -632,11 +633,11 @@ describe("lazy session", () => {
 
     let val: number | undefined;
     let storage = {
-        read: spy((_key: string) => tick(2).then(() => val)),
-        write: spy((_key: string, value: number) => {
+        read: spy((_key: Key) => tick(2).then(() => val)),
+        write: spy((_key: Key, value: number) => {
             val = value;
         }),
-        delete: spy((_key: string) => {
+        delete: spy((_key: Key) => {
             val = undefined;
         }),
     };
@@ -647,11 +648,11 @@ describe("lazy session", () => {
     function reset() {
         val = 0;
         storage = {
-            read: spy((_key: string) => tick(2).then(() => val)),
-            write: spy((_key: string, value: number) => {
+            read: spy((_key: Key) => tick(2).then(() => val)),
+            write: spy((_key: Key, value: number) => {
                 val = value;
             }),
-            delete: spy((_key: string) => {
+            delete: spy((_key: Key) => {
                 val = undefined;
             }),
         };
@@ -719,9 +720,9 @@ describe("lazy session", () => {
 describe("enhanceStorage", () => {
     it("should support reading and writing __d", async () => {
         const storage = {
-            read: spy((_key: string) => ({ __d: { __d: 42 } })),
-            write: spy((_key: string, _value: { __d: { __d: number } }) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => ({ __d: { __d: 42 } })),
+            write: spy((_key: Key, _value: { __d: { __d: number } }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const enhanced = enhanceStorage({ storage });
         assertEquals(await enhanced.read("key"), { __d: 42 });
@@ -751,9 +752,9 @@ describe("enhanceStorage", () => {
 
     it("should require migrations", () => {
         const storage = {
-            read: spy((_key: string) => ({ __d: { __d: 42 } })),
-            write: spy((_key: string, _value: { __d: { __d: number } }) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => ({ __d: { __d: 42 } })),
+            write: spy((_key: Key, _value: { __d: { __d: number } }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         assertThrows(
             () => enhanceStorage({ storage, migrations: {} }),
@@ -764,9 +765,9 @@ describe("enhanceStorage", () => {
 
     it("should not migrate undefined values", async () => {
         const storage = {
-            read: spy((_key: string) => undefined),
-            write: spy((_key: string, _value: { __d: number }) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => undefined),
+            write: spy((_key: Key, _value: { __d: number }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const enhanced = enhanceStorage({
             storage,
@@ -781,11 +782,9 @@ describe("enhanceStorage", () => {
 
     it("should not modify write and delete calls", async () => {
         const storage = {
-            read: spy((_key: string) => undefined),
-            write: spy(
-                (_key: string, _value: { __d: number; v?: number }) => {},
-            ),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => undefined),
+            write: spy((_key: Key, _value: { __d: number; v?: number }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const enhanced = enhanceStorage({
             storage,
@@ -803,9 +802,9 @@ describe("enhanceStorage", () => {
 
     it("should run migration functions from the start", async () => {
         const storage = {
-            read: spy((_key: string) => 0 as unknown as { __d: number }),
-            write: spy((_key: string, _value: { __d: number }) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => 0 as unknown as { __d: number }),
+            write: spy((_key: Key, _value: { __d: number }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const enhanced = enhanceStorage({
             storage,
@@ -820,9 +819,9 @@ describe("enhanceStorage", () => {
 
     it("should run migration functions from the middle", async () => {
         const storage = {
-            read: spy((_key: string) => ({ __d: 5, v: 3 })),
-            write: spy((_key: string, _value: { __d: number }) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => ({ __d: 5, v: 3 })),
+            write: spy((_key: Key, _value: { __d: number }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const enhanced = enhanceStorage({
             storage,
@@ -837,9 +836,9 @@ describe("enhanceStorage", () => {
 
     it("should not migrate up-to-date values", async () => {
         const storage = {
-            read: spy((_key: string) => ({ __d: 42, v: 12 })),
-            write: spy((_key: string, _value: { __d: number }) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => ({ __d: 42, v: 12 })),
+            write: spy((_key: Key, _value: { __d: number }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const enhanced = enhanceStorage({
             storage,
@@ -854,9 +853,9 @@ describe("enhanceStorage", () => {
 
     it("should handle missing migrations", async () => {
         const storage = {
-            read: spy((_key: string) => ({ __d: 5, v: 8 })),
-            write: spy((_key: string, _value: { __d: number }) => {}),
-            delete: spy((_key: string) => {}),
+            read: spy((_key: Key) => ({ __d: 5, v: 8 })),
+            write: spy((_key: Key, _value: { __d: number }) => {}),
+            delete: spy((_key: Key) => {}),
         };
         const enhanced = enhanceStorage({
             storage,
