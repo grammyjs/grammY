@@ -509,14 +509,15 @@ export class Keyboard {
         source: (string | KeyboardButton)[][] | Keyboard,
         options: Omit<ReplyKeyboardMarkup, "keyboard"> = {},
     ): Keyboard {
-        if (source instanceof Keyboard) return source;
         function toButton(btn: string | KeyboardButton) {
             return typeof btn === "string" ? Keyboard.text(btn) : btn;
         }
-        return Object.assign(
-            new Keyboard(source.map((row) => row.map(toButton))),
-            options,
-        );
+        if (source instanceof Keyboard) {
+            source = source.clone();
+        } else {
+            source = new Keyboard(source.map((row) => row.map(toButton)));
+        }
+        return Object.assign(source, options);
     }
     /**
      * Takes a number of button rows and creates a custom keyboard from them.
