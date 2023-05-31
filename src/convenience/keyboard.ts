@@ -436,10 +436,8 @@ export class Keyboard {
     reflow(columns = 4, options = { first: columns }) {
         const original = this.keyboard;
         const reflowed: KeyboardButton[][] = [[]];
-        for (let i = 0; i < original.length; i++) {
-            const row = original[i];
-            for (let j = 0; j < row.length; j++) {
-                const button = row[j];
+        for (const row of original) {
+            for (const button of row) {
                 const at = reflowed.length - 1;
                 const max = at === 0 ? options.first : columns;
                 let next = (reflowed[at] ??= []);
