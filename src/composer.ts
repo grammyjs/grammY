@@ -248,7 +248,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.on('::url', ctx => { ... })
      * ```
      *
-     * You can use autocomplete in VSCode to see all available filter queries.
+     * You can use autocomplete in VS Code to see all available filter queries.
      * Check out the
      * [documentation](https://grammy.dev/guide/filter-queries.html) on the
      * website to learn more about filter queries in grammY.
