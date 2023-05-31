@@ -1,5 +1,4 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
-import { KeyboardButton } from "../../src/types.deno.ts";
 import { type LoginUrl } from "../../src/types.ts";
 import { assertEquals, describe, it } from "../deps.test.ts";
 
