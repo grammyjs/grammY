@@ -1,4 +1,5 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
+import { KeyboardButton } from "../../src/types.deno.ts";
 import { type LoginUrl } from "../../src/types.ts";
 import { assertEquals, describe, it } from "../deps.test.ts";
 
@@ -62,6 +63,72 @@ describe("Keyboard", () => {
         assertEquals(keyboard.one_time_keyboard, true);
         assertEquals(keyboard.resize_keyboard, false);
         assertEquals(keyboard.input_field_placeholder, "placeholder");
+    });
+
+    it("can be transposed", () => {
+        function t(btns: string[][], expected: string[][]) {
+            assertEquals(
+                Keyboard.from(btns).transpose(),
+                Keyboard.from(expected),
+            );
+        }
+        t([["a"]], [["a"]]);
+        t([["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        t([["a", "b"], ["c", "d"], ["e"]], [["a", "c", "e"], ["b", "d"]]);
+        t(
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "c", "d"], ["b", "e"], ["f"]],
+        );
+        const keyboard = Keyboard.from([["a", "b", "c"], ["d", "e"], ["f"]]);
+        assertEquals(keyboard.clone().transpose().transpose(), keyboard);
+    });
+
+    it("can be reflowed", () => {
+        function r(
+            cols: number,
+            first: number,
+            btns: string[][],
+            expected: string[][],
+        ) {
+            assertEquals(
+                Keyboard.from(btns).reflow(cols, { first }),
+                Keyboard.from(expected),
+            );
+        }
+        r(4, 4, [["a"]], [["a"]]);
+        r(1, 1, [["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        r(3, 3, [["a", "b"], ["c", "d"], ["e"]], [["a", "b", "c"], ["d", "e"]]);
+        r(
+            5,
+            5,
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "b", "c", "d", "e"], ["f"]],
+        );
+        r(
+            3,
+            1,
+            [[..."abcdefghij"]],
+            [["a"], ["b", "c", "d"], ["e", "f", "g"], ["h", "i", "j"]],
+        );
+        const keyboard = Keyboard.from([["a", "b", "c"], ["d", "e"], ["f"]]);
+        assertEquals(keyboard.clone().reflow(3).reflow(3), keyboard.reflow(3));
+    });
+
+    it("can be created from data sources", () => {
+        const data = [["a", "b"], ["c", "d"]].map((row) =>
+            row.map((text) => ({ text }))
+        );
+        assertEquals(Keyboard.from(data).keyboard, data);
+        assertEquals(Keyboard.fromRows(...data).keyboard, data);
+        assertEquals(Keyboard.fromColumns(...data).transpose().keyboard, data);
+    });
+
+    it("can be appended", () => {
+        const initial = Keyboard.from([["a", "b"], ["c"]]);
+        assertEquals(
+            initial.clone().append(initial).append(initial).keyboard,
+            [...initial.keyboard, ...initial.keyboard, ...initial.keyboard],
+        );
     });
 });
 
