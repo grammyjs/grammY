@@ -1,9 +1,11 @@
 import {
     type InlineKeyboardButton,
     type KeyboardButton,
+    type KeyboardButtonPollType,
     type KeyboardButtonRequestChat,
     type KeyboardButtonRequestUser,
     type LoginUrl,
+    type ReplyKeyboardMarkup,
     type SwitchInlineQueryChosenChat,
 } from "../types.ts";
 
@@ -17,16 +19,27 @@ import {
  *   .text('A').text('B').row()
  *   .text('C').text('D')
  *
- * // Now you can either pass it directly:
+ * // Now you send it like so:
  * await ctx.reply('Here is your custom keyboard!', {
  *   reply_markup: keyboard
  * })
- * // Or if you need to specify more options in `reply_markup`:
+ * ```
+ *
+ * If you already have an array of elements which you would like to turn into a
+ * keyboard, you can use the static equivalents which every button has. This
+ * will create a two-dimensional keyboard button array. The resulting array can
+ * be turned into a keyboard instance.
+ *
+ * ```ts
+ * // Data source:
+ * const data = [['a', 'b'], ['c', 'd']]
+ *
+ * // Build a custom keyboard:
+ * const keyboard = Keyboard.from(data.map(row => row.map(Keyboard.text)))
+ *
+ * // Now you send it like so:
  * await ctx.reply('Here is your custom keyboard!', {
- *   reply_markup: {
- *     keyboard: keyboard.build(), // note the `build` call
- *     one_time_keyboard: true,
- *   }
+ *   reply_markup: keyboard
  * })
  * ```
  *
@@ -66,7 +79,7 @@ export class Keyboard {
      * keyboard. It will be extended every time you call one of the provided
      * methods.
      *
-     * @param keyboard The initial custom keyboard
+     * @param keyboard An optional initial two-dimensional button array
      */
     constructor(public readonly keyboard: KeyboardButton[][] = [[]]) {
     }
@@ -102,7 +115,16 @@ export class Keyboard {
      * @param text The text to display
      */
     text(text: string) {
-        return this.add({ text });
+        return this.add(Keyboard.text(text));
+    }
+    /**
+     * Creates a new text button. This button will simply send the given text as
+     * a text message back to your bot if a user clicks on it.
+     *
+     * @param text The text to display
+     */
+    static text(text: string): KeyboardButton.CommonButton {
+        return { text };
     }
     /**
      * Adds a new request user button. When the user presses the button, a list
@@ -119,10 +141,24 @@ export class Keyboard {
         requestId: number,
         options: Omit<KeyboardButtonRequestUser, "request_id"> = {},
     ) {
-        return this.add({
-            text,
-            request_user: { request_id: requestId, ...options },
-        });
+        return this.add(Keyboard.requestUser(text, requestId, options));
+    }
+    /**
+     * Creates a new request user button. When the user presses the button, a
+     * list of suitable users will be opened. Tapping on any user will send
+     * their identifier to the bot in a “user_shared” service message. Available
+     * in private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    static requestUser(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestUser, "request_id"> = {},
+    ): KeyboardButton.RequestUserButton {
+        return { text, request_user: { request_id: requestId, ...options } };
     }
     /**
      * Adds a new request chat button. When the user presses the button, a list
@@ -141,10 +177,26 @@ export class Keyboard {
             chat_is_channel: false,
         },
     ) {
-        return this.add({
-            text,
-            request_chat: { request_id: requestId, ...options },
-        });
+        return this.add(Keyboard.requestChat(text, requestId, options));
+    }
+    /**
+     * Creates a new request chat button. When the user presses the button, a
+     * list of suitable users will be opened. Tapping on a chat will send its
+     * identifier to the bot in a “chat_shared” service message. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    static requestChat(
+        text: string,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestChat, "request_id"> = {
+            chat_is_channel: false,
+        },
+    ): KeyboardButton.RequestChatButton {
+        return { text, request_chat: { request_id: requestId, ...options } };
     }
     /**
      * Adds a new contact request button. The user's phone number will be sent
@@ -153,7 +205,17 @@ export class Keyboard {
      * @param text The text to display
      */
     requestContact(text: string) {
-        return this.add({ text, request_contact: true });
+        return this.add(Keyboard.requestContact(text));
+    }
+    /**
+     * Creates a new contact request button. The user's phone number will be
+     * sent as a contact when the button is pressed. Available in private chats
+     * only.
+     *
+     * @param text The text to display
+     */
+    static requestContact(text: string): KeyboardButton.RequestContactButton {
+        return { text, request_contact: true };
     }
     /**
      * Adds a new location request button. The user's current location will be
@@ -162,7 +224,16 @@ export class Keyboard {
      * @param text The text to display
      */
     requestLocation(text: string) {
-        return this.add({ text, request_location: true });
+        return this.add(Keyboard.requestLocation(text));
+    }
+    /**
+     * Creates a new location request button. The user's current location will
+     * be sent when the button is pressed. Available in private chats only.
+     *
+     * @param text The text to display
+     */
+    static requestLocation(text: string): KeyboardButton.RequestLocationButton {
+        return { text, request_location: true };
     }
     /**
      * Adds a new poll request button. The user will be asked to create a poll
@@ -170,10 +241,26 @@ export class Keyboard {
      * chats only.
      *
      * @param text The text to display
-     * @param type The type of permitted polls to create, omit if the user may send a poll of any type
+     * @param type The type of permitted polls to create, omit if the user may
+     * send a poll of any type
      */
-    requestPoll(text: string, type?: "quiz" | "regular") {
-        return this.add({ text, request_poll: { type } });
+    requestPoll(text: string, type?: KeyboardButtonPollType["type"]) {
+        return this.add(Keyboard.requestPoll(text, type));
+    }
+    /**
+     * Creates a new poll request button. The user will be asked to create a
+     * poll and send it to the bot when the button is pressed. Available in
+     * private chats only.
+     *
+     * @param text The text to display
+     * @param type The type of permitted polls to create, omit if the user may
+     * send a poll of any type
+     */
+    static requestPoll(
+        text: string,
+        type?: KeyboardButtonPollType["type"],
+    ): KeyboardButton.RequestPollButton {
+        return { text, request_poll: { type } };
     }
     /**
      * Adds a new web app button. The Web App that will be launched when the
@@ -184,7 +271,18 @@ export class Keyboard {
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
     webApp(text: string, url: string) {
-        return this.add({ text, web_app: { url } });
+        return this.add(Keyboard.webApp(text, url));
+    }
+    /**
+     * Adds a new web app button. The Web App that will be launched when the
+     * user presses the button. The Web App will be able to send a
+     * “web_app_data” service message. Available in private chats only.
+     *
+     * @param text The text to display
+     * @param url An HTTPS URL of a Web App to be opened with additional data
+     */
+    static webApp(text: string, url: string): KeyboardButton.WebAppButton {
+        return { text, web_app: { url } };
     }
     /**
      * Make the current keyboard persistent. See
@@ -258,12 +356,193 @@ export class Keyboard {
         return this;
     }
     /**
+     * Flips the rows and columns by modifying this keyboard.
+     *
+     * Note that buttons can only span multiple columns, but never multiple
+     * rows. This means that if the given arrays have different lengths, some
+     * buttons might flow up in the layout. In these cases, transposing a
+     * keyboard a second time will not undo the first transposition.
+     *
+     * Here are some examples.
+     *
+     * ```
+     * original    transposed
+     * [a]      ~> [a]
+     *
+     *             [a]
+     * [a b c]  ~> [b]
+     *             [c]
+     *
+     * [a b]       [a c e]
+     * [c d]    ~> [ b d ]
+     * [ e ]
+     *
+     * [ a b ]     [a c d]
+     * [  c  ]  ~> [ b e ]
+     * [d e f]     [  f  ]
+     * ```
+     */
+    transpose() {
+        const original = this.keyboard;
+        const transposed: KeyboardButton[][] = [];
+        for (let i = 0; i < original.length; i++) {
+            const row = original[i];
+            for (let j = 0; j < row.length; j++) {
+                const button = row[j];
+                (transposed[j] ??= []).push(button);
+            }
+        }
+        original.length = transposed.length;
+        for (let i = 0; i < transposed.length; i++) {
+            original[i] = transposed[i];
+        }
+        return this;
+    }
+    /**
+     * Reflows the keyboard in-place into a given number of columns (default: 4)
+     * as if the buttons were text elements. Optionally, you can specify how
+     * many buttons should be on the first column.
+     *
+     * This method is idempotent, so calling it a second time will have no
+     * effect.
+     *
+     * Here are some examples.
+     *
+     * ```
+     * original    reflowed
+     * [a]      ~> [a]         (4 columns)
+     *
+     *             [a]
+     * [a b c]  ~> [b]         (1 column)
+     *             [c]
+     *
+     * [a b]       [a b c]
+     * [c d]    ~> [ d e ]     (3 columns)
+     * [ e ]
+     *
+     * [ a b ]     [a b c d e]
+     * [  c  ]  ~> [    f    ] (5 columns)
+     * [d e f]
+     *
+     * [a b c]     [  a  ]
+     * [d e f]  ~> [b c d]     (3 colums, 1 on first row)
+     * [g h i]     [e f g]
+     * [  j  ]     [h i j]
+     * ```
+     *
+     * @param columns Maximum number of buttons per row
+     * @param options Optional option for the first row
+     */
+    reflow(columns = 4, options = { first: columns }) {
+        const original = this.keyboard;
+        const reflowed: KeyboardButton[][] = [[]];
+        for (let i = 0; i < original.length; i++) {
+            const row = original[i];
+            for (let j = 0; j < row.length; j++) {
+                const button = row[j];
+                const at = reflowed.length - 1;
+                const max = at === 0 ? options.first : columns;
+                let next = (reflowed[at] ??= []);
+                if (next.length === max) {
+                    next = [];
+                    reflowed.push(next);
+                }
+                next.push(button);
+            }
+        }
+        original.length = reflowed.length;
+        for (let i = 0; i < reflowed.length; i++) {
+            original[i] = reflowed[i];
+        }
+        return this;
+    }
+    /**
+     * Creates and returns a deep copy of this keyboard.
+     */
+    clone() {
+        const clone = new Keyboard(this.keyboard.map((row) => row.slice()));
+        clone.is_persistent = this.is_persistent;
+        clone.selective = this.selective;
+        clone.one_time_keyboard = this.one_time_keyboard;
+        clone.resize_keyboard = this.resize_keyboard;
+        clone.input_field_placeholder = this.input_field_placeholder;
+        return clone;
+    }
+    /**
+     * Appends the buttons of the given keyboards to this keyboard. If other
+     * options are given in these keyboards, they will override our options.
+     *
+     * @param keyboards A number of keyboards to append
+     */
+    append(...keyboards: Keyboard[]) {
+        for (const keyboard of keyboards) {
+            this.keyboard.push(...keyboard.keyboard.map((row) => row.slice()));
+            this.is_persistent = keyboard.is_persistent ??
+                this.is_persistent;
+            this.selective = keyboard.selective ??
+                this.selective;
+            this.one_time_keyboard = keyboard.one_time_keyboard ??
+                this.one_time_keyboard;
+            this.resize_keyboard = keyboard.resize_keyboard ??
+                this.resize_keyboard;
+            this.input_field_placeholder = keyboard.input_field_placeholder ??
+                this.input_field_placeholder;
+        }
+        return this;
+    }
+    /**
      * Returns the keyboard that was build. Note that it doesn't return
      * `resize_keyboard` or other options that may be set. You don't usually
      * need to call this method. It is no longer useful.
      */
     build() {
         return this.keyboard;
+    }
+    /**
+     * Turns a two-dimensional keyboard button array into a keyboard instance.
+     * You can use the static button builder methods to create keyboard button
+     * objects.
+     *
+     * @param buttons A two-dimensional button array
+     * @param options Optional options for the custom keyboard
+     */
+    static from(
+        buttons: (string | KeyboardButton)[][],
+        options: Omit<ReplyKeyboardMarkup, "keyboard"> = {},
+    ): Keyboard {
+        function toButton(btn: string | KeyboardButton) {
+            return typeof btn === "string" ? Keyboard.text(btn) : btn;
+        }
+        return Object.assign(
+            new Keyboard(buttons.map((row) => row.map(toButton))),
+            options,
+        );
+    }
+    /**
+     * Takes a number of button rows and creates a custom keyboard from them.
+     * You can use the static button builder methods to create keyboard button
+     * objects.
+     *
+     * @param buttons A number of button rows
+     */
+    static fromRows(...buttons: (string | KeyboardButton)[][]) {
+        return Keyboard.from(buttons);
+    }
+    /**
+     * Takes a number of button columns and creates a custom keyboard from them.
+     *
+     * Note that buttons can only span multiple columns, but never multiple
+     * rows. This means that if the given arrays have different lengths, some
+     * buttons might flow up in the layout. In these cases, transposing a
+     * keyboard a second time will not undo the first transposition.
+     *
+     * You can use the static button builder methods to create keyboard button
+     * objects.
+     *
+     * @param buttons A number of button rows
+     */
+    static fromColumns(...buttons: (string | KeyboardButton)[][]) {
+        return Keyboard.from(buttons).transpose();
     }
 }
 
@@ -330,7 +609,9 @@ export class InlineKeyboard {
      * the button is pressed.
      *
      * @param text The text to display
-     * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
+     * @param url HTTP or tg:// url to be opened when the button is pressed.
+     * Links tg://user?id=<user_id> can be used to mention a user by their ID
+     * without using a username, if this is allowed by their privacy settings.
      */
     url(text: string, url: string) {
         return this.add({ text, url });
