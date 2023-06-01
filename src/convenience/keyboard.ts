@@ -519,32 +519,6 @@ export class Keyboard {
         }
         return Object.assign(source, options);
     }
-    /**
-     * Takes a number of button rows and creates a custom keyboard from them.
-     * You can use the static button builder methods to create keyboard button
-     * objects.
-     *
-     * @param rows A number of button rows
-     */
-    static fromRows(...rows: (string | KeyboardButton)[][]) {
-        return Keyboard.from(rows);
-    }
-    /**
-     * Takes a number of button columns and creates a custom keyboard from them.
-     *
-     * Note that buttons can only span multiple columns, but never multiple
-     * rows. This means that if the given arrays have different lengths, some
-     * buttons might flow up in the layout. In these cases, transposing a
-     * keyboard a second time will not undo the first transposition.
-     *
-     * You can use the static button builder methods to create keyboard button
-     * objects.
-     *
-     * @param columns A number of button columns
-     */
-    static fromColumns(...columns: (string | KeyboardButton)[][]) {
-        return Keyboard.from(columns).transpose();
-    }
 }
 
 /**
