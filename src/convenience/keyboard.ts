@@ -355,7 +355,9 @@ export class Keyboard {
         return this;
     }
     /**
-     * Flips the rows and columns by modifying this keyboard.
+     * Creates a new keyboard that contains the transposed grid of buttons of
+     * this keyboard. This means that the resulting keyboard has the rows and
+     * columns flipped.
      *
      * Note that buttons can only span multiple columns, but never multiple
      * rows. This means that if the given arrays have different lengths, some
@@ -366,15 +368,15 @@ export class Keyboard {
      *
      * ```
      * original    transposed
-     * [a]      ~> [a]
+     * [  a  ]  ~> [  a  ]
      *
-     *             [a]
-     * [a b c]  ~> [b]
-     *             [c]
+     *             [  a  ]
+     * [a b c]  ~> [  b  ]
+     *             [  c  ]
      *
-     * [a b]       [a c e]
-     * [c d]    ~> [ b d ]
-     * [ e ]
+     * [ a b ]     [a c e]
+     * [ c d ]  ~> [ b d ]
+     * [  e  ]
      *
      * [ a b ]     [a c d]
      * [  c  ]  ~> [ b e ]
@@ -383,44 +385,38 @@ export class Keyboard {
      */
     toTransposed() {
         const original = this.keyboard;
-        const transposed: KeyboardButton[][] = [];
-        for (let i = 0; i < original.length; i++) {
-            const row = original[i];
-            for (let j = 0; j < row.length; j++) {
-                const button = row[j];
-                (transposed[j] ??= []).push(button);
-            }
-        }
+        const transposed = transpose(original);
         return this.clone(transposed);
     }
     /**
-     * Reflows the keyboard in-place into a given number of columns (default: 4)
-     * as if the buttons were text elements. Optionally, you can specify how
-     * many buttons should be on the first column.
+     * Creates a new keyboard with the same buttons but reflowed into a given
+     * number of columns (default: 4) as if the buttons were text elements.
+     * Optionally, you can specify how many buttons should be on the first
+     * column.
      *
-     * This method is idempotent, so calling it a second time will have no
-     * effect.
+     * This method is idempotent, so calling it a second time will effectively
+     * clone this keyboard without reordering the buttons.
      *
      * Here are some examples.
      *
      * ```
      * original    reflowed
-     * [a]      ~> [a]         (4 columns)
+     * [  a  ]  ~> [  a  ]    (4 columns)
      *
-     *             [a]
-     * [a b c]  ~> [b]         (1 column)
-     *             [c]
+     *             [  a  ]
+     * [a b c]  ~> [  b  ]    (1 column)
+     *             [  c  ]
      *
-     * [a b]       [a b c]
-     * [c d]    ~> [ d e ]     (3 columns)
-     * [ e ]
+     * [ a b ]     [a b c]
+     * [ c d ]  ~> [ d e ]    (3 columns)
+     * [  e  ]
      *
-     * [ a b ]     [a b c d e]
-     * [  c  ]  ~> [    f    ] (5 columns)
+     * [ a b ]     [abcde]
+     * [  c  ]  ~> [  f  ]    (5 columns)
      * [d e f]
      *
      * [a b c]     [  a  ]
-     * [d e f]  ~> [b c d]     (3 colums, 1 on first row)
+     * [d e f]  ~> [b c d]    (3 colums, 1 on first row)
      * [g h i]     [e f g]
      * [  j  ]     [h i j]
      * ```
@@ -430,19 +426,7 @@ export class Keyboard {
      */
     toReflowed(columns = 4, options = { first: columns }) {
         const original = this.keyboard;
-        const reflowed: KeyboardButton[][] = [[]];
-        for (const row of original) {
-            for (const button of row) {
-                const at = reflowed.length - 1;
-                const max = at === 0 ? options.first : columns;
-                let next = (reflowed[at] ??= []);
-                if (next.length === max) {
-                    next = [];
-                    reflowed.push(next);
-                }
-                next.push(button);
-            }
-        }
+        const reflowed = reflow(original, columns, options.first);
         return this.clone(reflowed);
     }
     /**
@@ -533,6 +517,24 @@ export class Keyboard {
  * })
  * ```
  *
+ * If you already have an array of elements which you would like to turn into an
+ * inline keyboard, you can use the static equivalents which every button has.
+ * This will create a two-dimensional inline button array. The resulting array
+ * can be turned into an inline keyboard instance.
+ *
+ * ```ts
+ * // Data source:
+ * const data = [['a', 'b'], ['c', 'd']]
+ *
+ * // Build an inline keyboard:
+ * const keyboard = InlineKeyboard.from(data.map(row => row.map(InlineKeyboard.text)))
+ *
+ * // Now you send it like so:
+ * await ctx.reply('Here is your inline keyboard!', {
+ *   reply_markup: keyboard
+ * })
+ * ```
+ *
  * Be sure to to check the
  * [documentation](https://grammy.dev/plugins/keyboard.html#inline-keyboards) on
  * inline keyboards in grammY.
@@ -544,7 +546,7 @@ export class InlineKeyboard {
      * the inline keyboard. It will be extended every time you call one of the
      * provided methods.
      *
-     * @param inline_keyboard The initial inline keyboard
+     * @param inline_keyboard An optional initial two-dimensional button array
      */
     constructor(
         public readonly inline_keyboard: InlineKeyboardButton[][] = [[]],
@@ -579,12 +581,20 @@ export class InlineKeyboard {
      * the button is pressed.
      *
      * @param text The text to display
-     * @param url HTTP or tg:// url to be opened when the button is pressed.
-     * Links tg://user?id=<user_id> can be used to mention a user by their ID
-     * without using a username, if this is allowed by their privacy settings.
+     * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
      */
     url(text: string, url: string) {
-        return this.add({ text, url });
+        return this.add(InlineKeyboard.url(text, url));
+    }
+    /**
+     * Creates a new URL button. Telegram clients will open the provided URL
+     * when the button is pressed.
+     *
+     * @param text The text to display
+     * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
+     */
+    static url(text: string, url: string): InlineKeyboardButton.UrlButton {
+        return { text, url };
     }
     /**
      * Adds a new callback query button. The button contains a text and a custom
@@ -605,7 +615,31 @@ export class InlineKeyboard {
      * @param data The callback data to send back to your bot (default = text)
      */
     text(text: string, data = text) {
-        return this.add({ text, callback_data: data });
+        return this.add(InlineKeyboard.text(text, data));
+    }
+    /**
+     * Creates a new callback query button. The button contains a text and a
+     * custom payload. This payload will be sent back to your bot when the
+     * button is pressed. If you omit the payload, the display text will be sent
+     * back to your bot.
+     *
+     * Your bot will receive an update every time a user presses any of the text
+     * buttons. You can listen to these updates like this:
+     * ```ts
+     * // Specific buttons:
+     * bot.callbackQuery('button-data', ctx => { ... })
+     * // Any button of any inline keyboard:
+     * bot.on('callback_query:data',    ctx => { ... })
+     * ```
+     *
+     * @param text The text to display
+     * @param data The callback data to send back to your bot (default = text)
+     */
+    static text(
+        text: string,
+        data = text,
+    ): InlineKeyboardButton.CallbackButton {
+        return { text, callback_data: data };
     }
     /**
      * Adds a new web app button, confer https://core.telegram.org/bots/webapps
@@ -614,7 +648,19 @@ export class InlineKeyboard {
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
     webApp(text: string, url: string) {
-        return this.add({ text, web_app: { url } });
+        return this.add(InlineKeyboard.webApp(text, url));
+    }
+    /**
+     * Creates a new web app button, confer https://core.telegram.org/bots/webapps
+     *
+     * @param text The text to display
+     * @param url An HTTPS URL of a Web App to be opened with additional data
+     */
+    static webApp(
+        text: string,
+        url: string,
+    ): InlineKeyboardButton.WebAppButton {
+        return { text, web_app: { url } };
     }
     /**
      * Adds a new login button. This can be used as a replacement for the
@@ -625,12 +671,26 @@ export class InlineKeyboard {
      * @param loginUrl The login URL as string or `LoginUrl` object
      */
     login(text: string, loginUrl: string | LoginUrl) {
-        return this.add({
+        return this.add(InlineKeyboard.login(text, loginUrl));
+    }
+    /**
+     * Creates a new login button. This can be used as a replacement for the
+     * Telegram Login Widget. You must specify an HTTPS URL used to
+     * automatically authorize the user.
+     *
+     * @param text The text to display
+     * @param loginUrl The login URL as string or `LoginUrl` object
+     */
+    static login(
+        text: string,
+        loginUrl: string | LoginUrl,
+    ): InlineKeyboardButton.LoginButton {
+        return {
             text,
             login_url: typeof loginUrl === "string"
                 ? { url: loginUrl }
                 : loginUrl,
-        });
+        };
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -648,7 +708,28 @@ export class InlineKeyboard {
      * @param query The (optional) inline query string to prefill
      */
     switchInline(text: string, query = "") {
-        return this.add({ text, switch_inline_query: query });
+        return this.add(InlineKeyboard.switchInline(text, query));
+    }
+    /**
+     * Creates a new inline query button. Telegram clients will let the user pick a
+     * chat when this button is pressed. This will start an inline query. The
+     * selected chat will be prefilled with the name of your bot. You may
+     * provide a text that is specified along with it.
+     *
+     * Your bot will in turn receive updates for inline queries. You can listen
+     * to inline query updates like this:
+     * ```ts
+     * bot.on('inline_query', ctx => { ... })
+     * ```
+     *
+     * @param text The text to display
+     * @param query The (optional) inline query string to prefill
+     */
+    static switchInline(
+        text: string,
+        query = "",
+    ): InlineKeyboardButton.SwitchInlineButton {
+        return { text, switch_inline_query: query };
     }
     /**
      * Adds a new inline query button that acts on the current chat. The
@@ -666,7 +747,28 @@ export class InlineKeyboard {
      * @param query The (optional) inline query string to prefill
      */
     switchInlineCurrent(text: string, query = "") {
-        return this.add({ text, switch_inline_query_current_chat: query });
+        return this.add(InlineKeyboard.switchInlineCurrent(text, query));
+    }
+    /**
+     * Creates a new inline query button that acts on the current chat. The
+     * selected chat will be prefilled with the name of your bot. You may
+     * provide a text that is specified along with it. This will start an inline
+     * query.
+     *
+     * Your bot will in turn receive updates for inline queries. You can listen
+     * to inline query updates like this:
+     * ```ts
+     * bot.on('inline_query', ctx => { ... })
+     * ```
+     *
+     * @param text The text to display
+     * @param query The (optional) inline query string to prefill
+     */
+    static switchInlineCurrent(
+        text: string,
+        query = "",
+    ): InlineKeyboardButton.SwitchInlineCurrentChatButton {
+        return { text, switch_inline_query_current_chat: query };
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -687,7 +789,28 @@ export class InlineKeyboard {
         text: string,
         query: SwitchInlineQueryChosenChat = {},
     ) {
-        return this.add({ text, switch_inline_query_chosen_chat: query });
+        return this.add(InlineKeyboard.switchInlineChosen(text, query));
+    }
+    /**
+     * Creates a new inline query button. Telegram clients will let the user pick a
+     * chat when this button is pressed. This will start an inline query. The
+     * selected chat will be prefilled with the name of your bot. You may
+     * provide a text that is specified along with it.
+     *
+     * Your bot will in turn receive updates for inline queries. You can listen
+     * to inline query updates like this:
+     * ```ts
+     * bot.on('inline_query', ctx => { ... })
+     * ```
+     *
+     * @param text The text to display
+     * @param query The query object describing which chats can be picked
+     */
+    static switchInlineChosen(
+        text: string,
+        query: SwitchInlineQueryChosenChat = {},
+    ): InlineKeyboardButton.SwitchInlineChosenChatButton {
+        return { text, switch_inline_query_chosen_chat: query };
     }
     /**
      * Adds a new game query button, confer
@@ -698,7 +821,18 @@ export class InlineKeyboard {
      * @param text The text to display
      */
     game(text: string) {
-        return this.add({ text, callback_game: {} });
+        return this.add(InlineKeyboard.game(text));
+    }
+    /**
+     * Creates a new game query button, confer
+     * https://core.telegram.org/bots/api#games
+     *
+     * This type of button must always be the first button in the first row.
+     *
+     * @param text The text to display
+     */
+    static game(text: string): InlineKeyboardButton.GameButton {
+        return { text, callback_game: {} };
     }
     /**
      * Adds a new payment button, confer
@@ -710,6 +844,172 @@ export class InlineKeyboard {
      * @param text The text to display
      */
     pay(text: string) {
-        return this.add({ text, pay: true });
+        return this.add(InlineKeyboard.pay(text));
     }
+    /**
+     * Create a new payment button, confer
+     * https://core.telegram.org/bots/api#payments
+     *
+     * This type of button must always be the first button in the first row and
+     * can only be used in invoice messages.
+     *
+     * @param text The text to display
+     */
+    static pay(text: string): InlineKeyboardButton.PayButton {
+        return { text, pay: true };
+    }
+    /**
+     * Creates a new inline keyboard that contains the transposed grid of
+     * buttons of this inline keyboard. This means that the resulting inline
+     * keyboard has the rows and columns flipped.
+     *
+     * Note that inline buttons can only span multiple columns, but never
+     * multiple rows. This means that if the given arrays have different
+     * lengths, some buttons might flow up in the layout. In these cases,
+     * transposing an inline keyboard a second time will not undo the first
+     * transposition.
+     *
+     * Here are some examples.
+     *
+     * ```
+     * original    transposed
+     * [  a  ]  ~> [  a  ]
+     *
+     *             [  a  ]
+     * [a b c]  ~> [  b  ]
+     *             [  c  ]
+     *
+     * [ a b ]     [a c e]
+     * [ c d ]  ~> [ b d ]
+     * [  e  ]
+     *
+     * [ a b ]     [a c d]
+     * [  c  ]  ~> [ b e ]
+     * [d e f]     [  f  ]
+     * ```
+     */
+    toTransposed() {
+        const original = this.inline_keyboard;
+        const transposed = transpose(original);
+        return new InlineKeyboard(transposed);
+    }
+    /**
+     * Creates a new inline keyboard with the same buttons but reflowed into a
+     * given number of columns (default: 4) as if the buttons were text
+     * elements. Optionally, you can specify how many buttons should be on the
+     * first column.
+     *
+     * This method is idempotent, so calling it a second time will effectively
+     * clone this inline keyboard without reordering the buttons.
+     *
+     * Here are some examples.
+     *
+     * ```
+     * original    reflowed
+     * [  a  ]  ~> [  a  ]    (4 columns)
+     *
+     *             [  a  ]
+     * [a b c]  ~> [  b  ]    (1 column)
+     *             [  c  ]
+     *
+     * [ a b ]     [a b c]
+     * [ c d ]  ~> [ d e ]    (3 columns)
+     * [  e  ]
+     *
+     * [ a b ]     [abcde]
+     * [  c  ]  ~> [  f  ]    (5 columns)
+     * [d e f]
+     *
+     * [a b c]     [  a  ]
+     * [d e f]  ~> [b c d]    (3 colums, 1 on first row)
+     * [g h i]     [e f g]
+     * [  j  ]     [h i j]
+     * ```
+     *
+     * @param columns Maximum number of buttons per row
+     * @param options Optional option for the first row
+     */
+    toReflowed(columns = 4, options = { first: columns }) {
+        const original = this.inline_keyboard;
+        const reflowed = reflow(original, columns, options.first);
+        return new InlineKeyboard(reflowed);
+    }
+    /**
+     * Creates and returns a deep copy of this inline keyboard.
+     */
+    clone() {
+        return new InlineKeyboard(
+            this.inline_keyboard.map((row) => row.slice()),
+        );
+    }
+    /**
+     * Appends the buttons of the given inline keyboards to this keyboard.
+     *
+     * @param sources A number of inline keyboards to append
+     */
+    append(
+        ...sources: Array<
+            | ([text: string, data: string] | InlineKeyboardButton)[][]
+            | InlineKeyboard
+        >
+    ) {
+        for (const source of sources) {
+            const keyboard = InlineKeyboard.from(source);
+            this.inline_keyboard.push(
+                ...keyboard.inline_keyboard.map((row) => row.slice()),
+            );
+        }
+        return this;
+    }
+    /**
+     * Turns a two-dimensional inline button array into an inline keyboard
+     * instance. You can use the static button builder methods to create inline
+     * button objects.
+     *
+     * @param source A two-dimensional inline button array
+     */
+    static from(
+        source:
+            | ([text: string, data: string] | InlineKeyboardButton)[][]
+            | InlineKeyboard,
+    ): InlineKeyboard {
+        if (source instanceof InlineKeyboard) {
+            return source.clone();
+        }
+
+        function toButton(
+            btn: [text: string, data: string] | InlineKeyboardButton,
+        ) {
+            return Array.isArray(btn) ? InlineKeyboard.text(...btn) : btn;
+        }
+        return new InlineKeyboard(source.map((row) => row.map(toButton)));
+    }
+}
+
+function transpose<T>(grid: T[][]): T[][] {
+    const transposed: T[][] = [];
+    for (let i = 0; i < grid.length; i++) {
+        const row = grid[i];
+        for (let j = 0; j < row.length; j++) {
+            const button = row[j];
+            (transposed[j] ??= []).push(button);
+        }
+    }
+    return transposed;
+}
+function reflow<T>(grid: T[][], columns: number, first: number): T[][] {
+    const reflowed: T[][] = [];
+    for (const row of grid) {
+        for (const button of row) {
+            const at = Math.max(0, reflowed.length - 1);
+            const max = at === 0 ? first : columns;
+            let next = (reflowed[at] ??= []);
+            if (next.length === max) {
+                next = [];
+                reflowed.push(next);
+            }
+            next.push(button);
+        }
+    }
+    return reflowed;
 }
