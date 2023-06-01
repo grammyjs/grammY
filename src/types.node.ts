@@ -98,24 +98,13 @@ export class InputFile {
      * Converts this instance into a binary representation that can be sent to
      * the Bot API server in the request body.
      */
-    toRaw(): Promise<
+    async toRaw(): Promise<
         Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>
     > {
-        return InputFile.toRaw(this);
-    }
-    /**
-     * Internal method. Do not use.
-     *
-     * Converts this instance into a binary representation that can be sent to
-     * the Bot API server in the request body.
-     */
-    static async toRaw(
-        file: InputFile,
-    ): Promise<Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>> {
-        if (file.consumed) {
+        if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
-        const data = file.fileData;
+        const data = this.fileData;
         // Handle local files
         if (typeof data === "string") return createReadStream(data);
         // Handle URLs and URLLike objects
@@ -132,7 +121,7 @@ export class InputFile {
             return new InputFile(await data()).toRaw();
         }
         // Mark streams and iterators as consumed and return them as-is
-        file.consumed = true;
+        this.consumed = true;
         return data;
     }
 }
