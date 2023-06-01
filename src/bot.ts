@@ -681,7 +681,7 @@ function validateAllowedUpdates(
     const impossible = Array.from(updates).filter((u) => !allowed.includes(u));
     if (impossible.length > 0) {
         debugWarn(
-            `You registered listeners for the follow update types, \
+            `You registered listeners for the following update types, \
 but you did not specify them in \`allowed_updates\` \
 so they may not be received: ${impossible.map((u) => `'${u}'`).join(", ")}`,
         );
