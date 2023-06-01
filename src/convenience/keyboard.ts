@@ -81,8 +81,7 @@ export class Keyboard {
      *
      * @param keyboard An optional initial two-dimensional button array
      */
-    constructor(public readonly keyboard: KeyboardButton[][] = [[]]) {
-    }
+    constructor(public readonly keyboard: KeyboardButton[][] = [[]]) {}
     /**
      * Allows you to add your own `KeyboardButton` objects if you already have
      * them for some reason. You most likely want to call one of the other
@@ -382,7 +381,7 @@ export class Keyboard {
      * [d e f]     [  f  ]
      * ```
      */
-    transpose() {
+    toTransposed() {
         const original = this.keyboard;
         const transposed: KeyboardButton[][] = [];
         for (let i = 0; i < original.length; i++) {
@@ -392,11 +391,7 @@ export class Keyboard {
                 (transposed[j] ??= []).push(button);
             }
         }
-        original.length = transposed.length;
-        for (let i = 0; i < transposed.length; i++) {
-            original[i] = transposed[i];
-        }
-        return this;
+        return this.clone(transposed);
     }
     /**
      * Reflows the keyboard in-place into a given number of columns (default: 4)
@@ -433,7 +428,7 @@ export class Keyboard {
      * @param columns Maximum number of buttons per row
      * @param options Optional option for the first row
      */
-    reflow(columns = 4, options = { first: columns }) {
+    toReflowed(columns = 4, options = { first: columns }) {
         const original = this.keyboard;
         const reflowed: KeyboardButton[][] = [[]];
         for (const row of original) {
@@ -448,17 +443,17 @@ export class Keyboard {
                 next.push(button);
             }
         }
-        original.length = reflowed.length;
-        for (let i = 0; i < reflowed.length; i++) {
-            original[i] = reflowed[i];
-        }
-        return this;
+        return this.clone(reflowed);
     }
     /**
      * Creates and returns a deep copy of this keyboard.
+     *
+     * Optionally takes a new grid of buttons to replace the current buttons. If
+     * specified, only the options will be cloned, and the given buttons will be
+     * used instead.
      */
-    clone() {
-        const clone = new Keyboard(this.keyboard.map((row) => row.slice()));
+    clone(keyboard: KeyboardButton[][] = this.keyboard) {
+        const clone = new Keyboard(keyboard.map((row) => row.slice()));
         clone.is_persistent = this.is_persistent;
         clone.selective = this.selective;
         clone.one_time_keyboard = this.one_time_keyboard;
