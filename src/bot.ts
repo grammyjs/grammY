@@ -457,7 +457,7 @@ you can circumvent this protection against memory leaks.`);
     private async loop(options?: PollingOptions) {
         const limit = options?.limit;
         const timeout = options?.timeout ?? 30; // seconds
-        let allowed_updates = options?.allowed_updates;
+        let allowed_updates = options?.allowed_updates ?? []; // reset to default if unspecified
 
         while (this.pollingRunning) {
             // fetch updates
