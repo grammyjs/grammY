@@ -181,9 +181,14 @@ const http: FrameworkAdapter = (req, res) => {
 /** AWS lambda serverless functions */
 const awsLambda: FrameworkAdapter = (event, _context, callback) => ({
     update: JSON.parse(event.body),
-    header: event.headers[SECRET_HEADER],
+    header: event.headers[SECRET_HEADER_LOWERCASE],
     end: () => callback(null, { statusCode: 200 }),
-    respond: (json) => callback(null, { statusCode: 200, body: json }),
+    respond: (json) =>
+        callback(null, {
+            statusCode: 200,
+            headers: { "Content-Type": "application/json" },
+            body: json,
+        }),
     unauthorized: () => callback(null, { statusCode: 401 }),
 });
 
