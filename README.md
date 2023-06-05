@@ -68,7 +68,7 @@ Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent [documentation](https://grammy.dev), and an [API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts). It even integrates with your code editor, e.g. [VSCode](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
+grammY has an excellent [documentation](https://grammy.dev), and an [API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts). It even integrates with your code editor, e.g. [VS Code](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
 
 If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 
@@ -270,6 +270,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/AbbassAlmusawi"><img src="https://avatars.githubusercontent.com/u/73327881?v=4?s=100" width="100px;" alt="Abbass Al-Musawi"/><br /><sub><b>Abbass Al-Musawi</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=AbbassAlmusawi" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/inji-gg"><img src="https://avatars.githubusercontent.com/u/5071242?v=4?s=100" width="100px;" alt="ArunR"/><br /><sub><b>ArunR</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Ainji-gg" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=inji-gg" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ndatg"><img src="https://avatars.githubusercontent.com/u/108090198?v=4?s=100" width="100px;" alt="NDA"/><br /><sub><b>NDA</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Andatg" title="Bug reports">🐛</a> <a href="#ideas-ndatg" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=ndatg" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MatyiFKBT"><img src="https://avatars.githubusercontent.com/u/6183867?v=4?s=100" width="100px;" alt="MatyiFKBT"/><br /><sub><b>MatyiFKBT</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=MatyiFKBT" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://chrisandrew.cl"><img src="https://avatars.githubusercontent.com/u/368831?v=4?s=100" width="100px;" alt="Chris Andrew C. L."/><br /><sub><b>Chris Andrew C. L.</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Achrisandrewcl" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kiyasov"><img src="https://avatars.githubusercontent.com/u/16527461?v=4?s=100" width="100px;" alt="Islam Kiiasov"/><br /><sub><b>Islam Kiiasov</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=kiyasov" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

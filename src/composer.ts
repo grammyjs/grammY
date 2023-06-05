@@ -248,7 +248,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.on('::url', ctx => { ... })
      * ```
      *
-     * You can use autocomplete in VSCode to see all available filter queries.
+     * You can use autocomplete in VS Code to see all available filter queries.
      * Check out the
      * [documentation](https://grammy.dev/guide/filter-queries.html) on the
      * website to learn more about filter queries in grammY.
@@ -331,7 +331,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * via `ctx.match`.
      *
      * > **Did you know?** You can use deep linking
-     * > (https://core.telegram.org/bots#deep-linking) to let users start your
+     * > (https://core.telegram.org/bots/features#deep-linking) to let users start your
      * > bot with a custom payload. As an example, send someone the link
      * > https://t.me/name-of-your-bot?start=custom-payload and register a start
      * > command handler on your bot with grammY. As soon as the user starts

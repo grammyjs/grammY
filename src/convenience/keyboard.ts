@@ -9,7 +9,7 @@ import {
 
 /**
  * Use this class to simplify building a custom keyboard (something like this:
- * https://core.telegram.org/bots#keyboards).
+ * https://core.telegram.org/bots/features#keyboards).
  *
  * ```ts
  * // Build a custom keyboard:
@@ -269,7 +269,7 @@ export class Keyboard {
 
 /**
  * Use this class to simplify building an inline keyboard (something like this:
- * https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
+ * https://core.telegram.org/bots/features#inline-keyboards).
  *
  * ```ts
  * // Build an inline keyboard:

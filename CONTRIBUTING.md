@@ -36,7 +36,7 @@ It solves this problem substantially better by providing a Deno-aware wrapper of
 Hence, you can write a Deno project and directly compile it to JavaScript files that run under Node.js.
 
 In other words, working on grammY effectively means work on a Deno project.
-We use Deno testing, Deno linting, Deno formatting, and the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) for VSCode.
+We use Deno testing, Deno linting, Deno formatting, and the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) for VS Code.
 Your usual TypeScript tooling does not work—and once you tried developing for Deno and you have experienced how superior the development experience is, you will know why we are happy about our choice.
 
 > Note that not all plugins of grammY have to have the same setup: many of them only integrate with grammY itself, and hence can be written for Node and automatically ported to Deno via <https://skypack.dev/> and similar services.

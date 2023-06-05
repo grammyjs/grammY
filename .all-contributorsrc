@@ -1035,8 +1035,47 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "ndatg",
+      "name": "NDA",
+      "avatar_url": "https://avatars.githubusercontent.com/u/108090198?v=4",
+      "profile": "https://github.com/ndatg",
+      "contributions": [
+        "bug",
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "MatyiFKBT",
+      "name": "MatyiFKBT",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6183867?v=4",
+      "profile": "https://github.com/MatyiFKBT",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "chrisandrewcl",
+      "name": "Chris Andrew C. L.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/368831?v=4",
+      "profile": "https://chrisandrew.cl",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "kiyasov",
+      "name": "Islam Kiiasov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16527461?v=4",
+      "profile": "https://github.com/kiyasov",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": false
+  "skipCi": false,
+  "commitType": "docs"
 }
