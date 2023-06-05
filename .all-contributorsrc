@@ -1062,7 +1062,17 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/368831?v=4",
       "profile": "https://chrisandrew.cl",
       "contributions": [
-        "bug"
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "kiyasov",
+      "name": "Islam Kiiasov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16527461?v=4",
+      "profile": "https://github.com/kiyasov",
+      "contributions": [
+        "code"
       ]
     }
   ],
