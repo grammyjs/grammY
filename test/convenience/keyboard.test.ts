@@ -85,27 +85,30 @@ describe("Keyboard", () => {
     it("can be reflowed", () => {
         function r(
             cols: number,
-            first: number,
+            flow: "bottom" | "top",
             btns: string[][],
             expected: string[][],
         ) {
             assertEquals(
-                Keyboard.from(btns).toReflowed(cols, { first }),
+                Keyboard.from(btns).toReflowed(cols, flow),
                 Keyboard.from(expected),
             );
         }
-        r(4, 4, [["a"]], [["a"]]);
-        r(1, 1, [["a", "b", "c"]], [["a"], ["b"], ["c"]]);
-        r(3, 3, [["a", "b"], ["c", "d"], ["e"]], [["a", "b", "c"], ["d", "e"]]);
+        r(4, "top", [["a"]], [["a"]]);
+        r(1, "top", [["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        r(3, "top", [["a", "b"], ["c", "d"], ["e"]], [["a", "b", "c"], [
+            "d",
+            "e",
+        ]]);
         r(
             5,
-            5,
+            "top",
             [["a", "b"], ["c"], ["d", "e", "f"]],
             [["a", "b", "c", "d", "e"], ["f"]],
         );
         r(
             3,
-            1,
+            "bottom",
             [[..."abcdefghij"]],
             [["a"], ["b", "c", "d"], ["e", "f", "g"], ["h", "i", "j"]],
         );
@@ -245,31 +248,31 @@ describe("InlineKeyboard", () => {
     it("can be reflowed", () => {
         function r(
             cols: number,
-            first: number,
+            flow: "bottom" | "top",
             btns: [string, string][][],
             expected: [string, string][][],
         ) {
             assertEquals(
-                InlineKeyboard.from(btns).toReflowed(cols, { first }),
+                InlineKeyboard.from(btns).toReflowed(cols, flow),
                 InlineKeyboard.from(expected),
             );
         }
-        r(4, 4, [[["a", "a"]]], [[["a", "a"]]]);
+        r(4, "top", [[["a", "a"]]], [[["a", "a"]]]);
         r(
             1,
-            1,
+            "top",
             [[["a", "a"], ["b", "b"], ["c", "c"]]],
             [[["a", "a"]], [["b", "b"]], [["c", "c"]]],
         );
         r(
             3,
-            3,
+            "top",
             [[["a", "a"], ["b", "b"]], [["c", "c"], ["d", "d"]], [["e", "e"]]],
             [[["a", "a"], ["b", "b"], ["c", "c"]], [["d", "d"], ["e", "e"]]],
         );
         r(
             5,
-            5,
+            "top",
             [
                 [["a", "a"], ["b", "b"]],
                 [["c", "c"]],
@@ -282,7 +285,7 @@ describe("InlineKeyboard", () => {
         );
         r(
             3,
-            1,
+            "bottom",
             [[..."abcdefghij"].map((c) => [c, c])],
             [
                 [["a", "a"]],

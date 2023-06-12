@@ -424,9 +424,9 @@ export class Keyboard {
      * @param columns Maximum number of buttons per row
      * @param options Optional option for the first row
      */
-    toReflowed(columns = 4, options = { first: columns }) {
+    toReflowed(columns = 4, flow: "bottom" | "top" = "top") {
         const original = this.keyboard;
-        const reflowed = reflow(original, columns, options.first);
+        const reflowed = reflow(original, columns, flow);
         return this.clone(reflowed);
     }
     /**
@@ -929,9 +929,9 @@ export class InlineKeyboard {
      * @param columns Maximum number of buttons per row
      * @param options Optional option for the first row
      */
-    toReflowed(columns = 4, options = { first: columns }) {
+    toReflowed(columns = 4, flow: "bottom" | "top" = "top") {
         const original = this.inline_keyboard;
-        const reflowed = reflow(original, columns, options.first);
+        const reflowed = reflow(original, columns, flow);
         return new InlineKeyboard(reflowed);
     }
     /**
@@ -997,7 +997,18 @@ function transpose<T>(grid: T[][]): T[][] {
     }
     return transposed;
 }
-function reflow<T>(grid: T[][], columns: number, first: number): T[][] {
+function reflow<T>(
+    grid: T[][],
+    columns: number,
+    flow: "bottom" | "top",
+): T[][] {
+    let first = columns;
+    if (flow === "bottom") {
+        const buttonCount = grid
+            .map((row) => row.length)
+            .reduce((a, b) => a + b, 0);
+        first = buttonCount % columns;
+    }
     const reflowed: T[][] = [];
     for (const row of grid) {
         for (const button of row) {
