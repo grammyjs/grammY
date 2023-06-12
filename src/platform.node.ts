@@ -13,11 +13,34 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
     Readable.from(itr, { objectMode: false });
 
 // === Base configuration for `fetch` calls
+const httpAgents = new Map<string, HttpAgent>();
+const httpsAgents = new Map<string, HttpsAgent>();
+function getCached<K, V>(map: Map<K, V>, key: K, otherwise: () => V) {
+    let value = map.get(key);
+    if (value === undefined) {
+        value = otherwise();
+        map.set(key, value);
+    }
+    return value;
+}
 export function baseFetchConfig(apiRoot: string) {
     if (apiRoot.startsWith("https:")) {
-        return { compress: true, agent: new HttpsAgent({ keepAlive: true }) };
+        return {
+            compress: true,
+            agent: getCached(
+                httpsAgents,
+                apiRoot,
+                () => new HttpsAgent({ keepAlive: true }),
+            ),
+        };
     } else if (apiRoot.startsWith("http:")) {
-        return { agent: new HttpAgent({ keepAlive: true }) };
+        return {
+            agent: getCached(
+                httpAgents,
+                apiRoot,
+                () => new HttpAgent({ keepAlive: true }),
+            ),
+        };
     } else return {};
 }
 
