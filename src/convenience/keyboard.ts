@@ -25,22 +25,23 @@ import {
  * })
  * ```
  *
- * If you already have an array of elements which you would like to turn into a
- * keyboard, you can use the static equivalents which every button has. This
- * will create a two-dimensional keyboard button array. The resulting array can
- * be turned into a keyboard instance.
+ * If you already have some source data which you would like to turn into a
+ * keyboard button object, you can use the static equivalents which every button
+ * has. You can use them to create a two-dimensional keyboard button array. The
+ * resulting array can be turned into a keyboard instance.
  *
  * ```ts
- * // Data source:
- * const data = [['a', 'b'], ['c', 'd']]
+ * const button = Keyboard.text('push my buttons')
+ * const array = [[button]]
+ * const keyboard = Keyboard.from(array)
+ * ```
  *
- * // Build a custom keyboard:
- * const keyboard = Keyboard.from(data.map(row => row.map(Keyboard.text)))
+ * If you want to create text buttons only, you can directly use a
+ * two-dimensional string array and turn it into a keyboard.
  *
- * // Now you send it like so:
- * await ctx.reply('Here is your custom keyboard!', {
- *   reply_markup: keyboard
- * })
+ * ```ts
+ * const data = [['A', 'B'], ['C', 'D']]
+ * const keyboard = Keyboard.from(data)
  * ```
  *
  * Be sure to check out the
@@ -517,22 +518,27 @@ export class Keyboard {
  * })
  * ```
  *
- * If you already have an array of elements which you would like to turn into an
- * inline keyboard, you can use the static equivalents which every button has.
- * This will create a two-dimensional inline button array. The resulting array
- * can be turned into an inline keyboard instance.
+ * If you already have some source data which you would like to turn into an
+ * inline button object, you can use the static equivalents which every inline
+ * button has. You can use them to create a two-dimensional inline button array.
+ * The resulting array can be turned into a keyboard instance.
  *
  * ```ts
- * // Data source:
- * const data = [['a', 'b'], ['c', 'd']]
+ * const button = InlineKeyboard.text('GO', 'go')
+ * const array = [[button]]
+ * const keyboard = InlineKeyboard.from(array)
+ * ```
  *
- * // Build an inline keyboard:
- * const keyboard = InlineKeyboard.from(data.map(row => row.map(InlineKeyboard.text)))
+ * If you want to create callback buttons only, you can directly use a
+ * two-dimensional array of strings (or string pairs if label and callback data
+ * are different) and turn it into an inline keyboard.
  *
- * // Now you send it like so:
- * await ctx.reply('Here is your inline keyboard!', {
- *   reply_markup: keyboard
- * })
+ * ```ts
+ * const keyboard = InlineKeyboard.from([[
+ *     'one',
+ *     'two',
+ *     ['three', 'callback'],
+ * ]]);
  * ```
  *
  * Be sure to to check the
@@ -970,7 +976,11 @@ export class InlineKeyboard {
      */
     static from(
         source:
-            | ([text: string, data: string] | InlineKeyboardButton)[][]
+            | (
+                | string
+                | [text: string, data?: string]
+                | InlineKeyboardButton
+            )[][]
             | InlineKeyboard,
     ): InlineKeyboard {
         if (source instanceof InlineKeyboard) {
@@ -978,9 +988,13 @@ export class InlineKeyboard {
         }
 
         function toButton(
-            btn: [text: string, data: string] | InlineKeyboardButton,
+            btn: string | [text: string, data?: string] | InlineKeyboardButton,
         ) {
-            return Array.isArray(btn) ? InlineKeyboard.text(...btn) : btn;
+            return typeof btn === "string"
+                ? InlineKeyboard.text(btn)
+                : Array.isArray(btn)
+                ? InlineKeyboard.text(...btn)
+                : btn;
         }
         return new InlineKeyboard(source.map((row) => row.map(toButton)));
     }
