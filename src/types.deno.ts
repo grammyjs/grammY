@@ -116,7 +116,7 @@ export class InputFile {
         }
         if (data instanceof Blob) return data.stream();
         if (isDenoFile(data)) return iterateReader(data);
-        // Handle Reponse objects
+        // Handle Response objects
         if (data instanceof Response) {
             if (data.body === null) throw new Error(`No response body!`);
             return data.body;
