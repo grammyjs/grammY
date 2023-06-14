@@ -19,7 +19,7 @@ import {
  *   .text('A').text('B').row()
  *   .text('C').text('D')
  *
- * // Now you send it like so:
+ * // Now you can send it like so:
  * await ctx.reply('Here is your custom keyboard!', {
  *   reply_markup: keyboard
  * })
