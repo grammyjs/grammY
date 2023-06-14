@@ -58,6 +58,7 @@ export class InputFile {
             | string
             | Blob
             | Deno.FsFile
+            | Response
             | URL
             | URLLike
             | Uint8Array
@@ -115,6 +116,11 @@ export class InputFile {
         }
         if (data instanceof Blob) return data.stream();
         if (isDenoFile(data)) return iterateReader(data);
+        // Handle Reponse objects
+        if (data instanceof Response) {
+            if (data.body === null) throw new Error(`No response body!`);
+            return data.body;
+        }
         // Handle URL and URLLike objects
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
