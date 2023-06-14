@@ -153,6 +153,18 @@ Deno.test({
 });
 
 Deno.test({
+    name: "convert Response to raw",
+    async fn() {
+        const bytes = new Uint8Array([65, 66, 67]);
+        const file0 = new InputFile(new Response(bytes));
+        const data0 = await file0.toRaw();
+        if (data0 instanceof Uint8Array) throw new Error("no itr");
+        const values0 = await readAll(readerFromIterable(data0));
+        assertEquals(values0, bytes);
+    },
+});
+
+Deno.test({
     name: "handle invalid URLs",
     async fn() {
         const source = stub(
