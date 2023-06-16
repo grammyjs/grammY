@@ -390,10 +390,10 @@ export class Keyboard {
         return this.clone(transposed);
     }
     /**
-     * Creates a new keyboard with the same buttons but reflowed into a given
+     * Creates a new keyboard with the same buttons but wrapped after a given
      * number of columns (default: 4) as if the buttons were text elements.
-     * Optionally, you can specify how many buttons should be on the first
-     * column.
+     * Optionally, you can specify if the wrapping should prioritize filling up
+     * the top (default) or the bottom row.
      *
      * This method is idempotent, so calling it a second time will effectively
      * clone this keyboard without reordering the buttons.
@@ -401,7 +401,7 @@ export class Keyboard {
      * Here are some examples.
      *
      * ```
-     * original    reflowed
+     * original    wrapped
      * [  a  ]  ~> [  a  ]    (4 columns)
      *
      *             [  a  ]
@@ -417,18 +417,18 @@ export class Keyboard {
      * [d e f]
      *
      * [a b c]     [  a  ]
-     * [d e f]  ~> [b c d]    (3 colums, 1 on first row)
+     * [d e f]  ~> [b c d]    (3 colums, bottom wrapping)
      * [g h i]     [e f g]
      * [  j  ]     [h i j]
      * ```
      *
      * @param columns Maximum number of buttons per row
-     * @param options Optional option for the first row
+     * @param wrap Optional wrapping behavior
      */
-    toReflowed(columns = 4, flow: "bottom" | "top" = "top") {
+    toWrapped(columns = 4, wrap: "top" | "bottom" = "top") {
         const original = this.keyboard;
-        const reflowed = reflow(original, columns, flow);
-        return this.clone(reflowed);
+        const wrapped = wrapArray(original, columns, wrap);
+        return this.clone(wrapped);
     }
     /**
      * Creates and returns a deep copy of this keyboard.
@@ -900,10 +900,10 @@ export class InlineKeyboard {
         return new InlineKeyboard(transposed);
     }
     /**
-     * Creates a new inline keyboard with the same buttons but reflowed into a
+     * Creates a new inline keyboard with the same buttons but wrapped after a
      * given number of columns (default: 4) as if the buttons were text
-     * elements. Optionally, you can specify how many buttons should be on the
-     * first column.
+     * elements. Optionally, you can specify if the wrapping should prioritize
+     * filling up the top (default) or the bottom row.
      *
      * This method is idempotent, so calling it a second time will effectively
      * clone this inline keyboard without reordering the buttons.
@@ -911,7 +911,7 @@ export class InlineKeyboard {
      * Here are some examples.
      *
      * ```
-     * original    reflowed
+     * original    wrapped
      * [  a  ]  ~> [  a  ]    (4 columns)
      *
      *             [  a  ]
@@ -927,18 +927,18 @@ export class InlineKeyboard {
      * [d e f]
      *
      * [a b c]     [  a  ]
-     * [d e f]  ~> [b c d]    (3 colums, 1 on first row)
+     * [d e f]  ~> [b c d]    (3 colums, bottom wrapping)
      * [g h i]     [e f g]
      * [  j  ]     [h i j]
      * ```
      *
      * @param columns Maximum number of buttons per row
-     * @param options Optional option for the first row
+     * @param wrap Optional wrapping behavior
      */
-    toReflowed(columns = 4, flow: "bottom" | "top" = "top") {
+    toWrapped(columns = 4, wrap: "top" | "bottom" = "top") {
         const original = this.inline_keyboard;
-        const reflowed = reflow(original, columns, flow);
-        return new InlineKeyboard(reflowed);
+        const wrapped = wrapArray(original, columns, wrap);
+        return new InlineKeyboard(wrapped);
     }
     /**
      * Creates and returns a deep copy of this inline keyboard.
@@ -1011,30 +1011,30 @@ function transpose<T>(grid: T[][]): T[][] {
     }
     return transposed;
 }
-function reflow<T>(
+function wrapArray<T>(
     grid: T[][],
     columns: number,
-    flow: "bottom" | "top",
+    wrap: "top" | "bottom",
 ): T[][] {
     let first = columns;
-    if (flow === "bottom") {
+    if (wrap === "bottom") {
         const buttonCount = grid
             .map((row) => row.length)
             .reduce((a, b) => a + b, 0);
         first = buttonCount % columns;
     }
-    const reflowed: T[][] = [];
+    const wrapped: T[][] = [];
     for (const row of grid) {
         for (const button of row) {
-            const at = Math.max(0, reflowed.length - 1);
+            const at = Math.max(0, wrapped.length - 1);
             const max = at === 0 ? first : columns;
-            let next = (reflowed[at] ??= []);
+            let next = (wrapped[at] ??= []);
             if (next.length === max) {
                 next = [];
-                reflowed.push(next);
+                wrapped.push(next);
             }
             next.push(button);
         }
     }
-    return reflowed;
+    return wrapped;
 }
