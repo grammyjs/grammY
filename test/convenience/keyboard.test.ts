@@ -90,7 +90,7 @@ describe("Keyboard", () => {
             expected: string[][],
         ) {
             assertEquals(
-                Keyboard.from(btns).toReflowed(cols, flow),
+                Keyboard.from(btns).toWrapped(cols, flow),
                 Keyboard.from(expected),
             );
         }
@@ -114,8 +114,8 @@ describe("Keyboard", () => {
         );
         const keyboard = Keyboard.from([["a", "b", "c"], ["d", "e"], ["f"]]);
         assertEquals(
-            keyboard.clone().toReflowed(3).toReflowed(3),
-            keyboard.toReflowed(3),
+            keyboard.clone().toWrapped(3).toWrapped(3),
+            keyboard.toWrapped(3),
         );
     });
 
@@ -253,7 +253,7 @@ describe("InlineKeyboard", () => {
             expected: [string, string][][],
         ) {
             assertEquals(
-                InlineKeyboard.from(btns).toReflowed(cols, flow),
+                InlineKeyboard.from(btns).toWrapped(cols, flow),
                 InlineKeyboard.from(expected),
             );
         }
@@ -300,8 +300,8 @@ describe("InlineKeyboard", () => {
             [["f", "f"]],
         ]);
         assertEquals(
-            keyboard.clone().toReflowed(3).toReflowed(3),
-            keyboard.toReflowed(3),
+            keyboard.clone().toWrapped(3).toWrapped(3),
+            keyboard.toWrapped(3),
         );
     });
 
