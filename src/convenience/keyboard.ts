@@ -118,8 +118,8 @@ export class Keyboard {
      * ```ts
      * Keyboard.from(
      *   ['A', 'B', 'C']
-     *     .map(Keyboard.text)
-     *     .map(Keyboard.row)
+     *     .map(label => Keyboard.text(label))
+     *     .map(button => Keyboard.row(button))
      * )
      * ```
      *
@@ -618,8 +618,8 @@ export class InlineKeyboard {
      * ```ts
      * InlineKeyboard.from(
      *   ['one', 'two', 'three']
-     *     .map(InlineKeyboard.text)
-     *     .map(InlineKeyboard.row)
+     *     .map(label => InlineKeyboard.text(label))
+     *     .map(button => InlineKeyboard.row(button))
      * )
      * ```
      *
