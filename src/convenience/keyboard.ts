@@ -9,6 +9,8 @@ import {
     type SwitchInlineQueryChosenChat,
 } from "../types.ts";
 
+type KeyboardButtonSource = string | KeyboardButton;
+type KeyboardSource = KeyboardButtonSource[][] | Keyboard;
 /**
  * Use this class to simplify building a custom keyboard (something like this:
  * https://core.telegram.org/bots/features#keyboards).
@@ -470,7 +472,7 @@ export class Keyboard {
      *
      * @param sources A number of keyboards to append
      */
-    append(...sources: Array<(string | KeyboardButton)[][] | Keyboard>) {
+    append(...sources: KeyboardSource[]) {
         for (const source of sources) {
             const keyboard = Keyboard.from(source);
             this.keyboard.push(...keyboard.keyboard.map((row) => row.slice()));
@@ -504,10 +506,10 @@ export class Keyboard {
      * @param options Optional options for the custom keyboard
      */
     static from(
-        source: (string | KeyboardButton)[][] | Keyboard,
+        source: KeyboardSource,
         options: Omit<ReplyKeyboardMarkup, "keyboard"> = {},
     ): Keyboard {
-        function toButton(btn: string | KeyboardButton) {
+        function toButton(btn: KeyboardButtonSource) {
             return typeof btn === "string" ? Keyboard.text(btn) : btn;
         }
         if (source instanceof Keyboard) {
