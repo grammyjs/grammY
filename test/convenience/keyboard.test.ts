@@ -82,7 +82,7 @@ describe("Keyboard", () => {
         assertEquals(keyboard.clone().toTransposed().toTransposed(), keyboard);
     });
 
-    it("can be reflowed", () => {
+    it("can be wrapped", () => {
         function r(
             cols: number,
             flow: "bottom" | "top",
@@ -245,7 +245,7 @@ describe("InlineKeyboard", () => {
         assertEquals(keyboard.clone().toTransposed().toTransposed(), keyboard);
     });
 
-    it("can be reflowed", () => {
+    it("can be wrapped", () => {
         function r(
             cols: number,
             flow: "bottom" | "top",
