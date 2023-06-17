@@ -109,6 +109,24 @@ export class Keyboard {
         return this;
     }
     /**
+     * Creates a button row from one or more buttons.
+     *
+     * This allows for the following pattern:
+     *
+     * ```ts
+     * Keyboard.from(
+     *   ['A', 'B', 'C']
+     *     .map(Keyboard.text)
+     *     .map(Keyboard.row)
+     * )
+     * ```
+     *
+     * @param buttons A number of buttons to place on this row
+     */
+    static row(...buttons: KeyboardButton[]) {
+        return buttons;
+    }
+    /**
      * Adds a new text button. This button will simply send the given text as a
      * text message back to your bot if a user clicks on it.
      *
@@ -501,6 +519,14 @@ export class Keyboard {
     }
 }
 
+type InlineKeyboardButtonSource =
+    | string
+    | [text: string, data?: string]
+    | InlineKeyboardButton;
+type InlineKeyboardSource =
+    | InlineKeyboardButtonSource[][]
+    | InlineKeyboard;
+
 /**
  * Use this class to simplify building an inline keyboard (something like this:
  * https://core.telegram.org/bots/features#inline-keyboards).
@@ -581,6 +607,24 @@ export class InlineKeyboard {
     row(...buttons: InlineKeyboardButton[]) {
         this.inline_keyboard.push(buttons);
         return this;
+    }
+    /**
+     * Creates a button row from one or more buttons.
+     *
+     * This allows for the following pattern:
+     *
+     * ```ts
+     * InlineKeyboard.from(
+     *   ['one', 'two', 'three']
+     *     .map(InlineKeyboard.text)
+     *     .map(InlineKeyboard.row)
+     * )
+     * ```
+     *
+     * @param buttons A number of buttons to place on this row
+     */
+    static row(...buttons: InlineKeyboardButton[]) {
+        return buttons;
     }
     /**
      * Adds a new URL button. Telegram clients will open the provided URL when
@@ -953,12 +997,7 @@ export class InlineKeyboard {
      *
      * @param sources A number of inline keyboards to append
      */
-    append(
-        ...sources: Array<
-            | ([text: string, data: string] | InlineKeyboardButton)[][]
-            | InlineKeyboard
-        >
-    ) {
+    append(...sources: InlineKeyboardSource[]) {
         for (const source of sources) {
             const keyboard = InlineKeyboard.from(source);
             this.inline_keyboard.push(
@@ -974,22 +1013,11 @@ export class InlineKeyboard {
      *
      * @param source A two-dimensional inline button array
      */
-    static from(
-        source:
-            | (
-                | string
-                | [text: string, data?: string]
-                | InlineKeyboardButton
-            )[][]
-            | InlineKeyboard,
-    ): InlineKeyboard {
+    static from(source: InlineKeyboardSource): InlineKeyboard {
         if (source instanceof InlineKeyboard) {
             return source.clone();
         }
-
-        function toButton(
-            btn: string | [text: string, data?: string] | InlineKeyboardButton,
-        ) {
+        function toButton(btn: InlineKeyboardButtonSource) {
             return typeof btn === "string"
                 ? InlineKeyboard.text(btn)
                 : Array.isArray(btn)
