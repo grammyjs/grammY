@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.150.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
+import { assertEquals } from "https://deno.land/std@0.192.0/testing/asserts.ts";
+import { describe, it } from "https://deno.land/std@0.192.0/testing/bdd.ts";
 import {
     InlineQueryResultBuilder,
 } from "../../src/convenience/inline_query.ts";
