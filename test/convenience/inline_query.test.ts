@@ -1,9 +1,8 @@
-import { assertEquals } from "https://deno.land/std@0.192.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.192.0/testing/bdd.ts";
 import {
     InlineQueryResultBuilder,
 } from "../../src/convenience/inline_query.ts";
-import { InputInvoiceMessageContent } from "../../src/types.deno.ts";
+import { type InputInvoiceMessageContent } from "../../src/types.ts";
+import { assertEquals, describe, it } from "../deps.test.ts";
 
 describe("InlineQueryResultBuilder", () => {
     describe("article", () => {
