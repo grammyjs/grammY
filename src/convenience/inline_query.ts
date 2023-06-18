@@ -243,7 +243,7 @@ export const InlineQueryResultBuilder = {
         };
     },
     /**
-     * Builds an InlineQueryResultGame as specified by
+     * Builds an InlineQueryResultGame object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultgame.
      *
      * @param id Unique identifier for this result, 1-64 bytes
