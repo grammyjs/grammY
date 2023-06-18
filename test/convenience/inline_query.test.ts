@@ -1,434 +1,584 @@
-import {
-    type InlineQueryResultArticle,
-    type InlineQueryResultAudio,
-    type InlineQueryResultCachedAudio,
-    type InlineQueryResultCachedGif,
-    type InlineQueryResultCachedMpeg4Gif,
-    type InlineQueryResultCachedPhoto,
-    type InlineQueryResultCachedSticker,
-    type InlineQueryResultCachedVideo,
-    type InlineQueryResultCachedVoice,
-    type InlineQueryResultContact,
-    type InlineQueryResultDocument,
-    type InlineQueryResultGif,
-    type InlineQueryResultLocation,
-    type InlineQueryResultMpeg4Gif,
-    type InlineQueryResultPhoto,
-    type InlineQueryResultVenue,
-    type InlineQueryResultVideo,
-    type InlineQueryResultVoice,
-} from "../../src/types.ts";
 import { assertEquals } from "https://deno.land/std@0.150.0/testing/asserts.ts";
 import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
 import {
     InlineQueryResultBuilder,
-    WithoutType,
-} from "../../src/convenience/inline-query.ts";
+} from "../../src/convenience/inline_query.ts";
+import { InputInvoiceMessageContent } from "../../src/types.deno.ts";
 
-describe("Inline Query Result Builder", () => {
-    describe("Article", () => {
-        it("should have returned an InlineQueryResultArticle", () => {
-            const articleOptions: WithoutType<InlineQueryResultArticle> = {
+describe("InlineQueryResultBuilder", () => {
+    describe("article", () => {
+        it("should build an InlineQueryResultArticle from string", () => {
+            const article = InlineQueryResultBuilder.article(
+                "id",
+                "title",
+                "text",
+                { description: "description" },
+            );
+            assertEquals(article, {
+                type: "article",
                 id: "id",
-                input_message_content: {
-                    message_text: "Text message content",
-                },
-                title: "Article Title",
-                description: "Article Description",
-                hide_url: false,
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-                thumbnail_height: 4,
-                thumbnail_url: "Article thumbnail url",
-                thumbnail_width: 4,
-                url: "https://www.example.com/article",
-            };
-
-            const article = InlineQueryResultBuilder.article(articleOptions);
-
-            assertEquals(article, { type: "article", ...articleOptions });
+                title: "title",
+                input_message_content: { message_text: "text" },
+                description: "description",
+            });
         });
-    });
-
-    describe("Audio", () => {
-        it("should have returned an InlineQueryResultAudio", () => {
-            const audioOptions: WithoutType<InlineQueryResultAudio> = {
+        it("should build an InlineQueryResultArticle from InputTextMessageContent", () => {
+            const article = InlineQueryResultBuilder.article(
+                "id",
+                "title",
+                { message_text: "text", parse_mode: "HTML" },
+                { description: "description" },
+            );
+            assertEquals(article, {
+                type: "article",
                 id: "id",
-                audio_url: "Audio url",
-                title: "Audio Title",
-                audio_duration: 20,
-                caption: "Audio caption",
+                title: "title",
                 input_message_content: {
-                    message_text: "Text message content",
+                    message_text: "text",
+                    parse_mode: "HTML",
                 },
-                performer: "Audio performer",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const audio = InlineQueryResultBuilder.audio(audioOptions);
-
-            assertEquals(audio, { type: "audio", ...audioOptions });
-        });
-
-        describe("Cached", () => {
-            it("should have returned an InlineQueryResultCachedAudio", () => {
-                const audioOptions: WithoutType<InlineQueryResultCachedAudio> =
-                    {
-                        id: "id",
-                        audio_file_id: "Audio-file-id",
-                        caption: "Audio caption",
-                        input_message_content: {
-                            message_text: "Text message content",
-                        },
-                        reply_markup: {
-                            inline_keyboard: [],
-                        },
-                    };
-
-                const audio = InlineQueryResultBuilder.audioCache(audioOptions);
-
-                assertEquals(audio, { type: "audio", ...audioOptions });
+                description: "description",
             });
         });
     });
 
-    describe("Contact", () => {
-        it("should return an InlineQueryResultContact", () => {
-            const contactOptions: WithoutType<InlineQueryResultContact> = {
+    describe("audio", () => {
+        it("should build an InlineQueryResultAudio from a string", () => {
+            const audio = InlineQueryResultBuilder.audio(
+                "id",
+                "title",
+                "https://grammy.dev/",
+                { caption: "cap" },
+            );
+            assertEquals(audio, {
+                type: "audio",
                 id: "id",
-                phone_number: "+1-888-888-8888",
-                first_name: "Contact first name",
-                last_name: "Contact last name",
-                vcard: "Contact vcard data",
-                input_message_content: {
-                    message_text: "Text message content",
-                },
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-                thumbnail_url: "https://via.placeholder.com/60",
-                thumbnail_width: 60,
-                thumbnail_height: 60,
-            };
-
-            const contact = InlineQueryResultBuilder.contact(contactOptions);
-
-            assertEquals(contact, { type: "contact", ...contactOptions });
+                title: "title",
+                audio_url: "https://grammy.dev/",
+                caption: "cap",
+            });
         });
-    });
-
-    describe("Document", () => {
-        it("should return an InlineQueryResultDocument", () => {
-            const documentOptions: WithoutType<InlineQueryResultDocument> = {
+        it("should build an InlineQueryResultAudio from a URL", () => {
+            const audio = InlineQueryResultBuilder.audio(
+                "id",
+                "title",
+                new URL("https://grammy.dev/"),
+                { caption: "cap" },
+            );
+            assertEquals(audio, {
+                type: "audio",
                 id: "id",
-                title: "Document Title",
-                document_url: "https://www.example.com/document",
-                mime_type: "application/pdf",
-                caption: "Document caption",
-                input_message_content: {
-                    message_text: "Text message content",
-                },
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const document = InlineQueryResultBuilder.document(documentOptions);
-
-            assertEquals(document, { type: "document", ...documentOptions });
+                title: "title",
+                audio_url: "https://grammy.dev/",
+                caption: "cap",
+            });
         });
-
-        describe("Cached", () => {
-            it("should return an InlineQueryResultCachedDocument", () => {
-                const documentOptions = {
-                    id: "id",
-                    title: "Document Title",
-                    document_file_id: "document-file-id",
-                    caption: "Document caption",
-                    input_message_content: {
-                        message_text: "Text message content",
-                    },
-                    reply_markup: {
-                        inline_keyboard: [],
-                    },
-                };
-
-                const document = InlineQueryResultBuilder.documentCache(
-                    documentOptions,
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedAudio", () => {
+                const audio = InlineQueryResultBuilder.audioCached(
+                    "id",
+                    "file_id",
+                    { caption: "my cached audio" },
                 );
-
-                assertEquals(document, {
-                    type: "document",
-                    ...documentOptions,
+                assertEquals(audio, {
+                    type: "audio",
+                    id: "id",
+                    audio_file_id: "file_id",
+                    caption: "my cached audio",
                 });
             });
         });
     });
 
-    describe("Game", () => {
-        it("should return an InlineQueryResultGame", () => {
-            const gameOptions = {
+    describe("contact", () => {
+        it("should build an InlineQueryResultContact", () => {
+            const contact = InlineQueryResultBuilder.contact(
+                "id",
+                "phone",
+                "first",
+                { last_name: "last" },
+            );
+            assertEquals(contact, {
+                type: "contact",
                 id: "id",
-                game_short_name: "Game short name",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const game = InlineQueryResultBuilder.game(gameOptions);
-
-            assertEquals(game, { type: "game", ...gameOptions });
-        });
-    });
-
-    describe("Gif", () => {
-        it("should return an InlineQueryResultGif", () => {
-            const gifOptions: WithoutType<InlineQueryResultGif> = {
-                id: "id",
-                gif_url: "https://www.example.com/gif",
-                gif_width: 200,
-                gif_height: 200,
-                gif_duration: 20,
-                thumbnail_url: "https://www.example.com/thumbnail",
-                thumbnail_mime_type: "image/gif",
-                title: "Gif title",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const gif = InlineQueryResultBuilder.gif(gifOptions);
-
-            assertEquals(gif, { type: "gif", ...gifOptions });
-        });
-
-        describe("Cached", () => {
-            it("should return an InlineQueryResultCachedGif", () => {
-                const gifOptions: WithoutType<InlineQueryResultCachedGif> = {
-                    id: "id",
-                    gif_file_id: "gif-file-id",
-                    title: "Gif title",
-                    reply_markup: {
-                        inline_keyboard: [],
-                    },
-                };
-
-                const gif = InlineQueryResultBuilder.gifCache(gifOptions);
-
-                assertEquals(gif, { type: "gif", ...gifOptions });
+                phone_number: "phone",
+                first_name: "first",
+                last_name: "last",
             });
         });
     });
 
-    describe("Location", () => {
-        it("should return an InlineQueryResultLocation", () => {
-            const locationOptions: WithoutType<InlineQueryResultLocation> = {
+    describe("document", () => {
+        it("should build a PDF InlineQueryResultDocument from a string", () => {
+            const document = InlineQueryResultBuilder.documentPdf(
+                "id",
+                "title",
+                "https://grammy.dev/",
+                { caption: "captain" },
+            );
+            assertEquals(document, {
+                type: "document",
+                mime_type: "application/pdf",
                 id: "id",
-                latitude: 30,
-                longitude: 50,
-                title: "Location title",
-                horizontal_accuracy: 1500,
-                live_period: 60,
-                heading: 360,
-                proximity_alert_radius: 1,
-                thumbnail_url: "https://www.example.com/thumbnail",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const location = InlineQueryResultBuilder.location(locationOptions);
-
-            assertEquals(location, { type: "location", ...locationOptions });
+                title: "title",
+                document_url: "https://grammy.dev/",
+                caption: "captain",
+            });
         });
-    });
-
-    describe("Mpeg4Gif", () => {
-        it("should return an InlineQueryResultMpeg4Gif", () => {
-            const mpegOptions: WithoutType<InlineQueryResultMpeg4Gif> = {
+        it("should build a PDF InlineQueryResultDocument from a URL", () => {
+            const document = InlineQueryResultBuilder.documentPdf(
+                "id",
+                "title",
+                new URL("https://grammy.dev/"),
+                { caption: "morgan" },
+            );
+            assertEquals(document, {
+                type: "document",
+                mime_type: "application/pdf",
                 id: "id",
-                mpeg4_url: "https://www.example.com/mpeg4",
-                mpeg4_width: 100,
-                mpeg4_height: 100,
-                mpeg4_duration: 30,
-                thumbnail_url: "https://www.example.com/thumbnail",
-                title: "Mpeg4Gif title",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const mpeg = InlineQueryResultBuilder.mpeg4gif(mpegOptions);
-
-            assertEquals(mpeg, { type: "mpeg4_gif", ...mpegOptions });
+                title: "title",
+                document_url: "https://grammy.dev/",
+                caption: "morgan",
+            });
         });
-
-        describe("Cached", () => {
-            it("should return an InlineQueryResultCachedMpeg4Gif", () => {
-                const mpegOptions: WithoutType<
-                    InlineQueryResultCachedMpeg4Gif
-                > = {
-                    id: "id",
-                    mpeg4_file_id: "mpeg4-file-id",
-                    title: "Mpeg4Gif title",
-                    reply_markup: {
-                        inline_keyboard: [],
-                    },
-                };
-
-                const mpeg = InlineQueryResultBuilder.mpeg4gifCache(
-                    mpegOptions,
+        it("should build a ZIP InlineQueryResultDocument from a string", () => {
+            const document = InlineQueryResultBuilder.documentZip(
+                "id",
+                "title",
+                "https://grammy.dev/",
+                { caption: "captain" },
+            );
+            assertEquals(document, {
+                type: "document",
+                mime_type: "application/zip",
+                id: "id",
+                title: "title",
+                document_url: "https://grammy.dev/",
+                caption: "captain",
+            });
+        });
+        it("should build a ZIP InlineQueryResultDocument from a URL", () => {
+            const document = InlineQueryResultBuilder.documentZip(
+                "id",
+                "title",
+                new URL("https://grammy.dev/"),
+                { caption: "morgan" },
+            );
+            assertEquals(document, {
+                type: "document",
+                mime_type: "application/zip",
+                id: "id",
+                title: "title",
+                document_url: "https://grammy.dev/",
+                caption: "morgan",
+            });
+        });
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedDocument", () => {
+                const document = InlineQueryResultBuilder.documentCached(
+                    "id",
+                    "title",
+                    "file_id",
+                    { caption: "c" },
                 );
-                assertEquals(mpeg, { type: "mpeg4_gif", ...mpegOptions });
-            });
-        });
-    });
-
-    describe("Photo", () => {
-        it("should return an InlineQueryResultPhoto", () => {
-            const photoOptions: WithoutType<InlineQueryResultPhoto> = {
-                id: "id",
-                description: "Photo description text",
-                photo_url: "https://www.example.com/photo",
-                photo_width: 100,
-                photo_height: 100,
-                thumbnail_url: "https://www.example.com/thumbnail",
-                title: "Photo title",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const mpeg = InlineQueryResultBuilder.photo(photoOptions);
-            assertEquals(mpeg, { type: "photo", ...photoOptions });
-        });
-
-        describe("Cached", () => {
-            it("should return an InlineQueryResultCachedPhoto", () => {
-                const photoOptions: WithoutType<InlineQueryResultCachedPhoto> =
-                    {
-                        id: "id",
-                        description: "Photo description text",
-                        photo_file_id: "https://www.example.com/photo",
-                        title: "Photo title",
-                        reply_markup: {
-                            inline_keyboard: [],
-                        },
-                    };
-
-                const mpeg = InlineQueryResultBuilder.photoCache(photoOptions);
-                assertEquals(mpeg, { type: "photo", ...photoOptions });
-            });
-        });
-    });
-
-    describe("Venue", () => {
-        it("should return an InlineQueryResultVenue", () => {
-            const venueOptions: WithoutType<InlineQueryResultVenue> = {
-                id: "id",
-                latitude: 60,
-                longitude: 100,
-                address: "123 Example Street",
-                foursquare_id: "foursquare_id",
-                google_place_id: "google_place_id",
-                title: "Venue title",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const venue = InlineQueryResultBuilder.venue(venueOptions);
-            assertEquals(venue, { type: "venue", ...venueOptions });
-        });
-    });
-
-    describe("Video", () => {
-        it("should return an InlineQueryResultVideo", () => {
-            const videoOptions: WithoutType<InlineQueryResultVideo> = {
-                id: "id",
-                description: "Photo description text",
-                video_url: "https://www.example.com/video",
-                mime_type: "video/mp4",
-                thumbnail_url: "https://www.example.com/thumbnail",
-                title: "Video title",
-                video_width: 100,
-                video_height: 150,
-                video_duration: 30,
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const video = InlineQueryResultBuilder.video(videoOptions);
-            assertEquals(video, { type: "video", ...videoOptions });
-        });
-
-        describe("Cached", () => {
-            it("should return an InlineQueryResultCachedVideo", () => {
-                const videoOptions: WithoutType<InlineQueryResultCachedVideo> =
-                    {
-                        id: "id",
-                        description: "Video description text",
-                        video_file_id: "https://www.example.com/video",
-                        title: "Video title",
-                        reply_markup: {
-                            inline_keyboard: [],
-                        },
-                    };
-
-                const video = InlineQueryResultBuilder.videoCache(videoOptions);
-                assertEquals(video, { type: "video", ...videoOptions });
-            });
-        });
-    });
-
-    describe("Sticker Cached", () => {
-        it("should return an InlineQueryResultCachedSticker", () => {
-            const stickerOptions: WithoutType<InlineQueryResultCachedSticker> =
-                {
+                assertEquals(document, {
+                    type: "document",
                     id: "id",
-                    sticker_file_id: "sticker_file_id",
-                    reply_markup: {
-                        inline_keyboard: [],
-                    },
-                };
-
-            const video = InlineQueryResultBuilder.stickerCache(stickerOptions);
-            assertEquals(video, { type: "sticker", ...stickerOptions });
+                    title: "title",
+                    document_file_id: "file_id",
+                    caption: "c",
+                });
+            });
         });
     });
 
-    describe("Voice", () => {
-        it("should return an InlineQueryResultVoice", () => {
-            const voiceOptions: WithoutType<InlineQueryResultVoice> = {
+    describe("game", () => {
+        it("should build an InlineQueryResultGame", () => {
+            const game = InlineQueryResultBuilder.game("id", "game", {
+                reply_markup: { inline_keyboard: [] },
+            });
+            assertEquals(game, {
+                type: "game",
                 id: "id",
-                voice_url: "https://www.example.com/voice",
-                title: "Voice title",
-                voice_duration: 30,
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
-
-            const voice = InlineQueryResultBuilder.voice(voiceOptions);
-            assertEquals(voice, { type: "voice", ...voiceOptions });
+                game_short_name: "game",
+                reply_markup: { inline_keyboard: [] },
+            });
         });
+    });
 
-        it("should return an InlineQueryResultCachedVideo", () => {
-            const voiceOptions: WithoutType<InlineQueryResultCachedVoice> = {
+    describe("gif", () => {
+        it("should build an InlineQueryResultGif from strings", () => {
+            const gif = InlineQueryResultBuilder.gif(
+                "id",
+                "https://grammy.dev/",
+                "https://grammy.dev/thumb",
+                { caption: "It's pronounced GIF." },
+            );
+            assertEquals(gif, {
+                type: "gif",
                 id: "id",
-                voice_file_id: "voice-file-id",
-                title: "Voice title",
-                reply_markup: {
-                    inline_keyboard: [],
-                },
-            };
+                gif_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                caption: "It's pronounced GIF.",
+            });
+        });
+        it("should build an InlineQueryResultGif from URLs", () => {
+            const gif = InlineQueryResultBuilder.gif(
+                "id",
+                new URL("https://grammy.dev/"),
+                new URL("https://grammy.dev/thumb"),
+                { caption: "It's pronounced GIF." },
+            );
+            assertEquals(gif, {
+                type: "gif",
+                id: "id",
+                gif_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                caption: "It's pronounced GIF.",
+            });
+        });
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedGif", () => {
+                const gif = InlineQueryResultBuilder.gifCached(
+                    "id",
+                    "file_id",
+                    { caption: "cappy" },
+                );
+                assertEquals(gif, {
+                    type: "gif",
+                    id: "id",
+                    gif_file_id: "file_id",
+                    caption: "cappy",
+                });
+            });
+        });
+    });
 
-            const video = InlineQueryResultBuilder.voiceCache(voiceOptions);
-            assertEquals(video, { type: "voice", ...voiceOptions });
+    describe("invoice", () => {
+        it("should build an InlineQueryResultArticle", () => {
+            const invoiceData: InputInvoiceMessageContent = {
+                title: "grammY merch",
+                description: "Climb the coolness scale",
+                payload: "YYY",
+                provider_token: "asdf",
+                currency: "EUR",
+                prices: [{ label: "sticker pack", amount: 1000 }],
+            };
+            const invoice = InlineQueryResultBuilder.invoice(
+                "id",
+                "grammY merch",
+                invoiceData,
+                { description: "Buy it now!" },
+            );
+            assertEquals(invoice, {
+                type: "article",
+                id: "id",
+                title: "grammY merch",
+                input_message_content: invoiceData,
+                description: "Buy it now!",
+            });
+        });
+    });
+
+    describe("location", () => {
+        it("should build an InlineQueryResultLocation", () => {
+            const location = InlineQueryResultBuilder.location(
+                "id",
+                "title",
+                54,
+                10,
+                { horizontal_accuracy: 3 },
+            );
+            assertEquals(location, {
+                type: "location",
+                id: "id",
+                title: "title",
+                latitude: 54,
+                longitude: 10,
+                horizontal_accuracy: 3,
+            });
+        });
+    });
+
+    describe("mpeg4gif", () => {
+        it("should build an InlineQueryResultMpeg4Gif from strings", () => {
+            const mpeg = InlineQueryResultBuilder.mpeg4gif(
+                "id",
+                "https://grammy.dev/",
+                "https://grammy.dev/thumb",
+                { caption: "cap" },
+            );
+            assertEquals(mpeg, {
+                type: "mpeg4_gif",
+                id: "id",
+                mpeg4_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                caption: "cap",
+            });
+        });
+        it("should build an InlineQueryResultMpeg4Gif from URLs", () => {
+            const mpeg = InlineQueryResultBuilder.mpeg4gif(
+                "id",
+                new URL("https://grammy.dev/"),
+                new URL("https://grammy.dev/thumb"),
+                { caption: "cap" },
+            );
+            assertEquals(mpeg, {
+                type: "mpeg4_gif",
+                id: "id",
+                mpeg4_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                caption: "cap",
+            });
+        });
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedMpeg4Gif", () => {
+                const mpeg = InlineQueryResultBuilder.mpeg4gifCached(
+                    "id",
+                    "file_id",
+                    { title: "title" },
+                );
+                assertEquals(mpeg, {
+                    type: "mpeg4_gif",
+                    id: "id",
+                    mpeg4_file_id: "file_id",
+                    title: "title",
+                });
+            });
+        });
+    });
+
+    describe("photo", () => {
+        it("should build an InlineQueryResultPhoto from strings", () => {
+            const mpeg = InlineQueryResultBuilder.photo(
+                "id",
+                "https://grammy.dev/",
+                "https://grammy.dev/thumb",
+                { title: "pic" },
+            );
+            assertEquals(mpeg, {
+                type: "photo",
+                id: "id",
+                photo_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                title: "pic",
+            });
+        });
+        it("should build an InlineQueryResultPhoto from URLs", () => {
+            const mpeg = InlineQueryResultBuilder.photo(
+                "id",
+                new URL("https://grammy.dev/"),
+                new URL("https://grammy.dev/thumb"),
+                { title: "pic" },
+            );
+            assertEquals(mpeg, {
+                type: "photo",
+                id: "id",
+                photo_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                title: "pic",
+            });
+        });
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedPhoto", () => {
+                const mpeg = InlineQueryResultBuilder.photoCached(
+                    "id",
+                    "file_id",
+                    { caption: "#pic" },
+                );
+                assertEquals(mpeg, {
+                    type: "photo",
+                    id: "id",
+                    photo_file_id: "file_id",
+                    caption: "#pic",
+                });
+            });
+        });
+    });
+
+    describe("sticker", () => {
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedSticker", () => {
+                const video = InlineQueryResultBuilder.stickerCached(
+                    "id",
+                    "file_id",
+                    { reply_markup: { inline_keyboard: [] } },
+                );
+                assertEquals(video, {
+                    type: "sticker",
+                    id: "id",
+                    sticker_file_id: "file_id",
+                    reply_markup: { inline_keyboard: [] },
+                });
+            });
+        });
+    });
+
+    describe("venue", () => {
+        it("should build an InlineQueryResultVenue", () => {
+            const venue = InlineQueryResultBuilder.venue(
+                "id",
+                "grammY HQ",
+                54,
+                10,
+                "grammY Street 1",
+                { reply_markup: { inline_keyboard: [] } },
+            );
+            assertEquals(venue, {
+                type: "venue",
+                id: "id",
+                title: "grammY HQ",
+                latitude: 54,
+                longitude: 10,
+                address: "grammY Street 1",
+                reply_markup: { inline_keyboard: [] },
+            });
+        });
+    });
+
+    describe("video", () => {
+        it("should build an HTML InlineQueryResultVideo from strings", () => {
+            const video = InlineQueryResultBuilder.videoHtml(
+                "id",
+                "title",
+                "https://grammy.dev/",
+                "https://grammy.dev/thumb",
+                "grammY vids",
+                { caption: "cap" },
+            );
+            assertEquals(video, {
+                type: "video",
+                mime_type: "text/html",
+                id: "id",
+                title: "title",
+                video_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                input_message_content: { message_text: "grammY vids" },
+                caption: "cap",
+            });
+        });
+        it("should build an HTML InlineQueryResultVideo from URLs", () => {
+            const video = InlineQueryResultBuilder.videoHtml(
+                "id",
+                "title",
+                new URL("https://grammy.dev/"),
+                new URL("https://grammy.dev/thumb"),
+                { message_text: "grammY vids" },
+                { caption: "cap" },
+            );
+            assertEquals(video, {
+                type: "video",
+                mime_type: "text/html",
+                id: "id",
+                title: "title",
+                video_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                input_message_content: { message_text: "grammY vids" },
+                caption: "cap",
+            });
+        });
+        it("should build an MP4 InlineQueryResultVideo from strings", () => {
+            const video = InlineQueryResultBuilder.videoMp4(
+                "id",
+                "title",
+                "https://grammy.dev/",
+                "https://grammy.dev/thumb",
+                { caption: "cap" },
+            );
+            assertEquals(video, {
+                type: "video",
+                mime_type: "video/mp4",
+                id: "id",
+                title: "title",
+                video_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                caption: "cap",
+            });
+        });
+        it("should build an MP4 InlineQueryResultVideo from URLs", () => {
+            const video = InlineQueryResultBuilder.videoMp4(
+                "id",
+                "title",
+                new URL("https://grammy.dev/"),
+                new URL("https://grammy.dev/thumb"),
+                { caption: "cap" },
+            );
+            assertEquals(video, {
+                type: "video",
+                mime_type: "video/mp4",
+                id: "id",
+                title: "title",
+                video_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+                caption: "cap",
+            });
+        });
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedVideo", () => {
+                const video = InlineQueryResultBuilder.videoCached(
+                    "id",
+                    "title",
+                    "file_id",
+                    { caption: "c" },
+                );
+                assertEquals(video, {
+                    type: "video",
+                    id: "id",
+                    title: "title",
+                    video_file_id: "file_id",
+                    caption: "c",
+                });
+            });
+        });
+    });
+
+    describe("voice", () => {
+        it("should build an InlineQueryResultVoice from a string", () => {
+            const voice = InlineQueryResultBuilder.voice(
+                "id",
+                "title",
+                "https://grammy.dev/",
+                { caption: "voice caption? wtf" },
+            );
+            assertEquals(voice, {
+                type: "voice",
+                id: "id",
+                title: "title",
+                voice_url: "https://grammy.dev/",
+                caption: "voice caption? wtf",
+            });
+        });
+        it("should build an InlineQueryResultVoice from a URL", () => {
+            const voice = InlineQueryResultBuilder.voice(
+                "id",
+                "title",
+                new URL("https://grammy.dev/"),
+                { caption: "voice caption? wtf" },
+            );
+            assertEquals(voice, {
+                type: "voice",
+                id: "id",
+                title: "title",
+                voice_url: "https://grammy.dev/",
+                caption: "voice caption? wtf",
+            });
+        });
+        describe("cached", () => {
+            it("should build an InlineQueryResultCachedVideo", () => {
+                const video = InlineQueryResultBuilder.voiceCached(
+                    "id",
+                    "title",
+                    "file_id",
+                    { caption: "capped" },
+                );
+                assertEquals(video, {
+                    type: "voice",
+                    id: "id",
+                    title: "title",
+                    voice_file_id: "file_id",
+                    caption: "capped",
+                });
+            });
         });
     });
 });
