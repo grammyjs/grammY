@@ -1,6 +1,15 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
-import { type LoginUrl } from "../../src/types.ts";
-import { assertEquals, describe, it } from "../deps.test.ts";
+import {
+    type InlineKeyboardButton,
+    type KeyboardButton,
+    type LoginUrl,
+} from "../../src/types.ts";
+import {
+    assertEquals,
+    assertNotStrictEquals,
+    describe,
+    it,
+} from "../deps.test.ts";
 
 describe("Keyboard", () => {
     it("should take initial buttons", () => {
@@ -117,6 +126,13 @@ describe("Keyboard", () => {
             keyboard.clone().toWrapped(3).toWrapped(3),
             keyboard.toWrapped(3),
         );
+    });
+
+    it("creates static rows", () => {
+        const btn0: KeyboardButton = { text: "zero" };
+        const btn1: KeyboardButton = { text: "one" };
+        const row = Keyboard.row(btn0, btn1);
+        assertEquals(row, [btn0, btn1]);
     });
 
     it("can be created from data sources", () => {
@@ -306,10 +322,31 @@ describe("InlineKeyboard", () => {
     });
 
     it("can be created from data sources", () => {
-        const data = [["a", "b"], ["c", "d"]].map((row) =>
+        const labels = [["a", "b"], ["c", "d"]];
+        const raw = labels.map((row) =>
             row.map((text) => ({ text, callback_data: text }))
         );
-        assertEquals(InlineKeyboard.from(data).inline_keyboard, data);
+        assertEquals(InlineKeyboard.from(raw).inline_keyboard, raw);
+
+        const keyboard = new InlineKeyboard().text("button");
+        assertNotStrictEquals(InlineKeyboard.from(keyboard), keyboard);
+        assertEquals(InlineKeyboard.from(keyboard), keyboard);
+
+        assertEquals(InlineKeyboard.from(labels).inline_keyboard, raw);
+
+        const units = labels.map((row) => row.map((text): [string] => [text]));
+        assertEquals(InlineKeyboard.from(units).inline_keyboard, raw);
+        const pairs = labels.map((row) =>
+            row.map((text): [string, string] => [text, text])
+        );
+        assertEquals(InlineKeyboard.from(pairs).inline_keyboard, raw);
+    });
+
+    it("creates static rows", () => {
+        const btn0: InlineKeyboardButton = { text: "zero", callback_data: "0" };
+        const btn1: InlineKeyboardButton = { text: "one", callback_data: "1" };
+        const row = InlineKeyboard.row(btn0, btn1);
+        assertEquals(row, [btn0, btn1]);
     });
 
     it("can be appended", () => {
