@@ -67,7 +67,7 @@ export const InlineQueryResultBuilder = {
         options: InlineQueryResultOptions<
             InlineQueryResultArticle,
             "title"
-        >,
+        > = {},
     ): InlineQueryResultArticle {
         return {
             type: "article",
