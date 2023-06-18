@@ -294,7 +294,7 @@ export class Keyboard {
         return this.add(Keyboard.webApp(text, url));
     }
     /**
-     * Adds a new web app button. The Web App that will be launched when the
+     * Creates a new web app button. The Web App that will be launched when the
      * user presses the button. The Web App will be able to send a
      * “web_app_data” service message. Available in private chats only.
      *
