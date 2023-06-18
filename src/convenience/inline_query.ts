@@ -30,21 +30,40 @@ type InlineQueryResultOptions<T, K extends keyof T> = Omit<
 >;
 
 /**
- * Use this class to simply building as single inline query result object.
+ * Holds a number of helper methods for building `InlineQueryResult*` objects.
+ *
+ * For example, letting the user pick one out of three text messages can be done
+ * like this.
  *
  * ```ts
- * const article = InlineQueryResultBuilder.article('id', 'title', 'text');
+ * const results = [
+ *     InlineQueryResultBuilder.article('id0', 'Title A', 'message one'),
+ *     InlineQueryResultBuilder.article('id1', 'Title B', 'message two'),
+ *     InlineQueryResultBuilder.article('id2', 'Title C', 'message three'),
+ * ];
+ * await ctx.answerInlineQuery(results)
  * ```
  *
  * Be sure to check the
- * [documentation](https://core.telegram.org/bots/api#inlinequeryresult) on
- * inline query result in grammY.
+ * [documentation](https://core.telegram.org/bots/api#inline-mode) on inline
+ * mode.
  */
 export const InlineQueryResultBuilder = {
+    /**
+     * Builds an InlineQueryResultArticle object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultarticle with
+     * input_message_content set to an InputTextMessageContent object as
+     * specified by https://core.telegram.org/bots/api#inputtextmessagecontent.
+     *
+     * @param id Unique identifier for this result, 1-64 Bytes
+     * @param title Title of the result
+     * @param input_message_content Content of the text message to be sent
+     * @param options Remaining options
+     */
     article(
         id: string,
         title: string,
-        message_text: string | InputTextMessageContent,
+        input_message_content: string | InputTextMessageContent,
         options: InlineQueryResultOptions<
             InlineQueryResultArticle,
             "title"
@@ -54,12 +73,21 @@ export const InlineQueryResultBuilder = {
             type: "article",
             id,
             title,
-            input_message_content: typeof message_text === "string"
-                ? { message_text }
-                : message_text,
+            input_message_content: typeof input_message_content === "string"
+                ? { message_text: input_message_content }
+                : input_message_content,
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultAudio object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultaudio.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Title
+     * @param audio_url A valid URL for the audio file
+     * @param options Remaining options
+     */
     audio(
         id: string,
         title: string,
@@ -79,6 +107,14 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedAudio object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcachedaudio.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param audio_file_id A valid file identifier for the audio file
+     * @param options Remaining options
+     */
     audioCached(
         id: string,
         audio_file_id: string,
@@ -94,6 +130,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultContact object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcontact.
+     *
+     * @param id Unique identifier for this result, 1-64 Bytes
+     * @param phone_number Contact's phone number
+     * @param first_name Contact's first name
+     * @param options Remaining options
+     */
     contact(
         id: string,
         phone_number: string,
@@ -111,6 +156,16 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultDocument object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultdocument with
+     * mime_type set to "application/pdf".
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Title for the result
+     * @param document_url A valid URL for the file
+     * @param options Remaining options
+     */
     documentPdf(
         id: string,
         title: string,
@@ -131,6 +186,16 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultDocument object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultdocument with
+     * mime_type set to "application/zip".
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Title for the result
+     * @param document_url A valid URL for the file
+     * @param options Remaining options
+     */
     documentZip(
         id: string,
         title: string,
@@ -151,6 +216,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedDocument object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcacheddocument.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Title for the result
+     * @param document_file_id A valid file identifier for the file
+     * @param options Remaining options
+     */
     documentCached(
         id: string,
         title: string,
@@ -168,6 +242,14 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultGame as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultgame.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param game_short_name Short name of the game
+     * @param options Remaining options
+     */
     game(
         id: string,
         game_short_name: string,
@@ -183,6 +265,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultGif object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultgif.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param gif_url A valid URL for the GIF file. File size must not exceed 1MB
+     * @param thumbnail_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+     * @param options Remaining options
+     */
     gif(
         id: string,
         gif_url: string | URL,
@@ -202,6 +293,14 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedGif object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcachedgif.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param gif_file_id A valid file identifier for the GIF file
+     * @param options Remaining options
+     */
     gifCached(
         id: string,
         gif_file_id: string,
@@ -217,6 +316,18 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultArticle object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultarticle with
+     * input_message_content set to an InputInvoiceMessageContent object as
+     * specified by
+     * https://core.telegram.org/bots/api#inputinvoicemessagecontent.
+     *
+     * @param id Unique identifier for this result, 1-64 Bytes
+     * @param title Title of the result
+     * @param input_message_content Content of the invoice message to be sent
+     * @param options Remaining options
+     */
     invoice(
         id: string,
         title: string,
@@ -234,6 +345,16 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultLocation object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultlocation.
+     *
+     * @param id Unique identifier for this result, 1-64 Bytes
+     * @param title Location title
+     * @param latitude Location latitude in degrees
+     * @param longitude Location longitude in degrees
+     * @param options Remaining options
+     */
     location(
         id: string,
         title: string,
@@ -253,6 +374,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultMpeg4Gif object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param mpeg4_url A valid URL for the MPEG4 file. File size must not exceed 1MB
+     * @param thumbnail_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+     * @param options Remaining options
+     */
     mpeg4gif(
         id: string,
         mpeg4_url: string | URL,
@@ -274,6 +404,14 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedMpeg4Gif object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcachedmpeg4gif.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param mpeg4_file_id A valid file identifier for the MPEG4 file
+     * @param options Remaining options
+     */
     mpeg4gifCached(
         id: string,
         mpeg4_file_id: string,
@@ -289,6 +427,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultPhoto object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultphoto.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param photo_url A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB
+     * @param thumbnail_url URL of the thumbnail for the photo
+     * @param options Remaining options
+     */
     photo(
         id: string,
         photo_url: string | URL,
@@ -310,6 +457,14 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedPhoto object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcachedphoto.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param photo_file_id A valid file identifier of the photo
+     * @param options Remaining options
+     */
     photoCached(
         id: string,
         photo_file_id: string,
@@ -325,6 +480,14 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedSticker object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcachedsticker.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param sticker_file_id A valid file identifier of the sticker
+     * @param options Remaining options
+     */
     stickerCached(
         id: string,
         sticker_file_id: string,
@@ -340,6 +503,17 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultVenue object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultvenue.
+     *
+     * @param id Unique identifier for this result, 1-64 Bytes
+     * @param title Title of the venue
+     * @param latitude Latitude of the venue location in degrees
+     * @param longitude Longitude of the venue location in degrees
+     * @param address Address of the venue
+     * @param options Remaining options
+     */
     venue(
         id: string,
         title: string,
@@ -361,12 +535,25 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultVideo object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultvideo with mime_type
+     * set to "text/html". This will send an embedded video player. Requires you
+     * to specify the actual message content.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Title for the result
+     * @param video_url A valid URL for the embedded video player
+     * @param thumbnail_url URL of the thumbnail (JPEG only) for the video
+     * @param input_message_content Content of the message to be sent instead of the video
+     * @param options Remaining options
+     */
     videoHtml(
         id: string,
         title: string,
         video_url: string | URL,
         thumbnail_url: string | URL,
-        message_text: string | InputMessageContent,
+        input_message_content: string | InputMessageContent,
         options: InlineQueryResultOptions<
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
@@ -383,12 +570,23 @@ export const InlineQueryResultBuilder = {
             thumbnail_url: typeof thumbnail_url === "string"
                 ? thumbnail_url
                 : thumbnail_url.href,
-            input_message_content: typeof message_text === "string"
-                ? { message_text }
-                : message_text,
+            input_message_content: typeof input_message_content === "string"
+                ? { message_text: input_message_content }
+                : input_message_content,
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultVideo object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultvideo with mime_type
+     * set to "video/mp4".
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Title for the result
+     * @param video_url A valid URL for the video file
+     * @param thumbnail_url URL of the thumbnail (JPEG only) for the video
+     * @param options Remaining options
+     */
     videoMp4(
         id: string,
         title: string,
@@ -413,6 +611,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedVideo object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcachedvideo.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Title for the result
+     * @param video_file_id A valid file identifier for the video file
+     * @param options Remaining options
+     */
     videoCached(
         id: string,
         title: string,
@@ -430,6 +637,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultVoice object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultvoice.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Voice message title
+     * @param voice_url A valid URL for the voice recording
+     * @param options Remaining options
+     */
     voice(
         id: string,
         title: string,
@@ -449,6 +665,15 @@ export const InlineQueryResultBuilder = {
             ...options,
         };
     },
+    /**
+     * Builds an InlineQueryResultCachedVoice object as specified by
+     * https://core.telegram.org/bots/api#inlinequeryresultcachedvoice.
+     *
+     * @param id Unique identifier for this result, 1-64 bytes
+     * @param title Voice message title
+     * @param voice_file_id A valid file identifier for the voice message
+     * @param options Remaining options
+     */
     voiceCached(
         id: string,
         title: string,
