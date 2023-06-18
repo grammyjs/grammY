@@ -63,7 +63,7 @@ export const InlineQueryResultBuilder = {
     audio(
         id: string,
         title: string,
-        audio_url: string,
+        audio_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultAudio,
             "title" | "audio_url"
@@ -73,7 +73,9 @@ export const InlineQueryResultBuilder = {
             type: "audio",
             id,
             title,
-            audio_url,
+            audio_url: typeof audio_url === "string"
+                ? audio_url
+                : audio_url.href,
             ...options,
         };
     },
@@ -112,7 +114,7 @@ export const InlineQueryResultBuilder = {
     documentPdf(
         id: string,
         title: string,
-        document_url: string,
+        document_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
@@ -123,14 +125,16 @@ export const InlineQueryResultBuilder = {
             mime_type: "application/pdf",
             id,
             title,
-            document_url,
+            document_url: typeof document_url === "string"
+                ? document_url
+                : document_url.href,
             ...options,
         };
     },
     documentZip(
         id: string,
         title: string,
-        document_url: string,
+        document_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
@@ -141,7 +145,9 @@ export const InlineQueryResultBuilder = {
             mime_type: "application/zip",
             id,
             title,
-            document_url,
+            document_url: typeof document_url === "string"
+                ? document_url
+                : document_url.href,
             ...options,
         };
     },
@@ -179,8 +185,8 @@ export const InlineQueryResultBuilder = {
     },
     gif(
         id: string,
-        gif_url: string,
-        thumbnail_url: string,
+        gif_url: string | URL,
+        thumbnail_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultGif,
             "gif_url" | "thumbnail_url"
@@ -189,8 +195,10 @@ export const InlineQueryResultBuilder = {
         return {
             type: "gif",
             id,
-            gif_url,
-            thumbnail_url,
+            gif_url: typeof gif_url === "string" ? gif_url : gif_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
             ...options,
         };
     },
@@ -247,8 +255,8 @@ export const InlineQueryResultBuilder = {
     },
     mpeg4gif(
         id: string,
-        mpeg4_url: string,
-        thumbnail_url: string,
+        mpeg4_url: string | URL,
+        thumbnail_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultMpeg4Gif,
             "mpeg4_url" | "thumbnail_url"
@@ -257,8 +265,12 @@ export const InlineQueryResultBuilder = {
         return {
             type: "mpeg4_gif",
             id,
-            mpeg4_url,
-            thumbnail_url,
+            mpeg4_url: typeof mpeg4_url === "string"
+                ? mpeg4_url
+                : mpeg4_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
             ...options,
         };
     },
@@ -279,8 +291,8 @@ export const InlineQueryResultBuilder = {
     },
     photo(
         id: string,
-        photo_url: string,
-        thumbnail_url: string,
+        photo_url: string | URL,
+        thumbnail_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultPhoto,
             "photo_url" | "thumbnail_url"
@@ -289,8 +301,12 @@ export const InlineQueryResultBuilder = {
         return {
             type: "photo",
             id,
-            photo_url,
-            thumbnail_url,
+            photo_url: typeof photo_url === "string"
+                ? photo_url
+                : photo_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
             ...options,
         };
     },
@@ -348,9 +364,9 @@ export const InlineQueryResultBuilder = {
     videoHtml(
         id: string,
         title: string,
-        video_url: string,
-        thumbnail_url: string,
-        input_message_content: InputMessageContent,
+        video_url: string | URL,
+        thumbnail_url: string | URL,
+        message_text: string | InputMessageContent,
         options: InlineQueryResultOptions<
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
@@ -361,17 +377,23 @@ export const InlineQueryResultBuilder = {
             mime_type: "text/html",
             id,
             title,
-            video_url,
-            thumbnail_url,
-            input_message_content,
+            video_url: typeof video_url === "string"
+                ? video_url
+                : video_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
+            input_message_content: typeof message_text === "string"
+                ? { message_text }
+                : message_text,
             ...options,
         };
     },
     videoMp4(
         id: string,
         title: string,
-        video_url: string,
-        thumbnail_url: string,
+        video_url: string | URL,
+        thumbnail_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
@@ -382,8 +404,12 @@ export const InlineQueryResultBuilder = {
             mime_type: "video/mp4",
             id,
             title,
-            video_url,
-            thumbnail_url,
+            video_url: typeof video_url === "string"
+                ? video_url
+                : video_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
             ...options,
         };
     },
@@ -407,7 +433,7 @@ export const InlineQueryResultBuilder = {
     voice(
         id: string,
         title: string,
-        voice_url: string,
+        voice_url: string | URL,
         options: InlineQueryResultOptions<
             InlineQueryResultVoice,
             "title" | "voice_url"
@@ -417,7 +443,9 @@ export const InlineQueryResultBuilder = {
             type: "voice",
             id,
             title,
-            voice_url,
+            voice_url: typeof voice_url === "string"
+                ? voice_url
+                : voice_url.href,
             ...options,
         };
     },
