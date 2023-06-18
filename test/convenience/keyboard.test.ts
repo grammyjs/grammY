@@ -88,7 +88,7 @@ describe("Keyboard", () => {
             [["a", "c", "d"], ["b", "e"], ["f"]],
         );
         const keyboard = Keyboard.from([["a", "b", "c"], ["d", "e"], ["f"]]);
-        assertEquals(keyboard.clone().toTransposed().toTransposed(), keyboard);
+        assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
     });
 
     it("can be wrapped", () => {
@@ -123,7 +123,7 @@ describe("Keyboard", () => {
         );
         const keyboard = Keyboard.from([["a", "b", "c"], ["d", "e"], ["f"]]);
         assertEquals(
-            keyboard.clone().toWrapped(3).toWrapped(3),
+            keyboard.toWrapped(3).toWrapped(3),
             keyboard.toWrapped(3),
         );
     });
@@ -258,7 +258,7 @@ describe("InlineKeyboard", () => {
             [["d", "d"], ["e", "e"]],
             [["f", "f"]],
         ]);
-        assertEquals(keyboard.clone().toTransposed().toTransposed(), keyboard);
+        assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
     });
 
     it("can be wrapped", () => {
@@ -316,7 +316,7 @@ describe("InlineKeyboard", () => {
             [["f", "f"]],
         ]);
         assertEquals(
-            keyboard.clone().toWrapped(3).toWrapped(3),
+            keyboard.toWrapped(3).toWrapped(3),
             keyboard.toWrapped(3),
         );
     });
