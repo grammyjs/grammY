@@ -2212,7 +2212,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param result An object describing the message to be sent
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#answerinlinequery
+     * **Official reference:** https://core.telegram.org/bots/api#answerwebappquery
      */
     answerWebAppQuery(
         web_app_query_id: string,
