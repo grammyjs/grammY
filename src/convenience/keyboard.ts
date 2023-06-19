@@ -445,9 +445,9 @@ export class Keyboard {
      * @param columns Maximum number of buttons per row
      * @param wrap Optional wrapping behavior
      */
-    toWrapped(columns = 4, wrap: "top" | "bottom" = "top") {
+    toWrapped(columns: number, options: WrapOptions = {}) {
         const original = this.keyboard;
-        const wrapped = wrapArray(original, columns, wrap);
+        const wrapped = wrapArray(original, columns, options);
         return this.clone(wrapped);
     }
     /**
@@ -521,14 +521,7 @@ export class Keyboard {
     }
 }
 
-type InlineKeyboardButtonSource =
-    | string
-    | [text: string, data?: string]
-    | InlineKeyboardButton;
-type InlineKeyboardSource =
-    | InlineKeyboardButtonSource[][]
-    | InlineKeyboard;
-
+type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
 /**
  * Use this class to simplify building an inline keyboard (something like this:
  * https://core.telegram.org/bots/features#inline-keyboards).
@@ -981,9 +974,9 @@ export class InlineKeyboard {
      * @param columns Maximum number of buttons per row
      * @param wrap Optional wrapping behavior
      */
-    toWrapped(columns = 4, wrap: "top" | "bottom" = "top") {
+    toWrapped(columns: number, options: WrapOptions = {}) {
         const original = this.inline_keyboard;
-        const wrapped = wrapArray(original, columns, wrap);
+        const wrapped = wrapArray(original, columns, options);
         return new InlineKeyboard(wrapped);
     }
     /**
@@ -1019,14 +1012,7 @@ export class InlineKeyboard {
         if (source instanceof InlineKeyboard) {
             return source.clone();
         }
-        function toButton(btn: InlineKeyboardButtonSource) {
-            return typeof btn === "string"
-                ? InlineKeyboard.text(btn)
-                : Array.isArray(btn)
-                ? InlineKeyboard.text(...btn)
-                : btn;
-        }
-        return new InlineKeyboard(source.map((row) => row.map(toButton)));
+        return new InlineKeyboard(source.map((row) => row.slice()));
     }
 }
 
@@ -1041,13 +1027,17 @@ function transpose<T>(grid: T[][]): T[][] {
     }
     return transposed;
 }
+interface WrapOptions {
+    /** Set to `true` to completely fill up the last row */
+    fillLastRow?: boolean;
+}
 function wrapArray<T>(
     grid: T[][],
     columns: number,
-    wrap: "top" | "bottom",
+    { fillLastRow = false }: WrapOptions,
 ): T[][] {
     let first = columns;
-    if (wrap === "bottom") {
+    if (fillLastRow) {
         const buttonCount = grid
             .map((row) => row.length)
             .reduce((a, b) => a + b, 0);
