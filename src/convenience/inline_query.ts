@@ -1,4 +1,5 @@
 import {
+    type InlineQueryResult,
     type InlineQueryResultArticle,
     type InlineQueryResultAudio,
     type InlineQueryResultCachedAudio,
@@ -19,9 +20,12 @@ import {
     type InlineQueryResultVenue,
     type InlineQueryResultVideo,
     type InlineQueryResultVoice,
+    type InputContactMessageContent,
     type InputInvoiceMessageContent,
-    type InputMessageContent,
+    type InputLocationMessageContent,
     type InputTextMessageContent,
+    type InputVenueMessageContent,
+    type LabeledPrice,
 } from "../types.ts";
 
 type InlineQueryResultOptions<T, K extends keyof T> = Omit<
@@ -29,17 +33,121 @@ type InlineQueryResultOptions<T, K extends keyof T> = Omit<
     "type" | "id" | "input_message_content" | K
 >;
 
+type OptionalKeys<T> = { [K in keyof T]-?: undefined extends T[K] ? K : never };
+type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
+
+function inputMessage<R extends InlineQueryResult>(
+    queryTemplate: Omit<R, "input_message_content">,
+) {
+    return {
+        ...queryTemplate,
+        ...inputMessageMethods(queryTemplate),
+    };
+}
+function inputMessageMethods<R extends InlineQueryResult>(
+    queryTemplate: Omit<R, "input_message_content">,
+) {
+    return {
+        text(
+            message_text: string,
+            options: OptionalFields<InputTextMessageContent> = {},
+        ) {
+            const content: InputTextMessageContent = {
+                message_text,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+        location(
+            latitude: number,
+            longitude: number,
+            options: OptionalFields<InputLocationMessageContent> = {},
+        ) {
+            const content: InputLocationMessageContent = {
+                latitude,
+                longitude,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+        venue(
+            title: string,
+            latitude: number,
+            longitude: number,
+            address: string,
+            options: OptionalFields<InputVenueMessageContent>,
+        ) {
+            const content: InputVenueMessageContent = {
+                title,
+                latitude,
+                longitude,
+                address,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+        contact(
+            first_name: string,
+            phone_number: string,
+            options: OptionalFields<InputContactMessageContent> = {},
+        ) {
+            const content: InputContactMessageContent = {
+                first_name,
+                phone_number,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+        invoice(
+            title: string,
+            description: string,
+            payload: string,
+            provider_token: string,
+            currency: string,
+            prices: LabeledPrice[],
+            options: OptionalFields<InputInvoiceMessageContent> = {},
+        ) {
+            const content: InputInvoiceMessageContent = {
+                title,
+                description,
+                payload,
+                provider_token,
+                currency,
+                prices,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+    };
+}
+
 /**
  * Holds a number of helper methods for building `InlineQueryResult*` objects.
  *
- * For example, letting the user pick one out of three text messages can be done
- * like this.
+ * For example, letting the user pick one out of three photos can be done like
+ * this.
  *
  * ```ts
  * const results = [
- *     InlineQueryResultBuilder.article('id0', 'Title A', 'message one'),
- *     InlineQueryResultBuilder.article('id1', 'Title B', 'message two'),
- *     InlineQueryResultBuilder.article('id2', 'Title C', 'message three'),
+ *     InlineQueryResultBuilder.photo('id0', 'https://grammy.dev/images/Y.png'),
+ *     InlineQueryResultBuilder.photo('id1', 'https://grammy.dev/images/Y.png'),
+ *     InlineQueryResultBuilder.photo('id2', 'https://grammy.dev/images/Y.png'),
+ * ];
+ * await ctx.answerInlineQuery(results)
+ * ```
+ *
+ * If you want the message content to be different from the content in the
+ * inline query result, you can perform another method call on the resulting
+ * objects.
+ *
+ * ```ts
+ * const results = [
+ *     InlineQueryResultBuilder.photo("id0", "https://grammy.dev/images/Y.png")
+ *         .text("Picked photo 0!"),
+ *     InlineQueryResultBuilder.photo("id1", "https://grammy.dev/images/Y.png")
+ *         .text("Picked photo 1!"),
+ *     InlineQueryResultBuilder.photo("id2", "https://grammy.dev/images/Y.png")
+ *         .text("Picked photo 2!"),
  * ];
  * await ctx.answerInlineQuery(results)
  * ```
@@ -51,33 +159,25 @@ type InlineQueryResultOptions<T, K extends keyof T> = Omit<
 export const InlineQueryResultBuilder = {
     /**
      * Builds an InlineQueryResultArticle object as specified by
-     * https://core.telegram.org/bots/api#inlinequeryresultarticle with
-     * input_message_content set to an InputTextMessageContent object as
-     * specified by https://core.telegram.org/bots/api#inputtextmessagecontent.
+     * https://core.telegram.org/bots/api#inlinequeryresultarticle. Requires you
+     * to specify the actual message content by calling another function on the
+     * object returned from this method.
      *
      * @param id Unique identifier for this result, 1-64 Bytes
      * @param title Title of the result
-     * @param input_message_content Content of the text message to be sent
      * @param options Remaining options
      */
     article(
         id: string,
         title: string,
-        input_message_content: string | InputTextMessageContent,
         options: InlineQueryResultOptions<
             InlineQueryResultArticle,
             "title"
         > = {},
-    ): InlineQueryResultArticle {
-        return {
-            type: "article",
-            id,
-            title,
-            input_message_content: typeof input_message_content === "string"
-                ? { message_text: input_message_content }
-                : input_message_content,
-            ...options,
-        };
+    ) {
+        return inputMessageMethods<InlineQueryResultArticle>(
+            { type: "article", id, title, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultAudio object as specified by
@@ -96,8 +196,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultAudio,
             "title" | "audio_url"
         > = {},
-    ): InlineQueryResultAudio {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultAudio>({
             type: "audio",
             id,
             title,
@@ -105,7 +205,7 @@ export const InlineQueryResultBuilder = {
                 ? audio_url
                 : audio_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultCachedAudio object as specified by
@@ -122,13 +222,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedAudio,
             "audio_file_id"
         > = {},
-    ): InlineQueryResultCachedAudio {
-        return {
-            type: "audio",
-            id,
-            audio_file_id,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedAudio>(
+            { type: "audio", id, audio_file_id, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultContact object as specified by
@@ -147,14 +244,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultContact,
             "phone_number" | "first_name"
         > = {},
-    ): InlineQueryResultContact {
-        return {
-            type: "contact",
-            id,
-            phone_number,
-            first_name,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultContact>(
+            { type: "contact", id, phone_number, first_name, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultDocument object as specified by
@@ -174,8 +267,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
         > = {},
-    ): InlineQueryResultDocument {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultDocument>({
             type: "document",
             mime_type: "application/pdf",
             id,
@@ -184,7 +277,7 @@ export const InlineQueryResultBuilder = {
                 ? document_url
                 : document_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultDocument object as specified by
@@ -204,8 +297,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
         > = {},
-    ): InlineQueryResultDocument {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultDocument>({
             type: "document",
             mime_type: "application/zip",
             id,
@@ -214,7 +307,7 @@ export const InlineQueryResultBuilder = {
                 ? document_url
                 : document_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultCachedDocument object as specified by
@@ -233,14 +326,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedDocument,
             "title" | "document_file_id"
         > = {},
-    ): InlineQueryResultCachedDocument {
-        return {
-            type: "document",
-            id,
-            title,
-            document_file_id,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedDocument>(
+            { type: "document", id, title, document_file_id, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultGame object as specified by
@@ -257,13 +346,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultGame,
             "game_short_name"
         > = {},
-    ): InlineQueryResultGame {
-        return {
-            type: "game",
-            id,
-            game_short_name,
-            ...options,
-        };
+    ) {
+        return { type: "game", id, game_short_name, ...options };
     },
     /**
      * Builds an InlineQueryResultGif object as specified by
@@ -282,8 +366,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultGif,
             "gif_url" | "thumbnail_url"
         > = {},
-    ): InlineQueryResultGif {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultGif>({
             type: "gif",
             id,
             gif_url: typeof gif_url === "string" ? gif_url : gif_url.href,
@@ -291,7 +375,7 @@ export const InlineQueryResultBuilder = {
                 ? thumbnail_url
                 : thumbnail_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultCachedGif object as specified by
@@ -308,42 +392,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedGif,
             "gif_file_id"
         > = {},
-    ): InlineQueryResultCachedGif {
-        return {
-            type: "gif",
-            id,
-            gif_file_id,
-            ...options,
-        };
-    },
-    /**
-     * Builds an InlineQueryResultArticle object as specified by
-     * https://core.telegram.org/bots/api#inlinequeryresultarticle with
-     * input_message_content set to an InputInvoiceMessageContent object as
-     * specified by
-     * https://core.telegram.org/bots/api#inputinvoicemessagecontent.
-     *
-     * @param id Unique identifier for this result, 1-64 Bytes
-     * @param title Title of the result
-     * @param input_message_content Content of the invoice message to be sent
-     * @param options Remaining options
-     */
-    invoice(
-        id: string,
-        title: string,
-        input_message_content: InputInvoiceMessageContent,
-        options: InlineQueryResultOptions<
-            InlineQueryResultArticle,
-            "title"
-        > = {},
-    ): InlineQueryResultArticle {
-        return {
-            type: "article",
-            id,
-            title,
-            input_message_content,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedGif>(
+            { type: "gif", id, gif_file_id, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultLocation object as specified by
@@ -364,15 +416,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultLocation,
             "title" | "latitude" | "longitude"
         > = {},
-    ): InlineQueryResultLocation {
-        return {
-            type: "location",
-            id,
-            title,
-            latitude,
-            longitude,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultLocation>(
+            { type: "location", id, title, latitude, longitude, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultMpeg4Gif object as specified by
@@ -391,8 +438,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultMpeg4Gif,
             "mpeg4_url" | "thumbnail_url"
         > = {},
-    ): InlineQueryResultMpeg4Gif {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultMpeg4Gif>({
             type: "mpeg4_gif",
             id,
             mpeg4_url: typeof mpeg4_url === "string"
@@ -402,7 +449,7 @@ export const InlineQueryResultBuilder = {
                 ? thumbnail_url
                 : thumbnail_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultCachedMpeg4Gif object as specified by
@@ -419,43 +466,38 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedMpeg4Gif,
             "mpeg4_file_id"
         > = {},
-    ): InlineQueryResultCachedMpeg4Gif {
-        return {
-            type: "mpeg4_gif",
-            id,
-            mpeg4_file_id,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedMpeg4Gif>(
+            { type: "mpeg4_gif", id, mpeg4_file_id, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultPhoto object as specified by
-     * https://core.telegram.org/bots/api#inlinequeryresultphoto.
+     * https://core.telegram.org/bots/api#inlinequeryresultphoto with the
+     * thumbnail defaulting to the photo itself.
      *
      * @param id Unique identifier for this result, 1-64 bytes
      * @param photo_url A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB
-     * @param thumbnail_url URL of the thumbnail for the photo
      * @param options Remaining options
      */
     photo(
         id: string,
         photo_url: string | URL,
-        thumbnail_url: string | URL,
-        options: InlineQueryResultOptions<
-            InlineQueryResultPhoto,
-            "photo_url" | "thumbnail_url"
-        > = {},
-    ): InlineQueryResultPhoto {
-        return {
+        options: InlineQueryResultOptions<InlineQueryResultPhoto, "photo_url"> =
+            { // do not require thumbnail, default to the photo itself
+                thumbnail_url: typeof photo_url === "string"
+                    ? photo_url
+                    : photo_url.href,
+            },
+    ) {
+        return inputMessage<InlineQueryResultPhoto>({
             type: "photo",
             id,
             photo_url: typeof photo_url === "string"
                 ? photo_url
                 : photo_url.href,
-            thumbnail_url: typeof thumbnail_url === "string"
-                ? thumbnail_url
-                : thumbnail_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultCachedPhoto object as specified by
@@ -472,13 +514,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedPhoto,
             "photo_file_id"
         > = {},
-    ): InlineQueryResultCachedPhoto {
-        return {
-            type: "photo",
-            id,
-            photo_file_id,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedPhoto>(
+            { type: "photo", id, photo_file_id, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultCachedSticker object as specified by
@@ -495,13 +534,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedSticker,
             "sticker_file_id"
         > = {},
-    ): InlineQueryResultCachedSticker {
-        return {
-            type: "sticker",
-            id,
-            sticker_file_id,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedSticker>(
+            { type: "sticker", id, sticker_file_id, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultVenue object as specified by
@@ -524,8 +560,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultVenue,
             "title" | "latitude" | "longitude" | "address"
         > = {},
-    ): InlineQueryResultVenue {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultVenue>({
             type: "venue",
             id,
             title,
@@ -533,19 +569,19 @@ export const InlineQueryResultBuilder = {
             longitude,
             address,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultVideo object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvideo with mime_type
      * set to "text/html". This will send an embedded video player. Requires you
-     * to specify the actual message content.
+     * to specify the actual message content by calling another function on the
+     * object returned from this method.
      *
      * @param id Unique identifier for this result, 1-64 bytes
      * @param title Title for the result
      * @param video_url A valid URL for the embedded video player
      * @param thumbnail_url URL of the thumbnail (JPEG only) for the video
-     * @param input_message_content Content of the message to be sent instead of the video
      * @param options Remaining options
      */
     videoHtml(
@@ -553,13 +589,13 @@ export const InlineQueryResultBuilder = {
         title: string,
         video_url: string | URL,
         thumbnail_url: string | URL,
-        input_message_content: string | InputMessageContent,
         options: InlineQueryResultOptions<
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
         > = {},
-    ): InlineQueryResultVideo {
-        return {
+    ) {
+        // require input message content by only returning methods
+        return inputMessageMethods<InlineQueryResultVideo>({
             type: "video",
             mime_type: "text/html",
             id,
@@ -570,11 +606,8 @@ export const InlineQueryResultBuilder = {
             thumbnail_url: typeof thumbnail_url === "string"
                 ? thumbnail_url
                 : thumbnail_url.href,
-            input_message_content: typeof input_message_content === "string"
-                ? { message_text: input_message_content }
-                : input_message_content,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultVideo object as specified by
@@ -596,8 +629,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
         > = {},
-    ): InlineQueryResultVideo {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultVideo>({
             type: "video",
             mime_type: "video/mp4",
             id,
@@ -609,7 +642,7 @@ export const InlineQueryResultBuilder = {
                 ? thumbnail_url
                 : thumbnail_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultCachedVideo object as specified by
@@ -628,14 +661,10 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedVideo,
             "title" | "video_file_id"
         > = {},
-    ): InlineQueryResultCachedVideo {
-        return {
-            type: "video",
-            id,
-            title,
-            video_file_id,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedVideo>(
+            { type: "video", id, title, video_file_id, ...options },
+        );
     },
     /**
      * Builds an InlineQueryResultVoice object as specified by
@@ -654,8 +683,8 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultVoice,
             "title" | "voice_url"
         > = {},
-    ): InlineQueryResultVoice {
-        return {
+    ) {
+        return inputMessage<InlineQueryResultVoice>({
             type: "voice",
             id,
             title,
@@ -663,7 +692,7 @@ export const InlineQueryResultBuilder = {
                 ? voice_url
                 : voice_url.href,
             ...options,
-        };
+        });
     },
     /**
      * Builds an InlineQueryResultCachedVoice object as specified by
@@ -682,13 +711,9 @@ export const InlineQueryResultBuilder = {
             InlineQueryResultCachedVoice,
             "title" | "voice_file_id"
         > = {},
-    ): InlineQueryResultCachedVoice {
-        return {
-            type: "voice",
-            id,
-            title,
-            voice_file_id,
-            ...options,
-        };
+    ) {
+        return inputMessage<InlineQueryResultCachedVoice>(
+            { type: "voice", id, title, voice_file_id, ...options },
+        );
     },
 };
