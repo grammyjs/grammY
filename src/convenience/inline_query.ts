@@ -36,12 +36,10 @@ type InlineQueryResultOptions<T, K extends keyof T> = Omit<
 type OptionalKeys<T> = { [K in keyof T]-?: undefined extends T[K] ? K : never };
 type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
 
-function inputMessage<R extends InlineQueryResult>(
-    queryTemplate: Omit<R, "input_message_content">,
-) {
+function inputMessage<R extends InlineQueryResult>(queryTemplate: R) {
     return {
         ...queryTemplate,
-        ...inputMessageMethods(queryTemplate),
+        ...inputMessageMethods<R>(queryTemplate),
     };
 }
 function inputMessageMethods<R extends InlineQueryResult>(
