@@ -38,7 +38,8 @@
     "exports": {
         ".": {
             "types": "./out/mod.d.ts",
-            "default": "./out/mod.js"
+            "node": "./out/mod.js",
+            "default": "./out/web.mjs"
         },
         "./types": {
             "types": "./out/types.d.ts"
