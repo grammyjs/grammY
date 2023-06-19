@@ -99,7 +99,9 @@ describe("Keyboard", () => {
             expected: string[][],
         ) {
             assertEquals(
-                Keyboard.from(btns).toWrapped(cols, flow),
+                Keyboard.from(btns).toWrapped(cols, {
+                    fillLastRow: flow === "bottom",
+                }),
                 Keyboard.from(expected),
             );
         }
@@ -226,95 +228,78 @@ describe("InlineKeyboard", () => {
     });
 
     it("can be transposed", () => {
-        function t(btns: [string, string][][], expected: [string, string][][]) {
+        function t(btns: string[][], target: string[][]) {
+            const actual = InlineKeyboard.from(
+                btns.map((row) => row.map((data) => InlineKeyboard.text(data))),
+            );
+            const expected = InlineKeyboard.from(
+                target.map((row) =>
+                    row.map((data) => InlineKeyboard.text(data))
+                ),
+            );
             assertEquals(
-                InlineKeyboard.from(btns).toTransposed(),
+                InlineKeyboard.from(actual).toTransposed(),
                 InlineKeyboard.from(expected),
             );
         }
-        t([[["a", "a"]]], [[["a", "a"]]]);
+        t([["a"]], [["a"]]);
+        t([["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        t([["a", "b"], ["c", "d"], ["e"]], [["a", "c", "e"], ["b", "d"]]);
         t(
-            [[["a", "a"], ["b", "b"], ["c", "c"]]],
-            [[["a", "a"]], [["b", "b"]], [["c", "c"]]],
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "c", "d"], ["b", "e"], ["f"]],
         );
-        t(
-            [[["a", "a"], ["b", "b"]], [["c", "c"], ["d", "d"]], [["e", "e"]]],
-            [[["a", "a"], ["c", "c"], ["e", "e"]], [["b", "b"], ["d", "d"]]],
-        );
-        t(
-            [
-                [["a", "a"], ["b", "b"]],
-                [["c", "c"]],
-                [["d", "d"], ["e", "e"], ["f", "f"]],
-            ],
-            [
-                [["a", "a"], ["c", "c"], ["d", "d"]],
-                [["b", "b"], ["e", "e"]],
-                [["f", "f"]],
-            ],
-        );
-        const keyboard = InlineKeyboard.from([
-            [["a", "a"], ["b", "b"], ["c", "c"]],
-            [["d", "d"], ["e", "e"]],
-            [["f", "f"]],
-        ]);
+        const keyboard = new InlineKeyboard().text("a").text("b").text("c")
+            .row()
+            .text("d").text("e").row()
+            .text("f");
         assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
     });
 
     it("can be wrapped", () => {
         function r(
             cols: number,
-            flow: "bottom" | "top",
-            btns: [string, string][][],
-            expected: [string, string][][],
+            flow: "top" | "bottom",
+            btns: string[][],
+            target: string[][],
         ) {
+            const actual = InlineKeyboard.from(
+                btns.map((row) => row.map((data) => InlineKeyboard.text(data))),
+            );
+            const expected = InlineKeyboard.from(
+                target.map((row) =>
+                    row.map((data) => InlineKeyboard.text(data))
+                ),
+            );
             assertEquals(
-                InlineKeyboard.from(btns).toWrapped(cols, flow),
-                InlineKeyboard.from(expected),
+                actual.toWrapped(cols, { fillLastRow: flow === "bottom" }),
+                expected,
             );
         }
-        r(4, "top", [[["a", "a"]]], [[["a", "a"]]]);
-        r(
-            1,
-            "top",
-            [[["a", "a"], ["b", "b"], ["c", "c"]]],
-            [[["a", "a"]], [["b", "b"]], [["c", "c"]]],
-        );
+        r(4, "top", [["a"]], [["a"]]);
+        r(1, "top", [["a", "b", "c"]], [["a"], ["b"], ["c"]]);
         r(
             3,
             "top",
-            [[["a", "a"], ["b", "b"]], [["c", "c"], ["d", "d"]], [["e", "e"]]],
-            [[["a", "a"], ["b", "b"], ["c", "c"]], [["d", "d"], ["e", "e"]]],
+            [["a", "b"], ["c", "d"], ["e"]],
+            [["a", "b", "c"], ["d", "e"]],
         );
         r(
             5,
             "top",
-            [
-                [["a", "a"], ["b", "b"]],
-                [["c", "c"]],
-                [["d", "d"], ["e", "e"], ["f", "f"]],
-            ],
-            [
-                [["a", "a"], ["b", "b"], ["c", "c"], ["d", "d"], ["e", "e"]],
-                [["f", "f"]],
-            ],
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "b", "c", "d", "e"], ["f"]],
         );
         r(
             3,
             "bottom",
-            [[..."abcdefghij"].map((c) => [c, c])],
-            [
-                [["a", "a"]],
-                [["b", "b"], ["c", "c"], ["d", "d"]],
-                [["e", "e"], ["f", "f"], ["g", "g"]],
-                [["h", "h"], ["i", "i"], ["j", "j"]],
-            ],
+            [[..."abcdefghij"]],
+            [["a"], ["b", "c", "d"], ["e", "f", "g"], ["h", "i", "j"]],
         );
-        const keyboard = InlineKeyboard.from([
-            [["a", "a"], ["b", "b"], ["c", "c"]],
-            [["d", "d"], ["e", "e"]],
-            [["f", "f"]],
-        ]);
+        const keyboard = new InlineKeyboard()
+            .text("a").text("b").text("c").row()
+            .text("d").text("e").row()
+            .text("f");
         assertEquals(
             keyboard.toWrapped(3).toWrapped(3),
             keyboard.toWrapped(3),
@@ -331,15 +316,6 @@ describe("InlineKeyboard", () => {
         const keyboard = new InlineKeyboard().text("button");
         assertNotStrictEquals(InlineKeyboard.from(keyboard), keyboard);
         assertEquals(InlineKeyboard.from(keyboard), keyboard);
-
-        assertEquals(InlineKeyboard.from(labels).inline_keyboard, raw);
-
-        const units = labels.map((row) => row.map((text): [string] => [text]));
-        assertEquals(InlineKeyboard.from(units).inline_keyboard, raw);
-        const pairs = labels.map((row) =>
-            row.map((text): [string, string] => [text, text])
-        );
-        assertEquals(InlineKeyboard.from(pairs).inline_keyboard, raw);
     });
 
     it("creates static rows", () => {
@@ -350,9 +326,8 @@ describe("InlineKeyboard", () => {
     });
 
     it("can be appended", () => {
-        const initial = InlineKeyboard.from(
-            [[["a", "a"], ["b", "b"]], [["c", "c"]]],
-        );
+        const initial = new InlineKeyboard()
+            .text("a").text("b").text("c");
         assertEquals(
             initial.clone().append(initial).append(initial).inline_keyboard,
             [
