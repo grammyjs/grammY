@@ -7,6 +7,7 @@ export {
     assertEquals,
     assertFalse,
     assertInstanceOf,
+    assertObjectMatch,
     assertRejects,
     assertStringIncludes,
     assertThrows,

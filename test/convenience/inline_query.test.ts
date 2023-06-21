@@ -1,9 +1,8 @@
-import { assertObjectMatch } from "https://deno.land/std@0.192.0/testing/asserts.ts";
 import {
     InlineQueryResultBuilder,
 } from "../../src/convenience/inline_query.ts";
 
-import { assertEquals, describe, it } from "../deps.test.ts";
+import { assertEquals, assertObjectMatch, describe, it } from "../deps.test.ts";
 
 describe("InlineQueryResultBuilder", () => {
     describe("article", () => {
@@ -109,7 +108,7 @@ describe("InlineQueryResultBuilder", () => {
                     "title",
                     "https://grammy.dev/",
                     { caption: "cap" },
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -120,10 +119,10 @@ describe("InlineQueryResultBuilder", () => {
                     audio_url: "https://grammy.dev/",
                     caption: "cap",
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
@@ -278,7 +277,7 @@ describe("InlineQueryResultBuilder", () => {
                     "phone",
                     "first",
                     { last_name: "last" },
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -289,10 +288,10 @@ describe("InlineQueryResultBuilder", () => {
                     first_name: "first",
                     last_name: "last",
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
@@ -451,7 +450,7 @@ describe("InlineQueryResultBuilder", () => {
                         "title",
                         "https://grammy.dev/",
                         { caption: "captain" },
-                    ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                    ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
 
@@ -463,10 +462,10 @@ describe("InlineQueryResultBuilder", () => {
                         document_url: "https://grammy.dev/",
                         caption: "captain",
                         input_message_content: {
-                            title: "Grammy Venue",
+                            title: "grammY Venue",
                             latitude: 83,
                             longitude: 136,
-                            address: "1 Grammy Venue",
+                            address: "1 grammY Venue",
                             foursquare_id: "grammy-foursquare-id",
                         },
                     });
@@ -570,7 +569,7 @@ describe("InlineQueryResultBuilder", () => {
             });
 
             describe("with text", () => {
-                it("should build an ZIP InlineQueryResultDocument with location in message content", () => {
+                it("should build a ZIP InlineQueryResultDocument with location in message content", () => {
                     const document = InlineQueryResultBuilder.documentZip(
                         "id",
                         "title",
@@ -594,7 +593,7 @@ describe("InlineQueryResultBuilder", () => {
             });
 
             describe("with location", () => {
-                it("should build an ZIP InlineQueryResultDocument with location in message content", () => {
+                it("should build a ZIP InlineQueryResultDocument with location in message content", () => {
                     const document = InlineQueryResultBuilder.documentZip(
                         "id",
                         "title",
@@ -619,13 +618,13 @@ describe("InlineQueryResultBuilder", () => {
             });
 
             describe("with venue", () => {
-                it("should build an ZIP InlineQueryResultDocument with venue in message content", () => {
+                it("should build a ZIP InlineQueryResultDocument with venue in message content", () => {
                     const document = InlineQueryResultBuilder.documentZip(
                         "id",
                         "title",
                         "https://grammy.dev/",
                         { caption: "captain" },
-                    ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                    ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
 
@@ -637,10 +636,10 @@ describe("InlineQueryResultBuilder", () => {
                         document_url: "https://grammy.dev/",
                         caption: "captain",
                         input_message_content: {
-                            title: "Grammy Venue",
+                            title: "grammY Venue",
                             latitude: 83,
                             longitude: 136,
-                            address: "1 Grammy Venue",
+                            address: "1 grammY Venue",
                             foursquare_id: "grammy-foursquare-id",
                         },
                     });
@@ -648,7 +647,7 @@ describe("InlineQueryResultBuilder", () => {
             });
 
             describe("with contact", () => {
-                it("should build an ZIP InlineQueryResultDocument with contact in message content", () => {
+                it("should build a ZIP InlineQueryResultDocument with contact in message content", () => {
                     const document = InlineQueryResultBuilder.documentZip(
                         "id",
                         "title",
@@ -673,7 +672,7 @@ describe("InlineQueryResultBuilder", () => {
             });
 
             describe("with invoice", () => {
-                it("should build an ZIP InlineQueryResultDocument with invoice in message content", () => {
+                it("should build a ZIP InlineQueryResultDocument with invoice in message content", () => {
                     const document = InlineQueryResultBuilder.documentZip(
                         "id",
                         "title",
@@ -827,7 +826,7 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     "https://grammy.dev/thumb",
                     { caption: "It's pronounced GIF." },
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -838,10 +837,10 @@ describe("InlineQueryResultBuilder", () => {
                     thumbnail_url: "https://grammy.dev/thumb",
                     caption: "It's pronounced GIF.",
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
@@ -1001,7 +1000,7 @@ describe("InlineQueryResultBuilder", () => {
                     54,
                     10,
                     { horizontal_accuracy: 3 },
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -1013,10 +1012,10 @@ describe("InlineQueryResultBuilder", () => {
                     longitude: 10,
                     horizontal_accuracy: 3,
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
@@ -1173,7 +1172,7 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     "https://grammy.dev/thumb",
                     { caption: "cap" },
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -1184,10 +1183,10 @@ describe("InlineQueryResultBuilder", () => {
                     thumbnail_url: "https://grammy.dev/thumb",
                     caption: "cap",
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
@@ -1342,7 +1341,7 @@ describe("InlineQueryResultBuilder", () => {
                 const photo = InlineQueryResultBuilder.photo(
                     "id",
                     "https://grammy.dev/",
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -1352,10 +1351,10 @@ describe("InlineQueryResultBuilder", () => {
                     photo_url: "https://grammy.dev/",
                     thumbnail_url: "https://grammy.dev/",
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
@@ -1498,7 +1497,7 @@ describe("InlineQueryResultBuilder", () => {
                         "id",
                         "file_id",
                         { reply_markup: { inline_keyboard: [] } },
-                    ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                    ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
 
@@ -1508,10 +1507,10 @@ describe("InlineQueryResultBuilder", () => {
                         sticker_file_id: "file_id",
                         reply_markup: { inline_keyboard: [] },
                         input_message_content: {
-                            title: "Grammy Venue",
+                            title: "grammY Venue",
                             latitude: 83,
                             longitude: 136,
-                            address: "1 Grammy Venue",
+                            address: "1 grammY Venue",
                             foursquare_id: "grammy-foursquare-id",
                         },
                     });
@@ -1661,7 +1660,7 @@ describe("InlineQueryResultBuilder", () => {
                     10,
                     "grammY Street 1",
                     { reply_markup: { inline_keyboard: [] } },
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -1674,10 +1673,10 @@ describe("InlineQueryResultBuilder", () => {
                     address: "grammY Street 1",
                     reply_markup: { inline_keyboard: [] },
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
@@ -1836,7 +1835,7 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         "https://grammy.dev/thumb",
                         { caption: "cap" },
-                    ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                    ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
 
@@ -1849,10 +1848,10 @@ describe("InlineQueryResultBuilder", () => {
                         thumbnail_url: "https://grammy.dev/thumb",
                         caption: "cap",
                         input_message_content: {
-                            title: "Grammy Venue",
+                            title: "grammY Venue",
                             latitude: 83,
                             longitude: 136,
-                            address: "1 Grammy Venue",
+                            address: "1 grammY Venue",
                             foursquare_id: "grammy-foursquare-id",
                         },
                     });
@@ -2025,7 +2024,7 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         "https://grammy.dev/thumb",
                         { caption: "cap" },
-                    ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                    ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
 
@@ -2038,10 +2037,10 @@ describe("InlineQueryResultBuilder", () => {
                         thumbnail_url: "https://grammy.dev/thumb",
                         caption: "cap",
                         input_message_content: {
-                            title: "Grammy Venue",
+                            title: "grammY Venue",
                             latitude: 83,
                             longitude: 136,
-                            address: "1 Grammy Venue",
+                            address: "1 grammY Venue",
                             foursquare_id: "grammy-foursquare-id",
                         },
                     });
@@ -2220,7 +2219,7 @@ describe("InlineQueryResultBuilder", () => {
                     "title",
                     "https://grammy.dev/",
                     { caption: "voice caption? wtf" },
-                ).venue("Grammy Venue", 83, 136, "1 Grammy Venue", {
+                ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
 
@@ -2231,10 +2230,10 @@ describe("InlineQueryResultBuilder", () => {
                     voice_url: "https://grammy.dev/",
                     caption: "voice caption? wtf",
                     input_message_content: {
-                        title: "Grammy Venue",
+                        title: "grammY Venue",
                         latitude: 83,
                         longitude: 136,
-                        address: "1 Grammy Venue",
+                        address: "1 grammY Venue",
                         foursquare_id: "grammy-foursquare-id",
                     },
                 });
