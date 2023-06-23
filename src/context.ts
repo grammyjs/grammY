@@ -28,7 +28,9 @@ import {
 
 // === Util types
 export type MaybeArray<T> = T | T[];
-export type StringWithSuggestions<S extends string> = (string & Record<never, never>) | S; // permits `string` but gives hints
+export type StringWithSuggestions<S extends string> =
+    | (string & Record<never, never>)
+    | S; // permits `string` but gives hints
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
     RawApi,
