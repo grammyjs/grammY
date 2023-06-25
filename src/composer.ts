@@ -331,11 +331,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * via `ctx.match`.
      *
      * > **Did you know?** You can use deep linking
-     * > (https://core.telegram.org/bots#deep-linking) to let users start your
-     * > bot with a custom payload. As an example, send someone the link
-     * > https://t.me/name-of-your-bot?start=custom-payload and register a start
-     * > command handler on your bot with grammY. As soon as the user starts
-     * > your bot, you will receive `custom-payload` in the `ctx.match`
+     * > (https://core.telegram.org/bots/features#deep-linking) to let users
+     * > start your bot with a custom payload. As an example, send someone the
+     * > link https://t.me/name-of-your-bot?start=custom-payload and register a
+     * > start command handler on your bot with grammY. As soon as the user
+     * > starts your bot, you will receive `custom-payload` in the `ctx.match`
      * > property!
      * > ```ts
      * > bot.command('start', ctx => {
@@ -366,8 +366,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * // etc
      * ```
      *
-     * If you need more freedom matching your commands, check out the
-     * `command-filter` plugin.
+     * If you need more freedom matching your commands, check out the `commands`
+     * plugin.
      *
      * @param command The command to look for
      * @param middleware The middleware to register

@@ -1486,7 +1486,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.
+     * Use this method to change the list of the bot's commands. See https://core.telegram.org/bots/features#commands for more details about bot commands. Returns True on success.
      *
      * @param commands A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
      * @param other Optional remaining parameters, confer the official reference below
@@ -2212,7 +2212,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param result An object describing the message to be sent
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#answerinlinequery
+     * **Official reference:** https://core.telegram.org/bots/api#answerwebappquery
      */
     answerWebAppQuery(
         web_app_query_id: string,
