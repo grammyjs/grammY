@@ -85,12 +85,30 @@ export interface StorageAdapter<T> {
      * Deletes a value for the given key from the storage.
      */
     delete: (key: string) => MaybePromise<void>;
+    /**
+     * Checks whether a key exists in the storage.
+     */
+    has?: (key: string) => MaybePromise<boolean>;
+    /**
+     * Lists all keys.
+     */
+    readAllKeys?: () => Iterable<string> | AsyncIterable<string>;
+    /**
+     * Lists all values.
+     */
+    readAllValues?: () => Iterable<T> | AsyncIterable<T>;
+    /**
+     * Lists all keys with their values.
+     */
+    readAllEntries?: () =>
+        | Iterable<[key: string, value: T]>
+        | AsyncIterable<[key: string, value: T]>;
 }
 
 /**
  * Options for session middleware.
  */
-export interface SessionOptions<S> {
+export interface SessionOptions<S, C extends Context = Context> {
     type?: "single";
     /**
      * **Recommended to use.**
@@ -113,7 +131,9 @@ export interface SessionOptions<S> {
      * The default implementation will store sessions per chat, as determined by
      * `ctx.chat?.id`.
      */
-    getSessionKey?: (ctx: Context) => MaybePromise<string | undefined>;
+    getSessionKey?: (
+        ctx: Omit<C, "session">,
+    ) => MaybePromise<string | undefined>;
     /**
      * A storage adapter to your storage solution. Provides read, write, and
      * delete access to the session middleware.
@@ -132,12 +152,16 @@ export interface SessionOptions<S> {
  * Options for session middleware if multi sessions are used. Specify `"type":
  * "multi"` in the options to use multi sessions.
  */
-// deno-lint-ignore no-explicit-any
-export type MultiSessionOptions<S> = S extends Record<string, any> // unknown breaks extends
-    ? { type: "multi" } & MultiSessionOptionsRecord<S>
-    : never;
-type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
-    [K in keyof S]: SessionOptions<S[K]>;
+export type MultiSessionOptions<S, C extends Context> =
+    // deno-lint-ignore no-explicit-any
+    S extends Record<string, any> // unknown breaks extends
+        ? { type: "multi" } & MultiSessionOptionsRecord<S, C>
+        : never;
+type MultiSessionOptionsRecord<
+    S extends Record<string, unknown>,
+    C extends Context,
+> = {
+    [K in keyof S]: SessionOptions<S[K], C>;
 };
 
 /**
@@ -188,7 +212,7 @@ type MultiSessionOptionsRecord<S extends Record<string, unknown>> = {
  * @param options Optional configuration to pass to the session middleware
  */
 export function session<S, C extends Context>(
-    options: SessionOptions<S> | MultiSessionOptions<S> = {},
+    options: SessionOptions<S, C> | MultiSessionOptions<S, C> = {},
 ): MiddlewareFn<C & SessionFlavor<S>> {
     return options.type === "multi"
         ? strictMultiSession(options)
@@ -196,7 +220,7 @@ export function session<S, C extends Context>(
 }
 
 function strictSingleSession<S, C extends Context>(
-    options: SessionOptions<S>,
+    options: SessionOptions<S, C>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
     const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
@@ -213,7 +237,7 @@ function strictSingleSession<S, C extends Context>(
     };
 }
 function strictMultiSession<S, C extends Context>(
-    options: MultiSessionOptions<S>,
+    options: MultiSessionOptions<S, C>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
     const props = Object.keys(options).filter((k) => k !== "type");
     const defaults = Object.fromEntries(
@@ -273,8 +297,11 @@ function strictMultiSession<S, C extends Context>(
  * @param options Optional configuration to pass to the session middleware
  */
 export function lazySession<S, C extends Context>(
-    options: SessionOptions<S> = {},
+    options: SessionOptions<S, C> = {},
 ): MiddlewareFn<C & LazySessionFlavor<S>> {
+    if (options.type !== undefined && options.type !== "single") {
+        throw new Error("Cannot use lazy multi sessions!");
+    }
     const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
         const propSession = new PropertySession(
@@ -327,7 +354,7 @@ class PropertySession<O extends {}, P extends keyof O> {
         if (this.promise === undefined) {
             this.fetching = true;
             this.promise = Promise.resolve(this.storage.read(this.key))
-                .then((val) => {
+                .then((val?: O[P]) => {
                     this.fetching = false;
                     // Check for write op in the meantime
                     if (this.wrote) {
@@ -398,13 +425,13 @@ class PropertySession<O extends {}, P extends keyof O> {
     }
 }
 
-function fillDefaults<S>(opts: SessionOptions<S> = {}) {
+function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
     let { getSessionKey = defaultGetSessionKey, initial, storage } = opts;
     if (storage == null) {
         debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
         );
-        storage = new MemorySessionStorage();
+        storage = new MemorySessionStorage<S>();
     }
     const custom = getSessionKey !== defaultGetSessionKey;
     return { initial, storage, getSessionKey, custom };
@@ -639,14 +666,31 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     }
 
     /**
-     * Reads the values for all keys of the session storage, and returns them as
-     * an array.
+     * @deprecated Use {@link readAllValues} instead
      */
     readAll() {
+        return this.readAllValues();
+    }
+
+    readAllKeys() {
+        return Array.from(this.storage.keys());
+    }
+
+    readAllValues() {
         return Array
             .from(this.storage.keys())
             .map((key) => this.read(key))
             .filter((value): value is S => value !== undefined);
+    }
+
+    readAllEntries() {
+        return Array.from(this.storage.keys())
+            .map((key) => [key, this.read(key)])
+            .filter((pair): pair is [string, S] => pair[1] !== undefined);
+    }
+
+    has(key: string) {
+        return this.storage.has(key);
     }
 
     write(key: string, value: S) {

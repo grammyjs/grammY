@@ -1,6 +1,5 @@
 import { HttpError, toHttpError } from "../../src/core/error.ts";
-import { assertThrows } from "https://deno.land/std@0.150.0/testing/asserts.ts";
-import { describe, it } from "https://deno.land/std@0.150.0/testing/bdd.ts";
+import { assertThrows, describe, it } from "../deps.test.ts";
 
 describe("toHttpError", () => {
     it("should throw errors", () => {

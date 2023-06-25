@@ -28,8 +28,9 @@ import {
 
 // === Util types
 export type MaybeArray<T> = T | T[];
-// deno-lint-ignore ban-types
-export type StringWithSuggestions<S extends string> = (string & {}) | S; // permits `string` but gives hints
+export type StringWithSuggestions<S extends string> =
+    | (string & Record<never, never>)
+    | S; // permits `string` but gives hints
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
     RawApi,
@@ -408,6 +409,44 @@ export class Context implements RenamedUpdate {
             this.callbackQuery?.inline_message_id ??
                 this.chosenInlineResult?.inline_message_id
         );
+    }
+    /**
+     * Get entities and their text. Extracts the text from `ctx.msg.text` or `ctx.msg.caption`.
+     * Returns an empty array if one of `ctx.msg`, `ctx.msg.text`
+     * or `ctx.msg.entities` is undefined.
+     *
+     * You can filter specific entity types by passing the `types` parameter. Example:
+     *
+     * ```ts
+     * ctx.entities() // Returns all entity types
+     * ctx.entities('url') // Returns only url entities
+     * ctx.enttities(['url', 'email']) // Returns url and email entities
+     * ```
+     *
+     * @param types Types of entities to return. Omit to get all entities.
+     * @returns Array of entities and their texts, or empty array when there's no text
+     */
+    entities(): Array<MessageEntity & { text: string }>;
+    entities<T extends MessageEntity["type"]>(
+        types: MaybeArray<T>,
+    ): Array<MessageEntity & { type: T; text: string }>;
+    entities(types?: MaybeArray<MessageEntity["type"]>) {
+        const message = this.msg;
+        if (message === undefined) return [];
+
+        const text = message.text ?? message.caption;
+        if (text === undefined) return [];
+        let entities = message.entities ?? message.caption_entities;
+        if (entities === undefined) return [];
+        if (types !== undefined) {
+            const filters = new Set(toArray(types));
+            entities = entities.filter((entity) => filters.has(entity.type));
+        }
+
+        return entities.map((entity) => ({
+            ...entity,
+            text: text.substring(entity.offset, entity.offset + entity.length),
+        }));
     }
 
     // PROBING SHORTCUTS
@@ -991,6 +1030,7 @@ export class Context implements RenamedUpdate {
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
@@ -1004,14 +1044,17 @@ export class Context implements RenamedUpdate {
             | "record_voice"
             | "upload_voice"
             | "upload_document"
+            | "choose_sticker"
             | "find_location"
             | "record_video_note"
             | "upload_video_note",
+        other?: Other<"sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
     ) {
         return this.api.sendChatAction(
             orThrow(this.chat, "sendChatAction").id,
             action,
+            other,
             signal,
         );
     }
@@ -1602,7 +1645,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1617,7 +1660,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. Returns a ChatMember object on success.
+     * Context-aware alias for `api.getChatMember`. Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.
      *
      * @param user_id Unique identifier of the target user
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1687,26 +1730,18 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
-     * @param name New topic name, 1-128 characters
-     * @param icon_custom_emoji_id New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editforumtopic
      */
     editForumTopic(
-        name: string,
-        icon_custom_emoji_id: string,
+        other?: Other<"editForumTopic", "chat_id" | "message_thread_id">,
         signal?: AbortSignal,
     ) {
         const message = orThrow(this.msg, "editForumTopic");
         const thread = orThrow(message.message_thread_id, "editForumTopic");
-        return this.api.editForumTopic(
-            message.chat.id,
-            thread,
-            name,
-            icon_custom_emoji_id,
-            signal,
-        );
+        return this.api.editForumTopic(message.chat.id, thread, other, signal);
     }
 
     /**
@@ -1764,6 +1799,78 @@ export class Context implements RenamedUpdate {
         return this.api.unpinAllForumTopicMessages(
             message.chat.id,
             thread,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editGeneralForumTopic`. Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param name New topic name, 1-128 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editgeneralforumtopic
+     */
+    editGeneralForumTopic(name: string, signal?: AbortSignal) {
+        return this.api.editGeneralForumTopic(
+            orThrow(this.chat, "editGeneralForumTopic").id,
+            name,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.closeGeneralForumTopic`. Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
+     */
+    closeGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.closeGeneralForumTopic(
+            orThrow(this.chat, "closeGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.reopenGeneralForumTopic`. Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success.     *
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
+     */
+    reopenGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.reopenGeneralForumTopic(
+            orThrow(this.chat, "reopenGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.hideGeneralForumTopic`. Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
+     */
+    hideGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.hideGeneralForumTopic(
+            orThrow(this.chat, "hideGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.unhideGeneralForumTopic`. Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
+     */
+    unhideGeneralForumTopic(signal?: AbortSignal) {
+        return this.api.unhideGeneralForumTopic(
+            orThrow(this.chat, "unhideGeneralForumTopic").id,
             signal,
         );
     }
@@ -2071,7 +2178,7 @@ export class Context implements RenamedUpdate {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payments provider token, obtained via BotFather
+     * @param provider_token Payment provider token, obtained via @BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -2307,6 +2414,7 @@ export type ChosenInlineResultContext<C extends Context> = Filter<
 type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
     & ChatType<T> // ctx.chat
+    & ChatFrom<T> // ctx.from
     & ChatTypeRecord<"msg", T> // ctx.msg
     & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
 /**
@@ -2346,6 +2454,10 @@ type ChatTypeRecord<K extends string, T extends Chat["type"]> = Partial<
 >;
 interface ChatType<T extends Chat["type"]> {
     chat: { type: T };
+}
+interface ChatFrom<T extends Chat["type"]> {
+    // deno-lint-ignore ban-types
+    from: [T] extends ["private"] ? {} : unknown;
 }
 
 // === Util functions

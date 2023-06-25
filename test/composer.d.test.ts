@@ -1,4 +1,4 @@
-import { Composer, Context } from "../src/mod.ts";
+import { Composer, type Context } from "../src/mod.ts";
 
 function _f<C extends Context>() {
     const c = new Composer<C & { state: 1 }>();

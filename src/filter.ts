@@ -36,7 +36,7 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
     return (ctx: C): ctx is Filter<C, Q> => predicate(ctx);
 }
 
-function parse(filter: FilterQuery | FilterQuery[]): string[][] {
+export function parse(filter: FilterQuery | FilterQuery[]): string[][] {
     return Array.isArray(filter)
         ? filter.map((q) => q.split(":"))
         : [filter.split(":")];
@@ -49,7 +49,7 @@ function compile(parsed: string[][]): (ctx: Context) => boolean {
     return (ctx) => !!predicate(ctx.update, ctx);
 }
 
-function preprocess(filter: string[]): string[][] {
+export function preprocess(filter: string[]): string[][] {
     const valid: any = UPDATE_KEYS;
     const expanded = [filter]
         // expand L1
@@ -232,6 +232,11 @@ const USER_KEYS = {
     is_premium: {},
     added_to_attachment_menu: {},
 } as const;
+const STICKER_KEYS = {
+    is_video: {},
+    is_animated: {},
+    premium_animation: {},
+} as const;
 
 // L2
 const EDITABLE_MESSAGE_KEYS = {
@@ -247,12 +252,14 @@ const EDITABLE_MESSAGE_KEYS = {
     entities: ENTITY_KEYS,
     caption_entities: ENTITY_KEYS,
 
+    has_media_spoiler: {},
+
     caption: {},
 } as const;
 const COMMON_MESSAGE_KEYS = {
     ...EDITABLE_MESSAGE_KEYS,
 
-    sticker: {},
+    sticker: STICKER_KEYS,
     video_note: {},
     voice: {},
     contact: {},
@@ -267,9 +274,6 @@ const COMMON_MESSAGE_KEYS = {
     pinned_message: {},
     invoice: {},
     proximity_alert_triggered: {},
-    forum_topic_created: {},
-    forum_topic_closed: {},
-    forum_topic_reopened: {},
     video_chat_scheduled: {},
     video_chat_started: {},
     video_chat_ended: {},
@@ -289,8 +293,17 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
+    user_shared: {},
+    chat_shared: {},
     connected_website: {},
+    write_access_allowed: {},
     passport_data: {},
+    forum_topic_created: {},
+    forum_topic_edited: { name: {}, icon_custom_emoji_id: {} },
+    forum_topic_closed: {},
+    forum_topic_reopened: {},
+    general_forum_topic_hidden: {},
+    general_forum_topic_unhidden: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,

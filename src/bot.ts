@@ -1,5 +1,5 @@
 // deno-lint-ignore-file camelcase
-import { BotError, Composer, run } from "./composer.ts";
+import { BotError, Composer, type Middleware, run } from "./composer.ts";
 import { Context } from "./context.ts";
 import { Api } from "./core/api.ts";
 import {
@@ -7,10 +7,28 @@ import {
     type WebhookReplyEnvelope,
 } from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
+import { type Filter, type FilterQuery, parse, preprocess } from "./filter.ts";
 import { debug as d } from "./platform.deno.ts";
 import { type Update, type UserFromGetMe } from "./types.ts";
 const debug = d("grammy:bot");
+const debugWarn = d("grammy:warn");
 const debugErr = d("grammy:error");
+
+export const DEFAULT_UPDATE_TYPES = [
+    "message",
+    "edited_message",
+    "channel_post",
+    "edited_channel_post",
+    "inline_query",
+    "chosen_inline_result",
+    "callback_query",
+    "shipping_query",
+    "pre_checkout_query",
+    "poll",
+    "poll_answer",
+    "my_chat_member",
+    "chat_join_request",
+] as const;
 
 /**
  * Options that can be specified when running the bot via simple long polling.
@@ -141,6 +159,9 @@ export class Bot<
         ...args: ConstructorParameters<typeof Context>
     ) => C;
 
+    /** Used to log a warning if some update types are not in allowed_updates */
+    private observedUpdateTypes = new Set<string>();
+
     /**
      * Holds the bot's error handler that is invoked whenever middleware throws
      * (rejects). If you set your own error handler via `bot.catch`, all that
@@ -215,6 +236,19 @@ export class Bot<
     }
 
     /**
+     * @inheritdoc
+     */
+    on<Q extends FilterQuery>(
+        filter: Q | Q[],
+        ...middleware: Array<Middleware<Filter<C, Q>>>
+    ): Composer<Filter<C, Q>> {
+        for (const [u] of parse(filter).flatMap(preprocess)) {
+            this.observedUpdateTypes.add(u);
+        }
+        return super.on(filter, ...middleware);
+    }
+
+    /**
      * Checks if the bot has been initialized. A bot is initialized if the bot
      * information is set. The bot information can either be set automatically
      * by calling `bot.init`, or manually through the bot constructor. Note that
@@ -231,11 +265,16 @@ export class Bot<
      * Initializes the bot, i.e. fetches information about the bot itself. This
      * method is called automatically, you usually don't have to call it
      * manually.
+     *
+     * @param signal Optional `AbortSignal` to cancel the initialization
      */
-    async init() {
+    async init(signal?: AbortSignal) {
         if (!this.isInited()) {
             debug("Initializing bot");
-            this.mePromise ??= withRetries(() => this.api.getMe());
+            this.mePromise ??= withRetries(
+                () => this.api.getMe(signal),
+                signal,
+            );
             let me: UserFromGetMe;
             try {
                 me = await this.mePromise;
@@ -353,34 +392,37 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
-        if (!this.isInited()) await this.init();
+        if (!this.isInited()) {
+            await this.init(this.pollingAbortController?.signal);
+        }
         if (this.pollingRunning) {
             debug("Simple long polling already running!");
             return;
+        } else {
+            this.pollingRunning = true;
+            this.pollingAbortController = new AbortController();
         }
-        await withRetries(() =>
-            this.api.deleteWebhook({
-                drop_pending_updates: options?.drop_pending_updates,
-            })
+        await withRetries(
+            () =>
+                this.api.deleteWebhook({
+                    drop_pending_updates: options?.drop_pending_updates,
+                }, this.pollingAbortController?.signal),
+            this.pollingAbortController?.signal,
         );
 
         // All async ops of setup complete, run callback
         await options?.onStart?.(this.botInfo);
 
-        // Prevent common misuse that causes memory leak
-        this.use = () => {
-            throw new Error(`It looks like you are registering more listeners \
-on your bot from within other listeners! This means that every time your bot \
-handles a message like this one, new listeners will be added. This list grows until \
-your machine crashes, so grammY throws this error to tell you that you should \
-probably do things a bit differently. If you're unsure how to resolve this problem, \
-you can ask in the group chat: https://telegram.me/grammyjs
+        // Bot was stopped during `onStart`
+        if (!this.pollingRunning) return;
 
-On the other hand, if you actually know what you're doing and you do need to install \
-further middleware while your bot is running, consider installing a composer \
-instance on your bot, and in turn augment the composer after the fact. This way, \
-you can circumvent this protection against memory leaks.`);
-        };
+        // Prevent common misuse that leads to missing updates
+        validateAllowedUpdates(
+            this.observedUpdateTypes,
+            options?.allowed_updates,
+        );
+        // Prevent common misuse that causes memory leak
+        this.use = noUseFunction;
 
         // Start polling
         debug("Starting simple long polling");
@@ -412,8 +454,8 @@ you can circumvent this protection against memory leaks.`);
             this.pollingRunning = false;
             this.pollingAbortController?.abort();
             const offset = this.lastTriedUpdateId + 1;
-            await this.api.getUpdates({ offset, limit: 1 });
-            this.pollingAbortController = undefined;
+            await this.api.getUpdates({ offset, limit: 1 })
+                .finally(() => this.pollingAbortController = undefined);
         } else {
             debug("Bot is not running!");
         }
@@ -440,9 +482,6 @@ you can circumvent this protection against memory leaks.`);
      * the bot is stopped.
      */
     private async loop(options?: PollingOptions) {
-        this.pollingRunning = true;
-        this.pollingAbortController = new AbortController();
-
         const limit = options?.limit;
         const timeout = options?.timeout ?? 30; // seconds
         let allowed_updates = options?.allowed_updates;
@@ -525,33 +564,139 @@ you can circumvent this protection against memory leaks.`);
 /**
  * Performs a network call task, retrying upon known errors until success.
  *
+ * If the task errors and a retry_after value can be used, a subsequent retry
+ * will be delayed by the specified period of time.
+ *
+ * Otherwise, if the first attempt at running the task fails, the task is
+ * retried immediately. If second attempt fails, too, waits for 100 ms, and then
+ * doubles this delay for every subsequent attemt. Never waits longer than 1
+ * hour before retrying.
+ *
  * @param task Async task to perform
+ * @param signal Optional `AbortSignal` to prevent further retries
  */
-async function withRetries<T>(task: () => Promise<T>): Promise<T> {
+async function withRetries<T>(
+    task: () => Promise<T>,
+    signal?: AbortSignal,
+): Promise<T> {
+    // Set up delays between retries
+    const INITIAL_DELAY = 50; // ms
+    let lastDelay = INITIAL_DELAY;
+
+    // Define error handler
+    /**
+     * Determines the error handling strategy based on various error types.
+     * Sleeps if necessary, and returns whether to retry or rethrow an error.
+     */
+    async function handleError(error: unknown) {
+        let delay = false;
+        let strategy: "retry" | "rethrow" = "rethrow";
+
+        if (error instanceof HttpError) {
+            delay = true;
+            strategy = "retry";
+        } else if (error instanceof GrammyError) {
+            if (error.error_code >= 500) {
+                delay = true;
+                strategy = "retry";
+            } else if (error.error_code === 429) {
+                const retryAfter = error.parameters.retry_after;
+                if (typeof retryAfter === "number") {
+                    // ignore the backoff for sleep, then reset it
+                    await sleep(retryAfter, signal);
+                    lastDelay = INITIAL_DELAY;
+                } else {
+                    delay = true;
+                }
+                strategy = "retry";
+            }
+        }
+
+        if (delay) {
+            // Do not sleep for the first retry
+            if (lastDelay !== INITIAL_DELAY) {
+                await sleep(lastDelay, signal);
+            }
+            const TWENTY_MINUTES = 20 * 60 * 1000; // ms
+            lastDelay = Math.min(TWENTY_MINUTES, 2 * lastDelay);
+        }
+
+        return strategy;
+    }
+
+    // Perform the actual task with retries
     let result: { ok: false } | { ok: true; value: T } = { ok: false };
     while (!result.ok) {
         try {
             result = { ok: true, value: await task() };
         } catch (error) {
             debugErr(error);
-            if (error instanceof HttpError) continue;
-            if (error instanceof GrammyError) {
-                if (error.error_code >= 500) continue;
-                if (error.error_code === 429) {
-                    const retryAfter = error.parameters.retry_after;
-                    if (retryAfter !== undefined) await sleep(retryAfter);
+            const strategy = await handleError(error);
+            switch (strategy) {
+                case "retry":
                     continue;
-                }
+                case "rethrow":
+                    throw error;
             }
-            throw error;
         }
     }
     return result.value;
 }
 
 /**
- * Returns a new promise that resolves after the specified number of seconds.
+ * Returns a new promise that resolves after the specified number of seconds, or
+ * rejects as soon as the given signal is aborted.
  */
-function sleep(seconds: number) {
-    return new Promise((r) => setTimeout(r, 1000 * seconds));
+async function sleep(seconds: number, signal?: AbortSignal) {
+    let handle: number | undefined;
+    let reject: ((err: Error) => void) | undefined;
+    function abort() {
+        reject?.(new Error("Aborted delay"));
+        if (handle !== undefined) clearTimeout(handle);
+    }
+    try {
+        await new Promise<void>((res, rej) => {
+            reject = rej;
+            if (signal?.aborted) {
+                abort();
+                return;
+            }
+            signal?.addEventListener("abort", abort);
+            handle = setTimeout(res, 1000 * seconds);
+        });
+    } finally {
+        signal?.removeEventListener("abort", abort);
+    }
+}
+
+/**
+ * Takes a set of observed update types and a list of allowed updates and logs a
+ * warning in debug mode if some update types were observed that have not been
+ * allowed.
+ */
+function validateAllowedUpdates(
+    updates: Set<string>,
+    allowed: readonly string[] = DEFAULT_UPDATE_TYPES,
+) {
+    const impossible = Array.from(updates).filter((u) => !allowed.includes(u));
+    if (impossible.length > 0) {
+        debugWarn(
+            `You registered listeners for the following update types, \
+but you did not specify them in \`allowed_updates\` \
+so they may not be received: ${impossible.map((u) => `'${u}'`).join(", ")}`,
+        );
+    }
+}
+function noUseFunction(): never {
+    throw new Error(`It looks like you are registering more listeners \
+on your bot from within other listeners! This means that every time your bot \
+handles a message like this one, new listeners will be added. This list grows until \
+your machine crashes, so grammY throws this error to tell you that you should \
+probably do things a bit differently. If you're unsure how to resolve this problem, \
+you can ask in the group chat: https://telegram.me/grammyjs
+
+On the other hand, if you actually know what you're doing and you do need to install \
+further middleware while your bot is running, consider installing a composer \
+instance on your bot, and in turn augment the composer after the fact. This way, \
+you can circumvent this protection against memory leaks.`);
 }
