@@ -5,7 +5,6 @@ import {
     type KeyboardButtonRequestChat,
     type KeyboardButtonRequestUser,
     type LoginUrl,
-    type ReplyKeyboardMarkup,
     type SwitchInlineQueryChosenChat,
 } from "../types.ts";
 
@@ -109,24 +108,6 @@ export class Keyboard {
     row(...buttons: KeyboardButton[]) {
         this.keyboard.push(buttons);
         return this;
-    }
-    /**
-     * Creates a button row from one or more buttons.
-     *
-     * This allows for the following pattern:
-     *
-     * ```ts
-     * Keyboard.from(
-     *   ['A', 'B', 'C']
-     *     .map(label => Keyboard.text(label))
-     *     .map(button => Keyboard.row(button))
-     * )
-     * ```
-     *
-     * @param buttons A number of buttons to place on this row
-     */
-    static row(...buttons: KeyboardButton[]) {
-        return buttons;
     }
     /**
      * Adds a new text button. This button will simply send the given text as a
@@ -410,10 +391,9 @@ export class Keyboard {
         return this.clone(transposed);
     }
     /**
-     * Creates a new keyboard with the same buttons but wrapped after a given
-     * number of columns (default: 4) as if the buttons were text elements.
-     * Optionally, you can specify if the wrapping should prioritize filling up
-     * the top (default) or the bottom row.
+     * Creates a new keyboard with the same buttons but reflowed into a given
+     * number of columns as if the buttons were text elements. Optionally, you
+     * can specify if the flow should make sure to fill up the last row.
      *
      * This method is idempotent, so calling it a second time will effectively
      * clone this keyboard without reordering the buttons.
@@ -421,7 +401,7 @@ export class Keyboard {
      * Here are some examples.
      *
      * ```
-     * original    wrapped
+     * original    flowed
      * [  a  ]  ~> [  a  ]    (4 columns)
      *
      *             [  a  ]
@@ -437,18 +417,18 @@ export class Keyboard {
      * [d e f]
      *
      * [a b c]     [  a  ]
-     * [d e f]  ~> [b c d]    (3 colums, bottom wrapping)
+     * [d e f]  ~> [b c d]    (3 colums, { fillLastRow: true })
      * [g h i]     [e f g]
      * [  j  ]     [h i j]
      * ```
      *
      * @param columns Maximum number of buttons per row
-     * @param wrap Optional wrapping behavior
+     * @param options Optional flowing behavior
      */
-    toWrapped(columns: number, options: WrapOptions = {}) {
+    toFlowed(columns: number, options: FlowOptions = {}) {
         const original = this.keyboard;
-        const wrapped = wrapArray(original, columns, options);
-        return this.clone(wrapped);
+        const flowed = reflow(original, columns, options);
+        return this.clone(flowed);
     }
     /**
      * Creates and returns a deep copy of this keyboard.
@@ -468,7 +448,7 @@ export class Keyboard {
     }
     /**
      * Appends the buttons of the given keyboards to this keyboard. If other
-     * options are given in these keyboards, they will override our options.
+     * options are specified in these keyboards, they will be ignored.
      *
      * @param sources A number of keyboards to append
      */
@@ -476,16 +456,6 @@ export class Keyboard {
         for (const source of sources) {
             const keyboard = Keyboard.from(source);
             this.keyboard.push(...keyboard.keyboard.map((row) => row.slice()));
-            this.is_persistent = keyboard.is_persistent ??
-                this.is_persistent;
-            this.selective = keyboard.selective ??
-                this.selective;
-            this.one_time_keyboard = keyboard.one_time_keyboard ??
-                this.one_time_keyboard;
-            this.resize_keyboard = keyboard.resize_keyboard ??
-                this.resize_keyboard;
-            this.input_field_placeholder = keyboard.input_field_placeholder ??
-                this.input_field_placeholder;
         }
         return this;
     }
@@ -505,19 +475,12 @@ export class Keyboard {
      * @param source A two-dimensional button array
      * @param options Optional options for the custom keyboard
      */
-    static from(
-        source: KeyboardSource,
-        options: Omit<ReplyKeyboardMarkup, "keyboard"> = {},
-    ): Keyboard {
+    static from(source: KeyboardSource): Keyboard {
+        if (source instanceof Keyboard) return source.clone();
         function toButton(btn: KeyboardButtonSource) {
             return typeof btn === "string" ? Keyboard.text(btn) : btn;
         }
-        if (source instanceof Keyboard) {
-            source = source.clone();
-        } else {
-            source = new Keyboard(source.map((row) => row.map(toButton)));
-        }
-        return Object.assign(source, options);
+        return new Keyboard(source.map((row) => row.map(toButton)));
     }
 }
 
@@ -548,18 +511,6 @@ type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
  * const button = InlineKeyboard.text('GO', 'go')
  * const array = [[button]]
  * const keyboard = InlineKeyboard.from(array)
- * ```
- *
- * If you want to create callback buttons only, you can directly use a
- * two-dimensional array of strings (or string pairs if label and callback data
- * are different) and turn it into an inline keyboard.
- *
- * ```ts
- * const keyboard = InlineKeyboard.from([[
- *     'one',
- *     'two',
- *     ['three', 'callback'],
- * ]]);
  * ```
  *
  * Be sure to to check the
@@ -602,24 +553,6 @@ export class InlineKeyboard {
     row(...buttons: InlineKeyboardButton[]) {
         this.inline_keyboard.push(buttons);
         return this;
-    }
-    /**
-     * Creates a button row from one or more buttons.
-     *
-     * This allows for the following pattern:
-     *
-     * ```ts
-     * InlineKeyboard.from(
-     *   ['one', 'two', 'three']
-     *     .map(label => InlineKeyboard.text(label))
-     *     .map(button => InlineKeyboard.row(button))
-     * )
-     * ```
-     *
-     * @param buttons A number of buttons to place on this row
-     */
-    static row(...buttons: InlineKeyboardButton[]) {
-        return buttons;
     }
     /**
      * Adds a new URL button. Telegram clients will open the provided URL when
@@ -939,10 +872,9 @@ export class InlineKeyboard {
         return new InlineKeyboard(transposed);
     }
     /**
-     * Creates a new inline keyboard with the same buttons but wrapped after a
-     * given number of columns (default: 4) as if the buttons were text
-     * elements. Optionally, you can specify if the wrapping should prioritize
-     * filling up the top (default) or the bottom row.
+     * Creates a new inline keyboard with the same buttons but reflowed into a
+     * given number of columns as if the buttons were text elements. Optionally,
+     * you can specify if the flow should make sure to fill up the last row.
      *
      * This method is idempotent, so calling it a second time will effectively
      * clone this inline keyboard without reordering the buttons.
@@ -950,7 +882,7 @@ export class InlineKeyboard {
      * Here are some examples.
      *
      * ```
-     * original    wrapped
+     * original    flowed
      * [  a  ]  ~> [  a  ]    (4 columns)
      *
      *             [  a  ]
@@ -966,18 +898,18 @@ export class InlineKeyboard {
      * [d e f]
      *
      * [a b c]     [  a  ]
-     * [d e f]  ~> [b c d]    (3 colums, bottom wrapping)
+     * [d e f]  ~> [b c d]    (3 colums, { fillLastRow: true })
      * [g h i]     [e f g]
      * [  j  ]     [h i j]
      * ```
      *
      * @param columns Maximum number of buttons per row
-     * @param wrap Optional wrapping behavior
+     * @param options Optional flowing behavior
      */
-    toWrapped(columns: number, options: WrapOptions = {}) {
+    toFlowed(columns: number, options: FlowOptions = {}) {
         const original = this.inline_keyboard;
-        const wrapped = wrapArray(original, columns, options);
-        return new InlineKeyboard(wrapped);
+        const flowed = reflow(original, columns, options);
+        return new InlineKeyboard(flowed);
     }
     /**
      * Creates and returns a deep copy of this inline keyboard.
@@ -1009,9 +941,7 @@ export class InlineKeyboard {
      * @param source A two-dimensional inline button array
      */
     static from(source: InlineKeyboardSource): InlineKeyboard {
-        if (source instanceof InlineKeyboard) {
-            return source.clone();
-        }
+        if (source instanceof InlineKeyboard) return source.clone();
         return new InlineKeyboard(source.map((row) => row.slice()));
     }
 }
@@ -1027,14 +957,14 @@ function transpose<T>(grid: T[][]): T[][] {
     }
     return transposed;
 }
-interface WrapOptions {
+interface FlowOptions {
     /** Set to `true` to completely fill up the last row */
     fillLastRow?: boolean;
 }
-function wrapArray<T>(
+function reflow<T>(
     grid: T[][],
     columns: number,
-    { fillLastRow = false }: WrapOptions,
+    { fillLastRow = false }: FlowOptions,
 ): T[][] {
     let first = columns;
     if (fillLastRow) {
@@ -1043,18 +973,18 @@ function wrapArray<T>(
             .reduce((a, b) => a + b, 0);
         first = buttonCount % columns;
     }
-    const wrapped: T[][] = [];
+    const reflowed: T[][] = [];
     for (const row of grid) {
         for (const button of row) {
-            const at = Math.max(0, wrapped.length - 1);
+            const at = Math.max(0, reflowed.length - 1);
             const max = at === 0 ? first : columns;
-            let next = (wrapped[at] ??= []);
+            let next = (reflowed[at] ??= []);
             if (next.length === max) {
                 next = [];
-                wrapped.push(next);
+                reflowed.push(next);
             }
             next.push(button);
         }
     }
-    return wrapped;
+    return reflowed;
 }
