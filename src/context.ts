@@ -118,6 +118,16 @@ interface StaticHas {
     inlineQuery(
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing the chosen inline result, or for the chosen inline result to
+     * match the given regular expression.
+     *
+     * @param trigger The string or regex to match
+     */
+    chosenInlineResult(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is ChosenInlineResultContext<C>;
 }
 const checker: StaticHas = {
     filterQuery<Q extends FilterQuery>(filter: Q | Q[]) {
@@ -199,6 +209,17 @@ const checker: StaticHas = {
         const trg = triggerFn(trigger);
         return <C extends Context>(ctx: C): ctx is InlineQueryContext<C> =>
             hasInlineQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
+    },
+    chosenInlineResult(trigger) {
+        const hasChosenInlineResult = checker.filterQuery(
+            "chosen_inline_result",
+        );
+        const trg = triggerFn(trigger);
+        return <C extends Context>(
+            ctx: C,
+        ): ctx is ChosenInlineResultContext<C> =>
+            hasChosenInlineResult(ctx) &&
+            match(ctx, ctx.chosenInlineResult.result_id, trg);
     },
 };
 
@@ -531,6 +552,19 @@ export class Context implements RenamedUpdate {
         trigger: MaybeArray<string | RegExp>,
     ): this is InlineQueryContextCore {
         return Context.has.inlineQuery(trigger)(this);
+    }
+
+    /**
+     * Returns `true` if this context object contains the chosen inline result, or
+     * if the contained chosen inline result matches the given regular expression. It
+     * returns `false` otherwise. This uses the same logic as `bot.chosenInlineResult`.
+     *
+     * @param trigger The string or regex to match
+     */
+    hasChosenInlineResult(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is ChosenInlineResultContextCore {
+        return Context.has.chosenInlineResult(trigger)(this);
     }
 
     // API
@@ -2360,6 +2394,22 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * in separate files and still have the correct types.
  */
 export type InlineQueryContext<C extends Context> = Filter<C, "inline_query">;
+
+type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.chosenInlineResult`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * annotate `bot.chosenInlineResult` does it. This allows you to context objects in
+ * middleware that is not directly passed to `bot.chosenInlineResult`, hence not
+ * inferring the correct type automatically. That way, handlers can be defined
+ * in separate files and still have the correct types.
+ */
+export type ChosenInlineResultContext<C extends Context> = Filter<
+    C,
+    "chosen_inline_result"
+>;
 
 type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
