@@ -1,6 +1,7 @@
 import {
     type CallbackQueryContext,
     type ChatTypeContext,
+    type ChosenInlineResultContext,
     type CommandContext,
     Context,
     type GameQueryContext,
@@ -521,6 +522,33 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
+     * Registers middleware for the ChosenInlineResult by the given id or ids.
+     * ChosenInlineResult represents a result of an inline query that was
+     * chosen by the user and sent to their chat partner. Check out
+     * https://core.telegram.org/bots/api#choseninlineresult to read more
+     * about chosen inline results.
+     *
+     * ```ts
+     * bot.chosenInlineResult('id', async ctx => {
+     *   const id = ctx.result_id;
+     *   // Your code
+     * })
+     * ```
+     *
+     * @param resultId An id or array of ids
+     * @param middleware The middleware to register
+     */
+    chosenInlineResult(
+        resultId: MaybeArray<string | RegExp>,
+        ...middleware: Array<ChosenInlineResultMiddleware<C>>
+    ): Composer<ChosenInlineResultContext<C>> {
+        return this.filter(
+            Context.has.chosenInlineResult(resultId),
+            ...middleware,
+        );
+    }
+
+    /**
      * > This is an advanced method of grammY.
      *
      * Registers middleware behind a custom filter function that operates on the
@@ -858,6 +886,17 @@ export type GameQueryMiddleware<C extends Context> = Middleware<
  */
 export type InlineQueryMiddleware<C extends Context> = Middleware<
     InlineQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.chosenInlineResult`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.chosenInlineResult` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
+    ChosenInlineResultContext<C>
 >;
 /**
  * Type of the middleware that can be passed to `bot.chatType`.
