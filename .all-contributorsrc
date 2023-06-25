@@ -7,7 +7,7 @@
     "README.md"
   ],
   "imageSize": 100,
-  "commit": true,
+  "commit": false,
   "commitConvention": "none",
   "contributors": [
     {
@@ -255,7 +255,8 @@
         "example",
         "doc",
         "tutorial",
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -442,7 +443,9 @@
         "doc",
         "ideas",
         "infra",
-        "tool"
+        "tool",
+        "mentoring",
+        "maintenance"
       ]
     },
     {
@@ -1016,7 +1019,9 @@
         "bug",
         "code",
         "question",
-        "ideas"
+        "ideas",
+        "doc",
+        "translation"
       ]
     },
     {
@@ -1086,6 +1091,26 @@
         "ideas",
         "code",
         "test"
+      ]
+    },
+    {
+      "login": "MaicolAntali",
+      "name": "Maicol",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79454487?v=4",
+      "profile": "https://github.com/MaicolAntali",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Nazar-Ant",
+      "name": "Nazar Antoniuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75927667?v=4",
+      "profile": "https://github.com/Nazar-Ant",
+      "contributions": [
+        "doc",
+        "translation",
+        "maintenance"
       ]
     }
   ],
