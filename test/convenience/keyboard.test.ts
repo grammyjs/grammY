@@ -1,6 +1,11 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
 import { type LoginUrl } from "../../src/types.ts";
-import { assertEquals, describe, it } from "../deps.test.ts";
+import {
+    assertEquals,
+    assertNotStrictEquals,
+    describe,
+    it,
+} from "../deps.test.ts";
 
 describe("Keyboard", () => {
     it("should take initial buttons", () => {
@@ -62,6 +67,78 @@ describe("Keyboard", () => {
         assertEquals(keyboard.one_time_keyboard, true);
         assertEquals(keyboard.resize_keyboard, false);
         assertEquals(keyboard.input_field_placeholder, "placeholder");
+    });
+
+    it("can be transposed", () => {
+        function t(btns: string[][], expected: string[][]) {
+            assertEquals(
+                Keyboard.from(btns).toTransposed(),
+                Keyboard.from(expected),
+            );
+        }
+        t([["a"]], [["a"]]);
+        t([["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        t([["a", "b"], ["c", "d"], ["e"]], [["a", "c", "e"], ["b", "d"]]);
+        t(
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "c", "d"], ["b", "e"], ["f"]],
+        );
+        const keyboard = Keyboard.from([["a", "b", "c"], ["d", "e"], ["f"]]);
+        assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
+    });
+
+    it("can be wrapped", () => {
+        function r(
+            cols: number,
+            flow: "bottom" | "top",
+            btns: string[][],
+            expected: string[][],
+        ) {
+            assertEquals(
+                Keyboard.from(btns).toFlowed(cols, {
+                    fillLastRow: flow === "bottom",
+                }),
+                Keyboard.from(expected),
+            );
+        }
+        r(4, "top", [["a"]], [["a"]]);
+        r(1, "top", [["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        r(3, "top", [["a", "b"], ["c", "d"], ["e"]], [["a", "b", "c"], [
+            "d",
+            "e",
+        ]]);
+        r(
+            5,
+            "top",
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "b", "c", "d", "e"], ["f"]],
+        );
+        r(
+            3,
+            "bottom",
+            [[..."abcdefghij"]],
+            [["a"], ["b", "c", "d"], ["e", "f", "g"], ["h", "i", "j"]],
+        );
+        const keyboard = Keyboard.from([["a", "b", "c"], ["d", "e"], ["f"]]);
+        assertEquals(
+            keyboard.toFlowed(3).toFlowed(3),
+            keyboard.toFlowed(3),
+        );
+    });
+
+    it("can be created from data sources", () => {
+        const data = [["a", "b"], ["c", "d"]].map((row) =>
+            row.map((text) => ({ text }))
+        );
+        assertEquals(Keyboard.from(data).keyboard, data);
+    });
+
+    it("can be appended", () => {
+        const initial = Keyboard.from([["a", "b"], ["c"]]);
+        assertEquals(
+            initial.clone().append(initial).append(initial).keyboard,
+            [...initial.keyboard, ...initial.keyboard, ...initial.keyboard],
+        );
     });
 });
 
@@ -137,5 +214,109 @@ describe("InlineKeyboard", () => {
                 { text: "pay", pay: true },
             ],
         ]);
+    });
+
+    it("can be transposed", () => {
+        function t(btns: string[][], target: string[][]) {
+            const actual = InlineKeyboard.from(
+                btns.map((row) => row.map((data) => InlineKeyboard.text(data))),
+            );
+            const expected = InlineKeyboard.from(
+                target.map((row) =>
+                    row.map((data) => InlineKeyboard.text(data))
+                ),
+            );
+            assertEquals(
+                InlineKeyboard.from(actual).toTransposed(),
+                InlineKeyboard.from(expected),
+            );
+        }
+        t([["a"]], [["a"]]);
+        t([["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        t([["a", "b"], ["c", "d"], ["e"]], [["a", "c", "e"], ["b", "d"]]);
+        t(
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "c", "d"], ["b", "e"], ["f"]],
+        );
+        const keyboard = new InlineKeyboard().text("a").text("b").text("c")
+            .row()
+            .text("d").text("e").row()
+            .text("f");
+        assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
+    });
+
+    it("can be wrapped", () => {
+        function r(
+            cols: number,
+            flow: "top" | "bottom",
+            btns: string[][],
+            target: string[][],
+        ) {
+            const actual = InlineKeyboard.from(
+                btns.map((row) => row.map((data) => InlineKeyboard.text(data))),
+            );
+            const expected = InlineKeyboard.from(
+                target.map((row) =>
+                    row.map((data) => InlineKeyboard.text(data))
+                ),
+            );
+            assertEquals(
+                actual.toFlowed(cols, { fillLastRow: flow === "bottom" }),
+                expected,
+            );
+        }
+        r(4, "top", [["a"]], [["a"]]);
+        r(1, "top", [["a", "b", "c"]], [["a"], ["b"], ["c"]]);
+        r(
+            3,
+            "top",
+            [["a", "b"], ["c", "d"], ["e"]],
+            [["a", "b", "c"], ["d", "e"]],
+        );
+        r(
+            5,
+            "top",
+            [["a", "b"], ["c"], ["d", "e", "f"]],
+            [["a", "b", "c", "d", "e"], ["f"]],
+        );
+        r(
+            3,
+            "bottom",
+            [[..."abcdefghij"]],
+            [["a"], ["b", "c", "d"], ["e", "f", "g"], ["h", "i", "j"]],
+        );
+        const keyboard = new InlineKeyboard()
+            .text("a").text("b").text("c").row()
+            .text("d").text("e").row()
+            .text("f");
+        assertEquals(
+            keyboard.toFlowed(3).toFlowed(3),
+            keyboard.toFlowed(3),
+        );
+    });
+
+    it("can be created from data sources", () => {
+        const labels = [["a", "b"], ["c", "d"]];
+        const raw = labels.map((row) =>
+            row.map((text) => ({ text, callback_data: text }))
+        );
+        assertEquals(InlineKeyboard.from(raw).inline_keyboard, raw);
+
+        const keyboard = new InlineKeyboard().text("button");
+        assertNotStrictEquals(InlineKeyboard.from(keyboard), keyboard);
+        assertEquals(InlineKeyboard.from(keyboard), keyboard);
+    });
+
+    it("can be appended", () => {
+        const initial = new InlineKeyboard()
+            .text("a").text("b").text("c");
+        assertEquals(
+            initial.clone().append(initial).append(initial).inline_keyboard,
+            [
+                ...initial.inline_keyboard,
+                ...initial.inline_keyboard,
+                ...initial.inline_keyboard,
+            ],
+        );
     });
 });
