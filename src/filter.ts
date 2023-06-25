@@ -36,7 +36,7 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
     return (ctx: C): ctx is Filter<C, Q> => predicate(ctx);
 }
 
-function parse(filter: FilterQuery | FilterQuery[]): string[][] {
+export function parse(filter: FilterQuery | FilterQuery[]): string[][] {
     return Array.isArray(filter)
         ? filter.map((q) => q.split(":"))
         : [filter.split(":")];
@@ -49,7 +49,7 @@ function compile(parsed: string[][]): (ctx: Context) => boolean {
     return (ctx) => !!predicate(ctx.update, ctx);
 }
 
-function preprocess(filter: string[]): string[][] {
+export function preprocess(filter: string[]): string[][] {
     const valid: any = UPDATE_KEYS;
     const expanded = [filter]
         // expand L1
