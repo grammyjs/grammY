@@ -473,7 +473,6 @@ export class Keyboard {
      * objects.
      *
      * @param source A two-dimensional button array
-     * @param options Optional options for the custom keyboard
      */
     static from(source: KeyboardSource): Keyboard {
         if (source instanceof Keyboard) return source.clone();
