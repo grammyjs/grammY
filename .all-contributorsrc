@@ -203,7 +203,9 @@
       "profile": "https://github.com/code-withAshish",
       "contributions": [
         "doc",
-        "question"
+        "question",
+        "bug",
+        "review"
       ]
     },
     {
@@ -1062,7 +1064,28 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/368831?v=4",
       "profile": "https://chrisandrew.cl",
       "contributions": [
-        "bug"
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "kiyasov",
+      "name": "Islam Kiiasov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16527461?v=4",
+      "profile": "https://github.com/kiyasov",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ssistoza",
+      "name": "Shane Avery Sistoza",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17445445?v=4",
+      "profile": "https://github.com/ssistoza",
+      "contributions": [
+        "ideas",
+        "code",
+        "test"
       ]
     }
   ],
