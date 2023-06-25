@@ -19,6 +19,8 @@ const debug = d("grammy:warn");
 // === Export all API types
 export * from "https://deno.land/x/grammy_types@v3.1.2/mod.ts";
 
+/** A value, or a potentially async function supplying that value */
+type MaybeSupplier<T> = T | (() => T | Promise<T>);
 /** Something that looks like a URL. */
 interface URLLike {
     /**
@@ -54,7 +56,7 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file:
+        file: MaybeSupplier<
             | string
             | Blob
             | Deno.FsFile
@@ -63,7 +65,8 @@ export class InputFile {
             | Uint8Array
             | ReadableStream<Uint8Array>
             | Iterable<Uint8Array>
-            | AsyncIterable<Uint8Array>,
+            | AsyncIterable<Uint8Array>
+        >,
         filename?: string,
     ) {
         this.fileData = file;
@@ -118,9 +121,14 @@ export class InputFile {
         // Handle URL and URLLike objects
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
-        // Mark streams and iterators as consumed
-        if (!(data instanceof Uint8Array)) this.consumed = true;
-        // Return buffers and byte streams as-is
+        // Return buffers as-is
+        if (data instanceof Uint8Array) return data;
+        // Unwrap supplier functions
+        if (typeof data === "function") {
+            return new InputFile(await data()).toRaw();
+        }
+        // Mark streams and iterators as consumed and return them as-is
+        this.consumed = true;
         return data;
     }
 }
