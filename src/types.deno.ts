@@ -1,6 +1,6 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.184.0/path/mod.ts";
-import { iterateReader } from "https://deno.land/std@0.184.0/streams/mod.ts";
+import { basename } from "https://deno.land/std@0.192.0/path/mod.ts";
+import { iterateReader } from "https://deno.land/std@0.192.0/streams/mod.ts";
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -11,14 +11,16 @@ import {
     type InputMediaVideo as InputMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.1.1/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.1.2/mod.ts";
 import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.1.1/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.1.2/mod.ts";
 
+/** A value, or a potentially async function supplying that value */
+type MaybeSupplier<T> = T | (() => T | Promise<T>);
 /** Something that looks like a URL. */
 interface URLLike {
     /**
@@ -54,16 +56,18 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file:
+        file: MaybeSupplier<
             | string
             | Blob
             | Deno.FsFile
+            | Response
             | URL
             | URLLike
             | Uint8Array
             | ReadableStream<Uint8Array>
             | Iterable<Uint8Array>
-            | AsyncIterable<Uint8Array>,
+            | AsyncIterable<Uint8Array>
+        >,
         filename?: string,
     ) {
         this.fileData = file;
@@ -115,12 +119,22 @@ export class InputFile {
         }
         if (data instanceof Blob) return data.stream();
         if (isDenoFile(data)) return iterateReader(data);
+        // Handle Response objects
+        if (data instanceof Response) {
+            if (data.body === null) throw new Error(`No response body!`);
+            return data.body;
+        }
         // Handle URL and URLLike objects
         if (data instanceof URL) return fetchFile(data);
         if ("url" in data) return fetchFile(data.url);
-        // Mark streams and iterators as consumed
-        if (!(data instanceof Uint8Array)) this.consumed = true;
-        // Return buffers and byte streams as-is
+        // Return buffers as-is
+        if (data instanceof Uint8Array) return data;
+        // Unwrap supplier functions
+        if (typeof data === "function") {
+            return new InputFile(await data()).toRaw();
+        }
+        // Mark streams and iterators as consumed and return them as-is
+        this.consumed = true;
         return data;
     }
 }

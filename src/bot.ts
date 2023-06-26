@@ -1,5 +1,5 @@
 // deno-lint-ignore-file camelcase
-import { BotError, Composer, run } from "./composer.ts";
+import { BotError, Composer, type Middleware, run } from "./composer.ts";
 import { Context } from "./context.ts";
 import { Api } from "./core/api.ts";
 import {
@@ -7,10 +7,28 @@ import {
     type WebhookReplyEnvelope,
 } from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
+import { type Filter, type FilterQuery, parse, preprocess } from "./filter.ts";
 import { debug as d } from "./platform.deno.ts";
 import { type Update, type UserFromGetMe } from "./types.ts";
 const debug = d("grammy:bot");
+const debugWarn = d("grammy:warn");
 const debugErr = d("grammy:error");
+
+export const DEFAULT_UPDATE_TYPES = [
+    "message",
+    "edited_message",
+    "channel_post",
+    "edited_channel_post",
+    "inline_query",
+    "chosen_inline_result",
+    "callback_query",
+    "shipping_query",
+    "pre_checkout_query",
+    "poll",
+    "poll_answer",
+    "my_chat_member",
+    "chat_join_request",
+] as const;
 
 /**
  * Options that can be specified when running the bot via simple long polling.
@@ -141,6 +159,9 @@ export class Bot<
         ...args: ConstructorParameters<typeof Context>
     ) => C;
 
+    /** Used to log a warning if some update types are not in allowed_updates */
+    private observedUpdateTypes = new Set<string>();
+
     /**
      * Holds the bot's error handler that is invoked whenever middleware throws
      * (rejects). If you set your own error handler via `bot.catch`, all that
@@ -212,6 +233,19 @@ export class Bot<
             );
         }
         return this.me;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    on<Q extends FilterQuery>(
+        filter: Q | Q[],
+        ...middleware: Array<Middleware<Filter<C, Q>>>
+    ): Composer<Filter<C, Q>> {
+        for (const [u] of parse(filter).flatMap(preprocess)) {
+            this.observedUpdateTypes.add(u);
+        }
+        return super.on(filter, ...middleware);
     }
 
     /**
@@ -382,20 +416,13 @@ a known bot info object.",
         // Bot was stopped during `onStart`
         if (!this.pollingRunning) return;
 
+        // Prevent common misuse that leads to missing updates
+        validateAllowedUpdates(
+            this.observedUpdateTypes,
+            options?.allowed_updates,
+        );
         // Prevent common misuse that causes memory leak
-        this.use = () => {
-            throw new Error(`It looks like you are registering more listeners \
-on your bot from within other listeners! This means that every time your bot \
-handles a message like this one, new listeners will be added. This list grows until \
-your machine crashes, so grammY throws this error to tell you that you should \
-probably do things a bit differently. If you're unsure how to resolve this problem, \
-you can ask in the group chat: https://telegram.me/grammyjs
-
-On the other hand, if you actually know what you're doing and you do need to install \
-further middleware while your bot is running, consider installing a composer \
-instance on your bot, and in turn augment the composer after the fact. This way, \
-you can circumvent this protection against memory leaks.`);
-        };
+        this.use = noUseFunction;
 
         // Start polling
         debug("Starting simple long polling");
@@ -457,7 +484,8 @@ you can circumvent this protection against memory leaks.`);
     private async loop(options?: PollingOptions) {
         const limit = options?.limit;
         const timeout = options?.timeout ?? 30; // seconds
-        let allowed_updates = options?.allowed_updates;
+        let allowed_updates: PollingOptions["allowed_updates"] =
+            options?.allowed_updates ?? []; // reset to default if unspecified
 
         while (this.pollingRunning) {
             // fetch updates
@@ -640,4 +668,36 @@ async function sleep(seconds: number, signal?: AbortSignal) {
     } finally {
         signal?.removeEventListener("abort", abort);
     }
+}
+
+/**
+ * Takes a set of observed update types and a list of allowed updates and logs a
+ * warning in debug mode if some update types were observed that have not been
+ * allowed.
+ */
+function validateAllowedUpdates(
+    updates: Set<string>,
+    allowed: readonly string[] = DEFAULT_UPDATE_TYPES,
+) {
+    const impossible = Array.from(updates).filter((u) => !allowed.includes(u));
+    if (impossible.length > 0) {
+        debugWarn(
+            `You registered listeners for the following update types, \
+but you did not specify them in \`allowed_updates\` \
+so they may not be received: ${impossible.map((u) => `'${u}'`).join(", ")}`,
+        );
+    }
+}
+function noUseFunction(): never {
+    throw new Error(`It looks like you are registering more listeners \
+on your bot from within other listeners! This means that every time your bot \
+handles a message like this one, new listeners will be added. This list grows until \
+your machine crashes, so grammY throws this error to tell you that you should \
+probably do things a bit differently. If you're unsure how to resolve this problem, \
+you can ask in the group chat: https://telegram.me/grammyjs
+
+On the other hand, if you actually know what you're doing and you do need to install \
+further middleware while your bot is running, consider installing a composer \
+instance on your bot, and in turn augment the composer after the fact. This way, \
+you can circumvent this protection against memory leaks.`);
 }
