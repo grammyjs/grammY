@@ -1121,6 +1121,17 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "PonomareVlad",
+      "name": "Vladislav Ponomarev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2877584?v=4",
+      "profile": "https://github.com/PonomareVlad",
+      "contributions": [
+        "test",
+        "code",
+        "platform"
+      ]
     }
   ],
   "contributorsPerLine": 7,
