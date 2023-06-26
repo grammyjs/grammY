@@ -39,6 +39,7 @@
         ".": {
             "types": "./out/mod.d.ts",
             "node": "./out/mod.js",
+            "browser": "./out/web.mjs",
             "default": "./out/web.mjs"
         },
         "./types": {
