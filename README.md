@@ -279,6 +279,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MaicolAntali"><img src="https://avatars.githubusercontent.com/u/79454487?v=4?s=100" width="100px;" alt="Maicol"/><br /><sub><b>Maicol</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=MaicolAntali" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Nazar-Ant"><img src="https://avatars.githubusercontent.com/u/75927667?v=4?s=100" width="100px;" alt="Nazar Antoniuk"/><br /><sub><b>Nazar Antoniuk</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Nazar-Ant" title="Documentation">📖</a> <a href="#translation-Nazar-Ant" title="Translation">🌍</a> <a href="#maintenance-Nazar-Ant" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MajorLettuce"><img src="https://avatars.githubusercontent.com/u/3730149?v=4?s=100" width="100px;" alt="Aleksei Ivanov"/><br /><sub><b>Aleksei Ivanov</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3AMajorLettuce" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
