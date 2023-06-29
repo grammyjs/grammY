@@ -19,10 +19,33 @@ const ALL_CHAT_PERMISSIONS = {
 } as const;
 
 /**
+ * Contains utility types for the available update types and chat permissions
+ */
+export interface ApiConstants {
+    DefaultUpdateTypes: typeof DEFAULT_UPDATE_TYPES[number];
+    AllUpdateTypes: typeof ALL_UPDATE_TYPES[number];
+    AllChatPermissions: keyof typeof ALL_CHAT_PERMISSIONS;
+}
+
+/**
  * Contains lists of constants which are useful when working with the Bot API.
  */
 export const API_CONSTANTS = Object.freeze(
     {
+        /**
+         * List of update types a bot receives by default. Useful if you want to
+         * receive all update types but `chat_member`.
+         *
+         * ```ts
+         * // Built-in polling:
+         * bot.start({ allowed_updates: DEFAULT_UPDATE_TYPES });
+         * // grammY runner:
+         * run(bot, { runner: { fetch: { allowed_updates: DEFAULT_UPDATE_TYPES } } });
+         * // Webhooks:
+         * await bot.api.setWebhook(url, { allowed_updates: DEFAULT_UPDATE_TYPES });
+         * ```
+         */
+        DEFAULT_UPDATE_TYPES,
         /**
          * List of all available update types. Useful if you want to receive all
          * updates from the Bot API, rather than just those that are delivered by
