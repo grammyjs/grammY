@@ -4,7 +4,7 @@ import { type Update } from "./types.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
-const filterQueryCache = new Map<string[], (ctx: Context) => boolean>();
+const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
 
 // === Obtain O(1) filter function from query
 /**
@@ -34,10 +34,11 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
     filter: Q | Q[],
 ): FilterFunction<C, Filter<C, Q>> {
     const queries = Array.isArray(filter) ? filter : [filter];
-    const predicate = filterQueryCache.get(queries) ?? (() => {
+    const key = queries.join(",");
+    const predicate = filterQueryCache.get(key) ?? (() => {
         const parsed = parse(queries);
         const pred = compile(parsed);
-        filterQueryCache.set(queries, pred);
+        filterQueryCache.set(key, pred);
         return pred;
     })();
     return (ctx: C): ctx is Filter<C, Q> => predicate(ctx);
