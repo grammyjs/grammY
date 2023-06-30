@@ -108,7 +108,7 @@ The Russian community chat can be found [here](https://t.me/grammyjs_ru).
 —The channel where updates to grammY and the ecosystem are posted.
 We are also [on Twitter](https://twitter.com/grammy_js).
 
-### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
+### [Telegram Bot API reference](https://core.telegram.org/bots/api)
 
 —documentation of the API that Telegram offers, and that grammY connects to under the hood.
 
