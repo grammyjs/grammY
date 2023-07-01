@@ -28,45 +28,18 @@ Admins respect the privacy and security of the reporter of any incident.
 
 ### Guidelines
 
-Admins will follow these guidelines when taking action.
+Admins will try to follow these guidelines when taking action.
 
-### 1. Correction
-
-**Community Impact**: Use of inappropriate language or other behavior deemed unprofessional or unwelcome in the community.
-
-**Consequence**: A written warning, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate.
-A public apology may be requested.
-
-### 2. Warning
-
-**Community Impact**: A violation through a single incident or series of actions.
-
-**Consequence**: A warning with consequences for continued behavior.
-No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time.
-This includes avoiding interactions in community spaces as well as external channels like social media.
-Violating these terms may lead to a temporary or permanent ban.
-
-### 3. Temporary Ban
-
-**Community Impact**: A serious violation of community standards, including sustained inappropriate behavior.
-
-**Consequence**: A temporary ban from any sort of interaction or public communication with the community for a specified period of time.
-No public or private interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
-
-### 4. Permanent Ban
-
-**Community Impact**: Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment of an individual, or aggression toward or disparagement of classes of individuals.
-
-**Consequence**: A permanent ban from any sort of public interaction within the community.
+- Above all, use human judgement which is appropriate for the situation.
+- Warn or temp ban people who use inappropriate language or show other unwelcome behavior.
+  If there is hope that the respective person can learn and avoid such behavior in the future, it is imperative to teach them rather than banning them.
+- Be transparent about your actions, and provide necessary clarity why you performed them.
+- Delete messages that are too harmful to stay online and be read by others.
+  Only delete these messages, and no others, so that the context of your actions is preserved as much as possible.
 
 ## Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 2.0, available at <https://www.contributor-covenant.org/version/2/0/code_of_conduct.html>.
-
-Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcement ladder](https://github.com/mozilla/diversity).
-
-[homepage]: https://www.contributor-covenant.org
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.0, available at <https://www.contributor-covenant.org/version/2/0/code_of_conduct.html>.
 
 For answers to common questions about this code of conduct, see the FAQ at <https://www.contributor-covenant.org/faq>.
 Translations are available at <https://www.contributor-covenant.org/translations>.
