@@ -2,7 +2,7 @@
 
 ## Who We Want to Be
 
-We as a community want to be inclusive for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, religion, or sexual identity and orientation.
+We as a community want to be inclusive for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, language, personal appearance, religion, or sexual identity and orientation.
 
 We are humans.
 We meet each other with respect and dignity.
