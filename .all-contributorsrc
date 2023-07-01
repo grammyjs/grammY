@@ -9,7 +9,7 @@
     "imageSize": 50,
     "commit": false,
     "commitConvention": "none",
-    "contributorsPerLine": 12,
+    "contributorsPerLine": 10,
     "skipCi": false,
     "commitType": "docs",
     "contributors": [
