@@ -6,10 +6,10 @@
     "files": [
         "README.md"
     ],
-    "imageSize": 75,
+    "imageSize": 50,
     "commit": false,
     "commitConvention": "none",
-    "contributorsPerLine": 10,
+    "contributorsPerLine": 12,
     "skipCi": false,
     "commitType": "docs",
     "contributors": [
