@@ -76,17 +76,17 @@ Here are some more resources to support you:
 
 ## Resources
 
-### [grammY Website](https://grammy.dev)
+### [grammY website](https://grammy.dev)
 
 —main project website and documentation.
 Gets you started and explains all concepts.
 
-### [grammY API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts)
+### [grammY API reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts)
 
 —reference of everything that grammY exports.
 Useful to look up descriptions about any element of grammY.
 
-### [grammY Example Bots](https://github.com/grammyjs/examples)
+### [grammY examples](https://github.com/grammyjs/examples)
 
 —repository full of example bots.
 Includes a setup to easily run any of them.
@@ -96,16 +96,16 @@ Includes a setup to easily run any of them.
 —list of awesome projects built with grammY.
 Helpful if you want to see some real-world usage.
 
-### [grammY Telegram Chat](https://t.me/grammyjs)
+### [grammY chat](https://t.me/grammyjs)
 
-—Telegram chat where you can ask any question about grammY or bots in general.
+—The chat where you can ask any question about grammY or bots in general.
 We are also open for feedback, ideas, and contributions!
 
 The Russian community chat can be found [here](https://t.me/grammyjs_ru).
 
-### [grammY News Channel](https://t.me/grammyjs_news)
+### [grammY news](https://t.me/grammyjs_news)
 
-—Telegram channel where updates to grammY and the ecosystem are posted.
+—The channel where updates to grammY and the ecosystem are posted.
 We are also [on Twitter](https://twitter.com/grammy_js).
 
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
