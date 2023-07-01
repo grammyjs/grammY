@@ -9,6 +9,9 @@
   "imageSize": 100,
   "commit": false,
   "commitConvention": "none",
+  "contributorsPerLine": 9,
+  "skipCi": false,
+  "commitType": "docs",
   "contributors": [
     {
       "login": "KnorpelSenf",
@@ -27,7 +30,8 @@
         "review",
         "mentoring",
         "projectManagement",
-        "infra"
+        "infra",
+        "audio"
       ]
     },
     {
@@ -1135,8 +1139,5 @@
         "platform"
       ]
     }
-  ],
-  "contributorsPerLine": 7,
-  "skipCi": false,
-  "commitType": "docs"
+  ]
 }
