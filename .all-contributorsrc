@@ -496,7 +496,8 @@
       "contributions": [
         "review",
         "doc",
-        "translation"
+        "translation",
+        "maintenance"
       ]
     },
     {
@@ -691,7 +692,8 @@
         "code",
         "review",
         "infra",
-        "ideas"
+        "ideas",
+        "mentoring"
       ]
     },
     {
