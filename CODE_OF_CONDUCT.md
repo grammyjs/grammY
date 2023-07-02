@@ -21,7 +21,7 @@ They take appropriate and fair corrective action in response to any behavior tha
 When they take action, they will communicate this appropriately.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the admins at <https://t.me/grammyjs>.
-You can tag all available admins using the `/report` command.
+In the Telegram group chat you can tag all available admins using the `/report` command.
 All complaints will be reviewed and investigated promptly and fairly.
 
 Admins respect the privacy and security of the reporter of any incident.
