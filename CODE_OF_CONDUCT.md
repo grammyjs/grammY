@@ -11,7 +11,7 @@ If it is not obvious what this means, here are a few examples of behavior that w
 
 - Trolling, insulting or derogatory comments, and personal or political attacks
 - Public or private harassment
-- Publishing others' private information, such as a physical or email
+- Publishing others’ private information, such as a physical or email
   address, without their explicit permission
 
 ## Enforcement
