@@ -20,7 +20,8 @@ Admins enforce our standards of acceptable behavior.
 They take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.
 When they take action, they will communicate this appropriately.
 
-Reports of abusive, harassing, or otherwise unacceptable behavior, even those occurring on platforms other than Telegram, may be submitted to the admins at <https://t.me/grammyjs>. In the [chat](https://t.me/grammyjs), you can also notify the available administrators using the `/report` command.
+Instances of abusive, harassing, or otherwise unacceptable behavior on any platform may be reported to the administrators at <https://t.me/grammyjs>.
+In the [chat](https://t.me/grammyjs), you can also notify the available administrators using the `/report` command.
 All complaints will be reviewed and investigated promptly and fairly.
 
 Admins respect the privacy and security of the reporter of any incident.
