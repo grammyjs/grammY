@@ -27,7 +27,7 @@ export interface ApiConstants {
     AllChatPermissions: keyof typeof ALL_CHAT_PERMISSIONS;
 }
 
-export interface API_CONSTANTS {
+interface API_CONSTANTS {
     /**
      * List of update types a bot receives by default. Useful if you want to
      * receive all update types but `chat_member`.
