@@ -27,10 +27,7 @@ export interface ApiConstants {
     AllChatPermissions: keyof typeof ALL_CHAT_PERMISSIONS;
 }
 
-/**
- * Contains lists of constants which are useful when working with the Bot API.
- */
-export const API_CONSTANTS = {
+export interface API_CONSTANTS {
     /**
      * List of update types a bot receives by default. Useful if you want to
      * receive all update types but `chat_member`.
@@ -44,7 +41,7 @@ export const API_CONSTANTS = {
      * await bot.api.setWebhook(url, { allowed_updates: DEFAULT_UPDATE_TYPES });
      * ```
      */
-    DEFAULT_UPDATE_TYPES,
+    DEFAULT_UPDATE_TYPES: typeof DEFAULT_UPDATE_TYPES;
     /**
      * List of all available update types. Useful if you want to receive all
      * updates from the Bot API, rather than just those that are delivered by
@@ -62,7 +59,7 @@ export const API_CONSTANTS = {
      * await bot.api.setWebhook(url, { allowed_updates: ALL_UPDATE_TYPES });
      * ```
      */
-    ALL_UPDATE_TYPES,
+    ALL_UPDATE_TYPES: typeof ALL_UPDATE_TYPES;
     /**
      * An object containing all available chat permissions. Useful if you want
      * to lift restrictions from a user, as this action requires you to pass
@@ -78,6 +75,15 @@ export const API_CONSTANTS = {
      * await ctx.restrictAuthor(ALL_CHAT_PERMISSIONS);
      * ```
      */
+    ALL_CHAT_PERMISSIONS: typeof ALL_CHAT_PERMISSIONS;
+}
+
+/**
+ * Contains lists of constants which are useful when working with the Bot API.
+ */
+export const API_CONSTANTS: API_CONSTANTS = {
+    DEFAULT_UPDATE_TYPES,
+    ALL_UPDATE_TYPES,
     ALL_CHAT_PERMISSIONS,
 } as const;
 
