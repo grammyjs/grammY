@@ -1148,6 +1148,16 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "lejovaar7",
+      "name": "Leandro Vargas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26439842?v=4",
+      "profile": "https://github.com/lejovaar7",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
