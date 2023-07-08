@@ -275,6 +275,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/PonomareVlad"><img src="https://avatars.githubusercontent.com/u/2877584?v=4?s=100" width="100px;" alt="Vladislav Ponomarev"/><br /><sub><b>Vladislav Ponomarev</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=PonomareVlad" title="Tests">⚠️</a> <a href="https://github.com/grammyjs/grammY/commits?author=PonomareVlad" title="Code">💻</a> <a href="#platform-PonomareVlad" title="Packaging/porting to new platform">📦</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/louietyj"><img src="https://avatars.githubusercontent.com/u/11096034?v=4?s=100" width="100px;" alt="Louie Tan"/><br /><sub><b>Louie Tan</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Alouietyj" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
