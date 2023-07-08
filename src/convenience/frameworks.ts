@@ -181,7 +181,7 @@ const http: FrameworkAdapter = (req, res) => {
 /** AWS lambda serverless functions */
 const awsLambda: FrameworkAdapter = (event, _context, callback) => ({
     update: JSON.parse(event.body),
-    header: event.headers[SECRET_HEADER_LOWERCASE],
+    header: event.headers[SECRET_HEADER],
     end: () => callback(null, { statusCode: 200 }),
     respond: (json) =>
         callback(null, {
@@ -198,7 +198,7 @@ const awsLambdaAsync: FrameworkAdapter = (event, _context) => {
 
     return {
         update: JSON.parse(event.body),
-        header: event.headers[SECRET_HEADER_LOWERCASE],
+        header: event.headers[SECRET_HEADER],
         end: () => resolveResponse({ statusCode: 200 }),
         respond: (json) =>
             resolveResponse({
