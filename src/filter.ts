@@ -486,20 +486,16 @@ type FilteredContext<C extends Context, U extends Update> =
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
-    msg: [U["callback_query"]] extends [object]
-        ? U["callback_query"]["message"]
+    msg: [U["callback_query"]] extends [object] ? U["callback_query"]["message"]
         : [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]
         : [U["channel_post"]] extends [object] ? U["channel_post"]
-        : [U["edited_channel_post"]] extends [object]
-            ? U["edited_channel_post"]
+        : [U["edited_channel_post"]] extends [object] ? U["edited_channel_post"]
         : undefined;
     chat: [U["callback_query"]] extends [object]
         ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
-        : [Shortcuts<U>["msg"]] extends [object]
-            ? Shortcuts<U>["msg"]["chat"]
-        : [U["my_chat_member"]] extends [object]
-            ? U["my_chat_member"]["chat"]
+        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+        : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["chat"]
         : [U["chat_member"]] extends [object] ? U["chat_member"]["chat"]
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["chat"]
@@ -507,21 +503,17 @@ interface Shortcuts<U extends Update> {
     senderChat: [Shortcuts<U>["msg"]] extends [object]
         ? Shortcuts<U>["msg"]["sender_chat"]
         : undefined;
-    from: [U["callback_query"]] extends [object]
-        ? U["callback_query"]["from"]
+    from: [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
         : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
-        : [U["shipping_query"]] extends [object]
-            ? U["shipping_query"]["from"]
+        : [U["shipping_query"]] extends [object] ? U["shipping_query"]["from"]
         : [U["pre_checkout_query"]] extends [object]
             ? U["pre_checkout_query"]["from"]
         : [U["chosen_inline_result"]] extends [object]
             ? U["chosen_inline_result"]["from"]
-        : [U["message"]] extends [object]
-            ? NonNullable<U["message"]["from"]>
+        : [U["message"]] extends [object] ? NonNullable<U["message"]["from"]>
         : [U["edited_message"]] extends [object]
             ? NonNullable<U["edited_message"]["from"]>
-        : [U["my_chat_member"]] extends [object]
-            ? U["my_chat_member"]["from"]
+        : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["from"]
         : [U["chat_member"]] extends [object] ? U["chat_member"]["from"]
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
