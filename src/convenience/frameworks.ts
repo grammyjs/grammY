@@ -76,7 +76,7 @@ const express: FrameworkAdapter = (req, res) => ({
         res.send(json);
     },
     unauthorized: () => {
-        res.send(401, WRONG_TOKEN_ERROR);
+        res.status(401).send(WRONG_TOKEN_ERROR);
     },
 });
 
