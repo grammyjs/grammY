@@ -40,6 +40,27 @@ export interface API_CONSTANTS {
      * // Webhooks:
      * await bot.api.setWebhook(url, { allowed_updates: DEFAULT_UPDATE_TYPES });
      * ```
+     *
+     * See the [Bot API documentation](https://core.telegram.org/bots/api#update) for more information.
+     *
+     * Currently defined as:
+     *
+     * ```ts
+     * type DEFAULT_UPDATE_TYPES =
+     *  | "message"
+     *  | "edited_message"
+     *  | "channel_post"
+     *  | "edited_channel_post"
+     *  | "inline_query"
+     *  | "chosen_inline_result"
+     *  | "callback_query"
+     *  | "shipping_query"
+     *  | "pre_checkout_query"
+     *  | "poll"
+     *  | "poll_answer"
+     *  | "my_chat_member"
+     *  | "chat_join_request";
+     * ```
      */
     DEFAULT_UPDATE_TYPES: typeof DEFAULT_UPDATE_TYPES;
     /**
@@ -58,6 +79,28 @@ export interface API_CONSTANTS {
      * // Webhooks:
      * await bot.api.setWebhook(url, { allowed_updates: ALL_UPDATE_TYPES });
      * ```
+     *
+     * See the [Bot API documentation](https://core.telegram.org/bots/api#update) for more information.
+     *
+     * Currently defined as:
+     *
+     * ```ts
+     * type DEFAULT_UPDATE_TYPES =
+     *  | "message"
+     *  | "edited_message"
+     *  | "channel_post"
+     *  | "edited_channel_post"
+     *  | "inline_query"
+     *  | "chosen_inline_result"
+     *  | "callback_query"
+     *  | "shipping_query"
+     *  | "pre_checkout_query"
+     *  | "poll"
+     *  | "poll_answer"
+     *  | "my_chat_member"
+     *  | "chat_join_request"
+     *  | "chat_member";
+     * ```
      */
     ALL_UPDATE_TYPES: typeof ALL_UPDATE_TYPES;
     /**
@@ -73,6 +116,28 @@ export interface API_CONSTANTS {
      * // On `Context`:
      * await ctx.restrictChatMember(user_id, ALL_CHAT_PERMISSIONS);
      * await ctx.restrictAuthor(ALL_CHAT_PERMISSIONS);
+     * ```
+     *
+     * See the [Bot API documentation](https://core.telegram.org/bots/api#chatpermissions) for more information.
+     *
+     * Currently defined as:
+     *
+     * ```ts
+     *  type ALL_CHAT_PERMISSIONS =
+     *   | "can_send_messages"
+     *   | "can_send_audios"
+     *   | "can_send_documents"
+     *   | "can_send_photos"
+     *   | "can_send_videos"
+     *   | "can_send_video_notes"
+     *   | "can_send_voice_notes"
+     *   | "can_send_polls"
+     *   | "can_send_other_messages"
+     *   | "can_add_web_page_previews"
+     *   | "can_change_info"
+     *   | "can_invite_users"
+     *   | "can_pin_messages"
+     *   | "can_manage_topics";
      * ```
      */
     ALL_CHAT_PERMISSIONS: typeof ALL_CHAT_PERMISSIONS;
