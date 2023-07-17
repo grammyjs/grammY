@@ -13,9 +13,7 @@
         "url": "https://github.com/grammyjs/grammY"
     },
     "scripts": {
-        "prepare": "npm run backport",
-        "backport": "deno2node tsconfig.json",
-        "contribs": "all-contributors"
+        "prepare": "deno task --quiet backport"
     },
     "dependencies": {
         "@grammyjs/types": "3.1.2",
@@ -26,9 +24,7 @@
     "devDependencies": {
         "@types/debug": "^4.1.8",
         "@types/node": "^12.20.55",
-        "@types/node-fetch": "2.6.2",
-        "all-contributors-cli": "6.24.0",
-        "deno2node": "^1.8.1"
+        "@types/node-fetch": "2.6.2"
     },
     "files": [
         "out/"
