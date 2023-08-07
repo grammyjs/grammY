@@ -25,7 +25,7 @@ jobs:
               run: npm install --ignore-scripts
 
             - name: Run backporting
-              run: npm run backport
+              run: deno task backport
 
     format-and-lint:
         runs-on: ubuntu-latest
