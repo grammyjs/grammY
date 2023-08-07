@@ -8,8 +8,13 @@ if (!release) throw new Error("No release specified!");
 
 // Rewrite imports from .deno.ts to .web.ts
 const cache = createCache({ root: "deno_cache/" });
-const load = (specifier: string) =>
-    cache.load(specifier.replace(/\.deno\.ts$/, ".web.ts"));
+const load = (specifier: string) => {
+    if (specifier.endsWith(".deno.ts")) {
+        const baseLength = specifier.length - ".deno.ts".length;
+        specifier = specifier.substring(0, baseLength) + ".web.ts";
+    }
+    return cache.load(specifier);
+};
 
 console.log(`Bundling version '${release}' from ${source} ...`);
 // Bundle code
