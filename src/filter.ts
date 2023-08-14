@@ -266,6 +266,7 @@ const COMMON_MESSAGE_KEYS = {
     dice: {},
     poll: {},
     venue: {},
+    story: {},
 
     new_chat_title: {},
     new_chat_photo: {},
