@@ -260,6 +260,7 @@ const COMMON_MESSAGE_KEYS = {
     ...EDITABLE_MESSAGE_KEYS,
 
     sticker: STICKER_KEYS,
+    story: {},
     video_note: {},
     voice: {},
     contact: {},
