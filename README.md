@@ -2,7 +2,7 @@
 
 <div align="right">
 
-# The Telegram Bot Framework.
+# The Telegram Bot Framework
 
 </div>
 
@@ -10,7 +10,7 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-6.7-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-6.8-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
