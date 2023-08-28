@@ -13,7 +13,7 @@ import { type ApiError, type ResponseParameters } from "../types.ts";
  */
 export class GrammyError extends Error implements ApiError {
     /** Flag that this request was unsuccessful. Always `false`. */
-    public readonly ok: false = false;
+    public readonly ok = false;
     /** An integer holding Telegram's error code. Subject to change. */
     public readonly error_code: number;
     /** A human-readable description of the error. */
