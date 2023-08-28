@@ -160,7 +160,7 @@ const http: FrameworkAdapter = (req, res) => {
             const chunks: Chunk[] = [];
             req.on("data", (chunk: Chunk) => chunks.push(chunk))
                 .once("end", () => {
-                    // @ts-ignore `Buffer` is Node-only
+                    // @ts-expect-error `Buffer` is Node-only
                     const raw = Buffer.concat(chunks).toString("utf-8");
                     resolve(JSON.parse(raw));
                 })
