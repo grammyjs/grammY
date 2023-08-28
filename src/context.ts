@@ -156,7 +156,7 @@ const checker: StaticHas = {
                     }' not '${cmd}')`,
                 );
             }
-            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
+            const set = cmd.includes("@") ? atCommands : noAtCommands;
             set.add(cmd);
         });
         return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
