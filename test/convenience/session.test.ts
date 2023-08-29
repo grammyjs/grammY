@@ -745,7 +745,7 @@ describe("enhanceStorage", () => {
         assertEquals(await store.read("k"), 42);
         await tick(2);
         assertEquals(await store.read("k"), undefined);
-        store.write("k", 42);
+        await store.write("k", 42);
         assertEquals(await store.read("k"), 42);
     });
 
@@ -884,7 +884,7 @@ describe("enhanceStorage", () => {
         assertEquals(await enhanced.read("k"), 400);
         await tick(2);
         assertEquals(await enhanced.read("k"), undefined);
-        enhanced.write("k", 42);
+        await enhanced.write("k", 42);
         assertEquals(await enhanced.read("k"), 42);
     });
 });
