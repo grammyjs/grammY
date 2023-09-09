@@ -9,6 +9,9 @@
   "imageSize": 100,
   "commit": false,
   "commitConvention": "none",
+  "contributorsPerLine": 9,
+  "skipCi": false,
+  "commitType": "docs",
   "contributors": [
     {
       "login": "KnorpelSenf",
@@ -27,7 +30,9 @@
         "review",
         "mentoring",
         "projectManagement",
-        "infra"
+        "infra",
+        "audio",
+        "a11y"
       ]
     },
     {
@@ -496,7 +501,8 @@
       "contributions": [
         "review",
         "doc",
-        "translation"
+        "translation",
+        "maintenance"
       ]
     },
     {
@@ -691,7 +697,8 @@
         "code",
         "review",
         "infra",
-        "ideas"
+        "ideas",
+        "mentoring"
       ]
     },
     {
@@ -1070,7 +1077,8 @@
       "profile": "https://chrisandrew.cl",
       "contributions": [
         "bug",
-        "code"
+        "code",
+        "review"
       ]
     },
     {
@@ -1132,9 +1140,55 @@
         "code",
         "platform"
       ]
+    },
+    {
+      "login": "louietyj",
+      "name": "Louie Tan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11096034?v=4",
+      "profile": "https://github.com/louietyj",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "lejovaar7",
+      "name": "Leandro Vargas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26439842?v=4",
+      "profile": "https://github.com/lejovaar7",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "shaunnope",
+      "name": "Sean Yap",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19631195?v=4",
+      "profile": "https://github.com/shaunnope",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "sergeysolovev",
+      "name": "Sergey Solovev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5831301?v=4",
+      "profile": "https://sergeysolovev.com",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "HeySreelal",
+      "name": "Sree (Taylor's Version)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94184909?v=4",
+      "profile": "https://github.com/HeySreelal",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
-  ],
-  "contributorsPerLine": 7,
-  "skipCi": false,
-  "commitType": "docs"
+  ]
 }
