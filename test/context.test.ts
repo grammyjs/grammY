@@ -47,7 +47,7 @@ describe("Context", () => {
         chat_join_request: { date: 3, from: u, chat: c },
     } as Update;
     const api = new Api("dummy-token");
-    const me = { id: 42 } as UserFromGetMe;
+    const me = { id: 42, username: "bot" } as UserFromGetMe;
 
     it("provide basic properties", () => {
         const ctx = new Context(update, api, me);
@@ -274,6 +274,34 @@ describe("Context", () => {
                     type: "bot_command",
                     offset: "Test with ".length,
                     length: "/start".length,
+                }],
+            },
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertFalse(Context.has.command("start")(ctx));
+        assertFalse(ctx.hasCommand("start"));
+
+        up = {
+            message: {
+                text: "/start@BoT args",
+                entities: [{
+                    type: "bot_command",
+                    offset: 0,
+                    length: "/start@BoT".length,
+                }],
+            },
+        } as Update;
+        ctx = new Context(up, api, me);
+        assert(Context.has.command("start")(ctx));
+        assert(ctx.hasCommand("start"));
+
+        up = {
+            message: {
+                text: "/start@not args",
+                entities: [{
+                    type: "bot_command",
+                    offset: 0,
+                    length: "/start@not".length,
                 }],
             },
         } as Update;
