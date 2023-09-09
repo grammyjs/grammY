@@ -1169,6 +1169,16 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "sergeysolovev",
+      "name": "Sergey Solovev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5831301?v=4",
+      "profile": "https://sergeysolovev.com",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
     }
   ]
 }
