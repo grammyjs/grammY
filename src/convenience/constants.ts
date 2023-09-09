@@ -18,6 +18,10 @@ const ALL_CHAT_PERMISSIONS = {
     can_manage_topics: true,
 } as const;
 
+/**
+ * Types of the constants used in the Telegram Bot API. Currently holds all
+ * available update types as well as all chat permissions.
+ */
 export interface ApiConstants {
     /**
      * List of update types a bot receives by default. Useful if you want to
