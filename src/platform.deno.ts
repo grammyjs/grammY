@@ -17,7 +17,8 @@ if (isDeno) {
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.198.0/streams/readable_stream_from_iterable.ts";
+export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
+    ReadableStream.from(itr);
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
