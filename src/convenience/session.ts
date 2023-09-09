@@ -248,7 +248,7 @@ function strictMultiSession<S, C extends Context>(
         const propSessions = await Promise.all(props.map(async (prop) => {
             const { initial, storage, getSessionKey, custom } = defaults[prop];
             const s = new PropertySession(
-                // @ts-ignore cannot express that the storage works for a concrete prop
+                // @ts-expect-error cannot express that the storage works for a concrete prop
                 storage,
                 ctx.session,
                 prop,
@@ -305,7 +305,7 @@ export function lazySession<S, C extends Context>(
     const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
         const propSession = new PropertySession(
-            // @ts-ignore suppress promise nature of values
+            // @ts-expect-error suppress promise nature of values
             storage,
             ctx,
             "session",

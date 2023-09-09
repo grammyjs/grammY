@@ -1,7 +1,7 @@
 export {
     readAll,
     readerFromIterable,
-} from "https://deno.land/std@0.192.0/streams/mod.ts";
+} from "https://deno.land/std@0.198.0/streams/mod.ts";
 export {
     assert,
     assertEquals,
@@ -12,16 +12,16 @@ export {
     assertRejects,
     assertStringIncludes,
     assertThrows,
-} from "https://deno.land/std@0.192.0/testing/asserts.ts";
+} from "https://deno.land/std@0.198.0/assert/mod.ts";
 export {
     afterEach,
     beforeEach,
     describe,
     it,
-} from "https://deno.land/std@0.192.0/testing/bdd.ts";
+} from "https://deno.land/std@0.198.0/testing/bdd.ts";
 export {
     type Spy,
     spy,
     type Stub,
     stub,
-} from "https://deno.land/std@0.192.0/testing/mock.ts";
+} from "https://deno.land/std@0.198.0/testing/mock.ts";

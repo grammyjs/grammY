@@ -156,7 +156,7 @@ const checker: StaticHas = {
                     }' not '${cmd}')`,
                 );
             }
-            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
+            const set = cmd.includes("@") ? atCommands : noAtCommands;
             set.add(cmd);
         });
         return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
@@ -174,7 +174,9 @@ const checker: StaticHas = {
                 const index = cmd.indexOf("@");
                 if (index === -1) return false;
                 const atTarget = cmd.substring(index + 1);
-                if (atTarget !== ctx.me.username) return false;
+                if (atTarget.toLowerCase() !== ctx.me.username.toLowerCase()) {
+                    return false;
+                }
                 const atCommand = cmd.substring(0, index);
                 if (noAtCommands.has(atCommand)) {
                     ctx.match = txt.substring(cmd.length + 1).trimStart();
