@@ -14,7 +14,7 @@ import {
 } from "./deps.test.ts";
 
 describe("BotError", () => {
-    // @ts-ignore-error this message is missing many properties
+    // @ts-expect-error this message is missing many properties
     const ctx = new Context({ message: { text: "test" } }, 0, 0);
     it("should copy stack and message", () => {
         const e = new Error("nope");
