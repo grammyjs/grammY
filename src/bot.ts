@@ -498,7 +498,7 @@ a known bot info object.",
             // handle updates
             await this.handleUpdates(updates);
             // Telegram uses the last setting if `allowed_updates` is omitted so
-            // we can save same traffic by only sending it in the first request
+            // we can save some traffic by only sending it in the first request
             allowed_updates = undefined;
         }
     }

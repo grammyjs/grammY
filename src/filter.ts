@@ -4,6 +4,8 @@ import { type Update } from "./types.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
+const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
+
 // === Obtain O(1) filter function from query
 /**
  * > This is an advanced function of grammY.
@@ -31,8 +33,14 @@ type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 export function matchFilter<C extends Context, Q extends FilterQuery>(
     filter: Q | Q[],
 ): FilterFunction<C, Filter<C, Q>> {
-    const parsed = parse(filter);
-    const predicate = compile(parsed);
+    const queries = Array.isArray(filter) ? filter : [filter];
+    const key = queries.join(",");
+    const predicate = filterQueryCache.get(key) ?? (() => {
+        const parsed = parse(queries);
+        const pred = compile(parsed);
+        filterQueryCache.set(key, pred);
+        return pred;
+    })();
     return (ctx: C): ctx is Filter<C, Q> => predicate(ctx);
 }
 
@@ -239,33 +247,33 @@ const STICKER_KEYS = {
 } as const;
 
 // L2
-const EDITABLE_MESSAGE_KEYS = {
+const COMMON_MESSAGE_KEYS = {
+    forward_date: {},
+    is_topic_message: {},
+    is_automatic_forward: {},
+
     text: {},
     animation: {},
     audio: {},
     document: {},
     photo: {},
-    video: {},
-    game: {},
-    location: {},
-
-    entities: ENTITY_KEYS,
-    caption_entities: ENTITY_KEYS,
-
-    has_media_spoiler: {},
-
-    caption: {},
-} as const;
-const COMMON_MESSAGE_KEYS = {
-    ...EDITABLE_MESSAGE_KEYS,
-
     sticker: STICKER_KEYS,
+    story: {},
+    video: {},
     video_note: {},
     voice: {},
     contact: {},
     dice: {},
+    game: {},
     poll: {},
     venue: {},
+    location: {},
+
+    entities: ENTITY_KEYS,
+    caption_entities: ENTITY_KEYS,
+    caption: {},
+
+    has_media_spoiler: {},
 
     new_chat_title: {},
     new_chat_photo: {},
@@ -279,10 +287,6 @@ const COMMON_MESSAGE_KEYS = {
     video_chat_ended: {},
     video_chat_participants_invited: {},
     web_app_data: {},
-
-    forward_date: {},
-    is_topic_message: {},
-    is_automatic_forward: {},
 } as const;
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
@@ -402,9 +406,7 @@ export type FilterQuery = AllValidFilterQueries;
  * Any kind of value that appears in the Telegram Bot API. When intersected with
  * an optional field, it effectively removes `| undefined`.
  */
-// deno-lint-ignore ban-types
-type SomeObject = object;
-type NotUndefined = string | number | boolean | SomeObject;
+type NotUndefined = string | number | boolean | object;
 
 /**
  * Given a FilterQuery, returns an object that, when intersected with an Update,
@@ -468,11 +470,11 @@ export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     C,
     RunQuery<ExpandShortcuts<Q>>
 >;
-type PerformQueryCore<U extends SomeObject> = U extends unknown
+type PerformQueryCore<U extends object> = U extends unknown
     ? FilteredContextCore<Update & U>
     : never;
 // apply a query result by intersecting it with Update, and then injecting into C
-type PerformQuery<C extends Context, U extends SomeObject> = U extends unknown
+type PerformQuery<C extends Context, U extends object> = U extends unknown
     ? FilteredContext<C, Update & U>
     : never;
 
@@ -488,44 +490,36 @@ type FilteredContext<C extends Context, U extends Update> =
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
-    msg: [U["callback_query"]] extends [SomeObject]
-        ? U["callback_query"]["message"]
-        : [U["message"]] extends [SomeObject] ? U["message"]
-        : [U["edited_message"]] extends [SomeObject] ? U["edited_message"]
-        : [U["channel_post"]] extends [SomeObject] ? U["channel_post"]
-        : [U["edited_channel_post"]] extends [SomeObject]
-            ? U["edited_channel_post"]
+    msg: [U["callback_query"]] extends [object] ? U["callback_query"]["message"]
+        : [U["message"]] extends [object] ? U["message"]
+        : [U["edited_message"]] extends [object] ? U["edited_message"]
+        : [U["channel_post"]] extends [object] ? U["channel_post"]
+        : [U["edited_channel_post"]] extends [object] ? U["edited_channel_post"]
         : undefined;
-    chat: [U["callback_query"]] extends [SomeObject]
+    chat: [U["callback_query"]] extends [object]
         ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
-        : [Shortcuts<U>["msg"]] extends [SomeObject]
-            ? Shortcuts<U>["msg"]["chat"]
-        : [U["my_chat_member"]] extends [SomeObject]
-            ? U["my_chat_member"]["chat"]
-        : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["chat"]
-        : [U["chat_join_request"]] extends [SomeObject]
+        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+        : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["chat"]
+        : [U["chat_member"]] extends [object] ? U["chat_member"]["chat"]
+        : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["chat"]
         : undefined;
-    senderChat: [Shortcuts<U>["msg"]] extends [SomeObject]
+    senderChat: [Shortcuts<U>["msg"]] extends [object]
         ? Shortcuts<U>["msg"]["sender_chat"]
         : undefined;
-    from: [U["callback_query"]] extends [SomeObject]
-        ? U["callback_query"]["from"]
-        : [U["inline_query"]] extends [SomeObject] ? U["inline_query"]["from"]
-        : [U["shipping_query"]] extends [SomeObject]
-            ? U["shipping_query"]["from"]
-        : [U["pre_checkout_query"]] extends [SomeObject]
+    from: [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
+        : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
+        : [U["shipping_query"]] extends [object] ? U["shipping_query"]["from"]
+        : [U["pre_checkout_query"]] extends [object]
             ? U["pre_checkout_query"]["from"]
-        : [U["chosen_inline_result"]] extends [SomeObject]
+        : [U["chosen_inline_result"]] extends [object]
             ? U["chosen_inline_result"]["from"]
-        : [U["message"]] extends [SomeObject]
-            ? NonNullable<U["message"]["from"]>
-        : [U["edited_message"]] extends [SomeObject]
+        : [U["message"]] extends [object] ? NonNullable<U["message"]["from"]>
+        : [U["edited_message"]] extends [object]
             ? NonNullable<U["edited_message"]["from"]>
-        : [U["my_chat_member"]] extends [SomeObject]
-            ? U["my_chat_member"]["from"]
-        : [U["chat_member"]] extends [SomeObject] ? U["chat_member"]["from"]
-        : [U["chat_join_request"]] extends [SomeObject]
+        : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["from"]
+        : [U["chat_member"]] extends [object] ? U["chat_member"]["from"]
+        : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
         : undefined;
     // inlineMessageId: disregarded here because always optional on both types
