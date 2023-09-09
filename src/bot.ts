@@ -392,23 +392,24 @@ a known bot info object.",
      */
     async start(options?: PollingOptions) {
         // Perform setup
+        const setup: Promise<void>[] = [];
         if (!this.isInited()) {
-            await this.init(this.pollingAbortController?.signal);
+            setup.push(this.init(this.pollingAbortController?.signal));
         }
         if (this.pollingRunning) {
+            await Promise.all(setup);
             debug("Simple long polling already running!");
             return;
         } else {
             this.pollingRunning = true;
             this.pollingAbortController = new AbortController();
         }
-        await withRetries(
-            () =>
-                this.api.deleteWebhook({
-                    drop_pending_updates: options?.drop_pending_updates,
-                }, this.pollingAbortController?.signal),
-            this.pollingAbortController?.signal,
-        );
+        setup.push(withRetries(async () => {
+            await this.api.deleteWebhook({
+                drop_pending_updates: options?.drop_pending_updates,
+            }, this.pollingAbortController?.signal);
+        }, this.pollingAbortController?.signal));
+        await Promise.all(setup);
 
         // All async ops of setup complete, run callback
         await options?.onStart?.(this.botInfo);
