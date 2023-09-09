@@ -239,34 +239,33 @@ const STICKER_KEYS = {
 } as const;
 
 // L2
-const EDITABLE_MESSAGE_KEYS = {
+const COMMON_MESSAGE_KEYS = {
+    forward_date: {},
+    is_topic_message: {},
+    is_automatic_forward: {},
+
     text: {},
     animation: {},
     audio: {},
     document: {},
     photo: {},
-    video: {},
-    game: {},
-    location: {},
-
-    entities: ENTITY_KEYS,
-    caption_entities: ENTITY_KEYS,
-
-    has_media_spoiler: {},
-
-    caption: {},
-} as const;
-const COMMON_MESSAGE_KEYS = {
-    ...EDITABLE_MESSAGE_KEYS,
-
     sticker: STICKER_KEYS,
     story: {},
+    video: {},
     video_note: {},
     voice: {},
     contact: {},
     dice: {},
+    game: {},
     poll: {},
     venue: {},
+    location: {},
+
+    entities: ENTITY_KEYS,
+    caption_entities: ENTITY_KEYS,
+    caption: {},
+
+    has_media_spoiler: {},
 
     new_chat_title: {},
     new_chat_photo: {},
@@ -280,10 +279,6 @@ const COMMON_MESSAGE_KEYS = {
     video_chat_ended: {},
     video_chat_participants_invited: {},
     web_app_data: {},
-
-    forward_date: {},
-    is_topic_message: {},
-    is_automatic_forward: {},
 } as const;
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
