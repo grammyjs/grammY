@@ -1,6 +1,6 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.201.0/path/basename.ts";
-import { iterateReader } from "https://deno.land/std@0.201.0/streams/iterate_reader.ts";
+import { basename } from "https://deno.land/std@0.202.0/path/basename.ts";
+import { iterateReader } from "https://deno.land/std@0.202.0/streams/iterate_reader.ts";
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -11,13 +11,13 @@ import {
     type InputMediaVideo as InputMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.2.2/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.3.0/mod.ts";
 import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.2.2/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.3.0/mod.ts";
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);
