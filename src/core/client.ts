@@ -442,7 +442,8 @@ function validateSignal(
         `Incorrect abort signal instance found! \
 You passed two payloads to '${method}' but you should merge \
 the second one containing '${payload1}' into the first one \
-containing '${payload0}'!
+containing '${payload0}'! If you are using context shortcuts, \
+you may want to use a method on 'ctx.api' instead.
 
 If you want to prevent such mistakes in the future, \
 consider using TypeScript. https://www.typescriptlang.org/`,
