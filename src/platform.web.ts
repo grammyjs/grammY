@@ -10,11 +10,9 @@ async function writeAsyncItrToStream<T>(
     let isWriteDone = false;
     try {
         for await (const chunk of itr) {
-            await writer.ready;
             await writer.write(chunk);
         }
         isWriteDone = true;
-        await writer.ready;
         await writer.close();
     } catch (err) {
         console.error(
