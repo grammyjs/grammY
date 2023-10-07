@@ -18,7 +18,7 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) => {
     const { readable, writable } = new TransformStream();
     const writer = writable.getWriter();
 
-    writeAsyncItrToStream(itr, writer).catch((err) =>
+    writeAsyncItrToStream(itr, writer).catch((_err) =>
         console.error("Something went wrong with writing itrToStream")
     );
 
