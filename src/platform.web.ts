@@ -6,10 +6,29 @@ async function writeAsyncItrToStream<T>(
     itr: AsyncIterable<T>,
     writer: WritableStreamDefaultWriter<T>,
 ) {
-    for await (const chunk of itr) {
-        await writer.write(chunk);
+    let writeOrCloseErr;
+    let isWriteDone = false;
+    try {
+        for await (const chunk of itr) {
+            await writer.ready;
+            await writer.write(chunk);
+        }
+        isWriteDone = true;
+        await writer.ready;
+        await writer.close();
+    } catch (err) {
+        console.error(
+            `${isWriteDone ? "Stream error:" : "Chunk error:"} ${err}`,
+        );
+        writeOrCloseErr = err;
     }
-    await writer.close();
+    if (writeOrCloseErr) {
+        try {
+            await writer.abort(writeOrCloseErr);
+        } catch (err) {
+            console.error(`Abort error: ${err}`);
+        }
+    }
 }
 
 // Turn an AsyncIterable<Uint8Array> into a stream
@@ -18,9 +37,8 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) => {
     const { readable, writable } = new TransformStream();
     const writer = writable.getWriter();
 
-    writeAsyncItrToStream(itr, writer).catch((_err) =>
-        console.error("Something went wrong with writing itrToStream")
-    );
+    // This should never throw
+    writeAsyncItrToStream(itr, writer);
 
     return readable;
 };
