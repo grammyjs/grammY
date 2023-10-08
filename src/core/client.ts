@@ -426,7 +426,7 @@ function validateSignal(
 ) {
     // We use a very simple heuristic to check for AbortSignal instances
     // in order to avoid doing a runtime-specific version of `instanceof`.
-    if (typeof signal.addEventListener === "function") {
+    if (typeof signal?.addEventListener === "function") {
         return;
     }
 
