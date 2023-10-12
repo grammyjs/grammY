@@ -344,7 +344,7 @@ const worktop: FrameworkAdapter = (req, res) => ({
 const nhttp: FrameworkAdapter = (rev) => ({
     update: rev.body,
     header: rev.headers.get(SECRET_HEADER) || undefined,
-    end: () => rev.response.status(200),
+    end: () => rev.response.sendStatus(200),
     respond: (json) => rev.response.status(200).send(json),
     unauthorized: () => rev.response.status(401).send(WRONG_TOKEN_ERROR),
 });
