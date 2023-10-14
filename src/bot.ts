@@ -330,7 +330,7 @@ export class Bot<
     ) {
         if (this.me === undefined) {
             throw new Error(
-"Bot not initialized! Either call `await bot.init()`, \
+                "Bot not initialized! Either call `await bot.init()`, \
 or directly set the `botInfo` option in the `Bot` constructor to specify \
 a known bot info object.",
             );
