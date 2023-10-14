@@ -340,6 +340,15 @@ const worktop: FrameworkAdapter = (req, res) => ({
     unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
 });
 
+/** nhttp web framework */
+const nhttp: FrameworkAdapter = (rev) => ({
+    update: rev.body,
+    header: rev.headers.get(SECRET_HEADER) || undefined,
+    end: () => rev.response.sendStatus(200),
+    respond: (json) => rev.response.status(200).send(json),
+    unauthorized: () => rev.response.status(401).send(WRONG_TOKEN_ERROR),
+});
+
 // Please open a PR if you want to add another adapter
 export const adapters = {
     express,
@@ -359,4 +368,5 @@ export const adapters = {
     "cloudflare-mod": cloudflareModule,
     hono,
     worktop,
+    nhttp,
 };
