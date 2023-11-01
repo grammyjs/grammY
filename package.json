@@ -37,15 +37,15 @@
         ".": {
             "types": "./out/mod.d.ts",
             "node": "./out/mod.js",
-            "browser": "./out/web.mjs",
-            "default": "./out/web.mjs"
+            "browser": "./out/web.js",
+            "default": "./out/web.js"
         },
         "./types": {
             "types": "./out/types.d.ts"
         },
         "./web": {
             "types": "./out/web.d.ts",
-            "default": "./out/web.mjs"
+            "default": "./out/web.js"
         }
     },
     "typesVersions": {

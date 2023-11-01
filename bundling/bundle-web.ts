@@ -30,7 +30,7 @@ const { code: bundledCode } = await bundle(source, {
 console.log("Emitting ...");
 // Strip the huge inline source map which is somehow generated anyway
 await Deno.writeTextFile(
-    "../out/web.mjs",
+    "../out/web.js",
     bundledCode.replace(/\/\/# sourceMappingURL=.*\n/, ""),
 );
 await Deno.writeTextFile(
