@@ -8,7 +8,7 @@
         "dev": "deno fmt && deno lint && deno task test && deno task check",
         "coverage": "rm -rf ./test/cov_profile && deno task test --coverage=./test/cov_profile && deno coverage --lcov --output=./coverage.lcov ./test/cov_profile",
         "report": "genhtml ./coverage.lcov --output-directory ./test/coverage/ && echo 'Point your browser to test/coverage/index.html to see the test coverage report.'",
-        "bundle-web": "mkdir -p out deno_cache && deno run --quiet --allow-net --allow-read --allow-env=DENO_AUTH_TOKENS --allow-write=out/,deno_cache/ bundling/bundle-web.ts dev src/mod.ts"
+        "bundle-web": "mkdir -p out deno_cache && deno run --quiet --allow-net --allow-read --allow-env=DENO_DIR,XDG_CACHE_HOME,HOME,DENO_AUTH_TOKENS--allow-write=out/,deno_cache/ bundling/bundle-web.ts dev src/mod.ts"
     },
     "fmt": {
         "indentWidth": 4,

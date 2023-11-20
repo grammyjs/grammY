@@ -156,7 +156,7 @@ const checker: StaticHas = {
                     }' not '${cmd}')`,
                 );
             }
-            const set = cmd.indexOf("@") === -1 ? noAtCommands : atCommands;
+            const set = cmd.includes("@") ? atCommands : noAtCommands;
             set.add(cmd);
         });
         return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
@@ -173,8 +173,9 @@ const checker: StaticHas = {
                 }
                 const index = cmd.indexOf("@");
                 if (index === -1) return false;
-                const atTarget = cmd.substring(index + 1);
-                if (atTarget !== ctx.me.username) return false;
+                const atTarget = cmd.substring(index + 1).toLowerCase();
+                const username = ctx.me.username.toLowerCase();
+                if (atTarget !== username) return false;
                 const atCommand = cmd.substring(0, index);
                 if (noAtCommands.has(atCommand)) {
                     ctx.match = txt.substring(cmd.length + 1).trimStart();
@@ -1871,6 +1872,20 @@ export class Context implements RenamedUpdate {
     unhideGeneralForumTopic(signal?: AbortSignal) {
         return this.api.unhideGeneralForumTopic(
             orThrow(this.chat, "unhideGeneralForumTopic").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.unpinAllGeneralForumTopicMessages`. Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
+     */
+    unpinAllGeneralForumTopicMessages(signal?: AbortSignal) {
+        return this.api.unpinAllGeneralForumTopicMessages(
+            orThrow(this.chat, "unpinAllGeneralForumTopicMessages").id,
             signal,
         );
     }

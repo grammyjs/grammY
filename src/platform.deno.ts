@@ -2,22 +2,23 @@
 export const isDeno = typeof Deno !== "undefined";
 
 // === Export debug
-import d from "https://cdn.skypack.dev/debug@4.3.4";
-export { d as debug };
+import debug from "https://cdn.skypack.dev/debug@4.3.4";
+export { debug };
 const DEBUG = "DEBUG";
 if (isDeno) {
-    d.useColors = () => !Deno.noColor;
+    debug.useColors = () => !Deno.noColor;
     const env = { name: "env", variable: DEBUG } as const;
     const res = await Deno.permissions.query(env);
     let namespace: string | undefined = undefined;
     if (res.state === "granted") namespace = Deno.env.get(DEBUG);
-    if (namespace) d.enable(namespace);
-    else d.disable();
+    if (namespace) debug.enable(namespace);
+    else debug.disable();
 }
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.192.0/streams/mod.ts";
+export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
+    ReadableStream.from(itr);
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});

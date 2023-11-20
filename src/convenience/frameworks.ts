@@ -66,118 +66,6 @@ export interface ReqResHandler {
 // deno-lint-ignore no-explicit-any
 export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 
-/** express web framework */
-const express: FrameworkAdapter = (req, res) => ({
-    update: Promise.resolve(req.body),
-    header: req.header(SECRET_HEADER),
-    end: () => res.end(),
-    respond: (json) => {
-        res.set("Content-Type", "application/json");
-        res.send(json);
-    },
-    unauthorized: () => {
-        res.status(401).send(WRONG_TOKEN_ERROR);
-    },
-});
-
-/** koa web framework */
-const koa: FrameworkAdapter = (ctx) => ({
-    update: Promise.resolve(ctx.request.body),
-    header: ctx.get(SECRET_HEADER),
-    end: () => {
-        ctx.body = "";
-    },
-    respond: (json) => {
-        ctx.set("Content-Type", "application/json");
-        ctx.response.body = json;
-    },
-    unauthorized: () => {
-        ctx.status = 401;
-    },
-});
-
-/** fastify web framework */
-const fastify: FrameworkAdapter = (req, reply) => ({
-    update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER_LOWERCASE],
-    end: () => reply.status(200).send(),
-    respond: (json) => reply.send(json),
-    unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
-});
-
-const serveHttp: FrameworkAdapter = (requestEvent) => ({
-    update: requestEvent.request.json(),
-    header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
-    end: () => requestEvent.respondWith(ok()),
-    respond: (json) => requestEvent.respondWith(okJson(json)),
-    unauthorized: () => requestEvent.respondWith(unauthorized()),
-});
-
-/** std/http web server */
-const stdHttp: FrameworkAdapter = (req: Request) => {
-    let resolveResponse: (res: Response) => void;
-    return {
-        update: req.json(),
-        header: req.headers.get(SECRET_HEADER) || undefined,
-        end: () => {
-            if (resolveResponse) resolveResponse(ok());
-        },
-        respond: (json) => {
-            if (resolveResponse) resolveResponse(okJson(json));
-        },
-        unauthorized: () => {
-            if (resolveResponse) resolveResponse(unauthorized());
-        },
-        handlerReturn: new Promise((resolve) => {
-            resolveResponse = resolve;
-        }),
-    };
-};
-
-/** oak web framework */
-const oak: FrameworkAdapter = (ctx) => ({
-    update: ctx.request.body({ type: "json" }).value,
-    header: ctx.request.headers.get(SECRET_HEADER) || undefined,
-    end: () => {
-        ctx.response.status = 200;
-    },
-    respond: (json) => {
-        ctx.response.type = "json";
-        ctx.response.body = json;
-    },
-    unauthorized: () => {
-        ctx.response.status = 401;
-    },
-});
-
-/** Node.js native 'http' and 'https' modules */
-const http: FrameworkAdapter = (req, res) => {
-    const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
-    return {
-        update: new Promise((resolve, reject) => {
-            // deno-lint-ignore no-explicit-any
-            type Chunk = any;
-            const chunks: Chunk[] = [];
-            req.on("data", (chunk: Chunk) => chunks.push(chunk))
-                .once("end", () => {
-                    // @ts-ignore `Buffer` is Node-only
-                    const raw = Buffer.concat(chunks).toString("utf-8");
-                    resolve(JSON.parse(raw));
-                })
-                .once("error", reject);
-        }),
-        header: Array.isArray(secretHeaderFromRequest)
-            ? secretHeaderFromRequest[0]
-            : secretHeaderFromRequest,
-        end: () => res.end(),
-        respond: (json) =>
-            res
-                .writeHead(200, { "Content-Type": "application/json" })
-                .end(json),
-        unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
-    };
-};
-
 /** AWS lambda serverless functions */
 const awsLambda: FrameworkAdapter = (event, _context, callback) => ({
     update: JSON.parse(event.body),
@@ -230,36 +118,6 @@ const azure: FrameworkAdapter = (context, req) => ({
     },
 });
 
-/** Next.js Serverless Functions */
-const nextJs: FrameworkAdapter = (req, res) => ({
-    update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER_LOWERCASE],
-    end: () => res.end(),
-    respond: (json) => res.status(200).json(json),
-    unauthorized: () => res.status(401).send(WRONG_TOKEN_ERROR),
-});
-
-/** Sveltekit Serverless Functions */
-const sveltekit: FrameworkAdapter = ({ request }: { request: Request }) => {
-    let resolveResponse: (res: Response) => void;
-    return {
-        update: Promise.resolve(request.json()),
-        header: request.headers.get(SECRET_HEADER) || undefined,
-        end: () => {
-            if (resolveResponse) resolveResponse(ok());
-        },
-        respond: (json) => {
-            if (resolveResponse) resolveResponse(okJson(json));
-        },
-        unauthorized: () => {
-            if (resolveResponse) resolveResponse(unauthorized());
-        },
-        handlerReturn: new Promise((resolve) => {
-            resolveResponse = resolve;
-        }),
-    };
-};
-
 /** Native CloudFlare workers (service worker) */
 const cloudflare: FrameworkAdapter = (event: {
     request: Request;
@@ -307,6 +165,29 @@ const cloudflareModule: FrameworkAdapter = (request: Request) => {
     };
 };
 
+/** express web framework */
+const express: FrameworkAdapter = (req, res) => ({
+    update: Promise.resolve(req.body),
+    header: req.header(SECRET_HEADER),
+    end: () => res.end(),
+    respond: (json) => {
+        res.set("Content-Type", "application/json");
+        res.send(json);
+    },
+    unauthorized: () => {
+        res.status(401).send(WRONG_TOKEN_ERROR);
+    },
+});
+
+/** fastify web framework */
+const fastify: FrameworkAdapter = (req, reply) => ({
+    update: Promise.resolve(req.body),
+    header: req.headers[SECRET_HEADER_LOWERCASE],
+    end: () => reply.status(200).send(),
+    respond: (json) => reply.send(json),
+    unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
+});
+
 /** hono web framework */
 const hono: FrameworkAdapter = (ctx) => {
     let resolveResponse: (res: Response) => void;
@@ -331,6 +212,135 @@ const hono: FrameworkAdapter = (ctx) => {
     };
 };
 
+/** Node.js native 'http' and 'https' modules */
+const http: FrameworkAdapter = (req, res) => {
+    const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
+    return {
+        update: new Promise((resolve, reject) => {
+            // deno-lint-ignore no-explicit-any
+            type Chunk = any;
+            const chunks: Chunk[] = [];
+            req.on("data", (chunk: Chunk) => chunks.push(chunk))
+                .once("end", () => {
+                    // @ts-ignore `Buffer` is Node-only
+                    const raw = Buffer.concat(chunks).toString("utf-8");
+                    resolve(JSON.parse(raw));
+                })
+                .once("error", reject);
+        }),
+        header: Array.isArray(secretHeaderFromRequest)
+            ? secretHeaderFromRequest[0]
+            : secretHeaderFromRequest,
+        end: () => res.end(),
+        respond: (json) =>
+            res
+                .writeHead(200, { "Content-Type": "application/json" })
+                .end(json),
+        unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
+    };
+};
+
+/** koa web framework */
+const koa: FrameworkAdapter = (ctx) => ({
+    update: Promise.resolve(ctx.request.body),
+    header: ctx.get(SECRET_HEADER),
+    end: () => {
+        ctx.body = "";
+    },
+    respond: (json) => {
+        ctx.set("Content-Type", "application/json");
+        ctx.response.body = json;
+    },
+    unauthorized: () => {
+        ctx.status = 401;
+    },
+});
+
+/** Next.js Serverless Functions */
+const nextJs: FrameworkAdapter = (req, res) => ({
+    update: Promise.resolve(req.body),
+    header: req.headers[SECRET_HEADER_LOWERCASE],
+    end: () => res.end(),
+    respond: (json) => res.status(200).json(json),
+    unauthorized: () => res.status(401).send(WRONG_TOKEN_ERROR),
+});
+
+/** nhttp web framework */
+const nhttp: FrameworkAdapter = (rev) => ({
+    update: rev.body,
+    header: rev.headers.get(SECRET_HEADER) || undefined,
+    end: () => rev.response.sendStatus(200),
+    respond: (json) => rev.response.status(200).send(json),
+    unauthorized: () => rev.response.status(401).send(WRONG_TOKEN_ERROR),
+});
+
+/** oak web framework */
+const oak: FrameworkAdapter = (ctx) => ({
+    update: ctx.request.body({ type: "json" }).value,
+    header: ctx.request.headers.get(SECRET_HEADER) || undefined,
+    end: () => {
+        ctx.response.status = 200;
+    },
+    respond: (json) => {
+        ctx.response.type = "json";
+        ctx.response.body = json;
+    },
+    unauthorized: () => {
+        ctx.response.status = 401;
+    },
+});
+
+/** Deno.serve */
+const serveHttp: FrameworkAdapter = (requestEvent) => ({
+    update: requestEvent.request.json(),
+    header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
+    end: () => requestEvent.respondWith(ok()),
+    respond: (json) => requestEvent.respondWith(okJson(json)),
+    unauthorized: () => requestEvent.respondWith(unauthorized()),
+});
+
+/** std/http web server */
+const stdHttp: FrameworkAdapter = (req: Request) => {
+    let resolveResponse: (res: Response) => void;
+    return {
+        update: req.json(),
+        header: req.headers.get(SECRET_HEADER) || undefined,
+        end: () => {
+            if (resolveResponse) resolveResponse(ok());
+        },
+        respond: (json) => {
+            if (resolveResponse) resolveResponse(okJson(json));
+        },
+        unauthorized: () => {
+            if (resolveResponse) resolveResponse(unauthorized());
+        },
+        handlerReturn: new Promise((resolve) => {
+            resolveResponse = resolve;
+        }),
+    };
+};
+
+/** Sveltekit Serverless Functions */
+const sveltekit: FrameworkAdapter = ({ request }: { request: Request }) => {
+    let resolveResponse: (res: Response) => void;
+    return {
+        update: Promise.resolve(request.json()),
+        header: request.headers.get(SECRET_HEADER) || undefined,
+        end: () => {
+            if (resolveResponse) resolveResponse(ok());
+        },
+        respond: (json) => {
+            if (resolveResponse) resolveResponse(okJson(json));
+        },
+        unauthorized: () => {
+            if (resolveResponse) resolveResponse(unauthorized());
+        },
+        handlerReturn: new Promise((resolve) => {
+            resolveResponse = resolve;
+        }),
+    };
+};
+
 /** worktop CloudFlare workers framework */
 const worktop: FrameworkAdapter = (req, res) => ({
     update: Promise.resolve(req.body.json()),
@@ -340,23 +350,24 @@ const worktop: FrameworkAdapter = (req, res) => ({
     unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
 });
 
-// Please open a PR if you want to add another adapter
+// Please open a pull request if you want to add another adapter
 export const adapters = {
-    express,
-    koa,
-    fastify,
-    serveHttp,
-    "std/http": stdHttp,
-    oak,
-    http,
-    https: http,
     "aws-lambda": awsLambda,
     "aws-lambda-async": awsLambdaAsync,
     azure,
-    "next-js": nextJs,
-    sveltekit,
     cloudflare,
     "cloudflare-mod": cloudflareModule,
+    express,
+    fastify,
     hono,
+    http,
+    https: http,
+    koa,
+    "next-js": nextJs,
+    nhttp,
+    oak,
+    serveHttp,
+    "std/http": stdHttp,
+    sveltekit,
     worktop,
 };

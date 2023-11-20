@@ -4,8 +4,7 @@ import { Agent as HttpsAgent } from "https";
 import { Readable } from "stream";
 
 // === Export debug
-import { debug as d } from "debug";
-export { d as debug };
+export { debug } from "debug";
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream

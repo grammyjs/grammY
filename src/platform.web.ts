@@ -3,7 +3,17 @@ export { d as debug };
 
 // === Export system-specific operations
 // Turn an AsyncIterable<Uint8Array> into a stream
-export { readableStreamFromIterable as itrToStream } from "https://deno.land/std@0.192.0/streams/mod.ts";
+export const itrToStream = (itr: AsyncIterable<Uint8Array>) => {
+    // do not assume ReadableStream.from to exist yet
+    const it = itr[Symbol.asyncIterator]();
+    return new ReadableStream({
+        async pull(controller) {
+            const chunk = await it.next();
+            if (chunk.done) controller.close();
+            else controller.enqueue(chunk.value);
+        },
+    });
+};
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});

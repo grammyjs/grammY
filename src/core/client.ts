@@ -244,6 +244,7 @@ class ApiClient<R extends RawApi> {
     ) => {
         const payload = p ?? {};
         debug(`Calling ${method}`);
+        if (signal !== undefined) validateSignal(method, payload, signal);
         // General config
         const opts = this.options;
         const formDataRequired = requiresFormDataUpload(payload);
@@ -416,4 +417,35 @@ function createAbortControllerFromSignal(signal?: AbortSignal) {
     if (sig.aborted) abort();
     else sig.addEventListener("abort", abort);
     return { abort, signal: abortController.signal };
+}
+
+function validateSignal(
+    method: string,
+    payload: Record<string, unknown>,
+    signal: AbortSignal,
+) {
+    // We use a very simple heuristic to check for AbortSignal instances
+    // in order to avoid doing a runtime-specific version of `instanceof`.
+    if (typeof signal?.addEventListener === "function") {
+        return;
+    }
+
+    let payload0 = JSON.stringify(payload);
+    if (payload0.length > 20) {
+        payload0 = payload0.substring(0, 16) + " ...";
+    }
+    let payload1 = JSON.stringify(signal);
+    if (payload1.length > 20) {
+        payload1 = payload1.substring(0, 16) + " ...";
+    }
+    throw new Error(
+        `Incorrect abort signal instance found! \
+You passed two payloads to '${method}' but you should merge \
+the second one containing '${payload1}' into the first one \
+containing '${payload0}'! If you are using context shortcuts, \
+you may want to use a method on 'ctx.api' instead.
+
+If you want to prevent such mistakes in the future, \
+consider using TypeScript. https://www.typescriptlang.org/`,
+    );
 }

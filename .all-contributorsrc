@@ -1005,7 +1005,8 @@
       "profile": "https://github.com/shevernitskiy",
       "contributions": [
         "bug",
-        "review"
+        "review",
+        "code"
       ]
     },
     {
@@ -1155,6 +1156,36 @@
       "name": "Leandro Vargas",
       "avatar_url": "https://avatars.githubusercontent.com/u/26439842?v=4",
       "profile": "https://github.com/lejovaar7",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "shaunnope",
+      "name": "Sean Yap",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19631195?v=4",
+      "profile": "https://github.com/shaunnope",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "sergeysolovev",
+      "name": "Sergey Solovev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5831301?v=4",
+      "profile": "https://sergeysolovev.com",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "HeySreelal",
+      "name": "Sree (Taylor's Version)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94184909?v=4",
+      "profile": "https://github.com/HeySreelal",
       "contributions": [
         "bug",
         "code"
