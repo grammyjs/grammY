@@ -4,7 +4,7 @@ import {
     deno2node,
     emit,
     ts,
-} from "https://raw.githubusercontent.com/fromdeno/deno2node/70cddb305e3e65f51da4c34e7e8ebfc5f2085d38/src/mod.ts";
+} from "https://deno.land/x/deno2node@v1.10.1/src/mod.ts";
 
 const compilerOptions: ts.CompilerOptions = {
     "forceConsistentCasingInFileNames": true,
