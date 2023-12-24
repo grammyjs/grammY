@@ -285,7 +285,7 @@ class ApiClient<R extends RawApi> {
         const timeout = createTimeout(controller, opts.timeoutSeconds, method);
         const streamErr = createStreamError(controller);
         // Build request URL and config
-        const url = opts.buildUrl(opts.apiRoot, this.token, method);
+        const url = opts.buildUrl(opts.apiRoot, this.token, method, opts.dc);
         const config = formDataRequired
             ? createFormDataPayload(payload, (err) => streamErr.catch(err))
             : createJsonPayload(payload);
