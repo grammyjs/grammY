@@ -116,15 +116,34 @@ export interface ApiClientOptions {
      */
     apiRoot?: string;
     /**
+     * Specifies whether to use the [test
+     * environment](https://core.telegram.org/bots/webapps#using-bots-in-the-test-environment).
+     * Can be either `"prod"` (default) or `"test"`.
+     *
+     * The testing infrastructure is separate from the regular production
+     * infrastructure. No chats, accounts, or other data is shared between them.
+     * If you set this option to `"test"`, you will need to make your Telegram
+     * client connect to the testing data centers of Telegram, register your
+     * phone number again, open a new chat with @BotFather, and create a
+     * separate bot.
+     */
+    environment?: "prod" | "test";
+    /**
      * URL builder function for API calls. Can be used to modify which API
      * server should be called.
      *
      * @param root The URL that was passed in `apiRoot`, or its default value
      * @param token The bot's token that was passed when creating the bot
      * @param method The API method to be called, e.g. `getMe`
+     * @param env The value that was passed in `environment`, or its default value
      * @returns The URL that will be fetched during the API call
      */
-    buildUrl?: (root: string, token: string, method: string) => string | URL;
+    buildUrl?: (
+        root: string,
+        token: string,
+        method: string,
+        env: "prod" | "test",
+    ) => string | URL;
     /**
      * Maximum number of seconds that a request to the Bot API server may take.
      * If a request has not completed before this time has elapsed, grammY
@@ -213,10 +232,11 @@ class ApiClient<R extends RawApi> {
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {},
     ) {
         const apiRoot = options.apiRoot ?? "https://api.telegram.org";
+        const environment = options.environment ?? "prod";
         this.options = {
             apiRoot,
-            buildUrl: options.buildUrl ??
-                ((root, token, method) => `${root}/bot${token}/${method}`),
+            environment,
+            buildUrl: options.buildUrl ?? defaultBuildUrl,
             timeoutSeconds: options.timeoutSeconds ?? 500,
             baseFetchConfig: {
                 ...baseFetchConfig(apiRoot),
@@ -265,7 +285,12 @@ class ApiClient<R extends RawApi> {
         const timeout = createTimeout(controller, opts.timeoutSeconds, method);
         const streamErr = createStreamError(controller);
         // Build request URL and config
-        const url = opts.buildUrl(opts.apiRoot, this.token, method);
+        const url = opts.buildUrl(
+            opts.apiRoot,
+            this.token,
+            method,
+            opts.environment,
+        );
         const config = formDataRequired
             ? createFormDataPayload(payload, (err) => streamErr.catch(err))
             : createJsonPayload(payload);
@@ -345,6 +370,16 @@ export function createRawApi<R extends RawApi>(
 
     return api;
 }
+
+const defaultBuildUrl: NonNullable<ApiClientOptions["buildUrl"]> = (
+    root,
+    token,
+    method,
+    env,
+) => {
+    const prefix = env === "test" ? "test/" : "";
+    return `${root}/bot${token}/${prefix}${method}`;
+};
 
 const proxyMethods = {
     set() {
