@@ -1,6 +1,8 @@
 {
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": { "source.fixAll": true },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
     "deno.enable": true,
     "deno.lint": true,
     "deno.config": "./deno.jsonc",
