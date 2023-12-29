@@ -381,10 +381,10 @@ type L3S_<
 type L123 = L1S | L2S | L3S;
 // E.g. 'message::url' generation
 type InjectShortcuts<Q extends L123 = L123> = Q extends
-    `${infer R}:${infer S}:${infer T}`
-    ? `${CollapseL1<R, L1Shortcuts>}:${CollapseL2<S, L2Shortcuts>}:${T}`
-    : Q extends `${infer R}:${infer S}`
-        ? `${CollapseL1<R, L1Shortcuts>}:${CollapseL2<S>}`
+    `${infer L1}:${infer L2}:${infer L3}`
+    ? `${CollapseL1<L1, L1Shortcuts>}:${CollapseL2<L2, L2Shortcuts>}:${L3}`
+    : Q extends `${infer L1}:${infer L2}`
+        ? `${CollapseL1<L1, L1Shortcuts>}:${CollapseL2<L2>}`
     : CollapseL1<Q>;
 // Add L1 shortcuts
 type CollapseL1<
@@ -517,7 +517,8 @@ type PerformQueryCore<U extends object> = U extends unknown
     ? FilteredContextCore<Update & U>
     : never;
 
-// helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
+// helper type to infer shortcuts on context object based on present properties,
+// must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
     msg: [U["callback_query"]] extends [object] ? U["callback_query"]["message"]
         : [U["message"]] extends [object] ? U["message"]
