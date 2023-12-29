@@ -709,7 +709,11 @@ export class Context implements RenamedUpdate {
         return this.api.forwardMessage(
             chat_id,
             orThrow(this.chat, "forwardMessage").id,
-            orThrow(this.msg, "forwardMessage").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "forwardMessage",
+            ),
             other,
             signal,
         );
@@ -760,7 +764,11 @@ export class Context implements RenamedUpdate {
         return this.api.copyMessage(
             chat_id,
             orThrow(this.chat, "copyMessage").id,
-            orThrow(this.msg, "copyMessage").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "copyMessage",
+            ),
             other,
             signal,
         );
@@ -1036,7 +1044,11 @@ export class Context implements RenamedUpdate {
             )
             : this.api.editMessageLiveLocation(
                 orThrow(this.chat, "editMessageLiveLocation").id,
-                orThrow(this.msg, "editMessageLiveLocation").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageLiveLocation",
+                ),
                 latitude,
                 longitude,
                 other,
@@ -1064,7 +1076,11 @@ export class Context implements RenamedUpdate {
             ? this.api.stopMessageLiveLocationInline(inlineId, other)
             : this.api.stopMessageLiveLocation(
                 orThrow(this.chat, "stopMessageLiveLocation").id,
-                orThrow(this.msg, "stopMessageLiveLocation").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "stopMessageLiveLocation",
+                ),
                 other,
                 signal,
             );
@@ -1197,7 +1213,11 @@ export class Context implements RenamedUpdate {
     ) {
         return this.api.setMessageReaction(
             orThrow(this.chat, "setMessageReaction").id,
-            orThrow(this.msg, "setMessageReaction").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "setMessageReaction",
+            ),
             typeof reaction === "string"
                 ? [{ type: "emoji", emoji: reaction }]
                 : (Array.isArray(reaction) ? reaction : [reaction])
@@ -2196,7 +2216,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageTextInline(inlineId, text, other)
             : this.api.editMessageText(
                 orThrow(this.chat, "editMessageText").id,
-                orThrow(this.msg, "editMessageText").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageText",
+                ),
                 text,
                 other,
                 signal,
@@ -2223,7 +2247,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageCaptionInline(inlineId, other)
             : this.api.editMessageCaption(
                 orThrow(this.chat, "editMessageCaption").id,
-                orThrow(this.msg, "editMessageCaption").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageCaption",
+                ),
                 other,
                 signal,
             );
@@ -2251,7 +2279,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageMediaInline(inlineId, media, other)
             : this.api.editMessageMedia(
                 orThrow(this.chat, "editMessageMedia").id,
-                orThrow(this.msg, "editMessageMedia").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageMedia",
+                ),
                 media,
                 other,
                 signal,
@@ -2278,7 +2310,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageReplyMarkupInline(inlineId, other)
             : this.api.editMessageReplyMarkup(
                 orThrow(this.chat, "editMessageReplyMarkup").id,
-                orThrow(this.msg, "editMessageReplyMarkup").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageReplyMarkup",
+                ),
                 other,
                 signal,
             );
@@ -2298,7 +2334,11 @@ export class Context implements RenamedUpdate {
     ) {
         return this.api.stopPoll(
             orThrow(this.chat, "stopPoll").id,
-            orThrow(this.msg, "stopPoll").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "stopPoll",
+            ),
             other,
             signal,
         );
@@ -2322,7 +2362,11 @@ export class Context implements RenamedUpdate {
     deleteMessage(signal?: AbortSignal) {
         return this.api.deleteMessage(
             orThrow(this.chat, "deleteMessage").id,
-            orThrow(this.msg, "deleteMessage").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "deleteMessage",
+            ),
             signal,
         );
     }
