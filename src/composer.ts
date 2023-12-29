@@ -8,10 +8,15 @@ import {
     type HearsContext,
     type InlineQueryContext,
     type MaybeArray,
+    type ReactionContext,
     type StringWithSuggestions,
 } from "./context.ts";
 import { type Filter, type FilterQuery } from "./filter.ts";
-import { type Chat } from "./types.ts";
+import {
+    type Chat,
+    type ReactionType,
+    type ReactionTypeEmoji,
+} from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 
@@ -267,7 +272,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * (logical AND), you can chain the `.on` calls:
      * ```ts
      * // Matches all messages and channel posts that both a) contain a URL and b) are forwards
-     * bot.on('::url').on(':forward_date', ctx => { ... })
+     * bot.on('::url').on(':forward_origin', ctx => { ... })
      * ```
      *
      * @param filter The filter query to use, may also be an array of queries
@@ -380,6 +385,41 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         return this.filter(Context.has.command(command), ...middleware);
+    }
+
+    /**
+     * Registers some middleware that will only be added when a new reaction of
+     * the given type is added to a message.
+     * ```ts
+     * // Reacts to new '👍' reactions
+     * bot.reaction('👍', ctx => { ... })
+     * // Reacts to new '👍' or '👎' reactions
+     * bot.reaction(['👍', '👎'], ctx => { ... })
+     * ```
+     *
+     * > Note that you have to enable `message_reaction` updates in
+     * `allowed_updates` if you want your bot to receive updates about message
+     * reactions.
+     *
+     * `bot.reaction` will trigger if:
+     * - a new emoji reaction is added to a message
+     * - a new custom emoji reaction is added a message
+     *
+     * `bot.reaction` will not trigger if:
+     * - a reaction is removed
+     * - an anonymous reaction count is updated, such as on channel posts
+     * - `message_reaction` updates are not enabled for your bot
+     *
+     * @param reaction The reaction to look for
+     * @param middleware The middleware to register
+     */
+    reaction(
+        reaction:
+            | ReactionTypeEmoji["emoji"]
+            | MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        ...middleware: Array<ReactionMiddleware<C>>
+    ): Composer<ReactionContext<C>> {
+        return this.filter(Context.has.reaction(reaction), ...middleware);
     }
 
     /**
@@ -853,6 +893,17 @@ export type HearsMiddleware<C extends Context> = Middleware<
  */
 export type CommandMiddleware<C extends Context> = Middleware<
     CommandContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.reaction`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.reaction` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type ReactionMiddleware<C extends Context> = Middleware<
+    ReactionContext<C>
 >;
 /**
  * Type of the middleware that can be passed to `bot.callbackQuery`.
