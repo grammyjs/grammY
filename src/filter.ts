@@ -228,7 +228,6 @@ const ENTITY_KEYS = {
     underline: {},
     strikethrough: {},
     spoiler: {},
-    blockquote: {},
     code: {},
     pre: {},
     text_link: {},
@@ -319,14 +318,10 @@ const MESSAGE_KEYS = {
     forum_topic_reopened: {},
     general_forum_topic_hidden: {},
     general_forum_topic_unhidden: {},
-    giveaway: {},
-    giveaway_winners: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
-    giveaway_created: {},
-    giveaway_completed: {},
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
 const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
@@ -356,8 +351,8 @@ const UPDATE_KEYS = {
     chat_join_request: {},
     message_reaction: MESSAGE_REACTION_UPDATED_KEYS,
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
-    added_chat_boost: {},
-    removed_chat_boost: {},
+    // chat_boost: {},
+    // removed_chat_boost: {},
 } as const;
 
 // === Build up all possible filter queries from the above validation structure
@@ -529,17 +524,10 @@ interface Shortcuts<U extends Update> {
     chat: [U["callback_query"]] extends [object]
         ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
-        : [U["message_reaction"]] extends [object]
-            ? U["message_reaction"]["chat"]
-        : [U["message_reaction_count"]] extends [object]
-            ? U["message_reaction_count"]["chat"]
         : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["chat"]
         : [U["chat_member"]] extends [object] ? U["chat_member"]["chat"]
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["chat"]
-        : [U["chat_boost"]] extends [object] ? U["chat_boost"]["chat"]
-        : [U["removed_chat_boost"]] extends [object]
-            ? U["removed_chat_boost"]["chat"]
         : undefined;
     senderChat: [Shortcuts<U>["msg"]] extends [object]
         ? Shortcuts<U>["msg"]["sender_chat"]
