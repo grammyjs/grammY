@@ -474,10 +474,6 @@ type Combine<U, K extends string> = U extends unknown
     ? U & Partial<Record<Exclude<K, keyof U>, undefined>>
     : never;
 
-export type FilterCore<Q extends FilterQuery> = PerformQueryCore<
-    RunQuery<ExpandShortcuts<Q>>
->;
-
 /**
  * This type infers which properties will be present on the given context object
  * provided it matches the given filter query. If the filter query is a union
@@ -491,9 +487,17 @@ export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     C,
     RunQuery<ExpandShortcuts<Q>>
 >;
+// same as Filter but stop before intersecting with Context
+export type FilterCore<Q extends FilterQuery> = PerformQueryCore<
+    RunQuery<ExpandShortcuts<Q>>
+>;
+
 // apply a query result by intersecting it with Update, and then injecting into C
 type PerformQuery<C extends Context, U extends object> = U extends unknown
     ? FilteredContext<C, Update & U>
+    : never;
+type PerformQueryCore<U extends object> = U extends unknown
+    ? FilteredContextCore<Update & U>
     : never;
 
 // set the given update into a given context object, and adjust the aliases
@@ -506,11 +510,6 @@ type FilteredContextCore<U extends Update> =
     & Record<"update", U>
     & AliasProps<Omit<U, "update_id">>
     & Shortcuts<U>;
-
-// same as PerformQuery but stop before intersecting with Context
-type PerformQueryCore<U extends object> = U extends unknown
-    ? FilteredContextCore<Update & U>
-    : never;
 
 // helper type to infer shortcuts on context object based on present properties,
 // must be in sync with shortcut impl!
