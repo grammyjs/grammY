@@ -3,7 +3,7 @@ import {
     type KeyboardButton,
     type KeyboardButtonPollType,
     type KeyboardButtonRequestChat,
-    type KeyboardButtonRequestUser,
+    type KeyboardButtonRequestUsers,
     type LoginUrl,
     type SwitchInlineQueryChosenChat,
 } from "../types.ts";
@@ -128,38 +128,38 @@ export class Keyboard {
         return { text };
     }
     /**
-     * Adds a new request user button. When the user presses the button, a list
-     * of suitable users will be opened. Tapping on any user will send their
-     * identifier to the bot in a “user_shared” service message. Available in
-     * private chats only.
+     * Adds a new request users button. When the user presses the button, a list
+     * of suitable users will be opened. Tapping on any number of users will
+     * send their identifiers to the bot in a “users_shared” service message.
+     * Available in private chats only.
      *
      * @param text The text to display
      * @param requestId A signed 32-bit identifier of the request
      * @param options Options object for further requirements
      */
-    requestUser(
+    requestUsers(
         text: string,
         requestId: number,
-        options: Omit<KeyboardButtonRequestUser, "request_id"> = {},
+        options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
     ) {
-        return this.add(Keyboard.requestUser(text, requestId, options));
+        return this.add(Keyboard.requestUsers(text, requestId, options));
     }
     /**
-     * Creates a new request user button. When the user presses the button, a
-     * list of suitable users will be opened. Tapping on any user will send
-     * their identifier to the bot in a “user_shared” service message. Available
-     * in private chats only.
+     * Creates a new request users button. When the user presses the button, a
+     * list of suitable users will be opened. Tapping on any number of users
+     * will send their identifiers to the bot in a “users_shared” service
+     * message. Available in private chats only.
      *
      * @param text The text to display
      * @param requestId A signed 32-bit identifier of the request
      * @param options Options object for further requirements
      */
-    static requestUser(
+    static requestUsers(
         text: string,
         requestId: number,
-        options: Omit<KeyboardButtonRequestUser, "request_id"> = {},
-    ): KeyboardButton.RequestUserButton {
-        return { text, request_user: { request_id: requestId, ...options } };
+        options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
+    ): KeyboardButton.RequestUsersButton {
+        return { text, request_users: { request_id: requestId, ...options } };
     }
     /**
      * Adds a new request chat button. When the user presses the button, a list
