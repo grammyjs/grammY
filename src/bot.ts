@@ -28,6 +28,8 @@ export const DEFAULT_UPDATE_TYPES = [
     "poll_answer",
     "my_chat_member",
     "chat_join_request",
+    "chat_boost",
+    "removed_chat_boost",
 ] as const;
 
 /**

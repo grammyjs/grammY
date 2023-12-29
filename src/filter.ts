@@ -19,7 +19,7 @@ const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
  * like the following.
  * ```ts
  * // Listens for updates except forwards of messages or channel posts
- * bot.drop(matchFilter(':forward_date'), ctx => { ... })
+ * bot.drop(matchFilter(':forward_origin'), ctx => { ... })
  * ```
  *
  * Check out the
@@ -228,6 +228,7 @@ const ENTITY_KEYS = {
     underline: {},
     strikethrough: {},
     spoiler: {},
+    blockquote: {},
     code: {},
     pre: {},
     text_link: {},
@@ -240,15 +241,25 @@ const USER_KEYS = {
     is_premium: {},
     added_to_attachment_menu: {},
 } as const;
+const FORWARD_ORIGIN_KEYS = {
+    user: {},
+    hidden_user: {},
+    chat: {},
+    channel: {},
+} as const;
 const STICKER_KEYS = {
     is_video: {},
     is_animated: {},
     premium_animation: {},
 } as const;
+const REACTION_KEYS = {
+    emoji: {},
+    custom_emoji: {},
+} as const;
 
 // L2
 const COMMON_MESSAGE_KEYS = {
-    forward_date: {},
+    forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
 
@@ -297,7 +308,7 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
-    user_shared: {},
+    users_shared: {},
     chat_shared: {},
     connected_website: {},
     write_access_allowed: {},
@@ -308,13 +319,24 @@ const MESSAGE_KEYS = {
     forum_topic_reopened: {},
     general_forum_topic_hidden: {},
     general_forum_topic_unhidden: {},
+    giveaway: {},
+    giveaway_winners: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
+    giveaway_created: {},
+    giveaway_completed: {},
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
 const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
+const MESSAGE_REACTION_UPDATED_KEYS = {
+    old_reaction: REACTION_KEYS,
+    new_reaction: REACTION_KEYS,
+} as const;
+const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
+    reactions: REACTION_KEYS,
+} as const;
 
 // L1
 const UPDATE_KEYS = {
@@ -332,6 +354,10 @@ const UPDATE_KEYS = {
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_join_request: {},
+    message_reaction: MESSAGE_REACTION_UPDATED_KEYS,
+    message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
+    added_chat_boost: {},
+    removed_chat_boost: {},
 } as const;
 
 // === Build up all possible filter queries from the above validation structure
@@ -379,7 +405,7 @@ type CollapseL2<
         : never
         : never);
 // All queries
-type AllValidFilterQueries = InjectShortcuts;
+type ComputeFilterQueryList = InjectShortcuts;
 
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
@@ -397,7 +423,7 @@ type AllValidFilterQueries = InjectShortcuts;
  * bot.on('message:entities:url', ctx => { ... })
  * ```
  */
-export type FilterQuery = AllValidFilterQueries;
+export type FilterQuery = ComputeFilterQueryList;
 
 // === Infer the present/absent properties on a context object based on a query
 // Note: L3 filters are not represented in types
@@ -470,23 +496,26 @@ export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     C,
     RunQuery<ExpandShortcuts<Q>>
 >;
-type PerformQueryCore<U extends object> = U extends unknown
-    ? FilteredContextCore<Update & U>
-    : never;
 // apply a query result by intersecting it with Update, and then injecting into C
 type PerformQuery<C extends Context, U extends object> = U extends unknown
     ? FilteredContext<C, Update & U>
     : never;
 
+// set the given update into a given context object, and adjust the aliases
+type FilteredContext<C extends Context, U extends Update> =
+    & C
+    & FilteredContextCore<U>;
+
+// generate a structure with all aliases for a narrowed update
 type FilteredContextCore<U extends Update> =
     & Record<"update", U>
     & AliasProps<Omit<U, "update_id">>
     & Shortcuts<U>;
 
-// set the given update into a given context object, and adjust the aliases
-type FilteredContext<C extends Context, U extends Update> =
-    & C
-    & FilteredContextCore<U>;
+// same as PerformQuery but stop before intersecting with Context
+type PerformQueryCore<U extends object> = U extends unknown
+    ? FilteredContextCore<Update & U>
+    : never;
 
 // helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
@@ -499,10 +528,17 @@ interface Shortcuts<U extends Update> {
     chat: [U["callback_query"]] extends [object]
         ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+        : [U["message_reaction"]] extends [object]
+            ? U["message_reaction"]["chat"]
+        : [U["message_reaction_count"]] extends [object]
+            ? U["message_reaction_count"]["chat"]
         : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["chat"]
         : [U["chat_member"]] extends [object] ? U["chat_member"]["chat"]
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["chat"]
+        : [U["chat_boost"]] extends [object] ? U["chat_boost"]["chat"]
+        : [U["removed_chat_boost"]] extends [object]
+            ? U["removed_chat_boost"]["chat"]
         : undefined;
     senderChat: [Shortcuts<U>["msg"]] extends [object]
         ? Shortcuts<U>["msg"]["sender_chat"]
