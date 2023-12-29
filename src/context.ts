@@ -595,7 +595,7 @@ export class Context implements RenamedUpdate {
     ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }
-    hasReacted(
+    hasReaction(
         reaction:
             | ReactionTypeEmoji["emoji"]
             | MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,

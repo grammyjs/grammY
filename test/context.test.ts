@@ -256,15 +256,15 @@ describe("Context", () => {
         let ctx = new Context(up, api, me);
 
         assert(Context.has.reaction("👍")(ctx));
-        assert(ctx.hasReacted("👍"));
+        assert(ctx.hasReaction("👍"));
         assert(Context.has.reaction(["👍", "🏆"])(ctx));
-        assert(ctx.hasReacted(["👍", "🏆"]));
+        assert(ctx.hasReaction(["👍", "🏆"]));
         assert(Context.has.reaction({ type: "emoji", emoji: "👍" })(ctx));
-        assert(ctx.hasReacted({ type: "emoji", emoji: "👍" }));
+        assert(ctx.hasReaction({ type: "emoji", emoji: "👍" }));
         assert(Context.has.reaction([{ type: "emoji", emoji: "👍" }])(ctx));
-        assert(ctx.hasReacted([{ type: "emoji", emoji: "👍" }]));
+        assert(ctx.hasReaction([{ type: "emoji", emoji: "👍" }]));
         assertFalse(Context.has.reaction("👎")(ctx));
-        assertFalse(ctx.hasReacted("👎"));
+        assertFalse(ctx.hasReaction("👎"));
 
         const added = { type: "custom_emoji" as const, custom_emoji: "id_new" };
         up = {
@@ -287,9 +287,9 @@ describe("Context", () => {
         ctx = new Context(up, api, me);
 
         assert(Context.has.reaction(added)(ctx));
-        assert(ctx.hasReacted(added));
+        assert(ctx.hasReaction(added));
         assert(Context.has.reaction(["🏆", added])(ctx));
-        assert(ctx.hasReacted(["🏆", added]));
+        assert(ctx.hasReaction(["🏆", added]));
     });
 
     it("should be able to check for chat types", () => {
