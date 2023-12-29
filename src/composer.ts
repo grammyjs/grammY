@@ -414,9 +414,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     reaction(
-        reaction:
-            | ReactionTypeEmoji["emoji"]
-            | MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
         ...middleware: Array<ReactionMiddleware<C>>
     ): Composer<ReactionContext<C>> {
         return this.filter(Context.has.reaction(reaction), ...middleware);

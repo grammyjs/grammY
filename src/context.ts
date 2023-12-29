@@ -87,9 +87,7 @@ interface StaticHas {
      * @param reaction The reaction to test against
      */
     reaction(
-        reaction:
-            | ReactionTypeEmoji["emoji"]
-            | MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
     ): <C extends Context>(ctx: C) => ctx is ReactionContext<C>;
     /**
      * Generates a predicate function that can test context objects for
@@ -596,9 +594,7 @@ export class Context implements RenamedUpdate {
         return Context.has.command(command)(this);
     }
     hasReaction(
-        reaction:
-            | ReactionTypeEmoji["emoji"]
-            | MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
     ): this is ReactionContextCore {
         return Context.has.reaction(reaction)(this);
     }
@@ -1202,9 +1198,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#senddice
      */
     react(
-        reaction:
-            | ReactionTypeEmoji["emoji"]
-            | MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
         other?: Other<
             "setMessageReaction",
             "chat_id" | "message_id" | "reaction"
