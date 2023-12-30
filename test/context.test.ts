@@ -261,11 +261,11 @@ describe("Context", () => {
                 message_id: 2,
                 old_reaction: [
                     { type: "emoji", emoji: "🎉" },
-                    { type: "custom_emoji", custom_emoji: "id" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
                 ],
                 new_reaction: [
                     { type: "emoji", emoji: "🎉" },
-                    { type: "custom_emoji", custom_emoji: "id" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
                     { type: "emoji", emoji: "👍" },
                 ],
             },
@@ -283,7 +283,10 @@ describe("Context", () => {
         assertFalse(Context.has.reaction("👎")(ctx));
         assertFalse(ctx.hasReaction("👎"));
 
-        const added = { type: "custom_emoji" as const, custom_emoji: "id_new" };
+        const added = {
+            type: "custom_emoji" as const,
+            custom_emoji_id: "id_new",
+        };
         up = {
             update_id: 0,
             message_reaction: {
@@ -292,11 +295,11 @@ describe("Context", () => {
                 message_id: 2,
                 old_reaction: [
                     { type: "emoji", emoji: "🎉" },
-                    { type: "custom_emoji", custom_emoji: "id" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
                 ],
                 new_reaction: [
                     { type: "emoji", emoji: "🎉" },
-                    { type: "custom_emoji", custom_emoji: "id" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
                     added,
                 ],
             },
@@ -526,9 +529,9 @@ describe("Context", () => {
         const ye = { type: "emoji", emoji: "👍" };
         const no = { type: "emoji", emoji: "👎" };
         const ok = { type: "emoji", emoji: "👌" };
-        const cye = { type: "custom_emoji", custom_emoji: "id-ye" };
-        const cno = { type: "custom_emoji", custom_emoji: "id-no" };
-        const cok = { type: "custom_emoji", custom_emoji: "id-ok" };
+        const cye = { type: "custom_emoji", custom_emoji_id: "id-ye" };
+        const cno = { type: "custom_emoji", custom_emoji_id: "id-no" };
+        const cok = { type: "custom_emoji", custom_emoji_id: "id-ok" };
         let up = {
             message_reaction: {
                 old_reaction: [ye, no, cye, cno],
@@ -550,10 +553,10 @@ describe("Context", () => {
         assertEquals(emojiRemoved, [ye.emoji]);
         assertEquals(emojiKept, [no.emoji]);
         assertEquals(emojiAdded, [ok.emoji]);
-        assertEquals(customEmoji, [cok.custom_emoji, cno.custom_emoji]);
-        assertEquals(customEmojiRemoved, [cye.custom_emoji]);
-        assertEquals(customEmojiKept, [cno.custom_emoji]);
-        assertEquals(customEmojiAdded, [cok.custom_emoji]);
+        assertEquals(customEmoji, [cok.custom_emoji_id, cno.custom_emoji_id]);
+        assertEquals(customEmojiRemoved, [cye.custom_emoji_id]);
+        assertEquals(customEmojiKept, [cno.custom_emoji_id]);
+        assertEquals(customEmojiAdded, [cok.custom_emoji_id]);
 
         up = { message: update.message } as Update;
         ctx = new Context(up, api, me);

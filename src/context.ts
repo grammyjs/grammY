@@ -220,7 +220,7 @@ const checker: StaticHas = {
                 } else if (reaction.type === "custom_emoji") {
                     for (const old of old_reaction) {
                         if (old.type !== "custom_emoji") continue;
-                        if (old.custom_emoji === reaction.custom_emoji) {
+                        if (old.custom_emoji_id === reaction.custom_emoji_id) {
                             isOld = true;
                             break;
                         }
@@ -239,7 +239,10 @@ const checker: StaticHas = {
                     } else if (reaction.type === "custom_emoji") {
                         for (const wanted of normalized) {
                             if (wanted.type !== "custom_emoji") continue;
-                            if (wanted.custom_emoji === reaction.custom_emoji) {
+                            if (
+                                wanted.custom_emoji_id ===
+                                    reaction.custom_emoji_id
+                            ) {
                                 return true;
                             }
                         }
@@ -614,7 +617,7 @@ export class Context implements RenamedUpdate {
                 if (reaction.type === "emoji") {
                     emoji.push(reaction.emoji);
                 } else if (reaction.type === "custom_emoji") {
-                    customEmoji.push(reaction.custom_emoji);
+                    customEmoji.push(reaction.custom_emoji_id);
                 }
             }
             // temporarily move all old emoji to the *Removed arrays
@@ -622,7 +625,7 @@ export class Context implements RenamedUpdate {
                 if (reaction.type === "emoji") {
                     emojiRemoved.push(reaction.emoji);
                 } else if (reaction.type === "custom_emoji") {
-                    customEmojiRemoved.push(reaction.custom_emoji);
+                    customEmojiRemoved.push(reaction.custom_emoji_id);
                 }
             }
             // temporarily move all new emoji to the *Added arrays
