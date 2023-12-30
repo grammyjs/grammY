@@ -1,6 +1,12 @@
 // deno-lint-ignore-file camelcase
-import { BotError, Composer, type Middleware, run } from "./composer.ts";
-import { Context } from "./context.ts";
+import {
+    BotError,
+    Composer,
+    type Middleware,
+    type ReactionMiddleware,
+    run,
+} from "./composer.ts";
+import { Context, type MaybeArray, type ReactionContext } from "./context.ts";
 import { Api } from "./core/api.ts";
 import {
     type ApiClientOptions,
@@ -9,7 +15,12 @@ import {
 import { GrammyError, HttpError } from "./core/error.ts";
 import { type Filter, type FilterQuery, parse, preprocess } from "./filter.ts";
 import { debug as d } from "./platform.deno.ts";
-import { type Update, type UserFromGetMe } from "./types.ts";
+import {
+    type ReactionType,
+    type ReactionTypeEmoji,
+    type Update,
+    type UserFromGetMe,
+} from "./types.ts";
 const debug = d("grammy:bot");
 const debugWarn = d("grammy:warn");
 const debugErr = d("grammy:error");
@@ -248,6 +259,16 @@ export class Bot<
             this.observedUpdateTypes.add(u);
         }
         return super.on(filter, ...middleware);
+    }
+    /**
+     * @inheritdoc
+     */
+    reaction(
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        ...middleware: Array<ReactionMiddleware<C>>
+    ): Composer<ReactionContext<C>> {
+        this.observedUpdateTypes.add("message_reaction");
+        return super.reaction(reaction, ...middleware);
     }
 
     /**
