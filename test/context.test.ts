@@ -137,12 +137,26 @@ describe("Context", () => {
         up = { my_chat_member: update.my_chat_member } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.my_chat_member?.chat);
+        up = { message_reaction: update.message_reaction } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.message_reaction?.chat);
+        up = {
+            message_reaction_count: update.message_reaction_count,
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.message_reaction_count?.chat);
         up = { chat_member: update.chat_member } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.chat_member?.chat);
         up = { chat_join_request: update.chat_join_request } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.chat_join_request?.chat);
+        up = { chat_boost: update.chat_boost } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.chat_boost?.chat);
+        up = { removed_chat_boost: update.removed_chat_boost } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.removed_chat_boost?.chat);
     });
 
     it(".senderChat should aggregate sender chats", () => {
@@ -168,6 +182,9 @@ describe("Context", () => {
     it(".from should aggregate user objects", () => {
         let up: Update, ctx: Context;
 
+        up = { message_reaction: update.message_reaction } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.message_reaction?.user);
         up = { callback_query: update.callback_query } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.callback_query?.from);
@@ -503,5 +520,52 @@ describe("Context", () => {
             length: "some@email.com".length,
             text: "some@email.com",
         }]);
+    });
+
+    it("should be able to extract reaction info", () => {
+        const ye = { type: "emoji", emoji: "👍" };
+        const no = { type: "emoji", emoji: "👎" };
+        const ok = { type: "emoji", emoji: "👌" };
+        const cye = { type: "custom_emoji", custom_emoji: "id-ye" };
+        const cno = { type: "custom_emoji", custom_emoji: "id-no" };
+        const cok = { type: "custom_emoji", custom_emoji: "id-ok" };
+        let up = {
+            message_reaction: {
+                old_reaction: [ye, no, cye, cno],
+                new_reaction: [ok, no, cok, cno],
+            },
+        } as Update;
+        let ctx = new Context(up, api, me);
+        const {
+            emoji,
+            emojiRemoved,
+            emojiKept,
+            emojiAdded,
+            customEmoji,
+            customEmojiRemoved,
+            customEmojiKept,
+            customEmojiAdded,
+        } = ctx.reactions();
+        assertEquals(emoji, [ok.emoji, no.emoji]);
+        assertEquals(emojiRemoved, [ye.emoji]);
+        assertEquals(emojiKept, [no.emoji]);
+        assertEquals(emojiAdded, [ok.emoji]);
+        assertEquals(customEmoji, [cok.custom_emoji, cno.custom_emoji]);
+        assertEquals(customEmojiRemoved, [cye.custom_emoji]);
+        assertEquals(customEmojiKept, [cno.custom_emoji]);
+        assertEquals(customEmojiAdded, [cok.custom_emoji]);
+
+        up = { message: update.message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.reactions(), {
+            emoji: [],
+            emojiRemoved: [],
+            emojiKept: [],
+            emojiAdded: [],
+            customEmoji: [],
+            customEmojiRemoved: [],
+            customEmojiKept: [],
+            customEmojiAdded: [],
+        });
     });
 });
