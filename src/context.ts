@@ -515,10 +515,21 @@ export class Context implements RenamedUpdate {
      * @param types Types of entities to return. Omit to get all entities.
      * @returns Array of entities and their texts, or empty array when there's no text
      */
-    entities(): Array<MessageEntity & { text: string }>;
+    entities(): Array<
+        MessageEntity & {
+            /** Slice of the message text that contains this entity */
+            text: string;
+        }
+    >;
     entities<T extends MessageEntity["type"]>(
         types: MaybeArray<T>,
-    ): Array<MessageEntity & { type: T; text: string }>;
+    ): Array<
+        MessageEntity & {
+            type: T;
+            /** Slice of the message text that contains this entity */
+            text: string;
+        }
+    >;
     entities(types?: MaybeArray<MessageEntity["type"]>) {
         const message = this.msg;
         if (message === undefined) return [];
@@ -536,6 +547,128 @@ export class Context implements RenamedUpdate {
             ...entity,
             text: text.substring(entity.offset, entity.offset + entity.length),
         }));
+    }
+    /**
+     * Find out which reactions were added and removed in a `message_reaction`
+     * update. This method looks at `ctx.messageReaction` and computes the
+     * difference between the old reaction and the new reaction. It also groups
+     * the reactions by emoji reactions and custom emoji reactions. For example,
+     * the resulting object could look like this:
+     * ```ts
+     * {
+     *   emoji: ['👍', '🎉']
+     *   emojiAdded: ['🎉'],
+     *   emojiKept: ['👍'],
+     *   emojiRemoved: [],
+     *   customEmoji: [],
+     *   customEmojiAdded: [],
+     *   customEmojiKept: [],
+     *   customEmojiRemoved: ['id0123'],
+     * }
+     * ```
+     * In the above example, a tada reaction was added by the user, and a custom
+     * emoji reaction with the custom emoji 'id0123' was removed in the same
+     * update. The user had already reacted with a thumbs up reaction, which
+     * they left unchanged. As a result, the current reaction by the user is
+     * thumbs up and tada. Note that the current reaction (both emoji and custom
+     * emoji in one list) can also be obtained from
+     * `ctx.messageReaction.new_reaction`.
+     *
+     * Remember that reaction updates only include information about the
+     * reaction of a specific user. The respective message may have many more
+     * reactions by other people which will not be included in this update.
+     *
+     * @returns An object containing information about the reaction update
+     */
+    reactions(): {
+        /** Emoji currently present in this user's reaction */
+        emoji: ReactionTypeEmoji["emoji"][];
+        /** Emoji newly added to this user's reaction */
+        emojiAdded: ReactionTypeEmoji["emoji"][];
+        /** Emoji not changed by the update to this user's reaction */
+        emojiKept: ReactionTypeEmoji["emoji"][];
+        /** Emoji removed from this user's reaction */
+        emojiRemoved: ReactionTypeEmoji["emoji"][];
+        /** Custom emoji currently present in this user's reaction */
+        customEmoji: string[];
+        /** Custom emoji newly added to this user's reaction */
+        customEmojiAdded: string[];
+        /** Custom emoji not changed by the update to this user's reaction */
+        customEmojiKept: string[];
+        /** Custom emoji removed from this user's reaction */
+        customEmojiRemoved: string[];
+    } {
+        const emoji: ReactionTypeEmoji["emoji"][] = [];
+        const emojiAdded: ReactionTypeEmoji["emoji"][] = [];
+        const emojiKept: ReactionTypeEmoji["emoji"][] = [];
+        const emojiRemoved: ReactionTypeEmoji["emoji"][] = [];
+        const customEmoji: string[] = [];
+        const customEmojiAdded: string[] = [];
+        const customEmojiKept: string[] = [];
+        const customEmojiRemoved: string[] = [];
+        const r = this.messageReaction;
+        if (r !== undefined) {
+            const { old_reaction, new_reaction } = r;
+            // group all current emoji in `emoji` and `customEmoji`
+            for (const reaction of new_reaction) {
+                if (reaction.type === "emoji") {
+                    emoji.push(reaction.emoji);
+                } else if (reaction.type === "custom_emoji") {
+                    customEmoji.push(reaction.custom_emoji);
+                }
+            }
+            // temporarily move all old emoji to the *Removed arrays
+            for (const reaction of old_reaction) {
+                if (reaction.type === "emoji") {
+                    emojiRemoved.push(reaction.emoji);
+                } else if (reaction.type === "custom_emoji") {
+                    customEmojiRemoved.push(reaction.custom_emoji);
+                }
+            }
+            // temporarily move all new emoji to the *Added arrays
+            emojiAdded.push(...emoji);
+            customEmojiAdded.push(...customEmoji);
+            // drop common emoji from both lists and add them to `emojiKept`
+            for (let i = 0; i < emojiRemoved.length; i++) {
+                const len = emojiAdded.length;
+                if (len === 0) break;
+                const rem = emojiRemoved[i];
+                for (let j = 0; j < len; j++) {
+                    if (rem === emojiAdded[j]) {
+                        emojiKept.push(rem);
+                        emojiRemoved.splice(i, 1);
+                        emojiAdded.splice(j, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+            // drop common custom emoji from both lists and add them to `customEmojiKept`
+            for (let i = 0; i < customEmojiRemoved.length; i++) {
+                const len = customEmojiAdded.length;
+                if (len === 0) break;
+                const rem = customEmojiRemoved[i];
+                for (let j = 0; j < len; j++) {
+                    if (rem === customEmojiAdded[j]) {
+                        customEmojiKept.push(rem);
+                        customEmojiRemoved.splice(i, 1);
+                        customEmojiAdded.splice(j, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+        }
+        return {
+            emoji,
+            emojiAdded,
+            emojiKept,
+            emojiRemoved,
+            customEmoji,
+            customEmojiAdded,
+            customEmojiKept,
+            customEmojiRemoved,
+        };
     }
 
     // PROBING SHORTCUTS
