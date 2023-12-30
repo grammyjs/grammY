@@ -19,7 +19,7 @@ const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
  * like the following.
  * ```ts
  * // Listens for updates except forwards of messages or channel posts
- * bot.drop(matchFilter(':forward_date'), ctx => { ... })
+ * bot.drop(matchFilter(':forward_origin'), ctx => { ... })
  * ```
  *
  * Check out the
@@ -122,7 +122,10 @@ function check(original: string[], preprocessed: string[][]): string[][] {
 function checkOne(filter: string[]): string | true {
     const [l1, l2, l3, ...n] = filter;
     if (l1 === undefined) return "Empty filter query given";
-    if (!(l1 in UPDATE_KEYS)) {
+    if (
+        !(l1 in UPDATE_KEYS ||
+            l1 === "chat_boost" || l1 === "removed_chat_boost") // TODO: remove
+    ) {
         const permitted = Object.keys(UPDATE_KEYS);
         return `Invalid L1 filter '${l1}' given in '${filter.join(":")}'. \
 Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")}.`;
@@ -240,15 +243,25 @@ const USER_KEYS = {
     is_premium: {},
     added_to_attachment_menu: {},
 } as const;
+const FORWARD_ORIGIN_KEYS = {
+    user: {},
+    hidden_user: {},
+    chat: {},
+    channel: {},
+} as const;
 const STICKER_KEYS = {
     is_video: {},
     is_animated: {},
     premium_animation: {},
 } as const;
+const REACTION_KEYS = {
+    emoji: {},
+    custom_emoji: {},
+} as const;
 
 // L2
 const COMMON_MESSAGE_KEYS = {
-    forward_date: {},
+    forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
 
@@ -297,7 +310,7 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
-    user_shared: {},
+    users_shared: {},
     chat_shared: {},
     connected_website: {},
     write_access_allowed: {},
@@ -315,6 +328,13 @@ const CHANNEL_POST_KEYS = {
 } as const;
 const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
 const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
+const MESSAGE_REACTION_UPDATED_KEYS = {
+    old_reaction: REACTION_KEYS,
+    new_reaction: REACTION_KEYS,
+} as const;
+const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
+    reactions: REACTION_KEYS,
+} as const;
 
 // L1
 const UPDATE_KEYS = {
@@ -332,6 +352,10 @@ const UPDATE_KEYS = {
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_join_request: {},
+    message_reaction: MESSAGE_REACTION_UPDATED_KEYS,
+    message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
+    // chat_boost: {},
+    // removed_chat_boost: {},
 } as const;
 
 // === Build up all possible filter queries from the above validation structure
@@ -355,10 +379,10 @@ type L3S_<
 type L123 = L1S | L2S | L3S;
 // E.g. 'message::url' generation
 type InjectShortcuts<Q extends L123 = L123> = Q extends
-    `${infer R}:${infer S}:${infer T}`
-    ? `${CollapseL1<R, L1Shortcuts>}:${CollapseL2<S, L2Shortcuts>}:${T}`
-    : Q extends `${infer R}:${infer S}`
-        ? `${CollapseL1<R, L1Shortcuts>}:${CollapseL2<S>}`
+    `${infer L1}:${infer L2}:${infer L3}`
+    ? `${CollapseL1<L1, L1Shortcuts>}:${CollapseL2<L2, L2Shortcuts>}:${L3}`
+    : Q extends `${infer L1}:${infer L2}`
+        ? `${CollapseL1<L1, L1Shortcuts>}:${CollapseL2<L2>}`
     : CollapseL1<Q>;
 // Add L1 shortcuts
 type CollapseL1<
@@ -379,7 +403,10 @@ type CollapseL2<
         : never
         : never);
 // All queries
-type AllValidFilterQueries = InjectShortcuts;
+type ComputeFilterQueryList =
+    | InjectShortcuts
+    | "chat_boost" // TODO: remove
+    | "removed_chat_boost";
 
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
@@ -397,7 +424,7 @@ type AllValidFilterQueries = InjectShortcuts;
  * bot.on('message:entities:url', ctx => { ... })
  * ```
  */
-export type FilterQuery = AllValidFilterQueries;
+export type FilterQuery = ComputeFilterQueryList;
 
 // === Infer the present/absent properties on a context object based on a query
 // Note: L3 filters are not represented in types
@@ -453,10 +480,6 @@ type Combine<U, K extends string> = U extends unknown
     ? U & Partial<Record<Exclude<K, keyof U>, undefined>>
     : never;
 
-export type FilterCore<Q extends FilterQuery> = PerformQueryCore<
-    RunQuery<ExpandShortcuts<Q>>
->;
-
 /**
  * This type infers which properties will be present on the given context object
  * provided it matches the given filter query. If the filter query is a union
@@ -470,25 +493,32 @@ export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
     C,
     RunQuery<ExpandShortcuts<Q>>
 >;
-type PerformQueryCore<U extends object> = U extends unknown
-    ? FilteredContextCore<Update & U>
-    : never;
+// same as Filter but stop before intersecting with Context
+export type FilterCore<Q extends FilterQuery> = PerformQueryCore<
+    RunQuery<ExpandShortcuts<Q>>
+>;
+
 // apply a query result by intersecting it with Update, and then injecting into C
 type PerformQuery<C extends Context, U extends object> = U extends unknown
     ? FilteredContext<C, Update & U>
     : never;
-
-type FilteredContextCore<U extends Update> =
-    & Record<"update", U>
-    & AliasProps<Omit<U, "update_id">>
-    & Shortcuts<U>;
+type PerformQueryCore<U extends object> = U extends unknown
+    ? FilteredContextCore<Update & U>
+    : never;
 
 // set the given update into a given context object, and adjust the aliases
 type FilteredContext<C extends Context, U extends Update> =
     & C
     & FilteredContextCore<U>;
 
-// helper type to infer shortcuts on context object based on present properties, must be in sync with shortcut impl!
+// generate a structure with all aliases for a narrowed update
+type FilteredContextCore<U extends Update> =
+    & Record<"update", U>
+    & AliasProps<Omit<U, "update_id">>
+    & Shortcuts<U>;
+
+// helper type to infer shortcuts on context object based on present properties,
+// must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
     msg: [U["callback_query"]] extends [object] ? U["callback_query"]["message"]
         : [U["message"]] extends [object] ? U["message"]
@@ -548,11 +578,14 @@ const L2_SHORTCUTS = {
 type L1Shortcuts = KeyOf<typeof L1_SHORTCUTS>;
 type L2Shortcuts = KeyOf<typeof L2_SHORTCUTS>;
 
-type ExpandShortcuts<Q extends string> = Q extends
-    `${infer L1}:${infer L2}:${infer L3}`
-    ? `${ExpandL1<L1>}:${ExpandL2<L2>}:${L3}`
-    : Q extends `${infer L1}:${infer L2}` ? `${ExpandL1<L1>}:${ExpandL2<L2>}`
-    : ExpandL1<Q>;
+type ExpandShortcuts<Q extends string> = Exclude<
+    Q extends `${infer L1}:${infer L2}:${infer L3}`
+        ? `${ExpandL1<L1>}:${ExpandL2<L2>}:${L3}`
+        : Q extends `${infer L1}:${infer L2}`
+            ? `${ExpandL1<L1>}:${ExpandL2<L2>}`
+        : ExpandL1<Q>,
+    "chat_boost" | "removed_chat_boost" // TODO: remove
+>;
 type ExpandL1<S extends string> = S extends L1Shortcuts
     ? typeof L1_SHORTCUTS[S][number]
     : S;

@@ -30,7 +30,7 @@ describe("Keyboard", () => {
             .requestLocation("location")
             .requestPoll("poll", "quiz")
             .webApp("web app", "https://grammy.dev")
-            .requestUser("user", 12, { user_is_bot: true })
+            .requestUsers("user", 12, { user_is_bot: true })
             .requestChat("chat", 42);
         assertEquals(keyboard.build(), [[
             { text: "button" },
@@ -40,7 +40,7 @@ describe("Keyboard", () => {
             { text: "web app", web_app: { url: "https://grammy.dev" } },
             {
                 text: "user",
-                request_user: { request_id: 12, user_is_bot: true },
+                request_users: { request_id: 12, user_is_bot: true },
             },
             {
                 text: "chat",

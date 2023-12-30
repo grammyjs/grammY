@@ -13,6 +13,7 @@ import {
     type LabeledPrice,
     type MaskPosition,
     type PassportElementError,
+    type ReactionType,
 } from "../types.ts";
 import {
     type ApiClientOptions,
@@ -224,7 +225,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned.
+     * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -252,7 +253,37 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param from_chat_id Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
+     * @param message_ids Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#forwardmessages
+     */
+    forwardMessages(
+        chat_id: number | string,
+        from_chat_id: number | string,
+        message_ids: number[],
+        other?: Other<
+            R,
+            "forwardMessages",
+            "chat_id" | "from_chat_id" | "message_ids"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.forwardMessages({
+            chat_id,
+            from_chat_id,
+            message_ids,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -277,6 +308,36 @@ export class Api<R extends RawApi = RawApi> {
             { chat_id, from_chat_id, message_id, ...other },
             signal,
         );
+    }
+
+    /**
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param from_chat_id Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
+     * @param message_ids Identifiers of 1-100 messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#copymessages
+     */
+    copyMessages(
+        chat_id: number | string,
+        from_chat_id: number | string,
+        message_ids: number[],
+        other?: Other<
+            R,
+            "copyMessages",
+            "chat_id" | "from_chat_id" | "message_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.copyMessages({
+            chat_id,
+            from_chat_id,
+            message_ids,
+            ...other,
+        }, signal);
     }
 
     /**
@@ -686,6 +747,36 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_id Identifier of the target message
+     * @param reaction New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#senddice
+     */
+    setMessageReaction(
+        chat_id: number | string,
+        message_id: number,
+        reaction: ReactionType[],
+        other?: Other<
+            R,
+            "setMessageReaction",
+            "chat_id" | "message_id" | "reaction"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setMessageReaction({
+            chat_id,
+            message_id,
+            reaction,
+            ...other,
+        }, signal);
+    }
+
+    /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
      *
      * Example: The ImageBot needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use sendChatAction with action = upload_photo. The user will see a “sending photo” status for the bot.
@@ -734,6 +825,23 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getUserProfilePhotos({ user_id, ...other }, signal);
+    }
+
+    /**
+     * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object.
+     *
+     * @param chat_id Unique identifier for the chat or username of the channel (in the format @channelusername)
+     * @param user_id Unique identifier of the target user
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuserchatboosts
+     */
+    getUserChatBoosts(
+        chat_id: number | string,
+        user_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getUserChatBoosts({ chat_id, user_id }, signal);
     }
 
     /**
@@ -1920,6 +2028,23 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.deleteMessage({ chat_id, message_id }, signal);
+    }
+
+    /**
+     * Use this method to delete multiple messages simultaneously. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_ids Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessages
+     */
+    deleteMessages(
+        chat_id: number | string,
+        message_ids: number[],
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteMessages({ chat_id, message_ids }, signal);
     }
 
     /**

@@ -21,6 +21,8 @@ import {
     type Message,
     type MessageEntity,
     type PassportElementError,
+    type ReactionType,
+    type ReactionTypeEmoji,
     type Update,
     type User,
     type UserFromGetMe,
@@ -77,6 +79,16 @@ interface StaticHas {
             StringWithSuggestions<S | "start" | "help" | "settings">
         >,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
+    /**
+     * Generates a predicate function that can test context
+     * objects for containing a message reaction update. This uses the same
+     * logic as `bot.reaction`.
+     *
+     * @param reaction The reaction to test against
+     */
+    reaction(
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+    ): <C extends Context>(ctx: C) => ctx is ReactionContext<C>;
     /**
      * Generates a predicate function that can test context objects for
      * belonging to a chat with the given chat type. This uses the same logic as
@@ -183,6 +195,64 @@ const checker: StaticHas = {
                 }
                 return false;
             });
+        };
+    },
+    reaction(reaction) {
+        const hasMessageReaction = checker.filterQuery("message_reaction");
+        const normalized: ReactionType[] = typeof reaction === "string"
+            ? [{ type: "emoji", emoji: reaction }]
+            : (Array.isArray(reaction) ? reaction : [reaction]).map((emoji) =>
+                typeof emoji === "string" ? { type: "emoji", emoji } : emoji
+            );
+        return <C extends Context>(ctx: C): ctx is ReactionContext<C> => {
+            if (!hasMessageReaction(ctx)) return false;
+            const { old_reaction, new_reaction } = ctx.messageReaction;
+            for (const reaction of new_reaction) {
+                let isOld = false;
+                if (reaction.type === "emoji") {
+                    for (const old of old_reaction) {
+                        if (old.type !== "emoji") continue;
+                        if (old.emoji === reaction.emoji) {
+                            isOld = true;
+                            break;
+                        }
+                    }
+                } else if (reaction.type === "custom_emoji") {
+                    for (const old of old_reaction) {
+                        if (old.type !== "custom_emoji") continue;
+                        if (old.custom_emoji_id === reaction.custom_emoji_id) {
+                            isOld = true;
+                            break;
+                        }
+                    }
+                } else {
+                    // always regard unsupported emoji types as new
+                }
+                if (!isOld) {
+                    if (reaction.type === "emoji") {
+                        for (const wanted of normalized) {
+                            if (wanted.type !== "emoji") continue;
+                            if (wanted.emoji === reaction.emoji) {
+                                return true;
+                            }
+                        }
+                    } else if (reaction.type === "custom_emoji") {
+                        for (const wanted of normalized) {
+                            if (wanted.type !== "custom_emoji") continue;
+                            if (
+                                wanted.custom_emoji_id ===
+                                    reaction.custom_emoji_id
+                            ) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        // always regard unsupported emoji types as new
+                        return true;
+                    }
+                }
+            }
+            return false;
         };
     },
     chatType<T extends Chat["type"]>(chatType: MaybeArray<T>) {
@@ -303,6 +373,14 @@ export class Context implements RenamedUpdate {
     get editedChannelPost() {
         return this.update.edited_channel_post;
     }
+    /** Alias for `ctx.update.message_reaction` */
+    get messageReaction() {
+        return this.update.message_reaction;
+    }
+    /** Alias for `ctx.update.message_reaction_count` */
+    get messageReactionCount() {
+        return this.update.message_reaction_count;
+    }
     /** Alias for `ctx.update.inline_query` */
     get inlineQuery() {
         return this.update.inline_query;
@@ -343,6 +421,14 @@ export class Context implements RenamedUpdate {
     get chatJoinRequest() {
         return this.update.chat_join_request;
     }
+    /** Alias for `ctx.update.chat_boost` */
+    get chatBoost() {
+        return this.update.chat_boost;
+    }
+    /** Alias for `ctx.update.removed_chat_boost` */
+    get removedChatBoost() {
+        return this.update.removed_chat_boost;
+    }
 
     // AGGREGATION SHORTCUTS
 
@@ -363,15 +449,21 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get chat object from wherever possible. Alias for `(ctx.msg ??
-     * ctx.myChatMember ?? ctx.chatMember ?? ctx.chatJoinRequest)?.chat`
+     * ctx.myChatMember ?? ctx.chatMember ?? ctx.chatJoinRequest ??
+     * ctx.messageReaction ?? ctx.messageReactionCount ?? ctx.chatBoost ??
+     * ctx.removedChatBoost)?.chat`
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
         return (
             this.msg ??
+                this.messageReaction ??
+                this.messageReactionCount ??
                 this.myChatMember ??
                 this.chatMember ??
-                this.chatJoinRequest
+                this.chatJoinRequest ??
+                this.chatBoost ??
+                this.removedChatBoost
         )?.chat;
     }
     /**
@@ -389,8 +481,8 @@ export class Context implements RenamedUpdate {
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
-        return (
-            this.callbackQuery ??
+        return this.messageReaction?.user ??
+            (this.callbackQuery ??
                 this.inlineQuery ??
                 this.shippingQuery ??
                 this.preCheckoutQuery ??
@@ -398,8 +490,7 @@ export class Context implements RenamedUpdate {
                 this.msg ??
                 this.myChatMember ??
                 this.chatMember ??
-                this.chatJoinRequest
-        )?.from;
+                this.chatJoinRequest)?.from;
     }
     /**
      * Get inline message ID from wherever possible. Alias for
@@ -427,10 +518,21 @@ export class Context implements RenamedUpdate {
      * @param types Types of entities to return. Omit to get all entities.
      * @returns Array of entities and their texts, or empty array when there's no text
      */
-    entities(): Array<MessageEntity & { text: string }>;
+    entities(): Array<
+        MessageEntity & {
+            /** Slice of the message text that contains this entity */
+            text: string;
+        }
+    >;
     entities<T extends MessageEntity["type"]>(
         types: MaybeArray<T>,
-    ): Array<MessageEntity & { type: T; text: string }>;
+    ): Array<
+        MessageEntity & {
+            type: T;
+            /** Slice of the message text that contains this entity */
+            text: string;
+        }
+    >;
     entities(types?: MaybeArray<MessageEntity["type"]>) {
         const message = this.msg;
         if (message === undefined) return [];
@@ -448,6 +550,128 @@ export class Context implements RenamedUpdate {
             ...entity,
             text: text.substring(entity.offset, entity.offset + entity.length),
         }));
+    }
+    /**
+     * Find out which reactions were added and removed in a `message_reaction`
+     * update. This method looks at `ctx.messageReaction` and computes the
+     * difference between the old reaction and the new reaction. It also groups
+     * the reactions by emoji reactions and custom emoji reactions. For example,
+     * the resulting object could look like this:
+     * ```ts
+     * {
+     *   emoji: ['👍', '🎉']
+     *   emojiAdded: ['🎉'],
+     *   emojiKept: ['👍'],
+     *   emojiRemoved: [],
+     *   customEmoji: [],
+     *   customEmojiAdded: [],
+     *   customEmojiKept: [],
+     *   customEmojiRemoved: ['id0123'],
+     * }
+     * ```
+     * In the above example, a tada reaction was added by the user, and a custom
+     * emoji reaction with the custom emoji 'id0123' was removed in the same
+     * update. The user had already reacted with a thumbs up reaction, which
+     * they left unchanged. As a result, the current reaction by the user is
+     * thumbs up and tada. Note that the current reaction (both emoji and custom
+     * emoji in one list) can also be obtained from
+     * `ctx.messageReaction.new_reaction`.
+     *
+     * Remember that reaction updates only include information about the
+     * reaction of a specific user. The respective message may have many more
+     * reactions by other people which will not be included in this update.
+     *
+     * @returns An object containing information about the reaction update
+     */
+    reactions(): {
+        /** Emoji currently present in this user's reaction */
+        emoji: ReactionTypeEmoji["emoji"][];
+        /** Emoji newly added to this user's reaction */
+        emojiAdded: ReactionTypeEmoji["emoji"][];
+        /** Emoji not changed by the update to this user's reaction */
+        emojiKept: ReactionTypeEmoji["emoji"][];
+        /** Emoji removed from this user's reaction */
+        emojiRemoved: ReactionTypeEmoji["emoji"][];
+        /** Custom emoji currently present in this user's reaction */
+        customEmoji: string[];
+        /** Custom emoji newly added to this user's reaction */
+        customEmojiAdded: string[];
+        /** Custom emoji not changed by the update to this user's reaction */
+        customEmojiKept: string[];
+        /** Custom emoji removed from this user's reaction */
+        customEmojiRemoved: string[];
+    } {
+        const emoji: ReactionTypeEmoji["emoji"][] = [];
+        const emojiAdded: ReactionTypeEmoji["emoji"][] = [];
+        const emojiKept: ReactionTypeEmoji["emoji"][] = [];
+        const emojiRemoved: ReactionTypeEmoji["emoji"][] = [];
+        const customEmoji: string[] = [];
+        const customEmojiAdded: string[] = [];
+        const customEmojiKept: string[] = [];
+        const customEmojiRemoved: string[] = [];
+        const r = this.messageReaction;
+        if (r !== undefined) {
+            const { old_reaction, new_reaction } = r;
+            // group all current emoji in `emoji` and `customEmoji`
+            for (const reaction of new_reaction) {
+                if (reaction.type === "emoji") {
+                    emoji.push(reaction.emoji);
+                } else if (reaction.type === "custom_emoji") {
+                    customEmoji.push(reaction.custom_emoji_id);
+                }
+            }
+            // temporarily move all old emoji to the *Removed arrays
+            for (const reaction of old_reaction) {
+                if (reaction.type === "emoji") {
+                    emojiRemoved.push(reaction.emoji);
+                } else if (reaction.type === "custom_emoji") {
+                    customEmojiRemoved.push(reaction.custom_emoji_id);
+                }
+            }
+            // temporarily move all new emoji to the *Added arrays
+            emojiAdded.push(...emoji);
+            customEmojiAdded.push(...customEmoji);
+            // drop common emoji from both lists and add them to `emojiKept`
+            for (let i = 0; i < emojiRemoved.length; i++) {
+                const len = emojiAdded.length;
+                if (len === 0) break;
+                const rem = emojiRemoved[i];
+                for (let j = 0; j < len; j++) {
+                    if (rem === emojiAdded[j]) {
+                        emojiKept.push(rem);
+                        emojiRemoved.splice(i, 1);
+                        emojiAdded.splice(j, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+            // drop common custom emoji from both lists and add them to `customEmojiKept`
+            for (let i = 0; i < customEmojiRemoved.length; i++) {
+                const len = customEmojiAdded.length;
+                if (len === 0) break;
+                const rem = customEmojiRemoved[i];
+                for (let j = 0; j < len; j++) {
+                    if (rem === customEmojiAdded[j]) {
+                        customEmojiKept.push(rem);
+                        customEmojiRemoved.splice(i, 1);
+                        customEmojiAdded.splice(j, 1);
+                        i--;
+                        break;
+                    }
+                }
+            }
+        }
+        return {
+            emoji,
+            emojiAdded,
+            emojiKept,
+            emojiRemoved,
+            customEmoji,
+            customEmojiAdded,
+            customEmojiKept,
+            customEmojiRemoved,
+        };
     }
 
     // PROBING SHORTCUTS
@@ -504,6 +728,11 @@ export class Context implements RenamedUpdate {
         >,
     ): this is CommandContextCore {
         return Context.has.command(command)(this);
+    }
+    hasReaction(
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+    ): this is ReactionContextCore {
+        return Context.has.reaction(reaction)(this);
     }
     /**
      * Returns `true` if this context object belongs to a chat with the given
@@ -593,7 +822,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.forwardMessage`. Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned.
+     * Context-aware alias for `api.forwardMessage`. Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param other Optional remaining parameters, confer the official reference below
@@ -612,14 +841,46 @@ export class Context implements RenamedUpdate {
         return this.api.forwardMessage(
             chat_id,
             orThrow(this.chat, "forwardMessage").id,
-            orThrow(this.msg, "forwardMessage").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "forwardMessage",
+            ),
             other,
             signal,
         );
     }
 
     /**
-     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Context-aware alias for `api.forwardMessages`. Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_ids Identifiers of 1-100 messages in the current chat to forward. The identifiers must be specified in a strictly increasing order.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#forwardmessages
+     */
+    forwardMessages(
+        chat_id: number | string,
+        message_ids: number[],
+        other?: Other<
+            "forwardMessages",
+            "chat_id" | "from_chat_id" | "message_ids"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.forwardMessages(
+            chat_id,
+            orThrow(this.chat, "forwardMessages").id,
+            message_ids,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param other Optional remaining parameters, confer the official reference below
@@ -635,7 +896,39 @@ export class Context implements RenamedUpdate {
         return this.api.copyMessage(
             chat_id,
             orThrow(this.chat, "copyMessage").id,
-            orThrow(this.msg, "copyMessage").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "copyMessage",
+            ),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.copyMessages`.Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_ids Identifiers of 1-100 messages in the current chat to copy. The identifiers must be specified in a strictly increasing order.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#copymessages
+     */
+    copyMessages(
+        chat_id: number | string,
+        message_ids: number[],
+        other?: Other<
+            "copyMessages",
+            "chat_id" | "from_chat_id" | "message_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.copyMessages(
+            chat_id,
+            orThrow(this.chat, "copyMessages").id,
+            message_ids,
             other,
             signal,
         );
@@ -883,7 +1176,11 @@ export class Context implements RenamedUpdate {
             )
             : this.api.editMessageLiveLocation(
                 orThrow(this.chat, "editMessageLiveLocation").id,
-                orThrow(this.msg, "editMessageLiveLocation").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageLiveLocation",
+                ),
                 latitude,
                 longitude,
                 other,
@@ -911,7 +1208,11 @@ export class Context implements RenamedUpdate {
             ? this.api.stopMessageLiveLocationInline(inlineId, other)
             : this.api.stopMessageLiveLocation(
                 orThrow(this.chat, "stopMessageLiveLocation").id,
-                orThrow(this.msg, "stopMessageLiveLocation").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "stopMessageLiveLocation",
+                ),
                 other,
                 signal,
             );
@@ -1024,6 +1325,43 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success.
+     *
+     * @param reaction New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#senddice
+     */
+    react(
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        other?: Other<
+            "setMessageReaction",
+            "chat_id" | "message_id" | "reaction"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setMessageReaction(
+            orThrow(this.chat, "setMessageReaction").id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "setMessageReaction",
+            ),
+            typeof reaction === "string"
+                ? [{ type: "emoji", emoji: reaction }]
+                : (Array.isArray(reaction) ? reaction : [reaction])
+                    .map((emoji) =>
+                        typeof emoji === "string"
+                            ? { type: "emoji", emoji }
+                            : emoji
+                    ),
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.sendChatAction`. Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
      *
      * Example: The ImageBot needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use sendChatAction with action = upload_photo. The user will see a “sending photo” status for the bot.
@@ -1081,6 +1419,22 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.getUserChatBoosts`. Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object.
+     *
+     * @param chat_id Unique identifier for the chat or username of the channel (in the format @channelusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuserchatboosts
+     */
+    getUserChatBoosts(chat_id: number | string, signal?: AbortSignal) {
+        return this.api.getUserChatBoosts(
+            chat_id,
+            orThrow(this.from, "getUserChatBoosts").id,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.getFile`. Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
      *
      * Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
@@ -1115,7 +1469,8 @@ export class Context implements RenamedUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#banchatmember
-     */ banAuthor(
+     */
+    banAuthor(
         other?: Other<"banChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
     ) {
@@ -1991,7 +2346,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageTextInline(inlineId, text, other)
             : this.api.editMessageText(
                 orThrow(this.chat, "editMessageText").id,
-                orThrow(this.msg, "editMessageText").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageText",
+                ),
                 text,
                 other,
                 signal,
@@ -2018,7 +2377,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageCaptionInline(inlineId, other)
             : this.api.editMessageCaption(
                 orThrow(this.chat, "editMessageCaption").id,
-                orThrow(this.msg, "editMessageCaption").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageCaption",
+                ),
                 other,
                 signal,
             );
@@ -2046,7 +2409,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageMediaInline(inlineId, media, other)
             : this.api.editMessageMedia(
                 orThrow(this.chat, "editMessageMedia").id,
-                orThrow(this.msg, "editMessageMedia").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageMedia",
+                ),
                 media,
                 other,
                 signal,
@@ -2073,7 +2440,11 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageReplyMarkupInline(inlineId, other)
             : this.api.editMessageReplyMarkup(
                 orThrow(this.chat, "editMessageReplyMarkup").id,
-                orThrow(this.msg, "editMessageReplyMarkup").message_id,
+                orThrow(
+                    this.msg?.message_id ?? this.messageReaction?.message_id ??
+                        this.messageReactionCount?.message_id,
+                    "editMessageReplyMarkup",
+                ),
                 other,
                 signal,
             );
@@ -2093,7 +2464,11 @@ export class Context implements RenamedUpdate {
     ) {
         return this.api.stopPoll(
             orThrow(this.chat, "stopPoll").id,
-            orThrow(this.msg, "stopPoll").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "stopPoll",
+            ),
             other,
             signal,
         );
@@ -2117,7 +2492,28 @@ export class Context implements RenamedUpdate {
     deleteMessage(signal?: AbortSignal) {
         return this.api.deleteMessage(
             orThrow(this.chat, "deleteMessage").id,
-            orThrow(this.msg, "deleteMessage").message_id,
+            orThrow(
+                this.msg?.message_id ?? this.messageReaction?.message_id ??
+                    this.messageReactionCount?.message_id,
+                "deleteMessage",
+            ),
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.deleteMessages`. Use this method to delete multiple messages simultaneously. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param message_ids Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessages
+     */
+    deleteMessages(message_ids: number[], signal?: AbortSignal) {
+        return this.api.deleteMessages(
+            orThrow(this.chat, "deleteMessages").id,
+            message_ids,
             signal,
         );
     }
@@ -2409,6 +2805,19 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * in separate files and still have the correct types.
  */
 export type InlineQueryContext<C extends Context> = Filter<C, "inline_query">;
+
+type ReactionContextCore = FilterCore<"message_reaction">;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.reaction`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * annotate `bot.reaction` does it. This allows you to context objects in
+ * middleware that is not directly passed to `bot.reaction`, hence not inferring
+ * the correct type automatically. That way, handlers can be defined in separate
+ * files and still have the correct types.
+ */
+export type ReactionContext<C extends Context> = Filter<C, "message_reaction">;
 
 type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
 /**

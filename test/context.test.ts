@@ -25,6 +25,22 @@ describe("Context", () => {
         edited_message: m,
         channel_post: m,
         edited_channel_post: m,
+        message_reaction: {
+            chat: c,
+            date: 42,
+            message_id: 2,
+            old_reaction: [],
+            new_reaction: [{ type: "emoji", emoji: "👍" }],
+        },
+        message_reaction_count: {
+            chat: c,
+            date: 43,
+            message_id: 3,
+            reactions: [{
+                type: { type: "emoji", emoji: "🍌" },
+                total_count: 5,
+            }],
+        },
         inline_query: { id: "b", from: u, query: "iq" },
         chosen_inline_result: {
             from: u,
@@ -45,7 +61,9 @@ describe("Context", () => {
         my_chat_member: { date: 1, from: u, chat: c },
         chat_member: { date: 2, from: u, chat: c },
         chat_join_request: { date: 3, from: u, chat: c },
-    } as Update;
+        chat_boost: { chat: c, boost: { boost_id: 3 } },
+        removed_chat_boost: { chat: c, boost_id: 3 },
+    } as unknown as Update;
     const api = new Api("dummy-token");
     const me = { id: 42, username: "bot" } as UserFromGetMe;
 
@@ -56,12 +74,14 @@ describe("Context", () => {
         assertEquals(ctx.me, me);
     });
 
-    it("should have aliases", () => {
+    it("should have update shortcuts", () => {
         const ctx = new Context(update, api, me);
         assertEquals(ctx.message, update.message);
         assertEquals(ctx.editedMessage, update.edited_message);
         assertEquals(ctx.channelPost, update.channel_post);
         assertEquals(ctx.editedChannelPost, update.edited_channel_post);
+        assertEquals(ctx.messageReaction, update.message_reaction);
+        assertEquals(ctx.messageReactionCount, update.message_reaction_count);
         assertEquals(ctx.inlineQuery, update.inline_query);
         assertEquals(ctx.chosenInlineResult, update.chosen_inline_result);
         assertEquals(ctx.callbackQuery, update.callback_query);
@@ -72,23 +92,8 @@ describe("Context", () => {
         assertEquals(ctx.myChatMember, update.my_chat_member);
         assertEquals(ctx.chatMember, update.chat_member);
         assertEquals(ctx.chatJoinRequest, update.chat_join_request);
-    });
-
-    it("should have update shortcuts", () => {
-        const ctx = new Context(update, api, me);
-        assertEquals(ctx.message, update.message);
-        assertEquals(ctx.editedMessage, update.edited_message);
-        assertEquals(ctx.channelPost, update.channel_post);
-        assertEquals(ctx.editedChannelPost, update.edited_channel_post);
-        assertEquals(ctx.chosenInlineResult, update.chosen_inline_result);
-        assertEquals(ctx.callbackQuery, update.callback_query);
-        assertEquals(ctx.shippingQuery, update.shipping_query);
-        assertEquals(ctx.preCheckoutQuery, update.pre_checkout_query);
-        assertEquals(ctx.poll, update.poll);
-        assertEquals(ctx.pollAnswer, update.poll_answer);
-        assertEquals(ctx.myChatMember, update.my_chat_member);
-        assertEquals(ctx.chatMember, update.chat_member);
-        assertEquals(ctx.chatJoinRequest, update.chat_join_request);
+        assertEquals(ctx.chatBoost, update.chat_boost);
+        assertEquals(ctx.removedChatBoost, update.removed_chat_boost);
     });
 
     it(".msg should aggregate messages", () => {
@@ -132,12 +137,26 @@ describe("Context", () => {
         up = { my_chat_member: update.my_chat_member } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.my_chat_member?.chat);
+        up = { message_reaction: update.message_reaction } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.message_reaction?.chat);
+        up = {
+            message_reaction_count: update.message_reaction_count,
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.message_reaction_count?.chat);
         up = { chat_member: update.chat_member } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.chat_member?.chat);
         up = { chat_join_request: update.chat_join_request } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.chat_join_request?.chat);
+        up = { chat_boost: update.chat_boost } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.chat_boost?.chat);
+        up = { removed_chat_boost: update.removed_chat_boost } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.removed_chat_boost?.chat);
     });
 
     it(".senderChat should aggregate sender chats", () => {
@@ -163,6 +182,9 @@ describe("Context", () => {
     it(".from should aggregate user objects", () => {
         let up: Update, ctx: Context;
 
+        up = { message_reaction: update.message_reaction } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.message_reaction?.user);
         up = { callback_query: update.callback_query } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.callback_query?.from);
@@ -228,6 +250,66 @@ describe("Context", () => {
         assert(ctx.hasCallbackQuery(/^c./));
         assertFalse(Context.has.callbackQuery("bb")(ctx));
         assertFalse(ctx.hasCallbackQuery("bb"));
+    });
+
+    it("should be able to check for new reactions", () => {
+        let up: Update = {
+            update_id: 0,
+            message_reaction: {
+                chat: c,
+                date: 42,
+                message_id: 2,
+                old_reaction: [
+                    { type: "emoji", emoji: "🎉" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
+                ],
+                new_reaction: [
+                    { type: "emoji", emoji: "🎉" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
+                    { type: "emoji", emoji: "👍" },
+                ],
+            },
+        };
+        let ctx = new Context(up, api, me);
+
+        assert(Context.has.reaction("👍")(ctx));
+        assert(ctx.hasReaction("👍"));
+        assert(Context.has.reaction(["👍", "🏆"])(ctx));
+        assert(ctx.hasReaction(["👍", "🏆"]));
+        assert(Context.has.reaction({ type: "emoji", emoji: "👍" })(ctx));
+        assert(ctx.hasReaction({ type: "emoji", emoji: "👍" }));
+        assert(Context.has.reaction([{ type: "emoji", emoji: "👍" }])(ctx));
+        assert(ctx.hasReaction([{ type: "emoji", emoji: "👍" }]));
+        assertFalse(Context.has.reaction("👎")(ctx));
+        assertFalse(ctx.hasReaction("👎"));
+
+        const added = {
+            type: "custom_emoji" as const,
+            custom_emoji_id: "id_new",
+        };
+        up = {
+            update_id: 0,
+            message_reaction: {
+                chat: c,
+                date: 42,
+                message_id: 2,
+                old_reaction: [
+                    { type: "emoji", emoji: "🎉" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
+                ],
+                new_reaction: [
+                    { type: "emoji", emoji: "🎉" },
+                    { type: "custom_emoji", custom_emoji_id: "id" },
+                    added,
+                ],
+            },
+        };
+        ctx = new Context(up, api, me);
+
+        assert(Context.has.reaction(added)(ctx));
+        assert(ctx.hasReaction(added));
+        assert(Context.has.reaction(["🏆", added])(ctx));
+        assert(ctx.hasReaction(["🏆", added]));
     });
 
     it("should be able to check for chat types", () => {
@@ -441,5 +523,52 @@ describe("Context", () => {
             length: "some@email.com".length,
             text: "some@email.com",
         }]);
+    });
+
+    it("should be able to extract reaction info", () => {
+        const ye = { type: "emoji", emoji: "👍" };
+        const no = { type: "emoji", emoji: "👎" };
+        const ok = { type: "emoji", emoji: "👌" };
+        const cye = { type: "custom_emoji", custom_emoji_id: "id-ye" };
+        const cno = { type: "custom_emoji", custom_emoji_id: "id-no" };
+        const cok = { type: "custom_emoji", custom_emoji_id: "id-ok" };
+        let up = {
+            message_reaction: {
+                old_reaction: [ye, no, cye, cno],
+                new_reaction: [ok, no, cok, cno],
+            },
+        } as Update;
+        let ctx = new Context(up, api, me);
+        const {
+            emoji,
+            emojiRemoved,
+            emojiKept,
+            emojiAdded,
+            customEmoji,
+            customEmojiRemoved,
+            customEmojiKept,
+            customEmojiAdded,
+        } = ctx.reactions();
+        assertEquals(emoji, [ok.emoji, no.emoji]);
+        assertEquals(emojiRemoved, [ye.emoji]);
+        assertEquals(emojiKept, [no.emoji]);
+        assertEquals(emojiAdded, [ok.emoji]);
+        assertEquals(customEmoji, [cok.custom_emoji_id, cno.custom_emoji_id]);
+        assertEquals(customEmojiRemoved, [cye.custom_emoji_id]);
+        assertEquals(customEmojiKept, [cno.custom_emoji_id]);
+        assertEquals(customEmojiAdded, [cok.custom_emoji_id]);
+
+        up = { message: update.message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.reactions(), {
+            emoji: [],
+            emojiRemoved: [],
+            emojiKept: [],
+            emojiAdded: [],
+            customEmoji: [],
+            customEmojiRemoved: [],
+            customEmojiKept: [],
+            customEmojiAdded: [],
+        });
     });
 });

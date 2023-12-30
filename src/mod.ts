@@ -17,6 +17,7 @@ export {
     type GameQueryContext,
     type HearsContext,
     type InlineQueryContext,
+    type ReactionContext,
 } from "./context.ts";
 
 // Convenience stuff, built-in plugins, and helpers
@@ -40,6 +41,7 @@ export {
     type MiddlewareFn,
     type MiddlewareObj,
     type NextFunction,
+    type ReactionMiddleware,
 } from "./composer.ts";
 
 export { type Filter, type FilterQuery, matchFilter } from "./filter.ts";

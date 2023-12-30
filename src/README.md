@@ -24,7 +24,7 @@ bot.on(
     "edited_message",
     (ctx) =>
         ctx.reply("Ha! Gotcha! You just edited this!", {
-            reply_to_message_id: ctx.editedMessage.message_id,
+            reply_parameters: { message_id: ctx.editedMessage.message_id },
         }),
 );
 
