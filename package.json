@@ -42,7 +42,6 @@
         },
         "./types": {
             "types": "./out/types.d.ts",
-            "node": "./out/types.node.js",
             "default": "./out/types.js"
         },
         "./web": {
