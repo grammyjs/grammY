@@ -41,7 +41,9 @@
             "default": "./out/web.mjs"
         },
         "./types": {
-            "types": "./out/types.d.ts"
+            "types": "./out/types.d.ts",
+            "node": "./out/types.node.js",
+            "default": "./out/types.js"
         },
         "./web": {
             "types": "./out/web.d.ts",
