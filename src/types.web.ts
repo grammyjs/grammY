@@ -1,5 +1,5 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.210.0/path/basename.ts";
+import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -10,10 +10,10 @@ import {
     type InputMediaVideo as InputMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.4.4/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.4.6/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.4.4/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.4.6/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
