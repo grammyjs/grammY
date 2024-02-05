@@ -1,4 +1,4 @@
-            - name: Deploy to Deno Deploy
+- name: Deploy to Deno Deploy
   # You may pin to the exact commit or the version.
   # uses: denoland/deployctl@f21311b48f62f0063e3c729fc8a6a5dcdc4da7f9
   uses: denoland/deployctl@1.10.3
