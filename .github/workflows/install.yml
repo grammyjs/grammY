@@ -1,18 +1,8 @@
-            - name: Deploy to Deno Deploy
+            - name: Install Deno
   # You may pin to the exact commit or the version.
-  # uses: denoland/deployctl@f21311b48f62f0063e3c729fc8a6a5dcdc4da7f9
-  uses: denoland/deployctl@1.10.3
+  # uses: maximousblk/setup-deno@db02549d3ab194be6fcc1275a5c17677316dab36
+  uses: maximousblk/setup-deno@v2.0.0
   with:
-    # The name or ID of the project to deploy
-    project: 
-    # The path or URL to the entrypoint file
-    entrypoint: 
-    # The path or URL to an import map file
-    import-map: # optional
-    # Only upload files that match this pattern (multiline and/or comma-separated)
-    include: # optional
-    # Exclude files that match this pattern (multiline and/or comma-separated)
-    exclude: # optional
-    # The path to the directory containing the code and assets to upload
-    root: # optional
+    # Deno version
+    deno-version: # optional, default is latest
           
