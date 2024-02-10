@@ -193,7 +193,7 @@ const hono: FrameworkAdapter = (ctx) => {
     let resolveResponse: (res: Response) => void;
     return {
         update: ctx.req.json(),
-        header: ctx.req.header(SECRET_HEADER) || undefined,
+        header: ctx.req.header(SECRET_HEADER),
         end: () => {
             resolveResponse(ctx.body());
         },
