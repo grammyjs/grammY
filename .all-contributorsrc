@@ -1218,6 +1218,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "joshgillies",
+      "name": "Josh Gillies",
+      "avatar_url": "https://avatars.githubusercontent.com/u/319694?v=4",
+      "profile": "https://linktr.ee/joshgillies",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
