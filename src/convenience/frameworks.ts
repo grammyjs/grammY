@@ -198,8 +198,7 @@ const hono: FrameworkAdapter = (ctx) => {
             resolveResponse(ctx.body());
         },
         respond: (json) => {
-            ctx.header('Content-Type", "application/json');
-            resolveResponse(ctx.body(json));
+            resolveResponse(ctx.json(json));
         },
         unauthorized: () => {
             ctx.status(401);
