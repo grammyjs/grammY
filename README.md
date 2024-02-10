@@ -284,6 +284,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/gabeklavans"><img src="https://avatars.githubusercontent.com/u/32149200?v=4?s=100" width="100px;" alt="gabe"/><br /><sub><b>gabe</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Agabeklavans" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/Rnbsov"><img src="https://avatars.githubusercontent.com/u/73550760?v=4?s=100" width="100px;" alt="Lavrentiy Rubtsov"/><br /><sub><b>Lavrentiy Rubtsov</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Rnbsov" title="Documentation">📖</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="11.11%"><a href="https://linktr.ee/joshgillies"><img src="https://avatars.githubusercontent.com/u/319694?v=4?s=100" width="100px;" alt="Josh Gillies"/><br /><sub><b>Josh Gillies</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=joshgillies" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
