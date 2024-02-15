@@ -303,6 +303,9 @@ const COMMON_MESSAGE_KEYS = {
 } as const;
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
+
+    sender_boost_count: {},
+
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
     group_chat_created: {},
@@ -310,6 +313,7 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
+    boost_added: {},
     users_shared: {},
     chat_shared: {},
     connected_website: {},
