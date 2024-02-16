@@ -10,10 +10,10 @@ import {
     type InputMediaVideo as InputMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.4.6/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.5.1/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.4.6/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.5.1/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
