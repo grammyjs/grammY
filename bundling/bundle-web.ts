@@ -7,7 +7,7 @@ const [release, source = `https://deno.land/x/grammy@${release}/mod.ts`] =
 if (!release) throw new Error("No release specified!");
 
 // Rewrite imports from .deno.ts to .web.ts
-const cache = createCache();
+const cache = createCache({ root: "deno_cache/" });
 const load = (specifier: string) => {
     if (specifier.endsWith(".deno.ts")) {
         const baseLength = specifier.length - ".deno.ts".length;
@@ -30,11 +30,11 @@ const { code: bundledCode } = await bundle(source, {
 console.log("Emitting ...");
 // Strip the huge inline source map which is somehow generated anyway
 await Deno.writeTextFile(
-    "../out/web.mjs",
+    "out/web.mjs",
     bundledCode.replace(/\/\/# sourceMappingURL=.*\n/, ""),
 );
 await Deno.writeTextFile(
-    "../out/web.d.ts",
+    "out/web.d.ts",
     'export * from "./mod";\n',
 );
 
