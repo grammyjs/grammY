@@ -1229,6 +1229,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "SecondThundeR",
+      "name": "Uladzislau Hramyka",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36604233?v=4",
+      "profile": "https://secondthunder.github.io",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
