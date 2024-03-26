@@ -287,6 +287,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="11.11%"><a href="https://linktr.ee/joshgillies"><img src="https://avatars.githubusercontent.com/u/319694?v=4?s=100" width="100px;" alt="Josh Gillies"/><br /><sub><b>Josh Gillies</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=joshgillies" title="Code">💻</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://secondthunder.github.io"><img src="https://avatars.githubusercontent.com/u/36604233?v=4?s=100" width="100px;" alt="Uladzislau Hramyka"/><br /><sub><b>Uladzislau Hramyka</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3ASecondThundeR" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="http://gabelluardo.github.io"><img src="https://avatars.githubusercontent.com/u/42920247?v=4?s=100" width="100px;" alt="Gabriele Belluardo"/><br /><sub><b>Gabriele Belluardo</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Agabelluardo" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=gabelluardo" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
