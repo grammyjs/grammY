@@ -8,7 +8,7 @@ const DEBUG = "DEBUG";
 if (isDeno) {
     debug.useColors = () => !Deno.noColor;
     const env = { name: "env", variable: DEBUG } as const;
-    const res = await Deno.permissions.query(env);
+    const res = Deno.permissions.querySync(env);
     let namespace: string | undefined = undefined;
     if (res.state === "granted") namespace = Deno.env.get(DEBUG);
     if (namespace) debug.enable(namespace);
