@@ -184,7 +184,8 @@ const fastify: FrameworkAdapter = (req, reply) => ({
     update: Promise.resolve(req.body),
     header: req.headers[SECRET_HEADER_LOWERCASE],
     end: () => reply.status(200).send(),
-    respond: (json) => reply.send(json),
+    respond: (json) =>
+        reply.headers({ "Content-Type": "application/json" }).send(json),
     unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
 });
 
