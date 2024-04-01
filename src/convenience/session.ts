@@ -173,9 +173,9 @@ type MultiSessionOptionsRecord<
  *
  * > **What is a session?** Simply put, the session of a chat is a little
  * > persistent storage that is attached to it. As an example, your bot can send
- * > a message to a chat and store the ID of that message in the corresponding
- * > session. The next time your bot receives an update from that chat, the
- * > session will still contain that ID.
+ * > a message to a chat and store the identifier of that message in the
+ * > corresponding session. The next time your bot receives an update from that
+ * > chat, the session will still contain that ID.
  * >
  * > Session data can be stored in a database, in a file, or simply in memory.
  * > grammY only supports memory sessions out of the box, but you can use

@@ -257,7 +257,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
-     * @param message_ids Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.
+     * @param message_ids A list of 1-100 identifiers of messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -315,7 +315,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
-     * @param message_ids Identifiers of 1-100 messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.
+     * @param message_ids A list of 1-100 identifiers of messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -751,7 +751,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the target message
-     * @param reaction New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -842,6 +842,24 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getUserChatBoosts({ chat_id, user_id }, signal);
+    }
+
+    /**
+     * Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessconnection
+     */
+    getBusinessConnection(
+        business_connection_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getBusinessConnection(
+            { business_connection_id },
+            signal,
+        );
     }
 
     /**
@@ -2034,7 +2052,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to delete multiple messages simultaneously. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param message_ids Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted
+     * @param message_ids A list of 1-100 identifiers of messages to delete. See deleteMessage for limitations on which messages can be deleted
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletemessages
@@ -2051,7 +2069,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL.
+     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2081,7 +2099,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
      *
-     * @param custom_emoji_ids List of custom emoji identifiers
+     * @param custom_emoji_ids A list of custom emoji identifiers
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
@@ -2091,7 +2109,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success.
+     * Use this method to upload a file with a sticker for later use in the createNewStickerSet, addStickerToSet, or replaceStickerInSet methods (the file can be used multiple times). Returns the uploaded File on success.
      *
      * @param user_id User identifier of sticker file owner
      * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
@@ -2119,7 +2137,6 @@ export class Api<R extends RawApi = RawApi> {
      * @param name Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in `_by_<bot_username>`. `<bot_username>` is case insensitive. 1-64 characters.
      * @param title Sticker set title, 1-64 characters
      * @param stickers A list of 1-50 initial stickers to be added to the sticker set
-     * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2130,7 +2147,6 @@ export class Api<R extends RawApi = RawApi> {
         name: string,
         title: string,
         stickers: InputSticker[],
-        sticker_format: "static" | "animated" | "video",
         other?: Other<
             R,
             "createNewStickerSet",
@@ -2143,7 +2159,7 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.createNewStickerSet(
-            { user_id, name, title, stickers, sticker_format, ...other },
+            { user_id, name, title, stickers, ...other },
             signal,
         );
     }
@@ -2197,6 +2213,30 @@ export class Api<R extends RawApi = RawApi> {
      */
     deleteStickerFromSet(sticker: string, signal?: AbortSignal) {
         return this.raw.deleteStickerFromSet({ sticker }, signal);
+    }
+
+    /**
+     * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling deleteStickerFromSet, then addStickerToSet, then setStickerPositionInSet. Returns True on success.
+     *
+     * @param user_id User identifier of the sticker set owner
+     * @param name Sticker set name
+     * @param old_sticker File identifier of the replaced sticker
+     * @param sticker An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.:x
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#replacestickerinset
+     */
+    replaceStickerInSet(
+        user_id: number,
+        name: string,
+        old_sticker: string,
+        sticker: InputSticker,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.replaceStickerInSet(
+            { user_id, name, old_sticker, sticker },
+            signal,
+        );
     }
 
     /**
@@ -2284,6 +2324,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param name Sticker set name
      * @param user_id User identifier of the sticker set owner
      * @param thumbnail A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+     * @param format Format of the thumbnail, must be one of “static” for a .WEBP or .PNG image, “animated” for a .TGS animation, or “video” for a WEBM video
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setstickersetthumbnail
@@ -2292,10 +2333,11 @@ export class Api<R extends RawApi = RawApi> {
         name: string,
         user_id: number,
         thumbnail: InputFile | string | undefined,
+        format: "static" | "animated" | "video",
         signal?: AbortSignal,
     ) {
         return this.raw.setStickerSetThumbnail(
-            { name, user_id, thumbnail },
+            { name, user_id, thumbnail, format },
             signal,
         );
     }

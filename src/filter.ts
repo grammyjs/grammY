@@ -261,6 +261,7 @@ const COMMON_MESSAGE_KEYS = {
     forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
+    business_connection_id: {},
 
     text: {},
     animation: {},
@@ -327,15 +328,19 @@ const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
 } as const;
-const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
-const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
-const MESSAGE_REACTION_UPDATED_KEYS = {
+const BUSINESS_CONNECTION_KEYS = {
+    can_reply: {},
+    is_enabled: {},
+} as const;
+const MESSAGE_REACTION_KEYS = {
     old_reaction: REACTION_KEYS,
     new_reaction: REACTION_KEYS,
 } as const;
 const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
     reactions: REACTION_KEYS,
 } as const;
+const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
+const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
 
 // L1
 const UPDATE_KEYS = {
@@ -343,6 +348,10 @@ const UPDATE_KEYS = {
     edited_message: MESSAGE_KEYS,
     channel_post: CHANNEL_POST_KEYS,
     edited_channel_post: CHANNEL_POST_KEYS,
+    business_connection: BUSINESS_CONNECTION_KEYS,
+    business_message: MESSAGE_KEYS,
+    edited_business_message: MESSAGE_KEYS,
+    deleted_business_messages: {},
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
@@ -353,7 +362,7 @@ const UPDATE_KEYS = {
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_join_request: {},
-    message_reaction: MESSAGE_REACTION_UPDATED_KEYS,
+    message_reaction: MESSAGE_REACTION_KEYS,
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
     chat_boost: {},
     removed_chat_boost: {},
@@ -525,6 +534,18 @@ interface Shortcuts<U extends Update> {
     editedChannelPost: [U["edited_channel_post"]] extends [object]
         ? U["edited_channel_post"]
         : undefined;
+    businessConnection: [U["business_connection"]] extends [object]
+        ? U["business_connection"]
+        : undefined;
+    businessMessage: [U["business_message"]] extends [object]
+        ? U["business_message"]
+        : undefined;
+    editedBusinessMessage: [U["edited_business_message"]] extends [object]
+        ? U["edited_business_message"]
+        : undefined;
+    deletedBusinessMessages: [U["deleted_business_messages"]] extends [object]
+        ? U["deleted_business_messages"]
+        : undefined;
     messageReaction: [U["message_reaction"]] extends [object]
         ? U["message_reaction"]
         : undefined;
@@ -557,39 +578,67 @@ interface Shortcuts<U extends Update> {
     removedChatBoost: [U["removed_chat_boost"]] extends [object]
         ? U["removed_chat_boost"]
         : undefined;
-    msg: [U["callback_query"]] extends [object] ? U["callback_query"]["message"]
-        : [U["message"]] extends [object] ? U["message"]
+    msg: [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]
         : [U["channel_post"]] extends [object] ? U["channel_post"]
         : [U["edited_channel_post"]] extends [object] ? U["edited_channel_post"]
+        : [U["business_message"]] extends [object] ? U["business_message"]
+        : [U["edited_business_message"]] extends [object]
+            ? U["edited_business_message"]
+        : [U["callback_query"]] extends [object]
+            ? U["callback_query"]["message"]
         : undefined;
-    chat: [U["callback_query"]] extends [object]
-        ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
-        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+    chat: [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+        : [U["deleted_business_messages"]] extends [object]
+            ? U["deleted_business_messages"]["chat"]
+        : [U["message_reaction"]] extends [object]
+            ? U["message_reaction"]["chat"]
+        : [U["message_reaction_count"]] extends [object]
+            ? U["message_reaction_count"]["chat"]
         : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["chat"]
         : [U["chat_member"]] extends [object] ? U["chat_member"]["chat"]
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["chat"]
+        : [U["chat_boost"]] extends [object] ? U["chat_boost"]["chat"]
+        : [U["removed_chat_boost"]] extends [object]
+            ? U["removed_chat_boost"]["chat"]
         : undefined;
     senderChat: [Shortcuts<U>["msg"]] extends [object]
         ? Shortcuts<U>["msg"]["sender_chat"]
         : undefined;
-    from: [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
+    from: [U["business_connection"]] extends [object]
+        ? U["business_connection"]["user"]
+        : [U["message_reaction"]] extends [object]
+            ? U["message_reaction"]["user"]
+        : [U["chat_boost"]] extends [object]
+            ? U["chat_boost"]["boost"]["source"]["user"]
+        : [U["removed_chat_boost"]] extends [object]
+            ? U["removed_chat_boost"]["source"]["user"]
+        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["from"]
         : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
+        : [U["chosen_inline_result"]] extends [object]
+            ? U["chosen_inline_result"]["from"]
+        : [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
         : [U["shipping_query"]] extends [object] ? U["shipping_query"]["from"]
         : [U["pre_checkout_query"]] extends [object]
             ? U["pre_checkout_query"]["from"]
-        : [U["chosen_inline_result"]] extends [object]
-            ? U["chosen_inline_result"]["from"]
-        : [U["message"]] extends [object] ? NonNullable<U["message"]["from"]>
-        : [U["edited_message"]] extends [object]
-            ? NonNullable<U["edited_message"]["from"]>
         : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["from"]
         : [U["chat_member"]] extends [object] ? U["chat_member"]["from"]
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
         : undefined;
+    msgId: [Shortcuts<U>["msg"]] extends [object] ? number
+        : U["message_reaction"] extends [object] ? number
+        : U["message_reaction_count"] extends [object] ? number
+        : undefined;
     // inlineMessageId: disregarded here because always optional on both types
+    businessConnectionId: [Shortcuts<U>["msg"]] extends [object]
+        ? string | undefined
+        : [U["business_connection"]] extends [object]
+            ? [U["business_connection"]["id"]]
+        : [U["deleted_business_messages"]] extends [object]
+            ? [U["deleted_business_messages"]["business_connection_id"]]
+        : undefined;
 }
 
 // === Define some helpers for handling shortcuts, e.g. in 'edit:photo'
@@ -643,6 +692,8 @@ type L1Equivalents = {
     edited_message: "from" | "edit_date";
     channel_post: "sender_chat";
     edited_channel_post: "sender_chat" | "edit_date";
+    business_message: "from";
+    edited_business_message: "from" | "edit_date";
 };
 
 // yields twins based on given L1 and L2 properties
@@ -655,6 +706,8 @@ type L2Equivalents = {
     edited_message: MessageEquivalents;
     channel_post: MessageEquivalents;
     edited_channel_post: MessageEquivalents;
+    business_message: MessageEquivalents;
+    edited_business_message: MessageEquivalents;
 };
 type MessageEquivalents = {
     animation: "document";
