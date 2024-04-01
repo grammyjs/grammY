@@ -849,6 +849,8 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param business_connection_id Unique identifier of the business connection
      * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessconnection
      */
     getBusinessConnection(
         business_connection_id: string,
@@ -2221,6 +2223,8 @@ export class Api<R extends RawApi = RawApi> {
      * @param old_sticker File identifier of the replaced sticker
      * @param sticker An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.:x
      * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#replacestickerinset
      */
     replaceStickerInSet(
         user_id: number,

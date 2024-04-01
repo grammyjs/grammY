@@ -1402,7 +1402,7 @@ export class Context implements RenamedUpdate {
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#senddice
+     * **Official reference:** https://core.telegram.org/bots/api#setmessagereaction
      */
     react(
         reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
