@@ -1,5 +1,5 @@
 // deno-lint-ignore-file camelcase no-explicit-any
-import { type AliasProps, type Context } from "./context";
+import { type Context } from "./context";
 import { type Update } from "./types";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
@@ -512,12 +512,51 @@ type FilteredContext<C extends Context, U extends Update> =
 // generate a structure with all aliases for a narrowed update
 type FilteredContextCore<U extends Update> =
     & Record<"update", U>
-    & AliasProps<Omit<U, "update_id">>
     & Shortcuts<U>;
 
 // helper type to infer shortcuts on context object based on present properties,
 // must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
+    message: [U["message"]] extends [object] ? U["message"] : undefined;
+    edited_message: [U["edited_message"]] extends [object] ? U["edited_message"]
+        : undefined;
+    channelPost: [U["channel_post"]] extends [object] ? U["channel_post"]
+        : undefined;
+    editedChannelPost: [U["edited_channel_post"]] extends [object]
+        ? U["edited_channel_post"]
+        : undefined;
+    messageReaction: [U["message_reaction"]] extends [object]
+        ? U["message_reaction"]
+        : undefined;
+    messageReactionCount: [U["message_reaction_count"]] extends [object]
+        ? U["message_reaction_count"]
+        : undefined;
+    inlineQuery: [U["inline_query"]] extends [object] ? U["inline_query"]
+        : undefined;
+    chosenInlineResult: [U["chosen_inline_result"]] extends [object]
+        ? U["chosen_inline_result"]
+        : undefined;
+    callbackQuery: [U["callback_query"]] extends [object] ? U["callback_query"]
+        : undefined;
+    shippingQuery: [U["shipping_query"]] extends [object] ? U["shipping_query"]
+        : undefined;
+    preCheckoutQuery: [U["pre_checkout_query"]] extends [object]
+        ? U["pre_checkout_query"]
+        : undefined;
+    poll: [U["poll"]] extends [object] ? U["poll"] : undefined;
+    pollAnswer: [U["poll_answer"]] extends [object] ? U["poll_answer"]
+        : undefined;
+    myChatMember: [U["my_chat_member"]] extends [object] ? U["my_chat_member"]
+        : undefined;
+    chatMember: [U["chat_member"]] extends [object] ? U["chat_member"]
+        : undefined;
+    chatJoinRequest: [U["chat_join_request"]] extends [object]
+        ? U["chat_join_request"]
+        : undefined;
+    chatBoost: [U["chat_boost"]] extends [object] ? U["chat_boost"] : undefined;
+    removedChatBoost: [U["removed_chat_boost"]] extends [object]
+        ? U["removed_chat_boost"]
+        : undefined;
     msg: [U["callback_query"]] extends [object] ? U["callback_query"]["message"]
         : [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]
