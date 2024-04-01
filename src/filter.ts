@@ -261,6 +261,7 @@ const COMMON_MESSAGE_KEYS = {
     forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
+    business_connection_id: {},
 
     text: {},
     animation: {},
@@ -327,15 +328,19 @@ const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
 } as const;
-const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
-const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
-const MESSAGE_REACTION_UPDATED_KEYS = {
+const BUSINESS_CONNECTION_KEYS = {
+    can_reply: {},
+    is_enabled: {},
+} as const;
+const MESSAGE_REACTION_KEYS = {
     old_reaction: REACTION_KEYS,
     new_reaction: REACTION_KEYS,
 } as const;
 const MESSAGE_REACTION_COUNT_UPDATED_KEYS = {
     reactions: REACTION_KEYS,
 } as const;
+const CALLBACK_QUERY_KEYS = { data: {}, game_short_name: {} } as const;
+const CHAT_MEMBER_UPDATED_KEYS = { from: USER_KEYS } as const;
 
 // L1
 const UPDATE_KEYS = {
@@ -343,6 +348,10 @@ const UPDATE_KEYS = {
     edited_message: MESSAGE_KEYS,
     channel_post: CHANNEL_POST_KEYS,
     edited_channel_post: CHANNEL_POST_KEYS,
+    business_connection: BUSINESS_CONNECTION_KEYS,
+    business_message: MESSAGE_KEYS,
+    edited_business_message: MESSAGE_KEYS,
+    deleted_business_messages: {},
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
@@ -353,7 +362,7 @@ const UPDATE_KEYS = {
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_join_request: {},
-    message_reaction: MESSAGE_REACTION_UPDATED_KEYS,
+    message_reaction: MESSAGE_REACTION_KEYS,
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
     chat_boost: {},
     removed_chat_boost: {},

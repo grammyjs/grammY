@@ -373,6 +373,22 @@ export class Context implements RenamedUpdate {
     get editedChannelPost() {
         return this.update.edited_channel_post;
     }
+    /** Alias for `ctx.update.business_connection` */
+    get businessConnection() {
+        return this.update.business_connection;
+    }
+    /** Alias for `ctx.update.business_message` */
+    get businessMessage() {
+        return this.update.business_message;
+    }
+    /** Alias for `ctx.update.edited_business_message` */
+    get editedBusinessMessage() {
+        return this.update.edited_business_message;
+    }
+    /** Alias for `ctx.update.deleted_business_messages` */
+    get deletedBusinessMessages() {
+        return this.update.deleted_business_messages;
+    }
     /** Alias for `ctx.update.message_reaction` */
     get messageReaction() {
         return this.update.message_reaction;
@@ -433,30 +449,34 @@ export class Context implements RenamedUpdate {
     // AGGREGATION SHORTCUTS
 
     /**
-     * Get message object from wherever possible. Alias for `ctx.message ??
-     * ctx.editedMessage ?? ctx.callbackQuery?.message ?? ctx.channelPost ??
-     * ctx.editedChannelPost`
+     * Get the message object from wherever possible. Alias for `this.message ??
+     * this.editedMessage ?? this.channelPost ?? this.editedChannelPost ??
+     * this.businessMessage ?? this.editedBusinessMessage ??
+     * this.callbackQuery?.message`.
      */
     get msg(): Message | undefined {
         // Keep in sync with types in `filter.ts`.
         return (
             this.message ??
                 this.editedMessage ??
-                this.callbackQuery?.message ??
                 this.channelPost ??
-                this.editedChannelPost
+                this.editedChannelPost ??
+                this.businessMessage ??
+                this.editedBusinessMessage ??
+                this.callbackQuery?.message
         );
     }
     /**
-     * Get chat object from wherever possible. Alias for `(ctx.msg ??
-     * ctx.myChatMember ?? ctx.chatMember ?? ctx.chatJoinRequest ??
-     * ctx.messageReaction ?? ctx.messageReactionCount ?? ctx.chatBoost ??
-     * ctx.removedChatBoost)?.chat`
+     * Get the chat object from wherever possible. Alias for `(this.msg ??
+     * this.deletedBusinessMessages ?? this.messageReaction ??
+     * this.messageReactionCount ?? this.myChatMember ??  this.chatMember ??
+     * this.chatJoinRequest ?? this.chatBoost ??  this.removedChatBoost)?.chat`.
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
         return (
             this.msg ??
+                this.deletedBusinessMessages ??
                 this.messageReaction ??
                 this.messageReactionCount ??
                 this.myChatMember ??
@@ -467,40 +487,70 @@ export class Context implements RenamedUpdate {
         )?.chat;
     }
     /**
-     * Get sender chat object from wherever possible. Alias for
+     * Get the sender chat object from wherever possible. Alias for
      * `ctx.msg?.sender_chat`.
      */
     get senderChat(): Chat | undefined {
+        // Keep in sync with types in `filter.ts`.
         return this.msg?.sender_chat;
     }
     /**
-     * Get message author from wherever possible. Alias for
-     * `(ctx.callbackQuery?? ctx.inlineQuery ?? ctx.shippingQuery ??
-     * ctx.preCheckoutQuery ?? ctx.chosenInlineResult ?? ctx.msg ??
-     * ctx.myChatMember ?? ctx.chatMember ?? ctx.chatJoinRequest)?.from`
+     * Get the user object from wherever possible. Alias for
+     * `(this.businessConnection ?? this.messageReaction ??
+     * (this.chatBoost?.boost ?? this.removedChatBoost)?.source)?.user ??
+     * (this.msg ?? this.inlineQuery ?? this.chosenInlineResult ??
+     * this.callbackQuery ?? this.shippingQuery ?? this.preCheckoutQuery ??
+     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest)?.from`.
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
-        return this.messageReaction?.user ??
-            (this.callbackQuery ??
-                this.inlineQuery ??
-                this.shippingQuery ??
-                this.preCheckoutQuery ??
-                this.chosenInlineResult ??
+        return (
+            this.businessConnection ??
+                this.messageReaction ??
+                (this.chatBoost?.boost ?? this.removedChatBoost)?.source
+        )?.user ??
+            (
                 this.msg ??
-                this.myChatMember ??
-                this.chatMember ??
-                this.chatJoinRequest)?.from;
+                    this.inlineQuery ??
+                    this.chosenInlineResult ??
+                    this.callbackQuery ??
+                    this.shippingQuery ??
+                    this.preCheckoutQuery ??
+                    this.myChatMember ??
+                    this.chatMember ??
+                    this.chatJoinRequest
+            )?.from;
+    }
+
+    /**
+     * Get the message identifier from wherever possible. Alias for
+     * `this.msg?.message_id ?? this.messageReaction?.message_id ??
+     * this.messageReactionCount?.message_id`.
+     */
+    get msgId(): number | undefined {
+        // Keep in sync with types in `filter.ts`.
+        return this.msg?.message_id ?? this.messageReaction?.message_id ??
+            this.messageReactionCount?.message_id;
     }
     /**
-     * Get inline message ID from wherever possible. Alias for
-     * `(ctx.callbackQuery ?? ctx.chosenInlineResult)?.inline_message_id`
+     * Get the inline message identifier from wherever possible. Alias for
+     * `(ctx.callbackQuery ?? ctx.chosenInlineResult)?.inline_message_id`.
      */
     get inlineMessageId(): string | undefined {
         return (
             this.callbackQuery?.inline_message_id ??
                 this.chosenInlineResult?.inline_message_id
         );
+    }
+    /**
+     * Get the business connection identifier from wherever possible. Alias for
+     * `this.msg?.business_connection_id ?? this.businessConnection?.id ??
+     * this.deletedBusinessMessages?.business_connection_id`.
+     */
+    get businessConnectionId(): string | undefined {
+        return this.msg?.business_connection_id ??
+            this.businessConnection?.id ??
+            this.deletedBusinessMessages?.business_connection_id;
     }
     /**
      * Get entities and their text. Extracts the text from `ctx.msg.text` or `ctx.msg.caption`.
@@ -816,7 +866,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendMessage(
             orThrow(this.chat, "sendMessage").id,
             text,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -841,11 +891,7 @@ export class Context implements RenamedUpdate {
         return this.api.forwardMessage(
             chat_id,
             orThrow(this.chat, "forwardMessage").id,
-            orThrow(
-                this.msg?.message_id ?? this.messageReaction?.message_id ??
-                    this.messageReactionCount?.message_id,
-                "forwardMessage",
-            ),
+            orThrow(this.msgId, "forwardMessage"),
             other,
             signal,
         );
@@ -855,7 +901,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.forwardMessages`. Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param message_ids Identifiers of 1-100 messages in the current chat to forward. The identifiers must be specified in a strictly increasing order.
+     * @param message_ids A list of 1-100 identifiers of messages in the current chat to forward. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -896,11 +942,7 @@ export class Context implements RenamedUpdate {
         return this.api.copyMessage(
             chat_id,
             orThrow(this.chat, "copyMessage").id,
-            orThrow(
-                this.msg?.message_id ?? this.messageReaction?.message_id ??
-                    this.messageReactionCount?.message_id,
-                "copyMessage",
-            ),
+            orThrow(this.msgId, "copyMessage"),
             other,
             signal,
         );
@@ -910,7 +952,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.copyMessages`.Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param message_ids Identifiers of 1-100 messages in the current chat to copy. The identifiers must be specified in a strictly increasing order.
+     * @param message_ids A list of 1-100 identifiers of messages in the current chat to copy. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -951,7 +993,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendPhoto(
             orThrow(this.chat, "sendPhoto").id,
             photo,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -975,7 +1017,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendAudio(
             orThrow(this.chat, "sendAudio").id,
             audio,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -997,7 +1039,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendDocument(
             orThrow(this.chat, "sendDocument").id,
             document,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1019,7 +1061,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendVideo(
             orThrow(this.chat, "sendVideo").id,
             video,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1041,7 +1083,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendAnimation(
             orThrow(this.chat, "sendAnimation").id,
             animation,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1063,7 +1105,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendVoice(
             orThrow(this.chat, "sendVoice").id,
             voice,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1086,7 +1128,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendVideoNote(
             orThrow(this.chat, "sendVideoNote").id,
             video_note,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1113,7 +1155,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendMediaGroup(
             orThrow(this.chat, "sendMediaGroup").id,
             media,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1138,7 +1180,7 @@ export class Context implements RenamedUpdate {
             orThrow(this.chat, "sendLocation").id,
             latitude,
             longitude,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1176,11 +1218,7 @@ export class Context implements RenamedUpdate {
             )
             : this.api.editMessageLiveLocation(
                 orThrow(this.chat, "editMessageLiveLocation").id,
-                orThrow(
-                    this.msg?.message_id ?? this.messageReaction?.message_id ??
-                        this.messageReactionCount?.message_id,
-                    "editMessageLiveLocation",
-                ),
+                orThrow(this.msgId, "editMessageLiveLocation"),
                 latitude,
                 longitude,
                 other,
@@ -1208,11 +1246,7 @@ export class Context implements RenamedUpdate {
             ? this.api.stopMessageLiveLocationInline(inlineId, other)
             : this.api.stopMessageLiveLocation(
                 orThrow(this.chat, "stopMessageLiveLocation").id,
-                orThrow(
-                    this.msg?.message_id ?? this.messageReaction?.message_id ??
-                        this.messageReactionCount?.message_id,
-                    "stopMessageLiveLocation",
-                ),
+                orThrow(this.msgId, "stopMessageLiveLocation"),
                 other,
                 signal,
             );
@@ -1247,7 +1281,7 @@ export class Context implements RenamedUpdate {
             longitude,
             title,
             address,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1272,7 +1306,7 @@ export class Context implements RenamedUpdate {
             orThrow(this.chat, "sendContact").id,
             phone_number,
             first_name,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1297,7 +1331,7 @@ export class Context implements RenamedUpdate {
             orThrow(this.chat, "sendPoll").id,
             question,
             options,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1319,44 +1353,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendDice(
             orThrow(this.chat, "sendDice").id,
             emoji,
-            other,
-            signal,
-        );
-    }
-
-    /**
-     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success.
-     *
-     * @param reaction New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#senddice
-     */
-    react(
-        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
-        other?: Other<
-            "setMessageReaction",
-            "chat_id" | "message_id" | "reaction"
-        >,
-        signal?: AbortSignal,
-    ) {
-        return this.api.setMessageReaction(
-            orThrow(this.chat, "setMessageReaction").id,
-            orThrow(
-                this.msg?.message_id ?? this.messageReaction?.message_id ??
-                    this.messageReactionCount?.message_id,
-                "setMessageReaction",
-            ),
-            typeof reaction === "string"
-                ? [{ type: "emoji", emoji: reaction }]
-                : (Array.isArray(reaction) ? reaction : [reaction])
-                    .map((emoji) =>
-                        typeof emoji === "string"
-                            ? { type: "emoji", emoji }
-                            : emoji
-                    ),
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1393,6 +1390,39 @@ export class Context implements RenamedUpdate {
         return this.api.sendChatAction(
             orThrow(this.chat, "sendChatAction").id,
             action,
+            { business_connection_id: this.businessConnectionId, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success.
+     *
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#senddice
+     */
+    react(
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        other?: Other<
+            "setMessageReaction",
+            "chat_id" | "message_id" | "reaction"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setMessageReaction(
+            orThrow(this.chat, "setMessageReaction").id,
+            orThrow(this.msgId, "setMessageReaction"),
+            typeof reaction === "string"
+                ? [{ type: "emoji", emoji: reaction }]
+                : (Array.isArray(reaction) ? reaction : [reaction])
+                    .map((emoji) =>
+                        typeof emoji === "string"
+                            ? { type: "emoji", emoji }
+                            : emoji
+                    ),
             other,
             signal,
         );
@@ -1430,6 +1460,19 @@ export class Context implements RenamedUpdate {
         return this.api.getUserChatBoosts(
             chat_id,
             orThrow(this.from, "getUserChatBoosts").id,
+            signal,
+        );
+    }
+
+    /**
+     *  Context-aware alias for `api.getBusinessConnection`. Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessconnection
+     */
+    getBusinessConnection(signal?: AbortSignal) {
+        return this.api.getBusinessConnection(
+            orThrow(this.businessConnectionId, "getBusinessConnection"),
             signal,
         );
     }
@@ -2505,7 +2548,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.deleteMessages`. Use this method to delete multiple messages simultaneously. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param message_ids Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted
+     * @param message_ids A list of 1-100 identifiers of messages to delete. See deleteMessage for limitations on which messages can be deleted
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletemessages
@@ -2521,7 +2564,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.sendSticker`. Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
-     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data.
+     * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2535,7 +2578,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendSticker(
             orThrow(this.chat, "sendSticker").id,
             sticker,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -2543,7 +2586,7 @@ export class Context implements RenamedUpdate {
     /**
      * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.
      *
-     * @param custom_emoji_ids List of custom emoji identifiers
+     * @param custom_emoji_ids A list of custom emoji identifiers
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
@@ -2714,7 +2757,7 @@ export class Context implements RenamedUpdate {
         return this.api.sendGame(
             orThrow(this.chat, "sendGame").id,
             game_short_name,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }

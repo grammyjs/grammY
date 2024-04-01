@@ -1,6 +1,8 @@
 import { Context } from "../src/context.ts";
 import { Api } from "../src/mod.ts";
 import {
+    type BusinessConnection,
+    type BusinessMessagesDeleted,
     type Chat,
     type Message,
     type Update,
@@ -20,11 +22,26 @@ describe("Context", () => {
     const u = { id: 42, first_name: "bot", is_bot: true } as User;
     const c = { id: 100, type: "private" } as Chat;
     const m = { text: "a", from: u, chat: c, sender_chat: c } as Message;
+    const b = {
+        id: "conn",
+        user: u,
+        can_reply: true,
+        is_enabled: true,
+    } as BusinessConnection;
+    const d = {
+        chat: c,
+        message_ids: [0, 1, 2],
+        business_connection_id: "conn",
+    } as BusinessMessagesDeleted;
     const update = {
         message: m,
         edited_message: m,
         channel_post: m,
         edited_channel_post: m,
+        business_connection: b,
+        business_message: m,
+        edited_business_message: m,
+        deleted_business_messages: d,
         message_reaction: {
             chat: c,
             date: 42,
@@ -61,8 +78,8 @@ describe("Context", () => {
         my_chat_member: { date: 1, from: u, chat: c },
         chat_member: { date: 2, from: u, chat: c },
         chat_join_request: { date: 3, from: u, chat: c },
-        chat_boost: { chat: c, boost: { boost_id: 3 } },
-        removed_chat_boost: { chat: c, boost_id: 3 },
+        chat_boost: { chat: c, boost: { boost_id: 3, source: { user: u } } },
+        removed_chat_boost: { chat: c, boost_id: 3, source: { user: u } },
     } as unknown as Update;
     const api = new Api("dummy-token");
     const me = { id: 42, username: "bot" } as UserFromGetMe;
@@ -80,6 +97,13 @@ describe("Context", () => {
         assertEquals(ctx.editedMessage, update.edited_message);
         assertEquals(ctx.channelPost, update.channel_post);
         assertEquals(ctx.editedChannelPost, update.edited_channel_post);
+        assertEquals(ctx.businessConnection, update.business_connection);
+        assertEquals(ctx.businessMessage, update.business_message);
+        assertEquals(ctx.editedBusinessMessage, update.edited_business_message);
+        assertEquals(
+            ctx.deletedBusinessMessages,
+            update.deleted_business_messages,
+        );
         assertEquals(ctx.messageReaction, update.message_reaction);
         assertEquals(ctx.messageReactionCount, update.message_reaction_count);
         assertEquals(ctx.inlineQuery, update.inline_query);
@@ -114,6 +138,14 @@ describe("Context", () => {
         up = { edited_channel_post: update.edited_channel_post } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.msg, up.edited_channel_post);
+        up = { business_message: update.business_message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.msg, up.business_message);
+        up = {
+            edited_business_message: update.edited_business_message,
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.msg, up.edited_business_message);
     });
 
     it(".chat should aggregate chats", () => {
@@ -122,21 +154,11 @@ describe("Context", () => {
         up = { message: update.message } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.message?.chat);
-        up = { edited_message: update.edited_message } as Update;
+        up = {
+            deleted_business_messages: update.deleted_business_messages,
+        } as Update;
         ctx = new Context(up, api, me);
-        assertEquals(ctx.chat, up.edited_message?.chat);
-        up = { callback_query: update.callback_query } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.chat, up.callback_query?.message?.chat);
-        up = { channel_post: update.channel_post } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.chat, up.channel_post?.chat);
-        up = { edited_channel_post: update.edited_channel_post } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.chat, up.edited_channel_post?.chat);
-        up = { my_chat_member: update.my_chat_member } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.chat, up.my_chat_member?.chat);
+        assertEquals(ctx.chat, up.deleted_business_messages?.chat);
         up = { message_reaction: update.message_reaction } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.message_reaction?.chat);
@@ -145,6 +167,9 @@ describe("Context", () => {
         } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.message_reaction_count?.chat);
+        up = { my_chat_member: update.my_chat_member } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chat, up.my_chat_member?.chat);
         up = { chat_member: update.chat_member } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.chat, up.chat_member?.chat);
@@ -160,61 +185,45 @@ describe("Context", () => {
     });
 
     it(".senderChat should aggregate sender chats", () => {
-        let up: Update, ctx: Context;
-
-        up = { message: update.message } as Update;
-        ctx = new Context(up, api, me);
+        const up = { message: update.message } as Update;
+        const ctx = new Context(up, api, me);
         assertEquals(ctx.senderChat, up.message?.sender_chat);
-        up = { edited_message: update.edited_message } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.senderChat, up.edited_message?.sender_chat);
-        up = { callback_query: update.callback_query } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.senderChat, up.callback_query?.message?.sender_chat);
-        up = { channel_post: update.channel_post } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.senderChat, up.channel_post?.sender_chat);
-        up = { edited_channel_post: update.edited_channel_post } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.senderChat, up.edited_channel_post?.sender_chat);
     });
 
     it(".from should aggregate user objects", () => {
         let up: Update, ctx: Context;
 
+        up = { business_connection: update.business_connection } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.business_connection?.user);
         up = { message_reaction: update.message_reaction } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.message_reaction?.user);
-        up = { callback_query: update.callback_query } as Update;
+        up = { chat_boost: update.chat_boost } as Update;
         ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.callback_query?.from);
+        console.log(up);
+        assertEquals(ctx.from, up.chat_boost?.boost.source.user);
+        up = { removed_chat_boost: update.removed_chat_boost } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.removed_chat_boost?.source?.user);
+        up = { message: update.message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.message?.from);
         up = { inline_query: update.inline_query } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.inline_query?.from);
+        up = { chosen_inline_result: update.chosen_inline_result } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.chosen_inline_result?.from);
+        up = { callback_query: update.callback_query } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.callback_query?.from);
         up = { shipping_query: update.shipping_query } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.shipping_query?.from);
         up = { pre_checkout_query: update.pre_checkout_query } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.pre_checkout_query?.from);
-        up = { chosen_inline_result: update.chosen_inline_result } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.chosen_inline_result?.from);
-        up = { message: update.message } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.message?.from);
-        up = { edited_message: update.edited_message } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.edited_message?.from);
-        up = { callback_query: update.callback_query } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.callback_query?.message?.from);
-        up = { channel_post: update.channel_post } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.channel_post?.from);
-        up = { edited_channel_post: update.edited_channel_post } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.edited_channel_post?.from);
         up = { my_chat_member: update.my_chat_member } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.my_chat_member?.from);
@@ -224,6 +233,22 @@ describe("Context", () => {
         up = { chat_join_request: update.chat_join_request } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.chat_join_request?.from);
+    });
+
+    it(".msgId should aggregate message identifiers", () => {
+        let up: Update, ctx: Context;
+
+        up = { message: update.message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.msgId, up.message?.message_id);
+        up = { message_reaction: update.message_reaction } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.msgId, up.message_reaction?.message_id);
+        up = {
+            message_reaction_count: update.message_reaction_count,
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.msgId, up.message_reaction_count?.message_id);
     });
 
     it(".inlineMessageId should aggregate inline message identifiers", () => {
@@ -237,6 +262,28 @@ describe("Context", () => {
         assertEquals(
             ctx.inlineMessageId,
             up.chosen_inline_result?.inline_message_id,
+        );
+    });
+
+    it(".businessConnectionId should aggregate business connection identifiers", () => {
+        let up: Update, ctx: Context;
+
+        up = { message: update.message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(
+            ctx.businessConnectionId,
+            up.message?.business_connection_id,
+        );
+        up = { business_connection: update.business_connection } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.businessConnectionId, up.business_connection?.id);
+        up = {
+            deleted_business_messages: update.deleted_business_messages,
+        } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(
+            ctx.businessConnectionId,
+            up.deleted_business_messages?.business_connection_id,
         );
     });
 
