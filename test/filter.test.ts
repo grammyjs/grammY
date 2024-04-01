@@ -1,4 +1,4 @@
-import { type Context, type FilterQuery, matchFilter } from "../src/mod.ts";
+import { Context, type FilterQuery, matchFilter } from "../src/mod.ts";
 import { assert, assertThrows, describe, it } from "./deps.test.ts";
 
 describe("matchFilter", () => {
@@ -110,6 +110,27 @@ describe("matchFilter", () => {
                     "::code",
                 ])(ctx),
             );
+        }
+    });
+
+    it("should work with correct type-inference", () => {
+        const ctx = new Context(
+            // deno-lint-ignore no-explicit-any
+            { update: { message: { text: "" } } } as any,
+            // deno-lint-ignore no-explicit-any
+            undefined as any,
+            // deno-lint-ignore no-explicit-any
+            undefined as any,
+        );
+        const pred = matchFilter([":text", "callback_query:data"]);
+        if (pred(ctx)) {
+            if (ctx.callbackQuery) {
+                const s: string = ctx.update.callback_query.data;
+                assert(s);
+            } else {
+                const t: string = (ctx.message ?? ctx.channelPost).text;
+                assert(t);
+            }
         }
     });
 });
