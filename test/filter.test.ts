@@ -119,7 +119,7 @@ describe("matchFilter", () => {
         }
     });
 
-    it.only("should work with correct type-inference", () => {
+    it("should work with correct type-inference", () => {
         const text = "I <3 grammY";
         const ctx = new Context(
             // deno-lint-ignore no-explicit-any
