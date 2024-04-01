@@ -3,7 +3,7 @@
     "editor.codeActionsOnSave": {
         "source.fixAll": "explicit"
     },
-    "deno.enable": false,
+    "deno.enable": true,
     "deno.config": "./deno.jsonc",
     "deno.lint": true,
     "[typescript]": {
