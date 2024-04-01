@@ -1,1 +1,1 @@
-export * from "./types.node";
+export * from "./types.deno.ts";

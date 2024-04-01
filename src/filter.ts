@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase no-explicit-any
-import { type Context } from "./context";
-import { type Update } from "./types";
+import { type Context } from "./context.ts";
+import { type Update } from "./types.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
@@ -122,7 +122,10 @@ function check(original: string[], preprocessed: string[][]): string[][] {
 function checkOne(filter: string[]): string | true {
     const [l1, l2, l3, ...n] = filter;
     if (l1 === undefined) return "Empty filter query given";
-    if (!(l1 in UPDATE_KEYS)) {
+    if (
+        !(l1 in UPDATE_KEYS ||
+            l1 === "chat_boost" || l1 === "removed_chat_boost") // TODO: remove
+    ) {
         const permitted = Object.keys(UPDATE_KEYS);
         return `Invalid L1 filter '${l1}' given in '${filter.join(":")}'. \
 Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")}.`;
@@ -355,8 +358,8 @@ const UPDATE_KEYS = {
     chat_join_request: {},
     message_reaction: MESSAGE_REACTION_UPDATED_KEYS,
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
-    chat_boost: {},
-    removed_chat_boost: {},
+    // chat_boost: {},
+    // removed_chat_boost: {},
 } as const;
 
 // === Build up all possible filter queries from the above validation structure
@@ -404,7 +407,10 @@ type CollapseL2<
         : never
         : never);
 // All queries
-type ComputeFilterQueryList = InjectShortcuts;
+type ComputeFilterQueryList =
+    | InjectShortcuts
+    | "chat_boost" // TODO: remove
+    | "removed_chat_boost";
 
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
@@ -615,11 +621,14 @@ const L2_SHORTCUTS = {
 type L1Shortcuts = KeyOf<typeof L1_SHORTCUTS>;
 type L2Shortcuts = KeyOf<typeof L2_SHORTCUTS>;
 
-type ExpandShortcuts<Q extends string> = Q extends
-    `${infer L1}:${infer L2}:${infer L3}`
-    ? `${ExpandL1<L1>}:${ExpandL2<L2>}:${L3}`
-    : Q extends `${infer L1}:${infer L2}` ? `${ExpandL1<L1>}:${ExpandL2<L2>}`
-    : ExpandL1<Q>;
+type ExpandShortcuts<Q extends string> = Exclude<
+    Q extends `${infer L1}:${infer L2}:${infer L3}`
+        ? `${ExpandL1<L1>}:${ExpandL2<L2>}:${L3}`
+        : Q extends `${infer L1}:${infer L2}`
+            ? `${ExpandL1<L1>}:${ExpandL2<L2>}`
+        : ExpandL1<Q>,
+    "chat_boost" | "removed_chat_boost" // TODO: remove
+>;
 type ExpandL1<S extends string> = S extends L1Shortcuts
     ? typeof L1_SHORTCUTS[S][number]
     : S;

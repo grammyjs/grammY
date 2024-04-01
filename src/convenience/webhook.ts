@@ -1,14 +1,14 @@
 // deno-lint-ignore-file no-explicit-any
-import { type Bot } from "../bot";
-import { type Context } from "../context";
-import { type WebhookReplyEnvelope } from "../core/client";
-import { debug as d, defaultAdapter } from "../platform.node";
-import { type Update } from "../types";
+import { type Bot } from "../bot.ts";
+import { type Context } from "../context.ts";
+import { type WebhookReplyEnvelope } from "../core/client.ts";
+import { debug as d, defaultAdapter } from "../platform.deno.ts";
+import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
     type FrameworkAdapter,
     type SupportedFrameworks,
-} from "./frameworks";
+} from "./frameworks.ts";
 const debugErr = d("grammy:error");
 
 const callbackAdapter: FrameworkAdapter = (

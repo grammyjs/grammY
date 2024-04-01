@@ -5,22 +5,22 @@ import {
     type Middleware,
     type ReactionMiddleware,
     run,
-} from "./composer";
-import { Context, type MaybeArray, type ReactionContext } from "./context";
-import { Api } from "./core/api";
+} from "./composer.ts";
+import { Context, type MaybeArray, type ReactionContext } from "./context.ts";
+import { Api } from "./core/api.ts";
 import {
     type ApiClientOptions,
     type WebhookReplyEnvelope,
-} from "./core/client";
-import { GrammyError, HttpError } from "./core/error";
-import { type Filter, type FilterQuery, parse, preprocess } from "./filter";
-import { debug as d } from "./platform.node";
+} from "./core/client.ts";
+import { GrammyError, HttpError } from "./core/error.ts";
+import { type Filter, type FilterQuery, parse, preprocess } from "./filter.ts";
+import { debug as d } from "./platform.deno.ts";
 import {
     type ReactionType,
     type ReactionTypeEmoji,
     type Update,
     type UserFromGetMe,
-} from "./types";
+} from "./types.ts";
 const debug = d("grammy:bot");
 const debugWarn = d("grammy:warn");
 const debugErr = d("grammy:error");

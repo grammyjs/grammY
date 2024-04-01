@@ -1,4 +1,4 @@
-import { DEFAULT_UPDATE_TYPES } from "../bot";
+import { DEFAULT_UPDATE_TYPES } from "../bot.ts";
 
 const ALL_UPDATE_TYPES = [
     ...DEFAULT_UPDATE_TYPES,

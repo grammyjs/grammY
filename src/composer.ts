@@ -10,9 +10,13 @@ import {
     type MaybeArray,
     type ReactionContext,
     type StringWithSuggestions,
-} from "./context";
-import { type Filter, type FilterQuery } from "./filter";
-import { type Chat, type ReactionType, type ReactionTypeEmoji } from "./types";
+} from "./context.ts";
+import { type Filter, type FilterQuery } from "./filter.ts";
+import {
+    type Chat,
+    type ReactionType,
+    type ReactionTypeEmoji,
+} from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 

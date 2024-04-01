@@ -1,5 +1,5 @@
-import { itrToStream } from "../platform.node";
-import { InputFile } from "../types";
+import { itrToStream } from "../platform.deno.ts";
+import { InputFile } from "../types.ts";
 
 // === Payload types (JSON vs. form data)
 /**
