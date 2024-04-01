@@ -1,5 +1,5 @@
 // deno-lint-ignore-file camelcase no-explicit-any
-import { type AliasProps, type Context } from "./context.ts";
+import { type Context } from "./context.ts";
 import { type Update } from "./types.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
@@ -122,10 +122,7 @@ function check(original: string[], preprocessed: string[][]): string[][] {
 function checkOne(filter: string[]): string | true {
     const [l1, l2, l3, ...n] = filter;
     if (l1 === undefined) return "Empty filter query given";
-    if (
-        !(l1 in UPDATE_KEYS ||
-            l1 === "chat_boost" || l1 === "removed_chat_boost") // TODO: remove
-    ) {
+    if (!(l1 in UPDATE_KEYS)) {
         const permitted = Object.keys(UPDATE_KEYS);
         return `Invalid L1 filter '${l1}' given in '${filter.join(":")}'. \
 Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")}.`;
@@ -358,8 +355,8 @@ const UPDATE_KEYS = {
     chat_join_request: {},
     message_reaction: MESSAGE_REACTION_UPDATED_KEYS,
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
-    // chat_boost: {},
-    // removed_chat_boost: {},
+    chat_boost: {},
+    removed_chat_boost: {},
 } as const;
 
 // === Build up all possible filter queries from the above validation structure
@@ -407,10 +404,7 @@ type CollapseL2<
         : never
         : never);
 // All queries
-type ComputeFilterQueryList =
-    | InjectShortcuts
-    | "chat_boost" // TODO: remove
-    | "removed_chat_boost";
+type ComputeFilterQueryList = InjectShortcuts;
 
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
@@ -518,12 +512,51 @@ type FilteredContext<C extends Context, U extends Update> =
 // generate a structure with all aliases for a narrowed update
 type FilteredContextCore<U extends Update> =
     & Record<"update", U>
-    & AliasProps<Omit<U, "update_id">>
     & Shortcuts<U>;
 
 // helper type to infer shortcuts on context object based on present properties,
 // must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
+    message: [U["message"]] extends [object] ? U["message"] : undefined;
+    edited_message: [U["edited_message"]] extends [object] ? U["edited_message"]
+        : undefined;
+    channelPost: [U["channel_post"]] extends [object] ? U["channel_post"]
+        : undefined;
+    editedChannelPost: [U["edited_channel_post"]] extends [object]
+        ? U["edited_channel_post"]
+        : undefined;
+    messageReaction: [U["message_reaction"]] extends [object]
+        ? U["message_reaction"]
+        : undefined;
+    messageReactionCount: [U["message_reaction_count"]] extends [object]
+        ? U["message_reaction_count"]
+        : undefined;
+    inlineQuery: [U["inline_query"]] extends [object] ? U["inline_query"]
+        : undefined;
+    chosenInlineResult: [U["chosen_inline_result"]] extends [object]
+        ? U["chosen_inline_result"]
+        : undefined;
+    callbackQuery: [U["callback_query"]] extends [object] ? U["callback_query"]
+        : undefined;
+    shippingQuery: [U["shipping_query"]] extends [object] ? U["shipping_query"]
+        : undefined;
+    preCheckoutQuery: [U["pre_checkout_query"]] extends [object]
+        ? U["pre_checkout_query"]
+        : undefined;
+    poll: [U["poll"]] extends [object] ? U["poll"] : undefined;
+    pollAnswer: [U["poll_answer"]] extends [object] ? U["poll_answer"]
+        : undefined;
+    myChatMember: [U["my_chat_member"]] extends [object] ? U["my_chat_member"]
+        : undefined;
+    chatMember: [U["chat_member"]] extends [object] ? U["chat_member"]
+        : undefined;
+    chatJoinRequest: [U["chat_join_request"]] extends [object]
+        ? U["chat_join_request"]
+        : undefined;
+    chatBoost: [U["chat_boost"]] extends [object] ? U["chat_boost"] : undefined;
+    removedChatBoost: [U["removed_chat_boost"]] extends [object]
+        ? U["removed_chat_boost"]
+        : undefined;
     msg: [U["callback_query"]] extends [object] ? U["callback_query"]["message"]
         : [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]
@@ -582,14 +615,11 @@ const L2_SHORTCUTS = {
 type L1Shortcuts = KeyOf<typeof L1_SHORTCUTS>;
 type L2Shortcuts = KeyOf<typeof L2_SHORTCUTS>;
 
-type ExpandShortcuts<Q extends string> = Exclude<
-    Q extends `${infer L1}:${infer L2}:${infer L3}`
-        ? `${ExpandL1<L1>}:${ExpandL2<L2>}:${L3}`
-        : Q extends `${infer L1}:${infer L2}`
-            ? `${ExpandL1<L1>}:${ExpandL2<L2>}`
-        : ExpandL1<Q>,
-    "chat_boost" | "removed_chat_boost" // TODO: remove
->;
+type ExpandShortcuts<Q extends string> = Q extends
+    `${infer L1}:${infer L2}:${infer L3}`
+    ? `${ExpandL1<L1>}:${ExpandL2<L2>}:${L3}`
+    : Q extends `${infer L1}:${infer L2}` ? `${ExpandL1<L1>}:${ExpandL2<L2>}`
+    : ExpandL1<Q>;
 type ExpandL1<S extends string> = S extends L1Shortcuts
     ? typeof L1_SHORTCUTS[S][number]
     : S;

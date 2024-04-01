@@ -42,7 +42,7 @@ type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
 type SnakeToCamelCase<S extends string> = S extends `${infer L}_${infer R}`
     ? `${L}${Capitalize<SnakeToCamelCase<R>>}`
     : S;
-export type AliasProps<U> = {
+type AliasProps<U> = {
     [K in string & keyof U as SnakeToCamelCase<K>]: U[K];
 };
 type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
