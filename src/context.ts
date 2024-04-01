@@ -1,12 +1,12 @@
 // deno-lint-ignore-file camelcase
-import { type Api, type Other as OtherApi } from "./core/api.ts";
-import { type Methods, type RawApi } from "./core/client.ts";
+import { type Api, type Other as OtherApi } from "./core/api";
+import { type Methods, type RawApi } from "./core/client";
 import {
     type Filter,
     type FilterCore,
     type FilterQuery,
     matchFilter,
-} from "./filter.ts";
+} from "./filter";
 import {
     type Chat,
     type ChatPermissions,
@@ -26,7 +26,7 @@ import {
     type Update,
     type User,
     type UserFromGetMe,
-} from "./types.ts";
+} from "./types";
 
 // === Util types
 export type MaybeArray<T> = T | T[];

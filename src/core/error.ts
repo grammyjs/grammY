@@ -1,4 +1,4 @@
-import { type ApiError, type ResponseParameters } from "../types.ts";
+import { type ApiError, type ResponseParameters } from "../types";
 
 /**
  * This class represents errors that are thrown by grammY because the Telegram

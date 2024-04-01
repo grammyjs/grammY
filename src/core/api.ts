@@ -14,7 +14,7 @@ import {
     type MaskPosition,
     type PassportElementError,
     type ReactionType,
-} from "../types.ts";
+} from "../types";
 import {
     type ApiClientOptions,
     createRawApi,
@@ -24,7 +24,7 @@ import {
     type Transformer,
     type TransformerConsumer,
     type WebhookReplyEnvelope,
-} from "./client.ts";
+} from "./client";
 
 /**
  * Helper type to derive remaining properties of a given API method call M,

@@ -6,7 +6,7 @@ import {
     type KeyboardButtonRequestUsers,
     type LoginUrl,
     type SwitchInlineQueryChosenChat,
-} from "../types.ts";
+} from "../types";
 
 type KeyboardButtonSource = string | KeyboardButton;
 type KeyboardSource = KeyboardButtonSource[][] | Keyboard;

@@ -1,4 +1,4 @@
-import { type Update } from "../types.ts";
+import { type Update } from "../types";
 
 const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 const SECRET_HEADER_LOWERCASE = SECRET_HEADER.toLowerCase();

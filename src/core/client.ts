@@ -1,15 +1,15 @@
-import { baseFetchConfig, debug as d } from "../platform.deno.ts";
+import { baseFetchConfig, debug as d } from "../platform.node";
 import {
     type ApiMethods as Telegram,
     type ApiResponse,
     type Opts,
-} from "../types.ts";
-import { toGrammyError, toHttpError } from "./error.ts";
+} from "../types";
+import { toGrammyError, toHttpError } from "./error";
 import {
     createFormDataPayload,
     createJsonPayload,
     requiresFormDataUpload,
-} from "./payload.ts";
+} from "./payload";
 const debug = d("grammy:core");
 
 export type Methods<R extends RawApi> = string & keyof R;
@@ -299,6 +299,7 @@ class ApiClient<R extends RawApi> {
         // Perform fetch call, and handle networking errors
         const successPromise = fetch(
             url instanceof URL ? url.href : url,
+            // @ts-ignore TODO: remove
             options,
         ).catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:

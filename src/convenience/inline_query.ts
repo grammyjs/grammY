@@ -26,7 +26,7 @@ import {
     type InputTextMessageContent,
     type InputVenueMessageContent,
     type LabeledPrice,
-} from "../types.ts";
+} from "../types";
 
 type InlineQueryResultOptions<T, K extends keyof T> = Omit<
     T,

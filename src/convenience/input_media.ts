@@ -5,7 +5,7 @@ import {
     type InputMediaDocument,
     type InputMediaPhoto,
     type InputMediaVideo,
-} from "../types.ts";
+} from "../types";
 
 type InputMediaOptions<T> = Omit<T, "type" | "media">;
 
