@@ -692,6 +692,8 @@ type L1Equivalents = {
     edited_message: "from" | "edit_date";
     channel_post: "sender_chat";
     edited_channel_post: "sender_chat" | "edit_date";
+    business_message: "from";
+    edited_business_message: "from" | "edit_date";
 };
 
 // yields twins based on given L1 and L2 properties
@@ -704,6 +706,8 @@ type L2Equivalents = {
     edited_message: MessageEquivalents;
     channel_post: MessageEquivalents;
     edited_channel_post: MessageEquivalents;
+    business_message: MessageEquivalents;
+    edited_business_message: MessageEquivalents;
 };
 type MessageEquivalents = {
     animation: "document";
