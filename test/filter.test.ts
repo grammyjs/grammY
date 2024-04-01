@@ -1,5 +1,11 @@
 import { Context, type FilterQuery, matchFilter } from "../src/mod.ts";
-import { assert, assertThrows, describe, it } from "./deps.test.ts";
+import {
+    assert,
+    assertEquals,
+    assertThrows,
+    describe,
+    it,
+} from "./deps.test.ts";
 
 describe("matchFilter", () => {
     it("should reject empty filters", () => {
@@ -113,10 +119,11 @@ describe("matchFilter", () => {
         }
     });
 
-    it("should work with correct type-inference", () => {
+    it.only("should work with correct type-inference", () => {
+        const text = "I <3 grammY";
         const ctx = new Context(
             // deno-lint-ignore no-explicit-any
-            { update: { message: { text: "" } } } as any,
+            { message: { text } } as any,
             // deno-lint-ignore no-explicit-any
             undefined as any,
             // deno-lint-ignore no-explicit-any
@@ -127,10 +134,13 @@ describe("matchFilter", () => {
             if (ctx.callbackQuery) {
                 const s: string = ctx.update.callback_query.data;
                 assert(s);
+                throw "never";
             } else {
-                const t: string = (ctx.message ?? ctx.channelPost).text;
-                assert(t);
+                const t: string = (ctx.channelPost ?? ctx.message).text;
+                assertEquals(t, text);
             }
+        } else {
+            throw "never";
         }
     });
 });
