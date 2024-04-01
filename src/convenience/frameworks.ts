@@ -276,7 +276,7 @@ const nhttp: FrameworkAdapter = (rev) => ({
 
 /** oak web framework */
 const oak: FrameworkAdapter = (ctx) => ({
-    update: ctx.request.body({ type: "json" }).value,
+    update: ctx.request.body.json(),
     header: ctx.request.headers.get(SECRET_HEADER) || undefined,
     end: () => {
         ctx.response.status = 200;

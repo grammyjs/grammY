@@ -1,7 +1,7 @@
 {
     "name": "grammy",
     "description": "The Telegram Bot Framework.",
-    "version": "1.21.1",
+    "version": "1.21.2",
     "author": "KnorpelSenf",
     "license": "MIT",
     "engines": {
