@@ -588,7 +588,9 @@ interface Shortcuts<U extends Update> {
         : [U["callback_query"]] extends [object]
             ? U["callback_query"]["message"]
         : undefined;
-    chat: [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+    chat: [U["callback_query"]] extends [object]
+        ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
+        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
         : [U["deleted_business_messages"]] extends [object]
             ? U["deleted_business_messages"]["chat"]
         : [U["message_reaction"]] extends [object]
