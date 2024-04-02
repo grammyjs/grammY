@@ -67,7 +67,7 @@ describe("Context", () => {
         callback_query: {
             data: "cb",
             game_short_name: "game",
-            message: m,
+            message: { ...m, from: { ...u, id: -999 } },
             from: u,
             inline_message_id: "y",
         },
@@ -206,6 +206,9 @@ describe("Context", () => {
         up = { removed_chat_boost: update.removed_chat_boost } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.removed_chat_boost?.source?.user);
+        up = { callback_query: update.callback_query } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.callback_query?.from);
         up = { message: update.message } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.message?.from);
@@ -215,9 +218,6 @@ describe("Context", () => {
         up = { chosen_inline_result: update.chosen_inline_result } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.chosen_inline_result?.from);
-        up = { callback_query: update.callback_query } as Update;
-        ctx = new Context(up, api, me);
-        assertEquals(ctx.from, up.callback_query?.from);
         up = { shipping_query: update.shipping_query } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.shipping_query?.from);
