@@ -1,6 +1,5 @@
 // === Needed imports
 import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
-import { iterateReader } from "https://deno.land/std@0.211.0/io/iterate_reader.ts";
 
 import {
     type ApiMethods as ApiMethodsF,
@@ -116,10 +115,10 @@ export class InputFile {
                 );
             }
             using file = await Deno.open(data);
-            return iterateReader(file);
+            return file.readable;
         }
         if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) return iterateReader(data);
+        if (isDenoFile(data)) return data.readable;
         // Handle Response objects
         if (data instanceof Response) {
             if (data.body === null) throw new Error(`No response body!`);
