@@ -30,10 +30,5 @@
             "./package-lock.json",
             "./bundling/bundles"
         ]
-    },
-    "imports": {
-        "@std/path": "jsr:@std/path@^0.221.0",
-        "grammy_types": "https://deno.land/x/grammy_types@v3.6.2/mod.ts",
-        "debug": "https://cdn.skypack.dev/debug@4.3.4"
     }
 }
