@@ -1,6 +1,6 @@
 // === Needed imports
-import { basename } from "jsr:@std/path@^0.221.0";
-import { iterateReader } from "jsr:@std/io@^0.221.0";
+import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
+import { iterateReader } from "https://deno.land/std@0.211.0/io/iterate_reader.ts";
 
 import {
     type ApiMethods as ApiMethodsF,
