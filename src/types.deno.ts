@@ -1,6 +1,5 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
-import { iterateReader } from "https://deno.land/std@0.211.0/streams/iterate_reader.ts";
+import { basename } from "@std/path";
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -11,13 +10,13 @@ import {
     type InputMediaVideo as InputMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.6.2/mod.ts";
+} from "grammy_types";
 import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.6.2/mod.ts";
+export * from "grammy_types";
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);
@@ -114,11 +113,11 @@ export class InputFile {
                     "Reading files by path requires a Deno environment",
                 );
             }
-            const file = await Deno.open(data);
-            return iterateReader(file);
+            using file = await Deno.open(data);
+            return file.readable;
         }
         if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) return iterateReader(data);
+        if (isDenoFile(data)) return data.readable;
         // Handle Response objects
         if (data instanceof Response) {
             if (data.body === null) throw new Error(`No response body!`);
