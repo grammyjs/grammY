@@ -158,18 +158,16 @@ Deno.test({
 
 Deno.test({
     name: "handle invalid URLs",
-    async fn() {
+    fn() {
         const source = stub(
             globalThis,
             "fetch",
             () => Promise.resolve(new Response(null)),
         );
         const file = new InputFile({ url: "https://grammy.dev" });
-        const data = await file.toRaw();
-        if (data instanceof Uint8Array) throw new Error("no itr");
 
         assertRejects(
-            () => convertToUint8Array(data),
+            () => file.toRaw(),
             "no response body from 'https://grammy.dev'",
         );
         source.restore();
