@@ -635,12 +635,11 @@ interface Shortcuts<U extends Update> {
         : [U["message_reaction_count"]] extends [object] ? number
         : undefined;
     // inlineMessageId: disregarded here because always optional on both types
-    businessConnectionId: [Shortcuts<U>["msg"]] extends [object]
+    businessConnectionId: [U["callback_query"]] extends [object]
         ? string | undefined
-        : [U["business_connection"]] extends [object]
-            ? [U["business_connection"]["id"]]
-        : [U["deleted_business_messages"]] extends [object]
-            ? [U["deleted_business_messages"]["business_connection_id"]]
+        : [Shortcuts<U>["msg"]] extends [object] ? string | undefined
+        : [U["business_connection"]] extends [object] ? string
+        : [U["deleted_business_messages"]] extends [object] ? string
         : undefined;
 }
 
