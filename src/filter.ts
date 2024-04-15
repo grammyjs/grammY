@@ -629,9 +629,10 @@ interface Shortcuts<U extends Update> {
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
         : undefined;
-    msgId: [Shortcuts<U>["msg"]] extends [object] ? number
-        : U["message_reaction"] extends [object] ? number
-        : U["message_reaction_count"] extends [object] ? number
+    msgId: [U["callback_query"]] extends [object] ? number | undefined
+        : [Shortcuts<U>["msg"]] extends [object] ? number
+        : [U["message_reaction"]] extends [object] ? number
+        : [U["message_reaction_count"]] extends [object] ? number
         : undefined;
     // inlineMessageId: disregarded here because always optional on both types
     businessConnectionId: [Shortcuts<U>["msg"]] extends [object]
