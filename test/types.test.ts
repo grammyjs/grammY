@@ -5,8 +5,7 @@ import {
     assertInstanceOf,
     assertRejects,
     assertStringIncludes,
-    readAll,
-    readerFromIterable,
+    convertToUint8Array,
     stub,
 } from "./deps.test.ts";
 
@@ -82,13 +81,17 @@ Deno.test({
             function* data() {
                 yield bytes;
             }
-            return Promise.resolve(readerFromIterable(data()) as Deno.FsFile);
+
+            const stream = ReadableStream.from(data());
+            return Promise.resolve(
+                { readable: stream, [Symbol.dispose]() {} } as Deno.FsFile,
+            );
         });
         const file = new InputFile("/tmp/file.txt");
         assertEquals(file.filename, "file.txt");
         const data = await file.toRaw();
         if (data instanceof Uint8Array) throw new Error("no itr");
-        const values = await readAll(readerFromIterable(data));
+        const values = await convertToUint8Array(data);
         assertEquals(values, bytes);
         open.restore();
     },
@@ -101,31 +104,8 @@ Deno.test({
         const file = new InputFile(blob);
         const data = await file.toRaw();
         if (data instanceof Uint8Array) throw new Error("no itr");
-        const values = await readAll(readerFromIterable(data));
+        const values = await convertToUint8Array(data);
         assertEquals(values, new Uint8Array([65, 66, 67, 68])); // ABCD
-    },
-});
-
-Deno.test({
-    name: "convert Deno.FsFile to raw",
-    async fn() {
-        let count = 0;
-        const fsfile = new Deno.FsFile(42);
-        const source = stub(fsfile, "read", (buf) => {
-            if (count !== 0) return Promise.resolve(null);
-            let char = 65;
-            for (let i = 0; i < buf.byteLength; i++) buf[i] = char++;
-            count = buf.byteLength;
-            return Promise.resolve(buf.byteLength);
-        });
-        const file = new InputFile(fsfile);
-        const data = await file.toRaw();
-        if (data instanceof Uint8Array) throw new Error("no itr");
-        const values = await readAll(readerFromIterable(data));
-        const expected = new Uint8Array(count);
-        for (let i = 0; i < count; i++) expected[i] = i + 65;
-        assertEquals(values, expected);
-        source.restore();
     },
 });
 
@@ -144,8 +124,8 @@ Deno.test({
         const data1 = await file1.toRaw();
         if (data0 instanceof Uint8Array) throw new Error("no itr");
         if (data1 instanceof Uint8Array) throw new Error("no itr");
-        const values0 = await readAll(readerFromIterable(data0));
-        const values1 = await readAll(readerFromIterable(data1));
+        const values0 = await convertToUint8Array(data0);
+        const values1 = await convertToUint8Array(data1);
         assertEquals(values0, bytes);
         assertEquals(values1, bytes);
         source.restore();
@@ -159,7 +139,7 @@ Deno.test({
         const file0 = new InputFile(new Response(bytes));
         const data0 = await file0.toRaw();
         if (data0 instanceof Uint8Array) throw new Error("no itr");
-        const values0 = await readAll(readerFromIterable(data0));
+        const values0 = await convertToUint8Array(data0);
         assertEquals(values0, bytes);
     },
 });
@@ -171,7 +151,7 @@ Deno.test({
         const file = new InputFile(() => blob);
         const data = await file.toRaw();
         if (data instanceof Uint8Array) throw new Error("no itr");
-        const values = await readAll(readerFromIterable(data));
+        const values = await convertToUint8Array(data);
         assertEquals(values, new Uint8Array([65, 66, 67, 68])); // ABCD
     },
 });
@@ -187,8 +167,9 @@ Deno.test({
         const file = new InputFile({ url: "https://grammy.dev" });
         const data = await file.toRaw();
         if (data instanceof Uint8Array) throw new Error("no itr");
+
         assertRejects(
-            () => readAll(readerFromIterable(data)),
+            () => convertToUint8Array(data),
             "no response body from 'https://grammy.dev'",
         );
         source.restore();

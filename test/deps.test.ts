@@ -1,8 +1,4 @@
 export {
-    readAll,
-    readerFromIterable,
-} from "https://deno.land/std@0.211.0/streams/mod.ts";
-export {
     assert,
     assertEquals,
     assertFalse,
@@ -25,3 +21,19 @@ export {
     type Stub,
     stub,
 } from "https://deno.land/std@0.211.0/testing/mock.ts";
+
+export async function convertToUint8Array(
+    data: Iterable<Uint8Array> | AsyncIterable<Uint8Array>,
+) {
+    const stream = ReadableStream.from(data);
+    const reader = stream.getReader();
+
+    const values = [] as number[];
+    while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        values.push(...value);
+    }
+
+    return new Uint8Array(values);
+}
