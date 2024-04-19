@@ -83,9 +83,7 @@ Deno.test({
             }
 
             const stream = ReadableStream.from(data());
-            return Promise.resolve(
-                { readable: stream, [Symbol.dispose]() {} } as Deno.FsFile,
-            );
+            return Promise.resolve({ readable: stream } as Deno.FsFile);
         });
         const file = new InputFile("/tmp/file.txt");
         assertEquals(file.filename, "file.txt");

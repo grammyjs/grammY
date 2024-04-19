@@ -114,7 +114,7 @@ export class InputFile {
                     "Reading files by path requires a Deno environment",
                 );
             }
-            using file = await Deno.open(data);
+            const file = await Deno.open(data);
             return file.readable;
         }
         if (data instanceof Blob) return data.stream();
