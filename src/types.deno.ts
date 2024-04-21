@@ -118,7 +118,7 @@ export class InputFile {
             return file.readable[Symbol.asyncIterator]();
         }
         if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) return data.readable;
+        if (isDenoFile(data)) return data.readable[Symbol.asyncIterator]();
         // Handle Response objects
         if (data instanceof Response) {
             if (data.body === null) throw new Error(`No response body!`);
