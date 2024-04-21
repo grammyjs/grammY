@@ -115,7 +115,7 @@ export class InputFile {
                 );
             }
             const file = await Deno.open(data);
-            return file.readable;
+            return file.readable[Symbol.asyncIterator]();
         }
         if (data instanceof Blob) return data.stream();
         if (isDenoFile(data)) return data.readable;
