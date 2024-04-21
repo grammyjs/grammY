@@ -146,7 +146,7 @@ async function fetchFile(
     if (body === null) {
         throw new Error(`Download failed, no response body from '${url}'`);
     }
-    return body;
+    return body[Symbol.asyncIterator]();
 }
 function isDenoFile(data: unknown): data is Deno.FsFile {
     return isDeno && data instanceof Deno.FsFile;
