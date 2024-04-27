@@ -25,14 +25,10 @@ export {
 export async function convertToUint8Array(
     data: Iterable<Uint8Array> | AsyncIterable<Uint8Array>,
 ) {
-    const stream = ReadableStream.from(data);
-    const reader = stream.getReader();
-
     const values = [] as number[];
-    while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        values.push(...value);
+
+    for await (const chunk of data) {
+        values.push(...chunk);
     }
 
     return new Uint8Array(values);
