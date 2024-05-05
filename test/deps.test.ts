@@ -25,7 +25,7 @@ export {
 export async function convertToUint8Array(
     data: Iterable<Uint8Array> | AsyncIterable<Uint8Array>,
 ) {
-    const values = [] as number[];
+    const values: number[] = [];
 
     for await (const chunk of data) {
         values.push(...chunk);
