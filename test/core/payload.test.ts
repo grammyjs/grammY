@@ -7,10 +7,9 @@ import {
     assert,
     assertEquals,
     assertFalse,
+    convertToUint8Array,
     describe,
     it,
-    readAll,
-    readerFromIterable,
 } from "../deps.test.ts";
 
 describe("requiresFormDataUpload", () => {
@@ -67,7 +66,7 @@ describe("requiresFormDataUpload", () => {
             connection: "keep-alive",
         };
         assertEquals(payload.headers, headers);
-        const body = await readAll(readerFromIterable(payload.body));
+        const body = await convertToUint8Array(payload.body);
         const actual = new TextDecoder().decode(body);
         const expected = `--${boundary}\r
 content-disposition:form-data;name="chat_id"\r

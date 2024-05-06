@@ -1,6 +1,6 @@
 // === Needed imports
 import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
-import { iterateReader } from "https://deno.land/std@0.211.0/streams/iterate_reader.ts";
+
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -115,18 +115,18 @@ export class InputFile {
                 );
             }
             const file = await Deno.open(data);
-            return iterateReader(file);
+            return file.readable[Symbol.asyncIterator]();
         }
         if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) return iterateReader(data);
+        if (isDenoFile(data)) return data.readable[Symbol.asyncIterator]();
         // Handle Response objects
         if (data instanceof Response) {
             if (data.body === null) throw new Error(`No response body!`);
             return data.body;
         }
         // Handle URL and URLLike objects
-        if (data instanceof URL) return fetchFile(data);
-        if ("url" in data) return fetchFile(data.url);
+        if (data instanceof URL) return await fetchFile(data);
+        if ("url" in data) return await fetchFile(data.url);
         // Return buffers as-is
         if (data instanceof Uint8Array) return data;
         // Unwrap supplier functions
@@ -139,12 +139,14 @@ export class InputFile {
     }
 }
 
-async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
+async function fetchFile(
+    url: string | URL,
+): Promise<AsyncIterable<Uint8Array>> {
     const { body } = await fetch(url);
     if (body === null) {
         throw new Error(`Download failed, no response body from '${url}'`);
     }
-    yield* body;
+    return body[Symbol.asyncIterator]();
 }
 function isDenoFile(data: unknown): data is Deno.FsFile {
     return isDeno && data instanceof Deno.FsFile;
