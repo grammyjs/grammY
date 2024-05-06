@@ -631,6 +631,9 @@ interface Shortcuts<U extends Update> {
         : U["message_reaction"] extends [object] ? number
         : U["message_reaction_count"] extends [object] ? number
         : undefined;
+    chatId: [Shortcuts<U>["chat"]] extends [object] ? number
+        : U["business_connection"] extends [object] ? number
+        : undefined;
     // inlineMessageId: disregarded here because always optional on both types
     businessConnectionId: [Shortcuts<U>["msg"]] extends [object]
         ? string | undefined
