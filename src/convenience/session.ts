@@ -129,7 +129,7 @@ export interface SessionOptions<S, C extends Context = Context> {
      * keys are used.
      *
      * The default implementation will store sessions per chat, as determined by
-     * `ctx.chat?.id`.
+     * `ctx.chatId`.
      */
     getSessionKey?: (
         ctx: Omit<C, "session">,
@@ -439,7 +439,6 @@ function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
 
 /** Stores session data per chat by default */
 function defaultGetSessionKey(ctx: Context): string | undefined {
-    if (ctx.chat?.id !== ctx.chatId) console.log(ctx.chat?.id, ctx.chatId);
     return ctx.chatId?.toString();
 }
 
