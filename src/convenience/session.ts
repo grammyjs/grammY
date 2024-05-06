@@ -439,7 +439,8 @@ function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
 
 /** Stores session data per chat by default */
 function defaultGetSessionKey(ctx: Context): string | undefined {
-    return ctx.chat?.id.toString();
+    if (ctx.chat?.id !== ctx.chatId) console.log(ctx.chat?.id, ctx.chatId);
+    return ctx.chatId?.toString();
 }
 
 /** Returns a useful error message for when the session key is undefined */

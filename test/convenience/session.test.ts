@@ -27,7 +27,7 @@ describe("session", () => {
     it("should pass through updates", async () => {
         type C = Context & SessionFlavor<never>;
         const composer = new Composer<C>();
-        const ctx = { chat: { id: 42 } } as C;
+        const ctx = { chatId: 42 } as C;
         const middleware = spy((_ctx) => {});
         composer.use(session(), middleware);
         await composer.middleware()(ctx, next);
@@ -74,7 +74,7 @@ describe("session", () => {
             delete: spy((_key: string) => {}),
         };
         const composer = new Composer<C>();
-        const ctx = { chat: { id: 42 } } as C;
+        const ctx = { chatId: 42 } as C;
         composer.use(session({ storage }))
             .use(() => {
                 ctx.session = 0;
@@ -102,7 +102,7 @@ describe("session", () => {
         };
         type C = Context & SessionFlavor<number>;
         const composer = new Composer<C>();
-        let ctx = { chat: { id: 42 } } as C;
+        let ctx = { chatId: 42 } as C;
         composer.use(session({ storage }))
             .use((ctx) => {
                 if (ctx.session === 0) ctx.session = 1;
@@ -110,7 +110,7 @@ describe("session", () => {
             });
 
         await composer.middleware()(ctx, next);
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
 
         assertEquals(storage.read.calls.length, 2);
@@ -140,7 +140,7 @@ describe("session", () => {
         const initial = spy(() => ({}));
         type C = Context & SessionFlavor<Record<string, number>>;
         const composer = new Composer<C>();
-        let ctx = { chat: { id: 42 } } as C;
+        let ctx = { chatId: 42 } as C;
         composer
             .use(session({ storage, initial }))
             .use((ctx) => {
@@ -186,22 +186,22 @@ describe("session", () => {
         await composer.middleware()(ctx, next);
         assertEquals(storage.write.calls[0].args, ["42", { foo: 0 }]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage.write.calls[1].args, ["42", { foo: 1, bar: 0 }]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(
             storage.write.calls[2].args,
             ["42", { foo: 1, bar: 1, baz: 0 }],
         );
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage.delete.calls[0].args, ["42"]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage.write.calls[3].args, ["42", { foo: 0 }]);
 
@@ -218,7 +218,7 @@ describe("multi session", () => {
     it("should pass through updates", async () => {
         type C = Context & SessionFlavor<Record<never, never>>;
         const composer = new Composer<C>();
-        const ctx = { chat: { id: 42 } } as C;
+        const ctx = { chatId: 42 } as C;
         const middleware = spy((_ctx) => {});
         composer.use(session({ type: "multi" }), middleware);
         await composer.middleware()(ctx, next);
@@ -274,7 +274,7 @@ describe("multi session", () => {
             delete: spy((_key: string) => {}),
         };
         const composer = new Composer<C>();
-        const ctx = { chat: { id: 42 } } as C;
+        const ctx = { chatId: 42 } as C;
         composer.use(session({ type: "multi", prop: { storage } }))
             .use(() => {
                 ctx.session.prop = 0;
@@ -318,7 +318,7 @@ describe("multi session", () => {
         }
         type C = Context & SessionFlavor<SessionData>;
         const composer = new Composer<C>();
-        let ctx = { chat: { id: 42 } } as C;
+        let ctx = { chatId: 42 } as C;
         composer
             .use(
                 session({
@@ -395,12 +395,12 @@ describe("multi session", () => {
         assertEquals(storage0.write.calls[0].args, ["42", { foo: 0 }]);
         assertEquals(storage1.write.calls[0].args, ["42", { foo: 0 }]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage0.write.calls[1].args, ["42", { foo: 1, bar: 0 }]);
         assertEquals(storage1.write.calls[1].args, ["42", { foo: 1 }]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(
             storage0.write.calls[2].args,
@@ -408,12 +408,12 @@ describe("multi session", () => {
         );
         assertEquals(storage1.write.calls[2].args, ["42", { foo: 2 }]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage0.delete.calls[0].args, ["42"]);
         assertEquals(storage1.delete.calls[0].args, ["42"]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage0.write.calls[3].args, ["42", { foo: 0 }]);
         assertEquals(storage1.write.calls[3].args, ["42", { foo: 0 }]);
@@ -443,7 +443,7 @@ describe("lazy session", () => {
     it("should pass through updates", async () => {
         type C = Context & SessionFlavor<never>;
         const composer = new Composer<C>();
-        const ctx = { chat: { id: 42 } } as C;
+        const ctx = { chatId: 42 } as C;
         const middleware = spy((_ctx) => {});
         composer.use(lazySession(), middleware);
         await composer.middleware()(ctx, next);
@@ -490,7 +490,7 @@ describe("lazy session", () => {
             delete: spy((_key: string) => {}),
         };
         const composer = new Composer<C>();
-        const ctx = { chat: { id: 42 } } as C;
+        const ctx = { chatId: 42 } as C;
         composer.use(lazySession({ storage }))
             .use(async () => {
                 const old = await ctx.session;
@@ -519,7 +519,7 @@ describe("lazy session", () => {
         };
         type C = Context & LazySessionFlavor<number>;
         const composer = new Composer<C>();
-        let ctx = { chat: { id: 42 } } as C;
+        let ctx = { chatId: 42 } as C;
         composer.use(lazySession({ storage }))
             .use(async (ctx) => {
                 if (await ctx.session === 0) ctx.session = 1;
@@ -527,7 +527,7 @@ describe("lazy session", () => {
             });
 
         await composer.middleware()(ctx, next);
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
 
         assertEquals(storage.read.calls.length, 2);
@@ -557,7 +557,7 @@ describe("lazy session", () => {
         const initial = spy(() => ({}));
         type C = Context & LazySessionFlavor<Record<string, number>>;
         const composer = new Composer<C>();
-        let ctx = { chat: { id: 42 } } as C;
+        let ctx = { chatId: 42 } as C;
         composer
             .use(lazySession({ storage, initial }))
             .use(async (ctx) => {
@@ -605,22 +605,22 @@ describe("lazy session", () => {
         await composer.middleware()(ctx, next);
         assertEquals(storage.write.calls[0].args, ["42", { foo: 0 }]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage.write.calls[1].args, ["42", { foo: 1, bar: 0 }]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(
             storage.write.calls[2].args,
             ["42", { foo: 1, bar: 1, baz: 0 }],
         );
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage.delete.calls[0].args, ["42"]);
 
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
         await composer.middleware()(ctx, next);
         assertEquals(storage.write.calls[3].args, ["42", { foo: 0 }]);
 
@@ -656,7 +656,7 @@ describe("lazy session", () => {
             }),
         };
         composer = new Composer<C>();
-        ctx = { chat: { id: 42 } } as C;
+        ctx = { chatId: 42 } as C;
     }
     async function run(mw: MiddlewareFn<C>) {
         reset();
