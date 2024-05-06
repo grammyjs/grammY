@@ -28,6 +28,10 @@ import {
 } from "./frameworks.ts";
 const debugErr = d("grammy:error");
 
+type Handler<A extends (...args: any[]) => { handlerReturn?: unknown }> = (
+    ...args: Parameters<A>
+) => ReturnType<A>["handlerReturn"];
+
 const callbackAdapter: FrameworkAdapter = (
     update: Update,
     callback: (json: string) => unknown,
@@ -91,7 +95,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "aws-lambda",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -100,7 +104,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "aws-lambda-async",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -109,7 +113,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "azure",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -118,7 +122,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "cloudflare",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -127,7 +131,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "cloudflare-mod",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -136,7 +140,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "express",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -145,7 +149,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "fastify",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -154,7 +158,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "hono",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -163,7 +167,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "http" | "https",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -172,7 +176,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "koa",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -181,7 +185,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "next-js",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -190,7 +194,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "nhttp",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -199,7 +203,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "oak",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -208,7 +212,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "serveHttp",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -217,7 +221,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "std/http",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -226,7 +230,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "sveltekit",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<
     C extends Context = Context,
@@ -235,7 +239,7 @@ export function webhookCallback<
     bot: Bot<C>,
     adapter?: "worktop",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+): Handler<A>;
 
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
