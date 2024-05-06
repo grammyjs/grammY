@@ -67,6 +67,7 @@ export interface WebhookOptions {
  * @param adapter An optional string identifying the framework (default: 'express')
  * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
  * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
+ * @deprecated This function will be removed in the next major version
  */
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
