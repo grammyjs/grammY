@@ -26,7 +26,7 @@ export type SupportedFrameworks = keyof typeof adapters;
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
  */
-export interface ReqResHandler {
+export interface ReqResHandler<T> {
     /**
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
@@ -56,7 +56,7 @@ export interface ReqResHandler {
      * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
      * handler returns something
      */
-    handlerReturn?: unknown;
+    handlerReturn?: T;
 }
 
 /**
@@ -64,7 +64,7 @@ export interface ReqResHandler {
  * request. The handler will be used to integrate with the compatible framework.
  */
 // deno-lint-ignore no-explicit-any
-export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
+export type FrameworkAdapter = (...args: any[]) => ReqResHandler<any>;
 
 export type LambdaAdapter = (
     event: {
@@ -76,7 +76,19 @@ export type LambdaAdapter = (
         arg0: unknown,
         arg1: Record<string, unknown>,
     ) => Promise<unknown>,
-) => ReqResHandler;
+) => ReqResHandler<undefined>;
+
+export type LambdaAsyncAdapter = (
+    event: {
+        body: string;
+        headers: Record<string, string>;
+    },
+    _context: unknown,
+    callback: (
+        arg0: unknown,
+        arg1: Record<string, unknown>,
+    ) => Promise<unknown>,
+) => ReqResHandler<Promise<undefined>>;
 
 export type AzureAdapter = (context: {
     res: {
@@ -92,14 +104,16 @@ export type AzureAdapter = (context: {
 }, request: {
     // deno-lint-ignore no-explicit-any
     body: any;
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type CloudflareAdapter = (event: {
     request: Request;
     respondWith: (response: Promise<Response>) => void;
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
-export type CloudflareModuleAdapter = (request: Request) => ReqResHandler;
+export type CloudflareModuleAdapter = (
+    request: Request,
+) => ReqResHandler<Promise<Response>>;
 
 export type ExpressAdapter = (request: {
     // deno-lint-ignore no-explicit-any
@@ -110,7 +124,7 @@ export type ExpressAdapter = (request: {
     set: (key: string, value: string) => typeof response;
     send: (json: string) => typeof response;
     status: (code: number) => typeof response;
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type FastifyAdapter = (request: {
     // deno-lint-ignore no-explicit-any
@@ -124,7 +138,7 @@ export type FastifyAdapter = (request: {
         (): typeof reply;
         (json: string): typeof reply;
     };
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type HonoAdapter = (context: {
     req: {
@@ -135,9 +149,9 @@ export type HonoAdapter = (context: {
     status: (status: number) => void;
     statusText: (statusText: string) => void;
     json: (json: string) => Response;
-}) => ReqResHandler;
+}) => ReqResHandler<Promise<Response>>;
 
-export type HTTPAdapter = (request: {
+export type HttpAdapter = (request: {
     headers: Record<string, string>;
     on: (event: string, listener: (chunk: unknown) => void) => typeof request;
     once: (event: string, listener: () => void) => typeof request;
@@ -148,7 +162,7 @@ export type HTTPAdapter = (request: {
         (status: number, headers: Record<string, string>): typeof response;
     };
     end: (json?: string) => void;
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type KoaAdapter = (context: {
     get: (header: string) => string | undefined;
@@ -163,7 +177,7 @@ export type KoaAdapter = (context: {
         // deno-lint-ignore no-explicit-any
         body: any;
     };
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type NextAdapter = (request: {
     // deno-lint-ignore no-explicit-any
@@ -174,7 +188,7 @@ export type NextAdapter = (request: {
     status: (code: number) => typeof response;
     json: (json: string) => typeof response;
     send: (json: string) => typeof response;
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type NHttpAdapter = (rev: {
     // deno-lint-ignore no-explicit-any
@@ -188,7 +202,7 @@ export type NHttpAdapter = (rev: {
             send: (json: string) => void;
         };
     };
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type OakAdapter = (context: {
     request: {
@@ -204,30 +218,32 @@ export type OakAdapter = (context: {
         type: string;
         body: string;
     };
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 export type ServeHttpAdapter = (requestEvent: {
     request: Request;
     respondWith: (response: Response) => void;
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
-export type StdHttpAdapter = (request: Request) => ReqResHandler;
+export type StdHttpAdapter = (
+    request: Request,
+) => ReqResHandler<Promise<unknown>>;
 
 export type SveltekitAdapter = (
     { request }: { request: Request },
-) => ReqResHandler;
+) => ReqResHandler<Promise<unknown>>;
 
-export type WorktopAdapter = (req: {
+export type WorktopAdapter = (request: {
     body: {
         json: () => Promise<Update>;
     };
     headers: {
         get: (header: string) => string | undefined;
     };
-}, res: {
+}, response: {
     end: () => void;
     send: (status: number, json: string) => void;
-}) => ReqResHandler;
+}) => ReqResHandler<undefined>;
 
 /** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
@@ -244,8 +260,9 @@ const awsLambda: LambdaAdapter = (event, _context, callback) => ({
 });
 
 /** AWS lambda async/await serverless functions */
-const awsLambdaAsync: LambdaAdapter = (event, _context) => {
-    let resolveResponse: (response: unknown) => void;
+const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
+    // deno-lint-ignore no-explicit-any
+    let resolveResponse: (response: any) => void;
 
     return {
         update: JSON.parse(event.body),
@@ -373,7 +390,7 @@ const hono: HonoAdapter = (context) => {
 };
 
 /** Node.js native 'http' and 'https' modules */
-const http: HTTPAdapter = (request, response) => {
+const http: HttpAdapter = (request, response) => {
     const secretHeaderFromRequest = request.headers[SECRET_HEADER_LOWERCASE];
     return {
         update: new Promise((resolve, reject) => {

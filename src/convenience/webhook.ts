@@ -13,9 +13,10 @@ import {
     FastifyAdapter,
     type FrameworkAdapter,
     HonoAdapter,
-    HTTPAdapter,
+    HttpAdapter,
     KoaAdapter,
     LambdaAdapter,
+    LambdaAsyncAdapter,
     NextAdapter,
     NHttpAdapter,
     OakAdapter,
@@ -76,96 +77,166 @@ export function webhookCallback<C extends Context = Context>(
     timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
     secretToken?: WebhookOptions["secretToken"],
 ): (...args: any[]) => any;
+
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter?: SupportedFrameworks | FrameworkAdapter,
     webhookOptions?: WebhookOptions,
 ): (...args: any[]) => any;
-export function webhookCallback<C extends Context = Context>(
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends LambdaAdapter = LambdaAdapter,
+>(
     bot: Bot<C>,
     adapter?: "aws-lambda",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<LambdaAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends LambdaAsyncAdapter = LambdaAsyncAdapter,
+>(
     bot: Bot<C>,
     adapter?: "aws-lambda-async",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<LambdaAdapter>) => Promise<unknown>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends AzureAdapter = AzureAdapter,
+>(
     bot: Bot<C>,
     adapter?: "azure",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<AzureAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends CloudflareAdapter = CloudflareAdapter,
+>(
     bot: Bot<C>,
     adapter?: "cloudflare",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<CloudflareAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends CloudflareModuleAdapter = CloudflareModuleAdapter,
+>(
     bot: Bot<C>,
     adapter?: "cloudflare-mod",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<CloudflareModuleAdapter>) => Promise<Response>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends ExpressAdapter = ExpressAdapter,
+>(
     bot: Bot<C>,
     adapter?: "express",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<ExpressAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends FastifyAdapter = FastifyAdapter,
+>(
     bot: Bot<C>,
     adapter?: "fastify",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<FastifyAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends HonoAdapter = HonoAdapter,
+>(
     bot: Bot<C>,
     adapter?: "hono",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<HonoAdapter>) => Promise<Response>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends HttpAdapter = HttpAdapter,
+>(
     bot: Bot<C>,
     adapter?: "http" | "https",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<HTTPAdapter>) => Promise<Response>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends KoaAdapter = KoaAdapter,
+>(
     bot: Bot<C>,
     adapter?: "koa",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<KoaAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends NextAdapter = NextAdapter,
+>(
     bot: Bot<C>,
     adapter?: "next-js",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<NextAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends NHttpAdapter = NHttpAdapter,
+>(
     bot: Bot<C>,
     adapter?: "nhttp",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<NHttpAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends OakAdapter = OakAdapter,
+>(
     bot: Bot<C>,
     adapter?: "oak",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<OakAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends ServeHttpAdapter = ServeHttpAdapter,
+>(
     bot: Bot<C>,
     adapter?: "serveHttp",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<ServeHttpAdapter>) => Promise<undefined>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends StdHttpAdapter = StdHttpAdapter,
+>(
     bot: Bot<C>,
     adapter?: "std/http",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<StdHttpAdapter>) => Promise<unknown>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends SveltekitAdapter = SveltekitAdapter,
+>(
     bot: Bot<C>,
     adapter?: "sveltekit",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<SveltekitAdapter>) => Promise<unknown>;
-export function webhookCallback<C extends Context = Context>(
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
+export function webhookCallback<
+    C extends Context = Context,
+    A extends WorktopAdapter = WorktopAdapter,
+>(
     bot: Bot<C>,
     adapter?: "worktop",
     webhookOptions?: WebhookOptions,
-): (...args: Parameters<WorktopAdapter>) => Promise<undefined>;
+): (...args: Parameters<A>) => ReturnType<A>["handlerReturn"];
+
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
