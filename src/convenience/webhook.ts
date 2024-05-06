@@ -66,6 +66,34 @@ export function webhookCallback<C extends Context = Context>(
 ): (...args: any[]) => any;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
+    adapter?: "cloudflare",
+    webhookOptions?: WebhookOptions,
+): (event: {
+    request: Request;
+    respondWith: (response: Response | Promise<Response>) => void;
+}) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "cloudflare-mod",
+    webhookOptions?: WebhookOptions,
+): (request: Request) => Promise<Response>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "serveHttp",
+    webhookOptions?: WebhookOptions,
+): (requestEvent: Deno.RequestEvent | null) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "std/http",
+    webhookOptions?: WebhookOptions,
+): (request: Request) => Promise<unknown>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "sveltekit",
+    webhookOptions?: WebhookOptions,
+): ({ request }: { request: Request }) => Promise<unknown>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
     adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
     onTimeout:
         | WebhookOptions
