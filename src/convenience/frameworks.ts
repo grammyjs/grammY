@@ -2,8 +2,8 @@ import { type Update } from "../types.ts";
 
 const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 const SECRET_HEADER_LOWERCASE = SECRET_HEADER.toLowerCase();
-
 const WRONG_TOKEN_ERROR = "secret token is wrong";
+
 const ok = () => new Response(null, { status: 200 });
 const okJson = (json: string) =>
     new Response(json, {
@@ -59,6 +59,7 @@ export interface ReqResHandler {
     // deno-lint-ignore no-explicit-any
     handlerReturn?: any;
 }
+
 /**
  * Middleware for a web framework. Creates a request-response handler for a
  * request. The handler will be used to integrate with the compatible framework.
@@ -66,8 +67,171 @@ export interface ReqResHandler {
 // deno-lint-ignore no-explicit-any
 export type FrameworkAdapter = (...args: any[]) => ReqResHandler;
 
+export type LambdaAdapter = (
+    event: {
+        body: string;
+        headers: Record<string, string>;
+    },
+    _context: unknown,
+    callback: (
+        arg0: unknown,
+        arg1: Record<string, unknown>,
+    ) => Promise<unknown>,
+) => ReqResHandler;
+
+export type AzureAdapter = (context: {
+    res: {
+        status: number;
+        body: string;
+        headers?: Record<string, string>;
+        set?: (key: string, value: string) => void;
+        send?: {
+            (body: unknown): void;
+            (status: number, body: unknown): void;
+        };
+    };
+}, request: {
+    // deno-lint-ignore no-explicit-any
+    body: any;
+}) => ReqResHandler;
+
+export type CloudflareAdapter = (event: {
+    request: Request;
+    respondWith: (response: Promise<Response>) => void;
+}) => ReqResHandler;
+
+export type CloudflareModuleAdapter = (request: Request) => ReqResHandler;
+
+export type ExpressAdapter = (request: {
+    // deno-lint-ignore no-explicit-any
+    body: any;
+    header: (header: string) => string | undefined;
+}, response: {
+    end: () => typeof response;
+    set: (key: string, value: string) => typeof response;
+    send: (json: string) => typeof response;
+    status: (code: number) => typeof response;
+}) => ReqResHandler;
+
+export type FastifyAdapter = (request: {
+    // deno-lint-ignore no-explicit-any
+    body: any;
+    headers: Record<string, string>;
+}, reply: {
+    status: (code: number) => typeof reply;
+    headers: (headers: Record<string, string>) => typeof reply;
+    code: (code: number) => typeof reply;
+    send: {
+        (): typeof reply;
+        (json: string): typeof reply;
+    };
+}) => ReqResHandler;
+
+export type HonoAdapter = (context: {
+    req: {
+        json: () => Promise<Update>;
+        header: (header: string) => string | undefined;
+    };
+    body: () => Response;
+    status: (status: number) => void;
+    statusText: (statusText: string) => void;
+    json: (json: string) => Response;
+}) => ReqResHandler;
+
+export type HTTPAdapter = (request: {
+    headers: Record<string, string>;
+    on: (event: string, listener: (chunk: unknown) => void) => typeof request;
+    once: (event: string, listener: () => void) => typeof request;
+    json: () => Promise<Update>;
+}, response: {
+    writeHead: {
+        (status: number): typeof response;
+        (status: number, headers: Record<string, string>): typeof response;
+    };
+    end: (json?: string) => void;
+}) => ReqResHandler;
+
+export type KoaAdapter = (context: {
+    get: (header: string) => string | undefined;
+    set: (key: string, value: string) => void;
+    body: string;
+    status: number;
+    response: {
+        body: unknown;
+        status: number;
+    };
+    request: {
+        // deno-lint-ignore no-explicit-any
+        body: any;
+    };
+}) => ReqResHandler;
+
+export type NextAdapter = (request: {
+    // deno-lint-ignore no-explicit-any
+    body: any;
+    headers: Record<string, string>;
+}, response: {
+    end: () => void;
+    status: (code: number) => typeof response;
+    json: (json: string) => typeof response;
+    send: (json: string) => typeof response;
+}) => ReqResHandler;
+
+export type NHttpAdapter = (rev: {
+    // deno-lint-ignore no-explicit-any
+    body: any;
+    headers: {
+        get: (header: string) => string | undefined;
+    };
+    response: {
+        sendStatus: (status: number) => void;
+        status: (status: number) => {
+            send: (json: string) => void;
+        };
+    };
+}) => ReqResHandler;
+
+export type OakAdapter = (context: {
+    request: {
+        body: {
+            json: () => Promise<Update>;
+        };
+        headers: {
+            get: (header: string) => string | undefined;
+        };
+    };
+    response: {
+        status: number;
+        type: string;
+        body: string;
+    };
+}) => ReqResHandler;
+
+export type ServeHttpAdapter = (requestEvent: {
+    request: Request;
+    respondWith: (response: Response) => void;
+}) => ReqResHandler;
+
+export type StdHttpAdapter = (request: Request) => ReqResHandler;
+
+export type SveltekitAdapter = (
+    { request }: { request: Request },
+) => ReqResHandler;
+
+export type WorktopAdapter = (req: {
+    body: {
+        json: () => Promise<Update>;
+    };
+    headers: {
+        get: (header: string) => string | undefined;
+    };
+}, res: {
+    end: () => void;
+    send: (status: number, json: string) => void;
+}) => ReqResHandler;
+
 /** AWS lambda serverless functions */
-const awsLambda: FrameworkAdapter = (event, _context, callback) => ({
+const awsLambda: LambdaAdapter = (event, _context, callback) => ({
     update: JSON.parse(event.body),
     header: event.headers[SECRET_HEADER],
     end: () => callback(null, { statusCode: 200 }),
@@ -81,7 +245,7 @@ const awsLambda: FrameworkAdapter = (event, _context, callback) => ({
 });
 
 /** AWS lambda async/await serverless functions */
-const awsLambdaAsync: FrameworkAdapter = (event, _context) => {
+const awsLambdaAsync: LambdaAdapter = (event, _context) => {
     let resolveResponse: (response: unknown) => void;
 
     return {
@@ -102,28 +266,25 @@ const awsLambdaAsync: FrameworkAdapter = (event, _context) => {
 };
 
 /** Azure Functions */
-const azure: FrameworkAdapter = (context, req) => ({
-    update: Promise.resolve(req.body),
-    header: context.res.headers[SECRET_HEADER],
+const azure: AzureAdapter = (context, request) => ({
+    update: Promise.resolve(request.body),
+    header: context.res.headers?.[SECRET_HEADER],
     end: () => (context.res = {
         status: 200,
         body: "",
     }),
     respond: (json) => {
-        context.res.set("Content-Type", "application/json");
-        context.res.send(json);
+        context.res.set?.("Content-Type", "application/json");
+        context.res.send?.(json);
     },
     unauthorized: () => {
-        context.res.send(401, WRONG_TOKEN_ERROR);
+        context.res.send?.(401, WRONG_TOKEN_ERROR);
     },
 });
 
 /** Native CloudFlare workers (service worker) */
-const cloudflare: FrameworkAdapter = (event: {
-    request: Request;
-    respondWith: (res: Promise<Response>) => void;
-}) => {
-    let resolveResponse: (res: Response) => void;
+const cloudflare: CloudflareAdapter = (event) => {
+    let resolveResponse: (response: Response) => void;
     event.respondWith(
         new Promise<Response>((resolve) => {
             resolveResponse = resolve;
@@ -145,7 +306,7 @@ const cloudflare: FrameworkAdapter = (event: {
 };
 
 /** Native CloudFlare workers (module worker) */
-const cloudflareModule: FrameworkAdapter = (request: Request) => {
+const cloudflareModule: CloudflareModuleAdapter = (request) => {
     let resolveResponse: (res: Response) => void;
     return {
         update: request.json(),
@@ -166,23 +327,23 @@ const cloudflareModule: FrameworkAdapter = (request: Request) => {
 };
 
 /** express web framework */
-const express: FrameworkAdapter = (req, res) => ({
-    update: Promise.resolve(req.body),
-    header: req.header(SECRET_HEADER),
-    end: () => res.end(),
+const express: ExpressAdapter = (request, response) => ({
+    update: Promise.resolve(request.body),
+    header: request.header(SECRET_HEADER),
+    end: () => response.end(),
     respond: (json) => {
-        res.set("Content-Type", "application/json");
-        res.send(json);
+        response.set("Content-Type", "application/json");
+        response.send(json);
     },
     unauthorized: () => {
-        res.status(401).send(WRONG_TOKEN_ERROR);
+        response.status(401).send(WRONG_TOKEN_ERROR);
     },
 });
 
 /** fastify web framework */
-const fastify: FrameworkAdapter = (req, reply) => ({
-    update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER_LOWERCASE],
+const fastify: FastifyAdapter = (request, reply) => ({
+    update: Promise.resolve(request.body),
+    header: request.headers[SECRET_HEADER_LOWERCASE],
     end: () => reply.status(200).send(),
     respond: (json) =>
         reply.headers({ "Content-Type": "application/json" }).send(json),
@@ -190,21 +351,21 @@ const fastify: FrameworkAdapter = (req, reply) => ({
 });
 
 /** hono web framework */
-const hono: FrameworkAdapter = (ctx) => {
+const hono: HonoAdapter = (context) => {
     let resolveResponse: (res: Response) => void;
     return {
-        update: ctx.req.json(),
-        header: ctx.req.header(SECRET_HEADER),
+        update: context.req.json(),
+        header: context.req.header(SECRET_HEADER),
         end: () => {
-            resolveResponse(ctx.body());
+            resolveResponse(context.body());
         },
         respond: (json) => {
-            resolveResponse(ctx.json(json));
+            resolveResponse(context.json(json));
         },
         unauthorized: () => {
-            ctx.status(401);
-            ctx.statusText(WRONG_TOKEN_ERROR);
-            resolveResponse(ctx.body());
+            context.status(401);
+            context.statusText(WRONG_TOKEN_ERROR);
+            resolveResponse(context.body());
         },
         handlerReturn: new Promise<Response>((resolve) => {
             resolveResponse = resolve;
@@ -213,14 +374,14 @@ const hono: FrameworkAdapter = (ctx) => {
 };
 
 /** Node.js native 'http' and 'https' modules */
-const http: FrameworkAdapter = (req, res) => {
-    const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
+const http: HTTPAdapter = (request, response) => {
+    const secretHeaderFromRequest = request.headers[SECRET_HEADER_LOWERCASE];
     return {
         update: new Promise((resolve, reject) => {
             // deno-lint-ignore no-explicit-any
             type Chunk = any;
             const chunks: Chunk[] = [];
-            req.on("data", (chunk: Chunk) => chunks.push(chunk))
+            request.on("data", (chunk: Chunk) => chunks.push(chunk))
                 .once("end", () => {
                     // @ts-ignore `Buffer` is Node-only
                     const raw = Buffer.concat(chunks).toString("utf-8");
@@ -231,42 +392,42 @@ const http: FrameworkAdapter = (req, res) => {
         header: Array.isArray(secretHeaderFromRequest)
             ? secretHeaderFromRequest[0]
             : secretHeaderFromRequest,
-        end: () => res.end(),
+        end: () => response.end(),
         respond: (json) =>
-            res
+            response
                 .writeHead(200, { "Content-Type": "application/json" })
                 .end(json),
-        unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
+        unauthorized: () => response.writeHead(401).end(WRONG_TOKEN_ERROR),
     };
 };
 
 /** koa web framework */
-const koa: FrameworkAdapter = (ctx) => ({
-    update: Promise.resolve(ctx.request.body),
-    header: ctx.get(SECRET_HEADER),
+const koa: KoaAdapter = (context) => ({
+    update: Promise.resolve(context.request.body),
+    header: context.get(SECRET_HEADER),
     end: () => {
-        ctx.body = "";
+        context.body = "";
     },
     respond: (json) => {
-        ctx.set("Content-Type", "application/json");
-        ctx.response.body = json;
+        context.set("Content-Type", "application/json");
+        context.response.body = json;
     },
     unauthorized: () => {
-        ctx.status = 401;
+        context.status = 401;
     },
 });
 
 /** Next.js Serverless Functions */
-const nextJs: FrameworkAdapter = (req, res) => ({
-    update: Promise.resolve(req.body),
-    header: req.headers[SECRET_HEADER_LOWERCASE],
-    end: () => res.end(),
-    respond: (json) => res.status(200).json(json),
-    unauthorized: () => res.status(401).send(WRONG_TOKEN_ERROR),
+const nextJs: NextAdapter = (request, response) => ({
+    update: Promise.resolve(request.body),
+    header: request.headers[SECRET_HEADER_LOWERCASE],
+    end: () => response.end(),
+    respond: (json) => response.status(200).json(json),
+    unauthorized: () => response.status(401).send(WRONG_TOKEN_ERROR),
 });
 
 /** nhttp web framework */
-const nhttp: FrameworkAdapter = (rev) => ({
+const nhttp: NHttpAdapter = (rev) => ({
     update: rev.body,
     header: rev.headers.get(SECRET_HEADER) || undefined,
     end: () => rev.response.sendStatus(200),
@@ -275,23 +436,23 @@ const nhttp: FrameworkAdapter = (rev) => ({
 });
 
 /** oak web framework */
-const oak: FrameworkAdapter = (ctx) => ({
-    update: ctx.request.body.json(),
-    header: ctx.request.headers.get(SECRET_HEADER) || undefined,
+const oak: OakAdapter = (context) => ({
+    update: context.request.body.json(),
+    header: context.request.headers.get(SECRET_HEADER) || undefined,
     end: () => {
-        ctx.response.status = 200;
+        context.response.status = 200;
     },
     respond: (json) => {
-        ctx.response.type = "json";
-        ctx.response.body = json;
+        context.response.type = "json";
+        context.response.body = json;
     },
     unauthorized: () => {
-        ctx.response.status = 401;
+        context.response.status = 401;
     },
 });
 
 /** Deno.serve */
-const serveHttp: FrameworkAdapter = (requestEvent) => ({
+const serveHttp: ServeHttpAdapter = (requestEvent) => ({
     update: requestEvent.request.json(),
     header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
     end: () => requestEvent.respondWith(ok()),
@@ -300,11 +461,11 @@ const serveHttp: FrameworkAdapter = (requestEvent) => ({
 });
 
 /** std/http web server */
-const stdHttp: FrameworkAdapter = (req: Request) => {
-    let resolveResponse: (res: Response) => void;
+const stdHttp: StdHttpAdapter = (request) => {
+    let resolveResponse: (response: Response) => void;
     return {
-        update: req.json(),
-        header: req.headers.get(SECRET_HEADER) || undefined,
+        update: request.json(),
+        header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             if (resolveResponse) resolveResponse(ok());
         },
@@ -321,7 +482,7 @@ const stdHttp: FrameworkAdapter = (req: Request) => {
 };
 
 /** Sveltekit Serverless Functions */
-const sveltekit: FrameworkAdapter = ({ request }: { request: Request }) => {
+const sveltekit: SveltekitAdapter = ({ request }) => {
     let resolveResponse: (res: Response) => void;
     return {
         update: Promise.resolve(request.json()),
@@ -342,12 +503,12 @@ const sveltekit: FrameworkAdapter = ({ request }: { request: Request }) => {
 };
 
 /** worktop CloudFlare workers framework */
-const worktop: FrameworkAdapter = (req, res) => ({
-    update: Promise.resolve(req.body.json()),
-    header: req.headers.get(SECRET_HEADER),
-    end: () => res.end(),
-    respond: (json) => res.send(200, json),
-    unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
+const worktop: WorktopAdapter = (request, response) => ({
+    update: Promise.resolve(request.body.json()),
+    header: request.headers.get(SECRET_HEADER),
+    end: () => response.end(),
+    respond: (json) => response.send(200, json),
+    unauthorized: () => response.send(401, WRONG_TOKEN_ERROR),
 });
 
 // Please open a pull request if you want to add another adapter

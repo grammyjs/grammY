@@ -6,8 +6,24 @@ import { debug as d, defaultAdapter } from "../platform.deno.ts";
 import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
+    AzureAdapter,
+    CloudflareAdapter,
+    CloudflareModuleAdapter,
+    ExpressAdapter,
+    FastifyAdapter,
     type FrameworkAdapter,
+    HonoAdapter,
+    HTTPAdapter,
+    KoaAdapter,
+    LambdaAdapter,
+    NextAdapter,
+    NHttpAdapter,
+    OakAdapter,
+    ServeHttpAdapter,
+    StdHttpAdapter,
     type SupportedFrameworks,
+    SveltekitAdapter,
+    WorktopAdapter,
 } from "./frameworks.ts";
 const debugErr = d("grammy:error");
 
@@ -66,32 +82,89 @@ export function webhookCallback<C extends Context = Context>(
 ): (...args: any[]) => any;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
+    adapter?: "aws-lambda",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<LambdaAdapter>) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "aws-lambda-async",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<LambdaAdapter>) => Promise<unknown>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "azure",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<AzureAdapter>) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
     adapter?: "cloudflare",
     webhookOptions?: WebhookOptions,
-): (event: {
-    request: Request;
-    respondWith: (response: Response | Promise<Response>) => void;
-}) => Promise<undefined>;
+): (...args: Parameters<CloudflareAdapter>) => Promise<undefined>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter?: "cloudflare-mod",
     webhookOptions?: WebhookOptions,
-): (request: Request) => Promise<Response>;
+): (...args: Parameters<CloudflareModuleAdapter>) => Promise<Response>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "express",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<ExpressAdapter>) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "fastify",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<FastifyAdapter>) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "hono",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<HonoAdapter>) => Promise<Response>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "http" | "https",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<HTTPAdapter>) => Promise<Response>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "koa",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<KoaAdapter>) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "next-js",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<NextAdapter>) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "nhttp",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<NHttpAdapter>) => Promise<undefined>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "oak",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<OakAdapter>) => Promise<undefined>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter?: "serveHttp",
     webhookOptions?: WebhookOptions,
-): (requestEvent: Deno.RequestEvent | null) => Promise<undefined>;
+): (...args: Parameters<ServeHttpAdapter>) => Promise<undefined>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter?: "std/http",
     webhookOptions?: WebhookOptions,
-): (request: Request) => Promise<unknown>;
+): (...args: Parameters<StdHttpAdapter>) => Promise<unknown>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter?: "sveltekit",
     webhookOptions?: WebhookOptions,
-): ({ request }: { request: Request }) => Promise<unknown>;
+): (...args: Parameters<SveltekitAdapter>) => Promise<unknown>;
+export function webhookCallback<C extends Context = Context>(
+    bot: Bot<C>,
+    adapter?: "worktop",
+    webhookOptions?: WebhookOptions,
+): (...args: Parameters<WorktopAdapter>) => Promise<undefined>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
