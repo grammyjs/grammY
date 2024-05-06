@@ -56,8 +56,7 @@ export interface ReqResHandler {
      * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
      * handler returns something
      */
-    // deno-lint-ignore no-explicit-any
-    handlerReturn?: any;
+    handlerReturn?: unknown;
 }
 
 /**
