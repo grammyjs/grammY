@@ -6,31 +6,10 @@ import { debug as d, defaultAdapter } from "../platform.deno.ts";
 import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
-    type AzureAdapter,
-    type CloudflareAdapter,
-    type CloudflareModuleAdapter,
-    type ExpressAdapter,
-    type FastifyAdapter,
     type FrameworkAdapter,
-    type HonoAdapter,
-    type HttpAdapter,
-    type KoaAdapter,
-    type LambdaAdapter,
-    type LambdaAsyncAdapter,
-    type NextAdapter,
-    type NHttpAdapter,
-    type OakAdapter,
-    type ServeHttpAdapter,
-    type StdHttpAdapter,
     type SupportedFrameworks,
-    type SveltekitAdapter,
-    type WorktopAdapter,
 } from "./frameworks.ts";
 const debugErr = d("grammy:error");
-
-type Handler<A extends (...args: any[]) => { handlerReturn?: unknown }> = (
-    ...args: Parameters<A>
-) => ReturnType<A>["handlerReturn"];
 
 const callbackAdapter: FrameworkAdapter = (
     update: Update,
@@ -42,6 +21,7 @@ const callbackAdapter: FrameworkAdapter = (
     respond: callback,
     header,
     unauthorized,
+    handlerReturn: undefined,
 });
 const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
@@ -72,11 +52,10 @@ export interface WebhookOptions {
  * @param adapter An optional string identifying the framework (default: 'express')
  * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
  * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
- * @deprecated This function will be removed in the next major version
  */
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter?: SupportedFrameworks | FrameworkAdapter,
+    adapter?: FrameworkAdapter,
     onTimeout?: WebhookOptions["onTimeout"],
     timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
     secretToken?: WebhookOptions["secretToken"],
@@ -84,162 +63,20 @@ export function webhookCallback<C extends Context = Context>(
 
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter?: SupportedFrameworks | FrameworkAdapter,
+    adapter?: FrameworkAdapter,
     webhookOptions?: WebhookOptions,
 ): (...args: any[]) => any;
 
 export function webhookCallback<
     C extends Context = Context,
-    A extends LambdaAdapter = LambdaAdapter,
+    A extends keyof typeof nativeAdapters = keyof typeof nativeAdapters,
 >(
     bot: Bot<C>,
-    adapter?: "aws-lambda",
+    adapter: A,
     webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends LambdaAsyncAdapter = LambdaAsyncAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "aws-lambda-async",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends AzureAdapter = AzureAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "azure",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends CloudflareAdapter = CloudflareAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "cloudflare",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends CloudflareModuleAdapter = CloudflareModuleAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "cloudflare-mod",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends ExpressAdapter = ExpressAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "express",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends FastifyAdapter = FastifyAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "fastify",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends HonoAdapter = HonoAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "hono",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends HttpAdapter = HttpAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "http" | "https",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends KoaAdapter = KoaAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "koa",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends NextAdapter = NextAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "next-js",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends NHttpAdapter = NHttpAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "nhttp",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends OakAdapter = OakAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "oak",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends ServeHttpAdapter = ServeHttpAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "serveHttp",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends StdHttpAdapter = StdHttpAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "std/http",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends SveltekitAdapter = SveltekitAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "sveltekit",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
-
-export function webhookCallback<
-    C extends Context = Context,
-    A extends WorktopAdapter = WorktopAdapter,
->(
-    bot: Bot<C>,
-    adapter?: "worktop",
-    webhookOptions?: WebhookOptions,
-): Handler<A>;
+): (
+    ...args: Parameters<typeof nativeAdapters[A]>
+) => ReturnType<typeof nativeAdapters[A]>["handlerReturn"];
 
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,

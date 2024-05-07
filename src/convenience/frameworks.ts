@@ -528,7 +528,6 @@ const sveltekit: SveltekitAdapter = ({ request }) => {
         }),
     };
 };
-
 /** worktop CloudFlare workers framework */
 const worktop: WorktopAdapter = (request, response) => ({
     update: Promise.resolve(request.body.json()),
