@@ -68,8 +68,8 @@ export type FrameworkAdapter = (...args: any[]) => ReqResHandler<any>;
 
 export type LambdaAdapter = (
     event: {
-        body: string;
-        headers: Record<string, string>;
+        body?: string;
+        headers: Record<string, string | undefined>;
     },
     _context: unknown,
     callback: (
@@ -80,14 +80,10 @@ export type LambdaAdapter = (
 
 export type LambdaAsyncAdapter = (
     event: {
-        body: string;
-        headers: Record<string, string>;
+        body?: string;
+        headers: Record<string, string | undefined>;
     },
     _context: unknown,
-    callback: (
-        arg0: unknown,
-        arg1: Record<string, unknown>,
-    ) => Promise<unknown>,
 ) => ReqResHandler<Promise<undefined>>;
 
 export type AzureAdapter = (context: {
@@ -102,8 +98,7 @@ export type AzureAdapter = (context: {
         };
     };
 }, request: {
-    // deno-lint-ignore no-explicit-any
-    body: any;
+    body: Update;
 }) => ReqResHandler;
 
 export type CloudflareAdapter = (event: {
@@ -116,20 +111,19 @@ export type CloudflareModuleAdapter = (
 ) => ReqResHandler<Promise<Response>>;
 
 export type ExpressAdapter = (request: {
-    // deno-lint-ignore no-explicit-any
-    body: any;
+    body: Update;
     header: (header: string) => string | undefined;
 }, response: {
-    end: () => typeof response;
-    set: (key: string, value: string) => typeof response;
+    end: (cb?: () => void) => typeof response;
+    set: (field: string, value?: string | string[]) => typeof response;
     send: (json: string) => typeof response;
     status: (code: number) => typeof response;
 }) => ReqResHandler;
 
 export type FastifyAdapter = (request: {
+    body: Update;
     // deno-lint-ignore no-explicit-any
-    body: any;
-    headers: Record<string, string>;
+    headers: any;
 }, reply: {
     status: (code: number) => typeof reply;
     headers: (headers: Record<string, string>) => typeof reply;
@@ -175,14 +169,12 @@ export type KoaAdapter = (context: {
         status: number;
     };
     request: {
-        // deno-lint-ignore no-explicit-any
-        body: any;
+        body: Update;
     };
 }) => ReqResHandler;
 
 export type NextAdapter = (request: {
-    // deno-lint-ignore no-explicit-any
-    body: any;
+    body: Update;
     headers: Record<string, string>;
 }, response: {
     end: () => void;
@@ -192,8 +184,7 @@ export type NextAdapter = (request: {
 }) => ReqResHandler;
 
 export type NHttpAdapter = (rev: {
-    // deno-lint-ignore no-explicit-any
-    body: any;
+    body: Update;
     headers: {
         get: (header: string) => string | undefined;
     };
@@ -248,7 +239,7 @@ export type WorktopAdapter = (request: {
 
 /** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
-    update: JSON.parse(event.body),
+    update: JSON.parse(event.body ?? '{}'),
     header: event.headers[SECRET_HEADER],
     end: () => callback(null, { statusCode: 200 }),
     respond: (json) =>
@@ -267,7 +258,7 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
     let resolveResponse: (response: any) => void;
 
     return {
-        update: JSON.parse(event.body),
+        update: JSON.parse(event.body ?? '{}'),
         header: event.headers[SECRET_HEADER],
         end: () => resolveResponse({ statusCode: 200 }),
         respond: (json) =>
