@@ -110,14 +110,14 @@ export type CloudflareModuleAdapter = (
     request: Request,
 ) => ReqResHandler<Promise<Response>>;
 
-export type ExpressAdapter = (request: {
+export type ExpressAdapter = (req: {
     body: Update;
     header: (header: string) => string | undefined;
-}, response: {
-    end: (cb?: () => void) => typeof response;
-    set: (field: string, value?: string | string[]) => typeof response;
-    send: (json: string) => typeof response;
-    status: (code: number) => typeof response;
+}, res: {
+    end: (cb?: () => void) => typeof res;
+    set: (field: string, value?: string | string[]) => typeof res;
+    send: (json: string) => typeof res;
+    status: (code: number) => typeof res;
 }) => ReqResHandler;
 
 export type FastifyAdapter = (request: {
@@ -134,7 +134,7 @@ export type FastifyAdapter = (request: {
     };
 }) => ReqResHandler;
 
-export type HonoAdapter = (context: {
+export type HonoAdapter = (c: {
     req: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
@@ -146,20 +146,20 @@ export type HonoAdapter = (context: {
     json: (json: string) => Response;
 }) => ReqResHandler<Promise<Response>>;
 
-export type HttpAdapter = (request: {
+export type HttpAdapter = (req: {
     headers: Record<string, string>;
-    on: (event: string, listener: (chunk: unknown) => void) => typeof request;
-    once: (event: string, listener: () => void) => typeof request;
+    on: (event: string, listener: (chunk: unknown) => void) => typeof req;
+    once: (event: string, listener: () => void) => typeof req;
     json: () => Promise<Update>;
-}, response: {
+}, res: {
     writeHead: {
-        (status: number): typeof response;
-        (status: number, headers: Record<string, string>): typeof response;
+        (status: number): typeof res;
+        (status: number, headers: Record<string, string>): typeof res;
     };
     end: (json?: string) => void;
 }) => ReqResHandler;
 
-export type KoaAdapter = (context: {
+export type KoaAdapter = (ctx: {
     get: (header: string) => string | undefined;
     set: (key: string, value: string) => void;
     body: string;
@@ -197,7 +197,7 @@ export type NHttpAdapter = (rev: {
     };
 }) => ReqResHandler;
 
-export type OakAdapter = (context: {
+export type OakAdapter = (ctx: {
     request: {
         body: {
             json: () => Promise<Update>;
@@ -219,21 +219,21 @@ export type ServeHttpAdapter = (requestEvent: {
 }) => ReqResHandler;
 
 export type StdHttpAdapter = (
-    request: Request,
+    req: Request,
 ) => ReqResHandler<Promise<unknown>>;
 
 export type SveltekitAdapter = (
     { request }: { request: Request },
 ) => ReqResHandler<Promise<unknown>>;
 
-export type WorktopAdapter = (request: {
+export type WorktopAdapter = (req: {
     body: {
         json: () => Promise<Update>;
     };
     headers: {
         get: (header: string) => string | undefined;
     };
-}, response: {
+}, res: {
     end: () => void;
     send: (status: number, json: string) => void;
 }) => ReqResHandler;
@@ -339,16 +339,16 @@ const cloudflareModule: CloudflareModuleAdapter = (request) => {
 };
 
 /** express web framework */
-const express: ExpressAdapter = (request, response) => ({
-    update: Promise.resolve(request.body),
-    header: request.header(SECRET_HEADER),
-    end: () => response.end(),
+const express: ExpressAdapter = (req, res) => ({
+    update: Promise.resolve(req.body),
+    header: req.header(SECRET_HEADER),
+    end: () => res.end(),
     respond: (json) => {
-        response.set("Content-Type", "application/json");
-        response.send(json);
+        res.set("Content-Type", "application/json");
+        res.send(json);
     },
     unauthorized: () => {
-        response.status(401).send(WRONG_TOKEN_ERROR);
+        res.status(401).send(WRONG_TOKEN_ERROR);
     },
     handlerReturn: undefined,
 });
@@ -365,20 +365,20 @@ const fastify: FastifyAdapter = (request, reply) => ({
 });
 
 /** hono web framework */
-const hono: HonoAdapter = (context) => {
+const hono: HonoAdapter = (c) => {
     let resolveResponse: (response: Response) => void;
     return {
-        update: context.req.json(),
-        header: context.req.header(SECRET_HEADER),
+        update: c.req.json(),
+        header: c.req.header(SECRET_HEADER),
         end: () => {
-            resolveResponse(context.body());
+            resolveResponse(c.body());
         },
         respond: (json) => {
-            resolveResponse(context.json(json));
+            resolveResponse(c.json(json));
         },
         unauthorized: () => {
-            context.status(401);
-            resolveResponse(context.body());
+            c.status(401);
+            resolveResponse(c.body());
         },
         handlerReturn: new Promise<Response>((resolve) => {
             resolveResponse = resolve;
@@ -387,14 +387,14 @@ const hono: HonoAdapter = (context) => {
 };
 
 /** Node.js native 'http' and 'https' modules */
-const http: HttpAdapter = (request, response) => {
-    const secretHeaderFromRequest = request.headers[SECRET_HEADER_LOWERCASE];
+const http: HttpAdapter = (req, res) => {
+    const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
     return {
         update: new Promise((resolve, reject) => {
             // deno-lint-ignore no-explicit-any
             type Chunk = any;
             const chunks: Chunk[] = [];
-            request.on("data", (chunk: Chunk) => chunks.push(chunk))
+            req.on("data", (chunk: Chunk) => chunks.push(chunk))
                 .once("end", () => {
                     // @ts-ignore `Buffer` is Node-only
                     const raw = Buffer.concat(chunks).toString("utf-8");
@@ -405,29 +405,29 @@ const http: HttpAdapter = (request, response) => {
         header: Array.isArray(secretHeaderFromRequest)
             ? secretHeaderFromRequest[0]
             : secretHeaderFromRequest,
-        end: () => response.end(),
+        end: () => res.end(),
         respond: (json) =>
-            response
+            res
                 .writeHead(200, { "Content-Type": "application/json" })
                 .end(json),
-        unauthorized: () => response.writeHead(401).end(WRONG_TOKEN_ERROR),
+        unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
         handlerReturn: undefined,
     };
 };
 
 /** koa web framework */
-const koa: KoaAdapter = (context) => ({
-    update: Promise.resolve(context.request.body),
-    header: context.get(SECRET_HEADER),
+const koa: KoaAdapter = (ctx) => ({
+    update: Promise.resolve(ctx.request.body),
+    header: ctx.get(SECRET_HEADER),
     end: () => {
-        context.body = "";
+        ctx.body = "";
     },
     respond: (json) => {
-        context.set("Content-Type", "application/json");
-        context.response.body = json;
+        ctx.set("Content-Type", "application/json");
+        ctx.response.body = json;
     },
     unauthorized: () => {
-        context.status = 401;
+        ctx.status = 401;
     },
     handlerReturn: undefined,
 });
@@ -453,18 +453,18 @@ const nhttp: NHttpAdapter = (rev) => ({
 });
 
 /** oak web framework */
-const oak: OakAdapter = (context) => ({
-    update: context.request.body.json(),
-    header: context.request.headers.get(SECRET_HEADER) || undefined,
+const oak: OakAdapter = (ctx) => ({
+    update: ctx.request.body.json(),
+    header: ctx.request.headers.get(SECRET_HEADER) || undefined,
     end: () => {
-        context.response.status = 200;
+        ctx.response.status = 200;
     },
     respond: (json) => {
-        context.response.type = "json";
-        context.response.body = json;
+        ctx.response.type = "json";
+        ctx.response.body = json;
     },
     unauthorized: () => {
-        context.response.status = 401;
+        ctx.response.status = 401;
     },
     handlerReturn: undefined,
 });
@@ -480,11 +480,11 @@ const serveHttp: ServeHttpAdapter = (requestEvent) => ({
 });
 
 /** std/http web server */
-const stdHttp: StdHttpAdapter = (request) => {
+const stdHttp: StdHttpAdapter = (req) => {
     let resolveResponse: (response: Response) => void;
     return {
-        update: request.json(),
-        header: request.headers.get(SECRET_HEADER) || undefined,
+        update: req.json(),
+        header: req.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             if (resolveResponse) resolveResponse(ok());
         },
@@ -521,12 +521,12 @@ const sveltekit: SveltekitAdapter = ({ request }) => {
     };
 };
 /** worktop CloudFlare workers framework */
-const worktop: WorktopAdapter = (request, response) => ({
-    update: Promise.resolve(request.body.json()),
-    header: request.headers.get(SECRET_HEADER),
-    end: () => response.end(),
-    respond: (json) => response.send(200, json),
-    unauthorized: () => response.send(401, WRONG_TOKEN_ERROR),
+const worktop: WorktopAdapter = (req, res) => ({
+    update: Promise.resolve(req.body.json()),
+    header: req.headers.get(SECRET_HEADER),
+    end: () => res.end(),
+    respond: (json) => res.send(200, json),
+    unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
     handlerReturn: undefined,
 });
 
