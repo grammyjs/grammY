@@ -142,12 +142,13 @@ export type FastifyAdapter = (request: {
 
 export type HonoAdapter = (context: {
     req: {
-        json: () => Promise<Update>;
+        json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
     };
-    body: () => Response;
-    status: (status: number) => void;
-    statusText: (statusText: string) => void;
+    // deno-lint-ignore no-explicit-any
+    body: (...args: any) => Response;
+    // deno-lint-ignore no-explicit-any
+    status: (status: any) => void;
     json: (json: string) => Response;
 }) => ReqResHandler<Promise<Response>>;
 
@@ -368,7 +369,7 @@ const fastify: FastifyAdapter = (request, reply) => ({
 
 /** hono web framework */
 const hono: HonoAdapter = (context) => {
-    let resolveResponse: (res: Response) => void;
+    let resolveResponse: (response: Response) => void;
     return {
         update: context.req.json(),
         header: context.req.header(SECRET_HEADER),
@@ -380,7 +381,6 @@ const hono: HonoAdapter = (context) => {
         },
         unauthorized: () => {
             context.status(401);
-            context.statusText(WRONG_TOKEN_ERROR);
             resolveResponse(context.body());
         },
         handlerReturn: new Promise<Response>((resolve) => {
