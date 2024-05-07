@@ -26,7 +26,7 @@ export type SupportedFrameworks = keyof typeof adapters;
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
  */
-export interface ReqResHandler<T> {
+export interface ReqResHandler<T = undefined> {
     /**
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
@@ -56,7 +56,7 @@ export interface ReqResHandler<T> {
      * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
      * handler returns something
      */
-    handlerReturn?: T;
+    handlerReturn: T;
 }
 
 /**
@@ -76,7 +76,7 @@ export type LambdaAdapter = (
         arg0: unknown,
         arg1: Record<string, unknown>,
     ) => Promise<unknown>,
-) => ReqResHandler<undefined>;
+) => ReqResHandler;
 
 export type LambdaAsyncAdapter = (
     event: {
@@ -104,12 +104,12 @@ export type AzureAdapter = (context: {
 }, request: {
     // deno-lint-ignore no-explicit-any
     body: any;
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type CloudflareAdapter = (event: {
     request: Request;
     respondWith: (response: Promise<Response>) => void;
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type CloudflareModuleAdapter = (
     request: Request,
@@ -124,7 +124,7 @@ export type ExpressAdapter = (request: {
     set: (key: string, value: string) => typeof response;
     send: (json: string) => typeof response;
     status: (code: number) => typeof response;
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type FastifyAdapter = (request: {
     // deno-lint-ignore no-explicit-any
@@ -138,7 +138,7 @@ export type FastifyAdapter = (request: {
         (): typeof reply;
         (json: string): typeof reply;
     };
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type HonoAdapter = (context: {
     req: {
@@ -163,7 +163,7 @@ export type HttpAdapter = (request: {
         (status: number, headers: Record<string, string>): typeof response;
     };
     end: (json?: string) => void;
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type KoaAdapter = (context: {
     get: (header: string) => string | undefined;
@@ -178,7 +178,7 @@ export type KoaAdapter = (context: {
         // deno-lint-ignore no-explicit-any
         body: any;
     };
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type NextAdapter = (request: {
     // deno-lint-ignore no-explicit-any
@@ -189,7 +189,7 @@ export type NextAdapter = (request: {
     status: (code: number) => typeof response;
     json: (json: string) => typeof response;
     send: (json: string) => typeof response;
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type NHttpAdapter = (rev: {
     // deno-lint-ignore no-explicit-any
@@ -203,7 +203,7 @@ export type NHttpAdapter = (rev: {
             send: (json: string) => void;
         };
     };
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type OakAdapter = (context: {
     request: {
@@ -219,12 +219,12 @@ export type OakAdapter = (context: {
         type: string;
         body: string;
     };
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type ServeHttpAdapter = (requestEvent: {
     request: Request;
     respondWith: (response: Response) => void;
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 export type StdHttpAdapter = (
     request: Request,
@@ -244,7 +244,7 @@ export type WorktopAdapter = (request: {
 }, response: {
     end: () => void;
     send: (status: number, json: string) => void;
-}) => ReqResHandler<undefined>;
+}) => ReqResHandler;
 
 /** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
@@ -258,6 +258,7 @@ const awsLambda: LambdaAdapter = (event, _context, callback) => ({
             body: json,
         }),
     unauthorized: () => callback(null, { statusCode: 401 }),
+    handlerReturn: undefined,
 });
 
 /** AWS lambda async/await serverless functions */
@@ -297,6 +298,7 @@ const azure: AzureAdapter = (context, request) => ({
     unauthorized: () => {
         context.res.send?.(401, WRONG_TOKEN_ERROR);
     },
+    handlerReturn: undefined,
 });
 
 /** Native CloudFlare workers (service worker) */
@@ -319,6 +321,7 @@ const cloudflare: CloudflareAdapter = (event) => {
         unauthorized: () => {
             resolveResponse(unauthorized());
         },
+        handlerReturn: undefined,
     };
 };
 
@@ -355,6 +358,7 @@ const express: ExpressAdapter = (request, response) => ({
     unauthorized: () => {
         response.status(401).send(WRONG_TOKEN_ERROR);
     },
+    handlerReturn: undefined,
 });
 
 /** fastify web framework */
@@ -365,6 +369,7 @@ const fastify: FastifyAdapter = (request, reply) => ({
     respond: (json) =>
         reply.headers({ "Content-Type": "application/json" }).send(json),
     unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
+    handlerReturn: undefined,
 });
 
 /** hono web framework */
@@ -414,6 +419,7 @@ const http: HttpAdapter = (request, response) => {
                 .writeHead(200, { "Content-Type": "application/json" })
                 .end(json),
         unauthorized: () => response.writeHead(401).end(WRONG_TOKEN_ERROR),
+        handlerReturn: undefined,
     };
 };
 
@@ -431,6 +437,7 @@ const koa: KoaAdapter = (context) => ({
     unauthorized: () => {
         context.status = 401;
     },
+    handlerReturn: undefined,
 });
 
 /** Next.js Serverless Functions */
@@ -440,6 +447,7 @@ const nextJs: NextAdapter = (request, response) => ({
     end: () => response.end(),
     respond: (json) => response.status(200).json(json),
     unauthorized: () => response.status(401).send(WRONG_TOKEN_ERROR),
+    handlerReturn: undefined,
 });
 
 /** nhttp web framework */
@@ -449,6 +457,7 @@ const nhttp: NHttpAdapter = (rev) => ({
     end: () => rev.response.sendStatus(200),
     respond: (json) => rev.response.status(200).send(json),
     unauthorized: () => rev.response.status(401).send(WRONG_TOKEN_ERROR),
+    handlerReturn: undefined,
 });
 
 /** oak web framework */
@@ -465,6 +474,7 @@ const oak: OakAdapter = (context) => ({
     unauthorized: () => {
         context.response.status = 401;
     },
+    handlerReturn: undefined,
 });
 
 /** Deno.serve */
@@ -474,6 +484,7 @@ const serveHttp: ServeHttpAdapter = (requestEvent) => ({
     end: () => requestEvent.respondWith(ok()),
     respond: (json) => requestEvent.respondWith(okJson(json)),
     unauthorized: () => requestEvent.respondWith(unauthorized()),
+    handlerReturn: undefined,
 });
 
 /** std/http web server */
@@ -525,6 +536,7 @@ const worktop: WorktopAdapter = (request, response) => ({
     end: () => response.end(),
     respond: (json) => response.send(200, json),
     unauthorized: () => response.send(401, WRONG_TOKEN_ERROR),
+    handlerReturn: undefined,
 });
 
 // Please open a pull request if you want to add another adapter
