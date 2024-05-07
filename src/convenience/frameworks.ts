@@ -184,9 +184,10 @@ export type NextAdapter = (request: {
 }) => ReqResHandler;
 
 export type NHttpAdapter = (rev: {
-    body: Update;
+    // deno-lint-ignore no-explicit-any
+    body: any;
     headers: {
-        get: (header: string) => string | undefined;
+        get: (header: string) => string | null;
     };
     response: {
         sendStatus: (status: number) => void;
@@ -202,13 +203,13 @@ export type OakAdapter = (context: {
             json: () => Promise<Update>;
         };
         headers: {
-            get: (header: string) => string | undefined;
+            get: (header: string) => string | null;
         };
     };
     response: {
         status: number;
-        type: string;
-        body: string;
+        type: string | undefined;
+        body: unknown;
     };
 }) => ReqResHandler;
 
@@ -239,7 +240,7 @@ export type WorktopAdapter = (request: {
 
 /** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
-    update: JSON.parse(event.body ?? '{}'),
+    update: JSON.parse(event.body ?? "{}"),
     header: event.headers[SECRET_HEADER],
     end: () => callback(null, { statusCode: 200 }),
     respond: (json) =>
@@ -258,7 +259,7 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
     let resolveResponse: (response: any) => void;
 
     return {
-        update: JSON.parse(event.body ?? '{}'),
+        update: JSON.parse(event.body ?? "{}"),
         header: event.headers[SECRET_HEADER],
         end: () => resolveResponse({ statusCode: 200 }),
         respond: (json) =>
@@ -443,7 +444,7 @@ const nextJs: NextAdapter = (request, response) => ({
 
 /** nhttp web framework */
 const nhttp: NHttpAdapter = (rev) => ({
-    update: rev.body,
+    update: Promise.resolve(rev.body),
     header: rev.headers.get(SECRET_HEADER) || undefined,
     end: () => rev.response.sendStatus(200),
     respond: (json) => rev.response.status(200).send(json),
