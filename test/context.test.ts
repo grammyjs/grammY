@@ -251,6 +251,17 @@ describe("Context", () => {
         assertEquals(ctx.msgId, up.message_reaction_count?.message_id);
     });
 
+    it(".chatId should aggregate chat identifiers", () => {
+        let up: Update, ctx: Context;
+
+        up = { message: update.message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chatId, up.message?.chat.id);
+        up = { business_connection: up.business_connection } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.chatId, up.business_connection?.user_chat_id);
+    });
+
     it(".inlineMessageId should aggregate inline message identifiers", () => {
         let up: Update, ctx: Context;
 

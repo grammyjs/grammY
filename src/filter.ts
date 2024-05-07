@@ -588,7 +588,9 @@ interface Shortcuts<U extends Update> {
         : [U["callback_query"]] extends [object]
             ? U["callback_query"]["message"]
         : undefined;
-    chat: [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+    chat: [U["callback_query"]] extends [object]
+        ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
+        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
         : [U["deleted_business_messages"]] extends [object]
             ? U["deleted_business_messages"]["chat"]
         : [U["message_reaction"]] extends [object]
@@ -627,17 +629,20 @@ interface Shortcuts<U extends Update> {
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
         : undefined;
-    msgId: [Shortcuts<U>["msg"]] extends [object] ? number
-        : U["message_reaction"] extends [object] ? number
-        : U["message_reaction_count"] extends [object] ? number
+    msgId: [U["callback_query"]] extends [object] ? number | undefined
+        : [Shortcuts<U>["msg"]] extends [object] ? number
+        : [U["message_reaction"]] extends [object] ? number
+        : [U["message_reaction_count"]] extends [object] ? number
+        : undefined;
+    chatId: [Shortcuts<U>["chat"]] extends [object] ? number
+        : [U["business_connection"]] extends [object] ? number
         : undefined;
     // inlineMessageId: disregarded here because always optional on both types
-    businessConnectionId: [Shortcuts<U>["msg"]] extends [object]
+    businessConnectionId: [U["callback_query"]] extends [object]
         ? string | undefined
-        : [U["business_connection"]] extends [object]
-            ? [U["business_connection"]["id"]]
-        : [U["deleted_business_messages"]] extends [object]
-            ? [U["deleted_business_messages"]["business_connection_id"]]
+        : [Shortcuts<U>["msg"]] extends [object] ? string | undefined
+        : [U["business_connection"]] extends [object] ? string
+        : [U["deleted_business_messages"]] extends [object] ? string
         : undefined;
 }
 
