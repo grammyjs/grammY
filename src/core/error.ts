@@ -1,4 +1,6 @@
 import { type ApiError, type ResponseParameters } from "../types.ts";
+import { debug as d } from "../platform.deno.ts";
+const debug = d("grammy:warn");
 
 /**
  * This class represents errors that are thrown by grammY because the Telegram
@@ -40,6 +42,18 @@ export function toGrammyError(
     method: string,
     payload: Record<string, unknown>,
 ) {
+    switch (err.error_code) {
+        case 401:
+            debug(
+                "Error 401 means that your bot token is wrong, talk to https://t.me/BotFather to check it.",
+            );
+            break;
+        case 409:
+            debug(
+                "Error 409 means that you are running your bot several times on long polling. Consider revoking the bot token if you believe that no other instance is running.",
+            );
+            break;
+    }
     return new GrammyError(
         `Call to '${method}' failed!`,
         err,
