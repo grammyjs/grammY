@@ -45,12 +45,12 @@ export function toGrammyError(
     switch (err.error_code) {
         case 401:
             debug(
-                "Error 401 means that your bot token is wrong, talk to https://t.me/BotFather to check",
+                "Error 401 means that your bot token is wrong, talk to https://t.me/BotFather to check it.",
             );
             break;
         case 409:
             debug(
-                "Error 409 means that you are running your bot twice on long polling, did you call `bot.start` or `run(bot)` several times?",
+                "Error 409 means that you are running your bot several times on long polling. Consider revoking the bot token if you believe that no other instance is running.",
             );
             break;
     }
