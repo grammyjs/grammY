@@ -441,9 +441,10 @@ a known bot info object.",
 
             // All async ops of setup complete, run callback
             await options?.onStart?.(this.botInfo);
-        } finally {
+        } catch (err) {
             this.pollingRunning = false;
             this.pollingAbortController = undefined;
+            throw err;
         }
 
         // Bot was stopped during `onStart`
