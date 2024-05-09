@@ -291,6 +291,7 @@ const COMMON_MESSAGE_KEYS = {
     delete_chat_photo: {},
     message_auto_delete_timer_changed: {},
     pinned_message: {},
+    chat_background_set: {},
     invoice: {},
     proximity_alert_triggered: {},
     video_chat_scheduled: {},
