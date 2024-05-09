@@ -9,6 +9,7 @@ import {
     type InputMediaDocument,
     type InputMediaPhoto,
     type InputMediaVideo,
+    type InputPollOption,
     type InputSticker,
     type LabeledPrice,
     type MaskPosition,
@@ -717,7 +718,7 @@ export class Api<R extends RawApi = RawApi> {
     sendPoll(
         chat_id: number | string,
         question: string,
-        options: readonly string[],
+        options: InputPollOption[],
         other?: Other<R, "sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {

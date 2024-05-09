@@ -291,6 +291,7 @@ const COMMON_MESSAGE_KEYS = {
     delete_chat_photo: {},
     message_auto_delete_timer_changed: {},
     pinned_message: {},
+    chat_background_set: {},
     invoice: {},
     proximity_alert_triggered: {},
     video_chat_scheduled: {},
@@ -717,13 +718,6 @@ type L2Equivalents = {
 type MessageEquivalents = {
     animation: "document";
     entities: "text";
-    caption: CaptionMessages;
-    caption_entities: CaptionMessages;
+    caption_entities: "caption";
+    is_topic_message: "message_thread_id";
 };
-type CaptionMessages =
-    | "animation"
-    | "audio"
-    | "document"
-    | "photo"
-    | "video"
-    | "voice";
