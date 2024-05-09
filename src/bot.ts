@@ -722,25 +722,3 @@ further middleware while your bot is running, consider installing a composer \
 instance on your bot, and in turn augment the composer after the fact. This way, \
 you can circumvent this protection against memory leaks.`);
 }
-
-const bot = new Bot("829364035:AAFASApZMhqpxqLUoN0yySOhAAFOgakr9os");
-
-bot.on("message", (ctx) => ctx.reply("asdf"));
-
-bot.start();
-bot.start();
-bot.start();
-bot.start();
-bot.start();
-bot.start();
-
-const bota = new Bot("829364035:AAFASApZMhqpxqLUoN0yySOhAAFOgakr9os");
-
-bota.on("message", (ctx) => ctx.reply("asdf"));
-
-bota.start();
-bot.start();
-bot.start();
-bot.start();
-bot.start();
-bot.start();
