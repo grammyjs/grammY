@@ -17,6 +17,7 @@ import {
     type InputMediaDocument,
     type InputMediaPhoto,
     type InputMediaVideo,
+    type InputPollOption,
     type LabeledPrice,
     type Message,
     type MessageEntity,
@@ -1331,7 +1332,7 @@ export class Context implements RenamedUpdate {
      */
     replyWithPoll(
         question: string,
-        options: readonly string[],
+        options: InputPollOption[],
         other?: Other<"sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {
