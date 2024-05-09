@@ -1268,6 +1268,24 @@
         "ideas",
         "code"
       ]
+    },
+    {
+      "login": "janek",
+      "name": "Janek Szynal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2146927?v=4",
+      "profile": "https://github.com/janek",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "mordv",
+      "name": "Alexander Mordvinov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32086218?v=4",
+      "profile": "https://github.com/mordv",
+      "contributions": [
+        "ideas"
+      ]
     }
   ]
 }
