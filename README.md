@@ -292,6 +292,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="http://www.fwqaq.us"><img src="https://avatars.githubusercontent.com/u/82551626?v=4?s=100" width="100px;" alt="fwqaaq"/><br /><sub><b>fwqaaq</b></sub></a><br /><a href="#ideas-fwqaaq" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=fwqaaq" title="Code">💻</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/janek"><img src="https://avatars.githubusercontent.com/u/2146927?v=4?s=100" width="100px;" alt="Janek Szynal"/><br /><sub><b>Janek Szynal</b></sub></a><br /><a href="#ideas-janek" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/mordv"><img src="https://avatars.githubusercontent.com/u/32086218?v=4?s=100" width="100px;" alt="Alexander Mordvinov"/><br /><sub><b>Alexander Mordvinov</b></sub></a><br /><a href="#ideas-mordv" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="http://zi.vc/"><img src="https://avatars.githubusercontent.com/u/4239224?v=4?s=100" width="100px;" alt="Ash"/><br /><sub><b>Ash</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Azivc" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
