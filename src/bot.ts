@@ -568,15 +568,8 @@ a known bot info object.",
         let sleepSeconds = 3;
         if (error instanceof GrammyError) {
             debugErr(error.message);
-            if (error.error_code === 401) {
-                debugErr(
-                    "Make sure you are using the bot token you obtained from @BotFather (https://t.me/BotFather).",
-                );
-                throw error;
-            } else if (error.error_code === 409) {
-                debugErr(
-                    "Consider revoking the bot token if you believe that no other instance is running.",
-                );
+            // rethrow upon unauthorized or conflict
+            if (error.error_code === 401 || error.error_code === 409) {
                 throw error;
             } else if (error.error_code === 429) {
                 debugErr("Bot API server is closing.");
