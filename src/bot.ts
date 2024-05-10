@@ -427,19 +427,25 @@ a known bot info object.",
             await Promise.all(setup);
             debug("Simple long polling already running!");
             return;
-        } else {
-            this.pollingRunning = true;
-            this.pollingAbortController = new AbortController();
         }
-        setup.push(withRetries(async () => {
-            await this.api.deleteWebhook({
-                drop_pending_updates: options?.drop_pending_updates,
-            }, this.pollingAbortController?.signal);
-        }, this.pollingAbortController?.signal));
-        await Promise.all(setup);
 
-        // All async ops of setup complete, run callback
-        await options?.onStart?.(this.botInfo);
+        this.pollingRunning = true;
+        this.pollingAbortController = new AbortController();
+        try {
+            setup.push(withRetries(async () => {
+                await this.api.deleteWebhook({
+                    drop_pending_updates: options?.drop_pending_updates,
+                }, this.pollingAbortController?.signal);
+            }, this.pollingAbortController?.signal));
+            await Promise.all(setup);
+
+            // All async ops of setup complete, run callback
+            await options?.onStart?.(this.botInfo);
+        } catch (err) {
+            this.pollingRunning = false;
+            this.pollingAbortController = undefined;
+            throw err;
+        }
 
         // Bot was stopped during `onStart`
         if (!this.pollingRunning) return;
