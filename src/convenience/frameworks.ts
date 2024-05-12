@@ -26,7 +26,7 @@ export type SupportedFrameworks = keyof typeof adapters;
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
  */
-export interface ReqResHandler<T = undefined> {
+export interface ReqResHandler<T = void> {
     /**
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
