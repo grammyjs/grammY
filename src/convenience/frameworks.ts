@@ -418,7 +418,7 @@ const http: HttpAdapter = (req, res) => {
 /** koa web framework */
 const koa: KoaAdapter = (ctx) => ({
     update: Promise.resolve(ctx.request.body),
-    header: ctx.get(SECRET_HEADER),
+    header: ctx.get(SECRET_HEADER) || undefined,
     end: () => {
         ctx.body = "";
     },

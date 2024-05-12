@@ -528,7 +528,7 @@ type FilteredContextCore<U extends Update> =
 // must be in sync with shortcut impl!
 interface Shortcuts<U extends Update> {
     message: [U["message"]] extends [object] ? U["message"] : undefined;
-    edited_message: [U["edited_message"]] extends [object] ? U["edited_message"]
+    editedMessage: [U["edited_message"]] extends [object] ? U["edited_message"]
         : undefined;
     channelPost: [U["channel_post"]] extends [object] ? U["channel_post"]
         : undefined;
