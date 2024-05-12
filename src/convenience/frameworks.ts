@@ -86,7 +86,9 @@ export type LambdaAsyncAdapter = (
     _context: unknown,
 ) => ReqResHandler<Promise<undefined>>;
 
-export type AzureAdapter = (context: {
+export type AzureAdapter = (request: {
+    body: Update;
+}, context: {
     res: {
         status: number;
         body: string;
@@ -97,8 +99,6 @@ export type AzureAdapter = (context: {
             (status: number, body: unknown): void;
         };
     };
-}, request: {
-    body: Update;
 }) => ReqResHandler;
 
 export type CloudflareAdapter = (event: {
@@ -121,7 +121,8 @@ export type ExpressAdapter = (req: {
 }) => ReqResHandler;
 
 export type FastifyAdapter = (request: {
-    body: Update;
+    // deno-lint-ignore no-explicit-any
+    body: any;
     // deno-lint-ignore no-explicit-any
     headers: any;
 }, reply: {
@@ -220,7 +221,7 @@ export type ServeHttpAdapter = (requestEvent: {
 
 export type StdHttpAdapter = (
     req: Request,
-) => ReqResHandler<Promise<unknown>>;
+) => ReqResHandler<Promise<Response>>;
 
 export type SveltekitAdapter = (
     { request }: { request: Request },
@@ -276,7 +277,7 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
 };
 
 /** Azure Functions */
-const azure: AzureAdapter = (context, request) => ({
+const azure: AzureAdapter = (request, context) => ({
     update: Promise.resolve(request.body),
     header: context.res.headers?.[SECRET_HEADER],
     end: () => (context.res = {
