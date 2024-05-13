@@ -56,7 +56,7 @@ export interface ReqResHandler<T = void> {
      * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
      * handler returns something
      */
-    handlerReturn: T;
+    handlerReturn?: Promise<T>;
 }
 
 /**
@@ -84,7 +84,7 @@ export type LambdaAsyncAdapter = (
         headers: Record<string, string | undefined>;
     },
     _context: unknown,
-) => ReqResHandler<Promise<undefined>>;
+) => ReqResHandler;
 
 export type AzureAdapter = (request: {
     // deno-lint-ignore no-explicit-any
@@ -109,7 +109,7 @@ export type CloudflareAdapter = (event: {
 
 export type CloudflareModuleAdapter = (
     request: Request,
-) => ReqResHandler<Promise<Response>>;
+) => ReqResHandler<Response>;
 
 export type ExpressAdapter = (req: {
     body: Update;
@@ -146,7 +146,7 @@ export type HonoAdapter = (c: {
     // deno-lint-ignore no-explicit-any
     status: (status: any) => void;
     json: (json: string) => Response;
-}) => ReqResHandler<Promise<Response>>;
+}) => ReqResHandler<Response>;
 
 export type HttpAdapter = (req: {
     headers: NodeJS.Dict<string | string[]>;
@@ -222,11 +222,11 @@ export type ServeHttpAdapter = (
 
 export type StdHttpAdapter = (
     req: Request,
-) => ReqResHandler<Promise<Response>>;
+) => ReqResHandler<Response>;
 
 export type SveltekitAdapter = (
     { request }: { request: Request },
-) => ReqResHandler<Promise<unknown>>;
+) => ReqResHandler<unknown>;
 
 export type WorktopAdapter = (req: {
     json: () => Promise<Update>;
@@ -250,7 +250,6 @@ const awsLambda: LambdaAdapter = (event, _context, callback) => ({
             body: json,
         }),
     unauthorized: () => callback(null, { statusCode: 401 }),
-    handlerReturn: undefined,
 });
 
 /** AWS lambda async/await serverless functions */
@@ -290,7 +289,6 @@ const azure: AzureAdapter = (request, context) => ({
     unauthorized: () => {
         context.res?.send?.(401, WRONG_TOKEN_ERROR);
     },
-    handlerReturn: undefined,
 });
 
 /** Native CloudFlare workers (service worker) */
@@ -313,7 +311,6 @@ const cloudflare: CloudflareAdapter = (event) => {
         unauthorized: () => {
             resolveResponse(unauthorized());
         },
-        handlerReturn: undefined,
     };
 };
 
@@ -350,7 +347,6 @@ const express: ExpressAdapter = (req, res) => ({
     unauthorized: () => {
         res.status(401).send(WRONG_TOKEN_ERROR);
     },
-    handlerReturn: undefined,
 });
 
 /** fastify web framework */
@@ -361,7 +357,6 @@ const fastify: FastifyAdapter = (request, reply) => ({
     respond: (json) =>
         reply.headers({ "Content-Type": "application/json" }).send(json),
     unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
-    handlerReturn: undefined,
 });
 
 /** hono web framework */
@@ -411,7 +406,6 @@ const http: HttpAdapter = (req, res) => {
                 .writeHead(200, { "Content-Type": "application/json" })
                 .end(json),
         unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
-        handlerReturn: undefined,
     };
 };
 
@@ -429,7 +423,6 @@ const koa: KoaAdapter = (ctx) => ({
     unauthorized: () => {
         ctx.status = 401;
     },
-    handlerReturn: undefined,
 });
 
 /** Next.js Serverless Functions */
@@ -439,7 +432,6 @@ const nextJs: NextAdapter = (request, response) => ({
     end: () => response.end(),
     respond: (json) => response.status(200).json(json),
     unauthorized: () => response.status(401).send(WRONG_TOKEN_ERROR),
-    handlerReturn: undefined,
 });
 
 /** nhttp web framework */
@@ -449,7 +441,6 @@ const nhttp: NHttpAdapter = (rev) => ({
     end: () => rev.response.sendStatus(200),
     respond: (json) => rev.response.status(200).send(json),
     unauthorized: () => rev.response.status(401).send(WRONG_TOKEN_ERROR),
-    handlerReturn: undefined,
 });
 
 /** oak web framework */
@@ -466,7 +457,6 @@ const oak: OakAdapter = (ctx) => ({
     unauthorized: () => {
         ctx.response.status = 401;
     },
-    handlerReturn: undefined,
 });
 
 /** Deno.serve */
@@ -476,7 +466,6 @@ const serveHttp: ServeHttpAdapter = (requestEvent) => ({
     end: () => requestEvent.respondWith(ok()),
     respond: (json) => requestEvent.respondWith(okJson(json)),
     unauthorized: () => requestEvent.respondWith(unauthorized()),
-    handlerReturn: undefined,
 });
 
 /** std/http web server */
@@ -527,7 +516,6 @@ const worktop: WorktopAdapter = (req, res) => ({
     end: () => res.end(null),
     respond: (json) => res.send(200, json),
     unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
-    handlerReturn: undefined,
 });
 
 // Please open a pull request if you want to add another adapter

@@ -60,13 +60,11 @@ export function webhookCallback<C extends Context = Context>(
     timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
     secretToken?: WebhookOptions["secretToken"],
 ): (...args: any[]) => any;
-
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter?: FrameworkAdapter,
     webhookOptions?: WebhookOptions,
 ): (...args: any[]) => any;
-
 export function webhookCallback<
     C extends Context = Context,
     A extends keyof typeof nativeAdapters = keyof typeof nativeAdapters,
@@ -76,8 +74,9 @@ export function webhookCallback<
     webhookOptions?: WebhookOptions,
 ): (
     ...args: Parameters<typeof nativeAdapters[A]>
-) => ReturnType<typeof nativeAdapters[A]>["handlerReturn"];
-
+) => ReturnType<typeof nativeAdapters[A]>["handlerReturn"] extends undefined
+    ? Promise<void>
+    : NonNullable<ReturnType<typeof nativeAdapters[A]>["handlerReturn"]>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
     adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
