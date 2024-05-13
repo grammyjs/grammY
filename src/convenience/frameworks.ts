@@ -169,9 +169,6 @@ export type KoaAdapter = (ctx: {
         body: unknown;
         status: number;
     };
-    request: {
-        body: Update;
-    };
 }) => ReqResHandler;
 
 export type NextAdapter = (request: {
@@ -418,7 +415,7 @@ const http: HttpAdapter = (req, res) => {
 
 /** koa web framework */
 const koa: KoaAdapter = (ctx) => ({
-    update: Promise.resolve(ctx.request.body),
+    update: Promise.resolve(JSON.parse(ctx.body)),
     header: ctx.get(SECRET_HEADER) || undefined,
     end: () => {
         ctx.body = "";

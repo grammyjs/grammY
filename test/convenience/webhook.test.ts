@@ -1,12 +1,19 @@
+/// <reference types="npm:@types/node" />
+
 import { Hono } from "https://deno.land/x/hono/mod.ts";
 import type {
     APIGatewayProxyEventV2,
     Context as LambdaContext,
 } from "https://deno.land/x/lambda/mod.ts";
 import { HttpRequest, InvocationContext } from "npm:@azure/functions";
-import express from "npm:express";
+
+// @deno-types="npm:@types/express@^4.17"
+import express from "npm:express@^4.17";
+// @deno-types="npm:@types/koa@^2.15"
+import Koa from "npm:koa@^2.15";
+
 import Fastify from "npm:fastify";
-import Koa from "npm:koa";
+
 import { Bot, webhookCallback } from "../../src/mod.ts";
 import { describe, it } from "../deps.test.ts";
 
@@ -54,6 +61,7 @@ describe("webhook", () => {
 
     it("Koa should be compatible with grammY adapter", () => {
         new Koa().use((ctx) => {
+            ctx.body;
             return webhookCallback(new Bot(""), "koa")(ctx);
         });
     });
