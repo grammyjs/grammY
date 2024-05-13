@@ -5,17 +5,15 @@ import type {
     APIGatewayProxyEventV2,
     Context as LambdaContext,
 } from "https://deno.land/x/lambda/mod.ts";
-import { HttpRequest, InvocationContext } from "npm:@azure/functions";
+import { createServer } from "node:http";
+import Fastify from "npm:fastify";
+import { Bot, webhookCallback } from "../../src/mod.ts";
+import { describe, it } from "../deps.test.ts";
 
 // @deno-types="npm:@types/express@^4.17"
 import express from "npm:express@^4.17";
 // @deno-types="npm:@types/koa@^2.15"
 import Koa from "npm:koa@^2.15";
-
-import Fastify from "npm:fastify";
-
-import { Bot, webhookCallback } from "../../src/mod.ts";
-import { describe, it } from "../deps.test.ts";
 
 describe("webhook", () => {
     it("AWS Lambda should be compatible with grammY adapter", () => {
@@ -27,15 +25,6 @@ describe("webhook", () => {
                 event,
                 context,
             );
-        });
-    });
-
-    it("Azure Functions should be compatible with grammY adapter", () => {
-        ((
-            request: HttpRequest,
-            context: InvocationContext,
-        ) => {
-            return webhookCallback(new Bot(""), "azure")(request, context);
         });
     });
 
@@ -59,16 +48,21 @@ describe("webhook", () => {
         });
     });
 
-    it("Koa should be compatible with grammY adapter", () => {
-        new Koa().use((ctx) => {
-            ctx.body;
-            return webhookCallback(new Bot(""), "koa")(ctx);
-        });
-    });
-
     it("Hono should be compatible with grammY adapter", () => {
         new Hono().post("/", (c) => {
             return webhookCallback(new Bot(""), "hono")(c);
+        });
+    });
+
+    it("http/https should be compatible with grammY adapter", () => {
+        createServer((req, res) => {
+            return webhookCallback(new Bot(""), "http")(req, res);
+        });
+    });
+
+    it("Koa should be compatible with grammY adapter", () => {
+        new Koa().use((ctx) => {
+            return webhookCallback(new Bot(""), "koa")(ctx);
         });
     });
 

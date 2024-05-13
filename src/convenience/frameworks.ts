@@ -87,9 +87,10 @@ export type LambdaAsyncAdapter = (
 ) => ReqResHandler<Promise<undefined>>;
 
 export type AzureAdapter = (request: {
-    body: Update;
+    // deno-lint-ignore no-explicit-any
+    body?: any;
 }, context: {
-    res: {
+    res?: {
         status: number;
         body: string;
         headers?: Record<string, string>;
@@ -148,10 +149,9 @@ export type HonoAdapter = (c: {
 }) => ReqResHandler<Promise<Response>>;
 
 export type HttpAdapter = (req: {
-    headers: Record<string, string>;
+    headers: NodeJS.Dict<string | string[]>;
     on: (event: string, listener: (chunk: unknown) => void) => typeof req;
     once: (event: string, listener: () => void) => typeof req;
-    json: () => Promise<Update>;
 }, res: {
     writeHead: {
         (status: number): typeof res;
@@ -276,17 +276,17 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
 /** Azure Functions */
 const azure: AzureAdapter = (request, context) => ({
     update: Promise.resolve(request.body),
-    header: context.res.headers?.[SECRET_HEADER],
+    header: context.res?.headers?.[SECRET_HEADER],
     end: () => (context.res = {
         status: 200,
         body: "",
     }),
     respond: (json) => {
-        context.res.set?.("Content-Type", "application/json");
-        context.res.send?.(json);
+        context.res?.set?.("Content-Type", "application/json");
+        context.res?.send?.(json);
     },
     unauthorized: () => {
-        context.res.send?.(401, WRONG_TOKEN_ERROR);
+        context.res?.send?.(401, WRONG_TOKEN_ERROR);
     },
     handlerReturn: undefined,
 });
