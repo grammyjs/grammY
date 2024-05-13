@@ -5,8 +5,11 @@ import type {
     APIGatewayProxyEventV2,
     Context as LambdaContext,
 } from "https://deno.land/x/lambda/mod.ts";
+import nhttp from "https://deno.land/x/nhttp/mod.ts";
+import { Application } from "https://deno.land/x/oak/mod.ts";
 import { createServer } from "node:http";
 import Fastify from "npm:fastify";
+import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, webhookCallback } from "../../src/mod.ts";
 import { describe, it } from "../deps.test.ts";
 
@@ -64,6 +67,44 @@ describe("webhook", () => {
         new Koa().use((ctx) => {
             return webhookCallback(new Bot(""), "koa")(ctx);
         });
+    });
+
+    it("Next serverless functions should be compatible with grammY adapter", () => {
+        ((
+            req: NextApiRequest,
+            res: NextApiResponse,
+        ) => {
+            return webhookCallback(new Bot(""), "next-js")(req, res);
+        });
+    });
+
+    it("NHttp should be compatible with grammY adapter", () => {
+        nhttp().post("/", (rev) => {
+            return webhookCallback(new Bot(""), "nhttp")(rev);
+        });
+    });
+
+    it("Oak should be compatible with grammY adapter", () => {
+        new Application().use((ctx) => {
+            return webhookCallback(new Bot(""), "oak")(ctx);
+        });
+    });
+
+    it("serveHttp should be compatible with grammY adapter", async () => {
+        try {
+            Deno.serveHttp(await Deno.listen({ port: 8080 }).accept())
+                .nextRequest()
+                .then(
+                    (req) => {
+                        return !req
+                            ? undefined
+                            : webhookCallback(new Bot(""), "serveHttp")(req);
+                    },
+                );
+        } catch (error) {
+            if (error instanceof Deno.errors.PermissionDenied) return;
+            throw error;
+        }
     });
 
     it("std/http should be compatible with grammY adapter", () => {

@@ -171,14 +171,16 @@ export type KoaAdapter = (ctx: {
     };
 }) => ReqResHandler;
 
-export type NextAdapter = (request: {
+export type NextAdapter = (req: {
     body: Update;
-    headers: Record<string, string>;
-}, response: {
-    end: () => void;
-    status: (code: number) => typeof response;
-    json: (json: string) => typeof response;
-    send: (json: string) => typeof response;
+    headers: NodeJS.Dict<string | string[]>;
+}, res: {
+    end: (cb?: () => void) => typeof res;
+    status: (code: number) => typeof res;
+    // deno-lint-ignore no-explicit-any
+    json: (json: string) => any;
+    // deno-lint-ignore no-explicit-any
+    send: (json: string) => any;
 }) => ReqResHandler;
 
 export type NHttpAdapter = (rev: {
@@ -211,10 +213,12 @@ export type OakAdapter = (ctx: {
     };
 }) => ReqResHandler;
 
-export type ServeHttpAdapter = (requestEvent: {
-    request: Request;
-    respondWith: (response: Response) => void;
-}) => ReqResHandler;
+export type ServeHttpAdapter = (
+    requestEvent: {
+        request: Request;
+        respondWith: (response: Response) => void;
+    },
+) => ReqResHandler;
 
 export type StdHttpAdapter = (
     req: Request,
@@ -225,14 +229,12 @@ export type SveltekitAdapter = (
 ) => ReqResHandler<Promise<unknown>>;
 
 export type WorktopAdapter = (req: {
-    body: {
-        json: () => Promise<Update>;
-    };
+    json: () => Promise<Update>;
     headers: {
-        get: (header: string) => string | undefined;
+        get: (header: string) => string | null;
     };
 }, res: {
-    end: () => void;
+    end: (data: BodyInit | null) => void;
     send: (status: number, json: string) => void;
 }) => ReqResHandler;
 
@@ -433,7 +435,7 @@ const koa: KoaAdapter = (ctx) => ({
 /** Next.js Serverless Functions */
 const nextJs: NextAdapter = (request, response) => ({
     update: Promise.resolve(request.body),
-    header: request.headers[SECRET_HEADER_LOWERCASE],
+    header: request.headers[SECRET_HEADER_LOWERCASE] as string,
     end: () => response.end(),
     respond: (json) => response.status(200).json(json),
     unauthorized: () => response.status(401).send(WRONG_TOKEN_ERROR),
@@ -518,11 +520,11 @@ const sveltekit: SveltekitAdapter = ({ request }) => {
         }),
     };
 };
-/** worktop CloudFlare workers framework */
+/** worktop Cloudflare workers framework */
 const worktop: WorktopAdapter = (req, res) => ({
-    update: Promise.resolve(req.body.json()),
-    header: req.headers.get(SECRET_HEADER),
-    end: () => res.end(),
+    update: Promise.resolve(req.json()),
+    header: req.headers.get(SECRET_HEADER) ?? undefined,
+    end: () => res.end(null),
     respond: (json) => res.send(200, json),
     unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
     handlerReturn: undefined,
