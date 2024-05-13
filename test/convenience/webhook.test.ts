@@ -1,5 +1,3 @@
-/// <reference types="npm:@types/node" />
-
 import type { Hono } from "https://deno.land/x/hono/mod.ts";
 import type {
     APIGatewayProxyEventV2,
@@ -13,7 +11,7 @@ import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, webhookCallback } from "../../src/mod.ts";
 import { describe, it } from "../deps.test.ts";
 
-import { type Express } from "npm:@types/express@^4.17";
+import type { Express } from "npm:@types/express@^4.17";
 import type Koa from "npm:@types/koa@^2.15";
 import type { UserFromGetMe } from "../../src/types.ts";
 
