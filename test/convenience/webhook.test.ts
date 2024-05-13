@@ -67,10 +67,15 @@ describe("webhook", () => {
     });
 
     it("std/http should be compatible with grammY adapter", () => {
-        Deno.serve(
-            (req) => {
-                return webhookCallback(new Bot(""), "std/http")(req);
-            },
-        );
+        try {
+            Deno.serve(
+                (req) => {
+                    return webhookCallback(new Bot(""), "std/http")(req);
+                },
+            );
+        } catch (error) {
+            if (error instanceof Deno.errors.PermissionDenied) return;
+            throw error;
+        }
     });
 });

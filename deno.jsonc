@@ -3,7 +3,7 @@
     "tasks": {
         "check": "deno cache --check=all src/mod.ts",
         "backport": "deno run --no-prompt --allow-read=. --allow-write=. https://deno.land/x/deno2node@v1.9.0/src/cli.ts tsconfig.json",
-        "test": "deno test --seed=123456 --parallel ./test/",
+        "test": "deno test --allow-read --allow-env --allow-sys --seed=123456 --parallel ./test/",
         "dev": "deno fmt && deno lint && deno task test && deno task check",
         "coverage": "rm -rf ./test/cov_profile && deno task test --coverage=./test/cov_profile && deno coverage --lcov --output=./coverage.lcov ./test/cov_profile",
         "report": "genhtml ./coverage.lcov --output-directory ./test/coverage/ && echo 'Point your browser to test/coverage/index.html to see the test coverage report.'",
