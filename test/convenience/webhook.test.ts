@@ -92,6 +92,7 @@ describe("webhook", () => {
 
     it("serveHttp should be compatible with grammY adapter", async () => {
         try {
+            // deno-lint-ignore no-deprecated-deno-api
             Deno.serveHttp(await Deno.listen({ port: 8080 }).accept())
                 .nextRequest()
                 .then(
