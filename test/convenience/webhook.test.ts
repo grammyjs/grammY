@@ -73,8 +73,10 @@ describe("webhook", () => {
 
     it("Koa should be compatible with grammY adapter", () => {
         const app = { use: () => {} } as unknown as Koa;
+        const parser = (() => {}) as unknown as typeof bodyParser;
         const handler = webhookCallback(bot, "koa");
-        app.use(bodyParser()).use((ctx) => {
+        app.use(parser());
+        app.use((ctx) => {
             return handler(ctx);
         });
     });
