@@ -17,12 +17,6 @@ const unauthorized = () =>
     });
 
 /**
- * HTTP Web frameworks for which grammY provides compatible callback out of the
- * box.
- */
-export type SupportedFrameworks = keyof typeof adapters;
-
-/**
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
  */

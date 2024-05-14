@@ -7,7 +7,6 @@ import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
     type FrameworkAdapter,
-    type SupportedFrameworks,
 } from "./frameworks.ts";
 const debugErr = d("grammy:error");
 
@@ -78,7 +77,7 @@ export function webhookCallback<
     : NonNullable<ReturnType<typeof nativeAdapters[A]>["handlerReturn"]>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
+    adapter: keyof typeof nativeAdapters | FrameworkAdapter = defaultAdapter,
     onTimeout:
         | WebhookOptions
         | WebhookOptions["onTimeout"] = "throw",
