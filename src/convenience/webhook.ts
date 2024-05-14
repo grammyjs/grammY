@@ -21,7 +21,6 @@ const callbackAdapter: FrameworkAdapter = (
     respond: callback,
     header,
     unauthorized,
-    handlerReturn: undefined,
 });
 const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
