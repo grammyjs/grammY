@@ -1,3 +1,5 @@
+/// <reference types="npm:@types/node" />
+
 import type { Hono } from "https://deno.land/x/hono/mod.ts";
 import type {
     APIGatewayProxyEventV2,
@@ -38,31 +40,41 @@ describe("webhook", () => {
     it("Express should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as Express;
         const handler = webhookCallback(bot, "express");
-        app.post("/", (req, res) => handler(req, res));
+        app.post("/", (req, res) => {
+            return handler(req, res);
+        });
     });
 
     it("Fastify should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as FastifyInstance;
         const handler = webhookCallback(bot, "fastify");
-        app.post("/", (request, reply) => handler(request, reply));
+        app.post("/", (request, reply) => {
+            return handler(request, reply);
+        });
     });
 
     it("Hono should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as Hono;
         const handler = webhookCallback(bot, "hono");
-        app.post("/", (c) => handler(c));
+        app.post("/", (c) => {
+            return handler(c);
+        });
     });
 
     it("http/https should be compatible with grammY adapter", () => {
         const create = (() => {}) as unknown as typeof createServer;
         const handler = webhookCallback(bot, "http");
-        create((req, res) => handler(req, res));
+        create((req, res) => {
+            return handler(req, res);
+        });
     });
 
     it("Koa should be compatible with grammY adapter", () => {
         const app = { use: () => {} } as unknown as Koa;
         const handler = webhookCallback(bot, "koa");
-        app.use((ctx) => handler(ctx));
+        app.use((ctx) => {
+            return handler(ctx);
+        });
     });
 
     it("Next serverless functions should be compatible with grammY adapter", async () => {
@@ -78,13 +90,17 @@ describe("webhook", () => {
     it("NHttp should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as NHttp;
         const handler = webhookCallback(bot, "nhttp");
-        app.post("/", (rev) => handler(rev));
+        app.post("/", (rev) => {
+            return handler(rev);
+        });
     });
 
     it("Oak should be compatible with grammY adapter", () => {
         const app = { use: () => {} } as unknown as Application;
         const handler = webhookCallback(bot, "oak");
-        app.use((ctx) => handler(ctx));
+        app.use((ctx) => {
+            return handler(ctx);
+        });
     });
 
     it("serveHttp should be compatible with grammY adapter", async () => {
@@ -102,6 +118,8 @@ describe("webhook", () => {
     it("std/http should be compatible with grammY adapter", () => {
         const serve = (() => {}) as unknown as typeof Deno.serve;
         const handler = webhookCallback(bot, "std/http");
-        serve((req) => handler(req));
+        serve((req) => {
+            return handler(req);
+        });
     });
 });
