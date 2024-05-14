@@ -8,16 +8,14 @@ import type {
 import type { NHttp } from "https://deno.land/x/nhttp/mod.ts";
 import type { Application } from "https://deno.land/x/oak/mod.ts";
 import type { createServer } from "node:http";
+import type { Express } from "npm:@types/express@^4.17";
+import type bodyParser from "npm:@types/koa-bodyparser@^4.3.12";
+import type Koa from "npm:@types/koa@^2.15";
 import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, webhookCallback } from "../../src/mod.ts";
-import { describe, it } from "../deps.test.ts";
-
-import type { Express } from "npm:@types/express@^4.17";
-import type Koa from "npm:@types/koa@^2.15";
-// @deno-types="npm:@types/koa-bodyparser@^4.3.12"
-import bodyParser from "npm:koa-bodyparser@^4.3.12";
 import type { UserFromGetMe } from "../../src/types.ts";
+import { describe, it } from "../deps.test.ts";
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { botInfo: {} as unknown as UserFromGetMe });
