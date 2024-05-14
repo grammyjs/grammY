@@ -31,7 +31,8 @@ const ALL_CHAT_PERMISSIONS = {
 export interface ApiConstants {
     /**
      * List of update types a bot receives by default. Useful if you want to
-     * receive all update types but `chat_member`.
+     * receive all update types but `chat_member`, `message_reaction`, and
+     * `message_reaction_count`.
      *
      * ```ts
      * // Built-in polling:
@@ -52,8 +53,9 @@ export interface ApiConstants {
      * updates from the Bot API, rather than just those that are delivered by
      * default.
      *
-     * The main use case for this is when you want to receive `chat_member`
-     * updates, as they need to be enabled first. Use it like so:
+     * The main use case for this is when you want to receive `chat_member`,
+     * `message_reaction`, and `message_reaction_count` updates, as they need to
+     * be enabled first. Use it like so:
      *
      * ```ts
      * // Built-in polling:
