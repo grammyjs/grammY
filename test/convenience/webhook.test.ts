@@ -15,6 +15,8 @@ import { describe, it } from "../deps.test.ts";
 
 import type { Express } from "npm:@types/express@^4.17";
 import type Koa from "npm:@types/koa@^2.15";
+// @deno-types="npm:@types/koa-bodyparser@^4.3.12"
+import bodyParser from "npm:koa-bodyparser";
 import type { UserFromGetMe } from "../../src/types.ts";
 
 describe("webhook", () => {
@@ -72,7 +74,7 @@ describe("webhook", () => {
     it("Koa should be compatible with grammY adapter", () => {
         const app = { use: () => {} } as unknown as Koa;
         const handler = webhookCallback(bot, "koa");
-        app.use((ctx) => {
+        app.use(bodyParser()).use((ctx) => {
             return handler(ctx);
         });
     });

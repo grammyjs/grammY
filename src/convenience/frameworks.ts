@@ -81,8 +81,7 @@ export type LambdaAsyncAdapter = (
 ) => ReqResHandler;
 
 export type AzureAdapter = (request: {
-    // deno-lint-ignore no-explicit-any
-    body?: any;
+    body?: unknown;
 }, context: {
     res?: {
         status: number;
@@ -116,8 +115,7 @@ export type ExpressAdapter = (req: {
 }) => ReqResHandler;
 
 export type FastifyAdapter = (request: {
-    // deno-lint-ignore no-explicit-any
-    body: any;
+    body: unknown;
     // deno-lint-ignore no-explicit-any
     headers: any;
 }, reply: {
@@ -135,8 +133,12 @@ export type HonoAdapter = (c: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
     };
-    // deno-lint-ignore no-explicit-any
-    body: (...args: any) => Response;
+    body: (
+        data: string | ArrayBuffer | ReadableStream | null,
+        // deno-lint-ignore no-explicit-any
+        arg?: any,
+        headers?: Record<string, string | string[]>,
+    ) => Response;
     // deno-lint-ignore no-explicit-any
     status: (status: any) => void;
     json: (json: string) => Response;
@@ -157,8 +159,11 @@ export type HttpAdapter = (req: {
 export type KoaAdapter = (ctx: {
     get: (header: string) => string | undefined;
     set: (key: string, value: string) => void;
-    body: string;
     status: number;
+    body: string;
+    request: {
+        body?: unknown;
+    };
     response: {
         body: unknown;
         status: number;
@@ -178,8 +183,7 @@ export type NextAdapter = (req: {
 }) => ReqResHandler;
 
 export type NHttpAdapter = (rev: {
-    // deno-lint-ignore no-explicit-any
-    body: any;
+    body: unknown;
     headers: {
         get: (header: string) => string | null;
     };
@@ -270,7 +274,7 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
 
 /** Azure Functions */
 const azure: AzureAdapter = (request, context) => ({
-    update: Promise.resolve(request.body),
+    update: Promise.resolve(request.body as Update),
     header: context.res?.headers?.[SECRET_HEADER],
     end: () => (context.res = {
         status: 200,
@@ -345,7 +349,7 @@ const express: ExpressAdapter = (req, res) => ({
 
 /** fastify web framework */
 const fastify: FastifyAdapter = (request, reply) => ({
-    update: Promise.resolve(request.body),
+    update: Promise.resolve(request.body as Update),
     header: request.headers[SECRET_HEADER_LOWERCASE],
     end: () => reply.status(200).send(),
     respond: (json) =>
@@ -360,14 +364,14 @@ const hono: HonoAdapter = (c) => {
         update: c.req.json(),
         header: c.req.header(SECRET_HEADER),
         end: () => {
-            resolveResponse(c.body());
+            resolveResponse(c.body(null));
         },
         respond: (json) => {
             resolveResponse(c.json(json));
         },
         unauthorized: () => {
             c.status(401);
-            resolveResponse(c.body());
+            resolveResponse(c.body(null));
         },
         handlerReturn: new Promise<Response>((resolve) => {
             resolveResponse = resolve;
@@ -405,7 +409,7 @@ const http: HttpAdapter = (req, res) => {
 
 /** koa web framework */
 const koa: KoaAdapter = (ctx) => ({
-    update: Promise.resolve(JSON.parse(ctx.body)),
+    update: Promise.resolve(ctx.request.body as Update),
     header: ctx.get(SECRET_HEADER) || undefined,
     end: () => {
         ctx.body = "";
@@ -430,7 +434,7 @@ const nextJs: NextAdapter = (request, response) => ({
 
 /** nhttp web framework */
 const nhttp: NHttpAdapter = (rev) => ({
-    update: Promise.resolve(rev.body),
+    update: Promise.resolve(rev.body as Update),
     header: rev.headers.get(SECRET_HEADER) || undefined,
     end: () => rev.response.sendStatus(200),
     respond: (json) => rev.response.status(200).send(json),
