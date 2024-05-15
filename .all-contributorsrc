@@ -1295,6 +1295,18 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "winstxnhdw",
+      "name": "Winston H.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56998716?v=4",
+      "profile": "https://github.com/winstxnhdw",
+      "contributions": [
+        "ideas",
+        "code",
+        "review",
+        "test"
+      ]
     }
   ]
 }
