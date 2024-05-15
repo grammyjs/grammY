@@ -7,7 +7,6 @@ import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
     type FrameworkAdapter,
-    type SupportedFrameworks,
 } from "./frameworks.ts";
 const debugErr = d("grammy:error");
 
@@ -54,19 +53,31 @@ export interface WebhookOptions {
  */
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter?: SupportedFrameworks | FrameworkAdapter,
+    adapter?: FrameworkAdapter,
     onTimeout?: WebhookOptions["onTimeout"],
     timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
     secretToken?: WebhookOptions["secretToken"],
 ): (...args: any[]) => any;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter?: SupportedFrameworks | FrameworkAdapter,
+    adapter?: FrameworkAdapter,
     webhookOptions?: WebhookOptions,
 ): (...args: any[]) => any;
+export function webhookCallback<
+    C extends Context = Context,
+    A extends keyof typeof nativeAdapters = keyof typeof nativeAdapters,
+>(
+    bot: Bot<C>,
+    adapter: A,
+    webhookOptions?: WebhookOptions,
+): (
+    ...args: Parameters<typeof nativeAdapters[A]>
+) => ReturnType<typeof nativeAdapters[A]>["handlerReturn"] extends undefined
+    ? Promise<void>
+    : NonNullable<ReturnType<typeof nativeAdapters[A]>["handlerReturn"]>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter: SupportedFrameworks | FrameworkAdapter = defaultAdapter,
+    adapter: keyof typeof nativeAdapters | FrameworkAdapter = defaultAdapter,
     onTimeout:
         | WebhookOptions
         | WebhookOptions["onTimeout"] = "throw",
