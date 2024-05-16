@@ -28,6 +28,16 @@ describe("webhook", () => {
             ));
     });
 
+    it("Bun.serve should be compatible with grammY adapter", () => {
+        const handler = webhookCallback(bot, "bun");
+        const serve = (() => {});
+        serve({
+            fetch: (request) => {
+                return handler(request);
+            },
+        });
+    });
+
     it("Cloudflare Workers should be compatible with grammY adapter", async () => {
         const req = {
             json: () => ({}),
