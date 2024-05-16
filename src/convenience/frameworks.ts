@@ -95,6 +95,11 @@ export type AzureAdapter = (request: {
     };
 }) => ReqResHandler;
 
+export type BunAdapter = (request: {
+    headers: Headers;
+    json: () => Promise<Update>;
+}) => ReqResHandler<Response>;
+
 export type CloudflareAdapter = (event: {
     request: Request;
     respondWith: (response: Promise<Response>) => void;
@@ -288,6 +293,24 @@ const azure: AzureAdapter = (request, context) => ({
         context.res?.send?.(401, WRONG_TOKEN_ERROR);
     },
 });
+
+/** Bun.Serve */
+const bun: BunAdapter = (request) => {
+    let resolveResponse: (response: Response) => void;
+    return {
+        update: request.json(),
+        header: request.headers.get(SECRET_HEADER) || undefined,
+        end: () => {
+            resolveResponse(ok());
+        },
+        respond: (json) => {
+            resolveResponse(okJson(json));
+        },
+        unauthorized: () => {
+            resolveResponse(unauthorized());
+        },
+    };
+};
 
 /** Native CloudFlare workers (service worker) */
 const cloudflare: CloudflareAdapter = (event) => {
@@ -521,6 +544,7 @@ export const adapters = {
     "aws-lambda": awsLambda,
     "aws-lambda-async": awsLambdaAsync,
     azure,
+    bun,
     cloudflare,
     "cloudflare-mod": cloudflareModule,
     express,
