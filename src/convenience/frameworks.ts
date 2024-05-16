@@ -294,7 +294,7 @@ const azure: AzureAdapter = (request, context) => ({
     },
 });
 
-/** Bun.Serve */
+/** Bun.serve */
 const bun: BunAdapter = (request) => {
     let resolveResponse: (response: Response) => void;
     return {
