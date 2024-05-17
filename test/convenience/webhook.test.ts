@@ -1,4 +1,5 @@
 /// <reference types="npm:@types/node" />
+/// <reference types="npm:bun-types" />
 
 import type { Hono } from "https://deno.land/x/hono/mod.ts";
 import type {
@@ -30,7 +31,7 @@ describe("webhook", () => {
 
     it("Bun.serve should be compatible with grammY adapter", () => {
         const handler = webhookCallback(bot, "bun");
-        const serve = (() => {});
+        const serve = (() => {}) as unknown as typeof Bun.serve;
         serve({
             fetch: (request) => {
                 return handler(request);
