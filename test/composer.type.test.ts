@@ -96,41 +96,34 @@ describe("Composer types", () => {
         });
     });
 
-    // TODO the rest someone plz help
-    /*
     describe(".command", () => {
-        const c = new Context(
-            {
-                message: {
-                    text: "/start",
-                    entities: [{ type: "bot_command", offset: 0, length: 6 }],
-                },
-                // deno-lint-ignore no-explicit-any
-            } as any,
-            // deno-lint-ignore no-explicit-any
-            0 as any,
-            // deno-lint-ignore no-explicit-any
-            0 as any,
-        );
-        it("should check for commands", async () => {
-            composer.command("start", middleware);
-            await exec(c);
-            assertEquals(middleware.calls.length, 1);
-            assertEquals(middleware.calls[0].args[0], c);
-        });
-        it("should allow chaining commands", async () => {
-            composer.command(["help"])
-                .command(["start", "settings"], middleware); // nope
-            composer.command(["help", "start"])
-                .command(["settings"], middleware); // nope
-            composer.command(["help", "start"])
-                .command(["start", "settings"], middleware);
-            await exec(c);
-            assertEquals(middleware.calls.length, 1);
-            assertEquals(middleware.calls[0].args[0], c);
+        it("should have correct type for properties", () => {
+            composer.command("test", (ctx) => {
+                const msgText = ctx.msg.text;
+                const messageCaption = ctx.message?.caption;
+                const messageText = ctx.message?.text;
+                const channelPostCaption = ctx.channelPost?.caption;
+                const channelPostText = ctx.channelPost?.text;
+                const match = ctx.match;
+                assertType<IsExact<typeof msgText, string>>(true);
+                assertType<IsExact<typeof messageCaption, string | undefined>>(
+                    true,
+                );
+                assertType<IsExact<typeof messageText, string | undefined>>(
+                    true,
+                );
+                assertType<
+                    IsExact<typeof channelPostCaption, string | undefined>
+                >(true);
+                assertType<IsExact<typeof channelPostText, string | undefined>>(
+                    true,
+                );
+                assertType<IsExact<typeof match, string>>(true);
+            });
         });
     });
 
+    /*
     describe(".chatType", () => {
         const c = new Context(
             // deno-lint-ignore no-explicit-any
