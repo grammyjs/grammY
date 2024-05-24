@@ -295,6 +295,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="http://zi.vc/"><img src="https://avatars.githubusercontent.com/u/4239224?v=4?s=100" width="100px;" alt="Ash"/><br /><sub><b>Ash</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Azivc" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/winstxnhdw"><img src="https://avatars.githubusercontent.com/u/56998716?v=4?s=100" width="100px;" alt="Winston H."/><br /><sub><b>Winston H.</b></sub></a><br /><a href="#ideas-winstxnhdw" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=winstxnhdw" title="Code">💻</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Awinstxnhdw" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/grammyjs/grammY/commits?author=winstxnhdw" title="Tests">⚠️</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/carafelix"><img src="https://avatars.githubusercontent.com/u/48109042?v=4?s=100" width="100px;" alt="Hero Protagonist"/><br /><sub><b>Hero Protagonist</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=carafelix" title="Code">💻</a> <a href="https://github.com/grammyjs/grammY/issues?q=author%3Acarafelix" title="Bug reports">🐛</a> <a href="#ideas-carafelix" title="Ideas, Planning, & Feedback">🤔</a> <a href="#plugin-carafelix" title="Plugin/utility libraries">🔌</a></td>
+    </tr>
   </tbody>
 </table>
 
