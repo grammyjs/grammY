@@ -2542,6 +2542,28 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Refunds a successful payment in Telegram Stars.
+     *
+     * @param user_id Identifier of the user whose payment will be refunded
+     * @param message_id Identifier of the successful_payment message in the private chat with the user for the payment that will be refunded
+     * @param telegram_payment_charge_id Telegram payment identifier
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#refundstarpayment
+     */
+    refundStarPayment(
+        user_id: number,
+        message_id: number,
+        telegram_payment_charge_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.refundStarPayment(
+            { user_id, message_id, telegram_payment_charge_id },
+            signal,
+        );
+    }
+
+    /**
      * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
      *
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
