@@ -2412,7 +2412,6 @@ export class Api<R extends RawApi = RawApi> {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payment provider token, obtained via @BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -2425,7 +2424,6 @@ export class Api<R extends RawApi = RawApi> {
         title: string,
         description: string,
         payload: string,
-        provider_token: string,
         currency: string,
         prices: readonly LabeledPrice[],
         other?: Other<
@@ -2435,7 +2433,6 @@ export class Api<R extends RawApi = RawApi> {
             | "title"
             | "description"
             | "payload"
-            | "provider_token"
             | "currency"
             | "prices"
         >,
@@ -2446,7 +2443,6 @@ export class Api<R extends RawApi = RawApi> {
             title,
             description,
             payload,
-            provider_token,
             currency,
             prices,
             ...other,
@@ -2541,6 +2537,26 @@ export class Api<R extends RawApi = RawApi> {
     ) {
         return this.raw.answerPreCheckoutQuery(
             { pre_checkout_query_id, ok, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Refunds a successful payment in Telegram Stars.
+     *
+     * @param user_id Identifier of the user whose payment will be refunded
+     * @param telegram_payment_charge_id Telegram payment identifier
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#refundstarpayment
+     */
+    refundStarPayment(
+        user_id: number,
+        telegram_payment_charge_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.refundStarPayment(
+            { user_id, telegram_payment_charge_id },
             signal,
         );
     }

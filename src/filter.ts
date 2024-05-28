@@ -228,6 +228,8 @@ const ENTITY_KEYS = {
     underline: {},
     strikethrough: {},
     spoiler: {},
+    blockquote: {},
+    expandable_blockquote: {},
     code: {},
     pre: {},
     text_link: {},
@@ -284,6 +286,7 @@ const COMMON_MESSAGE_KEYS = {
     caption_entities: ENTITY_KEYS,
     caption: {},
 
+    effect_id: {},
     has_media_spoiler: {},
 
     new_chat_title: {},
