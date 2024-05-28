@@ -2734,7 +2734,6 @@ export class Context implements RenamedUpdate {
     refundStarPayment(signal?: AbortSignal) {
         return this.api.refundStarPayment(
             orThrow(this.from, "refundStarPayment").id,
-            orThrow(this.msgId, "refundStarPayment"),
             orThrow(this.msg?.successful_payment, "refundStarPayment")
                 .telegram_payment_charge_id,
             signal,

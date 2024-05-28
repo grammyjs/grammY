@@ -2545,7 +2545,6 @@ export class Api<R extends RawApi = RawApi> {
      * Refunds a successful payment in Telegram Stars.
      *
      * @param user_id Identifier of the user whose payment will be refunded
-     * @param message_id Identifier of the successful_payment message in the private chat with the user for the payment that will be refunded
      * @param telegram_payment_charge_id Telegram payment identifier
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2553,12 +2552,11 @@ export class Api<R extends RawApi = RawApi> {
      */
     refundStarPayment(
         user_id: number,
-        message_id: number,
         telegram_payment_charge_id: string,
         signal?: AbortSignal,
     ) {
         return this.raw.refundStarPayment(
-            { user_id, message_id, telegram_payment_charge_id },
+            { user_id, telegram_payment_charge_id },
             signal,
         );
     }
