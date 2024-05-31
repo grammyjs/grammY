@@ -17,7 +17,7 @@ import { Bot, webhookCallback } from "../../src/mod.ts";
 import type { UserFromGetMe } from "../../src/types.ts";
 import { describe, it } from "../deps.test.ts";
 
-type BunServe = (options: { fetch: (request: Request) => Response | Promise<Response> }) => void;
+type BunServe = (options: { fetch: (request: Request) => Response | Promise<Response> }) => object;
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { botInfo: {} as unknown as UserFromGetMe });
@@ -32,7 +32,7 @@ describe("webhook", () => {
 
     it("Bun.serve should be compatible with grammY adapter", () => {
         const handler = webhookCallback(bot, "bun");
-        const serve = (() => {}) as BunServe;
+        const serve = (() => {}) as unknown as BunServe;
         serve({
             fetch: (request) => {
                 return handler(request);
