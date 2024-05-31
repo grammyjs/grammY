@@ -818,7 +818,7 @@ export class InlineKeyboard {
      * This type of button must always be the first button in the first row and
      * can only be used in invoice messages.
      *
-     * @param text The text to display
+     * @param text The text to display. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
      */
     pay(text: string) {
         return this.add(InlineKeyboard.pay(text));
@@ -830,7 +830,7 @@ export class InlineKeyboard {
      * This type of button must always be the first button in the first row and
      * can only be used in invoice messages.
      *
-     * @param text The text to display
+     * @param text The text to display. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
      */
     static pay(text: string): InlineKeyboardButton.PayButton {
         return { text, pay: true };

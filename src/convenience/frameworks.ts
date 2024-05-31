@@ -150,7 +150,7 @@ export type HonoAdapter = (c: {
 }) => ReqResHandler<Response>;
 
 export type HttpAdapter = (req: {
-    headers: NodeJS.Dict<string | string[]>;
+    headers: Record<string, string | string[] | undefined>;
     on: (event: string, listener: (chunk: unknown) => void) => typeof req;
     once: (event: string, listener: () => void) => typeof req;
 }, res: {
@@ -177,7 +177,7 @@ export type KoaAdapter = (ctx: {
 
 export type NextAdapter = (req: {
     body: Update;
-    headers: NodeJS.Dict<string | string[]>;
+    headers: Record<string, string | string[] | undefined>;
 }, res: {
     end: (cb?: () => void) => typeof res;
     status: (code: number) => typeof res;

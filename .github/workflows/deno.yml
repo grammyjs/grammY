@@ -59,7 +59,7 @@ jobs:
                   deno-version: v1.x
 
             - name: Cache Dependencies
-              run: deno cache src/mod.ts
+              run: deno task check
 
             - name: Run Tests
               run: deno task test

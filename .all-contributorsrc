@@ -698,7 +698,8 @@
         "review",
         "infra",
         "ideas",
-        "mentoring"
+        "mentoring",
+        "plugin"
       ]
     },
     {
@@ -1306,6 +1307,18 @@
         "code",
         "review",
         "test"
+      ]
+    },
+    {
+      "login": "carafelix",
+      "name": "Hero Protagonist",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48109042?v=4",
+      "profile": "https://github.com/carafelix",
+      "contributions": [
+        "code",
+        "bug",
+        "ideas",
+        "plugin"
       ]
     }
   ]
