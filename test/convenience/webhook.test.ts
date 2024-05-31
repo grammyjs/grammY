@@ -17,7 +17,9 @@ import { Bot, webhookCallback } from "../../src/mod.ts";
 import type { UserFromGetMe } from "../../src/types.ts";
 import { describe, it } from "../deps.test.ts";
 
-type BunServe = (options: { fetch: (request: Request) => Response | Promise<Response> }) => object;
+type BunServe = (
+    options: { fetch: (request: Request) => Response | Promise<Response> },
+) => object;
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { botInfo: {} as unknown as UserFromGetMe });
