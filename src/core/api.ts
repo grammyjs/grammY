@@ -91,20 +91,29 @@ export class Api<R extends RawApi = RawApi> {
         readonly installedTransformers: () => Transformer<R>[];
     };
 
+    /**
+     * Constructs a new instance of `Api`. It is independent from all other
+     * instances of this class. For example, this lets you install a custom set
+     * if transformers.
+     *
+     * @param token Bot API token obtained from [@BotFather](https://t.me/BotFather)
+     * @param client Optional API client options for the underlying client instance
+     * @param webhookReplyEnvelope Optional envelope to handle webhook replies
+     */
     constructor(
-        token: string,
-        config?: ApiClientOptions,
+        public readonly token: string,
+        public readonly client?: ApiClientOptions,
         webhookReplyEnvelope?: WebhookReplyEnvelope,
     ) {
         const { raw, use, installedTransformers } = createRawApi<R>(
             token,
-            config,
+            client,
             webhookReplyEnvelope,
         );
         this.raw = raw;
         this.config = {
             use,
-            installedTransformers: () => [...installedTransformers],
+            installedTransformers: () => installedTransformers.slice(),
         };
     }
 
