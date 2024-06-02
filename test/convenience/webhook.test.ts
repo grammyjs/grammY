@@ -1,5 +1,3 @@
-/// <reference types="npm:@types/node" />
-
 import type { Hono } from "https://deno.land/x/hono/mod.ts";
 import type {
     APIGatewayProxyEventV2,
@@ -26,6 +24,22 @@ describe("webhook", () => {
                 event,
                 context,
             ));
+    });
+
+    it("Bun.serve should be compatible with grammY adapter", () => {
+        type BunServe = (
+            options: {
+                fetch: (request: Request) => Response | Promise<Response>;
+            },
+        ) => object;
+
+        const handler = webhookCallback(bot, "bun");
+        const serve = (() => {}) as unknown as BunServe;
+        serve({
+            fetch: (request) => {
+                return handler(request);
+            },
+        });
     });
 
     it("Cloudflare Workers should be compatible with grammY adapter", async () => {
