@@ -1201,7 +1201,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/32096016?v=4",
       "profile": "http://linkedin.com/in/thecoorum",
       "contributions": [
-        "bug"
+        "bug",
+        "code"
       ]
     },
     {
@@ -1319,6 +1320,25 @@
         "bug",
         "ideas",
         "plugin"
+      ]
+    },
+    {
+      "login": "MobinAskari",
+      "name": "Mobin Askari",
+      "avatar_url": "https://avatars.githubusercontent.com/u/132358316?v=4",
+      "profile": "https://github.com/MobinAskari",
+      "contributions": [
+        "plugin"
+      ]
+    },
+    {
+      "login": "ubertao",
+      "name": "Ubertao",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4099333?v=4",
+      "profile": "https://github.com/ubertao",
+      "contributions": [
+        "ideas",
+        "code"
       ]
     }
   ]
