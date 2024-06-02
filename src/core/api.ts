@@ -113,7 +113,7 @@ export class Api<R extends RawApi = RawApi> {
         this.raw = raw;
         this.config = {
             use,
-            installedTransformers: () => installedTransformers.slice(),
+            installedTransformers: () => [...installedTransformers],
         };
     }
 
