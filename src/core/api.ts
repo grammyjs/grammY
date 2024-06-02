@@ -97,17 +97,17 @@ export class Api<R extends RawApi = RawApi> {
      * if transformers.
      *
      * @param token Bot API token obtained from [@BotFather](https://t.me/BotFather)
-     * @param client Optional API client options for the underlying client instance
+     * @param options Optional API client options for the underlying client instance
      * @param webhookReplyEnvelope Optional envelope to handle webhook replies
      */
     constructor(
         public readonly token: string,
-        public readonly client?: ApiClientOptions,
+        public readonly options?: ApiClientOptions,
         webhookReplyEnvelope?: WebhookReplyEnvelope,
     ) {
         const { raw, use, installedTransformers } = createRawApi<R>(
             token,
-            client,
+            options,
             webhookReplyEnvelope,
         );
         this.raw = raw;
