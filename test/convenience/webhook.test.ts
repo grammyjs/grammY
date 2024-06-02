@@ -1,5 +1,3 @@
-/// <reference types="npm:@types/node" />
-
 import type { Hono } from "https://deno.land/x/hono/mod.ts";
 import type {
     APIGatewayProxyEventV2,
