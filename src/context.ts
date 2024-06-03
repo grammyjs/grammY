@@ -2641,7 +2641,6 @@ export class Context implements RenamedUpdate {
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @param provider_token Payment provider token, obtained via @BotFather
      * @param currency Three-letter ISO 4217 currency code, see more on currencies
      * @param prices Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
      * @param other Optional remaining parameters, confer the official reference below
@@ -2653,7 +2652,6 @@ export class Context implements RenamedUpdate {
         title: string,
         description: string,
         payload: string,
-        provider_token: string,
         currency: string,
         prices: readonly LabeledPrice[],
         other?: Other<
@@ -2662,7 +2660,6 @@ export class Context implements RenamedUpdate {
             | "title"
             | "description"
             | "payload"
-            | "provider_token"
             | "currency"
             | "prices"
         >,
@@ -2673,7 +2670,6 @@ export class Context implements RenamedUpdate {
             title,
             description,
             payload,
-            provider_token,
             currency,
             prices,
             other,
@@ -2724,6 +2720,22 @@ export class Context implements RenamedUpdate {
             orThrow(this.preCheckoutQuery, "answerPreCheckoutQuery").id,
             ok,
             typeof other === "string" ? { error_message: other } : other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.refundStarPayment`. Refunds a successful payment in Telegram Stars.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#refundstarpayment
+     */
+    refundStarPayment(signal?: AbortSignal) {
+        return this.api.refundStarPayment(
+            orThrow(this.from, "refundStarPayment").id,
+            orThrow(this.msg?.successful_payment, "refundStarPayment")
+                .telegram_payment_charge_id,
             signal,
         );
     }
