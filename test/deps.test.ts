@@ -21,6 +21,10 @@ export {
     type Stub,
     stub,
 } from "https://deno.land/std@0.211.0/testing/mock.ts";
+export {
+    assertType,
+    type IsExact,
+} from "https://deno.land/std@0.211.0/testing/types.ts";
 
 export async function convertToUint8Array(
     data: Iterable<Uint8Array> | AsyncIterable<Uint8Array>,

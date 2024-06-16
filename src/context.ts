@@ -2853,7 +2853,7 @@ type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
  * in separate files and still have the correct types.
  */
 export type GameQueryContext<C extends Context> = Filter<
-    C,
+    NarrowMatch<C, string | RegExpMatchArray>,
     "callback_query:game_short_name"
 >;
 
@@ -2868,7 +2868,10 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type InlineQueryContext<C extends Context> = Filter<C, "inline_query">;
+export type InlineQueryContext<C extends Context> = Filter<
+    NarrowMatch<C, string | RegExpMatchArray>,
+    "inline_query"
+>;
 
 type ReactionContextCore = FilterCore<"message_reaction">;
 /**
@@ -2895,13 +2898,14 @@ type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
  * in separate files and still have the correct types.
  */
 export type ChosenInlineResultContext<C extends Context> = Filter<
-    C,
+    NarrowMatch<C, string | RegExpMatchArray>,
     "chosen_inline_result"
 >;
 
 type ChatTypeContextCore<T extends Chat["type"]> =
     & Record<"update", ChatTypeUpdate<T>> // ctx.update
     & ChatType<T> // ctx.chat
+    & Record<"chatId", number> // ctx.chatId
     & ChatFrom<T> // ctx.from
     & ChatTypeRecord<"msg", T> // ctx.msg
     & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
@@ -2916,8 +2920,7 @@ type ChatTypeContextCore<T extends Chat["type"]> =
  * files and still have the correct types.
  */
 export type ChatTypeContext<C extends Context, T extends Chat["type"]> =
-    & C
-    & ChatTypeContextCore<T>;
+    T extends unknown ? C & ChatTypeContextCore<T> : never;
 type ChatTypeUpdate<T extends Chat["type"]> =
     & ChatTypeRecord<
         | "message"
