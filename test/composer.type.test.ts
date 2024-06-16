@@ -272,10 +272,12 @@ describe("Composer types", () => {
     });
 
     describe(".filter", () => {
-        type TmpCtx = Context & { prop: number };
-        composer.filter((_ctx): _ctx is TmpCtx => true, (ctx) => {
-            assertType<IsExact<typeof ctx, TmpCtx>>(true);
-            assertType<IsExact<typeof ctx.prop, number>>(true);
+        it("should have correct type for properties", () => {
+            type TmpCtx = Context & { prop: number };
+            composer.filter((_ctx): _ctx is TmpCtx => true, (ctx) => {
+                assertType<IsExact<typeof ctx, TmpCtx>>(true);
+                assertType<IsExact<typeof ctx.prop, number>>(true);
+            });
         });
     });
 });
