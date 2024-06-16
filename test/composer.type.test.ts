@@ -246,44 +246,46 @@ describe("Composer types", () => {
     });
 
     describe(".gameQuery", () => {
-        composer.gameQuery("test", (ctx) => {
-            const msg = ctx.msg;
-            const message = ctx.message;
-            const callbackQueryMessage = ctx.callbackQuery.message;
-            const gameShortName = ctx.callbackQuery.game_short_name;
-            const match = ctx.match;
-            assertType<
-                IsExact<typeof msg, MaybeInaccessibleMessage | undefined>
-            >(
-                true,
-            );
-            assertType<
-                IsExact<
-                    typeof message,
-                    undefined // This is ctx.update.message, but not ctx.update.callback_query.message
-                >
-            >(
-                true,
-            );
-            assertType<
-                IsExact<
-                    typeof callbackQueryMessage,
-                    MaybeInaccessibleMessage | undefined
-                >
-            >(
-                true,
-            );
-            assertType<
-                IsExact<
-                    typeof gameShortName,
-                    string
-                >
-            >(
-                true,
-            );
-            assertType<IsExact<typeof match, string | RegExpMatchArray>>(
-                true,
-            );
+        it("should have correct type for properties", () => {
+            composer.gameQuery("test", (ctx) => {
+                const msg = ctx.msg;
+                const message = ctx.message;
+                const callbackQueryMessage = ctx.callbackQuery.message;
+                const gameShortName = ctx.callbackQuery.game_short_name;
+                const match = ctx.match;
+                assertType<
+                    IsExact<typeof msg, MaybeInaccessibleMessage | undefined>
+                >(
+                    true,
+                );
+                assertType<
+                    IsExact<
+                        typeof message,
+                        undefined // This is ctx.update.message, but not ctx.update.callback_query.message
+                    >
+                >(
+                    true,
+                );
+                assertType<
+                    IsExact<
+                        typeof callbackQueryMessage,
+                        MaybeInaccessibleMessage | undefined
+                    >
+                >(
+                    true,
+                );
+                assertType<
+                    IsExact<
+                        typeof gameShortName,
+                        string
+                    >
+                >(
+                    true,
+                );
+                assertType<IsExact<typeof match, string | RegExpMatchArray>>(
+                    true,
+                );
+            });
         });
     });
 
