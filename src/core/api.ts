@@ -2551,7 +2551,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Returns the bot's Telegram Star transactions. On success, returns a StarTransactions object.
+     * Returns the bot's Telegram Star transactions in chronological order. On success, returns a StarTransactions object.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
