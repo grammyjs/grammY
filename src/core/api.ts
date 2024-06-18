@@ -1043,6 +1043,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param permissions New default chat permissions
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatpermissions
@@ -1050,9 +1051,13 @@ export class Api<R extends RawApi = RawApi> {
     setChatPermissions(
         chat_id: number | string,
         permissions: ChatPermissions,
+        other?: Other<R, "setChatPermissions", "chat_id" | "permissions">,
         signal?: AbortSignal,
     ) {
-        return this.raw.setChatPermissions({ chat_id, permissions }, signal);
+        return this.raw.setChatPermissions(
+            { chat_id, permissions, ...other },
+            signal,
+        );
     }
 
     /**
