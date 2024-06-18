@@ -1760,14 +1760,20 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.setChatPermissions`. Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.
      *
      * @param permissions New default chat permissions
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatpermissions
      */
-    setChatPermissions(permissions: ChatPermissions, signal?: AbortSignal) {
+    setChatPermissions(
+        permissions: ChatPermissions,
+        other?: Other<"setChatPermissions", "chat_id" | "permissions">,
+        signal?: AbortSignal,
+    ) {
         return this.api.setChatPermissions(
             orThrow(this.chatId, "setChatPermissions"),
             permissions,
+            other,
             signal,
         );
     }
