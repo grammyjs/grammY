@@ -32,6 +32,11 @@ export interface WebhookOptions {
     secretToken?: string;
 }
 
+type Adapters = typeof adapters;
+type AdapterNames = keyof Adapters;
+type ResolveName<A extends FrameworkAdapter | AdapterNames> = A extends
+    AdapterNames ? Adapters[A] : A;
+
 /**
  * Creates a callback function that you can pass to a web framework (such as
  * express) if you want to run your bot via webhooks. Use it like this:
@@ -48,40 +53,41 @@ export interface WebhookOptions {
  *
  * @param bot The bot for which to create a callback
  * @param adapter An optional string identifying the framework (default: 'express')
- * @param onTimeout An optional strategy to handle timeouts (default: 'throw')
- * @param timeoutMilliseconds An optional number of timeout milliseconds (default: 10_000)
+ * @param webhookOptions Further options for the webhook setup
  */
-export function webhookCallback<C extends Context = Context>(
-    bot: Bot<C>,
-    adapter?: FrameworkAdapter,
-    onTimeout?: WebhookOptions["onTimeout"],
-    timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
-    secretToken?: WebhookOptions["secretToken"],
-): (...args: any[]) => any;
-export function webhookCallback<C extends Context = Context>(
-    bot: Bot<C>,
-    adapter?: FrameworkAdapter,
-    webhookOptions?: WebhookOptions,
-): (...args: any[]) => any;
 export function webhookCallback<
     C extends Context = Context,
-    A extends keyof typeof nativeAdapters = keyof typeof nativeAdapters,
+    A extends FrameworkAdapter | AdapterNames = FrameworkAdapter | AdapterNames,
 >(
     bot: Bot<C>,
     adapter: A,
     webhookOptions?: WebhookOptions,
 ): (
-    ...args: Parameters<typeof nativeAdapters[A]>
-) => ReturnType<typeof nativeAdapters[A]>["handlerReturn"] extends undefined
+    ...args: Parameters<ResolveName<A>>
+) => ReturnType<ResolveName<A>>["handlerReturn"] extends undefined
     ? Promise<void>
-    : NonNullable<ReturnType<typeof nativeAdapters[A]>["handlerReturn"]>;
+    : NonNullable<ReturnType<ResolveName<A>>["handlerReturn"]>;
+export function webhookCallback<
+    C extends Context = Context,
+    A extends FrameworkAdapter | AdapterNames = FrameworkAdapter | AdapterNames,
+>(
+    bot: Bot<C>,
+    adapter: A,
+    onTimeout?: WebhookOptions["onTimeout"],
+    timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
+    secretToken?: WebhookOptions["secretToken"],
+): (
+    ...args: Parameters<ResolveName<A>>
+) => ReturnType<ResolveName<A>>["handlerReturn"] extends undefined
+    ? Promise<void>
+    : NonNullable<ReturnType<ResolveName<A>>["handlerReturn"]>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter: keyof typeof nativeAdapters | FrameworkAdapter = defaultAdapter,
-    onTimeout:
+    adapter: FrameworkAdapter | AdapterNames = defaultAdapter,
+    onTimeout?:
         | WebhookOptions
-        | WebhookOptions["onTimeout"] = "throw",
-    timeoutMilliseconds: WebhookOptions["timeoutMilliseconds"] = 10_000,
+        | WebhookOptions["onTimeout"],
+    timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
     secretToken?: WebhookOptions["secretToken"],
 ) {
     const {
