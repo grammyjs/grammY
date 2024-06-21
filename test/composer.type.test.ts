@@ -60,6 +60,7 @@ describe("Composer types", () => {
                 const callbackQueryMessage = ctx.callbackQuery.message;
                 const callbackQueryData = ctx.callbackQuery.data;
                 const match = ctx.match;
+                const chatId = ctx.chatId;
                 assertType<
                     IsExact<typeof msg, MaybeInaccessibleMessage | undefined>
                 >(
@@ -92,6 +93,7 @@ describe("Composer types", () => {
                 assertType<IsExact<typeof match, string | RegExpMatchArray>>(
                     true,
                 );
+                assertType<IsExact<typeof chatId, number | undefined>>(true);
             });
         });
     });
@@ -308,6 +310,17 @@ describe("Composer types", () => {
             composer.filter((_ctx): _ctx is TmpCtx => true, (ctx) => {
                 assertType<IsExact<typeof ctx, TmpCtx>>(true);
                 assertType<IsExact<typeof ctx.prop, number>>(true);
+            });
+        });
+    });
+
+    describe("known combined usages", () => {
+        it("should work with .chatType.callbackQuery", () => {
+            composer.chatType("private").callbackQuery("query", (ctx) => {
+                assertType<IsExact<typeof ctx.from.id, number>>(true);
+            });
+            composer.callbackQuery("query").chatType("private", (ctx) => {
+                assertType<IsExact<typeof ctx.from.id, number>>(true);
             });
         });
     });
