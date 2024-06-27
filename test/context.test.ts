@@ -71,8 +71,8 @@ describe("Context", () => {
             from: u,
             inline_message_id: "y",
         },
-        shipping_query: { id: "d", from: u },
-        pre_checkout_query: { id: "e", from: u },
+        shipping_query: { id: "d", from: u, invoice_payload: "sq" },
+        pre_checkout_query: { id: "e", from: u, invoice_payload: "pcq" },
         poll: { id: "f" },
         poll_answer: { poll_id: "g" },
         my_chat_member: { date: 1, from: u, chat: c },
@@ -489,6 +489,30 @@ describe("Context", () => {
         assert(ctx.hasChosenInlineResult(/^p/));
         assertFalse(Context.has.chosenInlineResult("q")(ctx));
         assertFalse(ctx.hasChosenInlineResult("q"));
+    });
+
+    it("should be able to check for pre-checkout queries", () => {
+        const ctx = new Context(update, api, me);
+
+        assert(Context.has.preCheckoutQuery("pcq")(ctx));
+        assert(ctx.hasPreCheckoutQuery("pcq"));
+        assert(Context.has.preCheckoutQuery(/^p.q/)(ctx));
+        assertEquals(ctx.match, "pcq".match(/^p.q/));
+        assert(ctx.hasPreCheckoutQuery(/^p.q/));
+        assertFalse(Context.has.preCheckoutQuery("pq")(ctx));
+        assertFalse(ctx.hasPreCheckoutQuery("pq"));
+    });
+
+    it("should be able to check for shipping queries", () => {
+        const ctx = new Context(update, api, me);
+
+        assert(Context.has.shippingQuery("sq")(ctx));
+        assert(ctx.hasShippingQuery("sq"));
+        assert(Context.has.shippingQuery(/^s./)(ctx));
+        assertEquals(ctx.match, "sq".match(/^s./));
+        assert(ctx.hasShippingQuery(/^s./));
+        assertFalse(Context.has.shippingQuery("sp")(ctx));
+        assertFalse(ctx.hasShippingQuery("sp"));
     });
 
     it("should be able to match filter queries", () => {

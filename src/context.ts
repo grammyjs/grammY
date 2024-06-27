@@ -141,6 +141,28 @@ interface StaticHas {
     chosenInlineResult(
         trigger: MaybeArray<string | RegExp>,
     ): <C extends Context>(ctx: C) => ctx is ChosenInlineResultContext<C>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing the given pre-checkout query, or for the pre-checkout query
+     * payload to match the given regular expression. This uses the same logic
+     * as `bot.preCheckoutQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    preCheckoutQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is PreCheckoutQueryContext<C>;
+    /**
+     * Generates a predicate function that can test context objects for
+     * containing the given shipping query, or for the shipping query to
+     * match the given regular expression. This uses the same logic as
+     * `bot.shippingQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    shippingQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): <C extends Context>(ctx: C) => ctx is ShippingQueryContext<C>;
 }
 const checker: StaticHas = {
     filterQuery<Q extends FilterQuery>(filter: Q | Q[]) {
@@ -292,6 +314,20 @@ const checker: StaticHas = {
         ): ctx is ChosenInlineResultContext<C> =>
             hasChosenInlineResult(ctx) &&
             match(ctx, ctx.chosenInlineResult.result_id, trg);
+    },
+    preCheckoutQuery(trigger) {
+        const hasPreCheckoutQuery = checker.filterQuery("pre_checkout_query");
+        const trg = triggerFn(trigger);
+        return <C extends Context>(ctx: C): ctx is PreCheckoutQueryContext<C> =>
+            hasPreCheckoutQuery(ctx) &&
+            match(ctx, ctx.preCheckoutQuery.invoice_payload, trg);
+    },
+    shippingQuery(trigger) {
+        const hasShippingQuery = checker.filterQuery("shipping_query");
+        const trg = triggerFn(trigger);
+        return <C extends Context>(ctx: C): ctx is ShippingQueryContext<C> =>
+            hasShippingQuery(ctx) &&
+            match(ctx, ctx.shippingQuery.invoice_payload, trg);
     },
 };
 
@@ -842,7 +878,6 @@ export class Context implements RenamedUpdate {
     ): this is InlineQueryContextCore {
         return Context.has.inlineQuery(trigger)(this);
     }
-
     /**
      * Returns `true` if this context object contains the chosen inline result, or
      * if the contained chosen inline result matches the given regular expression. It
@@ -854,6 +889,30 @@ export class Context implements RenamedUpdate {
         trigger: MaybeArray<string | RegExp>,
     ): this is ChosenInlineResultContextCore {
         return Context.has.chosenInlineResult(trigger)(this);
+    }
+    /**
+     * Returns `true` if this context object contains the given pre-checkout query,
+     * or if the contained pre-checkout query matches the given regular expression.
+     * It returns `false` otherwise. This uses the same logic as `bot.preCheckoutQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    hasPreCheckoutQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is PreCheckoutQueryContextCore {
+        return Context.has.preCheckoutQuery(trigger)(this);
+    }
+    /**
+     * Returns `true` if this context object contains the given shipping query,
+     * or if the contained shipping query matches the given regular expression.
+     * It returns `false` otherwise. This uses the same logic as `bot.shippingQuery`.
+     *
+     * @param trigger The string or regex to match
+     */
+    hasShippingQuery(
+        trigger: MaybeArray<string | RegExp>,
+    ): this is ShippingQueryContextCore {
+        return Context.has.shippingQuery(trigger)(this);
     }
 
     // API
@@ -2906,6 +2965,38 @@ type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
 export type ChosenInlineResultContext<C extends Context> = Filter<
     NarrowMatch<C, string | RegExpMatchArray>,
     "chosen_inline_result"
+>;
+
+type PreCheckoutQueryContextCore = FilterCore<"pre_checkout_query">;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.preCheckoutQuery`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * annotate `bot.preCheckoutQuery` does it. This allows you to context objects in
+ * middleware that is not directly passed to `bot.preCheckoutQuery`, hence not
+ * inferring the correct type automatically. That way, handlers can be defined
+ * in separate files and still have the correct types.
+ */
+export type PreCheckoutQueryContext<C extends Context> = Filter<
+    NarrowMatch<C, string | RegExpMatchArray>,
+    "pre_checkout_query"
+>;
+
+type ShippingQueryContextCore = FilterCore<"shipping_query">;
+/**
+ * Type of the context object that is available inside the handlers for
+ * `bot.shippingQuery`.
+ *
+ * This helper type can be used to narrow down context objects the same way how
+ * annotate `bot.shippingQuery` does it. This allows you to context objects in
+ * middleware that is not directly passed to `bot.shippingQuery`, hence not
+ * inferring the correct type automatically. That way, handlers can be defined
+ * in separate files and still have the correct types.
+ */
+export type ShippingQueryContext<C extends Context> = Filter<
+    NarrowMatch<C, string | RegExpMatchArray>,
+    "shipping_query"
 >;
 
 type ChatTypeContextCore<T extends Chat["type"]> =

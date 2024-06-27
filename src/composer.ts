@@ -8,7 +8,9 @@ import {
     type HearsContext,
     type InlineQueryContext,
     type MaybeArray,
+    type PreCheckoutQueryContext,
     type ReactionContext,
+    type ShippingQueryContext,
     type StringWithSuggestions,
 } from "./context.ts";
 import { type Filter, type FilterQuery } from "./filter.ts";
@@ -587,6 +589,61 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
+     * Registers middleware for pre-checkout queries. Telegram sends a pre-checkout
+     * query to your bot whenever a user has confirmed their payment and shipping
+     * details. You bot will then receive all information about the order and
+     * has to respond within 10 seconds with a confirmation of whether everything
+     * is alright (goods are available, etc.) and the bot is ready to proceed
+     * with the order. Check out https://core.telegram.org/bots/api#precheckoutquery
+     * to read more about pre-checkout queries.
+     *
+     * ```ts
+     * bot.preCheckoutQuery('invoice_payload', async ctx => {
+     *   // Answer the pre-checkout query, confer https://core.telegram.org/bots/api#answerprecheckoutquery
+     *   await ctx.answerPreCheckoutQuery( ... )
+     * })
+     * ```
+     *
+     * @param trigger The string to look for in the invoice payload
+     * @param middleware The middleware to register
+     */
+    preCheckoutQuery(
+        trigger: MaybeArray<string | RegExp>,
+        ...middleware: Array<PreCheckoutQueryMiddleware<C>>
+    ): Composer<PreCheckoutQueryContext<C>> {
+        return this.filter(
+            Context.has.preCheckoutQuery(trigger),
+            ...middleware,
+        );
+    }
+
+    /**
+     * Registers middleware for shipping queries. If you sent an invoice requesting
+     * a shipping address and the parameter _is_flexible_ was specified, Telegram
+     * will send a shipping query to your bot whenever a user has confirmed their
+     * shipping details. You bot will then receive the shipping information and
+     * can respond with a confirmation of whether delivery to the specified address
+     * is possible. Check out https://core.telegram.org/bots/api#shippingquery to
+     * read more about shipping queries.
+     *
+     * ```ts
+     * bot.shippingQuery('invoice_payload', async ctx => {
+     *   // Answer the shipping query, confer https://core.telegram.org/bots/api#answershippingquery
+     *   await ctx.answerShippingQuery( ... )
+     * })
+     * ```
+     *
+     * @param trigger The string to look for in the invoice payload
+     * @param middleware The middleware to register
+     */
+    shippingQuery(
+        trigger: MaybeArray<string | RegExp>,
+        ...middleware: Array<ShippingQueryMiddleware<C>>
+    ): Composer<ShippingQueryContext<C>> {
+        return this.filter(Context.has.shippingQuery(trigger), ...middleware);
+    }
+
+    /**
      * > This is an advanced method of grammY.
      *
      * Registers middleware behind a custom filter function that operates on the
@@ -946,6 +1003,28 @@ export type InlineQueryMiddleware<C extends Context> = Middleware<
  */
 export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
     ChosenInlineResultContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.preCheckoutQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.preCheckoutQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type PreCheckoutQueryMiddleware<C extends Context> = Middleware<
+    PreCheckoutQueryContext<C>
+>;
+/**
+ * Type of the middleware that can be passed to `bot.shippingQuery`.
+ *
+ * This helper type can be used to annotate middleware functions that are
+ * defined in one place, so that they have the correct type when passed to
+ * `bot.shippingQuery` in a different place. For instance, this allows for more
+ * modular code where handlers are defined in separate files.
+ */
+export type ShippingQueryMiddleware<C extends Context> = Middleware<
+    ShippingQueryContext<C>
 >;
 /**
  * Type of the middleware that can be passed to `bot.chatType`.
