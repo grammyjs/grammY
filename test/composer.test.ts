@@ -294,6 +294,64 @@ describe("Composer", () => {
         });
     });
 
+    describe(".preCheckoutQuery", () => {
+        const c = new Context(
+            // deno-lint-ignore no-explicit-any
+            { pre_checkout_query: { invoice_payload: "test" } } as any,
+            // deno-lint-ignore no-explicit-any
+            0 as any,
+            // deno-lint-ignore no-explicit-any
+            0 as any,
+        );
+        it("should check for pre-checkout query data", async () => {
+            composer.preCheckoutQuery("no-data", middleware);
+            composer.preCheckoutQuery(["nope", "test"], middleware);
+            await exec(c);
+            assertEquals(middleware.calls.length, 1);
+            assertEquals(middleware.calls[0].args[0], c);
+        });
+        it("should allow chaining pre-checkout query data checks", async () => {
+            composer.preCheckoutQuery(["nope"])
+                .preCheckoutQuery(["test", "nei"], middleware); // nope
+            composer.preCheckoutQuery(["nope", "test"])
+                .preCheckoutQuery(["nei"], middleware); // nope
+            composer.preCheckoutQuery(["nope", /test/])
+                .preCheckoutQuery(["test", "nei"], middleware);
+            await exec(c);
+            assertEquals(middleware.calls.length, 1);
+            assertEquals(middleware.calls[0].args[0], c);
+        });
+    });
+
+    describe(".shippingQuery", () => {
+        const c = new Context(
+            // deno-lint-ignore no-explicit-any
+            { shipping_query: { invoice_payload: "test" } } as any,
+            // deno-lint-ignore no-explicit-any
+            0 as any,
+            // deno-lint-ignore no-explicit-any
+            0 as any,
+        );
+        it("should check for shipping query data", async () => {
+            composer.shippingQuery("no-data", middleware);
+            composer.shippingQuery(["nope", "test"], middleware);
+            await exec(c);
+            assertEquals(middleware.calls.length, 1);
+            assertEquals(middleware.calls[0].args[0], c);
+        });
+        it("should allow chaining shipping query data checks", async () => {
+            composer.shippingQuery(["nope"])
+                .shippingQuery(["test", "nei"], middleware); // nope
+            composer.shippingQuery(["nope", "test"])
+                .shippingQuery(["nei"], middleware); // nope
+            composer.shippingQuery(["nope", /test/])
+                .shippingQuery(["test", "nei"], middleware);
+            await exec(c);
+            assertEquals(middleware.calls.length, 1);
+            assertEquals(middleware.calls[0].args[0], c);
+        });
+    });
+
     describe(".filter", () => {
         const t = () => true;
         const f = () => false;

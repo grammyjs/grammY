@@ -304,6 +304,32 @@ describe("Composer types", () => {
         });
     });
 
+    describe(".preCheckoutQuery", () => {
+        it("should have correct type for properties", () => {
+            composer.preCheckoutQuery("test", (ctx) => {
+                const invoicePayload = ctx.preCheckoutQuery.invoice_payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof invoicePayload, string>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | string>>(
+                    true,
+                );
+            });
+        });
+    });
+
+    describe(".shippingQuery", () => {
+        it("should have correct type for properties", () => {
+            composer.shippingQuery("test", (ctx) => {
+                const invoicePayload = ctx.shippingQuery.invoice_payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof invoicePayload, string>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | string>>(
+                    true,
+                );
+            });
+        });
+    });
+
     describe(".filter", () => {
         it("should have correct type for properties", () => {
             type TmpCtx = Context & { prop: number };
