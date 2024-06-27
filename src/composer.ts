@@ -563,10 +563,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
 
     /**
      * Registers middleware for the ChosenInlineResult by the given id or ids.
-     * ChosenInlineResult represents a result of an inline query that was
-     * chosen by the user and sent to their chat partner. Check out
-     * https://core.telegram.org/bots/api#choseninlineresult to read more
-     * about chosen inline results.
+     * ChosenInlineResult represents a result of an inline query that was chosen
+     * by the user and sent to their chat partner. Check out
+     * https://core.telegram.org/bots/api#choseninlineresult to read more about
+     * chosen inline results.
      *
      * ```ts
      * bot.chosenInlineResult('id', async ctx => {
@@ -589,13 +589,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
-     * Registers middleware for pre-checkout queries. Telegram sends a pre-checkout
-     * query to your bot whenever a user has confirmed their payment and shipping
-     * details. You bot will then receive all information about the order and
-     * has to respond within 10 seconds with a confirmation of whether everything
-     * is alright (goods are available, etc.) and the bot is ready to proceed
-     * with the order. Check out https://core.telegram.org/bots/api#precheckoutquery
-     * to read more about pre-checkout queries.
+     * Registers middleware for pre-checkout queries. Telegram sends a
+     * pre-checkout query to your bot whenever a user has confirmed their
+     * payment and shipping details. You bot will then receive all information
+     * about the order and has to respond within 10 seconds with a confirmation
+     * of whether everything is alright (goods are available, etc.) and the bot
+     * is ready to proceed with the order. Check out
+     * https://core.telegram.org/bots/api#precheckoutquery to read more about
+     * pre-checkout queries.
      *
      * ```ts
      * bot.preCheckoutQuery('invoice_payload', async ctx => {
@@ -618,13 +619,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
-     * Registers middleware for shipping queries. If you sent an invoice requesting
-     * a shipping address and the parameter _is_flexible_ was specified, Telegram
-     * will send a shipping query to your bot whenever a user has confirmed their
-     * shipping details. You bot will then receive the shipping information and
-     * can respond with a confirmation of whether delivery to the specified address
-     * is possible. Check out https://core.telegram.org/bots/api#shippingquery to
-     * read more about shipping queries.
+     * Registers middleware for shipping queries. If you sent an invoice
+     * requesting a shipping address and the parameter _is_flexible_ was
+     * specified, Telegram will send a shipping query to your bot whenever a
+     * user has confirmed their shipping details. You bot will then receive the
+     * shipping information and can respond with a confirmation of whether
+     * delivery to the specified address is possible. Check out
+     * https://core.telegram.org/bots/api#shippingquery to read more about
+     * shipping queries.
      *
      * ```ts
      * bot.shippingQuery('invoice_payload', async ctx => {
@@ -998,8 +1000,8 @@ export type InlineQueryMiddleware<C extends Context> = Middleware<
  *
  * This helper type can be used to annotate middleware functions that are
  * defined in one place, so that they have the correct type when passed to
- * `bot.chosenInlineResult` in a different place. For instance, this allows for more
- * modular code where handlers are defined in separate files.
+ * `bot.chosenInlineResult` in a different place. For instance, this allows for
+ * more modular code where handlers are defined in separate files.
  */
 export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
     ChosenInlineResultContext<C>
@@ -1009,8 +1011,8 @@ export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
  *
  * This helper type can be used to annotate middleware functions that are
  * defined in one place, so that they have the correct type when passed to
- * `bot.preCheckoutQuery` in a different place. For instance, this allows for more
- * modular code where handlers are defined in separate files.
+ * `bot.preCheckoutQuery` in a different place. For instance, this allows for
+ * more modular code where handlers are defined in separate files.
  */
 export type PreCheckoutQueryMiddleware<C extends Context> = Middleware<
     PreCheckoutQueryContext<C>

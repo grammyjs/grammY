@@ -81,9 +81,9 @@ interface StaticHas {
         >,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
     /**
-     * Generates a predicate function that can test context
-     * objects for containing a message reaction update. This uses the same
-     * logic as `bot.reaction`.
+     * Generates a predicate function that can test context objects for
+     * containing a message reaction update. This uses the same logic as
+     * `bot.reaction`.
      *
      * @param reaction The reaction to test against
      */
@@ -154,8 +154,8 @@ interface StaticHas {
     ): <C extends Context>(ctx: C) => ctx is PreCheckoutQueryContext<C>;
     /**
      * Generates a predicate function that can test context objects for
-     * containing the given shipping query, or for the shipping query to
-     * match the given regular expression. This uses the same logic as
+     * containing the given shipping query, or for the shipping query to match
+     * the given regular expression. This uses the same logic as
      * `bot.shippingQuery`.
      *
      * @param trigger The string or regex to match
@@ -598,11 +598,12 @@ export class Context implements RenamedUpdate {
             this.deletedBusinessMessages?.business_connection_id;
     }
     /**
-     * Get entities and their text. Extracts the text from `ctx.msg.text` or `ctx.msg.caption`.
-     * Returns an empty array if one of `ctx.msg`, `ctx.msg.text`
-     * or `ctx.msg.entities` is undefined.
+     * Get entities and their text. Extracts the text from `ctx.msg.text` or
+     * `ctx.msg.caption`. Returns an empty array if one of `ctx.msg`,
+     * `ctx.msg.text` or `ctx.msg.entities` is undefined.
      *
-     * You can filter specific entity types by passing the `types` parameter. Example:
+     * You can filter specific entity types by passing the `types` parameter.
+     * Example:
      *
      * ```ts
      * ctx.entities() // Returns all entity types
@@ -879,9 +880,10 @@ export class Context implements RenamedUpdate {
         return Context.has.inlineQuery(trigger)(this);
     }
     /**
-     * Returns `true` if this context object contains the chosen inline result, or
-     * if the contained chosen inline result matches the given regular expression. It
-     * returns `false` otherwise. This uses the same logic as `bot.chosenInlineResult`.
+     * Returns `true` if this context object contains the chosen inline result,
+     * or if the contained chosen inline result matches the given regular
+     * expression. It returns `false` otherwise. This uses the same logic as
+     * `bot.chosenInlineResult`.
      *
      * @param trigger The string or regex to match
      */
@@ -891,9 +893,10 @@ export class Context implements RenamedUpdate {
         return Context.has.chosenInlineResult(trigger)(this);
     }
     /**
-     * Returns `true` if this context object contains the given pre-checkout query,
-     * or if the contained pre-checkout query matches the given regular expression.
-     * It returns `false` otherwise. This uses the same logic as `bot.preCheckoutQuery`.
+     * Returns `true` if this context object contains the given pre-checkout
+     * query, or if the contained pre-checkout query matches the given regular
+     * expression. It returns `false` otherwise. This uses the same logic as
+     * `bot.preCheckoutQuery`.
      *
      * @param trigger The string or regex to match
      */
@@ -905,7 +908,8 @@ export class Context implements RenamedUpdate {
     /**
      * Returns `true` if this context object contains the given shipping query,
      * or if the contained shipping query matches the given regular expression.
-     * It returns `false` otherwise. This uses the same logic as `bot.shippingQuery`.
+     * It returns `false` otherwise. This uses the same logic as
+     * `bot.shippingQuery`.
      *
      * @param trigger The string or regex to match
      */
