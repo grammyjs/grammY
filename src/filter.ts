@@ -281,6 +281,7 @@ const COMMON_MESSAGE_KEYS = {
     poll: {},
     venue: {},
     location: {},
+    paid_media: {},
 
     entities: ENTITY_KEYS,
     caption_entities: ENTITY_KEYS,
