@@ -9,6 +9,7 @@ import {
     type InputMediaDocument,
     type InputMediaPhoto,
     type InputMediaVideo,
+    type InputPaidMedia,
     type InputPollOption,
     type InputSticker,
     type LabeledPrice,
@@ -293,7 +294,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -321,7 +322,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param from_chat_id Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
@@ -649,6 +650,30 @@ export class Api<R extends RawApi = RawApi> {
     ) {
         return this.raw.stopMessageLiveLocation(
             { inline_message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to send paid media to channel chats. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
+     * @param media An array describing the media to be sent; up to 10 items
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
+     */
+    sendPaidMedia(
+        chat_id: number | string,
+        star_count: number,
+        media: InputPaidMedia[],
+        other?: Other<R, "sendPaidMedia", "chat_id" | "star_count" | "media">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendPaidMedia(
+            { chat_id, star_count, media, ...other },
             signal,
         );
     }

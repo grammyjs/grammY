@@ -8,12 +8,15 @@ import {
     type InputMediaDocument as InputMediaDocumentF,
     type InputMediaPhoto as InputMediaPhotoF,
     type InputMediaVideo as InputMediaVideoF,
+    type InputPaidMedia as InputPaidMediaF,
+    type InputPaidMediaPhoto as InputPaidMediaPhotoF,
+    type InputPaidMediaVideo as InputPaidMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.9.0/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.10.0/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.9.0/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.10.0/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
@@ -131,3 +134,11 @@ export type InputMediaAnimation = InputMediaAnimationF<InputFile>;
 export type InputMediaAudio = InputMediaAudioF<InputFile>;
 /** Represents a general file to be sent. */
 export type InputMediaDocument = InputMediaDocumentF<InputFile>;
+/** This object describes the paid media to be sent. Currently, it can be one of
+- InputPaidMediaPhoto
+- InputPaidMediaVideo */
+export type InputPaidMedia = InputPaidMediaF<InputFile>;
+/** The paid media to send is a photo. */
+export type InputPaidMediaPhoto = InputPaidMediaPhotoF<InputFile>;
+/** The paid media to send is a video. */
+export type InputPaidMediaVideo = InputPaidMediaVideoF<InputFile>;
