@@ -32,9 +32,13 @@ import {
 
 // === Util types
 export type MaybeArray<T> = T | T[];
-export type StringWithSuggestions<S extends string> =
+/** permits `string` but gives hints */
+export type StringWithCommandSuggestions =
     | (string & Record<never, never>)
-    | S; // permits `string` but gives hints
+    | "start"
+    | "help"
+    | "settings"
+    | "privacy";
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
     RawApi,
@@ -76,10 +80,8 @@ interface StaticHas {
      *
      * @param command The command to match
      */
-    command<S extends string>(
-        command: MaybeArray<
-            StringWithSuggestions<S | "start" | "help" | "settings">
-        >,
+    command(
+        command: MaybeArray<StringWithCommandSuggestions>,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
     /**
      * Generates a predicate function that can test context objects for
@@ -819,10 +821,8 @@ export class Context implements RenamedUpdate {
      *
      * @param command The command to match
      */
-    hasCommand<S extends string>(
-        command: MaybeArray<
-            StringWithSuggestions<S | "start" | "help" | "settings">
-        >,
+    hasCommand(
+        command: MaybeArray<StringWithCommandSuggestions>,
     ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }

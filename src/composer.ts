@@ -11,7 +11,7 @@ import {
     type PreCheckoutQueryContext,
     type ReactionContext,
     type ShippingQueryContext,
-    type StringWithSuggestions,
+    type StringWithCommandSuggestions,
 } from "./context.ts";
 import { type Filter, type FilterQuery } from "./filter.ts";
 import {
@@ -380,10 +380,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param command The command to look for
      * @param middleware The middleware to register
      */
-    command<S extends string>(
-        command: MaybeArray<
-            StringWithSuggestions<S | "start" | "help" | "settings">
-        >,
+    command(
+        command: MaybeArray<StringWithCommandSuggestions>,
         ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         return this.filter(Context.has.command(command), ...middleware);
