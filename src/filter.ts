@@ -316,6 +316,7 @@ const MESSAGE_KEYS = {
     migrate_to_chat_id: {},
     migrate_from_chat_id: {},
     successful_payment: {},
+    refunded_payment: {},
     boost_added: {},
     users_shared: {},
     chat_shared: {},
