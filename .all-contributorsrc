@@ -1388,6 +1388,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "andrew-sol",
+      "name": "Andrew Sologor",
+      "avatar_url": "https://avatars.githubusercontent.com/u/97506048?v=4",
+      "profile": "https://github.com/asologor",
+      "contributions": [
+        "review"
+      ]
     }
   ]
 }
