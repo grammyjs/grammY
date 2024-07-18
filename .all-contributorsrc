@@ -1379,6 +1379,15 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "lexomis",
+      "name": "lexomis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/95214604?v=4",
+      "profile": "https://consortiumkey.com/",
+      "contributions": [
+        "review"
+      ]
     }
   ]
 }
