@@ -124,7 +124,7 @@ export interface SessionOptions<S, C extends Context = Context> {
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
      * your chats and users. Check out the
-     * [documentation](https://grammy.dev/plugins/session.html#how-to-use-sessions)
+     * [documentation](https://grammy.dev/plugins/session#how-to-use-sessions)
      * on the website about how to use session middleware to know how session
      * keys are used.
      *
@@ -139,7 +139,7 @@ export interface SessionOptions<S, C extends Context = Context> {
      * delete access to the session middleware.
      *
      * Consider using a [known storage
-     * adapter](https://grammy.dev/plugins/session.html#known-storage-adapters)
+     * adapter](https://grammy.dev/plugins/session#known-storage-adapters)
      * instead of rolling your own implementation of this.
      *
      * The default implementation will store session in memory. The data will be
@@ -206,7 +206,7 @@ type MultiSessionOptionsRecord<
  * You can delete the session data by setting `ctx.session` to `null` or
  * `undefined`.
  *
- * Check out the [documentation](https://grammy.dev/plugins/session.html) on the
+ * Check out the [documentation](https://grammy.dev/plugins/session) on the
  * website to know more about how sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
@@ -291,7 +291,7 @@ function strictMultiSession<S, C extends Context>(
  * ```
  *
  * Check out the
- * [documentation](https://grammy.dev/plugins/session.html#lazy-sessions) on the
+ * [documentation](https://grammy.dev/plugins/session#lazy-sessions) on the
  * website to know more about how lazy sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
