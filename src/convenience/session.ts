@@ -13,9 +13,9 @@ type MaybePromise<T> = Promise<T> | T;
  * Session middleware will load the session data of a specific chat from your
  * storage solution, and make it available to you on the context object. Check
  * out the
- * [documentation](https://doc.deno.land/https://deno.land/x/grammy/mod.ts/~/session)
+ * [documentation](https://grammy.dev/ref/core/session)
  * on session middleware to know more, and read the section about sessions on
- * the [website](https://grammy.dev/plugins/session.html).
+ * the [website](https://grammy.dev/plugins/session).
  */
 export interface SessionFlavor<S> {
     /**
@@ -42,10 +42,10 @@ export interface SessionFlavor<S> {
  * object. Once you access `ctx.session`, the storage will be queried and the
  * session data becomes available. If you access `ctx.session` again for the
  * same context object, the cached value will be used. Check out the
- * [documentation](https://doc.deno.land/https://deno.land/x/grammy/mod.ts/~/lazySession)
+ * [documentation](https://grammy.dev/ref/core/lazysession)
  * on lazy session middleware to know more, and read the section about lazy
  * sessions on the
- * [website](https://grammy.dev/plugins/session.html#lazy-sessions).
+ * [website](https://grammy.dev/plugins/session#lazy-sessions).
  */
 export interface LazySessionFlavor<S> {
     /**
@@ -124,7 +124,7 @@ export interface SessionOptions<S, C extends Context = Context> {
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
      * your chats and users. Check out the
-     * [documentation](https://grammy.dev/plugins/session.html#how-to-use-sessions)
+     * [documentation](https://grammy.dev/plugins/session#how-to-use-sessions)
      * on the website about how to use session middleware to know how session
      * keys are used.
      *
@@ -139,7 +139,7 @@ export interface SessionOptions<S, C extends Context = Context> {
      * delete access to the session middleware.
      *
      * Consider using a [known storage
-     * adapter](https://grammy.dev/plugins/session.html#known-storage-adapters)
+     * adapter](https://grammy.dev/plugins/session#known-storage-adapters)
      * instead of rolling your own implementation of this.
      *
      * The default implementation will store session in memory. The data will be
@@ -206,7 +206,7 @@ type MultiSessionOptionsRecord<
  * You can delete the session data by setting `ctx.session` to `null` or
  * `undefined`.
  *
- * Check out the [documentation](https://grammy.dev/plugins/session.html) on the
+ * Check out the [documentation](https://grammy.dev/plugins/session) on the
  * website to know more about how sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware
@@ -291,7 +291,7 @@ function strictMultiSession<S, C extends Context>(
  * ```
  *
  * Check out the
- * [documentation](https://grammy.dev/plugins/session.html#lazy-sessions) on the
+ * [documentation](https://grammy.dev/plugins/session#lazy-sessions) on the
  * website to know more about how lazy sessions work in grammY.
  *
  * @param options Optional configuration to pass to the session middleware

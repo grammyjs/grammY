@@ -23,9 +23,9 @@ const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
  * ```
  *
  * Check out the
- * [documentation](https://doc.deno.land/https://deno.land/x/grammy/mod.ts/~/Composer)
+ * [documentation](https://grammy.dev/ref/core/composer#on)
  * of `bot.on` for examples. In addition, the
- * [website](https://grammy.dev/guide/filter-queries.html) contains more
+ * [website](https://grammy.dev/guide/filter-queries) contains more
  * information about how filter queries work in grammY.
  *
  * @param filter A filter query or an array of filter queries
@@ -424,7 +424,7 @@ type ComputeFilterQueryList = InjectShortcuts;
 /**
  * Represents a filter query that can be passed to `bot.on`. There are three
  * different kinds of filter queries: Level 1, Level 2, and Level 3. Check out
- * the [website](https://grammy.dev/guide/filter-queries.html) to read about how
+ * the [website](https://grammy.dev/guide/filter-queries) to read about how
  * filter queries work in grammY, and how to use them.
  *
  * Here are three brief examples:

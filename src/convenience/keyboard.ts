@@ -46,7 +46,7 @@ type KeyboardSource = KeyboardButtonSource[][] | Keyboard;
  * ```
  *
  * Be sure to check out the
- * [documentation](https://grammy.dev/plugins/keyboard.html#custom-keyboards) on
+ * [documentation](https://grammy.dev/plugins/keyboard#custom-keyboards) on
  * custom keyboards in grammY.
  */
 export class Keyboard {
@@ -287,7 +287,7 @@ export class Keyboard {
     }
     /**
      * Make the current keyboard persistent. See
-     * https://grammy.dev/plugins/keyboard.html#persistent-keyboards for more
+     * https://grammy.dev/plugins/keyboard#persistent-keyboards for more
      * details.
      *
      * Keyboards are not persistent by default, use this function to enable it
@@ -302,7 +302,7 @@ export class Keyboard {
     }
     /**
      * Make the current keyboard selective. See
-     * https://grammy.dev/plugins/keyboard.html#selectively-send-custom-keyboards
+     * https://grammy.dev/plugins/keyboard#selectively-send-custom-keyboards
      * for more details.
      *
      * Keyboards are non-selective by default, use this function to enable it
@@ -317,7 +317,7 @@ export class Keyboard {
     }
     /**
      * Make the current keyboard one-time. See
-     * https://grammy.dev/plugins/keyboard.html#one-time-custom-keyboards for
+     * https://grammy.dev/plugins/keyboard#one-time-custom-keyboards for
      * more details.
      *
      * Keyboards are non-one-time by default, use this function to enable it
@@ -332,7 +332,7 @@ export class Keyboard {
     }
     /**
      * Make the current keyboard resized. See
-     * https://grammy.dev/plugins/keyboard.html#resize-custom-keyboard for more
+     * https://grammy.dev/plugins/keyboard#resize-custom-keyboard for more
      * details.
      *
      * Keyboards are non-resized by default, use this function to enable it
@@ -347,7 +347,7 @@ export class Keyboard {
     }
     /**
      * Set the current keyboard's input field placeholder. See
-     * https://grammy.dev/plugins/keyboard.html#input-field-placeholder for more
+     * https://grammy.dev/plugins/keyboard#input-field-placeholder for more
      * details.
      *
      * @param value The placeholder text
@@ -513,7 +513,7 @@ type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
  * ```
  *
  * Be sure to to check the
- * [documentation](https://grammy.dev/plugins/keyboard.html#inline-keyboards) on
+ * [documentation](https://grammy.dev/plugins/keyboard#inline-keyboards) on
  * inline keyboards in grammY.
  */
 export class InlineKeyboard {

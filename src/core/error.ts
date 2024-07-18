@@ -71,7 +71,7 @@ export function toGrammyError(
  * request failed.
  *
  * If an [API transformer
- * function](https://grammy.dev/advanced/transformers.html) throws an error,
+ * function](https://grammy.dev/advanced/transformers) throws an error,
  * grammY will regard this as if the network request failed. The contained error
  * will then be the error that was thrown by the transformer function.
  */

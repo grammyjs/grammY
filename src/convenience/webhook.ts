@@ -48,7 +48,7 @@ type ResolveName<A extends FrameworkAdapter | AdapterNames> = A extends
  * ```
  *
  * Confer the grammY
- * [documentation](https://grammy.dev/guide/deployment-types.html) to read more
+ * [documentation](https://grammy.dev/guide/deployment-types) to read more
  * about how to run your bot with webhooks.
  *
  * @param bot The bot for which to create a callback

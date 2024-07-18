@@ -345,7 +345,7 @@ export class Bot<
      * your bot will handle.
      *
      * If you're writing a library on top of grammY, check out the
-     * [documentation](https://grammy.dev/plugins/runner.html) of the runner
+     * [documentation](https://grammy.dev/plugins/runner) of the runner
      * plugin for an example that uses this method.
      *
      * @param update An update from the Telegram Bot API
@@ -412,7 +412,7 @@ a known bot info object.",
      * will impact the responsiveness negatively, so it makes sense to use the
      * `@grammyjs/runner` package even if you receive much fewer messages. If
      * you worry about how much load your bot can handle, check out the grammY
-     * [documentation](https://grammy.dev/advanced/scaling.html) about scaling
+     * [documentation](https://grammy.dev/advanced/scaling) about scaling
      * up.
      *
      * @param options Options to use for simple long polling

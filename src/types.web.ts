@@ -30,7 +30,7 @@ interface URLLike {
 // === InputFile handling and File augmenting
 /**
  * An `InputFile` wraps a number of different sources for [sending
- * files](https://grammy.dev/guide/files.html#uploading-your-own-file).
+ * files](https://grammy.dev/guide/files#uploading-your-own-files).
  *
  * It corresponds to the `InputFile` type in the [Telegram Bot API
  * Reference](https://core.telegram.org/bots/api#inputfile).
@@ -42,7 +42,7 @@ export class InputFile {
      * Optional name of the constructed `InputFile` instance.
      *
      * Check out the
-     * [documentation](https://grammy.dev/guide/files.html#uploading-your-own-file)
+     * [documentation](https://grammy.dev/guide/files#uploading-your-own-files)
      * on sending files with `InputFile`.
      */
     public readonly filename?: string;

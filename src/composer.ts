@@ -90,7 +90,7 @@ export interface MiddlewareObj<C extends Context = Context> {
  * Middleware is an extremely powerful concept and this short explanation only
  * scratched the surface of what is possible with grammY. If you want to know
  * more advanced things about middleware, check out the
- * [documentation](https://grammy.dev/guide/middleware.html) on the website.
+ * [documentation](https://grammy.dev/guide/middleware) on the website.
  */
 export type Middleware<C extends Context = Context> =
     | MiddlewareFn<C>
@@ -183,7 +183,7 @@ export async function run<C extends Context>(
  *
  * On the other hand, if you want to dig deeper into how grammY implements
  * middleware, check out the
- * [documentation](https://grammy.dev/advanced/middleware.html) on the website.
+ * [documentation](https://grammy.dev/advanced/middleware) on the website.
  */
 export class Composer<C extends Context> implements MiddlewareObj<C> {
     private handler: MiddlewareFn<C>;
@@ -217,7 +217,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * This method returns a new instance of composer. The returned instance can
      * be further extended, and all changes will be regarded here. Confer the
-     * [documentation](https://grammy.dev/advanced/middleware.html) on the
+     * [documentation](https://grammy.dev/advanced/middleware) on the
      * website if you want to know more about how the middleware system in
      * grammY works, especially when it comes to chaining the method calls
      * (`use( ... ).use( ... ).use( ... )`).
@@ -258,7 +258,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * You can use autocomplete in VS Code to see all available filter queries.
      * Check out the
-     * [documentation](https://grammy.dev/guide/filter-queries.html) on the
+     * [documentation](https://grammy.dev/guide/filter-queries) on the
      * website to learn more about filter queries in grammY.
      *
      * It is possible to pass multiple filter queries in an array, i.e.
@@ -445,7 +445,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * // Groups and supergroups only
      * bot.chatType(["group", "supergroup"], ctx => { ... });
      * ```
-     * [Remember](https://grammy.dev/guide/context.html#shortcuts) also that you
+     * [Remember](https://grammy.dev/guide/context#shortcuts) also that you
      * can access the chat type via `ctx.chat.type`.
      *
      * @param chatType The chat type
@@ -896,7 +896,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * ```
      *
      * Check out the
-     * [documentation](https://grammy.dev/guide/errors.html#error-boundaries) on
+     * [documentation](https://grammy.dev/guide/errors#error-boundaries) on
      * the website to learn more about error boundaries.
      *
      * @param errorHandler The error handler to use

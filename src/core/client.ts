@@ -65,7 +65,7 @@ type ApiCallResult<M extends Methods<R>, R extends RawApi> = R[M] extends
  * implement rate limiting or other things against the Telegram Bot API.
  *
  * Confer the grammY
- * [documentation](https://grammy.dev/advanced/transformers.html) to read more
+ * [documentation](https://grammy.dev/advanced/transformers) to read more
  * about how to use transformers.
  */
 export type Transformer<R extends RawApi = RawApi> = <M extends Methods<R>>(
