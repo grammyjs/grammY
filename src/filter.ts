@@ -23,9 +23,9 @@ const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
  * ```
  *
  * Check out the
- * [documentation](https://doc.deno.land/https://deno.land/x/grammy/mod.ts/~/Composer)
+ * [documentation](https://grammy.dev/ref/core/composer#on)
  * of `bot.on` for examples. In addition, the
- * [website](https://grammy.dev/guide/filter-queries.html) contains more
+ * [website](https://grammy.dev/guide/filter-queries) contains more
  * information about how filter queries work in grammY.
  *
  * @param filter A filter query or an array of filter queries
@@ -94,8 +94,7 @@ export function preprocess(filter: string[]): string[][] {
         });
     if (expanded.length === 0) {
         throw new Error(
-            `Shortcuts in '${
-                filter.join(":")
+            `Shortcuts in '${filter.join(":")
             }' do not expand to any valid filter query`,
         );
     }
@@ -111,10 +110,8 @@ function check(original: string[], preprocessed: string[][]): string[][] {
     else if (errors.length === 1) throw new Error(errors[0]);
     else {
         throw new Error(
-            `Invalid filter query '${
-                original.join(":")
-            }'. There are ${errors.length} errors after expanding the contained shortcuts: ${
-                errors.join("; ")
+            `Invalid filter query '${original.join(":")
+            }'. There are ${errors.length} errors after expanding the contained shortcuts: ${errors.join("; ")
             }`,
         );
     }
@@ -138,18 +135,15 @@ Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")}.`;
     const l2Obj = l1Obj[l2];
     if (!(l3 in l2Obj)) {
         const permitted = Object.keys(l2Obj);
-        return `Invalid L3 filter '${l3}' given in '${filter.join(":")}'. ${
-            permitted.length === 0
+        return `Invalid L3 filter '${l3}' given in '${filter.join(":")}'. ${permitted.length === 0
                 ? `No further filtering is possible after '${l1}:${l2}'.`
-                : `Permitted values are: ${
-                    permitted.map((k) => `'${k}'`).join(", ")
+                : `Permitted values are: ${permitted.map((k) => `'${k}'`).join(", ")
                 }.`
-        }`;
+            }`;
     }
     if (n.length === 0) return true;
-    return `Cannot filter further than three levels, ':${
-        n.join(":")
-    }' is invalid!`;
+    return `Cannot filter further than three levels, ':${n.join(":")
+        }' is invalid!`;
 }
 interface LTree {
     [l1: string]: { [l2: string]: Set<string> };
@@ -398,7 +392,7 @@ type InjectShortcuts<Q extends L123 = L123> = Q extends
     `${infer L1}:${infer L2}:${infer L3}`
     ? `${CollapseL1<L1, L1Shortcuts>}:${CollapseL2<L2, L2Shortcuts>}:${L3}`
     : Q extends `${infer L1}:${infer L2}`
-        ? `${CollapseL1<L1, L1Shortcuts>}:${CollapseL2<L2>}`
+    ? `${CollapseL1<L1, L1Shortcuts>}:${CollapseL2<L2>}`
     : CollapseL1<Q>;
 // Add L1 shortcuts
 type CollapseL1<
@@ -534,123 +528,123 @@ type FilteredContextCore<U extends Update> =
 interface Shortcuts<U extends Update> {
     message: [U["message"]] extends [object] ? U["message"] : undefined;
     editedMessage: [U["edited_message"]] extends [object] ? U["edited_message"]
-        : undefined;
+    : undefined;
     channelPost: [U["channel_post"]] extends [object] ? U["channel_post"]
-        : undefined;
+    : undefined;
     editedChannelPost: [U["edited_channel_post"]] extends [object]
-        ? U["edited_channel_post"]
-        : undefined;
+    ? U["edited_channel_post"]
+    : undefined;
     businessConnection: [U["business_connection"]] extends [object]
-        ? U["business_connection"]
-        : undefined;
+    ? U["business_connection"]
+    : undefined;
     businessMessage: [U["business_message"]] extends [object]
-        ? U["business_message"]
-        : undefined;
+    ? U["business_message"]
+    : undefined;
     editedBusinessMessage: [U["edited_business_message"]] extends [object]
-        ? U["edited_business_message"]
-        : undefined;
+    ? U["edited_business_message"]
+    : undefined;
     deletedBusinessMessages: [U["deleted_business_messages"]] extends [object]
-        ? U["deleted_business_messages"]
-        : undefined;
+    ? U["deleted_business_messages"]
+    : undefined;
     messageReaction: [U["message_reaction"]] extends [object]
-        ? U["message_reaction"]
-        : undefined;
+    ? U["message_reaction"]
+    : undefined;
     messageReactionCount: [U["message_reaction_count"]] extends [object]
-        ? U["message_reaction_count"]
-        : undefined;
+    ? U["message_reaction_count"]
+    : undefined;
     inlineQuery: [U["inline_query"]] extends [object] ? U["inline_query"]
-        : undefined;
+    : undefined;
     chosenInlineResult: [U["chosen_inline_result"]] extends [object]
-        ? U["chosen_inline_result"]
-        : undefined;
+    ? U["chosen_inline_result"]
+    : undefined;
     callbackQuery: [U["callback_query"]] extends [object] ? U["callback_query"]
-        : undefined;
+    : undefined;
     shippingQuery: [U["shipping_query"]] extends [object] ? U["shipping_query"]
-        : undefined;
+    : undefined;
     preCheckoutQuery: [U["pre_checkout_query"]] extends [object]
-        ? U["pre_checkout_query"]
-        : undefined;
+    ? U["pre_checkout_query"]
+    : undefined;
     poll: [U["poll"]] extends [object] ? U["poll"] : undefined;
     pollAnswer: [U["poll_answer"]] extends [object] ? U["poll_answer"]
-        : undefined;
+    : undefined;
     myChatMember: [U["my_chat_member"]] extends [object] ? U["my_chat_member"]
-        : undefined;
+    : undefined;
     chatMember: [U["chat_member"]] extends [object] ? U["chat_member"]
-        : undefined;
+    : undefined;
     chatJoinRequest: [U["chat_join_request"]] extends [object]
-        ? U["chat_join_request"]
-        : undefined;
+    ? U["chat_join_request"]
+    : undefined;
     chatBoost: [U["chat_boost"]] extends [object] ? U["chat_boost"] : undefined;
     removedChatBoost: [U["removed_chat_boost"]] extends [object]
-        ? U["removed_chat_boost"]
-        : undefined;
+    ? U["removed_chat_boost"]
+    : undefined;
     msg: [U["message"]] extends [object] ? U["message"]
-        : [U["edited_message"]] extends [object] ? U["edited_message"]
-        : [U["channel_post"]] extends [object] ? U["channel_post"]
-        : [U["edited_channel_post"]] extends [object] ? U["edited_channel_post"]
-        : [U["business_message"]] extends [object] ? U["business_message"]
-        : [U["edited_business_message"]] extends [object]
-            ? U["edited_business_message"]
-        : [U["callback_query"]] extends [object]
-            ? U["callback_query"]["message"]
-        : undefined;
+    : [U["edited_message"]] extends [object] ? U["edited_message"]
+    : [U["channel_post"]] extends [object] ? U["channel_post"]
+    : [U["edited_channel_post"]] extends [object] ? U["edited_channel_post"]
+    : [U["business_message"]] extends [object] ? U["business_message"]
+    : [U["edited_business_message"]] extends [object]
+    ? U["edited_business_message"]
+    : [U["callback_query"]] extends [object]
+    ? U["callback_query"]["message"]
+    : undefined;
     chat: [U["callback_query"]] extends [object]
-        ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
-        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
-        : [U["deleted_business_messages"]] extends [object]
-            ? U["deleted_business_messages"]["chat"]
-        : [U["message_reaction"]] extends [object]
-            ? U["message_reaction"]["chat"]
-        : [U["message_reaction_count"]] extends [object]
-            ? U["message_reaction_count"]["chat"]
-        : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["chat"]
-        : [U["chat_member"]] extends [object] ? U["chat_member"]["chat"]
-        : [U["chat_join_request"]] extends [object]
-            ? U["chat_join_request"]["chat"]
-        : [U["chat_boost"]] extends [object] ? U["chat_boost"]["chat"]
-        : [U["removed_chat_boost"]] extends [object]
-            ? U["removed_chat_boost"]["chat"]
-        : undefined;
+    ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
+    : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
+    : [U["deleted_business_messages"]] extends [object]
+    ? U["deleted_business_messages"]["chat"]
+    : [U["message_reaction"]] extends [object]
+    ? U["message_reaction"]["chat"]
+    : [U["message_reaction_count"]] extends [object]
+    ? U["message_reaction_count"]["chat"]
+    : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["chat"]
+    : [U["chat_member"]] extends [object] ? U["chat_member"]["chat"]
+    : [U["chat_join_request"]] extends [object]
+    ? U["chat_join_request"]["chat"]
+    : [U["chat_boost"]] extends [object] ? U["chat_boost"]["chat"]
+    : [U["removed_chat_boost"]] extends [object]
+    ? U["removed_chat_boost"]["chat"]
+    : undefined;
     senderChat: [Shortcuts<U>["msg"]] extends [object]
-        ? Shortcuts<U>["msg"]["sender_chat"]
-        : undefined;
+    ? Shortcuts<U>["msg"]["sender_chat"]
+    : undefined;
     from: [U["business_connection"]] extends [object]
-        ? U["business_connection"]["user"]
-        : [U["message_reaction"]] extends [object]
-            ? U["message_reaction"]["user"]
-        : [U["chat_boost"]] extends [object]
-            ? U["chat_boost"]["boost"]["source"]["user"]
-        : [U["removed_chat_boost"]] extends [object]
-            ? U["removed_chat_boost"]["source"]["user"]
-        : [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
-        : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["from"]
-        : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
-        : [U["chosen_inline_result"]] extends [object]
-            ? U["chosen_inline_result"]["from"]
-        : [U["shipping_query"]] extends [object] ? U["shipping_query"]["from"]
-        : [U["pre_checkout_query"]] extends [object]
-            ? U["pre_checkout_query"]["from"]
-        : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["from"]
-        : [U["chat_member"]] extends [object] ? U["chat_member"]["from"]
-        : [U["chat_join_request"]] extends [object]
-            ? U["chat_join_request"]["from"]
-        : undefined;
+    ? U["business_connection"]["user"]
+    : [U["message_reaction"]] extends [object]
+    ? U["message_reaction"]["user"]
+    : [U["chat_boost"]] extends [object]
+    ? U["chat_boost"]["boost"]["source"]["user"]
+    : [U["removed_chat_boost"]] extends [object]
+    ? U["removed_chat_boost"]["source"]["user"]
+    : [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
+    : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["from"]
+    : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]
+    : [U["chosen_inline_result"]] extends [object]
+    ? U["chosen_inline_result"]["from"]
+    : [U["shipping_query"]] extends [object] ? U["shipping_query"]["from"]
+    : [U["pre_checkout_query"]] extends [object]
+    ? U["pre_checkout_query"]["from"]
+    : [U["my_chat_member"]] extends [object] ? U["my_chat_member"]["from"]
+    : [U["chat_member"]] extends [object] ? U["chat_member"]["from"]
+    : [U["chat_join_request"]] extends [object]
+    ? U["chat_join_request"]["from"]
+    : undefined;
     msgId: [U["callback_query"]] extends [object] ? number | undefined
-        : [Shortcuts<U>["msg"]] extends [object] ? number
-        : [U["message_reaction"]] extends [object] ? number
-        : [U["message_reaction_count"]] extends [object] ? number
-        : undefined;
+    : [Shortcuts<U>["msg"]] extends [object] ? number
+    : [U["message_reaction"]] extends [object] ? number
+    : [U["message_reaction_count"]] extends [object] ? number
+    : undefined;
     chatId: [U["callback_query"]] extends [object] ? number | undefined
-        : [Shortcuts<U>["chat"]] extends [object] ? number
-        : [U["business_connection"]] extends [object] ? number
-        : undefined;
+    : [Shortcuts<U>["chat"]] extends [object] ? number
+    : [U["business_connection"]] extends [object] ? number
+    : undefined;
     // inlineMessageId: disregarded here because always optional on both types
     businessConnectionId: [U["callback_query"]] extends [object]
-        ? string | undefined
-        : [Shortcuts<U>["msg"]] extends [object] ? string | undefined
-        : [U["business_connection"]] extends [object] ? string
-        : [U["deleted_business_messages"]] extends [object] ? string
-        : undefined;
+    ? string | undefined
+    : [Shortcuts<U>["msg"]] extends [object] ? string | undefined
+    : [U["business_connection"]] extends [object] ? string
+    : [U["deleted_business_messages"]] extends [object] ? string
+    : undefined;
 }
 
 // === Define some helpers for handling shortcuts, e.g. in 'edit:photo'
