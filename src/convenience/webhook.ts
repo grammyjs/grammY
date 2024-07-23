@@ -140,6 +140,7 @@ function timeoutIfNecessary(
     if (timeout === Infinity) return task;
     return new Promise((resolve, reject) => {
         const handle = setTimeout(() => {
+            debugErr(`Request timed out after ${timeout} ms`);
             if (onTimeout === "throw") {
                 reject(new Error(`Request timed out after ${timeout} ms`));
             } else {
