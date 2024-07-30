@@ -10,14 +10,14 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-7.7-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-7.8-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
 
 <!-- deno-fmt-ignore-end -->
 
-## _[docs.](https://grammy.dev) [reference.](https://deno.land/x/grammy/mod.ts) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)_
+## _[docs.](https://grammy.dev) [reference.](https://grammy.dev/ref) [chat.](https://telegram.me/grammyjs) [news.](https://telegram.me/grammyjs_news)_
 
 </div>
 
@@ -68,7 +68,7 @@ Congrats! You just wrote a Telegram bot :)
 
 ## Going Further
 
-grammY has an excellent [documentation](https://grammy.dev), and an [API Reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts). It even integrates with your code editor, e.g. [VS Code](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
+grammY has an excellent [documentation](https://grammy.dev), and an [API Reference](https://grammy.dev/ref). It even integrates with your code editor, e.g. [VS Code](https://code.visualstudio.com/). You can hover over any element of grammY to get a detailed description of what that thing does or means.
 
 If you are still stuck, just join the [Telegram chat](https://t.me/grammyjs) and ask for help. People are nice there and we appreciate your question, no matter what it is :)
 
@@ -81,7 +81,7 @@ Here are some more resources to support you:
 —main project website and documentation.
 Gets you started and explains all concepts.
 
-### [grammY API reference](https://doc.deno.land/https://deno.land/x/grammy/mod.ts)
+### [grammY API reference](https://grammy.dev/ref)
 
 —reference of everything that grammY exports.
 Useful to look up descriptions about any element of grammY.
