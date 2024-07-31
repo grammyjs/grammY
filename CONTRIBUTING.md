@@ -18,7 +18,7 @@ If you’re unsure whether your changes are welcome, open an issue on GitHub or 
 
 In case you’d like to get some inspiration what we're working on, we have
 
-- a [project board tracking many active issues and pull requests](https://github.com/orgs/grammyjs/projects/3), and
+- a [long list of issues across all repositories](https://github.com/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen+archived%3Afalse+user%3Agrammyjs), and
 - an [issue with plugin ideas](https://github.com/grammyjs/grammY/issues/110).
 
 There’s usually also a [pinned issue](https://github.com/grammyjs/grammY/issues) which tells you what the next release is about.
@@ -52,7 +52,7 @@ There are several areas of contributions, and they have different ways to get yo
   If you're unsure whether or not your work goes in the right direction, simply ask about it in an issue or in the [Telegram chat](https://telegram.me/grammyjs).
 - **Plugins.**
   There are both official plugins and third-party plugins.
-  Our official plugins need to be of high quality (100 % TypeScript, ES6, Deno support, docs that are on par with grammY, semver, etc).
+  Our official plugins need to be of high quality (100 % TypeScript, ES6, Deno support, signed commits, docs that are on par with grammY, semver, etc).
   Third-party plugins are independent and anyone can do them however they want.
   If a third-party plugin was to be listed on the website, some docs would be nice.
 - **Storage adapters.**
@@ -64,7 +64,7 @@ There are several areas of contributions, and they have different ways to get yo
   We're happy to hear from you if you want to report a bug, request a feature, or contribute anything else—also if it is not code.
   There are no technical steps to this.
 
-### Working on the Core of grammY using Deno (recommended)
+### Working on the Core of grammY Using Deno (Recommended)
 
 If you just want to build from the newest version of the source code on GitHub, you can directly import from `https://raw.githubusercontent.com/grammyjs/grammY/main/src/mod.ts`.
 (Naturally, you can replace main by another branch name, e.g. in order to test a PR.)
@@ -92,15 +92,15 @@ This should give you `genhtml`, a tool to display LCOV code coverage.
 2. Run `deno task report` to generate an HTML report for the coverage.
 3. Point your browser to `./test/coverage/index.html` to view the test coverage.
 
-### Working on the Core of grammY using Node.js
+### Working on the Core of grammY Using Node.js
 
 You can install grammY directly from source via
 
 ```sh
 # main branch
-npm install grammyjs/grammy
+npm install github:grammyjs/grammy
 # another branch, e.g. called branch-name
-npm install grammyjs/grammy#branch-name
+npm install github:grammyjs/grammy#branch-name
 ```
 
 which will download grammY and build the code locally.
