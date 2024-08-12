@@ -201,7 +201,6 @@ describe("Context", () => {
         assertEquals(ctx.from, up.message_reaction?.user);
         up = { chat_boost: update.chat_boost } as Update;
         ctx = new Context(up, api, me);
-        console.log(up);
         assertEquals(ctx.from, up.chat_boost?.boost.source.user);
         up = { removed_chat_boost: update.removed_chat_boost } as Update;
         ctx = new Context(up, api, me);
