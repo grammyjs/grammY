@@ -10,25 +10,16 @@
         "bundle-web": "mkdir -p out deno_cache && cd bundling && DENO_DIR=$PWD/../deno_cache deno run --unstable --quiet --allow-net --allow-read --allow-env=DENO_DIR,XDG_CACHE_HOME,HOME,DENO_AUTH_TOKENS --allow-write=../out,$PWD/../deno_cache bundle-web.ts dev ../src/mod.ts",
         "contribs": "deno run --allow-env --allow-read --allow-write=. --allow-net=api.github.com --allow-sys npm:all-contributors-cli"
     },
+    "exclude": [
+        "./bundling/bundles",
+        "./deno_cache/",
+        "./node_modules/",
+        "./out/",
+        "./package-lock.json",
+        "./test/cov_profile"
+    ],
     "fmt": {
         "indentWidth": 4,
-        "proseWrap": "preserve",
-        "exclude": [
-            "./deno_cache/",
-            "./node_modules/",
-            "./out/",
-            "./package-lock.json",
-            "./bundling/bundles",
-            "./test/cov_profile"
-        ]
-    },
-    "lint": {
-        "exclude": [
-            "./deno_cache/",
-            "./node_modules/",
-            "./out/",
-            "./package-lock.json",
-            "./bundling/bundles"
-        ]
+        "proseWrap": "preserve"
     }
 }
