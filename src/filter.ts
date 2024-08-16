@@ -256,6 +256,7 @@ const STICKER_KEYS = {
 const REACTION_KEYS = {
     emoji: {},
     custom_emoji: {},
+    paid: {},
 } as const;
 
 // L2

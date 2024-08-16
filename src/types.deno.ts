@@ -14,13 +14,13 @@ import {
     type InputPaidMediaVideo as InputPaidMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.12.0/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.13.0/mod.ts";
 import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.12.0/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.13.0/mod.ts";
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);
