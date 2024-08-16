@@ -306,6 +306,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="https://consortiumkey.com/"><img src="https://avatars.githubusercontent.com/u/95214604?v=4?s=100" width="100px;" alt="lexomis"/><br /><sub><b>lexomis</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Alexomis" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/asologor"><img src="https://avatars.githubusercontent.com/u/97506048?v=4?s=100" width="100px;" alt="Andrew Sologor"/><br /><sub><b>Andrew Sologor</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Aandrew-sol" title="Reviewed Pull Requests">👀</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/rayz1065"><img src="https://avatars.githubusercontent.com/u/37779815?v=4?s=100" width="100px;" alt="rayz"/><br /><sub><b>rayz</b></sub></a><br /><a href="#question-rayz1065" title="Answering Questions">💬</a></td>
+    </tr>
   </tbody>
 </table>
 
