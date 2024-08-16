@@ -12,22 +12,21 @@ type MaybePromise<T> = Promise<T> | T;
  *
  * Session middleware will load the session data of a specific chat from your
  * storage solution, and make it available to you on the context object. Check
- * out the
- * [documentation](https://grammy.dev/ref/core/session)
- * on session middleware to know more, and read the section about sessions on
- * the [website](https://grammy.dev/plugins/session).
+ * out the [documentation](https://grammy.dev/ref/core/session) on session
+ * middleware to know more, and read the section about sessions on the
+ * [website](https://grammy.dev/plugins/session).
  */
 export interface SessionFlavor<S> {
     /**
      * Session data on the context object.
      *
      * **WARNING:** You have to make sure that your session data is not
-     * undefined by _providing an initial value to the session middleware_, or by
-     * making sure that `ctx.session` is assigned if it is empty! The type
+     * undefined by _providing an initial value to the session middleware_, or
+     * by making sure that `ctx.session` is assigned if it is empty! The type
      * system does not include `| undefined` because this is really annoying to
      * work with.
      *
-     *  Accessing `ctx.session` by reading or writing will throw if
+     * Accessing `ctx.session` by reading or writing will throw if
      * `getSessionKey(ctx) === undefined` for the respective context object
      * `ctx`.
      */
@@ -42,9 +41,8 @@ export interface SessionFlavor<S> {
  * object. Once you access `ctx.session`, the storage will be queried and the
  * session data becomes available. If you access `ctx.session` again for the
  * same context object, the cached value will be used. Check out the
- * [documentation](https://grammy.dev/ref/core/lazysession)
- * on lazy session middleware to know more, and read the section about lazy
- * sessions on the
+ * [documentation](https://grammy.dev/ref/core/lazysession) on lazy session
+ * middleware to know more, and read the section about lazy sessions on the
  * [website](https://grammy.dev/plugins/session#lazy-sessions).
  */
 export interface LazySessionFlavor<S> {
@@ -632,11 +630,11 @@ function wrapStorage<T>(
  * This class is used as default if you do not provide a storage adapter, e.g.
  * to your database.
  *
- * This storage adapter features expiring sessions. When instantiating this class
- * yourself, you can pass a time to live in milliseconds that will be used for
- * each session object. If a session for a user expired, the session data will
- * be discarded on its first read, and a fresh session object as returned by the
- * `initial` option (or undefined) will be put into place.
+ * This storage adapter features expiring sessions. When instantiating this
+ * class yourself, you can pass a time to live in milliseconds that will be used
+ * for each session object. If a session for a user expired, the session data
+ * will be discarded on its first read, and a fresh session object as returned
+ * by the `initial` option (or undefined) will be put into place.
  */
 export class MemorySessionStorage<S> implements StorageAdapter<S> {
     /**
