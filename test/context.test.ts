@@ -324,6 +324,7 @@ describe("Context", () => {
                     { type: "emoji", emoji: "🎉" },
                     { type: "custom_emoji", custom_emoji_id: "id" },
                     { type: "emoji", emoji: "👍" },
+                    { type: "paid" },
                 ],
             },
         };
@@ -337,9 +338,12 @@ describe("Context", () => {
         assert(ctx.hasReaction({ type: "emoji", emoji: "👍" }));
         assert(Context.has.reaction([{ type: "emoji", emoji: "👍" }])(ctx));
         assert(ctx.hasReaction([{ type: "emoji", emoji: "👍" }]));
+        assert(Context.has.reaction({ type: "paid" }));
+        assert(ctx.hasReaction({ type: "paid" }));
         assertFalse(Context.has.reaction("👎")(ctx));
         assertFalse(ctx.hasReaction("👎"));
 
+        const removed = { type: "paid" as const };
         const added = {
             type: "custom_emoji" as const,
             custom_emoji_id: "id_new",
@@ -351,6 +355,7 @@ describe("Context", () => {
                 date: 42,
                 message_id: 2,
                 old_reaction: [
+                    removed,
                     { type: "emoji", emoji: "🎉" },
                     { type: "custom_emoji", custom_emoji_id: "id" },
                 ],
@@ -367,6 +372,8 @@ describe("Context", () => {
         assert(ctx.hasReaction(added));
         assert(Context.has.reaction(["🏆", added])(ctx));
         assert(ctx.hasReaction(["🏆", added]));
+        assertFalse(Context.has.reaction(removed)(ctx));
+        assertFalse(ctx.hasReaction(removed));
     });
 
     it("should be able to check for chat types", () => {
@@ -613,10 +620,11 @@ describe("Context", () => {
         const cye = { type: "custom_emoji", custom_emoji_id: "id-ye" };
         const cno = { type: "custom_emoji", custom_emoji_id: "id-no" };
         const cok = { type: "custom_emoji", custom_emoji_id: "id-ok" };
+        const p = { type: "paid" };
         let up = {
             message_reaction: {
-                old_reaction: [ye, no, cye, cno],
-                new_reaction: [ok, no, cok, cno],
+                old_reaction: [ye, no, p, cye, cno],
+                new_reaction: [ok, no, p, cok, cno],
             },
         } as Update;
         let ctx = new Context(up, api, me);
@@ -629,6 +637,9 @@ describe("Context", () => {
             customEmojiRemoved,
             customEmojiKept,
             customEmojiAdded,
+            paid,
+            paidAdded,
+            paidRemoved,
         } = ctx.reactions();
         assertEquals(emoji, [ok.emoji, no.emoji]);
         assertEquals(emojiRemoved, [ye.emoji]);
@@ -638,6 +649,9 @@ describe("Context", () => {
         assertEquals(customEmojiRemoved, [cye.custom_emoji_id]);
         assertEquals(customEmojiKept, [cno.custom_emoji_id]);
         assertEquals(customEmojiAdded, [cok.custom_emoji_id]);
+        assertEquals(paid, true);
+        assertEquals(paidAdded, false);
+        assertEquals(paidRemoved, false);
 
         up = { message: update.message } as Update;
         ctx = new Context(up, api, me);
@@ -650,6 +664,9 @@ describe("Context", () => {
             customEmojiRemoved: [],
             customEmojiKept: [],
             customEmojiAdded: [],
+            paid: false,
+            paidAdded: false,
+            paidRemoved: false,
         });
     });
 });
