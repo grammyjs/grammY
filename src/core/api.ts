@@ -655,7 +655,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to send paid media to channel chats. On success, the sent Message is returned.
+     * Use this method to send paid media. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param star_count The number of Telegram Stars that must be paid to buy access to the media
@@ -782,11 +782,11 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success.
+     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the target message
-     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1117,7 +1117,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     *  Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
+     * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param invite_link The invite link to edit
@@ -1139,7 +1139,61 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     *  Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
+     * Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.
+     *
+     * @param chat_id Unique identifier for the target channel chat or username of the target channel (in the format @channelusername)
+     * @param subscription_period The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
+     * @param subscription_price The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-2500
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
+     */
+    createChatSubscriptionInviteLink(
+        chat_id: number | string,
+        subscription_period: number,
+        subscription_price: number,
+        other?: Other<
+            R,
+            "createChatSubscriptionInviteLink",
+            "chat_id" | "subscription_period" | "subscription_price"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.createChatSubscriptionInviteLink(
+            { chat_id, subscription_period, subscription_price, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param invite_link The invite link to edit
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editchatsubscriptioninvitelink
+     */
+    editChatSubscriptionInviteLink(
+        chat_id: number | string,
+        invite_link: string,
+        other?: Other<
+            R,
+            "editChatSubscriptionInviteLink",
+            "chat_id" | "invite_link"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editChatSubscriptionInviteLink(
+            { chat_id, invite_link, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
      *
      * @param chat_id Unique identifier of the target chat or username of the target channel (in the format @channelusername)
      * @param invite_link The invite link to revoke
@@ -1437,7 +1491,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
@@ -1536,7 +1590,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param name New topic name, 1-128 characters

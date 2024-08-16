@@ -231,10 +231,21 @@ const checker: StaticHas = {
             : (Array.isArray(reaction) ? reaction : [reaction]).map((emoji) =>
                 typeof emoji === "string" ? { type: "emoji", emoji } : emoji
             );
+        const emoji = new Set(
+            normalized.filter((r) => r.type === "emoji")
+                .map((r) => r.emoji),
+        );
+        const customEmoji = new Set(
+            normalized.filter((r) => r.type === "custom_emoji")
+                .map((r) => r.custom_emoji_id),
+        );
+        const paid = normalized.some((r) => r.type === "paid");
         return <C extends Context>(ctx: C): ctx is ReactionContext<C> => {
             if (!hasMessageReaction(ctx)) return false;
             const { old_reaction, new_reaction } = ctx.messageReaction;
+            // try to find a wanted reaction that is new and not old
             for (const reaction of new_reaction) {
+                // first check if the reaction existed previously
                 let isOld = false;
                 if (reaction.type === "emoji") {
                     for (const old of old_reaction) {
@@ -252,32 +263,29 @@ const checker: StaticHas = {
                             break;
                         }
                     }
+                } else if (reaction.type === "paid") {
+                    for (const old of old_reaction) {
+                        if (old.type !== "paid") continue;
+                        isOld = true;
+                        break;
+                    }
                 } else {
                     // always regard unsupported emoji types as new
                 }
-                if (!isOld) {
-                    if (reaction.type === "emoji") {
-                        for (const wanted of normalized) {
-                            if (wanted.type !== "emoji") continue;
-                            if (wanted.emoji === reaction.emoji) {
-                                return true;
-                            }
-                        }
-                    } else if (reaction.type === "custom_emoji") {
-                        for (const wanted of normalized) {
-                            if (wanted.type !== "custom_emoji") continue;
-                            if (
-                                wanted.custom_emoji_id ===
-                                    reaction.custom_emoji_id
-                            ) {
-                                return true;
-                            }
-                        }
-                    } else {
-                        // always regard unsupported emoji types as new
-                        return true;
-                    }
+                // disregard reaction if it is not new
+                if (isOld) continue;
+                // check if the new reaction is wanted and short-circuit
+                if (reaction.type === "emoji") {
+                    if (emoji.has(reaction.emoji)) return true;
+                } else if (reaction.type === "custom_emoji") {
+                    if (customEmoji.has(reaction.custom_emoji_id)) return true;
+                } else if (reaction.type === "paid") {
+                    if (paid) return true;
+                } else {
+                    // always regard unsupported emoji types as new
+                    return true;
                 }
+                // new reaction not wanted, check next one
             }
             return false;
         };
@@ -667,15 +675,18 @@ export class Context implements RenamedUpdate {
      *   customEmojiAdded: [],
      *   customEmojiKept: [],
      *   customEmojiRemoved: ['id0123'],
+     *   paid: true,
+     *   paidAdded: false,
+     *   paidRemoved: false,
      * }
      * ```
      * In the above example, a tada reaction was added by the user, and a custom
      * emoji reaction with the custom emoji 'id0123' was removed in the same
-     * update. The user had already reacted with a thumbs up reaction, which
-     * they left unchanged. As a result, the current reaction by the user is
-     * thumbs up and tada. Note that the current reaction (both emoji and custom
-     * emoji in one list) can also be obtained from
-     * `ctx.messageReaction.new_reaction`.
+     * update. The user had already reacted with a thumbs up reaction and a paid
+     * star reaction, which they left both unchanged. As a result, the current
+     * reaction by the user is thumbs up, tada, and a paid reaction. Note that
+     * the current reaction (all emoji reactions regardless of type in one list)
+     * can also be obtained from `ctx.messageReaction.new_reaction`.
      *
      * Remember that reaction updates only include information about the
      * reaction of a specific user. The respective message may have many more
@@ -700,6 +711,21 @@ export class Context implements RenamedUpdate {
         customEmojiKept: string[];
         /** Custom emoji removed from this user's reaction */
         customEmojiRemoved: string[];
+        /**
+         * `true` if a paid reaction is currently present in this user's
+         * reaction, and `false` otherwise
+         */
+        paid: boolean;
+        /**
+         * `true` if a paid reaction was newly added to this user's reaction,
+         * and `false` otherwise
+         */
+        paidAdded: boolean;
+        /**
+         * `true` if a paid reaction was removed from this user's reaction, and
+         * `false` otherwise
+         */
+        paidRemoved: boolean;
     } {
         const emoji: ReactionTypeEmoji["emoji"][] = [];
         const emojiAdded: ReactionTypeEmoji["emoji"][] = [];
@@ -709,6 +735,9 @@ export class Context implements RenamedUpdate {
         const customEmojiAdded: string[] = [];
         const customEmojiKept: string[] = [];
         const customEmojiRemoved: string[] = [];
+        let paid = false;
+        let paidAdded = false;
+        let paidRemoved = false;
         const r = this.messageReaction;
         if (r !== undefined) {
             const { old_reaction, new_reaction } = r;
@@ -718,6 +747,8 @@ export class Context implements RenamedUpdate {
                     emoji.push(reaction.emoji);
                 } else if (reaction.type === "custom_emoji") {
                     customEmoji.push(reaction.custom_emoji_id);
+                } else if (reaction.type === "paid") {
+                    paid = true;
                 }
             }
             // temporarily move all old emoji to the *Removed arrays
@@ -726,11 +757,14 @@ export class Context implements RenamedUpdate {
                     emojiRemoved.push(reaction.emoji);
                 } else if (reaction.type === "custom_emoji") {
                     customEmojiRemoved.push(reaction.custom_emoji_id);
+                } else if (reaction.type === "paid") {
+                    paidRemoved = true;
                 }
             }
             // temporarily move all new emoji to the *Added arrays
             emojiAdded.push(...emoji);
             customEmojiAdded.push(...customEmoji);
+            paidAdded = paid;
             // drop common emoji from both lists and add them to `emojiKept`
             for (let i = 0; i < emojiRemoved.length; i++) {
                 const len = emojiAdded.length;
@@ -761,6 +795,10 @@ export class Context implements RenamedUpdate {
                     }
                 }
             }
+            // erase changes to paid reaction if it was left unchanged
+            if (paidRemoved && paidAdded) {
+                paidRemoved = paidAdded = false;
+            }
         }
         return {
             emoji,
@@ -771,6 +809,9 @@ export class Context implements RenamedUpdate {
             customEmojiAdded,
             customEmojiKept,
             customEmojiRemoved,
+            paid,
+            paidAdded,
+            paidRemoved,
         };
     }
 
@@ -1327,7 +1368,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media to channel chats. On success, the sent Message is returned.
+     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
      *
      * @param star_count The number of Telegram Stars that must be paid to buy access to the media
      * @param media An array describing the media to be sent; up to 10 items
@@ -1495,9 +1536,9 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success.
+     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
      *
-     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1564,7 +1605,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     *  Context-aware alias for `api.getBusinessConnection`. Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success.
+     * Context-aware alias for `api.getBusinessConnection`. Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getbusinessconnection
@@ -1904,7 +1945,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     *  Context-aware alias for `api.editChatInviteLink`. Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
+     * Context-aware alias for `api.editChatInviteLink`. Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
      *
      * @param invite_link The invite link to edit
      * @param other Optional remaining parameters, confer the official reference below
@@ -1926,7 +1967,60 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     *  Context-aware alias for `api.revokeChatInviteLink`. Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
+     * Context-aware alias for `api.createChatSubscriptionInviteLink`. Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.
+     *
+     * @param subscription_period The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
+     * @param subscription_price The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-2500
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
+     */
+    createChatSubscriptionInviteLink(
+        subscription_period: number,
+        subscription_price: number,
+        other?: Other<
+            "createChatSubscriptionInviteLink",
+            "chat_id" | "subscription_period" | "subscription_price"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.createChatSubscriptionInviteLink(
+            orThrow(this.chatId, "createChatSubscriptionInviteLink"),
+            subscription_period,
+            subscription_price,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editChatSubscriptionInviteLink`. Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.
+     *
+     * @param invite_link The invite link to edit
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editchatsubscriptioninvitelink
+     */
+    editChatSubscriptionInviteLink(
+        invite_link: string,
+        other?: Other<
+            "editChatSubscriptionInviteLink",
+            "chat_id" | "invite_link"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.editChatSubscriptionInviteLink(
+            orThrow(this.chatId, "editChatSubscriptionInviteLink"),
+            invite_link,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.revokeChatInviteLink`. Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
      *
      * @param invite_link The invite link to revoke
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2232,7 +2326,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2308,7 +2402,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editGeneralForumTopic`. Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     * Context-aware alias for `api.editGeneralForumTopic`. Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
      *
      * @param name New topic name, 1-128 characters
      * @param signal Optional `AbortSignal` to cancel the request
