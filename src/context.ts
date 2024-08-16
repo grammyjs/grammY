@@ -721,11 +721,6 @@ export class Context implements RenamedUpdate {
          * and `false` otherwise
          */
         paidAdded: boolean;
-        /**
-         * `true` if a paid reaction was removed from this user's reaction, and
-         * `false` otherwise
-         */
-        paidRemoved: boolean;
     } {
         const emoji: ReactionTypeEmoji["emoji"][] = [];
         const emojiAdded: ReactionTypeEmoji["emoji"][] = [];
@@ -737,7 +732,6 @@ export class Context implements RenamedUpdate {
         const customEmojiRemoved: string[] = [];
         let paid = false;
         let paidAdded = false;
-        let paidRemoved = false;
         const r = this.messageReaction;
         if (r !== undefined) {
             const { old_reaction, new_reaction } = r;
@@ -748,7 +742,7 @@ export class Context implements RenamedUpdate {
                 } else if (reaction.type === "custom_emoji") {
                     customEmoji.push(reaction.custom_emoji_id);
                 } else if (reaction.type === "paid") {
-                    paid = true;
+                    paid = paidAdded = true;
                 }
             }
             // temporarily move all old emoji to the *Removed arrays
@@ -758,13 +752,12 @@ export class Context implements RenamedUpdate {
                 } else if (reaction.type === "custom_emoji") {
                     customEmojiRemoved.push(reaction.custom_emoji_id);
                 } else if (reaction.type === "paid") {
-                    paidRemoved = true;
+                    paidAdded = false;
                 }
             }
             // temporarily move all new emoji to the *Added arrays
             emojiAdded.push(...emoji);
             customEmojiAdded.push(...customEmoji);
-            paidAdded = paid;
             // drop common emoji from both lists and add them to `emojiKept`
             for (let i = 0; i < emojiRemoved.length; i++) {
                 const len = emojiAdded.length;
@@ -795,10 +788,6 @@ export class Context implements RenamedUpdate {
                     }
                 }
             }
-            // erase changes to paid reaction if it was left unchanged
-            if (paidRemoved && paidAdded) {
-                paidRemoved = paidAdded = false;
-            }
         }
         return {
             emoji,
@@ -811,7 +800,6 @@ export class Context implements RenamedUpdate {
             customEmojiRemoved,
             paid,
             paidAdded,
-            paidRemoved,
         };
     }
 

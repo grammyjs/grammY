@@ -639,7 +639,6 @@ describe("Context", () => {
             customEmojiAdded,
             paid,
             paidAdded,
-            paidRemoved,
         } = ctx.reactions();
         assertEquals(emoji, [ok.emoji, no.emoji]);
         assertEquals(emojiRemoved, [ye.emoji]);
@@ -651,7 +650,6 @@ describe("Context", () => {
         assertEquals(customEmojiAdded, [cok.custom_emoji_id]);
         assertEquals(paid, true);
         assertEquals(paidAdded, false);
-        assertEquals(paidRemoved, false);
 
         up = { message: update.message } as Update;
         ctx = new Context(up, api, me);
@@ -666,7 +664,6 @@ describe("Context", () => {
             customEmojiAdded: [],
             paid: false,
             paidAdded: false,
-            paidRemoved: false,
         });
     });
 });
