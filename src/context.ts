@@ -38,7 +38,8 @@ export type StringWithCommandSuggestions =
     | "start"
     | "help"
     | "settings"
-    | "privacy";
+    | "privacy"
+    | "developer_info";
 
 type Other<M extends Methods<RawApi>, X extends string = never> = OtherApi<
     RawApi,
