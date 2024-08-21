@@ -1467,14 +1467,21 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.sendDice`. Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
      *
-     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, or “🎰”. Dice can have values 1-6 for “🎲” and “🎯”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
+     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#senddice
      */
     replyWithDice(
-        emoji: string,
+        emoji:
+            | (string & Record<never, never>)
+            | "🎲"
+            | "🎯"
+            | "🏀"
+            | "⚽"
+            | "🎳"
+            | "🎰",
         other?: Other<"sendDice", "chat_id" | "emoji">,
         signal?: AbortSignal,
     ) {
@@ -2517,7 +2524,7 @@ export class Context implements RenamedUpdate {
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#setchatmenubutton
+     * **Official reference:** https://core.telegram.org/bots/api#getchatmenubutton
      */
     getChatMenuButton(
         other?: Other<"getChatMenuButton">,
