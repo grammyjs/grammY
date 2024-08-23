@@ -1,5 +1,11 @@
 {
     "lock": false,
+    "name": "@grammyjs/grammy",
+    "version": "1.29.0",
+    "exports": {
+        ".": "./src/mod.ts",
+        "./types": "./src/types.ts"
+    },
     "tasks": {
         "check": "deno cache --check=all src/mod.ts",
         "backport": "deno run --no-prompt --allow-read=. --allow-write=. https://deno.land/x/deno2node@v1.9.0/src/cli.ts tsconfig.json",
