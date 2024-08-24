@@ -1,5 +1,5 @@
 import { Composer } from "../src/composer.ts";
-import { Context } from "../src/mod.ts";
+import type { Context } from "../src/mod.ts";
 import type { Chat, MaybeInaccessibleMessage, User } from "../src/types.ts";
 import {
     assertType,

@@ -1,24 +1,20 @@
-import {
-    type CallbackQueryContext,
-    type ChatTypeContext,
-    type ChosenInlineResultContext,
-    type CommandContext,
-    Context,
-    type GameQueryContext,
-    type HearsContext,
-    type InlineQueryContext,
-    type MaybeArray,
-    type PreCheckoutQueryContext,
-    type ReactionContext,
-    type ShippingQueryContext,
-    type StringWithCommandSuggestions,
+import { Context } from "./context.ts";
+import type {
+    CallbackQueryContext,
+    ChatTypeContext,
+    ChosenInlineResultContext,
+    CommandContext,
+    GameQueryContext,
+    HearsContext,
+    InlineQueryContext,
+    MaybeArray,
+    PreCheckoutQueryContext,
+    ReactionContext,
+    ShippingQueryContext,
+    StringWithCommandSuggestions,
 } from "./context.ts";
-import { type Filter, type FilterQuery } from "./filter.ts";
-import {
-    type Chat,
-    type ReactionType,
-    type ReactionTypeEmoji,
-} from "./types.ts";
+import type { Filter, FilterQuery } from "./filter.ts";
+import type { Chat, ReactionType, ReactionTypeEmoji } from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 

@@ -1,9 +1,5 @@
 import { baseFetchConfig, debug as d } from "../platform.deno.ts";
-import {
-    type ApiMethods as Telegram,
-    type ApiResponse,
-    type Opts,
-} from "../types.ts";
+import type { ApiMethods as Telegram, ApiResponse, Opts } from "../types.ts";
 import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,

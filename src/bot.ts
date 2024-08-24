@@ -8,18 +8,15 @@ import {
 } from "./composer.ts";
 import { Context, type MaybeArray, type ReactionContext } from "./context.ts";
 import { Api } from "./core/api.ts";
-import {
-    type ApiClientOptions,
-    type WebhookReplyEnvelope,
-} from "./core/client.ts";
+import type { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
 import { type Filter, type FilterQuery, parse, preprocess } from "./filter.ts";
 import { debug as d } from "./platform.deno.ts";
-import {
-    type ReactionType,
-    type ReactionTypeEmoji,
-    type Update,
-    type UserFromGetMe,
+import type {
+    ReactionType,
+    ReactionTypeEmoji,
+    Update,
+    UserFromGetMe,
 } from "./types.ts";
 const debug = d("grammy:bot");
 const debugWarn = d("grammy:warn");

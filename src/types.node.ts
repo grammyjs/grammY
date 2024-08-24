@@ -1,17 +1,17 @@
 // === Needed imports
-import {
-    type ApiMethods as ApiMethodsF,
-    type InputMedia as InputMediaF,
-    type InputMediaAnimation as InputMediaAnimationF,
-    type InputMediaAudio as InputMediaAudioF,
-    type InputMediaDocument as InputMediaDocumentF,
-    type InputMediaPhoto as InputMediaPhotoF,
-    type InputMediaVideo as InputMediaVideoF,
-    type InputPaidMedia as InputPaidMediaF,
-    type InputPaidMediaPhoto as InputPaidMediaPhotoF,
-    type InputPaidMediaVideo as InputPaidMediaVideoF,
-    type InputSticker as InputStickerF,
-    type Opts as OptsF,
+import type {
+    ApiMethods as ApiMethodsF,
+    InputMedia as InputMediaF,
+    InputMediaAnimation as InputMediaAnimationF,
+    InputMediaAudio as InputMediaAudioF,
+    InputMediaDocument as InputMediaDocumentF,
+    InputMediaPhoto as InputMediaPhotoF,
+    InputMediaVideo as InputMediaVideoF,
+    InputPaidMedia as InputPaidMediaF,
+    InputPaidMediaPhoto as InputPaidMediaPhotoF,
+    InputPaidMediaVideo as InputPaidMediaVideoF,
+    InputSticker as InputStickerF,
+    Opts as OptsF,
 } from "@grammyjs/types";
 import { createReadStream, type ReadStream } from "fs";
 import fetch from "node-fetch";

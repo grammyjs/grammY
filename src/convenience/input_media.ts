@@ -1,10 +1,10 @@
-import {
-    type InputFile,
-    type InputMediaAnimation,
-    type InputMediaAudio,
-    type InputMediaDocument,
-    type InputMediaPhoto,
-    type InputMediaVideo,
+import type {
+    InputFile,
+    InputMediaAnimation,
+    InputMediaAudio,
+    InputMediaDocument,
+    InputMediaPhoto,
+    InputMediaVideo,
 } from "../types.ts";
 
 type InputMedia = string | InputFile;
