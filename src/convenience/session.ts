@@ -640,10 +640,10 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     /**
      * Internally used `Map` instance that stores the session data
      */
-    protected readonly storage = new Map<
+    protected readonly storage: Map<
         string,
         { session: S; expires?: number }
-    >();
+    > = new Map();
 
     /**
      * Constructs a new memory session storage with the given time to live. Note
@@ -653,7 +653,7 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
      */
     constructor(private readonly timeToLive?: number) {}
 
-    read(key: string) {
+    read(key: string): S | undefined {
         const value = this.storage.get(key);
         if (value === undefined) return undefined;
         if (value.expires !== undefined && value.expires < Date.now()) {
@@ -666,28 +666,28 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
     /**
      * @deprecated Use {@link readAllValues} instead
      */
-    readAll() {
+    readAll(): S[] {
         return this.readAllValues();
     }
 
-    readAllKeys() {
+    readAllKeys(): string[] {
         return Array.from(this.storage.keys());
     }
 
-    readAllValues() {
+    readAllValues(): S[] {
         return Array
             .from(this.storage.keys())
             .map((key) => this.read(key))
             .filter((value): value is S => value !== undefined);
     }
 
-    readAllEntries() {
+    readAllEntries(): [string, S][] {
         return Array.from(this.storage.keys())
             .map((key) => [key, this.read(key)])
             .filter((pair): pair is [string, S] => pair[1] !== undefined);
     }
 
-    has(key: string) {
+    has(key: string): boolean {
         return this.storage.has(key);
     }
 

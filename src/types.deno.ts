@@ -1,5 +1,5 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
+import { basename } from "jsr:@std/path@^1.0.2/basename";
 
 import {
     type ApiMethods as ApiMethodsF,
@@ -14,13 +14,13 @@ import {
     type InputPaidMediaVideo as InputPaidMediaVideoF,
     type InputSticker as InputStickerF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.13.0/mod.ts";
+} from "npm:@grammyjs/types@^3.13.0";
 import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.13.0/mod.ts";
+export * from "npm:@grammyjs/types@^3.13.0";
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);

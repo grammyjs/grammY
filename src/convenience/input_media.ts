@@ -7,7 +7,31 @@ import {
     type InputMediaVideo,
 } from "../types.ts";
 
+type InputMedia = string | InputFile;
 type InputMediaOptions<T> = Omit<T, "type" | "media">;
+
+interface InputMediaBuilder {
+    photo(
+        media: InputMedia,
+        options: InputMediaOptions<InputMediaPhoto>,
+    ): InputMediaPhoto;
+    video(
+        media: InputMedia,
+        options: InputMediaOptions<InputMediaVideo>,
+    ): InputMediaVideo;
+    animation(
+        media: InputMedia,
+        options: InputMediaOptions<InputMediaAnimation>,
+    ): InputMediaAnimation;
+    audio(
+        media: InputMedia,
+        options: InputMediaOptions<InputMediaAudio>,
+    ): InputMediaAudio;
+    document(
+        media: InputMedia,
+        options: InputMediaOptions<InputMediaDocument>,
+    ): InputMediaDocument;
+}
 
 /**
  * Holds a number of helper methods for building `InputMedia*` objects. They are
@@ -36,7 +60,7 @@ type InputMediaOptions<T> = Omit<T, "type" | "media">;
  * await bot.api.editMessageMedia(chatId, messageId, media)
  * ```
  */
-export const InputMediaBuilder = {
+export const InputMediaBuilder: InputMediaBuilder = {
     /**
      * Creates a new `InputMediaPhoto` object as specified by
      * https://core.telegram.org/bots/api#inputmediaphoto.
@@ -44,10 +68,7 @@ export const InputMediaBuilder = {
      * @param media An `InputFile` instance or a file identifier
      * @param options Remaining optional options
      */
-    photo(
-        media: string | InputFile,
-        options: InputMediaOptions<InputMediaPhoto> = {},
-    ): InputMediaPhoto {
+    photo(media, options = {}) {
         return { type: "photo", media, ...options };
     },
     /**
@@ -57,10 +78,7 @@ export const InputMediaBuilder = {
      * @param media An `InputFile` instance or a file identifier
      * @param options Remaining optional options
      */
-    video(
-        media: string | InputFile,
-        options: InputMediaOptions<InputMediaVideo> = {},
-    ): InputMediaVideo {
+    video(media, options = {}) {
         return { type: "video", media, ...options };
     },
     /**
@@ -70,10 +88,7 @@ export const InputMediaBuilder = {
      * @param media An `InputFile` instance or a file identifier
      * @param options Remaining optional options
      */
-    animation(
-        media: string | InputFile,
-        options: InputMediaOptions<InputMediaAnimation> = {},
-    ): InputMediaAnimation {
+    animation(media, options = {}) {
         return { type: "animation", media, ...options };
     },
     /**
@@ -83,10 +98,7 @@ export const InputMediaBuilder = {
      * @param media An `InputFile` instance or a file identifier
      * @param options Remaining optional options
      */
-    audio(
-        media: string | InputFile,
-        options: InputMediaOptions<InputMediaAudio> = {},
-    ): InputMediaAudio {
+    audio(media, options = {}) {
         return { type: "audio", media, ...options };
     },
     /**
@@ -96,10 +108,7 @@ export const InputMediaBuilder = {
      * @param media An `InputFile` instance or a file identifier
      * @param options Remaining optional options
      */
-    document(
-        media: string | InputFile,
-        options: InputMediaOptions<InputMediaDocument> = {},
-    ): InputMediaDocument {
+    document(media, options = {}) {
         return { type: "document", media, ...options };
     },
 };
