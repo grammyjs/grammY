@@ -308,6 +308,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/rayz1065"><img src="https://avatars.githubusercontent.com/u/37779815?v=4?s=100" width="100px;" alt="rayz"/><br /><sub><b>rayz</b></sub></a><br /><a href="#question-rayz1065" title="Answering Questions">💬</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/z44d"><img src="https://avatars.githubusercontent.com/u/162994967?v=4?s=100" width="100px;" alt="Zaid"/><br /><sub><b>Zaid</b></sub></a><br /><a href="#tool-z44d" title="Tools">🔧</a></td>
     </tr>
   </tbody>
 </table>

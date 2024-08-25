@@ -1406,6 +1406,15 @@
       "contributions": [
         "question"
       ]
+    },
+    {
+      "login": "z44d",
+      "name": "Zaid",
+      "avatar_url": "https://avatars.githubusercontent.com/u/162994967?v=4",
+      "profile": "https://github.com/z44d",
+      "contributions": [
+        "tool"
+      ]
     }
   ]
 }
