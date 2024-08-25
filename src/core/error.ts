@@ -1,4 +1,4 @@
-import { type ApiError, type ResponseParameters } from "../types.ts";
+import type { ApiError, ResponseParameters } from "../types.ts";
 import { debug as d } from "../platform.deno.ts";
 const debug = d("grammy:warn");
 

@@ -1,4 +1,5 @@
-import { type Update } from "../types.ts";
+import { Buffer } from "node:buffer";
+import type { Update } from "../types.ts";
 
 const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
 const SECRET_HEADER_LOWERCASE = SECRET_HEADER.toLowerCase();
