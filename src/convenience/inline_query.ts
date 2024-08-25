@@ -39,24 +39,24 @@ type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
 interface InputMessageMethods<R extends InlineQueryResult> {
     text(
         message_text: string,
-        options: OptionalFields<InputTextMessageContent>,
+        options?: OptionalFields<InputTextMessageContent>,
     ): R;
     location(
         latitude: number,
         longitude: number,
-        options: OptionalFields<InputLocationMessageContent>,
+        options?: OptionalFields<InputLocationMessageContent>,
     ): R;
     venue(
         title: string,
         latitude: number,
         longitude: number,
         address: string,
-        options: OptionalFields<InputVenueMessageContent>,
+        options?: OptionalFields<InputVenueMessageContent>,
     ): R;
     contact(
         first_name: string,
         phone_number: string,
-        options: OptionalFields<InputContactMessageContent>,
+        options?: OptionalFields<InputContactMessageContent>,
     ): R;
     invoice(
         title: string,
@@ -65,7 +65,7 @@ interface InputMessageMethods<R extends InlineQueryResult> {
         provider_token: string,
         currency: string,
         prices: LabeledPrice[],
-        options: OptionalFields<InputInvoiceMessageContent>,
+        options?: OptionalFields<InputInvoiceMessageContent>,
     ): R;
 }
 
@@ -94,7 +94,7 @@ function inputMessageMethods<R extends InlineQueryResult>(
             };
             return { ...queryTemplate, input_message_content: content } as R;
         },
-        venue(title, latitude, longitude, address, options) {
+        venue(title, latitude, longitude, address, options = {}) {
             const content: InputVenueMessageContent = {
                 title,
                 latitude,
