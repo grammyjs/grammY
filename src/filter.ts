@@ -270,6 +270,7 @@ const COMMON_MESSAGE_KEYS = {
     animation: {},
     audio: {},
     document: {},
+    paid_media: {},
     photo: {},
     sticker: STICKER_KEYS,
     story: {},
@@ -282,7 +283,6 @@ const COMMON_MESSAGE_KEYS = {
     poll: {},
     venue: {},
     location: {},
-    paid_media: {},
 
     entities: ENTITY_KEYS,
     caption_entities: ENTITY_KEYS,
@@ -296,9 +296,13 @@ const COMMON_MESSAGE_KEYS = {
     delete_chat_photo: {},
     message_auto_delete_timer_changed: {},
     pinned_message: {},
-    chat_background_set: {},
     invoice: {},
     proximity_alert_triggered: {},
+    chat_background_set: {},
+    giveaway_created: {},
+    giveaway: { only_new_members: {}, has_public_winners: {} },
+    giveaway_winners: { only_new_members: {}, was_refunded: {} },
+    giveaway_completed: {},
     video_chat_scheduled: {},
     video_chat_started: {},
     video_chat_ended: {},
@@ -308,8 +312,6 @@ const COMMON_MESSAGE_KEYS = {
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
 
-    sender_boost_count: {},
-
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
     group_chat_created: {},
@@ -318,18 +320,20 @@ const MESSAGE_KEYS = {
     migrate_from_chat_id: {},
     successful_payment: {},
     refunded_payment: {},
-    boost_added: {},
     users_shared: {},
     chat_shared: {},
     connected_website: {},
     write_access_allowed: {},
     passport_data: {},
+    boost_added: {},
     forum_topic_created: {},
     forum_topic_edited: { name: {}, icon_custom_emoji_id: {} },
     forum_topic_closed: {},
     forum_topic_reopened: {},
     general_forum_topic_hidden: {},
     general_forum_topic_unhidden: {},
+
+    sender_boost_count: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
@@ -373,6 +377,7 @@ const UPDATE_KEYS = {
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
     chat_boost: {},
     removed_chat_boost: {},
+    purchased_paid_media: {},
 } as const;
 
 // === Build up all possible filter queries from the above validation structure
@@ -584,6 +589,9 @@ interface Shortcuts<U extends Update> {
     chatBoost: [U["chat_boost"]] extends [object] ? U["chat_boost"] : undefined;
     removedChatBoost: [U["removed_chat_boost"]] extends [object]
         ? U["removed_chat_boost"]
+        : undefined;
+    purchasedPaidMedia: [U["purchased_paid_media"]] extends [object]
+        ? U["purchased_paid_media"]
         : undefined;
     msg: [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]

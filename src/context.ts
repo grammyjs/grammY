@@ -406,6 +406,7 @@ export class Context implements RenamedUpdate {
 
     // UPDATE SHORTCUTS
 
+    // Keep in sync with types in `filter.ts`.
     /** Alias for `ctx.update.message` */
     get message() {
         return this.update.message;
@@ -494,6 +495,10 @@ export class Context implements RenamedUpdate {
     get removedChatBoost() {
         return this.update.removed_chat_boost;
     }
+    /** Alias for `ctx.update.purchased_paid_media` */
+    get purchasedPaidMedia() {
+        return this.update.purchased_paid_media;
+    }
 
     // AGGREGATION SHORTCUTS
 
@@ -549,7 +554,8 @@ export class Context implements RenamedUpdate {
      * (this.chatBoost?.boost ?? this.removedChatBoost)?.source)?.user ??
      * (this.callbackQuery ?? this.msg ?? this.inlineQuery ??
      * this.chosenInlineResult ?? this.shippingQuery ?? this.preCheckoutQuery ??
-     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest)?.from`.
+     * this.myChatMember ?? this.chatMember ?? this.chatJoinRequest ??
+     * this.purchasedPaidMedia)?.from`.
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
@@ -567,7 +573,8 @@ export class Context implements RenamedUpdate {
                     this.preCheckoutQuery ??
                     this.myChatMember ??
                     this.chatMember ??
-                    this.chatJoinRequest
+                    this.chatJoinRequest ??
+                    this.purchasedPaidMedia
             )?.from;
     }
 
