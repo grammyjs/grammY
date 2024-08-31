@@ -766,7 +766,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, or “🎰”. Dice can have values 1-6 for “🎲” and “🎯”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
+     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -774,7 +774,14 @@ export class Api<R extends RawApi = RawApi> {
      */
     sendDice(
         chat_id: number | string,
-        emoji: string,
+        emoji:
+            | (string & Record<never, never>)
+            | "🎲"
+            | "🎯"
+            | "🏀"
+            | "⚽"
+            | "🎳"
+            | "🎰",
         other?: Other<R, "sendDice", "chat_id" | "emoji">,
         signal?: AbortSignal,
     ) {
@@ -790,7 +797,7 @@ export class Api<R extends RawApi = RawApi> {
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
-     * **Official reference:** https://core.telegram.org/bots/api#senddice
+     * **Official reference:** https://core.telegram.org/bots/api#setmessagereaction
      */
     setMessageReaction(
         chat_id: number | string,
