@@ -413,6 +413,7 @@ const http: HttpAdapter = (req, res) => {
             req.on("data", (chunk: Chunk) => chunks.push(chunk))
                 .once("end", () => {
                     // @ts-ignore `Buffer` is Node-only
+                    // deno-lint-ignore no-node-globals
                     const raw = Buffer.concat(chunks).toString("utf-8");
                     resolve(JSON.parse(raw));
                 })
