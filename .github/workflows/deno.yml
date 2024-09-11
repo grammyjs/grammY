@@ -37,6 +37,8 @@ jobs:
               with:
                   deno-version: v1.x
 
+            - run: deno upgrade rc
+
             - name: Check Format
               run: deno fmt --check
 
@@ -58,6 +60,8 @@ jobs:
               with:
                   deno-version: v1.x
 
+            - run: deno upgrade rc
+
             - name: Cache Dependencies
               run: deno task check
 
@@ -75,6 +79,8 @@ jobs:
             - uses: denoland/setup-deno@main
               with:
                   deno-version: v1.x
+
+            - run: deno upgrade rc
 
             - name: Create coverage files
               run: deno task coverage
