@@ -309,6 +309,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/rayz1065"><img src="https://avatars.githubusercontent.com/u/37779815?v=4?s=100" width="100px;" alt="rayz"/><br /><sub><b>rayz</b></sub></a><br /><a href="#question-rayz1065" title="Answering Questions">💬</a> <a href="#ideas-rayz1065" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=rayz1065" title="Code">💻</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/z44d"><img src="https://avatars.githubusercontent.com/u/162994967?v=4?s=100" width="100px;" alt="Zaid"/><br /><sub><b>Zaid</b></sub></a><br /><a href="#tool-z44d" title="Tools">🔧</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/matmilbury"><img src="https://avatars.githubusercontent.com/u/73319876?v=4?s=100" width="100px;" alt="Mat Milbury"/><br /><sub><b>Mat Milbury</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Amatmilbury" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=matmilbury" title="Code">💻</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://lao.sb/"><img src="https://avatars.githubusercontent.com/u/2545261?v=4?s=100" width="100px;" alt="Shibo Lyu"/><br /><sub><b>Shibo Lyu</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=laosb" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

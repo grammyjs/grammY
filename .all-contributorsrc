@@ -1417,6 +1417,25 @@
       "contributions": [
         "tool"
       ]
+    },
+    {
+      "login": "matmilbury",
+      "name": "Mat Milbury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73319876?v=4",
+      "profile": "https://github.com/matmilbury",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "laosb",
+      "name": "Shibo Lyu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2545261?v=4",
+      "profile": "https://lao.sb/",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
