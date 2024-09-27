@@ -32,6 +32,8 @@ jobs:
               with:
                 deno-version: v1.x
 
+            - run: deno upgrade rc
+
             - name: Create import_map.json
               run: |
                 set -o pipefail;
