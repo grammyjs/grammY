@@ -1437,6 +1437,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "MasedMSD",
+      "name": "Mased",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68379695?v=4",
+      "profile": "https://nometa.xyz/",
+      "contributions": [
+        "translation",
+        "doc"
+      ]
     }
   ]
 }
