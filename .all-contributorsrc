@@ -32,7 +32,8 @@
         "projectManagement",
         "infra",
         "audio",
-        "a11y"
+        "a11y",
+        "talk"
       ]
     },
     {
