@@ -1447,6 +1447,15 @@
         "translation",
         "doc"
       ]
+    },
+    {
+      "login": "ExposedCat",
+      "name": "Artem Prokop",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44642024?v=4",
+      "profile": "https://github.com/ExposedCat",
+      "contributions": [
+        "userTesting"
+      ]
     }
   ]
 }
