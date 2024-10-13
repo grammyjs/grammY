@@ -1456,6 +1456,15 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "Chinoman10",
+      "name": "Sérgio Rebelo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8300763?v=4",
+      "profile": "https://chinoman10.com/",
+      "contributions": [
+        "review"
+      ]
     }
   ]
 }

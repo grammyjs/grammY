@@ -313,6 +313,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="https://lao.sb/"><img src="https://avatars.githubusercontent.com/u/2545261?v=4?s=100" width="100px;" alt="Shibo Lyu"/><br /><sub><b>Shibo Lyu</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=laosb" title="Code">💻</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://nometa.xyz/"><img src="https://avatars.githubusercontent.com/u/68379695?v=4?s=100" width="100px;" alt="Mased"/><br /><sub><b>Mased</b></sub></a><br /><a href="#translation-MasedMSD" title="Translation">🌍</a> <a href="https://github.com/grammyjs/grammY/commits?author=MasedMSD" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/ExposedCat"><img src="https://avatars.githubusercontent.com/u/44642024?v=4?s=100" width="100px;" alt="Artem Prokop"/><br /><sub><b>Artem Prokop</b></sub></a><br /><a href="#userTesting-ExposedCat" title="User Testing">📓</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://chinoman10.com/"><img src="https://avatars.githubusercontent.com/u/8300763?v=4?s=100" width="100px;" alt="Sérgio Rebelo"/><br /><sub><b>Sérgio Rebelo</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3AChinoman10" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
