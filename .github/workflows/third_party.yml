@@ -25,7 +25,8 @@ jobs:
                     - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/hello-world.ts
                     - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/inline-keyboards.ts
                     - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/message-formatting.ts
-                    - https://raw.githubusercontent.com/grammyjs/docs-bot/main/bot.ts
+                    - https://raw.githubusercontent.com/grammyjs/docs-bot/main.ts
+                    - https://raw.githubusercontent.com/grammyjs/guard-bot/bot.ts
 
         steps:
             - uses: denoland/setup-deno@v2
