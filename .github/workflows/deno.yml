@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: npm install --ignore-scripts
@@ -31,11 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: denoland/setup-deno@main
+      - uses: denoland/setup-deno@2
         with:
-          deno-version: v1.x
+          deno-version: v2.x
 
       - name: Check Format
         run: deno fmt --check
@@ -52,11 +52,11 @@ jobs:
 
     steps:
       - name: Setup repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: denoland/setup-deno@main
+      - uses: denoland/setup-deno@2
         with:
-          deno-version: v1.x
+          deno-version: v2.x
 
       - name: Cache Dependencies
         run: deno task check
@@ -68,13 +68,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: denoland/setup-deno@main
+      - uses: denoland/setup-deno@2
         with:
-          deno-version: v1.x
+          deno-version: v2.x
 
       - name: Create coverage files
         run: deno task coverage
