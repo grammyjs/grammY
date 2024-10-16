@@ -20,7 +20,6 @@ jobs:
             matrix:
                 url:
                     # please keep sorted
-                    - https://raw.githubusercontent.com/dcdunkan/ryportbot/refs/heads/main/main.ts
                     - https://raw.githubusercontent.com/dcdunkan/y-by-example/refs/heads/main/contents/commands.ts
                     - https://raw.githubusercontent.com/dcdunkan/y-by-example/refs/heads/main/contents/hello-world.ts
                     - https://raw.githubusercontent.com/dcdunkan/y-by-example/refs/heads/main/contents/inline-keyboards.ts
