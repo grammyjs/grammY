@@ -30,22 +30,20 @@ jobs:
         steps:
             - uses: denoland/setup-deno@v1
               with:
-                deno-version: v1.x
-
-            - run: deno upgrade rc
+                  deno-version: v1.x
 
             - name: Create import_map.json
               run: |
-                set -o pipefail;
-                curl --silent https://cdn.deno.land/grammy/meta/versions.json |
-                jq '
-                    (.latest / ".")[0] as $major
-                    | .versions
-                    | map(select(startswith($major + ".")) | {
-                        key: @uri "https://deno.land/x/grammy@\(.)/mod.ts",
-                        value: @uri "https://raw.githubusercontent.com/grammyjs/grammY/\(env.GITHUB_SHA)/src/mod.ts"
-                    })
-                    | { imports: from_entries }
-                ' > import_map.json
+                  set -o pipefail;
+                  curl --silent https://cdn.deno.land/grammy/meta/versions.json |
+                  jq '
+                      (.latest / ".")[0] as $major
+                      | .versions
+                      | map(select(startswith($major + ".")) | {
+                          key: @uri "https://deno.land/x/grammy@\(.)/mod.ts",
+                          value: @uri "https://raw.githubusercontent.com/grammyjs/grammY/\(env.GITHUB_SHA)/src/mod.ts"
+                      })
+                      | { imports: from_entries }
+                  ' > import_map.json
 
             - run: deno check --import-map=import_map.json --remote ${{ matrix.url }}
