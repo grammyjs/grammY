@@ -9,77 +9,77 @@
 name: grammY
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-    backport:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Setup repo
-              uses: actions/checkout@v4
+  backport:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: npm install --ignore-scripts
+      - name: Install dependencies
+        run: npm install --ignore-scripts
 
-            - name: Run backporting
-              run: npm run backport
+      - name: Run backporting
+        run: npm run backport
 
-    format-and-lint:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Setup repo
-              uses: actions/checkout@v4
+  format-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
 
-            - uses: denoland/setup-deno@main
-              with:
-                  deno-version: v2.x
+      - uses: denoland/setup-deno@2
+        with:
+          deno-version: v2.x
 
-            - name: Check Format
-              run: deno fmt --check
+      - name: Check Format
+        run: deno fmt --check
 
-            - name: Lint
-              run: deno lint
+      - name: Lint
+        run: deno lint
 
-    test:
-        runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
+  test:
+    runs-on: ${{ matrix.os }} # runs a test on Ubuntu, Windows and macOS
 
-        strategy:
-            matrix:
-                os: [macOS-latest, windows-latest, ubuntu-latest]
+    strategy:
+      matrix:
+        os: [macOS-latest, windows-latest, ubuntu-latest]
 
-        steps:
-            - name: Setup repo
-              uses: actions/checkout@v4
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
 
-            - uses: denoland/setup-deno@main
-              with:
-                  deno-version: v2.x
+      - uses: denoland/setup-deno@2
+        with:
+          deno-version: v2.x
 
-            - name: Cache Dependencies
-              run: deno task check
+      - name: Cache Dependencies
+        run: deno task check
 
-            - name: Run Tests
-              run: deno task test
+      - name: Run Tests
+        run: deno task test
 
-    coverage:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Setup repo
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - uses: denoland/setup-deno@main
-              with:
-                  deno-version: v2.x
+      - uses: denoland/setup-deno@2
+        with:
+          deno-version: v2.x
 
-            - name: Create coverage files
-              run: deno task coverage
+      - name: Create coverage files
+        run: deno task coverage
 
-            - name: Collect coverage
-              uses: codecov/codecov-action@v1.0.10 # upload the report on Codecov
-              with:
-                  file: ./coverage.lcov
+      - name: Collect coverage
+        uses: codecov/codecov-action@v1.0.10 # upload the report on Codecov
+        with:
+          file: ./coverage.lcov

@@ -28,7 +28,7 @@ jobs:
                     - https://raw.githubusercontent.com/grammyjs/docs-bot/main/bot.ts
 
         steps:
-            - uses: denoland/setup-deno@v1
+            - uses: denoland/setup-deno@2
               with:
                   deno-version: v2.x
 
@@ -46,4 +46,4 @@ jobs:
                       | { imports: from_entries }
                   ' > import_map.json
 
-            - run: deno check --import-map=import_map.json --remote ${{ matrix.url }}
+            - run: deno check --allow-import --import-map=import_map.json --remote ${{ matrix.url }}
