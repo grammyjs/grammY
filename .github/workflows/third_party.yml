@@ -28,7 +28,7 @@ jobs:
                     - https://raw.githubusercontent.com/grammyjs/docs-bot/main/bot.ts
 
         steps:
-            - uses: denoland/setup-deno@2
+            - uses: denoland/setup-deno@v2
               with:
                   deno-version: v2.x
 

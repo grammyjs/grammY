@@ -15,7 +15,7 @@ jobs:
 
             # Setup deno so we can bundle for the web
 
-            - uses: denoland/setup-deno@2
+            - uses: denoland/setup-deno@v2
               with:
                   deno-version: v2.x
 
