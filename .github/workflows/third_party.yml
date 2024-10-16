@@ -20,13 +20,13 @@ jobs:
             matrix:
                 url:
                     # please keep sorted
-                    - https://raw.githubusercontent.com/dcdunkan/ryportbot/main/main.ts
-                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/commands.ts
-                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/hello-world.ts
-                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/inline-keyboards.ts
-                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/main/contents/message-formatting.ts
-                    - https://raw.githubusercontent.com/grammyjs/docs-bot/main.ts
-                    - https://raw.githubusercontent.com/grammyjs/guard-bot/bot.ts
+                    - https://raw.githubusercontent.com/dcdunkan/ryportbot/refs/heads/main/main.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/refs/heads/main/contents/commands.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/refs/heads/main/contents/hello-world.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/refs/heads/main/contents/inline-keyboards.ts
+                    - https://raw.githubusercontent.com/dcdunkan/y-by-example/refs/heads/main/contents/message-formatting.ts
+                    - https://raw.githubusercontent.com/grammyjs/docs-bot/refs/heads/main/main.ts
+                    - https://raw.githubusercontent.com/grammyjs/guard-bot/refs/heads/main/bot.ts
 
         steps:
             - uses: denoland/setup-deno@v2
