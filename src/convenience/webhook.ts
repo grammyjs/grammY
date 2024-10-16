@@ -8,6 +8,7 @@ import {
     adapters as nativeAdapters,
     type FrameworkAdapter,
 } from "./frameworks.ts";
+const debug = d("grammy:warn");
 const debugErr = d("grammy:error");
 
 const callbackAdapter: FrameworkAdapter = (
@@ -90,6 +91,19 @@ export function webhookCallback<C extends Context = Context>(
     timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
     secretToken?: WebhookOptions["secretToken"],
 ) {
+    if (bot.isRunning()) {
+        debug(
+            "Bot is already running via long polling, the webhook setup likely won't receive any updates!",
+        );
+    } else {
+        const oldStart = bot.start.bind(bot);
+        bot.start = (...args) => {
+            debug(
+                "You already started the bot via webhooks, calling `bot.start()` starts the bot with long polling and this will prevent your webhook setup from receiving any updates!",
+            );
+            return oldStart(...args);
+        };
+    }
     const {
         onTimeout: timeout = "throw",
         timeoutMilliseconds: ms = 10_000,
