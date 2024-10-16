@@ -255,7 +255,7 @@ export class Bot<
     /**
      * @inheritdoc
      */
-    on<Q extends FilterQuery>(
+    override on<Q extends FilterQuery>(
         filter: Q | Q[],
         ...middleware: Array<Middleware<Filter<C, Q>>>
     ): Composer<Filter<C, Q>> {
@@ -267,7 +267,7 @@ export class Bot<
     /**
      * @inheritdoc
      */
-    reaction(
+    override reaction(
         reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
         ...middleware: Array<ReactionMiddleware<C>>
     ): Composer<ReactionContext<C>> {
