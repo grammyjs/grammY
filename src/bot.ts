@@ -508,10 +508,9 @@ a known bot info object.",
      * a webhook server is running, or if grammY runner was started.
      *
      * Note that this method will already begin to return true even before the
-     * call to `bot.start()` has completed its initialization phase. During that
-     * period, it is `bot.isRunning() && !bot.isInited()`. By extension, this
-     * method returns true before `onStart` callback of `bot.start()` is
-     * invoked.
+     * call to `bot.start()` has completed its initialization phase (and hence
+     * before `bot.isInited()` returns true). By extension, this method
+     * returns true before `onStart` callback of `bot.start()` is invoked.
      */
     isRunning() {
         return this.pollingRunning;
