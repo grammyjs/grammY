@@ -85,6 +85,9 @@ export interface PollingOptions {
      * fetched. The bot information `bot.botInfo` will be available when the
      * function is run. For convenience, the callback function receives the
      * value of `bot.botInfo` as an argument.
+     *
+     * When this function is invoked, the bot already signals that it is
+     * running. In other words, `bot.isRunning()` already returns true.
      */
     onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
 }
@@ -496,6 +499,25 @@ a known bot info object.",
     }
 
     /**
+     * Returns true if the bot is currently running via built-in long polling,
+     * and false otherwise.
+     *
+     * If this method returns true, it means that `bot.start()` has been called,
+     * and that the bot has neither crashed nor was it stopped via a call to
+     * `bot.stop()`. This also means that you cannot use this method to check if
+     * a webhook server is running, or if grammY runner was started.
+     *
+     * Note that this method will already begin to return true even before the
+     * call to `bot.start()` has completed its initialization phase. During that
+     * period, it is `bot.isRunning() && !bot.isInited()`. By extension, this
+     * method returns true before `onStart` callback of `bot.start()` is
+     * invoked.
+     */
+    isRunning() {
+        return this.pollingRunning;
+    }
+
+    /**
      * Sets the bots error handler that is used during long polling.
      *
      * You should call this method to set an error handler if you are using long
@@ -521,18 +543,22 @@ a known bot info object.",
         let allowed_updates: PollingOptions["allowed_updates"] =
             options?.allowed_updates ?? []; // reset to default if unspecified
 
-        while (this.pollingRunning) {
-            // fetch updates
-            const updates = await this.fetchUpdates(
-                { limit, timeout, allowed_updates },
-            );
-            // check if polling stopped
-            if (updates === undefined) break;
-            // handle updates
-            await this.handleUpdates(updates);
-            // Telegram uses the last setting if `allowed_updates` is omitted so
-            // we can save some traffic by only sending it in the first request
-            allowed_updates = undefined;
+        try {
+            while (this.pollingRunning) {
+                // fetch updates
+                const updates = await this.fetchUpdates(
+                    { limit, timeout, allowed_updates },
+                );
+                // check if polling stopped
+                if (updates === undefined) break;
+                // handle updates
+                await this.handleUpdates(updates);
+                // Telegram uses the last setting if `allowed_updates` is omitted so
+                // we can save some traffic by only sending it in the first request
+                allowed_updates = undefined;
+            }
+        } finally {
+            this.pollingRunning = false;
         }
     }
 
