@@ -92,7 +92,7 @@ export function webhookCallback<C extends Context = Context>(
 ) {
     if (bot.isRunning()) {
         throw new Error(
-            "Bot is already running via long polling, the webhook setup likely won't receive any updates!",
+            "Bot is already running via long polling, the webhook setup won't receive any updates!",
         );
     } else {
         bot.start = () => {
