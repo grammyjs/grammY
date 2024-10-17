@@ -19,11 +19,11 @@ describe("API client", () => {
     let api: TransformableApi;
     let canUseWebhookReply: boolean;
     let response: ApiResponse<{ testValue: number }>;
-    let fetchStub: Stub<Window & typeof globalThis>;
+    let fetchStub: Stub<typeof globalThis>;
 
     beforeEach(() => {
         fetchStub = stub(
-            window,
+            globalThis,
             "fetch",
             () => Promise.resolve(new Response(JSON.stringify(response))),
         );

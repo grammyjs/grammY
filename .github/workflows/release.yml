@@ -11,13 +11,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             # Setup deno so we can bundle for the web
 
-            - uses: denoland/setup-deno@main
+            - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v1.x
+                  deno-version: v2.x
 
             - run: npm install
             - run: deno task bundle-web
