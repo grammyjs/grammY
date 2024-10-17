@@ -121,12 +121,12 @@ describe("webhook", () => {
 
     it("serveHttp should be compatible with grammY adapter", async () => {
         const event = {
-            request: {
-                json: () => ({ update_id: 0 }),
-                headers: { get: () => {} },
-            },
+            request: new Request("https://grammy.dev", {
+                method: "POST",
+                body: JSON.stringify({ update_id: 0 }),
+            }),
             respondWith: () => {},
-        } as unknown as Deno.RequestEvent;
+        };
         const handler = webhookCallback(bot, "serveHttp");
         await handler(event);
     });
