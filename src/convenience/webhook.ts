@@ -90,6 +90,17 @@ export function webhookCallback<C extends Context = Context>(
     timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
     secretToken?: WebhookOptions["secretToken"],
 ) {
+    if (bot.isRunning()) {
+        throw new Error(
+            "Bot is already running via long polling, the webhook setup won't receive any updates!",
+        );
+    } else {
+        bot.start = () => {
+            throw new Error(
+                "You already started the bot via webhooks, calling `bot.start()` starts the bot with long polling and this will prevent your webhook setup from receiving any updates!",
+            );
+        };
+    }
     const {
         onTimeout: timeout = "throw",
         timeoutMilliseconds: ms = 10_000,
