@@ -8,7 +8,7 @@ import {
 } from "./deps.test.ts";
 
 describe(
-    "context.has",
+    "ctx.has* tests",
     () => {
         it("should narrow down types", () => {
             const c = new Composer<Context & { state: 1 }>();
