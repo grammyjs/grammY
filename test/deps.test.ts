@@ -23,6 +23,7 @@ export {
 } from "https://deno.land/std@0.211.0/testing/mock.ts";
 export {
     assertType,
+    type Has,
     type IsExact,
 } from "https://deno.land/std@0.211.0/testing/types.ts";
 
