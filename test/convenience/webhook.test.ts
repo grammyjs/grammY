@@ -1,14 +1,14 @@
-import type { Hono } from "https://deno.land/x/hono/mod.ts";
+import type { Hono } from "jsr:@hono/hono";
 import type {
     APIGatewayProxyEventV2,
     Context as LambdaContext,
-} from "https://deno.land/x/lambda/mod.ts";
-import type { NHttp } from "https://deno.land/x/nhttp/mod.ts";
-import type { Application } from "https://deno.land/x/oak/mod.ts";
+} from "npm:@types/aws-lambda";
+import type { NHttp } from "jsr:@nhttp/nhttp";
+import type { Application } from "jsr:@oak/oak";
 import type { createServer } from "node:http";
-import type { Express } from "npm:@types/express@^4.17";
-import type bodyParser from "npm:@types/koa-bodyparser@^4.3.12";
-import type Koa from "npm:@types/koa@^2.15";
+import type { Express } from "npm:@types/express";
+import type bodyParser from "npm:@types/koa-bodyparser";
+import type Koa from "npm:@types/koa";
 import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, webhookCallback } from "../../src/mod.ts";
