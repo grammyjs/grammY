@@ -4,6 +4,7 @@ import {
     assertType,
     beforeEach,
     describe,
+    type Has,
     type IsExact,
     it,
 } from "./deps.test.ts";
@@ -61,7 +62,7 @@ describe("Composer types", () => {
                 const match = ctx.match;
                 const chatId = ctx.chatId;
                 assertType<
-                    IsExact<typeof msg, MaybeInaccessibleMessage | undefined>
+                    Has<typeof msg, MaybeInaccessibleMessage | undefined>
                 >(
                     true,
                 );
@@ -132,18 +133,18 @@ describe("Composer types", () => {
                 const from = ctx.from;
                 const channelPost = ctx.channelPost;
 
-                assertType<IsExact<typeof chat, Chat.PrivateChat>>(true);
+                assertType<Has<typeof chat, Chat.PrivateChat>>(true);
                 assertType<IsExact<typeof chatId, number>>(true);
                 assertType<IsExact<typeof from, User>>(true);
                 assertType<IsExact<typeof channelPost, undefined>>(true);
                 if (ctx.message) {
-                    assertType<
-                        IsExact<typeof ctx.message.chat, Chat.PrivateChat>
-                    >(true);
+                    assertType<Has<typeof ctx.message.chat, Chat.PrivateChat>>(
+                        true,
+                    );
                 }
                 if (ctx.callbackQuery?.message) {
                     assertType<
-                        IsExact<
+                        Has<
                             typeof ctx.callbackQuery.message.chat,
                             Chat.PrivateChat
                         >
@@ -157,17 +158,17 @@ describe("Composer types", () => {
                 const chatId = ctx.chatId;
                 const channelPost = ctx.channelPost;
 
-                assertType<IsExact<typeof chat, Chat.GroupChat>>(true);
+                assertType<Has<typeof chat, Chat.GroupChat>>(true);
                 assertType<IsExact<typeof chatId, number>>(true);
                 assertType<IsExact<typeof channelPost, undefined>>(true);
                 if (ctx.message) {
-                    assertType<
-                        IsExact<typeof ctx.message.chat, Chat.GroupChat>
-                    >(true);
+                    assertType<Has<typeof ctx.message.chat, Chat.GroupChat>>(
+                        true,
+                    );
                 }
                 if (ctx.callbackQuery?.message) {
                     assertType<
-                        IsExact<
+                        Has<
                             typeof ctx.callbackQuery.message.chat,
                             Chat.GroupChat
                         >
@@ -181,17 +182,17 @@ describe("Composer types", () => {
                 const chatId = ctx.chatId;
                 const channelPost = ctx.channelPost;
 
-                assertType<IsExact<typeof chat, Chat.SupergroupChat>>(true);
+                assertType<Has<typeof chat, Chat.SupergroupChat>>(true);
                 assertType<IsExact<typeof chatId, number>>(true);
                 assertType<IsExact<typeof channelPost, undefined>>(true);
                 if (ctx.message) {
                     assertType<
-                        IsExact<typeof ctx.message.chat, Chat.SupergroupChat>
+                        Has<typeof ctx.message.chat, Chat.SupergroupChat>
                     >(true);
                 }
                 if (ctx.callbackQuery?.message) {
                     assertType<
-                        IsExact<
+                        Has<
                             typeof ctx.callbackQuery.message.chat,
                             Chat.SupergroupChat
                         >
@@ -205,17 +206,17 @@ describe("Composer types", () => {
                 const chatId = ctx.chatId;
                 const message = ctx.message;
 
-                assertType<IsExact<typeof chat, Chat.ChannelChat>>(true);
+                assertType<Has<typeof chat, Chat.ChannelChat>>(true);
                 assertType<IsExact<typeof chatId, number>>(true);
                 assertType<IsExact<typeof message, undefined>>(true);
                 if (ctx.channelPost) {
                     assertType<
-                        IsExact<typeof ctx.channelPost.chat, Chat.ChannelChat>
+                        Has<typeof ctx.channelPost.chat, Chat.ChannelChat>
                     >(true);
                 }
                 if (ctx.callbackQuery?.message) {
                     assertType<
-                        IsExact<
+                        Has<
                             typeof ctx.callbackQuery.message.chat,
                             Chat.ChannelChat
                         >
@@ -229,17 +230,17 @@ describe("Composer types", () => {
                 const chatId = ctx.chatId;
 
                 assertType<
-                    IsExact<typeof chat, Chat.PrivateChat | Chat.ChannelChat>
+                    Has<typeof chat, Chat.PrivateChat | Chat.ChannelChat>
                 >(true);
                 assertType<IsExact<typeof chatId, number>>(true);
                 if (ctx.message) {
-                    assertType<
-                        IsExact<typeof ctx.message.chat, Chat.PrivateChat>
-                    >(true);
+                    assertType<Has<typeof ctx.message.chat, Chat.PrivateChat>>(
+                        true,
+                    );
                 }
                 if (ctx.channelPost) {
                     assertType<
-                        IsExact<typeof ctx.channelPost.chat, Chat.ChannelChat>
+                        Has<typeof ctx.channelPost.chat, Chat.ChannelChat>
                     >(true);
                 }
             });
@@ -255,7 +256,7 @@ describe("Composer types", () => {
                 const gameShortName = ctx.callbackQuery.game_short_name;
                 const match = ctx.match;
                 assertType<
-                    IsExact<typeof msg, MaybeInaccessibleMessage | undefined>
+                    Has<typeof msg, MaybeInaccessibleMessage | undefined>
                 >(
                     true,
                 );

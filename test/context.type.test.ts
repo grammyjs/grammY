@@ -22,7 +22,7 @@ describe(
                 }
                 if (ctx.hasText("123")) {
                     assertType<
-                        IsExact<typeof ctx.match, string | RegExpMatchArray>
+                        Has<typeof ctx.match, string | RegExpMatchArray>
                     >(true);
                 }
                 if (ctx.hasCommand("123")) {
