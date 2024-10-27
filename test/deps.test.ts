@@ -8,24 +8,10 @@ export {
     assertRejects,
     assertStringIncludes,
     assertThrows,
-} from "https://deno.land/std@0.211.0/assert/mod.ts";
-export {
-    afterEach,
-    beforeEach,
-    describe,
-    it,
-} from "https://deno.land/std@0.211.0/testing/bdd.ts";
-export {
-    type Spy,
-    spy,
-    type Stub,
-    stub,
-} from "https://deno.land/std@0.211.0/testing/mock.ts";
-export {
-    assertType,
-    type Has,
-    type IsExact,
-} from "https://deno.land/std@0.211.0/testing/types.ts";
+} from "jsr:@std/assert";
+export { afterEach, beforeEach, describe, it } from "jsr:@std/testing/bdd";
+export { type Spy, spy, type Stub, stub } from "jsr:@std/testing/mock";
+export { assertType, type Has, type IsExact } from "jsr:@std/testing/types";
 
 export async function convertToUint8Array(
     data: Iterable<Uint8Array> | AsyncIterable<Uint8Array>,
