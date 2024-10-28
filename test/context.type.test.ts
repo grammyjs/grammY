@@ -2,8 +2,8 @@ import { Composer, type Context } from "../src/mod.ts";
 import {
     assertType,
     describe,
-    type Has,
     type IsExact,
+    type IsMutuallyAssignable,
     it,
 } from "./deps.test.ts";
 
@@ -20,11 +20,16 @@ describe("ctx.has* checks", () => {
             }
             if (ctx.hasText("123")) {
                 assertType<
-                    Has<typeof ctx.match, string | RegExpMatchArray>
+                    IsMutuallyAssignable<
+                        typeof ctx.match,
+                        string | RegExpMatchArray
+                    >
                 >(true);
             }
             if (ctx.hasCommand("123")) {
-                assertType<Has<typeof ctx.match, string>>(true);
+                assertType<IsMutuallyAssignable<typeof ctx.match, string>>(
+                    true,
+                );
             }
             if (ctx.hasChatType("private")) {
                 assertType<IsExact<typeof ctx.chat.type, "private">>(true);
@@ -44,7 +49,7 @@ describe("ctx.has* checks", () => {
             }
         });
         c.command("c", (ctx) => {
-            assertType<Has<typeof ctx.match, string>>(true);
+            assertType<IsMutuallyAssignable<typeof ctx.match, string>>(true);
         });
     });
 });
