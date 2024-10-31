@@ -621,34 +621,6 @@ export class InlineKeyboard {
         return { text, callback_data: data };
     }
     /**
-     * Adds a new copy text button. When clicked, the specified text will be
-     * copied to the clipboard.
-     *
-     * @param text The text to display
-     * @param copyText The text to be copied to the clipboard
-     */
-    copyText(text: string, copyText: string | CopyTextButton) {
-        return this.add(InlineKeyboard.copyText(text, copyText));
-    }
-    /**
-     * Creates a new copy text button. When clicked, the specified text will be
-     * copied to the clipboard.
-     *
-     * @param text The text to display
-     * @param copyText The text to be copied to the clipboard
-     */
-    static copyText(
-        text: string,
-        copyText: string | CopyTextButton,
-    ): InlineKeyboardButton.CopyTextButtonButton {
-        return {
-            text,
-            copy_text: typeof copyText === "string"
-                ? { text: copyText }
-                : copyText,
-        };
-    }
-    /**
      * Adds a new web app button, confer https://core.telegram.org/bots/webapps
      *
      * @param text The text to display
@@ -818,6 +790,34 @@ export class InlineKeyboard {
         query: SwitchInlineQueryChosenChat = {},
     ): InlineKeyboardButton.SwitchInlineChosenChatButton {
         return { text, switch_inline_query_chosen_chat: query };
+    }
+    /**
+     * Adds a new copy text button. When clicked, the specified text will be
+     * copied to the clipboard.
+     *
+     * @param text The text to display
+     * @param copyText The text to be copied to the clipboard
+     */
+    copyText(text: string, copyText: string | CopyTextButton) {
+        return this.add(InlineKeyboard.copyText(text, copyText));
+    }
+    /**
+     * Creates a new copy text button. When clicked, the specified text will be
+     * copied to the clipboard.
+     *
+     * @param text The text to display
+     * @param copyText The text to be copied to the clipboard
+     */
+    static copyText(
+        text: string,
+        copyText: string | CopyTextButton,
+    ): InlineKeyboardButton.CopyTextButtonButton {
+        return {
+            text,
+            copy_text: typeof copyText === "string"
+                ? { text: copyText }
+                : copyText,
+        };
     }
     /**
      * Adds a new game query button, confer
