@@ -8,6 +8,9 @@
 
 name: grammY
 
+env:
+    RUST_BACKTRACE: full
+
 on:
     push:
         branches: [main]
@@ -62,7 +65,7 @@ jobs:
               run: deno task check
 
             - name: Run Tests
-              run: RUST_BACKTRACE=full deno task test
+              run: deno task test
 
     coverage:
         runs-on: ubuntu-latest
