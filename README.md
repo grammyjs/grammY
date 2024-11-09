@@ -21,6 +21,8 @@
 
 </div>
 
+x
+
 **grammY makes it easy to create Telegram bots.** Both for beginners and at scale.
 
 You want grammY because it is easy to use. It is very powerful and always up to date. It has the best [documentation](https://grammy.dev) in town. It is extremely efficient and scales up effortlessly. It has a thriving ecosystem of plugins, a friendly community chat, seamless integrations with web frameworks and databases, and so much more.
