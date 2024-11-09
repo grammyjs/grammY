@@ -363,6 +363,14 @@ export function createRawApi<R extends RawApi>(
         get(_, m: Methods<R> | "toJSON") {
             return m === "toJSON"
                 ? "__internal"
+                // Methods with zero parameters are called without any payload,
+                // so we have to manually inject an empty payload.
+                : m === "getMe" ||
+                        m === "getWebhookInfo" ||
+                        m === "getForumTopicIconStickers" ||
+                        m === "logOut" ||
+                        m === "close"
+                ? client.callApi.bind(client, m, {} as Payload<typeof m, R>)
                 : client.callApi.bind(client, m);
         },
         ...proxyMethods,
