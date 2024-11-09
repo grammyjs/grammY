@@ -21,7 +21,7 @@
 
 </div>
 
-xx
+xxx
 
 **grammY makes it easy to create Telegram bots.** Both for beginners and at scale.
 
