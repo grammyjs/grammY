@@ -1465,6 +1465,16 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "IKatsuba",
+      "name": "Igor Katsuba",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10637135?v=4",
+      "profile": "https://blog.katsuba.dev",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ]
 }
