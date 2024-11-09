@@ -205,6 +205,12 @@ export interface ApiClientOptions {
         NonNullable<Parameters<typeof fetch>[1]>,
         "method" | "headers" | "body"
     >;
+
+    /**
+     * `fetch` function to use for making HTTP requests. Default: `node-fetch` in Node.js, `fetch` in Deno.
+     */
+    fetch?: typeof fetch;
+
     /**
      * When the network connection is unreliable and some API requests fail
      * because of that, grammY will throw errors that tell you exactly which
@@ -221,6 +227,8 @@ export interface ApiClientOptions {
 
 class ApiClient<R extends RawApi> {
     private readonly options: Required<ApiClientOptions>;
+
+    private readonly fetch: typeof fetch;
 
     private hasUsedWebhookReply = false;
 
@@ -244,7 +252,9 @@ class ApiClient<R extends RawApi> {
             },
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
+            fetch: options.fetch ?? fetch,
         };
+        this.fetch = this.options.fetch;
         if (this.options.apiRoot.endsWith("/")) {
             throw new Error(
                 `Remove the trailing '/' from the 'apiRoot' option (use '${
@@ -297,7 +307,7 @@ class ApiClient<R extends RawApi> {
         const sig = controller.signal;
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
-        const successPromise = fetch(
+        const successPromise = this.fetch(
             url instanceof URL ? url.href : url,
             options,
         ).catch(toHttpError(method, opts.sensitiveLogs));
