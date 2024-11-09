@@ -62,7 +62,7 @@ jobs:
               run: deno task check
 
             - name: Run Tests
-              run: deno task test
+              run: RUST_BACKTRACE=full deno task test
 
     coverage:
         runs-on: ubuntu-latest
