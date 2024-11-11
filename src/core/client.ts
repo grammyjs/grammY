@@ -241,6 +241,13 @@ class ApiClient<R extends RawApi> {
     ) {
         const apiRoot = options.apiRoot ?? "https://api.telegram.org";
         const environment = options.environment ?? "prod";
+
+        // In an ideal world, `fetch` is independent of the context being called,
+        // but in a Cloudflare worker, any context other than global throws an error.
+        // That is why we need to call custom fetch or fetch without context.
+        const { fetch: customFetch } = options;
+        const fetchFn = customFetch ?? fetch;
+
         this.options = {
             apiRoot,
             environment,
@@ -252,14 +259,9 @@ class ApiClient<R extends RawApi> {
             },
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
-            // In an ideal world, `fetch` is independent of the context being called,
-            // but in a Cloudflare worker, any context other than global throws an error.
-            // That is why we need to call custom fetch or fetch without context.
-            fetch: ((...args: Parameters<typeof fetch>) => {
-                const { fetch: customFetch } = options;
-
-                return (customFetch ?? fetch)(...args);
-            }) as typeof fetch,
+            fetch:
+                ((...args: Parameters<typeof fetch>) =>
+                    fetchFn(...args)) as typeof fetch,
         };
         this.fetch = this.options.fetch;
         if (this.options.apiRoot.endsWith("/")) {
