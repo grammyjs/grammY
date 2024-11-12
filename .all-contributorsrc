@@ -1482,7 +1482,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/105904746?v=4",
       "profile": "https://tilon.uz",
       "contributions": [
-        "review"
+        "review",
+        "bug",
+        "code"
       ]
     },
     {
