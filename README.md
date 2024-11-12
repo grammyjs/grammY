@@ -315,6 +315,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/ExposedCat"><img src="https://avatars.githubusercontent.com/u/44642024?v=4?s=100" width="100px;" alt="Artem Prokop"/><br /><sub><b>Artem Prokop</b></sub></a><br /><a href="#userTesting-ExposedCat" title="User Testing">📓</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://chinoman10.com/"><img src="https://avatars.githubusercontent.com/u/8300763?v=4?s=100" width="100px;" alt="Sérgio Rebelo"/><br /><sub><b>Sérgio Rebelo</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3AChinoman10" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://blog.katsuba.dev"><img src="https://avatars.githubusercontent.com/u/10637135?v=4?s=100" width="100px;" alt="Igor Katsuba"/><br /><sub><b>Igor Katsuba</b></sub></a><br /><a href="#ideas-IKatsuba" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=IKatsuba" title="Code">💻</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://tilon.uz"><img src="https://avatars.githubusercontent.com/u/105904746?v=4?s=100" width="100px;" alt="Oyatillo"/><br /><sub><b>Oyatillo</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3ABilagoNet" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/grammyjs/grammY/issues?q=author%3ABilagoNet" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=BilagoNet" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="11.11%"><a href="https://www.vorant94.io/"><img src="https://avatars.githubusercontent.com/u/9719319?v=4?s=100" width="100px;" alt="Mordechai Dror"/><br /><sub><b>Mordechai Dror</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Avorant94" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
