@@ -309,6 +309,9 @@ const bun: BunAdapter = (request) => {
         unauthorized: () => {
             resolveResponse(unauthorized());
         },
+        handlerReturn: new Promise<Response>((resolve) => {
+            resolveResponse = resolve;
+        }),
     };
 };
 
