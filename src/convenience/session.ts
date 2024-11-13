@@ -229,7 +229,7 @@ export function session<S, C extends Context>(
 function strictSingleSession<S, C extends Context>(
     options: SessionOptions<S, C>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
-    const { initial, storage, prefix, getSessionKey, custom } = fillDefaults(
+    const { initial, storage, getSessionKey, custom } = fillDefaults(
         options,
     );
     return async (ctx, next) => {
@@ -239,7 +239,7 @@ function strictSingleSession<S, C extends Context>(
             "session",
             initial,
         );
-        const key = prefix + await getSessionKey(ctx);
+        const key = await getSessionKey(ctx);
         await propSession.init(key, { custom, lazy: false });
         await next(); // no catch: do not write back if middleware throws
         await propSession.finish();
@@ -255,8 +255,7 @@ function strictMultiSession<S, C extends Context>(
     return async (ctx, next) => {
         ctx.session = {} as S;
         const propSessions = await Promise.all(props.map(async (prop) => {
-            const { initial, storage, prefix, getSessionKey, custom } =
-                defaults[prop];
+            const { initial, storage, getSessionKey, custom } = defaults[prop];
             const s = new PropertySession(
                 // @ts-expect-error cannot express that the storage works for a concrete prop
                 storage,
@@ -264,7 +263,7 @@ function strictMultiSession<S, C extends Context>(
                 prop,
                 initial,
             );
-            const key = prefix + await getSessionKey(ctx);
+            const key = await getSessionKey(ctx);
             await s.init(key, { custom, lazy: false });
             return s;
         }));
@@ -312,7 +311,7 @@ export function lazySession<S, C extends Context>(
     if (options.type !== undefined && options.type !== "single") {
         throw new Error("Cannot use lazy multi sessions!");
     }
-    const { initial, storage, prefix, getSessionKey, custom } = fillDefaults(
+    const { initial, storage, getSessionKey, custom } = fillDefaults(
         options,
     );
     return async (ctx, next) => {
@@ -323,7 +322,7 @@ export function lazySession<S, C extends Context>(
             "session",
             initial,
         );
-        const key = prefix + await getSessionKey(ctx);
+        const key = await getSessionKey(ctx);
         await propSession.init(key, { custom, lazy: true });
         await next(); // no catch: do not write back if middleware throws
         await propSession.finish();
@@ -451,7 +450,15 @@ function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
         storage = new MemorySessionStorage<S>();
     }
     const custom = getSessionKey !== defaultGetSessionKey;
-    return { initial, storage, prefix, getSessionKey, custom };
+    return {
+        initial,
+        storage,
+        getSessionKey: async (ctx: C) => {
+            const key = await getSessionKey(ctx);
+            return key === undefined ? undefined : prefix + key;
+        },
+        custom,
+    };
 }
 
 /** Stores session data per chat by default */
