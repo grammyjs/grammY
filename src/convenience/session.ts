@@ -229,9 +229,7 @@ export function session<S, C extends Context>(
 function strictSingleSession<S, C extends Context>(
     options: SessionOptions<S, C>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
-    const { initial, storage, getSessionKey, custom } = fillDefaults(
-        options,
-    );
+    const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
         const propSession = new PropertySession<SessionFlavor<S>, "session">(
             storage,
@@ -311,9 +309,7 @@ export function lazySession<S, C extends Context>(
     if (options.type !== undefined && options.type !== "single") {
         throw new Error("Cannot use lazy multi sessions!");
     }
-    const { initial, storage, getSessionKey, custom } = fillDefaults(
-        options,
-    );
+    const { initial, storage, getSessionKey, custom } = fillDefaults(options);
     return async (ctx, next) => {
         const propSession = new PropertySession(
             // @ts-expect-error suppress promise nature of values
