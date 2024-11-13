@@ -142,7 +142,7 @@ describe("session", () => {
         let ctx = { chatId: 42 } as C;
         composer.use(
             session({
-                prefix: "xyz",
+                prefix: "xyz-",
                 getSessionKey: (ctx) =>
                     ctx.chatId ? (ctx.chatId ** 2).toString() : undefined,
                 storage,
