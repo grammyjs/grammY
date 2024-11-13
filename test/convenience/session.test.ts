@@ -126,6 +126,50 @@ describe("session", () => {
         assertEquals(storage.delete.calls[0].args, ["42"]);
     });
 
+    it("should work with custom session keys", async () => {
+        let val: number | undefined = 0;
+        const storage = {
+            read: spy((_key: string) => val),
+            write: spy((_key: string, value: number) => {
+                val = value;
+            }),
+            delete: spy((_key: string) => {
+                val = undefined;
+            }),
+        };
+        type C = Context & SessionFlavor<number>;
+        const composer = new Composer<C>();
+        let ctx = { chatId: 42 } as C;
+        composer.use(
+            session({
+                prefix: "xyz",
+                getSessionKey: (ctx) =>
+                    ctx.chatId ? (ctx.chatId ** 2).toString() : undefined,
+                storage,
+            }),
+        )
+            .use((ctx) => {
+                if (ctx.session === 0) ctx.session = 1;
+                else ctx.session = null;
+            });
+
+        await composer.middleware()(ctx, next);
+        ctx = { chatId: 42 } as C;
+        await composer.middleware()(ctx, next);
+
+        assertEquals(storage.read.calls.length, 2);
+        assertEquals(storage.read.calls[0].args, ["xyz-1764"]);
+        assertEquals(storage.read.calls[1].args, ["xyz-1764"]);
+        assertEquals(storage.read.calls[0].returned, 0);
+        assertEquals(storage.read.calls[1].returned, 1);
+
+        assertEquals(storage.write.calls.length, 1);
+        assertEquals(storage.write.calls[0].args, ["xyz-1764", 1]);
+
+        assertEquals(storage.delete.calls.length, 1);
+        assertEquals(storage.delete.calls[0].args, ["xyz-1764"]);
+    });
+
     it("should do IO with objects", async () => {
         let val: Record<string, number> | undefined;
         const storage = {
