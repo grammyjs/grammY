@@ -119,6 +119,15 @@ export interface SessionOptions<S, C extends Context = Context> {
      */
     initial?: () => S;
     /**
+     * A optional prefix to prepend to the session key after it was generated.
+     *
+     * This makes it easier to store session data under a namespace. You can
+     * technically achieve the same functionality by returning an already
+     * prefixed key from `getSessionKey`. This option is merely more convenient,
+     * as it does not require you to think about session key generation.
+     */
+    prefix?: string;
+    /**
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
      * your chats and users. Check out the
@@ -220,7 +229,9 @@ export function session<S, C extends Context>(
 function strictSingleSession<S, C extends Context>(
     options: SessionOptions<S, C>,
 ): MiddlewareFn<C & SessionFlavor<S>> {
-    const { initial, storage, getSessionKey, custom } = fillDefaults(options);
+    const { initial, storage, prefix, getSessionKey, custom } = fillDefaults(
+        options,
+    );
     return async (ctx, next) => {
         const propSession = new PropertySession<SessionFlavor<S>, "session">(
             storage,
@@ -228,7 +239,7 @@ function strictSingleSession<S, C extends Context>(
             "session",
             initial,
         );
-        const key = await getSessionKey(ctx);
+        const key = prefix + await getSessionKey(ctx);
         await propSession.init(key, { custom, lazy: false });
         await next(); // no catch: do not write back if middleware throws
         await propSession.finish();
@@ -244,7 +255,8 @@ function strictMultiSession<S, C extends Context>(
     return async (ctx, next) => {
         ctx.session = {} as S;
         const propSessions = await Promise.all(props.map(async (prop) => {
-            const { initial, storage, getSessionKey, custom } = defaults[prop];
+            const { initial, storage, prefix, getSessionKey, custom } =
+                defaults[prop];
             const s = new PropertySession(
                 // @ts-expect-error cannot express that the storage works for a concrete prop
                 storage,
@@ -252,7 +264,7 @@ function strictMultiSession<S, C extends Context>(
                 prop,
                 initial,
             );
-            const key = await getSessionKey(ctx);
+            const key = prefix + await getSessionKey(ctx);
             await s.init(key, { custom, lazy: false });
             return s;
         }));
@@ -300,7 +312,9 @@ export function lazySession<S, C extends Context>(
     if (options.type !== undefined && options.type !== "single") {
         throw new Error("Cannot use lazy multi sessions!");
     }
-    const { initial, storage, getSessionKey, custom } = fillDefaults(options);
+    const { initial, storage, prefix, getSessionKey, custom } = fillDefaults(
+        options,
+    );
     return async (ctx, next) => {
         const propSession = new PropertySession(
             // @ts-expect-error suppress promise nature of values
@@ -309,7 +323,7 @@ export function lazySession<S, C extends Context>(
             "session",
             initial,
         );
-        const key = await getSessionKey(ctx);
+        const key = prefix + await getSessionKey(ctx);
         await propSession.init(key, { custom, lazy: true });
         await next(); // no catch: do not write back if middleware throws
         await propSession.finish();
@@ -424,7 +438,12 @@ class PropertySession<O extends {}, P extends keyof O> {
 }
 
 function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
-    let { getSessionKey = defaultGetSessionKey, initial, storage } = opts;
+    let {
+        prefix = "",
+        getSessionKey = defaultGetSessionKey,
+        initial,
+        storage,
+    } = opts;
     if (storage == null) {
         debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
@@ -432,7 +451,7 @@ function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
         storage = new MemorySessionStorage<S>();
     }
     const custom = getSessionKey !== defaultGetSessionKey;
-    return { initial, storage, getSessionKey, custom };
+    return { initial, storage, prefix, getSessionKey, custom };
 }
 
 /** Stores session data per chat by default */
