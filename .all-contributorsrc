@@ -1495,6 +1495,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "mahovich",
+      "name": "mahovich",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2377626?v=4",
+      "profile": "https://github.com/mahovich",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
