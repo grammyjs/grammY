@@ -496,7 +496,7 @@ function isEnhance<T>(value?: T | Enhance<T>): value is Enhance<T> | undefined {
         typeof value === "object" && value !== null && "__d" in value;
 }
 /** Options for enhanced sessions */
-export interface MigrationOptions<T> {
+export interface EnhancementOptions<T> {
     /** The original storage adapter that will be enhanced */
     storage: StorageAdapter<Enhance<T>>;
     /**
@@ -545,7 +545,7 @@ export interface Migrations {
  * @returns The enhanced storage adapter
  */
 export function enhanceStorage<T>(
-    options: MigrationOptions<T>,
+    options: EnhancementOptions<T>,
 ): StorageAdapter<T> {
     let { storage, millisecondsToLive, migrations } = options;
     storage = compatStorage(storage);
