@@ -82,14 +82,14 @@ export interface PollingOptions {
      * A callback function that is useful for logging (or setting up middleware
      * if you did not do this before). It will be executed after the setup of
      * the bot has completed, and immediately before the first updates are being
-     * fetched. The bot information `bot.botInfo` will be available when the
-     * function is run. For convenience, the callback function receives the
-     * value of `bot.botInfo` as an argument.
+     * fetched. The bot information `bot.me` will be available when the function
+     * is run. For convenience, the callback function receives the value of
+     * `bot.me` as an argument.
      *
      * When this function is invoked, the bot already signals that it is
      * running. In other words, `bot.isRunning()` already returns true.
      */
-    onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
+    onStart?: (me: UserFromGetMe) => void | Promise<void>;
     onStop?: () => void | Promise<void>;
 }
 
@@ -123,7 +123,7 @@ export interface BotConfig<C extends Context> {
      * values. If you use this option, grammY will not attempt to make a `getMe`
      * call but use the provided data instead.
      */
-    botInfo?: UserFromGetMe;
+    me?: UserFromGetMe;
     /**
      * Pass the constructor of a custom context object that will be used when
      * creating the context for each incoming update.
@@ -172,7 +172,7 @@ export class Bot<
      */
     public readonly api: A;
 
-    private me: UserFromGetMe | undefined;
+    private botInfo: UserFromGetMe | undefined;
     private mePromise: Promise<UserFromGetMe> | undefined;
     private readonly clientConfig: ApiClientOptions | undefined;
 
@@ -223,7 +223,7 @@ export class Bot<
     constructor(public readonly token: string, config?: BotConfig<C>) {
         super();
         if (!token) throw new Error("Empty token!");
-        this.me = config?.botInfo;
+        this.botInfo = config?.me;
         this.clientConfig = config?.client;
         this.ContextConstructor = config?.ContextConstructor ??
             (Context as unknown as new (
@@ -244,16 +244,16 @@ export class Bot<
      * to pass it to the configuration object of the `new Bot()` instantiation,
      * rather than assigning this property.
      */
-    public set botInfo(botInfo: UserFromGetMe) {
-        this.me = botInfo;
+    public set me(me: UserFromGetMe) {
+        this.botInfo = me;
     }
-    public get botInfo(): UserFromGetMe {
-        if (this.me === undefined) {
+    public get me(): UserFromGetMe {
+        if (this.botInfo === undefined) {
             throw new Error(
-                "Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.botInfo`!",
+                "Bot information unavailable! Make sure to call `await bot.init()` before accessing `bot.me`!",
             );
         }
-        return this.me;
+        return this.botInfo;
     }
 
     /**
@@ -289,7 +289,7 @@ export class Bot<
      * @returns true if the bot is initialized, and false otherwise
      */
     isInited() {
-        return this.me !== undefined;
+        return this.botInfo !== undefined;
     }
 
     /**
@@ -312,10 +312,10 @@ export class Bot<
             } finally {
                 this.mePromise = undefined;
             }
-            if (this.me === undefined) this.me = me;
+            if (this.botInfo === undefined) this.botInfo = me;
             else debug("Bot info was set by now, will not overwrite");
         }
-        debug(`I am ${this.me!.username}!`);
+        debug(`I am ${this.botInfo!.username}!`);
     }
 
     /**
@@ -359,10 +359,10 @@ export class Bot<
         update: Update,
         webhookReplyEnvelope?: WebhookReplyEnvelope,
     ) {
-        if (this.me === undefined) {
+        if (this.botInfo === undefined) {
             throw new Error(
                 "Bot not initialized! Either call `await bot.init()`, \
-or directly set the `botInfo` option in the `Bot` constructor to specify \
+or directly set the `me` option in the `Bot` constructor to specify \
 a known bot info object.",
             );
         }
@@ -377,7 +377,7 @@ a known bot info object.",
         const t = this.api.config.installedTransformers();
         if (t.length > 0) api.config.use(...t);
         // create context object
-        const ctx = new this.ContextConstructor(update, api, this.me);
+        const ctx = new this.ContextConstructor(update, api, this.botInfo);
         try {
             // run middleware stack
             await run(this.middleware(), ctx);
@@ -421,7 +421,7 @@ a known bot info object.",
             await Promise.all(setup);
 
             // All async ops of setup complete, run callback
-            await options?.onStart?.(this.botInfo);
+            await options?.onStart?.(this.me);
         } catch (err) {
             this.pollingRunning = false;
             this.pollingAbortController = undefined;

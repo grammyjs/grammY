@@ -16,7 +16,7 @@ import type { UserFromGetMe } from "../../src/types.ts";
 import { describe, it } from "../deps.test.ts";
 
 describe("webhook", () => {
-    const bot = new Bot("dummy", { botInfo: {} as unknown as UserFromGetMe });
+    const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
 
     it("AWS Lambda should be compatible with grammY adapter", () => {
         ((event: APIGatewayProxyEventV2, context: LambdaContext) =>
