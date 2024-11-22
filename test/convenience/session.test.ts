@@ -106,7 +106,7 @@ describe("session", () => {
         composer.use(session({ storage }))
             .use((ctx) => {
                 if (ctx.session === 0) ctx.session = 1;
-                else ctx.session = null;
+                else ctx.session = undefined;
             });
 
         await composer.middleware()(ctx, next);
@@ -567,7 +567,7 @@ describe("lazy session", () => {
         composer.use(lazySession({ storage }))
             .use(async (ctx) => {
                 if (await ctx.session === 0) ctx.session = 1;
-                else ctx.session = null;
+                else ctx.session = undefined;
             });
 
         await composer.middleware()(ctx, next);
@@ -947,7 +947,7 @@ describe("MemorySessionStorage", () => {
         store.write("k0", 42);
         store.write("k1", 43);
         store.write("k2", 44);
-        assertEquals(store.readAll(), [42, 43, 44]);
+        assertEquals(store.readAllValues(), [42, 43, 44]);
     });
     it("should support timeouts", async () => {
         const store = new MemorySessionStorage<number>(TICK_MS);

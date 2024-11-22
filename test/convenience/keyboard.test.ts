@@ -169,7 +169,7 @@ describe("InlineKeyboard", () => {
         };
         const keyboard = new InlineKeyboard()
             .url("url", "https://grammy.dev")
-            .text("button")
+            .text("button", "button")
             .text("button", "data")
             .webApp("web app", "https://grammy.dev")
             .login("login", "https://grammy.dev")
@@ -219,11 +219,13 @@ describe("InlineKeyboard", () => {
     it("can be transposed", () => {
         function t(btns: string[][], target: string[][]) {
             const actual = InlineKeyboard.from(
-                btns.map((row) => row.map((data) => InlineKeyboard.text(data))),
+                btns.map((row) =>
+                    row.map((data) => InlineKeyboard.text(data, data))
+                ),
             );
             const expected = InlineKeyboard.from(
                 target.map((row) =>
-                    row.map((data) => InlineKeyboard.text(data))
+                    row.map((data) => InlineKeyboard.text(data, data))
                 ),
             );
             assertEquals(
@@ -238,10 +240,11 @@ describe("InlineKeyboard", () => {
             [["a", "b"], ["c"], ["d", "e", "f"]],
             [["a", "c", "d"], ["b", "e"], ["f"]],
         );
-        const keyboard = new InlineKeyboard().text("a").text("b").text("c")
+        const keyboard = new InlineKeyboard()
+            .text("a", "a").text("b", "b").text("c", "c")
             .row()
-            .text("d").text("e").row()
-            .text("f");
+            .text("d", "d").text("e", "e").row()
+            .text("f", "f");
         assertEquals(keyboard.toTransposed().toTransposed(), keyboard);
     });
 
@@ -253,11 +256,13 @@ describe("InlineKeyboard", () => {
             target: string[][],
         ) {
             const actual = InlineKeyboard.from(
-                btns.map((row) => row.map((data) => InlineKeyboard.text(data))),
+                btns.map((row) =>
+                    row.map((data) => InlineKeyboard.text(data, data))
+                ),
             );
             const expected = InlineKeyboard.from(
                 target.map((row) =>
-                    row.map((data) => InlineKeyboard.text(data))
+                    row.map((data) => InlineKeyboard.text(data, data))
                 ),
             );
             assertEquals(
@@ -286,9 +291,9 @@ describe("InlineKeyboard", () => {
             [["a"], ["b", "c", "d"], ["e", "f", "g"], ["h", "i", "j"]],
         );
         const keyboard = new InlineKeyboard()
-            .text("a").text("b").text("c").row()
-            .text("d").text("e").row()
-            .text("f");
+            .text("a", "a").text("b", "b").text("c", "c").row()
+            .text("d", "d").text("e", "e").row()
+            .text("f", "f");
         assertEquals(
             keyboard.toFlowed(3).toFlowed(3),
             keyboard.toFlowed(3),
@@ -302,14 +307,14 @@ describe("InlineKeyboard", () => {
         );
         assertEquals(InlineKeyboard.from(raw).inline_keyboard, raw);
 
-        const keyboard = new InlineKeyboard().text("button");
+        const keyboard = new InlineKeyboard().text("button", "button");
         assertNotStrictEquals(InlineKeyboard.from(keyboard), keyboard);
         assertEquals(InlineKeyboard.from(keyboard), keyboard);
     });
 
     it("can be appended", () => {
         const initial = new InlineKeyboard()
-            .text("a").text("b").text("c");
+            .text("a", "a").text("b", "b").text("c", "c");
         assertEquals(
             initial.clone().append(initial).append(initial).inline_keyboard,
             [
