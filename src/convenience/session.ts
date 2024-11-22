@@ -119,7 +119,7 @@ export interface SessionOptions<S, C extends Context = Context> {
      */
     initial?: () => S;
     /**
-     * A optional prefix to prepend to the session key after it was generated.
+     * An optional prefix to prepend to the session key after it was generated.
      *
      * This makes it easier to store session data under a namespace. You can
      * technically achieve the same functionality by returning an already
