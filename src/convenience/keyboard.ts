@@ -578,8 +578,7 @@ export class InlineKeyboard {
     /**
      * Adds a new callback query button. The button contains a text and a custom
      * payload. This payload will be sent back to your bot when the button is
-     * pressed. If you omit the payload, the display text will be sent back to
-     * your bot.
+     * pressed.
      *
      * Your bot will receive an update every time a user presses any of the text
      * buttons. You can listen to these updates like this:
@@ -591,16 +590,15 @@ export class InlineKeyboard {
      * ```
      *
      * @param text The text to display
-     * @param data The callback data to send back to your bot (default = text)
+     * @param data The callback data to send back to your bot
      */
-    text(text: string, data = text) {
+    text(text: string, data: string) {
         return this.add(InlineKeyboard.text(text, data));
     }
     /**
      * Creates a new callback query button. The button contains a text and a
      * custom payload. This payload will be sent back to your bot when the
-     * button is pressed. If you omit the payload, the display text will be sent
-     * back to your bot.
+     * button is pressed.
      *
      * Your bot will receive an update every time a user presses any of the text
      * buttons. You can listen to these updates like this:
@@ -612,11 +610,11 @@ export class InlineKeyboard {
      * ```
      *
      * @param text The text to display
-     * @param data The callback data to send back to your bot (default = text)
+     * @param data The callback data to send back to your bot
      */
     static text(
         text: string,
-        data = text,
+        data: string,
     ): InlineKeyboardButton.CallbackButton {
         return { text, callback_data: data };
     }
