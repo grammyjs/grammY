@@ -462,14 +462,6 @@ export class Keyboard {
         return this;
     }
     /**
-     * Returns the keyboard that was build. Note that it doesn't return
-     * `resize_keyboard` or other options that may be set. You don't usually
-     * need to call this method. It is no longer useful.
-     */
-    build() {
-        return this.keyboard;
-    }
-    /**
      * Turns a two-dimensional keyboard button array into a keyboard instance.
      * You can use the static button builder methods to create keyboard button
      * objects.
