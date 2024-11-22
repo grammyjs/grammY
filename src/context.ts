@@ -1591,6 +1591,25 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Contex-aware alias for `api.serUserEmojiStatus`. Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setuseremojistatus
+     */
+    setUserEmojiStatus(
+        other?: Other<"setUserEmojiStatus", "user_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setUserEmojiStatus(
+            orThrow(this.from, "setUserEmojiStatus").id,
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.getUserChatBoosts`. Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object.
      *
      * @param chat_id Unique identifier for the chat or username of the channel (in the format @channelusername)
@@ -2803,6 +2822,28 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.sendGift`. Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success.
+     *
+     * @param gift_id Identifier of the gift
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendgift
+     */
+    replyWithGift(
+        gift_id: string,
+        other?: Other<"sendGift", "user_id" | "gift_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.sendGift(
+            orThrow(this.from, "sendGift").id,
+            gift_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.answerInlineQuery`. Use this method to send answers to an inline query. On success, True is returned.
      * No more than 50 results per query are allowed.
      *
@@ -2822,6 +2863,28 @@ export class Context implements RenamedUpdate {
         return this.api.answerInlineQuery(
             orThrow(this.inlineQuery, "answerInlineQuery").id,
             results,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.savePreparedInlineMessage`. Stores a message that can be sent by a user of a Mini App. Returns a PreparedInlineMessage object.
+     *
+     * @param result An object describing the message to be sent
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#savepreparedinlinemessage
+     */
+    savePreparedInlineMessage(
+        result: InlineQueryResult,
+        other?: Other<"savePreparedInlineMessage", "user_id" | "result">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.savePreparedInlineMessage(
+            orThrow(this.from, "savePreparedInlineMessage").id,
+            result,
             other,
             signal,
         );
@@ -2928,6 +2991,28 @@ export class Context implements RenamedUpdate {
             orThrow(this.from, "refundStarPayment").id,
             orThrow(this.msg?.successful_payment, "refundStarPayment")
                 .telegram_payment_charge_id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editUserStarSubscription`. Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns True on success.
+     *
+     * @param telegram_payment_charge_id Telegram payment identifier for the subscription
+     * @param is_canceled Pass True to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass False to allow the user to re-enable a subscription that was previously canceled by the bot.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#edituserstarsubscription
+     */
+    editUserStarSubscription(
+        telegram_payment_charge_id: string,
+        is_canceled: boolean,
+        signal?: AbortSignal,
+    ) {
+        return this.api.editUserStarSubscription(
+            orThrow(this.from, "editUserStarSubscription").id,
+            telegram_payment_charge_id,
+            is_canceled,
             signal,
         );
     }

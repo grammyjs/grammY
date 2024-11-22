@@ -870,6 +870,23 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setuseremojistatus
+     */
+    setUserEmojiStatus(
+        user_id: number,
+        other?: Other<R, "setUserEmojiStatus", "user_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setUserEmojiStatus({ user_id, ...other }, signal);
+    }
+
+    /**
      * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object.
      *
      * @param chat_id Unique identifier for the chat or username of the channel (in the format @channelusername)
@@ -2464,6 +2481,36 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Returns the list of gifts that can be sent by the bot to users. Requires no parameters. Returns a Gifts object.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getavailablegifts
+     */
+    getAvailableGifts(signal?: AbortSignal) {
+        return this.raw.getAvailableGifts(signal);
+    }
+
+    /**
+     * Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user that will receive the gift
+     * @param gift_id Identifier of the gift
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendgift
+     */
+    sendGift(
+        user_id: number,
+        gift_id: string,
+        other?: Other<R, "sendGift", "user_id" | "gift_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendGift({ user_id, gift_id, ...other }, signal);
+    }
+
+    /**
      * Use this method to send answers to an inline query. On success, True is returned.
      * No more than 50 results per query are allowed.
      *
@@ -2503,6 +2550,28 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.answerWebAppQuery({ web_app_query_id, result }, signal);
+    }
+
+    /**
+     * Stores a message that can be sent by a user of a Mini App. Returns a PreparedInlineMessage object.
+     *
+     * @param user_id Unique identifier of the target user that can use the prepared message
+     * @param result An object describing the message to be sent
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#savepreparedinlinemessage
+     */
+    savePreparedInlineMessage(
+        user_id: number,
+        result: InlineQueryResult,
+        other?: Other<R, "savePreparedInlineMessage", "user_id" | "result">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.savePreparedInlineMessage(
+            { user_id, result, ...other },
+            signal,
+        );
     }
 
     /**
@@ -2672,6 +2741,28 @@ export class Api<R extends RawApi = RawApi> {
     ) {
         return this.raw.refundStarPayment(
             { user_id, telegram_payment_charge_id },
+            signal,
+        );
+    }
+
+    /**
+     * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns True on success.
+     *
+     * @param user_id Identifier of the user whose subscription will be edited
+     * @param telegram_payment_charge_id Telegram payment identifier for the subscription
+     * @param is_canceled Pass True to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass False to allow the user to re-enable a subscription that was previously canceled by the bot.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#edituserstarsubscription
+     */
+    editUserStarSubscription(
+        user_id: number,
+        telegram_payment_charge_id: string,
+        is_canceled: boolean,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editUserStarSubscription(
+            { user_id, telegram_payment_charge_id, is_canceled },
             signal,
         );
     }

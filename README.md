@@ -10,7 +10,7 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-7.11-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-8.0-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
@@ -319,6 +319,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="11.11%"><a href="https://www.vorant94.io/"><img src="https://avatars.githubusercontent.com/u/9719319?v=4?s=100" width="100px;" alt="Mordechai Dror"/><br /><sub><b>Mordechai Dror</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Avorant94" title="Reviewed Pull Requests">👀</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/mahovich"><img src="https://avatars.githubusercontent.com/u/2377626?v=4?s=100" width="100px;" alt="mahovich"/><br /><sub><b>mahovich</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=mahovich" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>

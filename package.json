@@ -1,7 +1,7 @@
 {
     "name": "grammy",
     "description": "The Telegram Bot Framework.",
-    "version": "1.31.3",
+    "version": "1.32.0",
     "author": "KnorpelSenf",
     "license": "MIT",
     "engines": {
@@ -17,7 +17,7 @@
         "backport": "deno2node tsconfig.json"
     },
     "dependencies": {
-        "@grammyjs/types": "3.15.0",
+        "@grammyjs/types": "3.16.0",
         "abort-controller": "^3.0.0",
         "debug": "^4.3.4",
         "node-fetch": "^2.7.0"
