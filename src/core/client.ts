@@ -147,7 +147,7 @@ export interface ApiClientOptions {
         token: string,
         method: string,
         options?: BuildUrlOptions,
-    ) => string | URL;
+    ) => string;
     /**
      * Maximum number of seconds that a request to the Bot API server may take.
      * If a request has not completed before this time has elapsed, grammY
@@ -320,10 +320,8 @@ class ApiClient<R extends RawApi> {
         const sig = controller.signal;
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
-        const successPromise = this.fetch(
-            url instanceof URL ? url.href : url,
-            options,
-        ).catch(toHttpError(method, opts.sensitiveLogs));
+        const successPromise = this.fetch(url, options)
+            .catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
         // Wait for result
