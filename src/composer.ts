@@ -736,8 +736,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * have completed.
      *
      * Both the fork and the downstream middleware are awaited with
-     * `Promise.all`, so you will only be to catch up to one error (the one that
-     * is thrown first).
+     * `Promise.allSettled`.
      *
      * In opposite to the other middleware methods on composer, `fork` does not
      * return simply return the composer connected to the main middleware stack.
@@ -753,7 +752,15 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     fork(...middleware: Array<Middleware<C>>) {
         const composer = new Composer(...middleware);
         const fork = flatten(composer);
-        this.use((ctx, next) => Promise.all([next(), run(fork, ctx)]));
+        this.use(async (ctx, next) => {
+            const results = await Promise.allSettled([next(), run(fork, ctx)]);
+            const errors = results.filter((res) => res.status === "rejected");
+            if (errors.length === 0) return;
+            if (errors.length === 1) throw errors[0].reason;
+            throw new Error("Multiple errors thrown in fork", {
+                cause: errors.map((e) => e.reason),
+            });
+        });
         return composer;
     }
 
