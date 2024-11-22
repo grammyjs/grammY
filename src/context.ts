@@ -1661,11 +1661,6 @@ export class Context implements RenamedUpdate {
         return this.api.getFile(orThrow(file, "getFile").file_id, signal);
     }
 
-    /** @deprecated Use `banAuthor` instead. */
-    kickAuthor(...args: Parameters<Context["banAuthor"]>) {
-        return this.banAuthor(...args);
-    }
-
     /**
      * Context-aware alias for `api.banChatMember`. Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
@@ -1684,11 +1679,6 @@ export class Context implements RenamedUpdate {
             other,
             signal,
         );
-    }
-
-    /** @deprecated Use `banChatMember` instead. */
-    kickChatMember(...args: Parameters<Context["banChatMember"]>) {
-        return this.banChatMember(...args);
     }
 
     /**
@@ -2242,11 +2232,6 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "getChatAdministrators"),
             signal,
         );
-    }
-
-    /** @deprecated Use `getChatMembersCount` instead. */
-    getChatMembersCount(...args: Parameters<Context["getChatMemberCount"]>) {
-        return this.getChatMemberCount(...args);
     }
 
     /**

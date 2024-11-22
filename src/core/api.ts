@@ -935,11 +935,6 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.getFile({ file_id }, signal);
     }
 
-    /** @deprecated Use `banChatMember` instead. */
-    kickChatMember(...args: Parameters<Api["banChatMember"]>) {
-        return this.banChatMember(...args);
-    }
-
     /**
      * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
@@ -1416,11 +1411,6 @@ export class Api<R extends RawApi = RawApi> {
      */
     getChatAdministrators(chat_id: number | string, signal?: AbortSignal) {
         return this.raw.getChatAdministrators({ chat_id }, signal);
-    }
-
-    /** @deprecated Use `getChatMemberCount` instead. */
-    getChatMembersCount(...args: Parameters<Api["getChatMemberCount"]>) {
-        return this.getChatMemberCount(...args);
     }
 
     /**

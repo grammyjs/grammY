@@ -685,13 +685,6 @@ export class MemorySessionStorage<S> implements StorageAdapter<S> {
         return value.session;
     }
 
-    /**
-     * @deprecated Use {@link readAllValues} instead
-     */
-    readAll() {
-        return this.readAllValues();
-    }
-
     readAllKeys() {
         return Array.from(this.storage.keys());
     }
