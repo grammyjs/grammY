@@ -105,6 +105,10 @@ function concatTransformer<R extends RawApi>(
     return (method, payload, signal) => trans(prev, method, payload, signal);
 }
 
+export interface BuildUrlOptions {
+    test?: boolean;
+}
+
 /**
  * Options to pass to the API client that eventually connects to the Telegram
  * Bot API server and makes the HTTP requests.
@@ -142,7 +146,7 @@ export interface ApiClientOptions {
         root: string,
         token: string,
         method: string,
-        env: "prod" | "test",
+        options?: BuildUrlOptions,
     ) => string | URL;
     /**
      * Maximum number of seconds that a request to the Bot API server may take.
@@ -308,7 +312,7 @@ class ApiClient<R extends RawApi> {
             opts.apiRoot,
             this.token,
             method,
-            opts.environment,
+            { test: opts.environment === "test" },
         );
         const config = formDataRequired
             ? createFormDataPayload(payload, (err) => streamErr.catch(err))
@@ -402,10 +406,9 @@ const defaultBuildUrl: NonNullable<ApiClientOptions["buildUrl"]> = (
     root,
     token,
     method,
-    env,
+    { test = false } = {},
 ) => {
-    const prefix = env === "test" ? "test/" : "";
-    return `${root}/bot${token}/${prefix}${method}`;
+    return `${root}/bot${token}/${test ? "test/" : ""}${method}`;
 };
 
 const proxyMethods = {
