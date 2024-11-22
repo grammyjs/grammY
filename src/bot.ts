@@ -90,6 +90,7 @@ export interface PollingOptions {
      * running. In other words, `bot.isRunning()` already returns true.
      */
     onStart?: (botInfo: UserFromGetMe) => void | Promise<void>;
+    onStop?: () => void | Promise<void>;
 }
 
 export { BotError };
@@ -389,34 +390,11 @@ a known bot info object.",
     /**
      * Starts your bot using long polling.
      *
-     * > This method returns a `Promise` that will never resolve except if your
-     * > bot is stopped. **You don't need to `await` the call to `bot.start`**,
-     * > but remember to catch potential errors by calling `bot.catch`.
-     * > Otherwise your bot will crash (and stop) if something goes wrong in
-     * > your code.
-     *
      * This method effectively enters a loop that will repeatedly call
      * `getUpdates` and run your middleware for every received update, allowing
      * your bot to respond to messages.
      *
      * If your bot is already running, this method does nothing.
-     *
-     * **Note that this starts your bot using a very simple long polling
-     * implementation.** `bot.start` should only be used for small bots. While
-     * the rest of grammY was built to perform well even under extreme loads,
-     * simple long polling is not capable of scaling up in a similar fashion.
-     * You should switch over to using `@grammyjs/runner` if you are running a
-     * bot with high load.
-     *
-     * What exactly _high load_ means differs from bot to bot, but as a rule of
-     * thumb, simple long polling should not be processing more than ~5K
-     * messages every hour. Also, if your bot has long-running operations such
-     * as large file transfers that block the middleware from completing, this
-     * will impact the responsiveness negatively, so it makes sense to use the
-     * `@grammyjs/runner` package even if you receive much fewer messages. If
-     * you worry about how much load your bot can handle, check out the grammY
-     * [documentation](https://grammy.dev/advanced/scaling) about scaling
-     * up.
      *
      * @param options Options to use for simple long polling
      */
@@ -463,8 +441,10 @@ a known bot info object.",
 
         // Start polling
         debug("Starting simple long polling");
-        await this.loop(options);
-        debug("Middleware is done running");
+        this.loop(options)
+            .catch((err) => {
+                console.error("Simple long polling crashed unexpectedly", err);
+            }).finally(() => options?.onStop?.());
     }
 
     /**
@@ -480,10 +460,6 @@ a known bot info object.",
      * discarded and will be fetched again when the bot starts up the next time.
      * Confer the official documentation on confirming updates if you want to
      * know more: https://core.telegram.org/bots/api#getupdates
-     *
-     * > Note that this method will not wait for the middleware stack to finish.
-     * > If you need to run code after all middleware is done, consider waiting
-     * > for the promise returned by `bot.start()` to resolve.
      */
     async stop() {
         if (this.pollingRunning) {
