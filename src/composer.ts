@@ -866,9 +866,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         trueMiddleware: MaybeArray<Middleware<C>>,
         falseMiddleware: MaybeArray<Middleware<C>>,
     ) {
-        return this.lazy(async (ctx) =>
-            (await predicate(ctx)) ? trueMiddleware : falseMiddleware
+        const otherwise = Array.isArray(falseMiddleware)
+            ? new Composer(...falseMiddleware)
+            : new Composer(falseMiddleware);
+        this.lazy(async (ctx) =>
+            (await predicate(ctx)) ? trueMiddleware : otherwise
         );
+        return otherwise;
     }
 
     /**
