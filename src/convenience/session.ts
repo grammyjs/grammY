@@ -119,6 +119,15 @@ export interface SessionOptions<S, C extends Context = Context> {
      */
     initial?: () => S;
     /**
+     * An optional prefix to prepend to the session key after it was generated.
+     *
+     * This makes it easier to store session data under a namespace. You can
+     * technically achieve the same functionality by returning an already
+     * prefixed key from `getSessionKey`. This option is merely more convenient,
+     * as it does not require you to think about session key generation.
+     */
+    prefix?: string;
+    /**
      * This option lets you generate your own session keys per context object.
      * The session key determines how to map the different session objects to
      * your chats and users. Check out the
@@ -424,7 +433,12 @@ class PropertySession<O extends {}, P extends keyof O> {
 }
 
 function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
-    let { getSessionKey = defaultGetSessionKey, initial, storage } = opts;
+    let {
+        prefix = "",
+        getSessionKey = defaultGetSessionKey,
+        initial,
+        storage,
+    } = opts;
     if (storage == null) {
         debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
@@ -432,7 +446,15 @@ function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
         storage = new MemorySessionStorage<S>();
     }
     const custom = getSessionKey !== defaultGetSessionKey;
-    return { initial, storage, getSessionKey, custom };
+    return {
+        initial,
+        storage,
+        getSessionKey: async (ctx: C) => {
+            const key = await getSessionKey(ctx);
+            return key === undefined ? undefined : prefix + key;
+        },
+        custom,
+    };
 }
 
 /** Stores session data per chat by default */
