@@ -129,13 +129,6 @@ export interface BotConfig<C extends Context> {
      * call but use the provided data instead.
      */
     me?: UserFromGetMe;
-    /**
-     * Pass the constructor of a custom context object that will be used when
-     * creating the context for each incoming update.
-     */
-    ContextConstructor?: new (
-        ...args: ConstructorParameters<typeof Context>
-    ) => C;
 }
 
 /**
@@ -180,10 +173,6 @@ export class Bot<
     private botInfo: UserFromGetMe | undefined;
     private mePromise: Promise<UserFromGetMe> | undefined;
     private readonly clientConfig: ApiClientOptions | undefined;
-
-    private readonly ContextConstructor: new (
-        ...args: ConstructorParameters<typeof Context>
-    ) => C;
 
     /** Used to log a warning if some update types are not in allowed_updates */
     private observedUpdateTypes = new Set<string>();
@@ -230,10 +219,6 @@ export class Bot<
         if (!token) throw new Error("Empty token!");
         this.botInfo = config?.me;
         this.clientConfig = config?.client;
-        this.ContextConstructor = config?.ContextConstructor ??
-            (Context as unknown as new (
-                ...args: ConstructorParameters<typeof Context>
-            ) => C);
         this.api = new Api(token, this.clientConfig) as A;
     }
 
@@ -382,7 +367,7 @@ a known bot info object.",
         const t = this.api.config.installedTransformers();
         if (t.length > 0) api.config.use(...t);
         // create context object
-        const ctx = new this.ContextConstructor(update, api, this.botInfo);
+        const ctx = new Context(update, api, this.botInfo) as C;
         try {
             // run middleware stack
             await run(this.middleware(), ctx);
