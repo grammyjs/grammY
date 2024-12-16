@@ -209,11 +209,6 @@ export interface ApiClientOptions {
     >;
 
     /**
-     * `fetch` function to use for making HTTP requests. Default: `node-fetch` in Node.js, `fetch` in Deno.
-     */
-    fetch?: typeof fetch;
-
-    /**
      * When the network connection is unreliable and some API requests fail
      * because of that, grammY will throw errors that tell you exactly which
      * requests failed. However, the error messages do not disclose the fetched
@@ -230,8 +225,6 @@ export interface ApiClientOptions {
 class ApiClient<R extends RawApi> {
     private readonly options: Required<ApiClientOptions>;
 
-    private readonly fetch: typeof fetch;
-
     private hasUsedWebhookReply = false;
 
     readonly installedTransformers: Transformer<R>[] = [];
@@ -244,12 +237,6 @@ class ApiClient<R extends RawApi> {
         const apiRoot = options.apiRoot ?? "https://api.telegram.org";
         const environment = options.environment ?? "prod";
 
-        // In an ideal world, `fetch` is independent of the context being called,
-        // but in a Cloudflare worker, any context other than global throws an error.
-        // That is why we need to call custom fetch or fetch without context.
-        const { fetch: customFetch } = options;
-        const fetchFn = customFetch ?? fetch;
-
         this.options = {
             apiRoot,
             environment,
@@ -261,11 +248,7 @@ class ApiClient<R extends RawApi> {
             },
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
-            fetch:
-                ((...args: Parameters<typeof fetch>) =>
-                    fetchFn(...args)) as typeof fetch,
         };
-        this.fetch = this.options.fetch;
         if (this.options.apiRoot.endsWith("/")) {
             throw new Error(
                 `Remove the trailing '/' from the 'apiRoot' option (use '${
@@ -318,7 +301,7 @@ class ApiClient<R extends RawApi> {
         const sig = controller.signal;
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
-        const successPromise = this.fetch(url, options)
+        const successPromise = fetch(url, options)
             .catch(toHttpError(method, opts.sensitiveLogs));
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
