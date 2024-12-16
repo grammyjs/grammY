@@ -970,7 +970,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendMessage(
             orThrow(this.chatId, "sendMessage"),
             text,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1097,7 +1101,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendPhoto(
             orThrow(this.chatId, "sendPhoto"),
             photo,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1121,7 +1129,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendAudio(
             orThrow(this.chatId, "sendAudio"),
             audio,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1143,7 +1155,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendDocument(
             orThrow(this.chatId, "sendDocument"),
             document,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1165,7 +1181,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendVideo(
             orThrow(this.chatId, "sendVideo"),
             video,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1187,7 +1207,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendAnimation(
             orThrow(this.chatId, "sendAnimation"),
             animation,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1209,7 +1233,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendVoice(
             orThrow(this.chatId, "sendVoice"),
             voice,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1232,6 +1260,35 @@ export class Context implements RenamedUpdate {
         return this.api.sendVideoNote(
             orThrow(this.chatId, "sendVideoNote"),
             video_note,
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
+     *
+     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
+     * @param media An array describing the media to be sent; up to 10 items
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
+     */
+    sendPaidMedia(
+        star_count: number,
+        media: InputPaidMedia[],
+        other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.sendPaidMedia(
+            orThrow(this.chatId, "sendPaidMedia"),
+            star_count,
+            media,
             { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
@@ -1259,7 +1316,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendMediaGroup(
             orThrow(this.chatId, "sendMediaGroup"),
             media,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1284,7 +1345,11 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendLocation"),
             latitude,
             longitude,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1318,14 +1383,14 @@ export class Context implements RenamedUpdate {
                 inlineId,
                 latitude,
                 longitude,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
             )
             : this.api.editMessageLiveLocation(
                 orThrow(this.chatId, "editMessageLiveLocation"),
                 orThrow(this.msgId, "editMessageLiveLocation"),
                 latitude,
                 longitude,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -1347,38 +1412,16 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.stopMessageLiveLocationInline(inlineId, other)
+            ? this.api.stopMessageLiveLocationInline(
+                inlineId,
+                { business_connection_id: this.businessConnectionId, ...other },
+            )
             : this.api.stopMessageLiveLocation(
                 orThrow(this.chatId, "stopMessageLiveLocation"),
                 orThrow(this.msgId, "stopMessageLiveLocation"),
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
-    }
-
-    /**
-     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
-     *
-     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
-     * @param media An array describing the media to be sent; up to 10 items
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
-     */
-    sendPaidMedia(
-        star_count: number,
-        media: InputPaidMedia[],
-        other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
-        signal?: AbortSignal,
-    ) {
-        return this.api.sendPaidMedia(
-            orThrow(this.chatId, "sendPaidMedia"),
-            star_count,
-            media,
-            other,
-            signal,
-        );
     }
 
     /**
@@ -1410,7 +1453,11 @@ export class Context implements RenamedUpdate {
             longitude,
             title,
             address,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1435,7 +1482,11 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendContact"),
             phone_number,
             first_name,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1460,7 +1511,11 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendPoll"),
             question,
             options,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1489,7 +1544,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendDice(
             orThrow(this.chatId, "sendDice"),
             emoji,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1526,9 +1585,33 @@ export class Context implements RenamedUpdate {
         return this.api.sendChatAction(
             orThrow(this.chatId, "sendChatAction"),
             action,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
+    }
+
+    /**
+     * Alias for `ctx.setMessageReaction`.
+     *
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmessagereaction
+     */
+    react(
+        reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
+        other?: Other<
+            "setMessageReaction",
+            "chat_id" | "message_id" | "reaction"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.setMessageReaction(reaction, other, signal);
     }
 
     /**
@@ -1540,7 +1623,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setmessagereaction
      */
-    react(
+    setMessageReaction(
         reaction: MaybeArray<ReactionTypeEmoji["emoji"] | ReactionType>,
         other?: Other<
             "setMessageReaction",
@@ -2166,14 +2249,20 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
      *
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinchatmessage
      */
-    unpinChatMessage(message_id?: number, signal?: AbortSignal) {
+    unpinChatMessage(
+        message_id?: number,
+        other?: Other<"unpinChatMessage", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
         return this.api.unpinChatMessage(
             orThrow(this.chatId, "unpinChatMessage"),
             message_id,
+            other,
             signal,
         );
     }
@@ -2594,7 +2683,7 @@ export class Context implements RenamedUpdate {
                     "editMessageText",
                 ),
                 text,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2624,7 +2713,7 @@ export class Context implements RenamedUpdate {
                         this.messageReactionCount?.message_id,
                     "editMessageCaption",
                 ),
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2657,7 +2746,7 @@ export class Context implements RenamedUpdate {
                     "editMessageMedia",
                 ),
                 media,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2679,7 +2768,10 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageReplyMarkupInline(inlineId, other)
+            ? this.api.editMessageReplyMarkupInline(
+                inlineId,
+                { business_connection_id: this.businessConnectionId, ...other },
+            )
             : this.api.editMessageReplyMarkup(
                 orThrow(this.chatId, "editMessageReplyMarkup"),
                 orThrow(
@@ -2687,7 +2779,7 @@ export class Context implements RenamedUpdate {
                         this.messageReactionCount?.message_id,
                     "editMessageReplyMarkup",
                 ),
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2711,7 +2803,7 @@ export class Context implements RenamedUpdate {
                     this.messageReactionCount?.message_id,
                 "stopPoll",
             ),
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -2777,7 +2869,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendSticker(
             orThrow(this.chatId, "sendSticker"),
             sticker,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -2906,7 +3002,7 @@ export class Context implements RenamedUpdate {
             payload,
             currency,
             prices,
-            other,
+            { message_thread_id: this.msg?.message_thread_id, ...other },
             signal,
         );
     }
@@ -3034,7 +3130,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendGame(
             orThrow(this.chatId, "sendGame"),
             game_short_name,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
