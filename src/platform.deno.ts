@@ -11,6 +11,3 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
 
 // === Base configuration for `fetch` calls
 export const baseFetchConfig = (_apiRoot: string) => ({});
-
-// === Default webhook adapter
-export const defaultAdapter = "oak";

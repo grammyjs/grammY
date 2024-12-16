@@ -2,7 +2,7 @@
 import { type Bot } from "../bot.ts";
 import { type Context } from "../context.ts";
 import { type WebhookReplyEnvelope } from "../core/client.ts";
-import { createDebug, defaultAdapter } from "../platform.deno.ts";
+import { createDebug } from "../platform.deno.ts";
 import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
@@ -83,7 +83,7 @@ export function webhookCallback<
     : NonNullable<ReturnType<ResolveName<A>>["handlerReturn"]>;
 export function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter: FrameworkAdapter | AdapterNames = defaultAdapter,
+    adapter: FrameworkAdapter | AdapterNames,
     onTimeout?:
         | WebhookOptions
         | WebhookOptions["onTimeout"],
