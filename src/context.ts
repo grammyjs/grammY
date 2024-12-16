@@ -581,12 +581,14 @@ export class Context implements RenamedUpdate {
             this.messageReactionCount?.message_id;
     }
     /**
-     * Gets the chat identifier from wherever possible. Alias for `this.chat?.id
-     * ?? this.businessConnection?.user_chat_id`.
+     * Gets the chat identifier from wherever possible. Alias for
+     * `this.chatJoinRequest?.user_chat_id ?? this.chat?.id ??
+     * this.businessConnection?.user_chat_id`.
      */
     get chatId(): number | undefined {
         // Keep in sync with types in `filter.ts`.
-        return this.chat?.id ?? this.businessConnection?.user_chat_id;
+        return this.chatJoinRequest?.user_chat_id ?? this.chat?.id ??
+            this.businessConnection?.user_chat_id;
     }
     /**
      * Get the inline message identifier from wherever possible. Alias for
