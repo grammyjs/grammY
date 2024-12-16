@@ -620,9 +620,6 @@ interface Shortcuts<U extends Update> {
         : [U["removed_chat_boost"]] extends [object]
             ? U["removed_chat_boost"]["chat"]
         : undefined;
-    senderChat: [Shortcuts<U>["msg"]] extends [object]
-        ? Shortcuts<U>["msg"]["sender_chat"]
-        : undefined;
     from: [U["business_connection"]] extends [object]
         ? U["business_connection"]["user"]
         : [U["message_reaction"]] extends [object]

@@ -184,12 +184,6 @@ describe("Context", () => {
         assertEquals(ctx.chat, up.removed_chat_boost?.chat);
     });
 
-    it(".senderChat should aggregate sender chats", () => {
-        const up = { message: update.message } as Update;
-        const ctx = new Context(up, api, me);
-        assertEquals(ctx.senderChat, up.message?.sender_chat);
-    });
-
     it(".from should aggregate user objects", () => {
         let up: Update, ctx: Context;
 

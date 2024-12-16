@@ -541,14 +541,6 @@ export class Context implements RenamedUpdate {
         )?.chat;
     }
     /**
-     * Get the sender chat object from wherever possible. Alias for
-     * `ctx.msg?.sender_chat`.
-     */
-    get senderChat(): Chat | undefined {
-        // Keep in sync with types in `filter.ts`.
-        return this.msg?.sender_chat;
-    }
-    /**
      * Get the user object from wherever possible. Alias for
      * `(this.businessConnection ?? this.messageReaction ??
      * (this.chatBoost?.boost ?? this.removedChatBoost)?.source)?.user ??
