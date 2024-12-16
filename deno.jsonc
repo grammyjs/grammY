@@ -4,8 +4,8 @@
         "@grammyjs/debug": "jsr:@grammyjs/debug@^0.1.2"
     },
     "tasks": {
-        "check": "deno check --all -I src/mod.ts",
-        "test": "deno test --seed=123456 -I test/",
+        "check": "deno check --all src/mod.ts",
+        "test": "deno test --seed=123456 test/",
         "ok": "deno fmt && deno lint && deno task test && deno task check",
         // TODO: bring back coverage reports
         "contribs": "deno run --allow-env --allow-read --allow-write=. --allow-net=api.github.com --allow-sys npm:all-contributors-cli"
