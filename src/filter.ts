@@ -32,7 +32,7 @@ const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
  */
 export function matchFilter<C extends Context, Q extends FilterQuery>(
     filter: Q | Q[],
-): FilterFunction<C, Filter<C, Q>> {
+): FilterFunction<C, FilterQueryContext<C, Q>> {
     const queries = Array.isArray(filter) ? filter : [filter];
     const key = queries.join(",");
     const predicate = filterQueryCache.get(key) ?? (() => {
@@ -41,7 +41,7 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
         filterQueryCache.set(key, pred);
         return pred;
     })();
-    return (ctx: C): ctx is Filter<C, Q> => predicate(ctx);
+    return (ctx: C): ctx is FilterQueryContext<C, Q> => predicate(ctx);
 }
 
 export function parse(filter: FilterQuery | FilterQuery[]): string[][] {
@@ -508,10 +508,8 @@ type Combine<U, K extends string> = U extends unknown
  *
  * In some sense, this type computes `matchFilter` on the type level.
  */
-export type Filter<C extends Context, Q extends FilterQuery> = PerformQuery<
-    C,
-    RunQuery<ExpandShortcuts<Q>>
->;
+export type FilterQueryContext<C extends Context, Q extends FilterQuery> =
+    PerformQuery<C, RunQuery<ExpandShortcuts<Q>>>;
 // same as Filter but stop before intersecting with Context
 export type FilterCore<Q extends FilterQuery> = PerformQueryCore<
     RunQuery<ExpandShortcuts<Q>>

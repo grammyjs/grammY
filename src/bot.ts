@@ -13,7 +13,12 @@ import {
     type WebhookReplyEnvelope,
 } from "./core/client.ts";
 import { GrammyError, HttpError } from "./core/error.ts";
-import { type Filter, type FilterQuery, parse, preprocess } from "./filter.ts";
+import {
+    type FilterQuery,
+    type FilterQueryContext,
+    parse,
+    preprocess,
+} from "./filter.ts";
 import { debug as d } from "./platform.deno.ts";
 import {
     type ReactionType,
@@ -261,8 +266,8 @@ export class Bot<
      */
     override on<Q extends FilterQuery>(
         filter: Q | Q[],
-        ...middleware: Array<Middleware<Filter<C, Q>>>
-    ): Composer<Filter<C, Q>> {
+        ...middleware: Array<Middleware<FilterQueryContext<C, Q>>>
+    ): Composer<FilterQueryContext<C, Q>> {
         for (const [u] of parse(filter).flatMap(preprocess)) {
             this.observedUpdateTypes.add(u);
         }

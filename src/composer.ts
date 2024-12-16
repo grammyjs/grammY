@@ -13,7 +13,7 @@ import {
     type ShippingQueryContext,
     type StringWithCommandSuggestions,
 } from "./context.ts";
-import { type Filter, type FilterQuery } from "./filter.ts";
+import { type FilterQuery, type FilterQueryContext } from "./filter.ts";
 import {
     type Chat,
     type ReactionType,
@@ -282,8 +282,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      */
     on<Q extends FilterQuery>(
         filter: Q | Q[],
-        ...middleware: Array<Middleware<Filter<C, Q>>>
-    ): Composer<Filter<C, Q>> {
+        ...middleware: Array<Middleware<FilterQueryContext<C, Q>>>
+    ): Composer<FilterQueryContext<C, Q>> {
         return this.filter(Context.has.filterQuery(filter), ...middleware);
     }
 

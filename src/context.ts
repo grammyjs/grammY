@@ -2,9 +2,9 @@
 import { type Api, type Other as OtherApi } from "./core/api.ts";
 import { type Methods, type RawApi } from "./core/client.ts";
 import {
-    type Filter,
     type FilterCore,
     type FilterQuery,
+    type FilterQueryContext,
     matchFilter,
 } from "./filter.ts";
 import {
@@ -64,7 +64,7 @@ interface StaticHas {
      */
     filterQuery<Q extends FilterQuery>(
         filter: Q | Q[],
-    ): <C extends Context>(ctx: C) => ctx is Filter<C, Q>;
+    ): <C extends Context>(ctx: C) => ctx is FilterQueryContext<C, Q>;
     /**
      * Generates a predicate function that can test context objects for
      * containing the given text, or for the text to match the given regular
@@ -171,7 +171,8 @@ interface StaticHas {
 const checker: StaticHas = {
     filterQuery<Q extends FilterQuery>(filter: Q | Q[]) {
         const pred = matchFilter(filter);
-        return <C extends Context>(ctx: C): ctx is Filter<C, Q> => pred(ctx);
+        return <C extends Context>(ctx: C): ctx is FilterQueryContext<C, Q> =>
+            pred(ctx);
     },
     text(trigger) {
         const hasText = checker.filterQuery([":text", ":caption"]);
@@ -3054,7 +3055,7 @@ type HearsContextCore =
  * the correct type automatically. That way, handlers can be defined in separate
  * files and still have the correct types.
  */
-export type HearsContext<C extends Context> = Filter<
+export type HearsContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string | RegExpMatchArray>,
     ":text" | ":caption"
 >;
@@ -3072,7 +3073,7 @@ type CommandContextCore =
  * the correct type automatically. That way, handlers can be defined in separate
  * files and still have the correct types.
  */
-export type CommandContext<C extends Context> = Filter<
+export type CommandContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string>,
     ":entities:bot_command"
 >;
@@ -3092,7 +3093,7 @@ type CallbackQueryContextCore = FilterCore<"callback_query:data">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type CallbackQueryContext<C extends Context> = Filter<
+export type CallbackQueryContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string | RegExpMatchArray>,
     "callback_query:data"
 >;
@@ -3108,7 +3109,7 @@ type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type GameQueryContext<C extends Context> = Filter<
+export type GameQueryContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string | RegExpMatchArray>,
     "callback_query:game_short_name"
 >;
@@ -3124,7 +3125,7 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type InlineQueryContext<C extends Context> = Filter<
+export type InlineQueryContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string | RegExpMatchArray>,
     "inline_query"
 >;
@@ -3140,7 +3141,10 @@ type ReactionContextCore = FilterCore<"message_reaction">;
  * the correct type automatically. That way, handlers can be defined in separate
  * files and still have the correct types.
  */
-export type ReactionContext<C extends Context> = Filter<C, "message_reaction">;
+export type ReactionContext<C extends Context> = FilterQueryContext<
+    C,
+    "message_reaction"
+>;
 
 type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
 /**
@@ -3153,7 +3157,7 @@ type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type ChosenInlineResultContext<C extends Context> = Filter<
+export type ChosenInlineResultContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string | RegExpMatchArray>,
     "chosen_inline_result"
 >;
@@ -3169,7 +3173,7 @@ type PreCheckoutQueryContextCore = FilterCore<"pre_checkout_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type PreCheckoutQueryContext<C extends Context> = Filter<
+export type PreCheckoutQueryContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string | RegExpMatchArray>,
     "pre_checkout_query"
 >;
@@ -3185,7 +3189,7 @@ type ShippingQueryContextCore = FilterCore<"shipping_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type ShippingQueryContext<C extends Context> = Filter<
+export type ShippingQueryContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string | RegExpMatchArray>,
     "shipping_query"
 >;

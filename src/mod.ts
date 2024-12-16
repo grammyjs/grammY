@@ -44,7 +44,11 @@ export {
     type ReactionMiddleware,
 } from "./composer.ts";
 
-export { type Filter, type FilterQuery, matchFilter } from "./filter.ts";
+export {
+    type FilterQuery,
+    type FilterQueryContext,
+    matchFilter,
+} from "./filter.ts";
 
 // Internal stuff for expert users
 export { Api } from "./core/api.ts";
