@@ -364,23 +364,11 @@ class PropertySession<O extends {}, P extends keyof O> {
                 .then((val?: O[P]) => {
                     this.fetching = false;
                     // Check for write op in the meantime
-                    if (this.wrote) {
-                        // Discard read op
-                        return this.value;
+                    if (!this.wrote) {
+                        // Store received value in `this.value`
+                        this.value = val ?? this.initial?.();
                     }
-                    // Store received value in `this.value`
-                    if (val !== undefined) {
-                        this.value = val;
-                        return val;
-                    }
-                    // No value, need to initialize
-                    val = this.initial?.();
-                    if (val !== undefined) {
-                        // Wrote initial value
-                        this.wrote = true;
-                        this.value = val;
-                    }
-                    return val;
+                    return this.value;
                 });
         }
         return this.promise;
