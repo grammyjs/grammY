@@ -2220,16 +2220,16 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to upload a file with a sticker for later use in the createNewStickerSet, addStickerToSet, or replaceStickerInSet methods (the file can be used multiple times). Returns the uploaded File on success.
      *
      * @param user_id User identifier of sticker file owner
-     * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
      * @param sticker A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements.
+     * @param sticker_format Format of the sticker, must be one of “static”, “animated”, “video”
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#uploadstickerfile
      */
     uploadStickerFile(
         user_id: number,
-        sticker_format: "static" | "animated" | "video",
         sticker: InputFile,
+        sticker_format: "static" | "animated" | "video",
         signal?: AbortSignal,
     ) {
         return this.raw.uploadStickerFile(
