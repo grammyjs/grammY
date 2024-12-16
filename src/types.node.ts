@@ -16,9 +16,6 @@ import {
 import { createReadStream, type ReadStream } from "fs";
 import fetch from "node-fetch";
 import { basename } from "path";
-import { debug as d } from "./platform.node";
-
-const debug = d("grammy:warn");
 
 // === Export all API types
 export * from "@grammyjs/types";
@@ -61,7 +58,7 @@ export class InputFile {
      */
     constructor(
         file: MaybeSupplier<
-            | string
+            | { path: string }
             | URL
             | URLLike
             | Uint8Array
@@ -74,19 +71,13 @@ export class InputFile {
         this.fileData = file;
         filename ??= this.guessFilename(file);
         this.filename = filename;
-        if (
-            typeof file === "string" &&
-            (file.startsWith("http:") || file.startsWith("https:"))
-        ) {
-            debug(
-                `InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`,
-            );
-        }
     }
     private guessFilename(
         file: ConstructorParameters<typeof InputFile>[0],
     ): string | undefined {
-        if (typeof file === "string") return basename(file);
+        if ("path" in file && typeof file.path === "string") {
+            return basename(file.path);
+        }
         if ("url" in file) return basename(file.url);
         if (!(file instanceof URL)) return undefined;
         if (file.pathname !== "/") {
@@ -109,7 +100,9 @@ export class InputFile {
         }
         const data = this.fileData;
         // Handle local files
-        if (typeof data === "string") return createReadStream(data);
+        if ("path" in data && !(Symbol.asyncIterator in data)) {
+            return createReadStream(data.path);
+        }
         // Handle URLs and URLLike objects
         if (data instanceof URL) {
             return data.protocol === "file" // node-fetch does not support file URLs

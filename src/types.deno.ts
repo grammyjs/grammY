@@ -15,9 +15,7 @@ import {
     type InputSticker as InputStickerF,
     type Opts as OptsF,
 } from "https://deno.land/x/grammy_types@v3.17.0/mod.ts";
-import { debug as d, isDeno } from "./platform.deno.ts";
-
-const debug = d("grammy:warn");
+import { isDeno } from "./platform.deno.ts";
 
 // === Export all API types
 export * from "https://deno.land/x/grammy_types@v3.17.0/mod.ts";
@@ -60,7 +58,7 @@ export class InputFile {
      */
     constructor(
         file: MaybeSupplier<
-            | string
+            | { path: string }
             | Blob
             | Deno.FsFile
             | Response
@@ -76,19 +74,13 @@ export class InputFile {
         this.fileData = file;
         filename ??= this.guessFilename(file);
         this.filename = filename;
-        if (
-            typeof file === "string" &&
-            (file.startsWith("http:") || file.startsWith("https:"))
-        ) {
-            debug(
-                `InputFile received the local file path '${file}' that looks like a URL. Is this a mistake?`,
-            );
-        }
     }
     private guessFilename(
         file: ConstructorParameters<typeof InputFile>[0],
     ): string | undefined {
-        if (typeof file === "string") return basename(file);
+        if ("path" in file && typeof file.path === "string") {
+            return basename(file.path);
+        }
         if ("url" in file) return basename(file.url);
         if (!(file instanceof URL)) return undefined;
         if (file.pathname !== "/") {
@@ -111,13 +103,13 @@ export class InputFile {
         }
         const data = this.fileData;
         // Handle local files
-        if (typeof data === "string") {
+        if ("path" in data) {
             if (!isDeno) {
                 throw new Error(
                     "Reading files by path requires a Deno environment",
                 );
             }
-            const file = await Deno.open(data);
+            const file = await Deno.open(data.path);
             return file.readable[Symbol.asyncIterator]();
         }
         if (data instanceof Blob) return data.stream();

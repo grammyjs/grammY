@@ -1,10 +1,8 @@
-import { debug as d } from "../src/platform.deno.ts";
 import { InputFile } from "../src/types.ts";
 import {
     assertEquals,
     assertInstanceOf,
     assertRejects,
-    assertStringIncludes,
     convertToUint8Array,
     stub,
 } from "./deps.test.ts";
@@ -12,7 +10,10 @@ import {
 Deno.test({
     name: "file name inference",
     fn() {
-        assertEquals(new InputFile("/tmp/file.txt").filename, "file.txt");
+        assertEquals(
+            new InputFile({ path: "/tmp/file.txt" }).filename,
+            "file.txt",
+        );
         assertEquals(
             new InputFile((function* (): Iterable<Uint8Array> {})()).filename,
             undefined,
@@ -33,21 +34,6 @@ Deno.test({
             new InputFile(new URL("https://grammy.dev")).filename,
             "grammy.dev",
         );
-    },
-});
-
-Deno.test({
-    name: "invalid usage warning",
-    fn() {
-        const debug = stub(d as Console, "log");
-        d.enable("*");
-        new InputFile("http://grammy.dev");
-        new InputFile("https://grammy.dev");
-        d.disable("*");
-        debug.restore();
-        assertEquals(debug.calls.length, 2);
-        assertStringIncludes(debug.calls[0].args[0], "local file path");
-        assertStringIncludes(debug.calls[1].args[0], "local file path");
     },
 });
 
@@ -85,7 +71,7 @@ Deno.test({
             const stream = ReadableStream.from(data());
             return Promise.resolve({ readable: stream } as Deno.FsFile);
         });
-        const file = new InputFile("/tmp/file.txt");
+        const file = new InputFile({ path: "/tmp/file.txt" });
         assertEquals(file.filename, "file.txt");
         const data = await file.toRaw();
         if (data instanceof Uint8Array) throw new Error("no itr");

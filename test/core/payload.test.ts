@@ -35,11 +35,17 @@ describe("requiresFormDataUpload", () => {
     });
 
     it("should detect InputFiles inside objects", () => {
-        assert(requiresFormDataUpload(new InputFile("")));
-        assert(requiresFormDataUpload({ data: new InputFile("") }));
-        assert(requiresFormDataUpload([0, 1, new InputFile("")]));
-        assert(requiresFormDataUpload({ x: [0, 1, new InputFile("")] }));
-        assert(requiresFormDataUpload({ x: [0, 1, { y: new InputFile("") }] }));
+        assert(requiresFormDataUpload(new InputFile({ path: "" })));
+        assert(requiresFormDataUpload({ data: new InputFile({ path: "" }) }));
+        assert(requiresFormDataUpload([0, 1, new InputFile({ path: "" })]));
+        assert(
+            requiresFormDataUpload({ x: [0, 1, new InputFile({ path: "" })] }),
+        );
+        assert(
+            requiresFormDataUpload({
+                x: [0, 1, { y: new InputFile({ path: "" }) }],
+            }),
+        );
     });
 
     // TODO: json payloads, including nullish values
