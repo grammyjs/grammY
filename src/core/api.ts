@@ -1360,9 +1360,13 @@ export class Api<R extends RawApi = RawApi> {
     unpinChatMessage(
         chat_id: number | string,
         message_id?: number,
+        other?: Other<R, "unpinChatMessage", "chat_id" | "message_id">,
         signal?: AbortSignal,
     ) {
-        return this.raw.unpinChatMessage({ chat_id, message_id }, signal);
+        return this.raw.unpinChatMessage(
+            { chat_id, message_id, ...other },
+            signal,
+        );
     }
 
     /**
