@@ -1,5 +1,8 @@
 {
     "lock": false,
+    "imports": {
+        "@grammyjs/debug": "jsr:@grammyjs/debug@^0.1.2"
+    },
     "tasks": {
         "check": "deno check --all -I src/mod.ts",
         "test": "deno test --seed=123456 -I test/",

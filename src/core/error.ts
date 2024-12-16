@@ -1,6 +1,6 @@
 import { type ApiError, type ResponseParameters } from "../types.ts";
-import { debug as d } from "../platform.deno.ts";
-const debug = d("grammy:warn");
+import { createDebug } from "../platform.deno.ts";
+const debug = createDebug("grammy:warn");
 
 /**
  * This class represents errors that are thrown by grammY because the Telegram

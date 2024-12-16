@@ -19,16 +19,16 @@ import {
     parse,
     preprocess,
 } from "./filter.ts";
-import { debug as d } from "./platform.deno.ts";
+import { createDebug } from "./platform.deno.ts";
 import {
     type ReactionType,
     type ReactionTypeEmoji,
     type Update,
     type UserFromGetMe,
 } from "./types.ts";
-const debug = d("grammy:bot");
-const debugWarn = d("grammy:warn");
-const debugErr = d("grammy:error");
+const debug = createDebug("grammy:bot");
+const debugWarn = createDebug("grammy:warn");
+const debugErr = createDebug("grammy:error");
 
 export const DEFAULT_UPDATE_TYPES = [
     "message",

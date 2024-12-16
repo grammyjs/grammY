@@ -1,7 +1,7 @@
 import { type MiddlewareFn } from "../composer.ts";
 import { type Context } from "../context.ts";
-import { debug as d } from "../platform.deno.ts";
-const debug = d("grammy:session");
+import { createDebug } from "../platform.deno.ts";
+const debug = createDebug("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;
 

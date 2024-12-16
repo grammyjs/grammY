@@ -1,4 +1,4 @@
-import { baseFetchConfig, debug as d } from "../platform.deno.ts";
+import { baseFetchConfig, createDebug } from "../platform.deno.ts";
 import { type ApiMethods, type ApiResponse, type Opts } from "../types.ts";
 import { toGrammyError, toHttpError } from "./error.ts";
 import {
@@ -6,7 +6,7 @@ import {
     createJsonPayload,
     requiresFormDataUpload,
 } from "./payload.ts";
-const debug = d("grammy:core");
+const debug = createDebug("grammy:core");
 
 export type Methods<R extends RawApi> = string & keyof R;
 
