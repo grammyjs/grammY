@@ -150,7 +150,7 @@ describe("session", () => {
         )
             .use((ctx) => {
                 if (ctx.session === 0) ctx.session = 1;
-                else ctx.session = null;
+                else ctx.session = undefined;
             });
 
         await composer.middleware()(ctx, next);

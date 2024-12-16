@@ -10,14 +10,14 @@ import {
 describe("Keyboard", () => {
     it("should take initial buttons", () => {
         const keyboard = new Keyboard([[{ text: "button" }]]);
-        assertEquals(keyboard.build(), [[{ text: "button" }]]);
+        assertEquals(keyboard.keyboard, [[{ text: "button" }]]);
     });
 
     it("should create rows and columns", () => {
         const keyboard = new Keyboard([[{ text: "0" }]])
             .add({ text: "1" }, { text: "2" }).row()
             .add({ text: "3" }, { text: "4" }).add({ text: "5" });
-        assertEquals(keyboard.build(), [
+        assertEquals(keyboard.keyboard, [
             [{ text: "0" }, { text: "1" }, { text: "2" }],
             [{ text: "3" }, { text: "4" }, { text: "5" }],
         ]);
@@ -32,7 +32,7 @@ describe("Keyboard", () => {
             .webApp("web app", "https://grammy.dev")
             .requestUsers("user", 12, { user_is_bot: true })
             .requestChat("chat", 42);
-        assertEquals(keyboard.build(), [[
+        assertEquals(keyboard.keyboard, [[
             { text: "button" },
             { text: "contact", request_contact: true },
             { text: "location", request_location: true },
