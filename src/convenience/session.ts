@@ -31,7 +31,7 @@ export interface SessionFlavor<S> {
      * `ctx`.
      */
     get session(): S;
-    set session(session: S | null | undefined);
+    set session(session: S | undefined);
 }
 /**
  * A lazy session flavor is a context flavor that holds a promise of some
@@ -60,7 +60,7 @@ export interface LazySessionFlavor<S> {
      * object `ctx`.
      */
     get session(): MaybePromise<S>;
-    set session(session: MaybePromise<S | null | undefined>);
+    set session(session: MaybePromise<S | undefined>);
 }
 
 /**
@@ -266,7 +266,7 @@ function strictMultiSession<S, C extends Context>(
             return s;
         }));
         await next(); // no catch: do not write back if middleware throws
-        if (ctx.session == null) propSessions.forEach((s) => s.delete());
+        if (ctx.session === undefined) propSessions.forEach((s) => s.delete());
         await Promise.all(propSessions.map((s) => s.finish()));
     };
 }
@@ -425,7 +425,7 @@ class PropertySession<O extends {}, P extends keyof O> {
             if (this.read) await this.load();
             if (this.read || this.wrote) {
                 const value = await this.value;
-                if (value == null) await this.storage.delete(this.key);
+                if (value === undefined) await this.storage.delete(this.key);
                 else await this.storage.write(this.key, value);
             }
         }
@@ -439,7 +439,7 @@ function fillDefaults<S, C extends Context>(opts: SessionOptions<S, C> = {}) {
         initial,
         storage,
     } = opts;
-    if (storage == null) {
+    if (storage === undefined) {
         debug(
             "Storing session data in memory, all data will be lost when the bot restarts.",
         );
