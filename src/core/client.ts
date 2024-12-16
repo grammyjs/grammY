@@ -1,9 +1,5 @@
 import { baseFetchConfig, debug as d } from "../platform.deno.ts";
-import {
-    type ApiMethods as Telegram,
-    type ApiResponse,
-    type Opts,
-} from "../types.ts";
+import { type ApiMethods, type ApiResponse, type Opts } from "../types.ts";
 import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
@@ -23,12 +19,14 @@ export type Methods<R extends RawApi> = string & keyof R;
  * API call if desired.
  */
 export type RawApi = {
-    [M in keyof Telegram]: Parameters<Telegram[M]>[0] extends undefined
-        ? (signal?: AbortSignal) => Promise<ReturnType<Telegram[M]>>
+    [M in keyof ApiMethods]: undefined extends Opts<M> ? (
+            args?: Opts<M>,
+            signal?: AbortSignal,
+        ) => Promise<ReturnType<ApiMethods[M]>>
         : (
             args: Opts<M>,
             signal?: AbortSignal,
-        ) => Promise<ReturnType<Telegram[M]>>;
+        ) => Promise<ReturnType<ApiMethods[M]>>;
 };
 
 export type Payload<M extends Methods<R>, R extends RawApi> = M extends unknown
@@ -374,14 +372,6 @@ export function createRawApi<R extends RawApi>(
         get(_, m: Methods<R> | "toJSON") {
             return m === "toJSON"
                 ? "__internal"
-                // Methods with zero parameters are called without any payload,
-                // so we have to manually inject an empty payload.
-                : m === "getMe" ||
-                        m === "getWebhookInfo" ||
-                        m === "getForumTopicIconStickers" ||
-                        m === "logOut" ||
-                        m === "close"
-                ? client.callApi.bind(client, m, {} as Payload<typeof m, R>)
                 : client.callApi.bind(client, m);
         },
         ...proxyMethods,

@@ -44,14 +44,14 @@ describe("API client", () => {
 
     it("should return payloads", async () => {
         response = { ok: true, result: { testValue: 0 } };
-        const me = await api.raw.getMe();
+        const me = await api.raw.getMe({});
         assertEquals<unknown>(me, response.result);
     });
 
     it("should throw errors", async () => {
         response = { ok: false, error_code: 42, description: "evil" };
         await assertRejects(
-            () => api.raw.getMe(),
+            () => api.raw.getMe({}),
             GrammyError,
             "Call to 'getMe' failed! (42: evil)",
         );

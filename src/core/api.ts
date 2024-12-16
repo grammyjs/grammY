@@ -180,7 +180,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#getwebhookinfo
      */
     getWebhookInfo(signal?: AbortSignal) {
-        return this.raw.getWebhookInfo(signal);
+        return this.raw.getWebhookInfo({}, signal);
     }
 
     /**
@@ -191,7 +191,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#getme
      */
     getMe(signal?: AbortSignal) {
-        return this.raw.getMe(signal);
+        return this.raw.getMe({}, signal);
     }
 
     /**
@@ -202,7 +202,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#logout
      */
     logOut(signal?: AbortSignal) {
-        return this.raw.logOut(signal);
+        return this.raw.logOut({}, signal);
     }
 
     /**
@@ -213,7 +213,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#close
      */
     close(signal?: AbortSignal) {
-        return this.raw.close(signal);
+        return this.raw.close({}, signal);
     }
 
     /**
@@ -1482,7 +1482,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#getforumtopiciconstickers
      */
     getForumTopicIconStickers(signal?: AbortSignal) {
-        return this.raw.getForumTopicIconStickers(signal);
+        return this.raw.getForumTopicIconStickers({}, signal);
     }
 
     /**
@@ -2478,7 +2478,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#getavailablegifts
      */
     getAvailableGifts(signal?: AbortSignal) {
-        return this.raw.getAvailableGifts(signal);
+        return this.raw.getAvailableGifts({}, signal);
     }
 
     /**
