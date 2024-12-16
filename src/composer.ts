@@ -59,7 +59,7 @@ export interface MiddlewareObj<C extends Context = Context> {
  * register middleware on a bot to listen for updates. Example:
  *
  * ```ts
- * bot.on('message', ctx => ctx.reply('I got your message!'))
+ * bot.on('message', ctx => ctx.send('I got your message!'))
  * //                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * //                ^
  * //                |
@@ -79,13 +79,13 @@ export interface MiddlewareObj<C extends Context = Context> {
  * `bot` instance all over your code.
  *
  * Most importantly, the context object gives you a handful of really useful
- * shortcuts, such as a `reply` method (see above). This method is nothing else
- * than a wrapper around `ctx.api.sendMessage`—but with some arguments
- * pre-filled for you. As you can see above, you no longer have to specify a
- * `chat_id` or anything; the context object knows which chat it belongs to, so
- * when you call `reply`, the context will call `sendMessage` with the correct
- * `chat_id`, namely the one for the same chat that the incoming message
- * originates from. This makes it very convenient to reply to a message.
+ * shortcuts, such as a `send` method (see above). This method is a wrapper
+ * around `ctx.api.sendMessage`—but with some arguments pre-filled for you. As
+ * you can see above, you no longer have to specify a `chat_id` or anything; the
+ * context object knows which chat it belongs to, so when you call `send`, the
+ * context will call `sendMessage` with the correct `chat_id`, namely the one
+ * for the same chat that the incoming message originates from. This makes it
+ * very convenient to reply to a message.
  *
  * Middleware is an extremely powerful concept and this short explanation only
  * scratched the surface of what is possible with grammY. If you want to know
@@ -292,9 +292,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * contains some text. Is it possible to pass a regular expression to match:
      * ```ts
      * // Match some text (exact match)
-     * bot.hears('I love grammY', ctx => ctx.reply('And grammY loves you! <3'))
+     * bot.hears('I love grammY', ctx => ctx.send('And grammY loves you! <3'))
      * // Match a regular expression
-     * bot.hears(/\/echo (.+)/, ctx => ctx.reply(ctx.match[1]))
+     * bot.hears(/\/echo (.+)/, ctx => ctx.send(ctx.match[1]))
      * ```
      * Note how `ctx.match` will contain the result of the regular expression.
      * Here it is a `RegExpMatchArray` object, so `ctx.match[1]` refers to the

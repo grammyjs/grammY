@@ -50,7 +50,7 @@ const { Bot } = require("grammy");
 const bot = new Bot(""); // <-- place your bot token in this string
 
 // Register listeners to handle messages
-bot.on("message:text", (ctx) => ctx.reply("Echo: " + ctx.message.text));
+bot.on("message:text", (ctx) => ctx.send("Echo: " + ctx.message.text));
 
 // Start the bot (using long polling)
 bot.start();

@@ -152,7 +152,7 @@ export interface BotConfig<C extends Context> {
  * // 1. Create a bot instance
  * const bot = new Bot('<secret-token>')
  * // 2. Listen for updates
- * bot.on('message:text', ctx => ctx.reply('You wrote: ' + ctx.message.text))
+ * bot.on('message:text', ctx => ctx.send('You wrote: ' + ctx.message.text))
  * // 3. Launch it!
  * bot.start()
  * ```

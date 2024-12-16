@@ -365,7 +365,7 @@ const checker: StaticHas = {
  *    `ctx.api.sendMessage`. Also here, the context objects has some useful
  *    shortcuts for you. For instance, if you want to send a message to the same
  *    chat that a message comes from (i.e. just respond to a user) you can call
- *    `ctx.reply`. This is nothing but a wrapper for `ctx.api.sendMessage` with
+ *    `ctx.send`. This is nothing but a wrapper for `ctx.api.sendMessage` with
  *    the right `chat_id` pre-filled for you. Almost all methods of the Telegram
  *    Bot API have their own shortcut directly on the context object, so you
  *    probably never really have to use `ctx.api` at all.
@@ -377,10 +377,9 @@ const checker: StaticHas = {
  * another example is `ctx.match` that is used by `bot.command` and other
  * methods to keep information about how a regular expression was matched.
  *
- * Read up about middleware on the
- * [website](https://grammy.dev/guide/context) if you want to know more
- * about the powerful opportunities that lie in context objects, and about how
- * grammY implements them.
+ * Read up about middleware on the [website](https://grammy.dev/guide/context)
+ * if you want to know more about the powerful opportunities that lie in context
+ * objects, and about how grammY implements them.
  */
 export class Context implements RenamedUpdate {
     /**

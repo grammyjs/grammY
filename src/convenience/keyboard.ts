@@ -23,7 +23,7 @@ type KeyboardSource = KeyboardButtonSource[][] | Keyboard;
  *   .text('C').text('D')
  *
  * // Now you can send it like so:
- * await ctx.reply('Here is your custom keyboard!', {
+ * await ctx.send('Here is your custom keyboard!', {
  *   reply_markup: keyboard
  * })
  * ```
@@ -490,7 +490,7 @@ type InlineKeyboardSource = InlineKeyboardButton[][] | InlineKeyboard;
  *   .url('Telegram', 'telegram.org')
  *
  * // Send the keyboard:
- * await ctx.reply('Here is your inline keyboard!', {
+ * await ctx.send('Here is your inline keyboard!', {
  *   reply_markup: keyboard
  * })
  * ```
