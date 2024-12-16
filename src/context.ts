@@ -963,7 +963,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendmessage
      */
-    reply(
+    sendMessage(
         text: string,
         other?: Other<"sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
@@ -1090,7 +1090,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendphoto
      */
-    replyWithPhoto(
+    sendPhoto(
         photo: InputFile | string,
         other?: Other<"sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
@@ -1114,7 +1114,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendaudio
      */
-    replyWithAudio(
+    sendAudio(
         audio: InputFile | string,
         other?: Other<"sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
@@ -1136,7 +1136,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#senddocument
      */
-    replyWithDocument(
+    sendDocument(
         document: InputFile | string,
         other?: Other<"sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
@@ -1158,7 +1158,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvideo
      */
-    replyWithVideo(
+    sendVideo(
         video: InputFile | string,
         other?: Other<"sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
@@ -1180,7 +1180,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendanimation
      */
-    replyWithAnimation(
+    sendAnimation(
         animation: InputFile | string,
         other?: Other<"sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
@@ -1202,7 +1202,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvoice
      */
-    replyWithVoice(
+    sendVoice(
         voice: InputFile | string,
         other?: Other<"sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
@@ -1225,7 +1225,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvideonote
      */
-    replyWithVideoNote(
+    sendVideoNote(
         video_note: InputFile | string,
         other?: Other<"sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
@@ -1247,7 +1247,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendmediagroup
      */
-    replyWithMediaGroup(
+    sendMediaGroup(
         media: ReadonlyArray<
             | InputMediaAudio
             | InputMediaDocument
@@ -1275,7 +1275,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendlocation
      */
-    replyWithLocation(
+    sendLocation(
         latitude: number,
         longitude: number,
         other?: Other<"sendLocation", "chat_id" | "latitude" | "longitude">,
@@ -1394,7 +1394,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendvenue
      */
-    replyWithVenue(
+    sendVenue(
         latitude: number,
         longitude: number,
         title: string,
@@ -1426,7 +1426,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendcontact
      */
-    replyWithContact(
+    sendContact(
         phone_number: string,
         first_name: string,
         other?: Other<"sendContact", "chat_id" | "phone_number" | "first_name">,
@@ -1451,7 +1451,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendpoll
      */
-    replyWithPoll(
+    sendPoll(
         question: string,
         options: InputPollOption[],
         other?: Other<"sendPoll", "chat_id" | "question" | "options">,
@@ -1475,7 +1475,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#senddice
      */
-    replyWithDice(
+    sendDice(
         emoji:
             | (string & Record<never, never>)
             | "🎲"
@@ -1508,7 +1508,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchataction
      */
-    replyWithChatAction(
+    sendChatAction(
         action:
             | "typing"
             | "upload_photo"
@@ -2770,7 +2770,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendsticker
      */
-    replyWithSticker(
+    sendSticker(
         sticker: InputFile | string,
         other?: Other<"sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
@@ -2810,7 +2810,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendgift
      */
-    replyWithGift(
+    sendGift(
         gift_id: string,
         other?: Other<"sendGift", "user_id" | "gift_id">,
         signal?: AbortSignal,
@@ -2883,7 +2883,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendinvoice
      */
-    replyWithInvoice(
+    sendInvoice(
         title: string,
         description: string,
         payload: string,
@@ -3027,7 +3027,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendgame
      */
-    replyWithGame(
+    sendGame(
         game_short_name: string,
         other?: Other<"sendGame", "chat_id" | "game_short_name">,
         signal?: AbortSignal,
