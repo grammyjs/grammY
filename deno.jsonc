@@ -1,7 +1,7 @@
 {
     "lock": false,
     "tasks": {
-        "check": "deno check --all src/mod.ts",
+        "check": "deno check --all -I src/mod.ts",
         "test": "deno test --seed=123456 -I test/",
         "ok": "deno fmt && deno lint && deno task test && deno task check",
         // TODO: bring back coverage reports
