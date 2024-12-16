@@ -15,7 +15,8 @@ import {
     type InputSticker as InputStickerF,
     type Opts as OptsF,
 } from "https://raw.githubusercontent.com/grammyjs/types/refs/heads/v2/mod.ts";
-import { isDeno } from "./platform.deno.ts";
+/** Are we running on Deno or in a web browser? */
+export const isDeno = typeof Deno !== "undefined";
 
 // === Export all API types
 export * from "https://raw.githubusercontent.com/grammyjs/types/refs/heads/v2/mod.ts";

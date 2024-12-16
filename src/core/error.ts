@@ -1,5 +1,5 @@
+import { createDebug } from "@grammyjs/debug";
 import { type ApiError, type ResponseParameters } from "../types.ts";
-import { createDebug } from "../platform.deno.ts";
 const debug = createDebug("grammy:warn");
 
 /**

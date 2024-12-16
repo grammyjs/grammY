@@ -1,4 +1,3 @@
-import { itrToStream } from "../platform.deno.ts";
 import { InputFile } from "../types.ts";
 
 // === Payload types (JSON vs. form data)
@@ -72,7 +71,7 @@ export function createFormDataPayload(
     const boundary = createBoundary();
     const itr = payloadToMultipartItr(payload, boundary);
     const safeItr = protectItr(itr, onError);
-    const stream = itrToStream(safeItr);
+    const stream = ReadableStream.from(safeItr);
     return {
         method: "POST",
         headers: {

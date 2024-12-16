@@ -1,4 +1,4 @@
-import { baseFetchConfig, createDebug } from "../platform.deno.ts";
+import { createDebug } from "@grammyjs/debug";
 import { type ApiMethods, type ApiResponse, type Opts } from "../types.ts";
 import { toGrammyError, toHttpError } from "./error.ts";
 import {
@@ -242,10 +242,7 @@ class ApiClient<R extends RawApi> {
             environment,
             buildUrl: options.buildUrl ?? defaultBuildUrl,
             timeoutSeconds: options.timeoutSeconds ?? 500,
-            baseFetchConfig: {
-                ...baseFetchConfig(apiRoot),
-                ...options.baseFetchConfig,
-            },
+            baseFetchConfig: options.baseFetchConfig ?? {},
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
         };

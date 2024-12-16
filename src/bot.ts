@@ -1,4 +1,5 @@
 // deno-lint-ignore-file camelcase
+import { createDebug } from "@grammyjs/debug";
 import {
     BotError,
     Composer,
@@ -19,7 +20,6 @@ import {
     parse,
     preprocess,
 } from "./filter.ts";
-import { createDebug } from "./platform.deno.ts";
 import {
     type ReactionType,
     type ReactionTypeEmoji,

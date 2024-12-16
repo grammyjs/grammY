@@ -1,8 +1,8 @@
 // deno-lint-ignore-file no-explicit-any
+import { createDebug } from "@grammyjs/debug";
 import { type Bot } from "../bot.ts";
 import { type Context } from "../context.ts";
 import { type WebhookReplyEnvelope } from "../core/client.ts";
-import { createDebug } from "../platform.deno.ts";
 import { type Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
