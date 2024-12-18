@@ -93,7 +93,7 @@ export class InputFile {
         return basename(file.hostname);
     }
 
-    async *[Symbol.asyncIterator](): AsyncIterable<Uint8Array> {
+    async *[Symbol.asyncIterator](): AsyncIterator<Uint8Array> {
         yield* await this.toRaw();
     }
 
@@ -103,7 +103,7 @@ export class InputFile {
      * Converts this instance into a binary representation that can be sent to
      * the Bot API server in the request body.
      */
-    async toRaw(): Promise<
+    private async toRaw(): Promise<
         Iterable<Uint8Array> | AsyncIterable<Uint8Array>
     > {
         if (this.consumed) {
@@ -131,6 +131,7 @@ export class InputFile {
         }
         // Handle URL and URLLike objects
         if (data instanceof URL) return await fetchFile(data);
+        // FIXME avoid reparsing in auto-retry
         if ("url" in data) return await fetchFile(new URL(data.url));
         // Unwrap supplier functions
         return new InputFile(await data()).toRaw();

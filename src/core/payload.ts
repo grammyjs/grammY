@@ -1,4 +1,4 @@
-import { InputFile } from "../types.ts";
+import { InputFile } from "./input_file.ts";
 
 // === Payload types (JSON vs. form data)
 /**
@@ -202,9 +202,7 @@ ${filename}
     yield enc.encode(
         `content-disposition:form-data;name="${id}";filename=${filename}\r\ncontent-type:application/octet-stream\r\n\r\n`,
     );
-    const data = await input.toRaw();
-    if (data instanceof Uint8Array) yield data;
-    else yield* data;
+    yield* input;
 }
 /** Returns the default file extension for an API property name */
 function getExt(key: string) {
