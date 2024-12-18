@@ -23,7 +23,6 @@ import {
     type Methods,
     type Payload,
     type RawApi,
-    type Transformer,
     type TransformerConsumer,
     type WebhookReplyEnvelope,
 } from "./client.ts";
@@ -71,7 +70,7 @@ export class Api<R extends RawApi = RawApi> {
      * separate those API operations that are related to grammY from methods of
      * the Telegram Bot API. Contains advanced options!
      */
-    public readonly config: {
+    public readonly transform: {
         /**
          * Allows to install an API request transformer function. A transformer
          * function has access to every API call before it is being performed.
@@ -82,14 +81,6 @@ export class Api<R extends RawApi = RawApi> {
          * grammY that most bots will not need to make use of._
          */
         readonly use: TransformerConsumer<R>;
-        /**
-         * Provides read access to all currently installed transformers (those
-         * that have previously been passed to `config.use`).
-         *
-         * _Note that using transformer functions is an advanced feature of
-         * grammY that most bots will not need to make use of._
-         */
-        readonly installedTransformers: () => Transformer<R>[];
     };
 
     /**
@@ -106,16 +97,13 @@ export class Api<R extends RawApi = RawApi> {
         public readonly options?: ApiClientOptions,
         webhookReplyEnvelope?: WebhookReplyEnvelope,
     ) {
-        const { raw, use, installedTransformers } = createRawApi<R>(
+        const { raw, ...transform } = createRawApi<R>(
             token,
             options,
             webhookReplyEnvelope,
         );
         this.raw = raw;
-        this.config = {
-            use,
-            installedTransformers: () => installedTransformers.slice(),
-        };
+        this.transform = transform;
     }
 
     /**

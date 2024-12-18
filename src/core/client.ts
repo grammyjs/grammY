@@ -88,12 +88,6 @@ export interface TransformableApi<R extends RawApi = RawApi> {
      * Can be used to register any number of transformers on the API.
      */
     use: (...transformers: Transformer<R>[]) => this;
-    /**
-     * Returns a readonly list or the currently installed transformers. The list
-     * is sorted by time of installation where index 0 represents the
-     * transformer that was installed first.
-     */
-    installedTransformers: Transformer<R>[];
 }
 
 // Transformer base functions
@@ -228,35 +222,27 @@ class ApiClient<R extends RawApi> {
 
     private hasUsedWebhookReply = false;
 
-    readonly installedTransformers: Transformer<R>[] = [];
-
     constructor(
         private readonly token: string,
         options: ApiClientOptions = {},
         private readonly webhookReplyEnvelope: WebhookReplyEnvelope = {},
     ) {
-        const apiRoot = options.apiRoot ?? "https://api.telegram.org";
-        const environment = options.environment ?? "prod";
-
+        if (options.apiRoot !== undefined && options.apiRoot.endsWith("/")) {
+            const last = options.apiRoot.length - 1;
+            const better = options.apiRoot.substring(0, last);
+            throw new Error(
+                `Remove the trailing '/' from the 'apiRoot' option (use '${better}' instead of '${options.apiRoot}')`,
+            );
+        }
         this.options = {
-            apiRoot,
-            environment,
+            apiRoot: options.apiRoot ?? "https://api.telegram.org",
+            environment: options.environment ?? "prod",
             buildUrl: options.buildUrl ?? defaultBuildUrl,
             timeoutSeconds: options.timeoutSeconds ?? 500,
             baseFetchConfig: options.baseFetchConfig ?? {},
             canUseWebhookReply: options.canUseWebhookReply ?? (() => false),
             sensitiveLogs: options.sensitiveLogs ?? false,
         };
-        if (this.options.apiRoot.endsWith("/")) {
-            throw new Error(
-                `Remove the trailing '/' from the 'apiRoot' option (use '${
-                    this.options.apiRoot.substring(
-                        0,
-                        this.options.apiRoot.length - 1,
-                    )
-                }' instead of '${this.options.apiRoot}')`,
-            );
-        }
     }
 
     private call: ApiCallFn<R> = async <M extends Methods<R>>(
@@ -314,7 +300,6 @@ class ApiClient<R extends RawApi> {
 
     use(...transformers: Transformer<R>[]) {
         this.call = transformers.reduce(concatTransformer, this.call);
-        this.installedTransformers.push(...transformers);
         return this;
     }
 
@@ -358,10 +343,8 @@ export function createRawApi<R extends RawApi>(
         ...proxyMethods,
     };
     const raw = new Proxy({} as R, proxyHandler);
-    const installedTransformers = client.installedTransformers;
     const api: TransformableApi<R> = {
         raw,
-        installedTransformers,
         use: (...t) => {
             client.use(...t);
             return api;
