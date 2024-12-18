@@ -43,8 +43,18 @@ export function createJsonPayload(payload: Record<string, unknown>) {
             "content-type": "application/json",
             connection: "keep-alive",
         },
-        body: str(payload),
+        body: createJsonPayloadBody(payload),
     };
+}
+/**
+ * Turns a payload into a string that can be passes as a body to a `fetch` call.
+ * May only be called for payloads `P` that let `requiresFormDataUpload(P)`
+ * return `false`.
+ *
+ * @param payload The payload to stringify
+ */
+export function createJsonPayloadBody(payload: Record<string, unknown>) {
+    return str(payload);
 }
 async function* protectItr<T>(
     itr: AsyncIterableIterator<T>,

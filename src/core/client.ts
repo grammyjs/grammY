@@ -4,6 +4,7 @@ import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
+    createJsonPayloadBody,
     requiresFormDataUpload,
 } from "./payload.ts";
 const debug = createDebug("grammy:core");
@@ -277,8 +278,8 @@ class ApiClient<R extends RawApi> {
             opts.canUseWebhookReply(method)
         ) {
             this.hasUsedWebhookReply = true;
-            const config = createJsonPayload({ ...payload, method });
-            await this.webhookReplyEnvelope.send(config.body);
+            const body = createJsonPayloadBody({ ...payload, method });
+            await this.webhookReplyEnvelope.send(body);
             return { ok: true, result: true as ApiCallResult<M, R> };
         }
         // Handle timeouts and errors in the underlying form-data stream
