@@ -52,7 +52,7 @@ export class InputFile {
      * [documentation](https://grammy.dev/guide/files#uploading-your-own-files)
      * on sending files with `InputFile`.
      */
-    public readonly filename?: string;
+    public readonly name?: string;
     /**
      * Constructs an `InputFile` that can be used in the API to send files.
      *
@@ -75,7 +75,7 @@ export class InputFile {
     ) {
         this.fileData = file;
         filename ??= this.guessFilename(file);
-        this.filename = filename;
+        this.name = filename;
     }
     private guessFilename(
         file: ConstructorParameters<typeof InputFile>[0],

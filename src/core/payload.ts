@@ -189,7 +189,7 @@ async function* filePart(
     origin: string,
     input: InputFile,
 ): AsyncIterableIterator<Uint8Array> {
-    const filename = input.filename || `${origin}.${getExt(origin)}`;
+    const filename = input.name || `${origin}.${getExt(origin)}`;
     if (filename.includes("\r") || filename.includes("\n")) {
         throw new Error(
             `File paths cannot contain carriage-return (\\r) \

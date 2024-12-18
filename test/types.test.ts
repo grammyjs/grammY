@@ -11,27 +11,27 @@ Deno.test({
     name: "file name inference",
     fn() {
         assertEquals(
-            new InputFile({ path: "/tmp/file.txt" }).filename,
+            new InputFile({ path: "/tmp/file.txt" }).name,
             "file.txt",
         );
         assertEquals(
-            new InputFile((function* (): Iterable<Uint8Array> {})()).filename,
+            new InputFile((function* (): Iterable<Uint8Array> {})()).name,
             undefined,
         );
         assertEquals(
-            new InputFile({ url: "https://grammy.dev/file.txt" }).filename,
+            new InputFile({ url: "https://grammy.dev/file.txt" }).name,
             "file.txt",
         );
         assertEquals(
-            new InputFile({ url: "https://grammy.dev" }).filename,
+            new InputFile({ url: "https://grammy.dev" }).name,
             "grammy.dev",
         );
         assertEquals(
-            new InputFile(new URL("https://grammy.dev/file.txt")).filename,
+            new InputFile(new URL("https://grammy.dev/file.txt")).name,
             "file.txt",
         );
         assertEquals(
-            new InputFile(new URL("https://grammy.dev")).filename,
+            new InputFile(new URL("https://grammy.dev")).name,
             "grammy.dev",
         );
     },
@@ -72,7 +72,7 @@ Deno.test({
             return Promise.resolve({ readable: stream } as Deno.FsFile);
         });
         const file = new InputFile({ path: "/tmp/file.txt" });
-        assertEquals(file.filename, "file.txt");
+        assertEquals(file.name, "file.txt");
         const data = await file.toRaw();
         if (data instanceof Uint8Array) throw new Error("no itr");
         const values = await convertToUint8Array(data);
