@@ -53,8 +53,8 @@ Deno.test({
         const bytes = new Uint8Array([65, 66, 67]);
         const file = new InputFile(bytes);
         const data = await file.toRaw();
-        assertInstanceOf(data, Uint8Array);
-        assertEquals(data, bytes);
+        assertInstanceOf(data, Array);
+        assertEquals(data, [bytes]);
     },
 });
 

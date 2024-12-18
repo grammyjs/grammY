@@ -1,6 +1,7 @@
 // === Needed imports
 import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
 
+// TODO(@wojpawlik) remove after #720
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
@@ -19,6 +20,7 @@ import {
 export const isDeno = typeof Deno !== "undefined";
 
 // === Export all API types
+// TODO(@wojpawlik) remove after #720
 export * from "https://raw.githubusercontent.com/grammyjs/types/refs/heads/v2/mod.ts";
 
 /** A value, or a potentially async function supplying that value */
@@ -66,7 +68,6 @@ export class InputFile {
             | URL
             | URLLike
             | Uint8Array
-            | ReadableStream<Uint8Array>
             | Iterable<Uint8Array>
             | AsyncIterable<Uint8Array>
         >,
@@ -82,7 +83,8 @@ export class InputFile {
         if ("path" in file && typeof file.path === "string") {
             return basename(file.path);
         }
-        if ("url" in file) return basename(file.url);
+        if ("url" in file && file.url) file = new URL(file.url);
+        if (file instanceof File) return file.name;
         if (!(file instanceof URL)) return undefined;
         if (file.pathname !== "/") {
             const filename = basename(file.pathname);
@@ -90,54 +92,64 @@ export class InputFile {
         }
         return basename(file.hostname);
     }
+
+    async *[Symbol.asyncIterator](): AsyncIterable<Uint8Array> {
+        yield* await this.toRaw();
+    }
+
     /**
-     * Internal method. Do not use.
+     * @internal use `[Symbol.asyncIterator]()` instead.
      *
      * Converts this instance into a binary representation that can be sent to
      * the Bot API server in the request body.
      */
     async toRaw(): Promise<
-        Uint8Array | Iterable<Uint8Array> | AsyncIterable<Uint8Array>
+        Iterable<Uint8Array> | AsyncIterable<Uint8Array>
     > {
         if (this.consumed) {
             throw new Error("Cannot reuse InputFile data source!");
         }
         const data = this.fileData;
-        // Handle local files
-        if ("path" in data) {
-            if (!isDeno) {
-                throw new Error(
-                    "Reading files by path requires a Deno environment",
-                );
-            }
-            const file = await Deno.open(data.path);
-            return file.readable[Symbol.asyncIterator]();
+        if (data instanceof Uint8Array) return [data];
+        // Mark streams and iterators as consumed and return them as-is
+        if (Symbol.asyncIterator in data || Symbol.iterator in data) {
+            this.consumed = true;
+            return data;
         }
+        // Handle local files
+        if ("path" in data) return await readFile(data.path);
         if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) return data.readable[Symbol.asyncIterator]();
+        if (isDenoFile(data)) {
+            this.consumed = true;
+            return data.readable;
+        }
         // Handle Response objects
         if (data instanceof Response) {
             if (data.body === null) throw new Error(`No response body!`);
+            this.consumed = true;
             return data.body;
         }
         // Handle URL and URLLike objects
         if (data instanceof URL) return await fetchFile(data);
-        if ("url" in data) return await fetchFile(data.url);
-        // Return buffers as-is
-        if (data instanceof Uint8Array) return data;
+        if ("url" in data) return await fetchFile(new URL(data.url));
         // Unwrap supplier functions
-        if (typeof data === "function") {
-            return new InputFile(await data()).toRaw();
-        }
-        // Mark streams and iterators as consumed and return them as-is
-        this.consumed = true;
-        return data;
+        return new InputFile(await data()).toRaw();
     }
 }
 
-async function fetchFile(
-    url: string | URL,
-): Promise<AsyncIterable<Uint8Array>> {
+async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
+    if (isDeno) {
+        const file = await Deno.open(path);
+        return file.readable;
+    }
+    const fs = await import("node:fs");
+    return fs.createReadStream(path);
+}
+
+async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
+    // https://github.com/nodejs/undici/issues/2751
+    if (url.protocol === "file") return await readFile(url.pathname);
+
     const { body } = await fetch(url);
     if (body === null) {
         throw new Error(`Download failed, no response body from '${url}'`);
@@ -149,6 +161,7 @@ function isDenoFile(data: unknown): data is Deno.FsFile {
 }
 
 // === Export InputFile types
+// TODO(@wojpawlik) remove after #720
 /** Wrapper type to bundle all methods of the Telegram API */
 export type ApiMethods = ApiMethodsF<InputFile>;
 
