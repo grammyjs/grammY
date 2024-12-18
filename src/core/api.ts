@@ -51,7 +51,7 @@ export type Other<
  *
  * In advanced use cases, this class allows to install transformers that can
  * modify the method and payload on the fly before sending it to the Telegram
- * servers. Confer the `config` property for this.
+ * servers. Confer the `transform` property for this.
  */
 export class Api<R extends RawApi = RawApi> {
     /**
