@@ -363,9 +363,6 @@ a known bot info object.",
             this.clientConfig,
             webhookReplyEnvelope,
         );
-        // configure it with the same transformers as bot.api
-        const t = this.api.config.installedTransformers();
-        if (t.length > 0) api.config.use(...t);
         // create context object
         const ctx = new Context(update, api, this.botInfo) as C;
         try {
