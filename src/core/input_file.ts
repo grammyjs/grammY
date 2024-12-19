@@ -107,7 +107,7 @@ export class InputFile {
         Iterable<Uint8Array> | AsyncIterable<Uint8Array>
     > {
         if (this.consumed) {
-            throw new Error("Cannot reuse InputFile data source!");
+            throw new TypeError("Cannot reuse InputFile data source!");
         }
         const data = this.fileData;
         if (data instanceof Uint8Array) return [data];
@@ -125,7 +125,7 @@ export class InputFile {
         }
         // Handle Response objects
         if (data instanceof Response) {
-            if (data.body === null) throw new Error(`No response body!`);
+            if (data.body === null) throw new InputError(data);
             this.consumed = true;
             return data.body;
         }
@@ -136,6 +136,22 @@ export class InputFile {
         // Unwrap supplier functions
         return new InputFile(await data()).toRaw();
     }
+}
+
+export class InputError extends Error {
+    readonly error_code: number;
+    constructor(readonly response: Response) {
+        let message = response.body ? response.statusText : "No response body";
+        if (response.url) message += ` from ${response.url}`;
+        super(message);
+        this.name = InputError.name;
+        this.error_code = response.status;
+    }
+}
+
+export function assertNever(data: never): never {
+    const { toString } = Object.prototype;
+    throw new TypeError(`Unexpected ${toString.call(data)}!`);
 }
 
 async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
@@ -151,11 +167,11 @@ async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
     // https://github.com/nodejs/undici/issues/2751
     if (url.protocol === "file") return await readFile(url.pathname);
 
-    const { body } = await fetch(url);
-    if (body === null) {
-        throw new Error(`Download failed, no response body from '${url}'`);
+    const response = await fetch(url);
+    if (!response.ok || response.body === null) {
+        throw new InputError(response);
     }
-    return body[Symbol.asyncIterator]();
+    return response.body;
 }
 function isDenoFile(data: unknown): data is Deno.FsFile {
     return isDeno && data instanceof Deno.FsFile;
