@@ -25,16 +25,7 @@ export * from "https://raw.githubusercontent.com/grammyjs/types/refs/heads/v2/mo
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);
-/** Something that looks like a URL. */
-interface URLLike {
-    /**
-     * Identifier of the resource. Must be in a format that can be parsed by the
-     * URL constructor.
-     */
-    url: string;
-}
 
-// === InputFile handling and File augmenting
 /**
  * An `InputFile` wraps a number of different sources for [sending
  * files](https://grammy.dev/guide/files#uploading-your-own-files).
@@ -62,14 +53,14 @@ export class InputFile {
     constructor(
         file: MaybeSupplier<
             | { path: string }
-            | Blob
-            | Deno.FsFile
-            | Response
+            | { url: string }
             | URL
-            | URLLike
+            | Blob
+            | Response
             | Uint8Array
             | Iterable<Uint8Array>
             | AsyncIterable<Uint8Array>
+            | { readable: AsyncIterable<Uint8Array> }
         >,
         filename?: string,
     ) {
@@ -93,49 +84,57 @@ export class InputFile {
         return basename(file.hostname);
     }
 
-    async *[Symbol.asyncIterator](): AsyncIterator<Uint8Array> {
-        yield* await this.toRaw();
-    }
-
     /**
-     * @internal use `[Symbol.asyncIterator]()` instead.
-     *
      * Converts this instance into a binary representation that can be sent to
      * the Bot API server in the request body.
      */
-    private async toRaw(): Promise<
-        Iterable<Uint8Array> | AsyncIterable<Uint8Array>
-    > {
+    async *[Symbol.asyncIterator](): AsyncIterator<Uint8Array, undefined> {
         if (this.consumed) {
-            throw new Error("Cannot reuse InputFile data source!");
+            throw new TypeError("Cannot reuse InputFile data source!");
         }
-        const data = this.fileData;
-        if (data instanceof Uint8Array) return [data];
-        // Mark streams and iterators as consumed and return them as-is
-        if (Symbol.asyncIterator in data || Symbol.iterator in data) {
+
+        let data = this.fileData;
+        if (typeof data === "function") data = await data();
+        if ("readable" in data) data = data.readable;
+
+        if (data instanceof Uint8Array) {
+            yield data;
+        } else if ("stream" in data) {
+            yield* data.stream();
+        } else if (Symbol.asyncIterator in data || Symbol.iterator in data) {
             this.consumed = true;
-            return data;
-        }
-        // Handle local files
-        if ("path" in data) return await readFile(data.path);
-        if (data instanceof Blob) return data.stream();
-        if (isDenoFile(data)) {
+            yield* data;
+        } else if ("path" in data) {
+            yield* await readFile(data.path);
+        } else if (data instanceof Response) {
+            if (data.body === null) throw new InputError(data);
             this.consumed = true;
-            return data.readable;
+            yield* data.body;
+        } else if (data instanceof URL) {
+            yield* await fetchFile(data);
+        } else if ("url" in data) {
+            // FIXME avoid reparsing in auto-retry
+            yield* await fetchFile(new URL(data.url));
+        } else {
+            assertNever(data);
         }
-        // Handle Response objects
-        if (data instanceof Response) {
-            if (data.body === null) throw new Error(`No response body!`);
-            this.consumed = true;
-            return data.body;
-        }
-        // Handle URL and URLLike objects
-        if (data instanceof URL) return await fetchFile(data);
-        // FIXME avoid reparsing in auto-retry
-        if ("url" in data) return await fetchFile(new URL(data.url));
-        // Unwrap supplier functions
-        return new InputFile(await data()).toRaw();
     }
+}
+
+export class InputError extends Error {
+    readonly error_code: number;
+    constructor(readonly response: Response) {
+        let message = response.body ? response.statusText : "No response body";
+        if (response.url) message += ` from ${response.url}`;
+        super(message);
+        this.name = InputError.name;
+        this.error_code = response.status;
+    }
+}
+
+export function assertNever(data: never): never {
+    const { toString } = Object.prototype;
+    throw new TypeError(`Unexpected ${toString.call(data)}!`);
 }
 
 async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
@@ -151,14 +150,11 @@ async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
     // https://github.com/nodejs/undici/issues/2751
     if (url.protocol === "file") return await readFile(url.pathname);
 
-    const { body } = await fetch(url);
-    if (body === null) {
-        throw new Error(`Download failed, no response body from '${url}'`);
+    const response = await fetch(url);
+    if (!response.ok || response.body === null) {
+        throw new InputError(response);
     }
-    return body[Symbol.asyncIterator]();
-}
-function isDenoFile(data: unknown): data is Deno.FsFile {
-    return isDeno && data instanceof Deno.FsFile;
+    return response.body;
 }
 
 // === Export InputFile types
