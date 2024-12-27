@@ -14,5 +14,12 @@
     "fmt": {
         "indentWidth": 4,
         "proseWrap": "preserve"
+    },
+    "lint": {
+        "rules": {
+            "exclude": [
+                "no-slow-types"
+            ]
+        }
     }
 }
