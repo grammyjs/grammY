@@ -144,7 +144,7 @@ function concat<C extends Context>(
     first: MiddlewareFn<C>,
     andThen: MiddlewareFn<C>,
 ): MiddlewareFn<C> {
-    return async (ctx, next) => {
+    return first === pass ? andThen : async (ctx, next) => {
         let nextCalled = false;
         await first(ctx, async () => {
             if (nextCalled) throw new Error("`next` already called before!");
