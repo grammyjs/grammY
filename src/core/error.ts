@@ -1,5 +1,5 @@
 import { createDebug } from "@grammyjs/debug";
-import { type ApiError, type ResponseParameters } from "../types.ts";
+import type { ApiError, ResponseParameters } from "../types.ts";
 const debug = createDebug("grammy:warn");
 
 /**

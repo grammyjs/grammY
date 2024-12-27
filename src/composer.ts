@@ -13,12 +13,8 @@ import {
     type ShippingQueryContext,
     type StringWithCommandSuggestions,
 } from "./context.ts";
-import { type FilterQuery, type FilterQueryContext } from "./filter.ts";
-import {
-    type Chat,
-    type ReactionType,
-    type ReactionTypeEmoji,
-} from "./types.ts";
+import type { FilterQuery, FilterQueryContext } from "./filter.ts";
+import type { Chat, ReactionType, ReactionTypeEmoji } from "./types.ts";
 
 type MaybePromise<T> = T | Promise<T>;
 

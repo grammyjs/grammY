@@ -2,19 +2,19 @@
 import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
 
 // TODO(@wojpawlik) remove after #720
-import {
-    type ApiMethods as ApiMethodsF,
-    type InputMedia as InputMediaF,
-    type InputMediaAnimation as InputMediaAnimationF,
-    type InputMediaAudio as InputMediaAudioF,
-    type InputMediaDocument as InputMediaDocumentF,
-    type InputMediaPhoto as InputMediaPhotoF,
-    type InputMediaVideo as InputMediaVideoF,
-    type InputPaidMedia as InputPaidMediaF,
-    type InputPaidMediaPhoto as InputPaidMediaPhotoF,
-    type InputPaidMediaVideo as InputPaidMediaVideoF,
-    type InputSticker as InputStickerF,
-    type Opts as OptsF,
+import type {
+    ApiMethods as ApiMethodsF,
+    InputMedia as InputMediaF,
+    InputMediaAnimation as InputMediaAnimationF,
+    InputMediaAudio as InputMediaAudioF,
+    InputMediaDocument as InputMediaDocumentF,
+    InputMediaPhoto as InputMediaPhotoF,
+    InputMediaVideo as InputMediaVideoF,
+    InputPaidMedia as InputPaidMediaF,
+    InputPaidMediaPhoto as InputPaidMediaPhotoF,
+    InputPaidMediaVideo as InputPaidMediaVideoF,
+    InputSticker as InputStickerF,
+    Opts as OptsF,
 } from "https://raw.githubusercontent.com/grammyjs/types/refs/heads/v2/mod.ts";
 /** Are we running on Deno or in a web browser? */
 export const isDeno = typeof Deno !== "undefined";

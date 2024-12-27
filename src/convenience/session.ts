@@ -1,6 +1,6 @@
 import { createDebug } from "@grammyjs/debug";
-import { type MiddlewareFn } from "../composer.ts";
-import { type Context } from "../context.ts";
+import type { MiddlewareFn } from "../composer.ts";
+import type { Context } from "../context.ts";
 const debug = createDebug("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;

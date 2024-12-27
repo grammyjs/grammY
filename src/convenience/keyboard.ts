@@ -1,13 +1,13 @@
-import {
-    type CopyTextButton,
-    type InlineKeyboardButton,
-    type KeyboardButton,
-    type KeyboardButtonPollType,
-    type KeyboardButtonRequestChat,
-    type KeyboardButtonRequestUsers,
-    type LoginUrl,
-    type SwitchInlineQueryChosenChat,
-    type WebAppInfo,
+import type {
+    CopyTextButton,
+    InlineKeyboardButton,
+    KeyboardButton,
+    KeyboardButtonPollType,
+    KeyboardButtonRequestChat,
+    KeyboardButtonRequestUsers,
+    LoginUrl,
+    SwitchInlineQueryChosenChat,
+    WebAppInfo,
 } from "../types.ts";
 
 type KeyboardButtonSource = string | KeyboardButton;

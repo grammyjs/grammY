@@ -1,5 +1,5 @@
 import { InlineKeyboard, Keyboard } from "../../src/convenience/keyboard.ts";
-import { type LoginUrl } from "../../src/types.ts";
+import type { LoginUrl } from "../../src/types.ts";
 import {
     assertEquals,
     assertNotStrictEquals,

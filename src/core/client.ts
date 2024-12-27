@@ -1,5 +1,5 @@
 import { createDebug } from "@grammyjs/debug";
-import { type ApiMethods, type ApiResponse, type Opts } from "../types.ts";
+import type { ApiMethods, ApiResponse, Opts } from "../types.ts";
 import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,

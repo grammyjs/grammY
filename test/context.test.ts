@@ -1,13 +1,13 @@
 import { Context } from "../src/context.ts";
 import { Api } from "../src/mod.ts";
-import {
-    type BusinessConnection,
-    type BusinessMessagesDeleted,
-    type Chat,
-    type Message,
-    type Update,
-    type User,
-    type UserFromGetMe,
+import type {
+    BusinessConnection,
+    BusinessMessagesDeleted,
+    Chat,
+    Message,
+    Update,
+    User,
+    UserFromGetMe,
 } from "../src/types.ts";
 import {
     assert,

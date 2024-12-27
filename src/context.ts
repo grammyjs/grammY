@@ -1,33 +1,33 @@
 // deno-lint-ignore-file camelcase
-import { type Api, type Other as OtherApi } from "./core/api.ts";
-import { type Methods, type RawApi } from "./core/client.ts";
+import type { Api, Other as OtherApi } from "./core/api.ts";
+import type { Methods, RawApi } from "./core/client.ts";
 import {
     type FilterCore,
     type FilterQuery,
     type FilterQueryContext,
     matchFilter,
 } from "./filter.ts";
-import {
-    type Chat,
-    type ChatPermissions,
-    type InlineQueryResult,
-    type InputFile,
-    type InputMedia,
-    type InputMediaAudio,
-    type InputMediaDocument,
-    type InputMediaPhoto,
-    type InputMediaVideo,
-    type InputPaidMedia,
-    type InputPollOption,
-    type LabeledPrice,
-    type Message,
-    type MessageEntity,
-    type PassportElementError,
-    type ReactionType,
-    type ReactionTypeEmoji,
-    type Update,
-    type User,
-    type UserFromGetMe,
+import type {
+    Chat,
+    ChatPermissions,
+    InlineQueryResult,
+    InputFile,
+    InputMedia,
+    InputMediaAudio,
+    InputMediaDocument,
+    InputMediaPhoto,
+    InputMediaVideo,
+    InputPaidMedia,
+    InputPollOption,
+    LabeledPrice,
+    Message,
+    MessageEntity,
+    PassportElementError,
+    ReactionType,
+    ReactionTypeEmoji,
+    Update,
+    User,
+    UserFromGetMe,
 } from "./types.ts";
 
 // === Util types
