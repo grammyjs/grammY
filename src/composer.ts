@@ -676,6 +676,20 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * })
      * ```
      *
+     * TypeScript does not support asynchronous type predicates. However,
+     * synchronous type predicates can be returned from asynchronous functions.
+     * You can therefore pass a function that returns a promise of a type
+     * predicate if you want to narrow down the context type asynchronously.
+     *
+     * ```ts
+     * bot.filter(async (ctx) => {
+     *   // Perform async work here ...
+     *   const admin = await isAdmin(ctx.from)
+     *   // ... to return a synchronous predicate function.
+     *   return (ctx: MyContext): ctx is MyAdminContext => !!admin
+     * })
+     * ```
+     *
      * @param predicate The predicate to check
      * @param middleware The middleware to register
      */
@@ -683,16 +697,20 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         predicate: (ctx: C) => ctx is D,
         ...middleware: Array<Middleware<D>>
     ): Composer<D>;
+    filter<D extends C>(
+        predicate: (ctx: C) => MaybePromise<(ctx: C) => ctx is D>,
+        ...middleware: Array<Middleware<D>>
+    ): Composer<D>;
     filter(
-        predicate: (ctx: C) => MaybePromise<boolean>,
+        predicate: (ctx: C) => MaybePromise<boolean | ((ctx: C) => boolean)>,
         ...middleware: Array<Middleware<C>>
     ): Composer<C>;
     filter(
-        predicate: (ctx: C) => MaybePromise<boolean>,
+        predicate: (ctx: C) => MaybePromise<boolean | ((ctx: C) => boolean)>,
         ...middleware: Array<Middleware<C>>
     ) {
         const composer = new Composer(...middleware);
-        this.branch(predicate, composer, pass);
+        this.branch(predicate, composer);
         return composer;
     }
 
@@ -855,25 +873,75 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * This method takes a predicate function that is tested once per context
      * object. If it returns `true`, the first supplied middleware is executed.
-     * If it returns `false`, the second supplied middleware is executed. Note
-     * that the predicate may be asynchronous, i.e. it can return a Promise of a
-     * boolean.
+     * If it returns `false`, the second supplied middleware is executed if it
+     * was specified. Note that the predicate may be asynchronous, i.e. it can
+     * return a `Promise` of a boolean.
+     *
+     * The predicate may also be a type predicate that narrows down the type of
+     * the context object. In this case, the first supplied middleware may
+     * receive the narrowed down context object.
+     *
+     * TypeScript does not support asynchronous type predicates. However,
+     * synchronous type predicates can be returned from asynchronous functions.
+     * You can therefore pass a function that returns a promise of a type
+     * predicate if you want to narrow down the context type asynchronously.
+     *
+     * ```ts
+     * bot.branch(async (ctx) => {
+     *   // Perform async work here ...
+     *   const admin = await isAdmin(ctx.from)
+     *   // ... to return a synchronous predicate function.
+     *   return (ctx: MyContext): ctx is MyAdminContext => !!admin
+     * }, handler)
+     * ```
+     *
+     * This method returns a composer that runs if the predicate was not
+     * satisfied. As a result, switch-expressions like the following are
+     * possible.
+     *
+     * ```ts
+     * bot.branch(firstCase, firstHandler)
+     *   .branch(secondCase, secondHandler)
+     *   .branch(thirdCase, thirdHandler)
+     * ```
      *
      * @param predicate The predicate to check
      * @param trueMiddleware The middleware for the `true` case
-     * @param falseMiddleware The middleware for the `false` case
+     * @param falseMiddleware The optional middleware for the `false` case
      */
+    branch<D extends C>(
+        predicate: (ctx: C) => ctx is D,
+        trueMiddleware: MaybeArray<Middleware<D>>,
+        falseMiddleware?: MaybeArray<Middleware<C>>,
+    ): Composer<C>;
+    branch<D extends C>(
+        predicate: (ctx: C) => MaybePromise<(ctx: C) => ctx is D>,
+        trueMiddleware: MaybeArray<Middleware<D>>,
+        falseMiddleware?: MaybeArray<Middleware<C>>,
+    ): Composer<C>;
     branch(
-        predicate: (ctx: C) => MaybePromise<boolean>,
+        predicate: (ctx: C) => MaybePromise<boolean | ((ctx: C) => boolean)>,
         trueMiddleware: MaybeArray<Middleware<C>>,
-        falseMiddleware: MaybeArray<Middleware<C>>,
+        falseMiddleware?: MaybeArray<Middleware<C>>,
+    ): Composer<C>;
+    branch(
+        predicate: (ctx: C) => MaybePromise<boolean | ((ctx: C) => boolean)>,
+        trueMiddleware: MaybeArray<Middleware<C>>,
+        falseMiddleware: MaybeArray<Middleware<C>> = [],
     ) {
+        const then = Array.isArray(trueMiddleware)
+            ? new Composer(...trueMiddleware)
+            : new Composer(trueMiddleware);
         const otherwise = Array.isArray(falseMiddleware)
             ? new Composer(...falseMiddleware)
             : new Composer(falseMiddleware);
-        this.lazy(async (ctx) =>
-            (await predicate(ctx)) ? trueMiddleware : otherwise
-        );
+        this.lazy(async (ctx) => {
+            const condition = await predicate(ctx);
+            const satisfied = typeof condition === "function"
+                ? condition(ctx)
+                : condition;
+            return satisfied ? then : otherwise;
+        });
         return otherwise;
     }
 
