@@ -1,7 +1,6 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
+import { basename } from "@std/path";
 
-// TODO(@wojpawlik) remove after #720
 import type {
     ApiMethods as ApiMethodsF,
     InputMedia as InputMediaF,
@@ -15,13 +14,12 @@ import type {
     InputPaidMediaVideo as InputPaidMediaVideoF,
     InputSticker as InputStickerF,
     Opts as OptsF,
-} from "https://raw.githubusercontent.com/grammyjs/types/refs/heads/v2/mod.ts";
+} from "../temporary_types/mod.ts";
 /** Are we running on Deno or in a web browser? */
 export const isDeno = typeof Deno !== "undefined";
 
 // === Export all API types
-// TODO(@wojpawlik) remove after #720
-export * from "https://raw.githubusercontent.com/grammyjs/types/refs/heads/v2/mod.ts";
+export * from "../temporary_types/mod.ts";
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);

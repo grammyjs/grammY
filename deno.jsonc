@@ -1,7 +1,8 @@
 {
     "lock": false,
     "imports": {
-        "@grammyjs/debug": "jsr:@grammyjs/debug@^0.1.2"
+        "@grammyjs/debug": "jsr:@grammyjs/debug@^0.1.2",
+        "@std/path": "jsr:@std/path@^1.0.8"
     },
     "tasks": {
         "check": "deno check --all src/mod.ts",
