@@ -370,6 +370,14 @@ describe("Composer", () => {
             assertEquals(middleware.calls.length, 1);
             assertEquals(middleware.calls[0].args[0], ctx);
         });
+        it("should support second-order predicates", async () => {
+            composer.filter(() => t).filter(f, middleware); // nope
+            composer.filter(() => f).filter(t, middleware); // nope
+            composer.filter(() => t).filter(t, middleware);
+            await exec();
+            assertEquals(middleware.calls.length, 1);
+            assertEquals(middleware.calls[0].args[0], ctx);
+        });
     });
 
     describe(".drop", () => {
@@ -477,6 +485,21 @@ describe("Composer", () => {
                 () => l++,
                 () => r++,
             );
+            for (let i = 0; i < 8; i++) await exec();
+            assertEquals(l, 4);
+            assertEquals(r, 4);
+        });
+        it("should switch based on a second-order predicate", async () => {
+            let count = 0;
+            let l = 0;
+            let r = 0;
+            composer.branch(
+                (c) => {
+                    assertEquals(c, ctx);
+                    return Promise.resolve(() => count++ % 2 === 0);
+                },
+                () => l++,
+            ).branch(() => () => true, () => r++);
             for (let i = 0; i < 8; i++) await exec();
             assertEquals(l, 4);
             assertEquals(r, 4);
