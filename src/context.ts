@@ -526,9 +526,8 @@ export class Context implements RenamedUpdate {
      */
     get txt(): string | undefined {
         // Keep in sync with types in `filter.ts`.
-        return (
-            this.msg?.text ?? this.msg?.caption
-        );
+        const msg = this.msg;
+        return msg?.text ?? msg?.caption;
     }
     /**
      * Get the chat object from wherever possible. Alias for `(this.msg ??
