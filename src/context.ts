@@ -521,6 +521,16 @@ export class Context implements RenamedUpdate {
         );
     }
     /**
+     * Get the message text from wherever possible. Alias for `this.msg?.text ??
+     * this.msg?.caption
+     */
+    get txt(): string | undefined {
+        // Keep in sync with types in `filter.ts`.
+        return (
+            this.msg?.text ?? this.msg?.caption
+        );
+    }
+    /**
      * Get the chat object from wherever possible. Alias for `(this.msg ??
      * this.deletedBusinessMessages ?? this.messageReaction ??
      * this.messageReactionCount ?? this.myChatMember ??  this.chatMember ??
