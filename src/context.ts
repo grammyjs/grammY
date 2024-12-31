@@ -82,7 +82,7 @@ interface StaticHas {
      * @param command The command to match
      */
     command(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
     /**
      * Generates a predicate function that can test context objects for
@@ -186,9 +186,8 @@ const checker: StaticHas = {
     },
     command(command) {
         const hasEntities = checker.filterQuery(":entities:bot_command");
-        const atCommands = new Set<string>();
-        const noAtCommands = new Set<string>();
-        toArray(command).forEach((cmd) => {
+        const noAtCommands = new Set<string>(toArray(command ?? []));
+        for (const cmd of noAtCommands) {
             if (cmd.startsWith("/")) {
                 throw new Error(
                     `Do not include '/' when registering command handlers (use '${
@@ -196,33 +195,29 @@ const checker: StaticHas = {
                     }' not '${cmd}')`,
                 );
             }
-            const set = cmd.includes("@") ? atCommands : noAtCommands;
-            set.add(cmd);
-        });
+        }
         return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
             if (!hasEntities(ctx)) return false;
             const msg = ctx.message ?? ctx.channelPost;
             const txt = msg.text ?? msg.caption;
-            return msg.entities.some((e) => {
-                if (e.type !== "bot_command") return false;
-                if (e.offset !== 0) return false;
-                const cmd = txt.substring(1, e.length);
-                if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                    ctx.match = txt.substring(cmd.length + 1).trimStart();
-                    return true;
-                }
-                const index = cmd.indexOf("@");
-                if (index === -1) return false;
+            const e: MessageEntity = msg.entities[0];
+            if (e.type !== "bot_command") return false;
+            if (e.offset !== 0) return false;
+            const cmd = txt.substring(1, e.length);
+            let index = cmd.indexOf("@");
+            if (index === -1) {
+                index = Infinity;
+            } else {
                 const atTarget = cmd.substring(index + 1).toLowerCase();
                 const username = ctx.me.username.toLowerCase();
                 if (atTarget !== username) return false;
-                const atCommand = cmd.substring(0, index);
-                if (noAtCommands.has(atCommand)) {
-                    ctx.match = txt.substring(cmd.length + 1).trimStart();
-                    return true;
-                }
-                return false;
-            });
+            }
+            const atCommand = cmd.substring(0, index);
+            if (command === undefined || noAtCommands.has(atCommand)) {
+                ctx.match = txt.substring(cmd.length + 1).trimStart();
+                return true;
+            }
+            return false;
         };
     },
     reaction(reaction) {
@@ -853,7 +848,7 @@ export class Context implements RenamedUpdate {
      * @param command The command to match
      */
     hasCommand(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
     ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }

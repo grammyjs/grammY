@@ -398,6 +398,7 @@ describe("Context", () => {
         assert(ctx.hasCommand("start"));
         assert(Context.has.command(["help", "start"])(ctx));
         assert(ctx.hasCommand(["help", "start"]));
+        assert(ctx.hasCommand());
         assertEquals(ctx.match, "args");
         assertFalse(Context.has.command("help")(ctx));
         assertFalse(ctx.hasCommand("help"));
@@ -420,6 +421,7 @@ describe("Context", () => {
         ctx = new Context(up, api, me);
         assertFalse(Context.has.command("start")(ctx));
         assertFalse(ctx.hasCommand("start"));
+        assertFalse(ctx.hasCommand());
 
         up = {
             message: {
@@ -434,6 +436,7 @@ describe("Context", () => {
         ctx = new Context(up, api, me);
         assert(Context.has.command("start")(ctx));
         assert(ctx.hasCommand("start"));
+        assert(ctx.hasCommand());
 
         up = {
             message: {
@@ -448,11 +451,13 @@ describe("Context", () => {
         ctx = new Context(up, api, me);
         assertFalse(Context.has.command("start")(ctx));
         assertFalse(ctx.hasCommand("start"));
+        assertFalse(ctx.hasCommand());
 
         up = { message: { text: "/start" } } as Update;
         ctx = new Context(up, api, me);
         assertFalse(Context.has.command("start")(ctx));
         assertFalse(ctx.hasCommand("start"));
+        assertFalse(ctx.hasCommand());
     });
 
     it("should be able to check for game queries", () => {

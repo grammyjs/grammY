@@ -329,6 +329,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.command('start', ctx => { ... })
      * // Reacts to /help commands
      * bot.command('help', ctx => { ... })
+     * // Reacts to any command
+     * bot.command(undefined, ctx => { ... })
+     * bot.command().use(ctx => { ... })
      * ```
      *
      * The rest of the message (excluding the command, and trimmed) is provided
@@ -377,7 +380,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     command(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
         ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         return this.filter(Context.has.command(command), ...middleware);
