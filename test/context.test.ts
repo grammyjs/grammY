@@ -147,6 +147,21 @@ describe("Context", () => {
         ctx = new Context(up, api, me);
         assertEquals(ctx.msg, up.edited_business_message);
     });
+    it(".txt should aggregate text", () => {
+        let up: Update, ctx: Context;
+        const mc = {
+            caption: "b",
+            from: u,
+            chat: c,
+            sender_chat: c,
+        } as Message;
+        up = { message: update.message } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.txt, up.message?.text);
+        up = { message: mc } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.txt, up.message?.caption);
+    });
 
     it(".chat should aggregate chats", () => {
         let up: Update, ctx: Context;
