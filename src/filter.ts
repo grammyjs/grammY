@@ -601,7 +601,11 @@ interface Shortcuts<U extends Update> {
         : [U["callback_query"]] extends [object]
             ? U["callback_query"]["message"]
         : undefined;
-    txt: [Shortcuts<U>["msg"]] extends [object] ? string : undefined;
+    txt: [Shortcuts<U>["msg"]] extends [object]
+        ? Shortcuts<U>["msg"]["text"] extends [object] ? string
+        : Shortcuts<U>["msg"]["caption"] extends [object] ? string
+        : undefined
+        : undefined;
     chat: [U["callback_query"]] extends [object]
         ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
