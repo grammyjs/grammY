@@ -2768,6 +2768,67 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Verifies a user on behalf of the organization which is represented by the bot. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#verifyuser
+     */
+    verifyUser(
+        user_id: number,
+        other?: Other<R, "verifyUser">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.verifyUser({ user_id, ...other }, signal);
+    }
+
+    /**
+     * Verifies a chat on behalf of the organization which is represented by the bot. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#verifychat
+     */
+    verifyChat(
+        chat_id: number | string,
+        other?: Other<R, "verifyChat">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.verifyChat({ chat_id, ...other }, signal);
+    }
+
+    /**
+     * Removes verification from a user who is currently verified on behalf of the organization represented by the bot. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removeuserverification
+     */
+    removeUserVerification(user_id: number, signal?: AbortSignal) {
+        return this.raw.removeUserVerification({ user_id }, signal);
+    }
+
+    /**
+     * Removes verification from a chat that is currently verified on behalf of the organization represented by the bot. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removechatverification
+     */
+    removeChatVerification(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.removeChatVerification({ chat_id }, signal);
+    }
+
+    /**
      * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
      *
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
