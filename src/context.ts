@@ -200,24 +200,25 @@ const checker: StaticHas = {
             if (!hasEntities(ctx)) return false;
             const msg = ctx.message ?? ctx.channelPost;
             const txt = msg.text ?? msg.caption;
-            const e: MessageEntity = msg.entities[0];
-            if (e.type !== "bot_command") return false;
-            if (e.offset !== 0) return false;
-            const cmd = txt.substring(1, e.length);
-            let index = cmd.indexOf("@");
-            if (index === -1) {
-                index = Infinity;
-            } else {
-                const atTarget = cmd.substring(index + 1).toLowerCase();
-                const username = ctx.me.username.toLowerCase();
-                if (atTarget !== username) return false;
-            }
-            const atCommand = cmd.substring(0, index);
-            if (command === undefined || noAtCommands.has(atCommand)) {
-                ctx.match = txt.substring(cmd.length + 1).trimStart();
-                return true;
-            }
-            return false;
+            return msg.entities.some((e) => {
+                if (e.type !== "bot_command") return false;
+                if (e.offset !== 0) return false;
+                const cmd = txt.substring(1, e.length);
+                let index = cmd.indexOf("@");
+                if (index === -1) {
+                    index = Infinity;
+                } else {
+                    const atTarget = cmd.substring(index + 1).toLowerCase();
+                    const username = ctx.me.username.toLowerCase();
+                    if (atTarget !== username) return false;
+                }
+                const atCommand = cmd.substring(0, index);
+                if (command === undefined || noAtCommands.has(atCommand)) {
+                    ctx.match = txt.substring(cmd.length + 1).trimStart();
+                    return true;
+                }
+                return false;
+            });
         };
     },
     reaction(reaction) {
