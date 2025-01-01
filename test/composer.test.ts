@@ -49,7 +49,7 @@ describe("Composer", () => {
 
     beforeEach(() => {
         composer = new Composer();
-        middleware = spy((_ctx) => {});
+        middleware = spy((_ctx, next) => next());
     });
 
     it("should call handlers", async () => {
@@ -160,9 +160,10 @@ describe("Composer", () => {
             0 as any,
         );
         it("should check for commands", async () => {
+            composer.command(undefined, middleware);
             composer.command("start", middleware);
             await exec(c);
-            assertEquals(middleware.calls.length, 1);
+            assertEquals(middleware.calls.length, 2);
             assertEquals(middleware.calls[0].args[0], c);
         });
         it("should allow chaining commands", async () => {
@@ -540,9 +541,7 @@ describe("Composer", () => {
             composer.use(() => {
                 throw err;
             });
-            await assertRejects(async () => {
-                await exec();
-            }, "yay");
+            await assertRejects(async () => await exec(), Error, "yay");
             assertEquals(handler.calls.length, 0);
         });
         it("should support passing on the control flow via next", async () => {
