@@ -3171,7 +3171,7 @@ type CommandContextCore =
  */
 export type CommandContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string>,
-    ":entities:bot_command"
+    "::bot_command"
 >;
 type NarrowMatchCore<T extends Context["match"]> = { match: T };
 type NarrowMatch<C extends Context, T extends C["match"]> = {

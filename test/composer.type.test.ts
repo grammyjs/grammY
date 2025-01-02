@@ -110,7 +110,7 @@ describe("Composer types", () => {
                 const channelPostCaption = ctx.channelPost?.caption;
                 const channelPostText = ctx.channelPost?.text;
                 const match = ctx.match;
-                assertType<IsExact<typeof msgText, string>>(true);
+                assertType<IsExact<typeof msgText, string | undefined>>(true);
                 assertType<IsExact<typeof messageCaption, string | undefined>>(
                     true,
                 );
