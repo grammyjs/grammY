@@ -1,5 +1,5 @@
 // === Needed imports
-import { basename } from "@std/path";
+import { basename } from "node:path";
 
 import type {
     ApiMethods as ApiMethodsF,
@@ -21,8 +21,15 @@ export const isDeno = typeof Deno !== "undefined";
 // === Export all API types
 export * from "../temporary_types/mod.ts";
 
-/** A value, or a potentially async function supplying that value */
-type MaybeSupplier<T> = T | (() => T | Promise<T>);
+type MaybePromise<T> = T | Promise<T>;
+
+function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
+    if ("base64" in data) return new URL(`data:;base64,${data.base64}`);
+    if ("readable" in data) return data.readable;
+    if (data instanceof Response) return data;
+    if ("url" in data) return new URL(data.url);
+    return data;
+}
 
 /**
  * An `InputFile` wraps a number of different sources for [sending
@@ -33,7 +40,7 @@ type MaybeSupplier<T> = T | (() => T | Promise<T>);
  */
 export class InputFile {
     private consumed = false;
-    private readonly fileData: ConstructorParameters<typeof InputFile>[0];
+    private readonly fileData: ReturnType<typeof preprocess>;
     /**
      * Optional name of the constructed `InputFile` instance.
      *
@@ -49,26 +56,25 @@ export class InputFile {
      * @param filename Optional name of the file
      */
     constructor(
-        file: MaybeSupplier<
+        file:
             | { path: string }
             | { url: string }
             | URL
             | Blob
             | Response
             | Uint8Array
-            | Iterable<Uint8Array>
             | AsyncIterable<Uint8Array>
+            | (() => MaybePromise<AsyncIterable<Uint8Array>>)
             | { readable: AsyncIterable<Uint8Array> }
-        >,
+            | { base64: string },
         filename?: string,
     ) {
-        this.fileData = file;
-        filename ??= this.guessFilename(file);
-        this.name = filename;
+        this.fileData = preprocess(file);
+        this.name = filename ?? this.guessFilename();
     }
-    private guessFilename(
-        file: ConstructorParameters<typeof InputFile>[0],
-    ): string | undefined {
+
+    private guessFilename(): string | undefined {
+        let file = this.fileData;
         if ("path" in file && typeof file.path === "string") {
             return basename(file.path);
         }
@@ -87,45 +93,40 @@ export class InputFile {
      * the Bot API server in the request body.
      */
     async *[Symbol.asyncIterator](): AsyncIterator<Uint8Array, undefined> {
+        // prefer extending `preprocess` -- it's not re-ran on retry
+        const data = this.fileData;
         if (this.consumed) {
             throw new TypeError("Cannot reuse InputFile data source!");
-        }
-
-        let data = this.fileData;
-        if (typeof data === "function") data = await data();
-        if ("readable" in data) data = data.readable;
-
-        if (data instanceof Uint8Array) {
+        } else if (typeof data === "function") {
+            yield* await data();
+        } else if (data instanceof Uint8Array) {
             yield data;
         } else if ("stream" in data) {
             yield* data.stream();
-        } else if (Symbol.asyncIterator in data || Symbol.iterator in data) {
+        } else if (Symbol.asyncIterator in data) {
             this.consumed = true;
             yield* data;
         } else if ("path" in data) {
             yield* await readFile(data.path);
         } else if (data instanceof Response) {
-            if (data.body === null) throw new InputError(data);
+            if (data.body === null) throw new ResponseError(data);
             this.consumed = true;
             yield* data.body;
         } else if (data instanceof URL) {
             yield* await fetchFile(data);
-        } else if ("url" in data) {
-            // FIXME avoid reparsing in auto-retry
-            yield* await fetchFile(new URL(data.url));
         } else {
             assertNever(data);
         }
     }
 }
 
-export class InputError extends Error {
+export class ResponseError extends Error {
     readonly error_code: number;
     constructor(readonly response: Response) {
         let message = response.body ? response.statusText : "No response body";
         if (response.url) message += ` from ${response.url}`;
         super(message);
-        this.name = InputError.name;
+        this.name = ResponseError.name;
         this.error_code = response.status;
     }
 }
@@ -140,7 +141,7 @@ async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
         const file = await Deno.open(path);
         return file.readable;
     }
-    const fs = await import("node:fs");
+    const fs = globalThis.process.getBuiltinModule("node:fs");
     return fs.createReadStream(path);
 }
 
@@ -150,7 +151,7 @@ async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
 
     const response = await fetch(url);
     if (!response.ok || response.body === null) {
-        throw new InputError(response);
+        throw new ResponseError(response);
     }
     return response.body;
 }
