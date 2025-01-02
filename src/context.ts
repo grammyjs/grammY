@@ -3018,6 +3018,74 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.verifyUser`. Verifies a user on behalf of the organization which is represented by the bot. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#verifyuser
+     */
+    verifyUser(
+        other?: Other<"verifyUser">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.verifyUser(
+            orThrow(this.from, "verifyUser").id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.verifyChat`. Verifies a chat on behalf of the organization which is represented by the bot. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#verifychat
+     */
+    verifyChat(
+        other?: Other<"verifyChat">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.verifyChat(
+            orThrow(this.chatId, "verifyChat"),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.removeUserVerification`. Removes verification from a user who is currently verified on behalf of the organization represented by the bot. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removeuserverification
+     */
+    removeUserVerification(signal?: AbortSignal) {
+        return this.api.removeUserVerification(
+            orThrow(this.from, "removeUserVerification").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.removeChatVerification`. Removes verification from a chat that is currently verified on behalf of the organization represented by the bot. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removechatverification
+     */
+    removeChatVerification(
+        signal?: AbortSignal,
+    ) {
+        return this.api.removeChatVerification(
+            orThrow(this.chatId, "removeChatVerification"),
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.setPassportDataErrors`. Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
      *
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.

@@ -17,7 +17,7 @@
         "backport": "deno2node tsconfig.json"
     },
     "dependencies": {
-        "@grammyjs/types": "3.17.0",
+        "@grammyjs/types": "3.18.0",
         "abort-controller": "^3.0.0",
         "debug": "^4.3.4",
         "node-fetch": "^2.7.0"
