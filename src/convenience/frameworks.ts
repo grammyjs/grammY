@@ -138,12 +138,8 @@ export type HonoAdapter = (c: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
     };
-    body: (
-        data: string | ArrayBuffer | ReadableStream,
-        // deno-lint-ignore no-explicit-any
-        arg?: any,
-        headers?: Record<string, string | string[]>,
-    ) => Response;
+    body(data: string): Response;
+    body(data: null, status: 204): Response;
     // deno-lint-ignore no-explicit-any
     status: (status: any) => void;
     json: (json: string) => Response;
