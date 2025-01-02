@@ -82,7 +82,7 @@ interface StaticHas {
      * @param command The command to match
      */
     command(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
     /**
      * Generates a predicate function that can test context objects for
@@ -185,10 +185,9 @@ const checker: StaticHas = {
         };
     },
     command(command) {
-        const hasEntities = checker.filterQuery(":entities:bot_command");
-        const atCommands = new Set<string>();
-        const noAtCommands = new Set<string>();
-        toArray(command).forEach((cmd) => {
+        const hasEntities = checker.filterQuery("::bot_command");
+        const noAtCommands = new Set<string>(toArray(command ?? []));
+        for (const cmd of noAtCommands) {
             if (cmd.startsWith("/")) {
                 throw new Error(
                     `Do not include '/' when registering command handlers (use '${
@@ -196,28 +195,26 @@ const checker: StaticHas = {
                     }' not '${cmd}')`,
                 );
             }
-            const set = cmd.includes("@") ? atCommands : noAtCommands;
-            set.add(cmd);
-        });
+        }
         return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
             if (!hasEntities(ctx)) return false;
             const msg = ctx.message ?? ctx.channelPost;
-            const txt = msg.text ?? msg.caption;
-            return msg.entities.some((e) => {
+            const txt = msg.text ?? msg.caption ?? "";
+            const entities = msg.entities ?? msg.caption_entities;
+            return entities.some((e) => {
                 if (e.type !== "bot_command") return false;
                 if (e.offset !== 0) return false;
                 const cmd = txt.substring(1, e.length);
-                if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                    ctx.match = txt.substring(cmd.length + 1).trimStart();
-                    return true;
+                let index = cmd.indexOf("@");
+                if (index === -1) {
+                    index = Infinity;
+                } else {
+                    const atTarget = cmd.substring(index + 1).toLowerCase();
+                    const username = ctx.me.username.toLowerCase();
+                    if (atTarget !== username) return false;
                 }
-                const index = cmd.indexOf("@");
-                if (index === -1) return false;
-                const atTarget = cmd.substring(index + 1).toLowerCase();
-                const username = ctx.me.username.toLowerCase();
-                if (atTarget !== username) return false;
                 const atCommand = cmd.substring(0, index);
-                if (noAtCommands.has(atCommand)) {
+                if (command === undefined || noAtCommands.has(atCommand)) {
                     ctx.match = txt.substring(cmd.length + 1).trimStart();
                     return true;
                 }
@@ -853,7 +850,7 @@ export class Context implements RenamedUpdate {
      * @param command The command to match
      */
     hasCommand(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
     ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }
@@ -3174,7 +3171,7 @@ type CommandContextCore =
  */
 export type CommandContext<C extends Context> = FilterQueryContext<
     NarrowMatch<C, string>,
-    ":entities:bot_command"
+    "::bot_command"
 >;
 type NarrowMatchCore<T extends Context["match"]> = { match: T };
 type NarrowMatch<C extends Context, T extends C["match"]> = {
