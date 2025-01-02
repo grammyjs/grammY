@@ -350,13 +350,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * > })
      * > ```
      *
-     * Note that commands are not matched in captions or in the middle of the
-     * text.
+     * Note that commands are not matched in the middle of the text.
      * ```ts
      * bot.command('start', ctx => { ... })
      * // ... does not match:
      * // A message saying: “some text /start some more text”
-     * // A photo message with the caption “/start”
      * ```
      *
      * By default, commands are detected in channel posts, too. This means that

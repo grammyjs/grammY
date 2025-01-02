@@ -185,7 +185,7 @@ const checker: StaticHas = {
         };
     },
     command(command) {
-        const hasEntities = checker.filterQuery(":entities:bot_command");
+        const hasEntities = checker.filterQuery("::bot_command");
         const noAtCommands = new Set<string>(toArray(command ?? []));
         for (const cmd of noAtCommands) {
             if (cmd.startsWith("/")) {
@@ -199,8 +199,9 @@ const checker: StaticHas = {
         return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
             if (!hasEntities(ctx)) return false;
             const msg = ctx.message ?? ctx.channelPost;
-            const txt = msg.text ?? msg.caption;
-            return msg.entities.some((e) => {
+            const txt = msg.text ?? msg.caption ?? "";
+            const entities = msg.entities ?? msg.caption_entities;
+            return entities.some((e) => {
                 if (e.type !== "bot_command") return false;
                 if (e.offset !== 0) return false;
                 const cmd = txt.substring(1, e.length);

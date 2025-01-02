@@ -381,17 +381,23 @@ describe("Context", () => {
         assertFalse(ctx.hasChatType("group"));
     });
 
-    it("should be able to check for commands", () => {
+    it("should be able to check for commands in text", () =>
+        testCommands("text"));
+    it("should be able to check for commands in captions", () =>
+        testCommands("caption"));
+
+    function testCommands(text: "text" | "caption") {
+        const entities = text === "text" ? "entities" : "caption_entities";
         let up = {
             message: {
-                text: "/start args",
-                entities: [{
+                [text]: "/start args",
+                [entities]: [{
                     type: "bot_command",
                     offset: 0,
                     length: "/start".length,
                 }],
             },
-        } as Update;
+        } as unknown as Update;
         let ctx = new Context(up, api, me);
 
         assert(Context.has.command("start")(ctx));
@@ -410,14 +416,14 @@ describe("Context", () => {
 
         up = {
             message: {
-                text: "Test with /start args",
-                entities: [{
+                [text]: "Test with /start args",
+                [entities]: [{
                     type: "bot_command",
                     offset: "Test with ".length,
                     length: "/start".length,
                 }],
             },
-        } as Update;
+        } as unknown as Update;
         ctx = new Context(up, api, me);
         assertFalse(Context.has.command("start")(ctx));
         assertFalse(ctx.hasCommand("start"));
@@ -425,14 +431,14 @@ describe("Context", () => {
 
         up = {
             message: {
-                text: "/start@BoT args",
-                entities: [{
+                [text]: "/start@BoT args",
+                [entities]: [{
                     type: "bot_command",
                     offset: 0,
                     length: "/start@BoT".length,
                 }],
             },
-        } as Update;
+        } as unknown as Update;
         ctx = new Context(up, api, me);
         assert(Context.has.command("start")(ctx));
         assert(ctx.hasCommand("start"));
@@ -440,14 +446,14 @@ describe("Context", () => {
 
         up = {
             message: {
-                text: "/start@not args",
-                entities: [{
+                [text]: "/start@not args",
+                [entities]: [{
                     type: "bot_command",
                     offset: 0,
                     length: "/start@not".length,
                 }],
             },
-        } as Update;
+        } as unknown as Update;
         ctx = new Context(up, api, me);
         assertFalse(Context.has.command("start")(ctx));
         assertFalse(ctx.hasCommand("start"));
@@ -458,7 +464,7 @@ describe("Context", () => {
         assertFalse(Context.has.command("start")(ctx));
         assertFalse(ctx.hasCommand("start"));
         assertFalse(ctx.hasCommand());
-    });
+    }
 
     it("should be able to check for game queries", () => {
         const ctx = new Context(update, api, me);
