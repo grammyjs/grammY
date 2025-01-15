@@ -82,14 +82,7 @@ export type LambdaAsyncAdapter = (
 
 export type AzureAdapter = (context: {
     res?: {
-        status: number;
-        body: string;
-        headers?: Record<string, string>;
-        set?: (key: string, value: string) => void;
-        send?: {
-            (body: unknown): void;
-            (status: number, body: unknown): void;
-        };
+        [key: string]: any;
     };
 }, request: { body?: unknown }) => ReqResHandler;
 export type AzureAdapterV4 = (request: Request, context: {
