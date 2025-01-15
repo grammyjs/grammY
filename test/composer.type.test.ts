@@ -391,31 +391,4 @@ describe("Composer types", () => {
             });
         });
     });
-    describe(".txt", () => {
-        it("should be string on text and caption", () => {
-            composer.on(
-                [":text"],
-                (ctx) => assertType<IsExact<typeof ctx.txt, string>>(true),
-            );
-            composer.on(
-                [":caption"],
-                (ctx) => assertType<IsExact<typeof ctx.txt, string>>(true),
-            );
-            composer.on(
-                [":text", ":caption"],
-                (ctx) => assertType<IsExact<typeof ctx.txt, string>>(true),
-            );
-            composer.on(
-                "message",
-                (ctx) =>
-                    assertType<IsExact<typeof ctx.txt, string | undefined>>(
-                        true,
-                    ),
-            );
-            composer.callbackQuery(
-                "query",
-                (ctx) => assertType<IsExact<typeof ctx.txt, undefined>>(true),
-            );
-        });
-    });
 });
