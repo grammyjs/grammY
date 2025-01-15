@@ -407,11 +407,14 @@ describe("Composer types", () => {
             );
             composer.on(
                 "message",
-                (ctx) => assertType<IsExact<typeof ctx.txt, string | undefined>>(true),
-            );
-            composer.callbackQuery("query",
                 (ctx) =>
-                    assertType<IsExact<typeof ctx.txt, undefined>>(true),
+                    assertType<IsExact<typeof ctx.txt, string | undefined>>(
+                        true,
+                    ),
+            );
+            composer.callbackQuery(
+                "query",
+                (ctx) => assertType<IsExact<typeof ctx.txt, undefined>>(true),
             );
         });
     });
