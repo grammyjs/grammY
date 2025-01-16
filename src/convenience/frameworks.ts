@@ -82,6 +82,7 @@ export type LambdaAsyncAdapter = (
 
 export type AzureAdapter = (context: {
     res?: {
+        // deno-lint-ignore no-explicit-any
         [key: string]: any;
     };
 }, request: { body?: unknown }) => ReqResHandler;
