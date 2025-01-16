@@ -87,7 +87,7 @@ export type AzureAdapter = (context: {
     };
 }, request: { body?: unknown }) => ReqResHandler;
 export type AzureAdapterV4 = (
-    request: { headers: Record<string, string>; json(): Promise<Update> },
+    request: { headers: Headers; json(): Promise<Update> },
 ) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
 
 export type BunAdapter = (request: {
@@ -291,7 +291,7 @@ const azureV4: AzureAdapterV4 = (request) => {
     let resolveResponse: (response: Res) => void;
     return {
         update: Promise.resolve(request.json()) as Promise<Update>,
-        header: request.headers[SECRET_HEADER],
+        header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => resolveResponse({ status: 204 }),
         respond: (json) => resolveResponse({ jsonBody: json }),
         unauthorized: () =>
