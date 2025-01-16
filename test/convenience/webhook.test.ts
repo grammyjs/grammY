@@ -11,7 +11,7 @@ import type bodyParser from "npm:@types/koa-bodyparser";
 import type Koa from "npm:@types/koa";
 import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
-import { Bot, BotError, webhookCallback } from "../../src/mod.ts";
+import { Bot, BotError, webhookAdapters } from "../../src/mod.ts";
 import type { UserFromGetMe } from "../../src/types.ts";
 import { assert, assertIsError, describe, it } from "../deps.test.ts";
 
@@ -20,7 +20,7 @@ describe("webhook", () => {
 
     it("AWS Lambda should be compatible with grammY adapter", () => {
         ((event: APIGatewayProxyEventV2, context: LambdaContext) =>
-            webhookCallback(bot, "aws-lambda-async")(
+            webhookAdapters.awsLambdaAsync(bot)(
                 event,
                 context,
             ));
@@ -33,7 +33,7 @@ describe("webhook", () => {
             },
         ) => object;
 
-        const handler = webhookCallback(bot, "bun");
+        const handler = webhookAdapters.bun(bot);
         const serve = (() => {}) as unknown as BunServe;
         serve({
             fetch: (request) => {
@@ -47,13 +47,13 @@ describe("webhook", () => {
             json: () => ({}),
             headers: { get: () => "" },
         } as unknown as Request;
-        const handler = webhookCallback(bot, "cloudflare-mod");
+        const handler = webhookAdapters.cloudflareModule(bot);
         const _res: Response = await handler(req);
     });
 
     it("Express should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as Express;
-        const handler = webhookCallback(bot, "express");
+        const handler = webhookAdapters.express(bot);
         app.post("/", (req, res) => {
             return handler(req, res);
         });
@@ -61,7 +61,7 @@ describe("webhook", () => {
 
     it("Fastify should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as FastifyInstance;
-        const handler = webhookCallback(bot, "fastify");
+        const handler = webhookAdapters.fastify(bot);
         app.post("/", (request, reply) => {
             return handler(request, reply);
         });
@@ -69,7 +69,7 @@ describe("webhook", () => {
 
     it("Hono should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as Hono;
-        const handler = webhookCallback(bot, "hono");
+        const handler = webhookAdapters.hono(bot);
         app.post("/", (c) => {
             return handler(c);
         });
@@ -77,7 +77,7 @@ describe("webhook", () => {
 
     it("http/https should be compatible with grammY adapter", () => {
         const create = (() => {}) as unknown as typeof createServer;
-        const handler = webhookCallback(bot, "http");
+        const handler = webhookAdapters.http(bot);
         create((req, res) => {
             return handler(req, res);
         });
@@ -86,7 +86,7 @@ describe("webhook", () => {
     it("Koa should be compatible with grammY adapter", () => {
         const app = { use: () => {} } as unknown as Koa;
         const parser = (() => {}) as unknown as typeof bodyParser;
-        const handler = webhookCallback(bot, "koa");
+        const handler = webhookAdapters.koa(bot);
         app.use(parser());
         app.use((ctx) => {
             return handler(ctx);
@@ -99,13 +99,13 @@ describe("webhook", () => {
             body: { update: {} },
         } as unknown as NextApiRequest;
         const res = { end: () => {} } as NextApiResponse;
-        const handler = webhookCallback(bot, "next-js");
+        const handler = webhookAdapters.nextJs(bot);
         await handler(req, res);
     });
 
     it("NHttp should be compatible with grammY adapter", () => {
         const app = { post: () => {} } as unknown as NHttp;
-        const handler = webhookCallback(bot, "nhttp");
+        const handler = webhookAdapters.nhttp(bot);
         app.post("/", (rev) => {
             return handler(rev);
         });
@@ -113,7 +113,7 @@ describe("webhook", () => {
 
     it("Oak should be compatible with grammY adapter", () => {
         const app = { use: () => {} } as unknown as Application;
-        const handler = webhookCallback(bot, "oak");
+        const handler = webhookAdapters.oak(bot);
         app.use((ctx) => {
             return handler(ctx);
         });
@@ -127,13 +127,13 @@ describe("webhook", () => {
             }),
             respondWith: () => {},
         };
-        const handler = webhookCallback(bot, "serveHttp");
+        const handler = webhookAdapters.serveHttp(bot);
         await handler(event);
     });
 
     it("std/http should be compatible with grammY adapter", () => {
         const serve = (() => {}) as unknown as typeof Deno.serve;
-        const handler = webhookCallback(bot, "std/http");
+        const handler = webhookAdapters.stdHttp(bot);
         serve((req) => {
             return handler(req);
         });
@@ -150,7 +150,7 @@ describe("webhook", () => {
             throw new Error("Test Error");
         });
 
-        const handler = webhookCallback(bot, "std/http");
+        const handler = webhookAdapters.stdHttp(bot);
         const fakeReq = new Request("https://fake-api.com", {
             method: "POST",
             body: JSON.stringify({
