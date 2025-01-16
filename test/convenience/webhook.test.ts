@@ -13,7 +13,7 @@ import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, BotError, webhookCallback } from "../../src/mod.ts";
 import type { UserFromGetMe } from "../../src/types.ts";
-import { assertIsError, describe, it } from "../deps.test.ts";
+import { assertEquals, assertIsError, describe, it } from "../deps.test.ts";
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
@@ -140,8 +140,11 @@ describe("webhook", () => {
     });
 
     it("bot should catch errors in webhoook handler", async () => {
+        let called = false;
+
         bot.catch((err) => {
             assertIsError(err, BotError, "Test Error");
+            called = true;
         });
         bot.on("message", () => {
             throw new Error("Test Error");
@@ -157,5 +160,7 @@ describe("webhook", () => {
         });
 
         await handler(fakeReq);
+
+        assertEquals(called, true);
     });
 });
