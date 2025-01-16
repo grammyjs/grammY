@@ -86,23 +86,9 @@ export type AzureAdapter = (context: {
         [key: string]: any;
     };
 }, request: { body?: unknown }) => ReqResHandler;
-type AzureV4HttpRequest = {
-    method: string;
-    url: string;
-    headers: any;
-    query: URLSearchParams;
-    body: any;
-}
-type AzureV4InvocationContext = {
-    invocationId: string;
-    functionName: string;
-}
-export type AzureAdapterV4 = (request: AzureV4HttpRequest, context: AzureV4InvocationContext) => ReqResHandler<{
-    status: number;
-    body?: string;
-} | {
-    jsonBody: string;
-}>;
+export type AzureAdapterV4 = (
+    request: { headers: Record<string, string>; json(): Promise<Update> },
+) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
 
 export type BunAdapter = (request: {
     headers: Headers;
@@ -298,14 +284,14 @@ const azure: AzureAdapter = (context, request) => ({
         context.res?.send?.(401, WRONG_TOKEN_ERROR);
     },
 });
-const azureV4: AzureAdapterV4 = (request, context) => {
+const azureV4: AzureAdapterV4 = (request) => {
     type Res = NonNullable<
         Awaited<ReturnType<AzureAdapterV4>["handlerReturn"]>
     >;
     let resolveResponse: (response: Res) => void;
     return {
         update: Promise.resolve(request.json()) as Promise<Update>,
-        header: context.res?.headers?.[SECRET_HEADER],
+        header: request.headers[SECRET_HEADER],
         end: () => resolveResponse({ status: 204 }),
         respond: (json) => resolveResponse({ jsonBody: json }),
         unauthorized: () =>
