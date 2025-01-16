@@ -13,7 +13,7 @@ import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, BotError, webhookCallback } from "../../src/mod.ts";
 import type { UserFromGetMe } from "../../src/types.ts";
-import { assertEquals, assertIsError, describe, it } from "../deps.test.ts";
+import { assert, assertIsError, describe, it } from "../deps.test.ts";
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
@@ -161,6 +161,6 @@ describe("webhook", () => {
 
         await handler(fakeReq);
 
-        assertEquals(called, true);
+        assert(called);
     });
 });
