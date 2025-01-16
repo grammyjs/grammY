@@ -148,7 +148,7 @@ describe("webhook", () => {
         });
 
         const handler = webhookCallback(bot, "std/http");
-        const fake_req = new Request("https://fake-api.com", {
+        const fakeReq = new Request("https://fake-api.com", {
             method: "POST",
             body: JSON.stringify({
                 update_id: 9696,
@@ -156,6 +156,6 @@ describe("webhook", () => {
             }),
         });
 
-        await handler(fake_req);
+        await handler(fakeReq);
     });
 });
