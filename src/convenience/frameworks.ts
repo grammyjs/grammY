@@ -86,13 +86,23 @@ export type AzureAdapter = (context: {
         [key: string]: any;
     };
 }, request: { body?: unknown }) => ReqResHandler;
-export type AzureAdapterV4 = (request: Request, context: {
-    res?: {
-        status: number;
-        body: string;
-        headers?: Record<string, string>;
-    };
-}) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
+type AzureV4HttpRequest = {
+    method: string;
+    url: string;
+    headers: any;
+    query: URLSearchParams;
+    body: any;
+}
+type AzureV4InvocationContext = {
+    invocationId: string;
+    functionName: string;
+}
+export type AzureAdapterV4 = (request: AzureV4HttpRequest, context: AzureV4InvocationContext) => ReqResHandler<{
+    status: number;
+    body?: string;
+} | {
+    jsonBody: string;
+}>;
 
 export type BunAdapter = (request: {
     headers: Headers;
