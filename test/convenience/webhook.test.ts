@@ -11,9 +11,9 @@ import type bodyParser from "npm:@types/koa-bodyparser";
 import type Koa from "npm:@types/koa";
 import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
-import { Bot, webhookCallback } from "../../src/mod.ts";
+import { Bot, BotError, webhookCallback } from "../../src/mod.ts";
 import type { UserFromGetMe } from "../../src/types.ts";
-import { describe, it } from "../deps.test.ts";
+import { assertIsError, describe, it } from "../deps.test.ts";
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
@@ -137,5 +137,25 @@ describe("webhook", () => {
         serve((req) => {
             return handler(req);
         });
+    });
+
+    it("bot should catch errors in webhoook handler", async () => {
+        bot.catch((err) => {
+            assertIsError(err, BotError, "Test Error");
+        });
+        bot.on("message", () => {
+            throw new Error("Test Error");
+        });
+
+        const handler = webhookCallback(bot, "std/http");
+        const fake_req = new Request("https://fake-api.com", {
+            method: "POST",
+            body: JSON.stringify({
+                update_id: 9696,
+                message: {},
+            }),
+        });
+
+        await handler(fake_req);
     });
 });

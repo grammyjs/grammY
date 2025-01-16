@@ -316,17 +316,7 @@ export class Bot<
         // handle updates sequentially (!)
         for (const update of updates) {
             this.lastTriedUpdateId = update.update_id;
-            try {
-                await this.handleUpdate(update);
-            } catch (err) {
-                // should always be true
-                if (err instanceof BotError) {
-                    await this.errorHandler(err);
-                } else {
-                    console.error("FATAL: grammY unable to handle:", err);
-                    throw err;
-                }
-            }
+            await this.handleUpdate(update);
         }
     }
 
@@ -367,7 +357,7 @@ a known bot info object.",
             await run(this.middleware(), ctx);
         } catch (err) {
             debugErr(`Error in middleware for update ${update.update_id}`);
-            throw new BotError<C>(err, ctx);
+            await this.errorHandler(new BotError<C>(err, ctx));
         }
     }
 
