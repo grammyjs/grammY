@@ -85,14 +85,14 @@ export type AzureAdapter = (context: {
         [key: string]: any;
     };
 }, request: { body?: unknown }) => ReqResHandler;
-export type AzureV4HttpRequest = {
+type AzureV4HttpRequest = {
     method: string;
     url: string;
     headers: any;
     query: URLSearchParams;
     body: any;
 }
-export type AzureV4InvocationContext = {
+type AzureV4InvocationContext = {
     invocationId: string;
     functionName: string;
 }
