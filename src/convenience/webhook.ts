@@ -63,10 +63,10 @@ type WebhookAdapters<C extends Context = Context> = {
 function createWebhookAdapters<C extends Context = Context>(
     adapters: Adapters,
 ): WebhookAdapters<C> {
-    const callbacks = {} as WebhookAdapters<C>;
+    const handlers = {} as WebhookAdapters<C>;
 
     for (const [name, handler] of Object.entries(adapters)) {
-        callbacks[name as AdapterNames] = (
+        handlers[name as AdapterNames] = (
             bot: Bot<C>,
             onTimeout?:
                 | WebhookOptions
@@ -86,7 +86,7 @@ function createWebhookAdapters<C extends Context = Context>(
         };
     }
 
-    return callbacks;
+    return handlers;
 }
 
 /**
