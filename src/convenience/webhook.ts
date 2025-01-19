@@ -80,7 +80,7 @@ function createWebhookAdapter<
         return webhookCallback(bot, adapter, timeout, ms, token);
     };
 }
-// TODO: add docs exmaples for each adpter?
+// TODO: add docs examples for each adapter?
 /**
  * Contains factories of callback function that you can pass to a web framework
  * (such as express) if you want to run your bot via webhooks. Use it like this:
