@@ -36,14 +36,14 @@ type Adapters = typeof adapters;
 type AdapterNames = keyof Adapters;
 type ResolveName<A extends FrameworkAdapter | AdapterNames> = A extends
     AdapterNames ? Adapters[A] : A;
-type AdapterSignature<A extends AdapterNames = AdapterNames> = (
+type AdapterSignature<A extends Adapters[AdapterNames]> = (
     ...args: Parameters<ResolveName<A>>
 ) => ReturnType<ResolveName<A>>["handlerReturn"] extends undefined
     ? Promise<void>
     : NonNullable<ReturnType<ResolveName<A>>["handlerReturn"]>;
 type WebhookAdapter<
     C extends Context = Context,
-    A extends AdapterNames = AdapterNames,
+    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
 > = {
     (
         bot: Bot<C>,
@@ -56,39 +56,31 @@ type WebhookAdapter<
         secretToken?: WebhookOptions["secretToken"],
     ): AdapterSignature<A>;
 };
-type WebhookAdapters<C extends Context = Context> = {
-    [A in AdapterNames]: WebhookAdapter<C, A>;
-};
 
-function createWebhookAdapters<C extends Context = Context>(
-    adapters: Adapters,
-): WebhookAdapters<C> {
-    const handlers = {} as WebhookAdapters<C>;
+function createWebhookAdapter<
+    C extends Context = Context,
+    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
+>(adapter: ResolveName<A>): WebhookAdapter<C, A> {
+    return (
+        bot: Bot<C>,
+        onTimeout?:
+            | WebhookOptions
+            | WebhookOptions["onTimeout"],
+        timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
+        secretToken?: WebhookOptions["secretToken"],
+    ) => {
+        const {
+            onTimeout: timeout = "throw",
+            timeoutMilliseconds: ms = 10_000,
+            secretToken: token,
+        } = typeof onTimeout === "object"
+            ? onTimeout
+            : { onTimeout, timeoutMilliseconds, secretToken };
 
-    for (const [name, handler] of Object.entries(adapters)) {
-        handlers[name as AdapterNames] = (
-            bot: Bot<C>,
-            onTimeout?:
-                | WebhookOptions
-                | WebhookOptions["onTimeout"],
-            timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
-            secretToken?: WebhookOptions["secretToken"],
-        ) => {
-            const {
-                onTimeout: timeout = "throw",
-                timeoutMilliseconds: ms = 10_000,
-                secretToken: token,
-            } = typeof onTimeout === "object"
-                ? onTimeout
-                : { onTimeout, timeoutMilliseconds, secretToken };
-
-            return webhookCallback(bot, handler, timeout, ms, token);
-        };
-    }
-
-    return handlers;
+        return webhookCallback(bot, adapter, timeout, ms, token);
+    };
 }
-
+// TODO: add docs exmaples for each adpter?
 /**
  * Contains factories of callback function that you can pass to a web framework
  * (such as express) if you want to run your bot via webhooks. Use it like this:
@@ -106,7 +98,27 @@ function createWebhookAdapters<C extends Context = Context>(
  * @param bot The bot for which to create a callback
  * @param webhookOptions Further options for the webhook setup
  */
-export const webhookAdapters = createWebhookAdapters(adapters);
+export const webhookAdapters = {
+    awsLambda: createWebhookAdapter(adapters.awsLambda),
+    awsLambdaAsync: createWebhookAdapter(adapters.awsLambdaAsync),
+    azure: createWebhookAdapter(adapters.azure),
+    bun: createWebhookAdapter(adapters.bun),
+    cloudflare: createWebhookAdapter(adapters.cloudflare),
+    cloudflareModule: createWebhookAdapter(adapters.cloudflareModule),
+    express: createWebhookAdapter(adapters.express),
+    fastify: createWebhookAdapter(adapters.fastify),
+    hono: createWebhookAdapter(adapters.hono),
+    http: createWebhookAdapter(adapters.http),
+    https: createWebhookAdapter(adapters.http),
+    koa: createWebhookAdapter(adapters.koa),
+    nextJs: createWebhookAdapter(adapters.nextJs),
+    nhttp: createWebhookAdapter(adapters.nhttp),
+    oak: createWebhookAdapter(adapters.oak),
+    serveHttp: createWebhookAdapter(adapters.serveHttp),
+    stdHttp: createWebhookAdapter(adapters.stdHttp),
+    sveltekit: createWebhookAdapter(adapters.sveltekit),
+    worktop: createWebhookAdapter(adapters.worktop),
+};
 
 /**
  * Creates a callback function that you can pass to a web framework (such as
