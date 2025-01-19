@@ -34,13 +34,10 @@ export interface WebhookOptions {
 
 type Adapters = typeof adapters;
 type AdapterNames = keyof Adapters;
-type ResolveName<A extends FrameworkAdapter | AdapterNames> = A extends
-    AdapterNames ? Adapters[A] : A;
-type AdapterSignature<A extends Adapters[AdapterNames]> = (
-    ...args: Parameters<ResolveName<A>>
-) => ReturnType<ResolveName<A>>["handlerReturn"] extends undefined
-    ? Promise<void>
-    : NonNullable<ReturnType<ResolveName<A>>["handlerReturn"]>;
+type Adapter<A extends Adapters[AdapterNames]> = (
+    ...args: Parameters<A>
+) => ReturnType<A>["handlerReturn"] extends undefined ? Promise<void>
+    : NonNullable<ReturnType<A>["handlerReturn"]>;
 type WebhookAdapter<
     C extends Context = Context,
     A extends Adapters[AdapterNames] = Adapters[AdapterNames],
@@ -48,19 +45,19 @@ type WebhookAdapter<
     (
         bot: Bot<C>,
         webhookOptions?: WebhookOptions,
-    ): AdapterSignature<A>;
+    ): Adapter<A>;
     (
         bot: Bot<C>,
         onTimeout?: WebhookOptions["onTimeout"],
         timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
         secretToken?: WebhookOptions["secretToken"],
-    ): AdapterSignature<A>;
+    ): Adapter<A>;
 };
 
 function createWebhookAdapter<
     C extends Context = Context,
     A extends Adapters[AdapterNames] = Adapters[AdapterNames],
->(adapter: ResolveName<A>): WebhookAdapter<C, A> {
+>(adapter: A): WebhookAdapter<C, A> {
     return (
         bot: Bot<C>,
         onTimeout?:
@@ -118,6 +115,7 @@ export const webhookAdapters = {
     stdHttp: createWebhookAdapter(adapters.stdHttp),
     sveltekit: createWebhookAdapter(adapters.sveltekit),
     worktop: createWebhookAdapter(adapters.worktop),
+    callback: createWebhookAdapter(adapters.callback),
 };
 
 /**
