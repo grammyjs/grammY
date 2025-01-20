@@ -25,7 +25,7 @@ const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
 export interface WebhookOptions {
     /** An optional strategy to handle timeouts (default: 'throw') */
-    onTimeout?: "throw" | "return" | ((...args: any[]) => unknown);
+    onTimeout?: "throw" | "ignore" | ((...args: any[]) => unknown);
     /** An optional number of timeout milliseconds (default: 10_000) */
     timeoutMilliseconds?: number;
     /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
@@ -34,8 +34,110 @@ export interface WebhookOptions {
 
 type Adapters = typeof adapters;
 type AdapterNames = keyof Adapters;
-type ResolveName<A extends FrameworkAdapter | AdapterNames> = A extends
-    AdapterNames ? Adapters[A] : A;
+type Adapter<A extends Adapters[AdapterNames]> = (
+    ...args: Parameters<A>
+) => ReturnType<A>["handlerReturn"] extends undefined ? Promise<void>
+    : NonNullable<ReturnType<A>["handlerReturn"]>;
+type WebhookAdapter<
+    C extends Context = Context,
+    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
+> = {
+    (
+        bot: Bot<C>,
+        webhookOptions?: WebhookOptions,
+    ): Adapter<A>;
+};
+
+function createWebhookAdapter<
+    C extends Context = Context,
+    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
+>(adapter: A): WebhookAdapter<C, A> {
+    return (
+        bot: Bot<C>,
+        options?: WebhookOptions,
+    ) => webhookCallback(bot, adapter, options);
+}
+
+// TODO: add docs examples for each adapter?
+/**
+ * Contains factories of callback function that you can pass to a web framework
+ * (such as express) if you want to run your bot via webhooks. Use it like this:
+ * ```ts
+ * const app = express() // or whatever you're using
+ * const bot = new Bot('<token>')
+ *
+ * app.use(webhookAdapters.express(bot))
+ * ```
+ *
+ * Confer the grammY
+ * [documentation](https://grammy.dev/guide/deployment-types) to read more
+ * about how to run your bot with webhooks.
+ *
+ * @param bot The bot for which to create a callback
+ * @param webhookOptions Further options for the webhook setup
+ */
+export const webhookAdapters = {
+    get awsLambda() {
+        return createWebhookAdapter(adapters.awsLambda);
+    },
+    get awsLambdaAsync() {
+        return createWebhookAdapter(adapters.awsLambdaAsync);
+    },
+    get azure() {
+        return createWebhookAdapter(adapters.azure);
+    },
+    get bun() {
+        return createWebhookAdapter(adapters.bun);
+    },
+    get cloudflare() {
+        return createWebhookAdapter(adapters.cloudflare);
+    },
+    get cloudflareModule() {
+        return createWebhookAdapter(adapters.cloudflareModule);
+    },
+    get express() {
+        return createWebhookAdapter(adapters.express);
+    },
+    get fastify() {
+        return createWebhookAdapter(adapters.fastify);
+    },
+    get hono() {
+        return createWebhookAdapter(adapters.hono);
+    },
+    get http() {
+        return createWebhookAdapter(adapters.http);
+    },
+    get https() {
+        return createWebhookAdapter(adapters.http);
+    },
+    get koa() {
+        return createWebhookAdapter(adapters.koa);
+    },
+    get nextJs() {
+        return createWebhookAdapter(adapters.nextJs);
+    },
+    get nhttp() {
+        return createWebhookAdapter(adapters.nhttp);
+    },
+    get oak() {
+        return createWebhookAdapter(adapters.oak);
+    },
+    get serveHttp() {
+        return createWebhookAdapter(adapters.serveHttp);
+    },
+    get stdHttp() {
+        return createWebhookAdapter(adapters.stdHttp);
+    },
+    get sveltekit() {
+        return createWebhookAdapter(adapters.sveltekit);
+    },
+    get worktop() {
+        return createWebhookAdapter(adapters.worktop);
+    },
+    get callback() {
+        return createWebhookAdapter(adapters.callback);
+    },
+};
 
 /**
  * Creates a callback function that you can pass to a web framework (such as
@@ -55,41 +157,17 @@ type ResolveName<A extends FrameworkAdapter | AdapterNames> = A extends
  * @param adapter An optional string identifying the framework (default: 'express')
  * @param webhookOptions Further options for the webhook setup
  */
-export function webhookCallback<
-    C extends Context = Context,
-    A extends FrameworkAdapter | AdapterNames = FrameworkAdapter | AdapterNames,
->(
+function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter: A,
-    webhookOptions?: WebhookOptions,
-): (
-    ...args: Parameters<ResolveName<A>>
-) => ReturnType<ResolveName<A>>["handlerReturn"] extends undefined
-    ? Promise<void>
-    : NonNullable<ReturnType<ResolveName<A>>["handlerReturn"]>;
-export function webhookCallback<
-    C extends Context = Context,
-    A extends FrameworkAdapter | AdapterNames = FrameworkAdapter | AdapterNames,
->(
-    bot: Bot<C>,
-    adapter: A,
-    onTimeout?: WebhookOptions["onTimeout"],
-    timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
-    secretToken?: WebhookOptions["secretToken"],
-): (
-    ...args: Parameters<ResolveName<A>>
-) => ReturnType<ResolveName<A>>["handlerReturn"] extends undefined
-    ? Promise<void>
-    : NonNullable<ReturnType<ResolveName<A>>["handlerReturn"]>;
-export function webhookCallback<C extends Context = Context>(
-    bot: Bot<C>,
-    adapter: FrameworkAdapter | AdapterNames,
-    onTimeout?:
-        | WebhookOptions
-        | WebhookOptions["onTimeout"],
-    timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
-    secretToken?: WebhookOptions["secretToken"],
+    adapter: FrameworkAdapter,
+    options?: WebhookOptions,
 ) {
+    const {
+        onTimeout = "throw",
+        timeoutMilliseconds = 10_000,
+        secretToken,
+    } = options ?? {};
+
     if (bot.isRunning()) {
         throw new Error(
             "Bot is already running via long polling, the webhook setup won't receive any updates!",
@@ -101,26 +179,18 @@ export function webhookCallback<C extends Context = Context>(
             );
         };
     }
-    const {
-        onTimeout: timeout = "throw",
-        timeoutMilliseconds: ms = 10_000,
-        secretToken: token,
-    } = typeof onTimeout === "object"
-        ? onTimeout
-        : { onTimeout, timeoutMilliseconds, secretToken };
+
     let initialized = false;
-    const server: FrameworkAdapter = typeof adapter === "string"
-        ? adapters[adapter]
-        : adapter;
+
     return async (...args: any[]) => {
         const { update, respond, unauthorized, end, handlerReturn, header } =
-            server(...args);
+            adapter(...args);
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
             initialized = true;
         }
-        if (header !== token) {
+        if (header !== secretToken) {
             await unauthorized();
             // TODO: investigate deno bug that happens when this console logging is removed
             console.log(handlerReturn);
@@ -135,8 +205,10 @@ export function webhookCallback<C extends Context = Context>(
         };
         await timeoutIfNecessary(
             bot.handleUpdate(await update, webhookReplyEnvelope),
-            typeof timeout === "function" ? () => timeout(...args) : timeout,
-            ms,
+            typeof onTimeout === "function"
+                ? () => onTimeout(...args)
+                : onTimeout,
+            timeoutMilliseconds,
         );
         if (!usedWebhookReply) end?.();
         return handlerReturn;
@@ -145,7 +217,7 @@ export function webhookCallback<C extends Context = Context>(
 
 function timeoutIfNecessary(
     task: Promise<void>,
-    onTimeout: "throw" | "return" | (() => unknown),
+    onTimeout: "throw" | "ignore" | (() => unknown),
     timeout: number,
 ): Promise<void> {
     if (timeout === Infinity) return task;

@@ -138,12 +138,8 @@ export type HonoAdapter = (c: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
     };
-    body: (
-        data: string | ArrayBuffer | ReadableStream | null,
-        // deno-lint-ignore no-explicit-any
-        arg?: any,
-        headers?: Record<string, string | string[]>,
-    ) => Response;
+    body(data: string): Response;
+    body(data: null, status: 204): Response;
     // deno-lint-ignore no-explicit-any
     status: (status: any) => void;
     json: (json: string) => Response;
@@ -390,14 +386,14 @@ const hono: HonoAdapter = (c) => {
         update: c.req.json(),
         header: c.req.header(SECRET_HEADER),
         end: () => {
-            resolveResponse(c.body(null));
+            resolveResponse(c.body(""));
         },
         respond: (json) => {
             resolveResponse(c.json(json));
         },
         unauthorized: () => {
             c.status(401);
-            resolveResponse(c.body(null));
+            resolveResponse(c.body(""));
         },
         handlerReturn: new Promise<Response>((resolve) => {
             resolveResponse = resolve;
@@ -545,23 +541,23 @@ const worktop: WorktopAdapter = (req, res) => ({
 
 // Please open a pull request if you want to add another adapter
 export const adapters = {
-    "aws-lambda": awsLambda,
-    "aws-lambda-async": awsLambdaAsync,
+    awsLambda,
+    awsLambdaAsync,
     azure,
     bun,
     cloudflare,
-    "cloudflare-mod": cloudflareModule,
+    cloudflareModule,
     express,
     fastify,
     hono,
     http,
     https: http,
     koa,
-    "next-js": nextJs,
+    nextJs,
     nhttp,
     oak,
     serveHttp,
-    "std/http": stdHttp,
+    stdHttp,
     sveltekit,
     worktop,
 };
