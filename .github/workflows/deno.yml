@@ -10,9 +10,7 @@ name: grammY
 
 on:
     push:
-        branches: [main]
-    pull_request:
-        branches: [main]
+        branches: ["*"]
 
 jobs:
     format-and-lint:
