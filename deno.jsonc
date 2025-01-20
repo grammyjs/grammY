@@ -6,7 +6,7 @@
     },
     "tasks": {
         "check": "deno check --all src/mod.ts",
-        "test": "deno test --seed=123456 test/",
+        "test": "deno test --allow-net --seed=123456 test/",
         "ok": "deno fmt --check && deno lint && deno task test && deno task check",
         "fix": "deno fmt && deno lint --fix",
         // TODO: bring back coverage reports

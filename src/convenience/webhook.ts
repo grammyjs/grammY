@@ -6,7 +6,9 @@ import type { WebhookReplyEnvelope } from "../core/client.ts";
 import type { Update } from "../types.ts";
 import {
     adapters as nativeAdapters,
+    BAD_REQUEST_ERROR,
     type FrameworkAdapter,
+    WRONG_TOKEN_ERROR,
 } from "./frameworks.ts";
 const debugErr = createDebug("grammy:error");
 
@@ -14,12 +16,14 @@ const callbackAdapter: FrameworkAdapter = (
     update: Update,
     callback: (json: string) => unknown,
     header: string,
-    unauthorized = () => callback('"unauthorized"'),
+    unauthorized = () => callback(WRONG_TOKEN_ERROR),
+    badRequest = () => callback(BAD_REQUEST_ERROR),
 ) => ({
     update: Promise.resolve(update),
     respond: callback,
     header,
     unauthorized,
+    badRequest,
 });
 const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
@@ -183,8 +187,15 @@ function webhookCallback<C extends Context = Context>(
     let initialized = false;
 
     return async (...args: any[]) => {
-        const { update, respond, unauthorized, end, handlerReturn, header } =
-            adapter(...args);
+        const {
+            update,
+            respond,
+            unauthorized,
+            badRequest,
+            end,
+            handlerReturn,
+            header,
+        } = adapter(...args);
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
@@ -192,8 +203,11 @@ function webhookCallback<C extends Context = Context>(
         }
         if (header !== secretToken) {
             await unauthorized();
-            // TODO: investigate deno bug that happens when this console logging is removed
-            console.log(handlerReturn);
+            return handlerReturn;
+        }
+        const updateData = await update;
+        if (!updateData?.update_id) {
+            await badRequest();
             return handlerReturn;
         }
         let usedWebhookReply = false;
@@ -204,7 +218,7 @@ function webhookCallback<C extends Context = Context>(
             },
         };
         await timeoutIfNecessary(
-            bot.handleUpdate(await update, webhookReplyEnvelope),
+            bot.handleUpdate(updateData, webhookReplyEnvelope),
             typeof onTimeout === "function"
                 ? () => onTimeout(...args)
                 : onTimeout,
