@@ -43,10 +43,10 @@ describe("webhook", () => {
     });
 
     it("Cloudflare Workers should be compatible with grammY adapter", async () => {
-        const req = {
-            json: () => ({}),
-            headers: { get: () => "" },
-        } as unknown as Request;
+        const req = new Request("https://grammy.dev", {
+            method: "POST",
+            body: JSON.stringify({ update_id: 0 }),
+        });
         const handler = webhookAdapters.cloudflareModule(bot);
         const _res: Response = await handler(req);
     });
@@ -98,7 +98,12 @@ describe("webhook", () => {
             headers: {},
             body: { update: {} },
         } as unknown as NextApiRequest;
-        const res = { end: () => {} } as NextApiResponse;
+        const res = {
+            end: () => {},
+            status: (_code) => ({
+                send: (_data) => {},
+            }),
+        } as NextApiResponse;
         const handler = webhookAdapters.nextJs(bot);
         await handler(req, res);
     });
@@ -151,16 +156,43 @@ describe("webhook", () => {
         });
 
         const handler = webhookAdapters.stdHttp(bot);
-        const fakeReq = new Request("https://fake-api.com", {
-            method: "POST",
-            body: JSON.stringify({
-                update_id: 9696,
-                message: {},
-            }),
-        });
 
-        await handler(fakeReq);
+        await handler(
+            new Request("https://fake-api.com", {
+                method: "POST",
+                body: JSON.stringify({ update_id: 9696, message: {} }),
+            }),
+        );
 
         assert(called);
+    });
+
+    describe("server webhook errors", () => {
+        it("should response with 401 unauthorized status", async () => {
+            const handler = webhookAdapters.stdHttp(bot, {
+                secretToken: "wrong-token",
+            });
+
+            const res = await handler(
+                new Request("https://fake-api.com", {
+                    method: "POST",
+                    body: JSON.stringify({ update_id: 9696 }),
+                }),
+            );
+
+            assert(res.status === 401);
+        });
+
+        it("should response with 400 bad request status", async () => {
+            const handler = webhookAdapters.stdHttp(bot);
+
+            const res = await handler(
+                new Request("https://fake-api.com", {
+                    method: "POST",
+                }),
+            );
+
+            assert(res.status === 400);
+        });
     });
 });
