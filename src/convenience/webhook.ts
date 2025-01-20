@@ -46,12 +46,6 @@ type WebhookAdapter<
         bot: Bot<C>,
         webhookOptions?: WebhookOptions,
     ): Adapter<A>;
-    (
-        bot: Bot<C>,
-        onTimeout?: WebhookOptions["onTimeout"],
-        timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
-        secretToken?: WebhookOptions["secretToken"],
-    ): Adapter<A>;
 };
 
 function createWebhookAdapter<
@@ -60,23 +54,10 @@ function createWebhookAdapter<
 >(adapter: A): WebhookAdapter<C, A> {
     return (
         bot: Bot<C>,
-        onTimeout?:
-            | WebhookOptions
-            | WebhookOptions["onTimeout"],
-        timeoutMilliseconds?: WebhookOptions["timeoutMilliseconds"],
-        secretToken?: WebhookOptions["secretToken"],
-    ) => {
-        const {
-            onTimeout: timeout = "throw",
-            timeoutMilliseconds: ms = 10_000,
-            secretToken: token,
-        } = typeof onTimeout === "object"
-            ? onTimeout
-            : { onTimeout, timeoutMilliseconds, secretToken };
-
-        return webhookCallback(bot, adapter, timeout, ms, token);
-    };
+        options?: WebhookOptions,
+    ) => webhookCallback(bot, adapter, options);
 }
+
 // TODO: add docs examples for each adapter?
 /**
  * Contains factories of callback function that you can pass to a web framework
@@ -178,14 +159,17 @@ export const webhookAdapters = {
  */
 function webhookCallback<C extends Context = Context>(
     bot: Bot<C>,
-    adapter: FrameworkAdapter | AdapterNames,
-    onTimeout: Exclude<WebhookOptions["onTimeout"], undefined>,
-    timeoutMilliseconds: Exclude<
-        WebhookOptions["timeoutMilliseconds"],
-        undefined
-    >,
-    secretToken?: WebhookOptions["secretToken"],
+    adapter: FrameworkAdapter,
+    options?: WebhookOptions,
 ) {
+    const {
+        onTimeout = "throw",
+        timeoutMilliseconds = 10_000,
+        secretToken,
+    } = options ?? {};
+
+    console.log(onTimeout, timeoutMilliseconds, secretToken);
+
     if (bot.isRunning()) {
         throw new Error(
             "Bot is already running via long polling, the webhook setup won't receive any updates!",
@@ -199,12 +183,10 @@ function webhookCallback<C extends Context = Context>(
     }
 
     let initialized = false;
-    const server: FrameworkAdapter = typeof adapter === "string"
-        ? adapters[adapter]
-        : adapter;
+
     return async (...args: any[]) => {
         const { update, respond, unauthorized, end, handlerReturn, header } =
-            server(...args);
+            adapter(...args);
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
