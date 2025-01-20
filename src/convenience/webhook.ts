@@ -168,8 +168,6 @@ function webhookCallback<C extends Context = Context>(
         secretToken,
     } = options ?? {};
 
-    console.log(onTimeout, timeoutMilliseconds, secretToken);
-
     if (bot.isRunning()) {
         throw new Error(
             "Bot is already running via long polling, the webhook setup won't receive any updates!",
