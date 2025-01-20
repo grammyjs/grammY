@@ -96,26 +96,66 @@ function createWebhookAdapter<
  * @param webhookOptions Further options for the webhook setup
  */
 export const webhookAdapters = {
-    awsLambda: createWebhookAdapter(adapters.awsLambda),
-    awsLambdaAsync: createWebhookAdapter(adapters.awsLambdaAsync),
-    azure: createWebhookAdapter(adapters.azure),
-    bun: createWebhookAdapter(adapters.bun),
-    cloudflare: createWebhookAdapter(adapters.cloudflare),
-    cloudflareModule: createWebhookAdapter(adapters.cloudflareModule),
-    express: createWebhookAdapter(adapters.express),
-    fastify: createWebhookAdapter(adapters.fastify),
-    hono: createWebhookAdapter(adapters.hono),
-    http: createWebhookAdapter(adapters.http),
-    https: createWebhookAdapter(adapters.http),
-    koa: createWebhookAdapter(adapters.koa),
-    nextJs: createWebhookAdapter(adapters.nextJs),
-    nhttp: createWebhookAdapter(adapters.nhttp),
-    oak: createWebhookAdapter(adapters.oak),
-    serveHttp: createWebhookAdapter(adapters.serveHttp),
-    stdHttp: createWebhookAdapter(adapters.stdHttp),
-    sveltekit: createWebhookAdapter(adapters.sveltekit),
-    worktop: createWebhookAdapter(adapters.worktop),
-    callback: createWebhookAdapter(adapters.callback),
+    get awsLambda() {
+        return createWebhookAdapter(adapters.awsLambda);
+    },
+    get awsLambdaAsync() {
+        return createWebhookAdapter(adapters.awsLambdaAsync);
+    },
+    get azure() {
+        return createWebhookAdapter(adapters.azure);
+    },
+    get bun() {
+        return createWebhookAdapter(adapters.bun);
+    },
+    get cloudflare() {
+        return createWebhookAdapter(adapters.cloudflare);
+    },
+    get cloudflareModule() {
+        return createWebhookAdapter(adapters.cloudflareModule);
+    },
+    get express() {
+        return createWebhookAdapter(adapters.express);
+    },
+    get fastify() {
+        return createWebhookAdapter(adapters.fastify);
+    },
+    get hono() {
+        return createWebhookAdapter(adapters.hono);
+    },
+    get http() {
+        return createWebhookAdapter(adapters.http);
+    },
+    get https() {
+        return createWebhookAdapter(adapters.http);
+    },
+    get koa() {
+        return createWebhookAdapter(adapters.koa);
+    },
+    get nextJs() {
+        return createWebhookAdapter(adapters.nextJs);
+    },
+    get nhttp() {
+        return createWebhookAdapter(adapters.nhttp);
+    },
+    get oak() {
+        return createWebhookAdapter(adapters.oak);
+    },
+    get serveHttp() {
+        return createWebhookAdapter(adapters.serveHttp);
+    },
+    get stdHttp() {
+        return createWebhookAdapter(adapters.stdHttp);
+    },
+    get sveltekit() {
+        return createWebhookAdapter(adapters.sveltekit);
+    },
+    get worktop() {
+        return createWebhookAdapter(adapters.worktop);
+    },
+    get callback() {
+        return createWebhookAdapter(adapters.callback);
+    },
 };
 
 /**
