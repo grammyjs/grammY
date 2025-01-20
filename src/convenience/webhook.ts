@@ -8,11 +8,13 @@ import {
     adapters as nativeAdapters,
     BAD_REQUEST_ERROR,
     type FrameworkAdapter,
+    type ReqResHandler,
     WRONG_TOKEN_ERROR,
 } from "./frameworks.ts";
 const debugErr = createDebug("grammy:error");
 
-const callbackAdapter: FrameworkAdapter = (
+const callbackAdapter: FrameworkAdapter = () =>
+(
     update: Update,
     callback: (json: string) => unknown,
     header: string,
@@ -39,27 +41,26 @@ export interface WebhookOptions {
 type Adapters = typeof adapters;
 type AdapterNames = keyof Adapters;
 type Adapter<A extends Adapters[AdapterNames]> = (
-    ...args: Parameters<A>
-) => ReturnType<A>["handlerReturn"] extends undefined ? Promise<void>
-    : NonNullable<ReturnType<A>["handlerReturn"]>;
-type WebhookAdapter<
-    C extends Context = Context,
-    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
-> = {
-    (
-        bot: Bot<C>,
-        webhookOptions?: WebhookOptions,
-    ): Adapter<A>;
-};
+    options: Parameters<A>[0],
+) => (
+    ...args: Parameters<ReturnType<A>>
+) => ReturnType<ReturnType<A>>["handlerReturn"] extends undefined
+    ? Promise<void>
+    : NonNullable<ReturnType<ReturnType<A>>["handlerReturn"]>;
 
 function createWebhookAdapter<
     C extends Context = Context,
     A extends Adapters[AdapterNames] = Adapters[AdapterNames],
->(adapter: A): WebhookAdapter<C, A> {
+>(adapter: A): {
+    (
+        bot: Bot<C>,
+        webhookOptions?: Parameters<A>[0],
+    ): ReturnType<Adapter<A>>;
+} {
     return (
         bot: Bot<C>,
-        options?: WebhookOptions,
-    ) => webhookCallback(bot, adapter, options);
+        webhookOptions?: Parameters<A>[0],
+    ) => webhookCallback(bot, adapter, webhookOptions);
 }
 
 // TODO: add docs examples for each adapter?
@@ -158,20 +159,17 @@ export const webhookAdapters = {
  * about how to run your bot with webhooks.
  *
  * @param bot The bot for which to create a callback
- * @param adapter An optional string identifying the framework (default: 'express')
- * @param webhookOptions Further options for the webhook setup
+ * @param adapter Builder identifying the framework to use
+ * @param webhookOptions Further options for the webhook and adapter setup
  */
-function webhookCallback<C extends Context = Context>(
+function webhookCallback<
+    C extends Context = Context,
+    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
+>(
     bot: Bot<C>,
-    adapter: FrameworkAdapter,
+    adapter: A,
     options?: WebhookOptions,
 ) {
-    const {
-        onTimeout = "throw",
-        timeoutMilliseconds = 10_000,
-        secretToken,
-    } = options ?? {};
-
     if (bot.isRunning()) {
         throw new Error(
             "Bot is already running via long polling, the webhook setup won't receive any updates!",
@@ -184,6 +182,13 @@ function webhookCallback<C extends Context = Context>(
         };
     }
 
+    const {
+        onTimeout = "throw",
+        timeoutMilliseconds = 10_000,
+        secretToken,
+    } = options ?? {};
+
+    const handler: (...args: any[]) => ReqResHandler<any> = adapter(options);
     let initialized = false;
 
     return async (...args: any[]) => {
@@ -195,7 +200,13 @@ function webhookCallback<C extends Context = Context>(
             end,
             handlerReturn,
             header,
-        } = adapter(...args);
+            customCallback,
+        } = handler(...args);
+
+        if (customCallback) {
+            const result = await customCallback();
+            if (result) return result;
+        }
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
