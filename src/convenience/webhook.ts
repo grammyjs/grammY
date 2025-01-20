@@ -206,7 +206,7 @@ function webhookCallback<C extends Context = Context>(
             return handlerReturn;
         }
         const updateData = await update;
-        if (!updateData?.update_id) {
+        if (updateData?.update_id === undefined || updateData.update_id <= 0) {
             await badRequest();
             return handlerReturn;
         }

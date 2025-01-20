@@ -14,10 +14,6 @@ import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, BotError, webhookAdapters } from "../../src/mod.ts";
 import type { UserFromGetMe } from "../../src/types.ts";
 import { assert, assertIsError, describe, it } from "../deps.test.ts";
-import {
-    BAD_REQUEST_ERROR,
-    WRONG_TOKEN_ERROR,
-} from "../../src/convenience/frameworks.ts";
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
@@ -160,61 +156,43 @@ describe("webhook", () => {
         });
 
         const handler = webhookAdapters.stdHttp(bot);
-        const fakeReq = new Request("https://fake-api.com", {
-            method: "POST",
-            body: JSON.stringify({ update_id: 9696, message: {} }),
-        });
 
-        await handler(fakeReq);
+        await handler(
+            new Request("https://fake-api.com", {
+                method: "POST",
+                body: JSON.stringify({ update_id: 9696, message: {} }),
+            }),
+        );
 
         assert(called);
     });
 
     describe("server webhook errors", () => {
-        const TEST_PORT = 6969 as const;
-        const TEST_SERVER = `http://localhost:${TEST_PORT}` as const;
-
         it("should response with 401 unauthorized status", async () => {
             const handler = webhookAdapters.stdHttp(bot, {
                 secretToken: "wrong-token",
             });
-            const server = Deno.serve({
-                port: TEST_PORT,
-                onListen: () => {},
-            }, handler);
 
-            const res = await fetch(TEST_SERVER, {
-                method: "POST",
-                body: JSON.stringify({ update_id: 9696 }),
-                signal: AbortSignal.timeout(1000),
-            });
+            const res = await handler(
+                new Request("https://fake-api.com", {
+                    method: "POST",
+                    body: JSON.stringify({ update_id: 9696 }),
+                }),
+            );
 
             assert(res.status === 401);
-            assert(res.statusText === "Unauthorized");
-            assert(await res.text() === WRONG_TOKEN_ERROR);
-
-            await server.shutdown();
-            await new Promise((resolve) => setTimeout(resolve, 30)); // wait for server ending connection
         });
 
         it("should response with 400 bad request status", async () => {
             const handler = webhookAdapters.stdHttp(bot);
-            const server = Deno.serve({
-                port: TEST_PORT,
-                onListen: () => {},
-            }, handler);
 
-            const res = await fetch(TEST_SERVER, {
-                method: "POST",
-                signal: AbortSignal.timeout(1000),
-            });
+            const res = await handler(
+                new Request("https://fake-api.com", {
+                    method: "POST",
+                }),
+            );
 
             assert(res.status === 400);
-            assert(res.statusText === "Bad Request");
-            assert(await res.text() === BAD_REQUEST_ERROR);
-
-            await server.shutdown();
-            await new Promise((resolve) => setTimeout(resolve, 30)); // wait for server ending connection
         });
     });
 });

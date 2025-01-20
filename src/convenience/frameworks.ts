@@ -243,7 +243,8 @@ export type WorktopAdapter = (req: {
 
 /** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
-    update: Promise.resolve(JSON.parse(event.body ?? "{}")).catch(empty),
+    // TODO: add safe parse workaround
+    update: JSON.parse(event.body ?? "{}"),
     header: event.headers[SECRET_HEADER],
     end: () => callback(null, { statusCode: 200 }),
     respond: (json) =>
@@ -262,7 +263,8 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
     let resolveResponse: (response: any) => void;
 
     return {
-        update: Promise.resolve(JSON.parse(event.body ?? "{}")).catch(empty),
+        // TODO: add safe parse workaround
+        update: JSON.parse(event.body ?? "{}"),
         header: event.headers[SECRET_HEADER],
         end: () => resolveResponse({ statusCode: 200 }),
         respond: (json) =>
