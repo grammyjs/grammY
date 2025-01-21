@@ -27,6 +27,11 @@ function safeJsonParse(value: string, fallback = {} as any): any {
     }
 }
 
+interface PathOption {
+    /** An optional path to match against the request URL. */
+    path?: string;
+}
+
 /**
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
@@ -273,7 +278,7 @@ export type ServeHttpAdapter = (
 ) => ReqResHandler;
 
 export type StdHttpAdapter = (
-    options?: WebhookOptions & { path?: string },
+    options?: WebhookOptions & PathOption,
 ) => (
     req: Request,
 ) => ReqResHandler<Response>;

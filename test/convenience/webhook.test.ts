@@ -194,5 +194,19 @@ describe("webhook", () => {
 
             assert(res.status === 400);
         });
+
+        it("should response with 404 not found status", async () => {
+            const handler = webhookAdapters.stdHttp(bot, {
+                path: "/real-path",
+            });
+
+            const res = await handler(
+                new Request("https://fake-api.com/wrong-path", {
+                    method: "POST",
+                }),
+            );
+
+            assert(res.status === 404);
+        });
     });
 });
