@@ -57,13 +57,7 @@ export interface ReqResHandler<T = void> {
     handlerReturn?: Promise<T>;
 }
 
-/**
- * Middleware for a web framework. Creates a request-response handler for a
- * request. The handler will be used to integrate with the compatible framework.
- */
-// deno-lint-ignore no-explicit-any
-export type FrameworkAdapter = (...args: any[]) => ReqResHandler<any>;
-
+/** AWS lambda serverless functions */
 export type LambdaAdapter = (
     event: {
         body?: string;
@@ -75,173 +69,6 @@ export type LambdaAdapter = (
         arg1: Record<string, unknown>,
     ) => Promise<unknown>,
 ) => ReqResHandler;
-
-export type LambdaAsyncAdapter = (
-    event: {
-        body?: string;
-        headers: Record<string, string | undefined>;
-    },
-    _context: unknown,
-) => ReqResHandler;
-
-export type AzureAdapter = (request: {
-    body?: unknown;
-}, context: {
-    res?: {
-        status: number;
-        body: string;
-        headers?: Record<string, string>;
-        set?: (key: string, value: string) => void;
-        send?: {
-            (body: unknown): void;
-            (status: number, body: unknown): void;
-        };
-    };
-}) => ReqResHandler;
-
-export type BunAdapter = (request: {
-    headers: Headers;
-    json: () => Promise<Update>;
-}) => ReqResHandler<Response>;
-
-export type CloudflareAdapter = (event: {
-    request: Request;
-    respondWith: (response: Promise<Response>) => void;
-}) => ReqResHandler;
-
-export type CloudflareModuleAdapter = (
-    request: Request,
-) => ReqResHandler<Response>;
-
-export type ExpressAdapter = (req: {
-    body: Update;
-    header: (header: string) => string | undefined;
-}, res: {
-    end: (cb?: () => void) => typeof res;
-    set: (field: string, value?: string | string[]) => typeof res;
-    send: (json: string) => typeof res;
-    status: (code: number) => typeof res;
-}) => ReqResHandler;
-
-export type FastifyAdapter = (request: {
-    body: unknown;
-    // deno-lint-ignore no-explicit-any
-    headers: any;
-}, reply: {
-    status: (code: number) => typeof reply;
-    headers: (headers: Record<string, string>) => typeof reply;
-    code: (code: number) => typeof reply;
-    send: {
-        (): typeof reply;
-        (json: string): typeof reply;
-    };
-}) => ReqResHandler;
-
-export type HonoAdapter = (c: {
-    req: {
-        json: <T>() => Promise<T>;
-        header: (header: string) => string | undefined;
-    };
-    body(data: string): Response;
-    body(data: null, status: 204): Response;
-    // deno-lint-ignore no-explicit-any
-    status: (status: any) => void;
-    json: (json: string) => Response;
-}) => ReqResHandler<Response>;
-
-export type HttpAdapter = (req: {
-    headers: Record<string, string | string[] | undefined>;
-    on: (event: string, listener: (chunk: unknown) => void) => typeof req;
-    once: (event: string, listener: () => void) => typeof req;
-}, res: {
-    writeHead: {
-        (status: number): typeof res;
-        (status: number, headers: Record<string, string>): typeof res;
-    };
-    end: (json?: string) => void;
-}) => ReqResHandler;
-
-export type KoaAdapter = (ctx: {
-    get: (header: string) => string | undefined;
-    set: (key: string, value: string) => void;
-    status: number;
-    body: string;
-    request: {
-        body?: unknown;
-    };
-    response: {
-        body: unknown;
-        status: number;
-    };
-}) => ReqResHandler;
-
-export type NextAdapter = (req: {
-    body: Update;
-    headers: Record<string, string | string[] | undefined>;
-}, res: {
-    end: (cb?: () => void) => typeof res;
-    status: (code: number) => typeof res;
-    // deno-lint-ignore no-explicit-any
-    json: (json: string) => any;
-    // deno-lint-ignore no-explicit-any
-    send: (json: string) => any;
-}) => ReqResHandler;
-
-export type NHttpAdapter = (rev: {
-    body: unknown;
-    headers: {
-        get: (header: string) => string | null;
-    };
-    response: {
-        sendStatus: (status: number) => void;
-        status: (status: number) => {
-            send: (json: string) => void;
-        };
-    };
-}) => ReqResHandler;
-
-export type OakAdapter = (ctx: {
-    request: {
-        body: {
-            json: () => Promise<Update>;
-        };
-        headers: {
-            get: (header: string) => string | null;
-        };
-    };
-    response: {
-        status: number;
-        type: string | undefined;
-        body: unknown;
-    };
-}) => ReqResHandler;
-
-export type ServeHttpAdapter = (
-    requestEvent: {
-        request: Request;
-        respondWith: (response: Response) => void;
-    },
-) => ReqResHandler;
-
-export type StdHttpAdapter = (
-    req: Request,
-) => ReqResHandler<Response>;
-
-export type SveltekitAdapter = (
-    { request }: { request: Request },
-) => ReqResHandler<unknown>;
-
-export type WorktopAdapter = (req: {
-    json: () => Promise<Update>;
-    headers: {
-        get: (header: string) => string | null;
-    };
-}, res: {
-    end: (data: BodyInit | null) => void;
-    send: (status: number, json: string) => void;
-}) => ReqResHandler;
-
-/** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
     // TODO: add safe parse workaround
     update: JSON.parse(event.body ?? "{}"),
@@ -258,6 +85,13 @@ const awsLambda: LambdaAdapter = (event, _context, callback) => ({
 });
 
 /** AWS lambda async/await serverless functions */
+export type LambdaAsyncAdapter = (
+    event: {
+        body?: string;
+        headers: Record<string, string | undefined>;
+    },
+    _context: unknown,
+) => ReqResHandler;
 const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
     // deno-lint-ignore no-explicit-any
     let resolveResponse: (response: any) => void;
@@ -282,6 +116,20 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
 };
 
 /** Azure Functions */
+export type AzureAdapter = (request: {
+    body?: unknown;
+}, context: {
+    res?: {
+        status: number;
+        body: string;
+        headers?: Record<string, string>;
+        set?: (key: string, value: string) => void;
+        send?: {
+            (body: unknown): void;
+            (status: number, body: unknown): void;
+        };
+    };
+}) => ReqResHandler;
 const azure: AzureAdapter = (request, context) => ({
     update: Promise.resolve(request.body as Update),
     header: context.res?.headers?.[SECRET_HEADER],
@@ -302,6 +150,10 @@ const azure: AzureAdapter = (request, context) => ({
 });
 
 /** Bun.serve */
+export type BunAdapter = (request: {
+    headers: Headers;
+    json: () => Promise<Update>;
+}) => ReqResHandler<Response>;
 const bun: BunAdapter = (request) => {
     let resolveResponse: (response: Response) => void;
     return {
@@ -326,6 +178,11 @@ const bun: BunAdapter = (request) => {
 };
 
 /** Native CloudFlare workers (service worker) */
+export type CloudflareAdapter = (event: {
+    request: Request;
+    respondWith: (response: Promise<Response>) => void;
+}) => ReqResHandler;
+
 const cloudflare: CloudflareAdapter = (event) => {
     let resolveResponse: (response: Response) => void;
     event.respondWith(
@@ -352,6 +209,9 @@ const cloudflare: CloudflareAdapter = (event) => {
 };
 
 /** Native CloudFlare workers (module worker) */
+export type CloudflareModuleAdapter = (
+    request: Request,
+) => ReqResHandler<Response>;
 const cloudflareModule: CloudflareModuleAdapter = (request) => {
     let resolveResponse: (res: Response) => void;
     return {
@@ -376,6 +236,15 @@ const cloudflareModule: CloudflareModuleAdapter = (request) => {
 };
 
 /** express web framework */
+export type ExpressAdapter = (req: {
+    body: Update;
+    header: (header: string) => string | undefined;
+}, res: {
+    end: (cb?: () => void) => typeof res;
+    set: (field: string, value?: string | string[]) => typeof res;
+    send: (json: string) => typeof res;
+    status: (code: number) => typeof res;
+}) => ReqResHandler;
 const express: ExpressAdapter = (req, res) => ({
     update: Promise.resolve(req.body),
     header: req.header(SECRET_HEADER),
@@ -393,6 +262,19 @@ const express: ExpressAdapter = (req, res) => ({
 });
 
 /** fastify web framework */
+export type FastifyAdapter = (request: {
+    body: unknown;
+    // deno-lint-ignore no-explicit-any
+    headers: any;
+}, reply: {
+    status: (code: number) => typeof reply;
+    headers: (headers: Record<string, string>) => typeof reply;
+    code: (code: number) => typeof reply;
+    send: {
+        (): typeof reply;
+        (json: string): typeof reply;
+    };
+}) => ReqResHandler;
 const fastify: FastifyAdapter = (request, reply) => ({
     update: Promise.resolve(request.body as Update),
     header: request.headers[SECRET_HEADER_LOWERCASE],
@@ -404,6 +286,17 @@ const fastify: FastifyAdapter = (request, reply) => ({
 });
 
 /** hono web framework */
+export type HonoAdapter = (c: {
+    req: {
+        json: <T>() => Promise<T>;
+        header: (header: string) => string | undefined;
+    };
+    body(data: string): Response;
+    body(data: null, status: 204): Response;
+    // deno-lint-ignore no-explicit-any
+    status: (status: any) => void;
+    json: (json: string) => Response;
+}) => ReqResHandler<Response>;
 const hono: HonoAdapter = (c) => {
     let resolveResponse: (response: Response) => void;
     return {
@@ -430,6 +323,17 @@ const hono: HonoAdapter = (c) => {
 };
 
 /** Node.js native 'http' and 'https' modules */
+export type HttpAdapter = (req: {
+    headers: Record<string, string | string[] | undefined>;
+    on: (event: string, listener: (chunk: unknown) => void) => typeof req;
+    once: (event: string, listener: () => void) => typeof req;
+}, res: {
+    writeHead: {
+        (status: number): typeof res;
+        (status: number, headers: Record<string, string>): typeof res;
+    };
+    end: (json?: string) => void;
+}) => ReqResHandler;
 const http: HttpAdapter = (req, res) => {
     const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
     return {
@@ -460,6 +364,19 @@ const http: HttpAdapter = (req, res) => {
 };
 
 /** koa web framework */
+export type KoaAdapter = (ctx: {
+    get: (header: string) => string | undefined;
+    set: (key: string, value: string) => void;
+    status: number;
+    body: string;
+    request: {
+        body?: unknown;
+    };
+    response: {
+        body: unknown;
+        status: number;
+    };
+}) => ReqResHandler;
 const koa: KoaAdapter = (ctx) => ({
     update: Promise.resolve(ctx.request.body as Update),
     header: ctx.get(SECRET_HEADER) || undefined,
@@ -479,6 +396,17 @@ const koa: KoaAdapter = (ctx) => ({
 });
 
 /** Next.js Serverless Functions */
+export type NextAdapter = (req: {
+    body: Update;
+    headers: Record<string, string | string[] | undefined>;
+}, res: {
+    end: (cb?: () => void) => typeof res;
+    status: (code: number) => typeof res;
+    // deno-lint-ignore no-explicit-any
+    json: (json: string) => any;
+    // deno-lint-ignore no-explicit-any
+    send: (json: string) => any;
+}) => ReqResHandler;
 const nextJs: NextAdapter = (request, response) => ({
     update: Promise.resolve(request.body),
     header: request.headers[SECRET_HEADER_LOWERCASE] as string,
@@ -489,6 +417,18 @@ const nextJs: NextAdapter = (request, response) => ({
 });
 
 /** nhttp web framework */
+export type NHttpAdapter = (rev: {
+    body: unknown;
+    headers: {
+        get: (header: string) => string | null;
+    };
+    response: {
+        sendStatus: (status: number) => void;
+        status: (status: number) => {
+            send: (json: string) => void;
+        };
+    };
+}) => ReqResHandler;
 const nhttp: NHttpAdapter = (rev) => ({
     update: Promise.resolve(rev.body as Update),
     header: rev.headers.get(SECRET_HEADER) || undefined,
@@ -499,6 +439,21 @@ const nhttp: NHttpAdapter = (rev) => ({
 });
 
 /** oak web framework */
+export type OakAdapter = (ctx: {
+    request: {
+        body: {
+            json: () => Promise<Update>;
+        };
+        headers: {
+            get: (header: string) => string | null;
+        };
+    };
+    response: {
+        status: number;
+        type: string | undefined;
+        body: unknown;
+    };
+}) => ReqResHandler;
 const oak: OakAdapter = (ctx) => ({
     update: ctx.request.body.json().catch(empty),
     header: ctx.request.headers.get(SECRET_HEADER) || undefined,
@@ -518,6 +473,12 @@ const oak: OakAdapter = (ctx) => ({
 });
 
 /** Deno.serve */
+export type ServeHttpAdapter = (
+    requestEvent: {
+        request: Request;
+        respondWith: (response: Response) => void;
+    },
+) => ReqResHandler;
 const serveHttp: ServeHttpAdapter = (requestEvent) => ({
     update: requestEvent.request.json().catch(empty),
     header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
@@ -528,6 +489,9 @@ const serveHttp: ServeHttpAdapter = (requestEvent) => ({
 });
 
 /** std/http web server */
+export type StdHttpAdapter = (
+    req: Request,
+) => ReqResHandler<Response>;
 const stdHttp: StdHttpAdapter = (req) => {
     let resolveResponse: (response: Response) => void;
     return {
@@ -552,6 +516,9 @@ const stdHttp: StdHttpAdapter = (req) => {
 };
 
 /** Sveltekit Serverless Functions */
+export type SveltekitAdapter = (
+    { request }: { request: Request },
+) => ReqResHandler<unknown>;
 const sveltekit: SveltekitAdapter = ({ request }) => {
     let resolveResponse: (res: Response) => void;
     return {
@@ -576,6 +543,15 @@ const sveltekit: SveltekitAdapter = ({ request }) => {
 };
 
 /** worktop Cloudflare workers framework */
+export type WorktopAdapter = (req: {
+    json: () => Promise<Update>;
+    headers: {
+        get: (header: string) => string | null;
+    };
+}, res: {
+    end: (data: BodyInit | null) => void;
+    send: (status: number, json: string) => void;
+}) => ReqResHandler;
 const worktop: WorktopAdapter = (req, res) => ({
     update: req.json().catch(empty),
     header: req.headers.get(SECRET_HEADER) ?? undefined,
