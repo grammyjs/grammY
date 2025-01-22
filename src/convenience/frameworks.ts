@@ -1,4 +1,3 @@
-import type { WebhookOptions } from "./webhook.ts";
 import type { Update } from "../types.ts";
 
 const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
@@ -36,7 +35,7 @@ interface PathOption {
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
  */
-export interface ReqResHandler<T = void> {
+export interface ReqResHandler<T = void, O = object> {
     /**
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
@@ -76,21 +75,17 @@ export interface ReqResHandler<T = void> {
      * Custom callback that will be called at the very beginning of
      * request handling.
      */
-    customCallback?: () => unknown | Promise<unknown>;
+    customCallback?: (options: O) => unknown | Promise<unknown>;
 }
 
 /**
  * Middleware for a web framework. Creates a request-response handler for a
  * request. The handler will be used to integrate with the compatible framework.
  */
-export type FrameworkAdapter = (
-    options?: WebhookOptions,
-    // deno-lint-ignore no-explicit-any
-) => (...args: any[]) => ReqResHandler<any>;
+// deno-lint-ignore no-explicit-any
+export type FrameworkAdapter = (...args: any[]) => ReqResHandler<any>;
 
 export type LambdaAdapter = (
-    options?: WebhookOptions,
-) => (
     event: {
         body?: string;
         headers: Record<string, string | undefined>;
@@ -103,8 +98,6 @@ export type LambdaAdapter = (
 ) => ReqResHandler;
 
 export type LambdaAsyncAdapter = (
-    options?: WebhookOptions,
-) => (
     event: {
         body?: string;
         headers: Record<string, string | undefined>;
@@ -112,9 +105,7 @@ export type LambdaAsyncAdapter = (
     _context: unknown,
 ) => ReqResHandler;
 
-export type AzureAdapter = (
-    options?: WebhookOptions,
-) => (request: {
+export type AzureAdapter = (request: {
     body?: unknown;
 }, context: {
     res?: {
@@ -129,29 +120,21 @@ export type AzureAdapter = (
     };
 }) => ReqResHandler;
 
-export type BunAdapter = (
-    options?: WebhookOptions,
-) => (request: {
+export type BunAdapter = (request: {
     headers: Headers;
     json: () => Promise<Update>;
 }) => ReqResHandler<Response>;
 
-export type CloudflareAdapter = (
-    options?: WebhookOptions,
-) => (event: {
+export type CloudflareAdapter = (event: {
     request: Request;
     respondWith: (response: Promise<Response>) => void;
 }) => ReqResHandler;
 
 export type CloudflareModuleAdapter = (
-    options?: WebhookOptions,
-) => (
     request: Request,
 ) => ReqResHandler<Response>;
 
-export type ExpressAdapter = (
-    options?: WebhookOptions,
-) => (req: {
+export type ExpressAdapter = (req: {
     body: Update;
     header: (header: string) => string | undefined;
 }, res: {
@@ -161,9 +144,7 @@ export type ExpressAdapter = (
     status: (code: number) => typeof res;
 }) => ReqResHandler;
 
-export type FastifyAdapter = (
-    options?: WebhookOptions,
-) => (request: {
+export type FastifyAdapter = (request: {
     body: unknown;
     // deno-lint-ignore no-explicit-any
     headers: any;
@@ -177,9 +158,7 @@ export type FastifyAdapter = (
     };
 }) => ReqResHandler;
 
-export type HonoAdapter = (
-    options?: WebhookOptions,
-) => (c: {
+export type HonoAdapter = (c: {
     req: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
@@ -191,9 +170,7 @@ export type HonoAdapter = (
     json: (json: string) => Response;
 }) => ReqResHandler<Response>;
 
-export type HttpAdapter = (
-    options?: WebhookOptions,
-) => (req: {
+export type HttpAdapter = (req: {
     headers: Record<string, string | string[] | undefined>;
     on: (event: string, listener: (chunk: unknown) => void) => typeof req;
     once: (event: string, listener: () => void) => typeof req;
@@ -205,9 +182,7 @@ export type HttpAdapter = (
     end: (json?: string) => void;
 }) => ReqResHandler;
 
-export type KoaAdapter = (
-    options?: WebhookOptions,
-) => (ctx: {
+export type KoaAdapter = (ctx: {
     get: (header: string) => string | undefined;
     set: (key: string, value: string) => void;
     status: number;
@@ -221,9 +196,7 @@ export type KoaAdapter = (
     };
 }) => ReqResHandler;
 
-export type NextAdapter = (
-    options?: WebhookOptions,
-) => (req: {
+export type NextAdapter = (req: {
     body: Update;
     headers: Record<string, string | string[] | undefined>;
 }, res: {
@@ -235,9 +208,7 @@ export type NextAdapter = (
     send: (json: string) => any;
 }) => ReqResHandler;
 
-export type NHttpAdapter = (
-    options?: WebhookOptions,
-) => (rev: {
+export type NHttpAdapter = (rev: {
     body: unknown;
     headers: {
         get: (header: string) => string | null;
@@ -250,9 +221,7 @@ export type NHttpAdapter = (
     };
 }) => ReqResHandler;
 
-export type OakAdapter = (
-    options?: WebhookOptions,
-) => (ctx: {
+export type OakAdapter = (ctx: {
     request: {
         body: {
             json: () => Promise<Update>;
@@ -266,11 +235,9 @@ export type OakAdapter = (
         type: string | undefined;
         body: unknown;
     };
-}) => ReqResHandler;
+}) => ReqResHandler<unknown, { ghs?: string }>;
 
 export type ServeHttpAdapter = (
-    options?: WebhookOptions,
-) => (
     requestEvent: {
         request: Request;
         respondWith: (response: Response) => void;
@@ -278,20 +245,14 @@ export type ServeHttpAdapter = (
 ) => ReqResHandler;
 
 export type StdHttpAdapter = (
-    options?: WebhookOptions & PathOption,
-) => (
     req: Request,
-) => ReqResHandler<Response>;
+) => ReqResHandler<Response, PathOption>;
 
 export type SveltekitAdapter = (
-    options?: WebhookOptions,
-) => (
     { request }: { request: Request },
 ) => ReqResHandler<unknown>;
 
-export type WorktopAdapter = (
-    options?: WebhookOptions,
-) => (req: {
+export type WorktopAdapter = (req: {
     json: () => Promise<Update>;
     headers: {
         get: (header: string) => string | null;
@@ -302,7 +263,7 @@ export type WorktopAdapter = (
 }) => ReqResHandler;
 
 /** AWS lambda serverless functions */
-const awsLambda: LambdaAdapter = () => (event, _context, callback) => ({
+const awsLambda: LambdaAdapter = (event, _context, callback) => ({
     update: safeJsonParse(event.body ?? "{}"),
     header: event.headers[SECRET_HEADER],
     end: () => callback(null, { statusCode: 200 }),
@@ -317,7 +278,7 @@ const awsLambda: LambdaAdapter = () => (event, _context, callback) => ({
 });
 
 /** AWS lambda async/await serverless functions */
-const awsLambdaAsync: LambdaAsyncAdapter = () => (event, _context) => {
+const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
     // deno-lint-ignore no-explicit-any
     let resolveResponse: (response: any) => void;
 
@@ -340,7 +301,7 @@ const awsLambdaAsync: LambdaAsyncAdapter = () => (event, _context) => {
 };
 
 /** Azure Functions */
-const azure: AzureAdapter = () => (request, context) => ({
+const azure: AzureAdapter = (request, context) => ({
     update: Promise.resolve(request.body as Update),
     header: context.res?.headers?.[SECRET_HEADER],
     end: () => (context.res = {
@@ -360,7 +321,7 @@ const azure: AzureAdapter = () => (request, context) => ({
 });
 
 /** Bun.serve */
-const bun: BunAdapter = () => (request) => {
+const bun: BunAdapter = (request) => {
     let resolveResponse: (response: Response) => void;
     return {
         update: request.json().catch(empty),
@@ -384,7 +345,7 @@ const bun: BunAdapter = () => (request) => {
 };
 
 /** Native CloudFlare workers (service worker) */
-const cloudflare: CloudflareAdapter = () => (event) => {
+const cloudflare: CloudflareAdapter = (event) => {
     let resolveResponse: (response: Response) => void;
     event.respondWith(
         new Promise<Response>((resolve) => {
@@ -410,7 +371,7 @@ const cloudflare: CloudflareAdapter = () => (event) => {
 };
 
 /** Native CloudFlare workers (module worker) */
-const cloudflareModule: CloudflareModuleAdapter = () => (request) => {
+const cloudflareModule: CloudflareModuleAdapter = (request) => {
     let resolveResponse: (res: Response) => void;
     return {
         update: request.json().catch(empty),
@@ -434,7 +395,7 @@ const cloudflareModule: CloudflareModuleAdapter = () => (request) => {
 };
 
 /** express web framework */
-const express: ExpressAdapter = () => (req, res) => ({
+const express: ExpressAdapter = (req, res) => ({
     update: Promise.resolve(req.body),
     header: req.header(SECRET_HEADER),
     end: () => res.end(),
@@ -451,7 +412,7 @@ const express: ExpressAdapter = () => (req, res) => ({
 });
 
 /** fastify web framework */
-const fastify: FastifyAdapter = () => (request, reply) => ({
+const fastify: FastifyAdapter = (request, reply) => ({
     update: Promise.resolve(request.body as Update),
     header: request.headers[SECRET_HEADER_LOWERCASE],
     end: () => reply.status(200).send(),
@@ -462,7 +423,7 @@ const fastify: FastifyAdapter = () => (request, reply) => ({
 });
 
 /** hono web framework */
-const hono: HonoAdapter = () => (c) => {
+const hono: HonoAdapter = (c) => {
     let resolveResponse: (response: Response) => void;
     return {
         update: c.req.json<Update>().catch(empty),
@@ -488,7 +449,7 @@ const hono: HonoAdapter = () => (c) => {
 };
 
 /** Node.js native 'http' and 'https' modules */
-const http: HttpAdapter = () => (req, res) => {
+const http: HttpAdapter = (req, res) => {
     const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
     return {
         update: new Promise<Update>((resolve, reject) => {
@@ -518,7 +479,7 @@ const http: HttpAdapter = () => (req, res) => {
 };
 
 /** koa web framework */
-const koa: KoaAdapter = () => (ctx) => ({
+const koa: KoaAdapter = (ctx) => ({
     update: Promise.resolve(ctx.request.body as Update),
     header: ctx.get(SECRET_HEADER) || undefined,
     end: () => {
@@ -537,7 +498,7 @@ const koa: KoaAdapter = () => (ctx) => ({
 });
 
 /** Next.js Serverless Functions */
-const nextJs: NextAdapter = () => (request, response) => ({
+const nextJs: NextAdapter = (request, response) => ({
     update: Promise.resolve(request.body),
     header: request.headers[SECRET_HEADER_LOWERCASE] as string,
     end: () => response.end(),
@@ -547,7 +508,7 @@ const nextJs: NextAdapter = () => (request, response) => ({
 });
 
 /** nhttp web framework */
-const nhttp: NHttpAdapter = () => (rev) => ({
+const nhttp: NHttpAdapter = (rev) => ({
     update: Promise.resolve(rev.body as Update),
     header: rev.headers.get(SECRET_HEADER) || undefined,
     end: () => rev.response.sendStatus(200),
@@ -557,7 +518,7 @@ const nhttp: NHttpAdapter = () => (rev) => ({
 });
 
 /** oak web framework */
-const oak: OakAdapter = () => (ctx) => ({
+const oak: OakAdapter = (ctx) => ({
     update: ctx.request.body.json().catch(empty),
     header: ctx.request.headers.get(SECRET_HEADER) || undefined,
     end: () => {
@@ -576,7 +537,7 @@ const oak: OakAdapter = () => (ctx) => ({
 });
 
 /** Deno.serve */
-const serveHttp: ServeHttpAdapter = () => (requestEvent) => ({
+const serveHttp: ServeHttpAdapter = (requestEvent) => ({
     update: requestEvent.request.json().catch(empty),
     header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
     end: () => requestEvent.respondWith(ok()),
@@ -586,7 +547,7 @@ const serveHttp: ServeHttpAdapter = () => (requestEvent) => ({
 });
 
 /** std/http web server */
-const stdHttp: StdHttpAdapter = (options) => (req) => {
+const stdHttp: StdHttpAdapter = (req) => {
     let resolveResponse: (response: Response) => void;
     return {
         update: req.json().catch(empty),
@@ -606,7 +567,7 @@ const stdHttp: StdHttpAdapter = (options) => (req) => {
         handlerReturn: new Promise((resolve) => {
             resolveResponse = resolve;
         }),
-        customCallback: () => {
+        customCallback: (options) => {
             if (
                 options?.path !== undefined &&
                 new URL(req.url).pathname !== options.path
@@ -618,7 +579,7 @@ const stdHttp: StdHttpAdapter = (options) => (req) => {
 };
 
 /** Sveltekit Serverless Functions */
-const sveltekit: SveltekitAdapter = () => ({ request }) => {
+const sveltekit: SveltekitAdapter = ({ request }) => {
     let resolveResponse: (res: Response) => void;
     return {
         update: request.json().catch(empty),
@@ -642,7 +603,7 @@ const sveltekit: SveltekitAdapter = () => ({ request }) => {
 };
 
 /** worktop Cloudflare workers framework */
-const worktop: WorktopAdapter = () => (req, res) => ({
+const worktop: WorktopAdapter = (req, res) => ({
     update: req.json().catch(empty),
     header: req.headers.get(SECRET_HEADER) ?? undefined,
     end: () => res.end(null),
