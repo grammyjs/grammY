@@ -3,7 +3,9 @@ import {
     assert,
     assertEquals,
     assertThrows,
+    assertType,
     describe,
+    type IsNullable,
     it,
 } from "./deps.test.ts";
 
@@ -141,6 +143,27 @@ describe("matchFilter", () => {
             }
         } else {
             throw "never";
+        }
+    });
+
+    it("should narrow down context shortcut types", () => {
+        const ctx = new Context(
+            // deno-lint-ignore no-explicit-any
+            {} as any,
+            // deno-lint-ignore no-explicit-any
+            undefined as any,
+            // deno-lint-ignore no-explicit-any
+            undefined as any,
+        );
+        if (matchFilter([":text", ":caption"])(ctx)) {
+            assertType<IsNullable<typeof ctx["msg"]>>(false);
+            assertType<IsNullable<typeof ctx["txt"]>>(false);
+            assertType<IsNullable<typeof ctx["chat"]>>(false);
+            assertType<IsNullable<typeof ctx["msgId"]>>(false);
+            assertType<IsNullable<typeof ctx["chatId"]>>(false);
+        }
+        if (matchFilter("message")(ctx)) {
+            assertType<IsNullable<typeof ctx["from"]>>(false);
         }
     });
 });

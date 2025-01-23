@@ -12,7 +12,11 @@ export {
 } from "jsr:@std/assert";
 export { afterEach, beforeEach, describe, it } from "jsr:@std/testing/bdd";
 export { type Spy, spy, type Stub, stub } from "jsr:@std/testing/mock";
-export { assertType, type IsExact } from "jsr:@std/testing/types";
+export {
+    assertType,
+    type IsExact,
+    type IsNullable,
+} from "jsr:@std/testing/types";
 export { type IsMutuallyAssignable } from "jsr:@std/testing/unstable-types";
 
 /**
