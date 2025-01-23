@@ -329,6 +329,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * bot.command('start', ctx => { ... })
      * // Reacts to /help commands
      * bot.command('help', ctx => { ... })
+     * // Reacts to any command
+     * bot.command(undefined, ctx => { ... })
+     * bot.command().use(ctx => { ... })
      * ```
      *
      * The rest of the message (excluding the command, and trimmed) is provided
@@ -347,13 +350,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * > })
      * > ```
      *
-     * Note that commands are not matched in captions or in the middle of the
-     * text.
+     * Note that commands are not matched in the middle of the text.
      * ```ts
      * bot.command('start', ctx => { ... })
      * // ... does not match:
      * // A message saying: “some text /start some more text”
-     * // A photo message with the caption “/start”
      * ```
      *
      * By default, commands are detected in channel posts, too. This means that
@@ -377,7 +378,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     command(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
         ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         return this.filter(Context.has.command(command), ...middleware);
