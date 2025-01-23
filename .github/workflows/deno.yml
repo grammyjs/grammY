@@ -11,6 +11,8 @@ name: grammY
 on:
     push:
         branches: ["*"]
+    pull_requests:
+        branches: ["*"]
 
 jobs:
     backport:
