@@ -5,7 +5,7 @@ import {
     assertThrows,
     assertType,
     describe,
-    IsNullable,
+    type IsNullable,
     it,
 } from "./deps.test.ts";
 

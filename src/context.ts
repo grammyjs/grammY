@@ -522,7 +522,7 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get the message text from wherever possible. Alias for `this.msg?.text ??
-     * this.msg?.caption
+     * this.msg?.caption`.
      */
     get txt(): string | undefined {
         // Keep in sync with types in `filter.ts`.
