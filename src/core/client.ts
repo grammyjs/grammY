@@ -377,6 +377,7 @@ export function createRawApi<R extends RawApi>(
                 : m === "getMe" ||
                         m === "getWebhookInfo" ||
                         m === "getForumTopicIconStickers" ||
+                        m === "getAvailableGifts" ||
                         m === "logOut" ||
                         m === "close"
                 ? client.callApi.bind(client, m, {} as Payload<typeof m, R>)
