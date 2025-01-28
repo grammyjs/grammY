@@ -15,48 +15,45 @@ const unauthorized = () => new Response(WRONG_TOKEN_ERROR, { status: 401 });
 const badRequest = () => new Response(BAD_REQUEST_ERROR, { status: 400 });
 const empty = () => ({} as Update);
 
-/**
- * Abstraction over a request-response cycle, providing access to the update, as
- * well as a mechanism for responding to the request and to end it.
- */
-export interface ReqResHandler<T = void> {
-    /**
-     * The update object sent from Telegram, usually resolves the request's JSON
-     * body
-     */
-    update: Promise<Update>;
-    /**
-     * X-Telegram-Bot-Api-Secret-Token header of the request, or undefined if
-     * not present
-     */
-    header?: string;
-    /**
-     * Ends the request immediately without body, called after every request
-     * unless a webhook reply was performed
-     */
-    end?: () => void;
-    /**
-     * Sends the specified JSON as a payload in the body, used for webhook
-     * replies
-     */
-    respond: (json: string) => unknown | Promise<unknown>;
-    /**
-     * Responds that the request is unauthorized due to mismatching
-     * X-Telegram-Bot-Api-Secret-Token headers
-     */
-    unauthorized: () => unknown | Promise<unknown>;
-    /**
-     * Responds that the request is bad due to the body payload not being
-     * parsable or valid Update object
-     */
-    badRequest: () => unknown | Promise<unknown>;
-    /**
-     * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
-     * handler returns something
-     */
-    handlerReturn?: Promise<T>;
+export interface WebhookRequestData {
+    path(): string;
+    header(name: string): string | null;
+    update(): Promise<Update>;
+    extra?(): Promise<unknown>;
+}
+export type WebhookResponseData<T = void> =
+    | { type: "end" }
+    | { type: "bad-request" }
+    | { type: "unauthorized" }
+    | { type: "success"; json?: string };
+// deno-lint-ignore no-explicit-any
+export type FrameworkAdapter<F extends (...args: any[]) => any> = (
+    ...args: Parameters<F>
+) => ReqResHandler<F>;
+// deno-lint-ignore no-explicit-any
+export interface ReqResHandler<F extends (...args: any[]) => any> {
+    receive(...args: Parameters<F>): WebhookRequestData;
+    ok(...args: Parameters<F>): ReturnType<F>;
+    badRequest(...args: Parameters<F>): ReturnType<F>;
+    unauthorized(...args: Parameters<F>): ReturnType<F>;
+    success(json?: string, ...args: Parameters<F>): ReturnType<F>;
 }
 
+const demo: ReqResHandler<(req: Request) => Response> = {
+    receive(req) {
+        return {
+            path: () => new URL(req.url).pathname,
+            header: (name) => req.headers.get(name),
+            update: () => req.json(),
+        };
+    },
+    ok,
+    badRequest,
+    unauthorized,
+    success: okJson,
+};
+
+// TODO: refactor the ones below
 /** AWS lambda serverless functions */
 export type LambdaAdapter = (
     event: {
