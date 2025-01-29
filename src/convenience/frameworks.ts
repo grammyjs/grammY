@@ -87,7 +87,10 @@ export type AzureAdapter = (context: {
     };
 }, request: { body?: unknown }) => ReqResHandler;
 export type AzureAdapterV4 = (
-    request: { headers: Headers; json(): Promise<Update> },
+    request: {
+        headers: { get(name: string): string | null };
+        json(): Promise<unknown>;
+    },
 ) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
 
 export type BunAdapter = (request: {
