@@ -18,123 +18,124 @@ import { assert, assertIsError, describe, it } from "../deps.test.ts";
 describe("webhook", () => {
     const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
 
-    // it("AWS Lambda should be compatible with grammY adapter", () => {
-    //     ((event: APIGatewayProxyEventV2, context: LambdaContext) =>
-    //         webhookAdapters.awsLambdaAsync(bot)(
-    //             event,
-    //             context,
-    //         ));
-    // });
+    it("AWS Lambda should be compatible with grammY adapter", () => {
+        ((event: APIGatewayProxyEventV2, context: LambdaContext) =>
+            webhookAdapters.awsLambdaAsync(bot)(
+                event,
+                context,
+            ));
+    });
 
-    // it("Bun.serve should be compatible with grammY adapter", () => {
-    //     type BunServe = (
-    //         options: {
-    //             fetch: (request: Request) => Response | Promise<Response>;
-    //         },
-    //     ) => object;
+    it("Bun.serve should be compatible with grammY adapter", () => {
+        type BunServe = (
+            options: {
+                fetch: (request: Request) => Response | Promise<Response>;
+            },
+        ) => object;
 
-    //     const handler = webhookAdapters.bun(bot);
-    //     const serve = (() => {}) as unknown as BunServe;
-    //     serve({
-    //         fetch: (request) => {
-    //             return handler(request);
-    //         },
-    //     });
-    // });
+        const handler = webhookAdapters.bun(bot);
+        const serve = (() => {}) as unknown as BunServe;
+        serve({
+            fetch: (request) => {
+                return handler(request);
+            },
+        });
+    });
 
-    // it("Cloudflare Workers should be compatible with grammY adapter", async () => {
-    //     const req = new Request("https://grammy.dev", {
-    //         method: "POST",
-    //         body: JSON.stringify({ update_id: 0 }),
-    //     });
-    //     const handler = webhookAdapters.cloudflareModule(bot);
-    //     const _res: Response = await handler(req);
-    // });
+    it("Cloudflare Workers should be compatible with grammY adapter", async () => {
+        const req = new Request("https://grammy.dev", {
+            method: "POST",
+            body: JSON.stringify({ update_id: 0 }),
+        });
+        const handler = webhookAdapters.cloudflareModule(bot);
+        const _res: Response = await handler(req);
+    });
 
-    // it("Express should be compatible with grammY adapter", () => {
-    //     const app = { post: () => {} } as unknown as Express;
-    //     const handler = webhookAdapters.express(bot);
-    //     app.post("/", (req, res) => {
-    //         return handler(req, res);
-    //     });
-    // });
+    it("Express should be compatible with grammY adapter", () => {
+        const app = { post: () => {} } as unknown as Express;
+        const handler = webhookAdapters.express(bot);
+        app.post("/", (req, res) => {
+            return handler(req, res);
+        });
+    });
 
-    // it("Fastify should be compatible with grammY adapter", () => {
-    //     const app = { post: () => {} } as unknown as FastifyInstance;
-    //     const handler = webhookAdapters.fastify(bot);
-    //     app.post("/", (request, reply) => {
-    //         return handler(request, reply);
-    //     });
-    // });
+    it("Fastify should be compatible with grammY adapter", () => {
+        const app = { post: () => {} } as unknown as FastifyInstance;
+        const handler = webhookAdapters.fastify(bot);
+        app.post("/", (request, reply) => {
+            return handler(request, reply);
+        });
+    });
 
-    // it("Hono should be compatible with grammY adapter", () => {
-    //     const app = { post: () => {} } as unknown as Hono;
-    //     const handler = webhookAdapters.hono(bot);
-    //     app.post("/", (c) => {
-    //         return handler(c);
-    //     });
-    // });
+    it("Hono should be compatible with grammY adapter", () => {
+        const app = { post: () => {} } as unknown as Hono;
+        const handler = webhookAdapters.hono(bot);
+        app.post("/", (c) => {
+            return handler(c);
+        });
+    });
 
-    // it("http/https should be compatible with grammY adapter", () => {
-    //     const create = (() => {}) as unknown as typeof createServer;
-    //     const handler = webhookAdapters.http(bot);
-    //     create((req, res) => {
-    //         return handler(req, res);
-    //     });
-    // });
+    it("http/https should be compatible with grammY adapter", () => {
+        const create = (() => {}) as unknown as typeof createServer;
+        const handler = webhookAdapters.http(bot);
+        create((req, res) => {
+            return handler(req, res);
+        });
+    });
 
-    // it("Koa should be compatible with grammY adapter", () => {
-    //     const app = { use: () => {} } as unknown as Koa;
-    //     const parser = (() => {}) as unknown as typeof bodyParser;
-    //     const handler = webhookAdapters.koa(bot);
-    //     app.use(parser());
-    //     app.use((ctx) => {
-    //         return handler(ctx);
-    //     });
-    // });
+    it("Koa should be compatible with grammY adapter", () => {
+        const app = { use: () => {} } as unknown as Koa;
+        const parser = (() => {}) as unknown as typeof bodyParser;
+        const handler = webhookAdapters.koa(bot);
+        app.use(parser());
+        app.use((ctx) => {
+            return handler(ctx);
+        });
+    });
 
-    // it("Next serverless functions should be compatible with grammY adapter", async () => {
-    //     const req = {
-    //         headers: {},
-    //         body: { update: {} },
-    //     } as unknown as NextApiRequest;
-    //     const res = {
-    //         end: () => {},
-    //         status: (_code) => ({
-    //             send: (_data) => {},
-    //         }),
-    //     } as NextApiResponse;
-    //     const handler = webhookAdapters.nextJs(bot);
-    //     await handler(req, res);
-    // });
+    it("Next serverless functions should be compatible with grammY adapter", async () => {
+        const req = {
+            headers: {},
+            body: { update: {} },
+            url: "",
+        } as unknown as NextApiRequest;
+        const res = {
+            end: () => {},
+            status: (_code) => ({
+                send: (_data) => {},
+            }),
+        } as NextApiResponse;
+        const handler = webhookAdapters.nextJs(bot);
+        await handler(req, res);
+    });
 
-    // it("NHttp should be compatible with grammY adapter", () => {
-    //     const app = { post: () => {} } as unknown as NHttp;
-    //     const handler = webhookAdapters.nhttp(bot);
-    //     app.post("/", (rev) => {
-    //         return handler(rev);
-    //     });
-    // });
+    it("NHttp should be compatible with grammY adapter", () => {
+        const app = { post: () => {} } as unknown as NHttp;
+        const handler = webhookAdapters.nhttp(bot);
+        app.post("/", (rev) => {
+            return handler(rev);
+        });
+    });
 
-    // it("Oak should be compatible with grammY adapter", () => {
-    //     const app = { use: () => {} } as unknown as Application;
-    //     const handler = webhookAdapters.oak(bot);
-    //     app.use((ctx) => {
-    //         return handler(ctx);
-    //     });
-    // });
+    it("Oak should be compatible with grammY adapter", () => {
+        const app = { use: () => {} } as unknown as Application;
+        const handler = webhookAdapters.oak(bot);
+        app.use((ctx) => {
+            return handler(ctx);
+        });
+    });
 
-    // it("serveHttp should be compatible with grammY adapter", async () => {
-    //     const event = {
-    //         request: new Request("https://grammy.dev", {
-    //             method: "POST",
-    //             body: JSON.stringify({ update_id: 0 }),
-    //         }),
-    //         respondWith: () => {},
-    //     };
-    //     const handler = webhookAdapters.serveHttp(bot);
-    //     await handler(event);
-    // });
+    it("serveHttp should be compatible with grammY adapter", async () => {
+        const event = {
+            request: new Request("https://grammy.dev", {
+                method: "POST",
+                body: JSON.stringify({ update_id: 0 }),
+            }),
+            respondWith: () => {},
+        };
+        const handler = webhookAdapters.serveHttp(bot);
+        await handler(event);
+    });
 
     it("std/http should be compatible with grammY adapter", () => {
         const serve = (() => {}) as unknown as typeof Deno.serve;
@@ -167,32 +168,34 @@ describe("webhook", () => {
         assert(called);
     });
 
-    // describe("server webhook errors", () => {
-    //     it("should response with 401 unauthorized status", async () => {
-    //         const handler = webhookAdapters.stdHttp(bot, {
-    //             secretToken: "wrong-token",
-    //         });
+    describe("server webhook errors", () => {
+        it("should response with 400 bad request status", async () => {
+            const handler = webhookAdapters.stdHttp(bot);
 
-    //         const res = await handler(
-    //             new Request("https://fake-api.com", {
-    //                 method: "POST",
-    //                 body: JSON.stringify({ update_id: 9696 }),
-    //             }),
-    //         );
+            const res = await handler(
+                new Request("https://fake-api.com", {
+                    method: "POST",
+                }),
+            );
 
-    //         assert(res.status === 401);
-    //     });
+            assert(res.status === 400);
+        });
 
-    //     it("should response with 400 bad request status", async () => {
-    //         const handler = webhookAdapters.stdHttp(bot);
+        it("should response with 401 unauthorized status", async () => {
+            const handler = webhookAdapters.stdHttp(bot, {
+                secretToken: "wrong-token",
+            });
 
-    //         const res = await handler(
-    //             new Request("https://fake-api.com", {
-    //                 method: "POST",
-    //             }),
-    //         );
+            const res = await handler(
+                new Request("https://fake-api.com", {
+                    method: "POST",
+                    body: JSON.stringify({ update_id: 9696 }),
+                }),
+            );
 
-    //         assert(res.status === 400);
-    //     });
-    // });
+            assert(res.status === 401);
+        });
+
+        // TODO: not found case
+    });
 });

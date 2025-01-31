@@ -4,14 +4,8 @@ import type { Bot } from "../bot.ts";
 import type { Context } from "../context.ts";
 import type { WebhookReplyEnvelope } from "../core/client.ts";
 import type { Update } from "../types.ts";
-import {
-    adapters,
-    // BAD_REQUEST_ERROR,
-    type FrameworkAdapter,
-    // WRONG_TOKEN_ERROR,
-} from "./frameworks.ts";
+import { adapters, type FrameworkAdapter } from "./frameworks.ts";
 
-import { HTTPMethods } from "npm:fastify";
 const debugErr = createDebug("grammy:error");
 
 const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token" as const;
@@ -38,6 +32,7 @@ export interface WebhookOptions {
     timeoutMilliseconds?: number;
     /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
     secretToken?: string;
+    /** An optional path to check against request path */
     path?: string;
 }
 
@@ -85,66 +80,63 @@ function createWebhookAdapter<
  * @param webhookOptions Further options for the webhook setup
  */
 export const webhookAdapters = {
-    get demo() {
-        return createWebhookAdapter(adapters.demo);
+    get awsLambda() {
+        return createWebhookAdapter(adapters.awsLambda);
     },
-    // get awsLambda() {
-    //     return createWebhookAdapter(adapters.awsLambda);
-    // },
-    // get awsLambdaAsync() {
-    //     return createWebhookAdapter(adapters.awsLambdaAsync);
-    // },
-    // get azure() {
-    //     return createWebhookAdapter(adapters.azure);
-    // },
-    // get bun() {
-    //     return createWebhookAdapter(adapters.bun);
-    // },
-    // get cloudflare() {
-    //     return createWebhookAdapter(adapters.cloudflare);
-    // },
-    // get cloudflareModule() {
-    //     return createWebhookAdapter(adapters.cloudflareModule);
-    // },
-    // get express() {
-    //     return createWebhookAdapter(adapters.express);
-    // },
-    // get fastify() {
-    //     return createWebhookAdapter(adapters.fastify);
-    // },
-    // get hono() {
-    //     return createWebhookAdapter(adapters.hono);
-    // },
-    // get http() {
-    //     return createWebhookAdapter(adapters.http);
-    // },
-    // get https() {
-    //     return createWebhookAdapter(adapters.http);
-    // },
-    // get koa() {
-    //     return createWebhookAdapter(adapters.koa);
-    // },
-    // get nextJs() {
-    //     return createWebhookAdapter(adapters.nextJs);
-    // },
-    // get nhttp() {
-    //     return createWebhookAdapter(adapters.nhttp);
-    // },
-    // get oak() {
-    //     return createWebhookAdapter(adapters.oak);
-    // },
-    // get serveHttp() {
-    //     return createWebhookAdapter(adapters.serveHttp);
-    // },
+    get awsLambdaAsync() {
+        return createWebhookAdapter(adapters.awsLambdaAsync);
+    },
+    get azure() {
+        return createWebhookAdapter(adapters.azure);
+    },
+    get bun() {
+        return createWebhookAdapter(adapters.bun);
+    },
+    get cloudflare() {
+        return createWebhookAdapter(adapters.cloudflare);
+    },
+    get cloudflareModule() {
+        return createWebhookAdapter(adapters.cloudflareModule);
+    },
+    get express() {
+        return createWebhookAdapter(adapters.express);
+    },
+    get fastify() {
+        return createWebhookAdapter(adapters.fastify);
+    },
+    get hono() {
+        return createWebhookAdapter(adapters.hono);
+    },
+    get http() {
+        return createWebhookAdapter(adapters.http);
+    },
+    get https() {
+        return createWebhookAdapter(adapters.http);
+    },
+    get koa() {
+        return createWebhookAdapter(adapters.koa);
+    },
+    get nextJs() {
+        return createWebhookAdapter(adapters.nextJs);
+    },
+    get nhttp() {
+        return createWebhookAdapter(adapters.nhttp);
+    },
+    get oak() {
+        return createWebhookAdapter(adapters.oak);
+    },
+    get serveHttp() {
+        return createWebhookAdapter(adapters.serveHttp);
+    },
     get stdHttp() {
         return createWebhookAdapter(adapters.stdHttp);
     },
-    // get sveltekit() {
-    //     return createWebhookAdapter(adapters.sveltekit);
-    // },
-    // get worktop() {
-    //     return createWebhookAdapter(adapters.worktop);
-    // },
+    get sveltekit() {
+        return createWebhookAdapter(adapters.sveltekit);
+    },
+    get worktop() {
+        return createWebhookAdapter(adapters.worktop);
+    },
     // get callback() {
     //     return createWebhookAdapter(adapters.callback);
     // },
