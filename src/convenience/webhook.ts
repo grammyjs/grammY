@@ -27,7 +27,7 @@ const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token" as const;
 
 export interface WebhookOptions {
     /** An optional strategy to handle timeouts (default: 'throw') */
-    onTimeout?: "throw" | "ignore" | ((...args: any[]) => unknown);
+    onTimeout?: "throw" | ((...args: any[]) => unknown);
     /** An optional number of timeout milliseconds (default: 10_000) */
     timeoutMilliseconds?: number;
     /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
@@ -252,27 +252,30 @@ function webhookCallback<
 
 function timeoutIfNecessary(
     task: Promise<void>,
-    onTimeout: "throw" | "ignore" | (() => unknown),
+    onTimeout: "throw" | (() => unknown), // need async?
     timeout: number,
 ): Promise<void> {
     if (timeout === Infinity) return task;
-    return new Promise((resolve, reject) => {
-        const handle = setTimeout(() => {
-            debugErr(`Request timed out after ${timeout} ms`);
-            if (onTimeout === "throw") {
-                reject(new Error(`Request timed out after ${timeout} ms`));
-            } else {
-                if (typeof onTimeout === "function") onTimeout();
-                resolve();
-            }
-            const now = Date.now();
-            task.finally(() => {
-                const diff = Date.now() - now;
-                debugErr(`Request completed ${diff} ms after timeout!`);
-            });
-        }, timeout);
-        task.then(resolve)
-            .catch(reject)
-            .finally(() => clearTimeout(handle));
-    });
+    const { promise, resolve, reject } = Promise.withResolvers<void>();
+
+    const handle = setTimeout(() => {
+        debugErr(`Request timed out after ${timeout} ms`);
+        if (onTimeout === "throw") {
+            reject(new Error(`Request timed out after ${timeout} ms`));
+        } else {
+            onTimeout();
+            resolve();
+        }
+        const now = Date.now();
+        task.finally(() => {
+            const diff = Date.now() - now;
+            debugErr(`Request completed ${diff} ms after timeout!`);
+        });
+    }, timeout);
+
+    task.then(resolve)
+        .catch(reject)
+        .finally(() => clearTimeout(handle));
+
+    return promise;
 }
