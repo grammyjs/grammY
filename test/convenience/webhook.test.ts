@@ -6,6 +6,7 @@ import type {
 import type { NHttp } from "jsr:@nhttp/nhttp";
 import type { Application } from "jsr:@oak/oak";
 import type { createServer } from "node:http";
+import type { Elysia } from "npm:elysia";
 import type { Express } from "npm:@types/express";
 import type bodyParser from "npm:@types/koa-bodyparser";
 import type Koa from "npm:@types/koa";
@@ -49,6 +50,12 @@ describe("webhook", () => {
         } as unknown as Request;
         const handler = webhookCallback(bot, "cloudflare-mod");
         const _res: Response = await handler(req);
+    });
+
+    it("Elysia should be compatible with grammY adapter", () => {
+        const app = { post: () => {} } as unknown as Elysia;
+
+        app.post("/", webhookCallback(bot, "elysia"));
     });
 
     it("Express should be compatible with grammY adapter", () => {
