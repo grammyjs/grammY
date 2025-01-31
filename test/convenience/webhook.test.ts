@@ -97,6 +97,7 @@ describe("webhook", () => {
         const req = {
             headers: {},
             body: { update: {} },
+            url: "",
         } as unknown as NextApiRequest;
         const res = {
             end: () => {},
@@ -168,6 +169,18 @@ describe("webhook", () => {
     });
 
     describe("server webhook errors", () => {
+        it("should response with 400 bad request status", async () => {
+            const handler = webhookAdapters.stdHttp(bot);
+
+            const res = await handler(
+                new Request("https://fake-api.com", {
+                    method: "POST",
+                }),
+            );
+
+            assert(res.status === 400);
+        });
+
         it("should response with 401 unauthorized status", async () => {
             const handler = webhookAdapters.stdHttp(bot, {
                 secretToken: "wrong-token",
@@ -183,16 +196,6 @@ describe("webhook", () => {
             assert(res.status === 401);
         });
 
-        it("should response with 400 bad request status", async () => {
-            const handler = webhookAdapters.stdHttp(bot);
-
-            const res = await handler(
-                new Request("https://fake-api.com", {
-                    method: "POST",
-                }),
-            );
-
-            assert(res.status === 400);
-        });
+        // TODO: not found case
     });
 });
