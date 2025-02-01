@@ -238,7 +238,7 @@ function webhookCallback<
         await timeoutIfNecessary(
             bot.handleUpdate(updateData, webhookReplyEnvelope),
             timeoutMilliseconds,
-            onTimeout ? () => onTimeout(...args) : onTimeout,
+            onTimeout !== undefined ? () => onTimeout(...args) : undefined,
         );
 
         if (!usedWebhookReply) return ok(...args);
@@ -258,7 +258,7 @@ function timeoutIfNecessary(
 
     const handle = setTimeout(() => {
         debugErr(`Request timed out after ${timeout} ms`);
-        if (onTimeout) {
+        if (onTimeout !== undefined) {
             onTimeout();
             resolve();
         } else {
