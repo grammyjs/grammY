@@ -26,8 +26,8 @@ const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token" as const;
 // const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
 export interface WebhookOptions {
-    /** An optional strategy to handle timeouts (default: 'throw') */
-    onTimeout?: "throw" | ((...args: any[]) => unknown);
+    /** An optional callback to handle timeouts. If undefined, it will throw an error. */
+    onTimeout?: (...args: any[]) => unknown;
     /** An optional number of timeout milliseconds (default: 10_000) */
     timeoutMilliseconds?: number;
     /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
@@ -170,7 +170,7 @@ function webhookCallback<
     options?: WebhookOptions,
 ): (...args: Parameters<T>) => Promise<ReturnType<T>> {
     const {
-        onTimeout = "throw",
+        onTimeout,
         timeoutMilliseconds = 10_000,
         secretToken,
     } = options ?? {};
@@ -237,10 +237,8 @@ function webhookCallback<
         };
         await timeoutIfNecessary(
             bot.handleUpdate(updateData, webhookReplyEnvelope),
-            typeof onTimeout === "function"
-                ? () => onTimeout(...args)
-                : onTimeout,
             timeoutMilliseconds,
+            onTimeout ? () => onTimeout(...args) : onTimeout,
         );
 
         if (!usedWebhookReply) return ok(...args);
@@ -252,19 +250,19 @@ function webhookCallback<
 
 function timeoutIfNecessary(
     task: Promise<void>,
-    onTimeout: "throw" | (() => unknown), // need async?
     timeout: number,
+    onTimeout?: () => unknown, // need async?
 ): Promise<void> {
     if (timeout === Infinity) return task;
     const { promise, resolve, reject } = Promise.withResolvers<void>();
 
     const handle = setTimeout(() => {
         debugErr(`Request timed out after ${timeout} ms`);
-        if (onTimeout === "throw") {
-            reject(new Error(`Request timed out after ${timeout} ms`));
-        } else {
+        if (onTimeout) {
             onTimeout();
             resolve();
+        } else {
+            reject(new Error(`Request timed out after ${timeout} ms`));
         }
         const now = Date.now();
         task.finally(() => {
