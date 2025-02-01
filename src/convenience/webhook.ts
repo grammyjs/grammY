@@ -4,58 +4,57 @@ import type { Bot } from "../bot.ts";
 import type { Context } from "../context.ts";
 import type { WebhookReplyEnvelope } from "../core/client.ts";
 import type { Update } from "../types.ts";
-import {
-    adapters as nativeAdapters,
-    BAD_REQUEST_ERROR,
-    type FrameworkAdapter,
-    WRONG_TOKEN_ERROR,
-} from "./frameworks.ts";
+import { adapters, type FrameworkAdapter } from "./frameworks.ts";
+
 const debugErr = createDebug("grammy:error");
 
-const callbackAdapter: FrameworkAdapter = (
-    update: Update,
-    callback: (json: string) => unknown,
-    header: string,
-    unauthorized = () => callback(WRONG_TOKEN_ERROR),
-    badRequest = () => callback(BAD_REQUEST_ERROR),
-) => ({
-    update: Promise.resolve(update),
-    respond: callback,
-    header,
-    unauthorized,
-    badRequest,
-});
-const adapters = { ...nativeAdapters, callback: callbackAdapter };
+const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token" as const;
+
+// const callbackAdapter: FrameworkAdapter = (
+//     update: Update,
+//     callback: (json: string) => unknown,
+//     header: string,
+//     unauthorized = () => callback(WRONG_TOKEN_ERROR),
+//     badRequest = () => callback(BAD_REQUEST_ERROR),
+// ) => ({
+//     update: Promise.resolve(update),
+//     respond: callback,
+//     header,
+//     unauthorized,
+//     badRequest,
+// });
+// const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
 export interface WebhookOptions {
-    /** An optional strategy to handle timeouts (default: 'throw') */
-    onTimeout?: "throw" | "ignore" | ((...args: any[]) => unknown);
+    /** An optional callback to handle timeouts. If undefined, it will throw an error. */
+    onTimeout?: (...args: any[]) => unknown | Promise<unknown>;
     /** An optional number of timeout milliseconds (default: 10_000) */
     timeoutMilliseconds?: number;
     /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
     secretToken?: string;
+    /** An optional path to check against request path */
+    path?: string;
 }
 
-type Adapters = typeof adapters;
-type AdapterNames = keyof Adapters;
-type Adapter<A extends Adapters[AdapterNames]> = (
-    ...args: Parameters<A>
-) => ReturnType<A>["handlerReturn"] extends undefined ? Promise<void>
-    : NonNullable<ReturnType<A>["handlerReturn"]>;
+type Adapters = typeof adapters[keyof typeof adapters];
+
+// assume that ok is typical handler signature
 type WebhookAdapter<
+    A extends Adapters,
+    T extends A["ok"],
     C extends Context = Context,
-    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
 > = {
     (
         bot: Bot<C>,
         webhookOptions?: WebhookOptions,
-    ): Adapter<A>;
+    ): (...args: Parameters<T>) => Promise<ReturnType<T>>;
 };
 
 function createWebhookAdapter<
+    A extends Adapters,
+    T extends A["ok"],
     C extends Context = Context,
-    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
->(adapter: A): WebhookAdapter<C, A> {
+>(adapter: FrameworkAdapter<T>): WebhookAdapter<A, T, C> {
     return (
         bot: Bot<C>,
         options?: WebhookOptions,
@@ -138,9 +137,9 @@ export const webhookAdapters = {
     get worktop() {
         return createWebhookAdapter(adapters.worktop);
     },
-    get callback() {
-        return createWebhookAdapter(adapters.callback);
-    },
+    // get callback() {
+    //     return createWebhookAdapter(adapters.callback);
+    // },
 };
 
 /**
@@ -161,13 +160,17 @@ export const webhookAdapters = {
  * @param adapter An optional string identifying the framework (default: 'express')
  * @param webhookOptions Further options for the webhook setup
  */
-function webhookCallback<C extends Context = Context>(
+function webhookCallback<
+    A extends Adapters,
+    T extends A["ok"],
+    C extends Context = Context,
+>(
     bot: Bot<C>,
-    adapter: FrameworkAdapter,
+    handler: FrameworkAdapter<T>,
     options?: WebhookOptions,
-) {
+): (...args: Parameters<T>) => Promise<ReturnType<T>> {
     const {
-        onTimeout = "throw",
+        onTimeout,
         timeoutMilliseconds = 10_000,
         secretToken,
     } = options ?? {};
@@ -186,72 +189,91 @@ function webhookCallback<C extends Context = Context>(
 
     let initialized = false;
 
-    return async (...args: any[]) => {
+    return async (...args: Parameters<T>) => {
         const {
-            update,
-            respond,
-            unauthorized,
+            receive,
+            ok,
+            success,
             badRequest,
-            end,
-            handlerReturn,
+            unauthorized,
+            notFound,
+        } = handler;
+        const {
+            path,
             header,
-        } = adapter(...args);
+            update,
+            extra,
+        } = receive(...args);
+
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
             initialized = true;
         }
-        if (header !== secretToken) {
-            await unauthorized();
-            return handlerReturn;
+        if (
+            secretToken !== undefined && header(SECRET_HEADER) !== secretToken
+        ) {
+            return unauthorized(...args);
         }
-        const updateData = await update;
-        if (updateData?.update_id === undefined || updateData.update_id <= 0) {
-            await badRequest();
-            return handlerReturn;
+        if (options?.path !== undefined && options.path !== path()) {
+            return notFound(...args);
         }
+        if (extra) {
+            await extra(...args);
+        }
+        const updateData = await update().catch(() => ({} as Update));
+        if (
+            updateData?.update_id === undefined || updateData.update_id <= 0
+        ) {
+            return badRequest(...args);
+        }
+
         let usedWebhookReply = false;
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
-            async send(json) {
+            send(json) {
                 usedWebhookReply = true;
-                await respond(json);
+                success(json, ...args);
             },
         };
         await timeoutIfNecessary(
             bot.handleUpdate(updateData, webhookReplyEnvelope),
-            typeof onTimeout === "function"
-                ? () => onTimeout(...args)
-                : onTimeout,
             timeoutMilliseconds,
+            onTimeout !== undefined ? () => onTimeout(...args) : undefined,
         );
-        if (!usedWebhookReply) end?.();
-        return handlerReturn;
+
+        if (!usedWebhookReply) return ok(...args);
+
+        // TODO: what we should return?
+        return success("Ok", ...args);
     };
 }
 
 function timeoutIfNecessary(
     task: Promise<void>,
-    onTimeout: "throw" | "ignore" | (() => unknown),
     timeout: number,
+    onTimeout?: () => unknown | Promise<unknown>,
 ): Promise<void> {
     if (timeout === Infinity) return task;
-    return new Promise((resolve, reject) => {
-        const handle = setTimeout(() => {
-            debugErr(`Request timed out after ${timeout} ms`);
-            if (onTimeout === "throw") {
-                reject(new Error(`Request timed out after ${timeout} ms`));
-            } else {
-                if (typeof onTimeout === "function") onTimeout();
-                resolve();
-            }
-            const now = Date.now();
-            task.finally(() => {
-                const diff = Date.now() - now;
-                debugErr(`Request completed ${diff} ms after timeout!`);
-            });
-        }, timeout);
-        task.then(resolve)
-            .catch(reject)
-            .finally(() => clearTimeout(handle));
-    });
+    const { promise, resolve, reject } = Promise.withResolvers<void>();
+
+    const handle = setTimeout(async () => {
+        debugErr(`Request timed out after ${timeout} ms`);
+        if (onTimeout !== undefined) {
+            await onTimeout();
+            resolve();
+        } else {
+            reject(new Error(`Request timed out after ${timeout} ms`));
+        }
+        const now = Date.now();
+        task.finally(() => {
+            const diff = Date.now() - now;
+            debugErr(`Request completed ${diff} ms after timeout!`);
+        });
+    }, timeout);
+
+    task.then(resolve)
+        .catch(reject)
+        .finally(() => clearTimeout(handle));
+
+    return promise;
 }
