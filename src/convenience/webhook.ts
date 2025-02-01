@@ -27,7 +27,7 @@ const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token" as const;
 
 export interface WebhookOptions {
     /** An optional callback to handle timeouts. If undefined, it will throw an error. */
-    onTimeout?: (...args: any[]) => unknown;
+    onTimeout?: (...args: any[]) => unknown | Promise<unknown>;
     /** An optional number of timeout milliseconds (default: 10_000) */
     timeoutMilliseconds?: number;
     /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
@@ -251,15 +251,15 @@ function webhookCallback<
 function timeoutIfNecessary(
     task: Promise<void>,
     timeout: number,
-    onTimeout?: () => unknown, // need async?
+    onTimeout?: () => unknown | Promise<unknown>,
 ): Promise<void> {
     if (timeout === Infinity) return task;
     const { promise, resolve, reject } = Promise.withResolvers<void>();
 
-    const handle = setTimeout(() => {
+    const handle = setTimeout(async () => {
         debugErr(`Request timed out after ${timeout} ms`);
         if (onTimeout !== undefined) {
-            onTimeout();
+            await onTimeout();
             resolve();
         } else {
             reject(new Error(`Request timed out after ${timeout} ms`));
