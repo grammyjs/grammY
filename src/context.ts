@@ -1538,7 +1538,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
+     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
      *
      * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      * @param other Optional remaining parameters, confer the official reference below
@@ -2822,7 +2822,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.sendGift`. Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success.
+     * Context-aware alias for `api.sendGift`. Sends a gift to the given user. The gift can't be converted to Telegram Stars by the receiver. Returns True on success.
      *
      * @param gift_id Identifier of the gift
      * @param other Optional remaining parameters, confer the official reference below
@@ -2832,11 +2832,33 @@ export class Context implements RenamedUpdate {
      */
     replyWithGift(
         gift_id: string,
-        other?: Other<"sendGift", "user_id" | "gift_id">,
+        other?: Other<"sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
     ) {
         return this.api.sendGift(
             orThrow(this.from, "sendGift").id,
+            gift_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.sendGift`. Sends a gift to the given channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns True on success.
+     *
+     * @param gift_id Identifier of the gift
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendgift
+     */
+    replyWithGiftToChannel(
+        gift_id: string,
+        other?: Other<"sendGift", "user_id" | "chat_id" | "gift_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.sendGiftToChannel(
+            orThrow(this.chat, "sendGift").id,
             gift_id,
             other,
             signal,
