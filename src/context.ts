@@ -2857,7 +2857,7 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
     ) {
-        return this.api.sendGift(
+        return this.api.sendGiftToChannel(
             orThrow(this.chat, "sendGift").id,
             gift_id,
             other,
