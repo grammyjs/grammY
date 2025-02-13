@@ -877,7 +877,7 @@ export class Context implements RenamedUpdate {
      */
     hasChatType<T extends Chat["type"]>(
         chatType: MaybeArray<T>,
-    ): this is ChatTypeContextCore<T> {
+    ): this is T extends unknown ? ChatTypeContextCore<T> : never {
         return Context.has.chatType(chatType)(this);
     }
     /**
