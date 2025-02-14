@@ -3301,13 +3301,14 @@ export type ShippingQueryContext<C extends Context> = Filter<
     "shipping_query"
 >;
 
-type ChatTypeContextCore<T extends Chat["type"]> =
-    & Record<"update", ChatTypeUpdate<T>> // ctx.update
-    & ChatType<T> // ctx.chat
-    & Record<"chatId", number> // ctx.chatId
-    & ChatFrom<T> // ctx.from
-    & ChatTypeRecord<"msg", T> // ctx.msg
-    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
+type ChatTypeContextCore<T extends Chat["type"]> = T extends unknown ?
+        & Record<"update", ChatTypeUpdate<T>> // ctx.update
+        & ChatType<T> // ctx.chat
+        & Record<"chatId", number> // ctx.chatId
+        & ChatFrom<T> // ctx.from
+        & ChatTypeRecord<"msg", T> // ctx.msg
+        & AliasProps<ChatTypeUpdate<T>> // ctx.message etc
+    : never;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.chatType`.
