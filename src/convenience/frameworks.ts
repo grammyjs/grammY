@@ -80,20 +80,18 @@ export type LambdaAsyncAdapter = (
     _context: unknown,
 ) => ReqResHandler;
 
-export type AzureAdapter = (request: {
-    body?: unknown;
-}, context: {
+export type AzureAdapter = (context: {
     res?: {
-        status: number;
-        body: string;
-        headers?: Record<string, string>;
-        set?: (key: string, value: string) => void;
-        send?: {
-            (body: unknown): void;
-            (status: number, body: unknown): void;
-        };
+        // deno-lint-ignore no-explicit-any
+        [key: string]: any;
     };
-}) => ReqResHandler;
+}, request: { body?: unknown }) => ReqResHandler;
+export type AzureAdapterV4 = (
+    request: {
+        headers: { get(name: string): string | null };
+        json(): Promise<unknown>;
+    },
+) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
 
 export type BunAdapter = (request: {
     headers: Headers;
@@ -282,8 +280,8 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
     };
 };
 
-/** Azure Functions */
-const azure: AzureAdapter = (request, context) => ({
+/** Azure Functions v3 and v4 */
+const azure: AzureAdapter = (context, request) => ({
     update: Promise.resolve(request.body as Update),
     header: context.res?.headers?.[SECRET_HEADER],
     end: () => (context.res = {
@@ -298,6 +296,23 @@ const azure: AzureAdapter = (request, context) => ({
         context.res?.send?.(401, WRONG_TOKEN_ERROR);
     },
 });
+const azureV4: AzureAdapterV4 = (request) => {
+    type Res = NonNullable<
+        Awaited<ReturnType<AzureAdapterV4>["handlerReturn"]>
+    >;
+    let resolveResponse: (response: Res) => void;
+    return {
+        update: Promise.resolve(request.json()) as Promise<Update>,
+        header: request.headers.get(SECRET_HEADER) || undefined,
+        end: () => resolveResponse({ status: 204 }),
+        respond: (json) => resolveResponse({ jsonBody: json }),
+        unauthorized: () =>
+            resolveResponse({ status: 401, body: WRONG_TOKEN_ERROR }),
+        handlerReturn: new Promise<Res>((resolve) => {
+            resolveResponse = resolve;
+        }),
+    };
+};
 
 /** Bun.serve */
 const bun: BunAdapter = (request) => {
@@ -580,6 +595,7 @@ export const adapters = {
     "aws-lambda": awsLambda,
     "aws-lambda-async": awsLambdaAsync,
     azure,
+    "azure-v4": azureV4,
     bun,
     cloudflare,
     "cloudflare-mod": cloudflareModule,
