@@ -930,20 +930,16 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
     ) {
-        const composer = new Composer<C>(...middleware);
-        const bound = flatten(composer);
-        this.use(async (ctx, next) => {
-            let nextCalled = false;
-            const cont = () => ((nextCalled = true), Promise.resolve());
+        return this.surround(async (ctx, tree, next) => {
+            let nextCalled: boolean;
             try {
-                await bound(ctx, cont);
-            } catch (err) {
-                nextCalled = false;
-                await errorHandler(new BotError<C>(err, ctx), cont);
+                nextCalled = (await tree()).nextCalled;
+            } catch (e) {
+                await errorHandler(new BotError(e, ctx), next);
+                return;
             }
             if (nextCalled) await next();
-        });
-        return composer;
+        }, ...middleware);
     }
 }
 
