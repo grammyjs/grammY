@@ -864,8 +864,71 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         );
     }
 
+    /**
+     * > This is an advanced method of grammY.
+     *
+     * Installs a piece of middleware that not only receives `next` as a
+     * callback to call downstream middleware, but that also receives `tree` as
+     * a callback to call the middleware of the subtree of middleware. The
+     * subtree consists of all additional handlers passed as well as all
+     * middleware installed on the composer returned by this method. This lets
+     * you wrap a middleware tree in your own logic.
+     *
+     * Consider the following code. It will reach the points A-G alphabetically.
+     *
+     * ```ts
+     * // wrap a subtree of middleware with custom logic
+     * const sub = bot.surround(
+     *   // pass a wrapper function for the tree
+     *   async (ctx, tree, next) => {
+     *     // A
+     *     await tree()
+     *     // E
+     *     await next()
+     *     // G
+     *   },
+     *   // optionally, pass some middleware for the tree here
+     *   async (ctx, next) => {
+     *     // B
+     *     await next()
+     *     // D
+     *   }
+     * })
+     * // install more middleware on the tree here
+     * sub.use((ctx) => {
+     *   // C
+     * })
+     * // install more handler on the bot
+     * bot.use((ctx) => {
+     *   // F
+     * })
+     * ```
+     *
+     * Note how the wrapper function always calls `next`. It disregards that the
+     * subtree of middleware already handled the update at point C without ever
+     * calling `next`. If this is undesired, you can determine whether or not
+     * the subtree has handled the update by looking at the return value of
+     * `tree`.
+     *
+     * ```ts
+     * const sub = bot.surround(
+     *   async (ctx, tree, next) => {
+     *     const { nextCalled } = await tree()
+     *     // only resume downstream middleware if the tree called `next`
+     *     if (nextCalled) await next()
+     *   },
+     * })
+     * ```
+     *
+     * This function lets you perform certain operations only for a part of the
+     * middleware tree by giving you the ability to revert your actions after
+     * the subtree has completed its update handling.
+     *
+     * @param wrapper A function that wraps the middleware tree
+     * @param middleware Initial handlers for the middleware tree
+     */
     surround(
-        fn: (
+        wrapper: (
             ctx: C,
             tree: () => Promise<{ nextCalled: boolean }>,
             next: () => Promise<void>,
@@ -875,7 +938,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         const composer = new Composer(...middleware);
         const tree = flatten(composer);
         this.use(async (ctx, next) => {
-            await fn(ctx, async () => {
+            await wrapper(ctx, async () => {
                 let nextCalled = false;
                 const cont = () => ((nextCalled = true), Promise.resolve());
                 await tree(ctx, cont);
@@ -886,7 +949,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
-     * > This is an advanced function of grammY.
+     * > This is an advanced method of grammY.
      *
      * Installs an error boundary that catches errors that happen only inside
      * the given middleware. This allows you to install custom error handlers
