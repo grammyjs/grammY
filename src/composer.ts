@@ -864,6 +864,27 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         );
     }
 
+    surround(
+        fn: (
+            ctx: C,
+            tree: () => Promise<{ nextCalled: boolean }>,
+            next: () => Promise<void>,
+        ) => unknown | Promise<unknown>,
+        ...middleware: Array<Middleware<C>>
+    ): Composer<C> {
+        const composer = new Composer(...middleware);
+        const tree = flatten(composer);
+        this.use(async (ctx, next) => {
+            await fn(ctx, async () => {
+                let nextCalled = false;
+                const cont = () => ((nextCalled = true), Promise.resolve());
+                await tree(ctx, cont);
+                return { nextCalled };
+            }, next);
+        });
+        return composer;
+    }
+
     /**
      * > This is an advanced function of grammY.
      *
