@@ -865,7 +865,82 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
-     * > This is an advanced function of grammY.
+     * > This is an advanced method of grammY.
+     *
+     * Installs a piece of middleware that receives `subtree`
+     * instead of `next` as a callback to call downstream middleware. The
+     * subtree consists of all additional handlers passed as well as all
+     * middleware installed on the composer returned by this method. This lets
+     * you wrap part of a middleware tree in your own logic.
+     *
+     * Consider the following code. It will reach the points A-F alphabetically.
+     *
+     * ```ts
+     * // wrap a subtree of middleware with custom logic
+     * const sub = bot.surround(
+     *   // pass a wrapper function for the tree
+     *   async (ctx, tree, next) => {
+     *     // A
+     *     await tree()
+     *     // E
+     *   },
+     *   // optionally, pass some middleware for the tree here
+     *   async (ctx, next) => {
+     *     // B
+     *     await next()
+     *     // D
+     *   }
+     * })
+     * // install more middleware on the tree here
+     * sub.use((ctx) => {
+     *   // C
+     * })
+     * // install more handler on the bot
+     * bot.use((ctx) => {
+     *   // F
+     * })
+     * ```
+     *
+     * `subtree.nextCalled` tells you whether the last middleware in the subtree
+     * called `next()`. You're free to overwrite it to control
+     * whether to pass control to middleware outside the subtree
+     * after the wrapper settles.
+     *
+     * This function lets you perform certain operations only for a part of the
+     * middleware tree by giving you the ability to revert your actions after
+     * the subtree has completed its update handling.
+     *
+     * @param wrapper A function that wraps the middleware tree
+     * @param middleware Initial handlers for the middleware tree
+     */
+    surround(
+        wrapper: (
+            ctx: C,
+            subtree: {
+                (): Promise<void>;
+                nextCalled: boolean;
+            },
+        ) => unknown | Promise<unknown>,
+        ...middleware: Array<Middleware<C>>
+    ): Composer<C> {
+        const composer = new Composer(...middleware);
+        this.use(async (ctx, next) => {
+            const cont = () => ((subtree.nextCalled = true), Promise.resolve());
+            const subtree = async () => {
+                await composer.middleware()(ctx, cont);
+            };
+            subtree.nextCalled = false;
+            try {
+                await wrapper(ctx, subtree);
+            } finally {
+                if (subtree.nextCalled) await next();
+            }
+        });
+        return composer;
+    }
+
+    /**
+     * > This is an advanced method of grammY.
      *
      * Installs an error boundary that catches errors that happen only inside
      * the given middleware. This allows you to install custom error handlers
@@ -909,20 +984,15 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
     ) {
-        const composer = new Composer<C>(...middleware);
-        const bound = flatten(composer);
-        this.use(async (ctx, next) => {
-            let nextCalled = false;
-            const cont = () => ((nextCalled = true), Promise.resolve());
+        return this.surround(async (ctx, subtree) => {
+            const next = () => ((subtree.nextCalled = true), Promise.resolve());
             try {
-                await bound(ctx, cont);
-            } catch (err) {
-                nextCalled = false;
-                await errorHandler(new BotError<C>(err, ctx), cont);
+                await subtree();
+            } catch (e) {
+                subtree.nextCalled = false;
+                await errorHandler(new BotError(e, ctx), next);
             }
-            if (nextCalled) await next();
-        });
-        return composer;
+        }, ...middleware);
     }
 }
 
