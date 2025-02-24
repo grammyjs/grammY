@@ -867,14 +867,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     /**
      * > This is an advanced method of grammY.
      *
-     * Installs a piece of middleware that not only receives `next` as a
-     * callback to call downstream middleware, but that also receives `tree` as
-     * a callback to call the middleware of the subtree of middleware. The
+     * Installs a piece of middleware that receives `subtree`
+     * instead of `next` as a callback to call downstream middleware. The
      * subtree consists of all additional handlers passed as well as all
      * middleware installed on the composer returned by this method. This lets
-     * you wrap a middleware tree in your own logic.
+     * you wrap part of a middleware tree in your own logic.
      *
-     * Consider the following code. It will reach the points A-G alphabetically.
+     * Consider the following code. It will reach the points A-F alphabetically.
      *
      * ```ts
      * // wrap a subtree of middleware with custom logic
@@ -884,8 +883,6 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *     // A
      *     await tree()
      *     // E
-     *     await next()
-     *     // G
      *   },
      *   // optionally, pass some middleware for the tree here
      *   async (ctx, next) => {
@@ -904,21 +901,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * })
      * ```
      *
-     * Note how the wrapper function always calls `next`. It disregards that the
-     * subtree of middleware already handled the update at point C without ever
-     * calling `next`. If this is undesired, you can determine whether or not
-     * the subtree has handled the update by looking at the return value of
-     * `tree`.
-     *
-     * ```ts
-     * const sub = bot.surround(
-     *   async (ctx, tree, next) => {
-     *     const { nextCalled } = await tree()
-     *     // only resume downstream middleware if the tree called `next`
-     *     if (nextCalled) await next()
-     *   },
-     * })
-     * ```
+     * `subtree.nextCalled` tells you whether the last middleware in the subtree
+     * called `next()`. You're free to overwrite it to control
+     * whether to pass control to middleware outside the subtree
+     * after the wrapper settles.
      *
      * This function lets you perform certain operations only for a part of the
      * middleware tree by giving you the ability to revert your actions after
@@ -930,20 +916,25 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     surround(
         wrapper: (
             ctx: C,
-            tree: () => Promise<{ nextCalled: boolean }>,
-            next: () => Promise<void>,
+            subtree: {
+                (): Promise<void>;
+                nextCalled: boolean;
+            },
         ) => unknown | Promise<unknown>,
         ...middleware: Array<Middleware<C>>
     ): Composer<C> {
         const composer = new Composer(...middleware);
-        const tree = flatten(composer);
         this.use(async (ctx, next) => {
-            await wrapper(ctx, async () => {
-                let nextCalled = false;
-                const cont = () => ((nextCalled = true), Promise.resolve());
-                await tree(ctx, cont);
-                return { nextCalled };
-            }, next);
+            const cont = () => ((subtree.nextCalled = true), Promise.resolve());
+            const subtree = async () => {
+                await composer.middleware()(ctx, cont);
+            };
+            subtree.nextCalled = false;
+            try {
+                await wrapper(ctx, subtree);
+            } finally {
+                if (subtree.nextCalled) await next();
+            }
         });
         return composer;
     }
@@ -993,15 +984,14 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
     ) {
-        return this.surround(async (ctx, tree, next) => {
-            let nextCalled: boolean;
+        return this.surround(async (ctx, subtree) => {
+            const next = () => ((subtree.nextCalled = true), Promise.resolve());
             try {
-                nextCalled = (await tree()).nextCalled;
+                await subtree();
             } catch (e) {
+                subtree.nextCalled = false;
                 await errorHandler(new BotError(e, ctx), next);
-                return;
             }
-            if (nextCalled) await next();
         }, ...middleware);
     }
 }
