@@ -879,9 +879,9 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * // wrap a subtree of middleware with custom logic
      * const sub = bot.surround(
      *   // pass a wrapper function for the tree
-     *   async (ctx, tree, next) => {
+     *   async (ctx, subtree) => {
      *     // A
-     *     await tree()
+     *     await subtree()
      *     // E
      *   },
      *   // optionally, pass some middleware for the tree here
@@ -901,12 +901,12 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * })
      * ```
      *
-     * `subtree.nextCalled` tells you whether the last middleware in the subtree
-     * called `next()`. You're free to overwrite it to control
-     * whether to pass control to middleware outside the subtree
-     * after the wrapper settles.
+     * After `subtree()` settles, `subtree.leave` tells you
+     * whether the last middleware in the subtree called `next()`.
+     * You're free to overwrite it, to control whether to actually pass control
+     * to outside middleware after the wrapper settles.
      *
-     * This function lets you perform certain operations only for a part of the
+     * This method lets you perform certain operations only for a part of the
      * middleware tree by giving you the ability to revert your actions after
      * the subtree has completed its update handling.
      *
@@ -918,22 +918,22 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             ctx: C,
             subtree: {
                 (): Promise<void>;
-                nextCalled: boolean;
+                leave: boolean;
             },
         ) => unknown | Promise<unknown>,
         ...middleware: Array<Middleware<C>>
     ): Composer<C> {
         const composer = new Composer(...middleware);
         this.use(async (ctx, next) => {
-            const cont = () => ((subtree.nextCalled = true), Promise.resolve());
+            const cont = () => ((subtree.leave = true), Promise.resolve());
             const subtree = async () => {
                 await composer.middleware()(ctx, cont);
             };
-            subtree.nextCalled = false;
+            subtree.leave = false;
             try {
                 await wrapper(ctx, subtree);
             } finally {
-                if (subtree.nextCalled) await next();
+                if (subtree.leave) await next();
             }
         });
         return composer;
@@ -985,11 +985,11 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<Middleware<C>>
     ) {
         return this.surround(async (ctx, subtree) => {
-            const next = () => ((subtree.nextCalled = true), Promise.resolve());
+            const next = () => ((subtree.leave = true), Promise.resolve());
             try {
                 await subtree();
             } catch (e) {
-                subtree.nextCalled = false;
+                subtree.leave = false;
                 await errorHandler(new BotError(e, ctx), next);
             }
         }, ...middleware);
