@@ -153,7 +153,9 @@ function concat<C extends Context>(
         });
     };
 }
-function pass<C extends Context>(_ctx: C, next: NextFunction) {
+
+/** Identity middleware/boundary controller. */
+export function pass<T>(_ctx: unknown, next: () => T): T {
     return next();
 }
 
@@ -867,74 +869,33 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     /**
      * > This is an advanced method of grammY.
      *
-     * Installs a piece of middleware that receives `subtree`
-     * instead of `next` as a callback to call downstream middleware. The
-     * subtree consists of all additional handlers passed as well as all
-     * middleware installed on the composer returned by this method. This lets
-     * you wrap part of a middleware tree in your own logic.
+     * Creates a composer inside a new boundary and installs it.
+     * It has no access to outside middleware.
      *
-     * Consider the following code. It will reach the points A-F alphabetically.
+     * This lets you perform certain operations only for a part of the
+     * middleware tree, by allowing the controller and middleware inside
+     * to revert their changes after the middleware finishes,
+     * but before the control is passed outside.
      *
-     * ```ts
-     * // wrap a subtree of middleware with custom logic
-     * const sub = bot.surround(
-     *   // pass a wrapper function for the tree
-     *   async (ctx, subtree) => {
-     *     // A
-     *     await subtree()
-     *     // E
-     *   },
-     *   // optionally, pass some middleware for the tree here
-     *   async (ctx, next) => {
-     *     // B
-     *     await next()
-     *     // D
-     *   }
-     * })
-     * // install more middleware on the tree here
-     * sub.use((ctx) => {
-     *   // C
-     * })
-     * // install more handler on the bot
-     * bot.use((ctx) => {
-     *   // F
-     * })
-     * ```
+     * See {@link BoundaryController} for how it works and how to control it.
      *
-     * After `subtree()` settles, `subtree.leave` tells you
-     * whether the last middleware in the subtree called `next()`.
-     * You're free to overwrite it, to control whether to actually pass control
-     * to outside middleware after the wrapper settles.
-     *
-     * This method lets you perform certain operations only for a part of the
-     * middleware tree by giving you the ability to revert your actions after
-     * the subtree has completed its update handling.
-     *
-     * @param wrapper A function that wraps the middleware tree
-     * @param middleware Initial handlers for the middleware tree
+     * @param controller A function that wraps the middleware subtree to control the boundary
+     * @param middleware Initial handlers for the middleware subtree
+     * @returns A `Composer` inside the boundary
      */
-    surround(
-        wrapper: (
-            ctx: C,
-            subtree: {
-                (): Promise<void>;
-                leave: boolean;
-            },
-        ) => unknown | Promise<unknown>,
+    boundary(
+        controller: BoundaryController<C> = pass,
         ...middleware: Array<Middleware<C>>
     ): Composer<C> {
         const composer = new Composer(...middleware);
         this.use(async (ctx, next) => {
-            const cont = () => ((subtree.leave = true), Promise.resolve());
             const subtree = async () => {
+                let nextCalled = false;
+                const cont = () => ((nextCalled = true), Promise.resolve());
                 await composer.middleware()(ctx, cont);
+                return nextCalled;
             };
-            subtree.leave = false;
-            try {
-                await wrapper(ctx, subtree);
-            } finally {
-                if (subtree.leave) await next();
-            }
+            if (await controller(ctx, subtree)) await next();
         });
         return composer;
     }
@@ -983,18 +944,64 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             next: NextFunction,
         ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
-    ) {
-        return this.surround(async (ctx, subtree) => {
-            const next = () => ((subtree.leave = true), Promise.resolve());
+    ): Composer<C> {
+        return this.boundary(async (ctx, subtree) => {
+            let nextCalled = false;
+            const next = () => ((nextCalled = true), Promise.resolve());
             try {
-                await subtree();
+                return await subtree();
             } catch (e) {
-                subtree.leave = false;
                 await errorHandler(new BotError(e, ctx), next);
+                return nextCalled;
             }
         }, ...middleware);
     }
 }
+
+/**
+ * > This is an advanced type of grammY.
+ *
+ * Wraps a middleware subtree, in order to control the behavior of a boundary.
+ *
+ * `await subtree()` calls the subtree. The returned boolean indicates
+ * whether the subtree attempted to pass control outside,
+ * by calling `next()` in the last middleware inside.
+ *
+ * Return `true` to actually pass control outside after the controller settles,
+ * or `false` not to. When in doubt, return what `await subtree()` did.
+ *
+ * The following example will reach the points A-F alphabetically.
+ *
+ * ```ts
+ * // wrap a subtree of middleware with custom logic
+ * const sub = bot.surround(
+ *   // pass a boundary controller, wrapping the subtree
+ *   async (ctx, subtree) => {
+ *     // A
+ *     await subtree() // -- returns false because C didn't call next()
+ *     // E
+ *   },
+ *   // optionally, pass some middleware for the subtree here
+ *   async (ctx, next) => {
+ *     // B
+ *     await next()
+ *     // D
+ *   }
+ * })
+ * // install more middleware on the subtree here
+ * sub.use((ctx) => {
+ *   // C
+ * })
+ * // install more handler outside the subtree
+ * bot.use((ctx) => {
+ *   // F -- reached only if controller passes control outside by returning true
+ * })
+ * ```
+ */
+export type BoundaryController<C extends Context> = (
+    ctx: C,
+    subtree: () => Promise<boolean>,
+) => Promise<boolean>;
 
 // === Filtered context middleware types
 /**
