@@ -692,7 +692,13 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         ...middleware: Array<Middleware<C>>
     ) {
         const composer = new Composer(...middleware);
-        this.branch(predicate, composer, pass);
+        this.use(async (ctx, next) => {
+            if (await predicate(ctx)) {
+                await composer.middleware()(ctx, next);
+            } else {
+                await next();
+            }
+        });
         return composer;
     }
 
