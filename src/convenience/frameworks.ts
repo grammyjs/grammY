@@ -107,6 +107,15 @@ export type CloudflareModuleAdapter = (
     request: Request,
 ) => ReqResHandler<Response>;
 
+export type ElysiaAdapter = (ctx: {
+    body: Update;
+    headers: Record<string, string | undefined>;
+    set: {
+        headers: Record<string, string>;
+        status: number;
+    };
+}) => ReqResHandler<string>;
+
 export type ExpressAdapter = (req: {
     body: Update;
     header: (header: string) => string | undefined;
@@ -554,6 +563,33 @@ const worktop: WorktopAdapter = (req, res) => ({
     unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
 });
 
+const elysia: ElysiaAdapter = (ctx) => {
+    // @note upgrade target to use modern code?
+    // const { promise, resolve } = Promise.withResolvers<string>();
+
+    let resolve: (result: string) => void;
+    const handlerReturn = new Promise<string>((res) => resolve = res);
+
+    return {
+        // @note technically the type shouldn't be limited to Promise, because it's fine to await plain values as well
+        update: Promise.resolve(ctx.body as Update),
+        header: ctx.headers[SECRET_HEADER_LOWERCASE],
+        end() {
+            resolve("");
+        },
+        respond(json) {
+            // @note since json is passed as string here, we gotta define proper content-type
+            ctx.set.headers["content-type"] = "application/json";
+            resolve(json);
+        },
+        unauthorized() {
+            ctx.set.status = 401;
+            resolve("");
+        },
+        handlerReturn,
+    };
+};
+
 // Please open a pull request if you want to add another adapter
 export const adapters = {
     "aws-lambda": awsLambda,
@@ -563,6 +599,7 @@ export const adapters = {
     bun,
     cloudflare,
     "cloudflare-mod": cloudflareModule,
+    elysia,
     express,
     fastify,
     hono,

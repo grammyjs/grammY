@@ -10,7 +10,7 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-8.2-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-8.3-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
@@ -322,6 +322,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/mahovich"><img src="https://avatars.githubusercontent.com/u/2377626?v=4?s=100" width="100px;" alt="mahovich"/><br /><sub><b>mahovich</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=mahovich" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/Hth4nh"><img src="https://avatars.githubusercontent.com/u/63627651?v=4?s=100" width="100px;" alt="Thành Hoàng Trần"/><br /><sub><b>Thành Hoàng Trần</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Hth4nh" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/ikelax"><img src="https://avatars.githubusercontent.com/u/163678144?v=4?s=100" width="100px;" alt="ikelax"/><br /><sub><b>ikelax</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=ikelax" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="http://zeokku.com"><img src="https://avatars.githubusercontent.com/u/22231294?v=4?s=100" width="100px;" alt="Lutymane"/><br /><sub><b>Lutymane</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Lutymane" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
