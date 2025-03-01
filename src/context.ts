@@ -387,6 +387,11 @@ export class Context implements RenamedUpdate {
      * or regular expression was matched.
      */
     public match: string | RegExpMatchArray | undefined;
+    /**
+     * Used by the session plugin to store the current session key, if it
+     * exists.
+     */
+    public sessionKey: string | undefined;
 
     constructor(
         /**

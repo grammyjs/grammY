@@ -238,6 +238,7 @@ function strictSingleSession<S, C extends Context>(
             initial,
         );
         const key = await getSessionKey(ctx);
+        ctx.sessionKey = key;
         await propSession.init(key, { custom, lazy: false });
         await next(); // no catch: do not write back if middleware throws
         await propSession.finish();
