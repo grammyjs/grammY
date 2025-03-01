@@ -970,16 +970,20 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
  * Return `true` to actually pass control outside after the controller settles,
  * or `false` not to. When in doubt, return what `await subtree()` did.
  *
- * The following example will reach the points A-F alphabetically.
+ * The following example will reach the points A-E alphabetically.
+ * F would then be reached if controller returned true to pass control outside.
  *
  * ```ts
  * // wrap a subtree of middleware with custom logic
  * const sub = bot.surround(
  *   // pass a boundary controller, wrapping the subtree
  *   async (ctx, subtree) => {
- *     // A
- *     await subtree() // -- returns false because C didn't call next()
- *     // E
+ *     // A -- setup
+ *     try {
+ *       return await subtree() // -- returns false because C didn't call next()
+ *     } finally {
+ *       // E -- teardown
+ *     }
  *   },
  *   // optionally, pass some middleware for the subtree here
  *   async (ctx, next) => {
