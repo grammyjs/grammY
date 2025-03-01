@@ -254,6 +254,23 @@ describe("session", () => {
         assertEquals(storage.write.calls.length, 4);
         assertEquals(storage.delete.calls.length, 1);
     });
+
+    it.only("should set ctx.sessionKey", async () => {
+        const storage = {
+            read: () => Promise.resolve(),
+            write: () => {},
+            delete: () => {},
+        };
+
+        const initial = () => ({});
+        type C = Context & SessionFlavor<never>;
+        const composer = new Composer<C>();
+        const ctx = { chatId: 42 } as C;
+        composer.use(session({ storage, initial }));
+
+        await composer.middleware()(ctx, next);
+        assertEquals(ctx.sessionKey, "42");
+    });
 });
 
 describe("multi session", () => {
