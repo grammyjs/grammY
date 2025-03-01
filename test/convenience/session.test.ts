@@ -255,7 +255,7 @@ describe("session", () => {
         assertEquals(storage.delete.calls.length, 1);
     });
 
-    it.only("should set ctx.sessionKey", async () => {
+    it("should set ctx.sessionKey", async () => {
         const storage = {
             read: () => Promise.resolve(),
             write: () => {},
@@ -488,6 +488,34 @@ describe("multi session", () => {
         assertEquals(storage1.read.calls.length, 5);
         assertEquals(storage1.write.calls.length, 4);
         assertEquals(storage1.delete.calls.length, 1);
+    });
+
+    it("should set ctx.sessionKey", async () => {
+        const val = {};
+        const storage = {
+            read: () => Promise.resolve(val),
+            write: () => {},
+            delete: () => {},
+        };
+
+        const initial = () => ({});
+        type SessionData = {
+            prop0: Record<string, number>;
+            prop1: Record<string, number>;
+        };
+        type C = Context & SessionFlavor<SessionData>;
+        const composer = new Composer<C>();
+        const ctx = { chatId: 42 } as C;
+        composer.use(
+            session({
+                type: "multi",
+                prop0: { storage, initial },
+                prop1: { storage, initial },
+            }),
+        );
+
+        await composer.middleware()(ctx, next);
+        assertEquals(ctx.sessionKey, "42");
     });
 });
 
@@ -774,6 +802,17 @@ describe("lazy session", () => {
         assertEquals(storage.write.calls[0].args, ["42", 0]);
         assert(done);
         await p;
+    });
+
+    it("should set ctx.sessionKey", async () => {
+        type C = Context & SessionFlavor<never>;
+        const composer = new Composer<C>();
+        const ctx = { chatId: 42 } as C;
+        composer.use(lazySession());
+
+        await composer.middleware()(ctx, next);
+
+        assertEquals(ctx.sessionKey, "42");
     });
 });
 
