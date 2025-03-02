@@ -1532,6 +1532,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mildronize",
+      "name": "Thada Wangthammang",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3647850?v=4",
+      "profile": "https://thadaw.com",
+      "contributions": [
+        "bug",
+        "test",
+        "review"
+      ]
     }
   ]
 }
