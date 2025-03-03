@@ -34,23 +34,26 @@ describe("session", () => {
         assertEquals(middleware.calls[0].args[0], ctx);
     });
 
-    it("should throw when reading from empty session key", async () => {
+    it("should return undefined when reading from empty session key", async () => {
         type C = Context & SessionFlavor<number>;
         let composer = new Composer<C>();
-        const ctx = {} as C;
-        composer.use(session(), () => ctx.session);
-        await assertRejects(async () => {
-            await composer.middleware()(ctx, next);
+        let ctx = {} as C;
+        composer.use(session(), () => {
+            assertEquals(ctx.session, undefined);
         });
 
+        await composer.middleware()(ctx, next);
+
+        ctx = {} as C;
         composer = new Composer<C>();
         composer.use(
             session({ getSessionKey: () => undefined }),
-            () => ctx.session,
+            () => {
+                assertEquals(ctx.session, undefined);
+            },
         );
-        await assertRejects(async () => {
-            await composer.middleware()(ctx, next);
-        });
+
+        await composer.middleware()(ctx, next);
     });
 
     it("should throw when writing to empty session key", async () => {
@@ -269,29 +272,30 @@ describe("multi session", () => {
         assertEquals(middleware.calls[0].args[0], ctx);
     });
 
-    it("should throw when reading from empty session key", async () => {
+    it("should return undefined when reading from empty session key", async () => {
         type C = Context & SessionFlavor<{ prop: number }>;
         let composer = new Composer<C>();
-        const ctx = {} as C;
+        let ctx = {} as C;
         composer.use(
             session({ type: "multi", prop: {} }),
-            () => ctx.session.prop,
+            () => {
+                assertEquals(ctx.session.prop, undefined);
+            },
         );
-        await assertRejects(async () => {
-            await composer.middleware()(ctx, next);
-        });
+        await composer.middleware()(ctx, next);
 
+        ctx = {} as C;
         composer = new Composer<C>();
         composer.use(
             session({
                 type: "multi",
                 prop: { getSessionKey: () => undefined },
             }),
-            () => ctx.session.prop,
+            () => {
+                assertEquals(ctx.session.prop, undefined);
+            },
         );
-        await assertRejects(async () => {
-            await composer.middleware()(ctx, next);
-        });
+        await composer.middleware()(ctx, next);
     });
 
     it("should throw when writing to empty session key", async () => {
@@ -494,23 +498,24 @@ describe("lazy session", () => {
         assertEquals(middleware.calls[0].args[0], ctx);
     });
 
-    it("should throw when reading from empty session key", async () => {
+    it("should return undefined when reading from empty session key", async () => {
         type C = Context & LazySessionFlavor<number>;
         let composer = new Composer<C>();
-        const ctx = {} as C;
-        composer.use(lazySession(), () => ctx.session);
-        await assertRejects(async () => {
-            await composer.middleware()(ctx, next);
+        let ctx = {} as C;
+        composer.use(lazySession(), () => {
+            assertEquals(ctx.session, undefined);
         });
+        await composer.middleware()(ctx, next);
 
+        ctx = {} as C;
         composer = new Composer<C>();
         composer.use(
             lazySession({ getSessionKey: () => undefined }),
-            () => ctx.session,
+            () => {
+                assertEquals(ctx.session, undefined);
+            },
         );
-        await assertRejects(async () => {
-            await composer.middleware()(ctx, next);
-        });
+        await composer.middleware()(ctx, next);
     });
 
     it("should throw when writing to empty session key", async () => {
