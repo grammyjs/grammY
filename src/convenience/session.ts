@@ -384,8 +384,7 @@ class PropertySession<O extends {}, P extends keyof O> {
             enumerable: true,
             get: () => {
                 if (key === undefined) {
-                    const msg = undef("access", opts);
-                    throw new Error(msg);
+                    return undefined;
                 }
                 this.read = true;
                 if (!opts.lazy || this.wrote) return this.value;
