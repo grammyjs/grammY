@@ -452,7 +452,8 @@ export type FilterQuery = ComputeFilterQueryList;
  * Any kind of value that appears in the Telegram Bot API. When intersected with
  * an optional field, it effectively removes `| undefined`.
  */
-type NotUndefined = string | number | boolean | object;
+// deno-lint-ignore ban-types
+type NotUndefined = {};
 
 /**
  * Given a FilterQuery, returns an object that, when intersected with an Update,
