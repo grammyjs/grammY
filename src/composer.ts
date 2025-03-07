@@ -153,7 +153,9 @@ function concat<C extends Context>(
         });
     };
 }
-function pass<C extends Context>(_ctx: C, next: NextFunction) {
+
+/** Identity middleware/boundary controller. */
+export function pass<T>(_ctx: unknown, next: () => T): T {
     return next();
 }
 
@@ -865,7 +867,41 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     }
 
     /**
-     * > This is an advanced function of grammY.
+     * > This is an advanced method of grammY.
+     *
+     * Creates a composer inside a new boundary and installs it.
+     * It has no access to outside middleware.
+     *
+     * This lets you perform certain operations only for a part of the
+     * middleware tree, by allowing the controller and middleware inside
+     * to revert their changes after the middleware finishes,
+     * but before the control is passed outside.
+     *
+     * See {@link BoundaryController} for how it works and how to control it.
+     *
+     * @param controller A function that wraps the middleware subtree to control the boundary
+     * @param middleware Initial handlers for the middleware subtree
+     * @returns A `Composer` inside the boundary
+     */
+    boundary(
+        controller: BoundaryController<C> = pass,
+        ...middleware: Array<Middleware<C>>
+    ): Composer<C> {
+        const composer = new Composer(...middleware);
+        this.use(async (ctx, next) => {
+            const subtree = async () => {
+                let nextCalled = false;
+                const cont = () => ((nextCalled = true), Promise.resolve());
+                await composer.middleware()(ctx, cont);
+                return nextCalled;
+            };
+            if (await controller(ctx, subtree)) await next();
+        });
+        return composer;
+    }
+
+    /**
+     * > This is an advanced method of grammY.
      *
      * Installs an error boundary that catches errors that happen only inside
      * the given middleware. This allows you to install custom error handlers
@@ -908,23 +944,68 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             next: NextFunction,
         ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
-    ) {
-        const composer = new Composer<C>(...middleware);
-        const bound = flatten(composer);
-        this.use(async (ctx, next) => {
+    ): Composer<C> {
+        return this.boundary(async (ctx, subtree) => {
             let nextCalled = false;
-            const cont = () => ((nextCalled = true), Promise.resolve());
+            const next = () => ((nextCalled = true), Promise.resolve());
             try {
-                await bound(ctx, cont);
-            } catch (err) {
-                nextCalled = false;
-                await errorHandler(new BotError<C>(err, ctx), cont);
+                return await subtree();
+            } catch (e) {
+                await errorHandler(new BotError(e, ctx), next);
+                return nextCalled;
             }
-            if (nextCalled) await next();
-        });
-        return composer;
+        }, ...middleware);
     }
 }
+
+/**
+ * > This is an advanced type of grammY.
+ *
+ * Wraps a middleware subtree, in order to control the behavior of a boundary.
+ *
+ * `await subtree()` calls the subtree. The returned boolean indicates
+ * whether the subtree attempted to pass control outside,
+ * by calling `next()` in the last middleware inside.
+ *
+ * Return `true` to actually pass control outside after the controller settles,
+ * or `false` not to. When in doubt, return what `await subtree()` did.
+ *
+ * The following example will reach the points A-E alphabetically.
+ * F would then be reached if controller returned true to pass control outside.
+ *
+ * ```ts
+ * // wrap a subtree of middleware with custom logic
+ * const sub = bot.surround(
+ *   // pass a boundary controller, wrapping the subtree
+ *   async (ctx, subtree) => {
+ *     // A -- setup
+ *     try {
+ *       return await subtree() // -- returns false because C didn't call next()
+ *     } finally {
+ *       // E -- teardown
+ *     }
+ *   },
+ *   // optionally, pass some middleware for the subtree here
+ *   async (ctx, next) => {
+ *     // B
+ *     await next()
+ *     // D
+ *   }
+ * })
+ * // install more middleware on the subtree here
+ * sub.use((ctx) => {
+ *   // C
+ * })
+ * // install more handler outside the subtree
+ * bot.use((ctx) => {
+ *   // F -- reached only if controller passes control outside by returning true
+ * })
+ * ```
+ */
+export type BoundaryController<C extends Context> = (
+    ctx: C,
+    subtree: () => Promise<boolean>,
+) => Promise<boolean>;
 
 // === Filtered context middleware types
 /**
