@@ -25,7 +25,6 @@ export * from "./convenience/constants.ts";
 export * from "./convenience/inline_query.ts";
 export * from "./convenience/input_media.ts";
 export * from "./convenience/keyboard.ts";
-export * from "./convenience/session.ts";
 export * from "./convenience/webhook.ts";
 
 // A little more advanced stuff
