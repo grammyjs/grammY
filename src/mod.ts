@@ -17,6 +17,7 @@ export {
     type GameQueryContext,
     type HearsContext,
     type InlineQueryContext,
+    type ChosenInlineResultContext,
     type ReactionContext,
 } from "./context.ts";
 
