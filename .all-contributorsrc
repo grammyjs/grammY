@@ -1543,6 +1543,16 @@
         "test",
         "review"
       ]
+    },
+    {
+      "login": "mishkatik",
+      "name": "mish",
+      "avatar_url": "https://avatars.githubusercontent.com/u/101044644?v=4",
+      "profile": "https://github.com/mishkatik",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
