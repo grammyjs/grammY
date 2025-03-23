@@ -1324,14 +1324,15 @@ export class Context implements RenamedUpdate {
                 inlineId,
                 latitude,
                 longitude,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
             )
             : this.api.editMessageLiveLocation(
                 orThrow(this.chatId, "editMessageLiveLocation"),
                 orThrow(this.msgId, "editMessageLiveLocation"),
                 latitude,
                 longitude,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -1353,11 +1354,15 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.stopMessageLiveLocationInline(inlineId, other)
+            ? this.api.stopMessageLiveLocationInline(
+                inlineId,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.stopMessageLiveLocation(
                 orThrow(this.chatId, "stopMessageLiveLocation"),
                 orThrow(this.msgId, "stopMessageLiveLocation"),
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -1382,7 +1387,7 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendPaidMedia"),
             star_count,
             media,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -2173,7 +2178,7 @@ export class Context implements RenamedUpdate {
         return this.api.pinChatMessage(
             orThrow(this.chatId, "pinChatMessage"),
             message_id,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -2186,10 +2191,15 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinchatmessage
      */
-    unpinChatMessage(message_id?: number, signal?: AbortSignal) {
+    unpinChatMessage(
+        message_id?: number,
+        other?: Other<"unpinChatMessage", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
         return this.api.unpinChatMessage(
             orThrow(this.chatId, "unpinChatMessage"),
             message_id,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -2606,7 +2616,12 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageTextInline(inlineId, text, other)
+            ? this.api.editMessageTextInline(
+                inlineId,
+                text,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.editMessageText(
                 orThrow(this.chatId, "editMessageText"),
                 orThrow(
@@ -2615,7 +2630,7 @@ export class Context implements RenamedUpdate {
                     "editMessageText",
                 ),
                 text,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2637,7 +2652,11 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageCaptionInline(inlineId, other)
+            ? this.api.editMessageCaptionInline(
+                inlineId,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.editMessageCaption(
                 orThrow(this.chatId, "editMessageCaption"),
                 orThrow(
@@ -2645,7 +2664,7 @@ export class Context implements RenamedUpdate {
                         this.messageReactionCount?.message_id,
                     "editMessageCaption",
                 ),
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2669,7 +2688,12 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageMediaInline(inlineId, media, other)
+            ? this.api.editMessageMediaInline(
+                inlineId,
+                media,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.editMessageMedia(
                 orThrow(this.chatId, "editMessageMedia"),
                 orThrow(
@@ -2678,7 +2702,7 @@ export class Context implements RenamedUpdate {
                     "editMessageMedia",
                 ),
                 media,
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2700,7 +2724,11 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageReplyMarkupInline(inlineId, other)
+            ? this.api.editMessageReplyMarkupInline(
+                inlineId,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.editMessageReplyMarkup(
                 orThrow(this.chatId, "editMessageReplyMarkup"),
                 orThrow(
@@ -2708,7 +2736,7 @@ export class Context implements RenamedUpdate {
                         this.messageReactionCount?.message_id,
                     "editMessageReplyMarkup",
                 ),
-                other,
+                { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
     }
@@ -2732,7 +2760,7 @@ export class Context implements RenamedUpdate {
                     this.messageReactionCount?.message_id,
                 "stopPoll",
             ),
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
