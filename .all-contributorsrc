@@ -1543,6 +1543,15 @@
         "test",
         "review"
       ]
+    },
+    {
+      "login": "rtyt3000",
+      "name": "Konstantin Ryshkov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/123096124?v=4",
+      "profile": "https://github.com/rtyt3000",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
