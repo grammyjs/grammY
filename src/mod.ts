@@ -12,6 +12,7 @@ export { InputFile } from "./types.ts";
 export {
     type CallbackQueryContext,
     type ChatTypeContext,
+    type ChosenInlineResultContext,
     type CommandContext,
     Context,
     type GameQueryContext,
