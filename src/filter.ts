@@ -288,6 +288,7 @@ const COMMON_MESSAGE_KEYS = {
     caption_entities: ENTITY_KEYS,
     caption: {},
 
+    link_preview_options: {},
     effect_id: {},
     has_media_spoiler: {},
 
