@@ -1798,7 +1798,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success.
      *
      * @param description New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setmydescription
@@ -1814,7 +1814,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to get the current bot description for the given user language. Returns BotDescription on success.
      *
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmydescription
@@ -1830,7 +1830,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success.
      *
      * @param short_description New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setmyshortdescription
@@ -1849,7 +1849,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.
      *
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmyshortdescription

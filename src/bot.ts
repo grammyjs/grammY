@@ -622,7 +622,7 @@ a known bot info object.",
  *
  * Otherwise, if the first attempt at running the task fails, the task is
  * retried immediately. If second attempt fails, too, waits for 100 ms, and then
- * doubles this delay for every subsequent attemt. Never waits longer than 1
+ * doubles this delay for every subsequent attempt. Never waits longer than 1
  * hour before retrying.
  *
  * @param task Async task to perform
