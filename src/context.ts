@@ -627,7 +627,7 @@ export class Context implements RenamedUpdate {
      * ```ts
      * ctx.entities() // Returns all entity types
      * ctx.entities('url') // Returns only url entities
-     * ctx.enttities(['url', 'email']) // Returns url and email entities
+     * ctx.entities(['url', 'email']) // Returns url and email entities
      * ```
      *
      * @param types Types of entities to return. Omit to get all entities.
@@ -1596,7 +1596,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Contex-aware alias for `api.serUserEmojiStatus`. Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
+     * Context-aware alias for `api.serUserEmojiStatus`. Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
