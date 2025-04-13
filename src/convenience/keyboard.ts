@@ -419,7 +419,7 @@ export class Keyboard {
      * [d e f]
      *
      * [a b c]     [  a  ]
-     * [d e f]  ~> [b c d]    (3 colums, { fillLastRow: true })
+     * [d e f]  ~> [b c d]    (3 columns, { fillLastRow: true })
      * [g h i]     [e f g]
      * [  j  ]     [h i j]
      * ```
@@ -927,7 +927,7 @@ export class InlineKeyboard {
      * [d e f]
      *
      * [a b c]     [  a  ]
-     * [d e f]  ~> [b c d]    (3 colums, { fillLastRow: true })
+     * [d e f]  ~> [b c d]    (3 columns, { fillLastRow: true })
      * [g h i]     [e f g]
      * [  j  ]     [h i j]
      * ```
