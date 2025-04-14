@@ -11,7 +11,13 @@ import {
     type InputPaidMedia as InputPaidMediaF,
     type InputPaidMediaPhoto as InputPaidMediaPhotoF,
     type InputPaidMediaVideo as InputPaidMediaVideoF,
+    type InputProfilePhoto as InputProfilePhotoAnimatedF,
+    type InputProfilePhoto as InputProfilePhotoF,
+    type InputProfilePhoto as InputProfilePhotoStaticF,
     type InputSticker as InputStickerF,
+    type InputStoryContent as InputStoryContentF,
+    type InputStoryContentPhoto as InputStoryContentPhotoF,
+    type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
 } from "https://deno.land/x/grammy_types@v3.20.0/mod.ts";
 
@@ -142,3 +148,19 @@ export type InputPaidMedia = InputPaidMediaF<InputFile>;
 export type InputPaidMediaPhoto = InputPaidMediaPhotoF<InputFile>;
 /** The paid media to send is a video. */
 export type InputPaidMediaVideo = InputPaidMediaVideoF<InputFile>;
+/** This object describes a profile photo to set. Currently, it can be one of
+- InputProfilePhotoStatic
+- InputProfilePhotoAnimated */
+export type InputProfilePhoto = InputProfilePhotoF<InputFile>;
+/** A static profile photo in the .JPG format. */
+export type InputProfilePhotoStatic = InputProfilePhotoStaticF<InputFile>;
+/** An animated profile photo in the MPEG4 format. */
+export type InputProfilePhotoAnimated = InputProfilePhotoAnimatedF<InputFile>;
+/** This object describes the content of a story to post. Currently, it can be one of
+- InputStoryContentPhoto
+- InputStoryContentVideo */
+export type InputStoryContent = InputStoryContentF<InputFile>;
+/** Describes a photo to post as a story. */
+export type InputStoryContentPhoto = InputStoryContentPhotoF<InputFile>;
+/** Describes a video to post as a story. */
+export type InputStoryContentVideo = InputStoryContentVideoF<InputFile>;
