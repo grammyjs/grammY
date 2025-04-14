@@ -1,5 +1,6 @@
 // deno-lint-ignore-file camelcase
 import {
+    type AcceptedGiftTypes,
     type BotCommand,
     type ChatPermissions,
     type InlineQueryResult,
@@ -11,7 +12,9 @@ import {
     type InputMediaVideo,
     type InputPaidMedia,
     type InputPollOption,
+    type InputProfilePhoto,
     type InputSticker,
+    type InputStoryContent,
     type LabeledPrice,
     type MaskPosition,
     type PassportElementError,
@@ -2188,6 +2191,370 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Delete messages on behalf of a business account. Requires the can_delete_outgoing_messages business bot right to delete messages sent by the bot itself, or the can_delete_all_messages business bot right to delete any message. Returns True on success.
+     *
+     *     @param business_connection_id Unique identifier of the business connection on behalf of which to delete the messages
+     *     @param message_ids A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See deleteMessage for limitations on which messages can be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletebusinessmessages
+     */
+    deleteBusinessMessages(
+        business_connection_id: string,
+        message_ids: number[],
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteBusinessMessages(
+            { business_connection_id, message_ids },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the first and last name of a managed business account. Requires the can_change_name business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param first_name The new value of the first name for the business account; 1-64 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountname
+     */
+    setBusinessAccountName(
+        business_connection_id: string,
+        first_name: string,
+        other: Other<
+            R,
+            "setBusinessAccountName",
+            "business_connection_id" | "first_name"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountName(
+            { business_connection_id, first_name, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the username of a managed business account. Requires the can_change_username business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection *
+     * @param username The new value of the username for the business account; 0-32 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountusername
+     */
+    setBusinessAccountUsername(
+        business_connection_id: string,
+        username: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountUsername(
+            { business_connection_id, username },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the bio of a managed business account. Requires the can_change_bio business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param bio The new value of the bio for the business account; 0-140 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountbio
+     */
+    setBusinessAccountBio(
+        business_connection_id: string,
+        bio: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountBio(
+            { business_connection_id, bio },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param photo The new profile photo to set
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
+     */
+    setBusinessAccountProfilePhoto(
+        business_connection_id: string,
+        photo: InputProfilePhoto,
+        other: Other<
+            R,
+            "setBusinessAccountProfilePhoto",
+            "business_connection_id" | "photo"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountProfilePhoto(
+            { business_connection_id, photo, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Removes the current profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removebusinessaccountprofilephoto
+     */
+    removeBusinessAccountProfilePhoto(
+        business_connection_id: string,
+        other: Other<
+            R,
+            "removeBusinessAccountProfilePhoto",
+            "business_connection_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.removeBusinessAccountProfilePhoto(
+            { business_connection_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the can_change_gift_settings business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param show_gift_button Pass True, if a button for sending a gift to the user or by the business account must always be shown in the input field
+     * @param accepted_gift_types Types of gifts accepted by the business account
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+     */
+    setBusinessAccountGiftSettings(
+        business_connection_id: string,
+        show_gift_button: boolean,
+        accepted_gift_types: AcceptedGiftTypes,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountGiftSettings(
+            { business_connection_id, show_gift_button, accepted_gift_types },
+            signal,
+        );
+    }
+
+    /**
+     * Returns the amount of Telegram Stars owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns StarAmount on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountstarbalance
+     */
+    getBusinessAccountStarBalance(
+        business_connection_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getBusinessAccountStarBalance(
+            { business_connection_id },
+            signal,
+        );
+    }
+
+    /**
+     * Transfers Telegram Stars from the business account balance to the bot's balance. Requires the can_transfer_stars business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param star_count Number of Telegram Stars to transfer; 1-10000
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transferbusinessaccountstars
+     */
+    transferBusinessAccountStars(
+        business_connection_id: string,
+        star_count: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.transferBusinessAccountStars(
+            { business_connection_id, star_count },
+            signal,
+        );
+    }
+
+    /**
+     * Returns the gifts received and owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns OwnedGifts on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountgifts
+     */
+    getBusinessAccountGifts(
+        business_connection_id: string,
+        other: Other<R, "getBusinessAccountGifts", "business_connection_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getBusinessAccountGifts(
+            { business_connection_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Converts a given regular gift to Telegram Stars. Requires the can_convert_gifts_to_stars business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param owned_gift_id Unique identifier of the regular gift that should be converted to Telegram Stars
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#convertgifttostars
+     */
+    convertGiftToStars(
+        business_connection_id: string,
+        owned_gift_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.convertGiftToStars(
+            { business_connection_id, owned_gift_id },
+            signal,
+        );
+    }
+
+    /**
+     * Upgrades a given regular gift to a unique gift. Requires the can_transfer_and_upgrade_gifts business bot right. Additionally requires the can_transfer_stars business bot right if the upgrade is paid. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param owned_gift_id Unique identifier of the regular gift that should be upgraded to a unique one
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#upgradegift
+     */
+    upgradeGift(
+        business_connection_id: string,
+        owned_gift_id: string,
+        other: Other<
+            R,
+            "getBusinessAccountGifts",
+            "business_connection_id" | "owned_gift_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.upgradeGift(
+            { business_connection_id, owned_gift_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Transfers an owned unique gift to another user. Requires the can_transfer_and_upgrade_gifts business bot right. Requires can_transfer_stars business bot right if the transfer is paid. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param owned_gift_id Unique identifier of the regular gift that should be transferred
+     * @param new_owner_chat_id Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.
+     * @param star_count The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the can_transfer_stars business bot right is required.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transfergift
+     */
+    transferGift(
+        business_connection_id: string,
+        owned_gift_id: string,
+        new_owner_chat_id: number,
+        star_count: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.transferGift({
+            business_connection_id,
+            owned_gift_id,
+            new_owner_chat_id,
+            star_count,
+        }, signal);
+    }
+
+    /**
+     * Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param content Content of the story
+     * @param active_period Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#poststory
+     */
+    postStory(
+        business_connection_id: string,
+        content: InputStoryContent,
+        active_period: number,
+        other: Other<
+            R,
+            "postStory",
+            "business_connection_id" | "content" | "active_period"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.postStory(
+            { business_connection_id, content, active_period, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Edits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param story_id Unique identifier of the story to edit
+     * @param content Content of the story
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editstory
+     */
+    editStory(
+        business_connection_id: string,
+        story_id: number,
+        content: InputStoryContent,
+        other: Other<
+            R,
+            "editStory",
+            "business_connection_id" | "story_id" | "content"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editStory(
+            { business_connection_id, story_id, content, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param story_id Unique identifier of the story to delete
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletestory
+     */
+    deleteStory(
+        business_connection_id: string,
+        story_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteStory(
+            { business_connection_id, story_id },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -2512,6 +2879,34 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.sendGift({ user_id, gift_id, ...other }, signal);
+    }
+
+    /**
+     * Gifts a Telegram Premium subscription to the given user. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user who will receive a Telegram Premium subscription
+     * @param month_count Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
+     * @param star_count Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#giftpremiumsubscription
+     */
+    giftPremiumSubscription(
+        user_id: number,
+        month_count: 3 | 6 | 12,
+        star_count: 1000 | 1500 | 2500,
+        other?: Other<
+            R,
+            "giftPremiumSubscription",
+            "user_id" | "month_count" | "star_count"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.giftPremiumSubscription(
+            { user_id, month_count, star_count, ...other },
+            signal,
+        );
     }
 
     /**
@@ -2849,6 +3244,28 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.removeChatVerification({ chat_id }, signal);
+    }
+
+    /**
+     * Marks incoming message as read on behalf of a business account. Requires the can_read_messages business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection on behalf of which to read the message
+     * @param chat_id Unique identifier of the chat in which the message was received. The chat must have been active in the last 24 hours.
+     * @param message_id Unique identifier of the message to mark as read
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#readbusinessmessage
+     */
+    readBusinessMessage(
+        business_connection_id: string,
+        chat_id: number,
+        message_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.readBusinessMessage(
+            { business_connection_id, chat_id, message_id },
+            signal,
+        );
     }
 
     /**

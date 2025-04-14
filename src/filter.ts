@@ -289,6 +289,7 @@ const COMMON_MESSAGE_KEYS = {
     caption: {},
 
     effect_id: {},
+    paid_star_count: {},
     has_media_spoiler: {},
 
     new_chat_title: {},
@@ -303,6 +304,9 @@ const COMMON_MESSAGE_KEYS = {
     giveaway: { only_new_members: {}, has_public_winners: {} },
     giveaway_winners: { only_new_members: {}, was_refunded: {} },
     giveaway_completed: {},
+    gift: {},
+    unique_gift: {},
+    paid_message_price_changed: {},
     video_chat_scheduled: {},
     video_chat_started: {},
     video_chat_ended: {},
