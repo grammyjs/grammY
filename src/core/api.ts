@@ -2239,7 +2239,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Changes the username of a managed business account. Requires the can_change_username business bot right. Returns True on success.
      *
-     * @param business_connection_idUnique identifier of the business connection *
+     * @param business_connection_id Unique identifier of the business connection *
      * @param username The new value of the username for the business account; 0-32 characters
      * @param signal Optional `AbortSignal` to cancel the request
      *
