@@ -14,6 +14,7 @@ import {
     type InputPollOption,
     type InputProfilePhoto,
     type InputSticker,
+    type InputStoryContent,
     type LabeledPrice,
     type MaskPosition,
     type PassportElementError,
