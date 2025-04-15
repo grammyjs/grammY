@@ -98,7 +98,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Constructs a new instance of `Api`. It is independent from all other
      * instances of this class. For example, this lets you install a custom set
-     * if transformers.
+     * of transformers.
      *
      * @param token Bot API token obtained from [@BotFather](https://t.me/BotFather)
      * @param options Optional API client options for the underlying client instance
