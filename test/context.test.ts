@@ -27,6 +27,8 @@ describe("Context", () => {
         user: u,
         can_reply: true,
         is_enabled: true,
+        user_chat_id: 42,
+        date: 1112734,
     } as BusinessConnection;
     const d = {
         chat: c,

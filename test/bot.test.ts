@@ -18,5 +18,5 @@ Deno.test("should not take an empty token", () => {
 // TODO: add tests
 
 // for error handling
-// for initilisation, including retries
+// for initialization, including retries
 // for starting and stopping

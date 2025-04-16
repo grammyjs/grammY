@@ -8,6 +8,7 @@ import {
     matchFilter,
 } from "./filter.ts";
 import {
+    type AcceptedGiftTypes,
     type Chat,
     type ChatPermissions,
     type InlineQueryResult,
@@ -19,6 +20,8 @@ import {
     type InputMediaVideo,
     type InputPaidMedia,
     type InputPollOption,
+    type InputProfilePhoto,
+    type InputStoryContent,
     type LabeledPrice,
     type Message,
     type MessageEntity,
@@ -627,7 +630,7 @@ export class Context implements RenamedUpdate {
      * ```ts
      * ctx.entities() // Returns all entity types
      * ctx.entities('url') // Returns only url entities
-     * ctx.enttities(['url', 'email']) // Returns url and email entities
+     * ctx.entities(['url', 'email']) // Returns url and email entities
      * ```
      *
      * @param types Types of entities to return. Omit to get all entities.
@@ -1596,7 +1599,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Contex-aware alias for `api.serUserEmojiStatus`. Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
+     * Context-aware alias for `api.serUserEmojiStatus`. Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2810,6 +2813,347 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.deleteBusinessMessages`. Delete messages on behalf of a business account. Requires the can_delete_outgoing_messages business bot right to delete messages sent by the bot itself, or the can_delete_all_messages business bot right to delete any message. Returns True on success.
+     *
+     * @param message_ids A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See deleteMessage for limitations on which messages can be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletebusinessmessages
+     */
+    deleteBusinessMessages(message_ids: number[], signal?: AbortSignal) {
+        return this.api.deleteBusinessMessages(
+            orThrow(this.businessConnectionId, "deleteBusinessMessages"),
+            message_ids,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountName`. Changes the first and last name of a managed business account. Requires the can_change_name business bot right. Returns True on success.
+     *
+     * @param first_name The new value of the first name for the business account; 1-64 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountname
+     */
+    setBusinessAccountName(
+        first_name: string,
+        other: Other<
+            "setBusinessAccountName",
+            "business_connection_id" | "first_name"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setBusinessAccountName(
+            orThrow(this.businessConnectionId, "setBusinessAccountName"),
+            first_name,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountUsername`. Changes the username of a managed business account. Requires the can_change_username business bot right. Returns True on success.
+     *
+     * @param username The new value of the username for the business account; 0-32 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountusername
+     */
+    setBusinessAccountUsername(username: string, signal?: AbortSignal) {
+        return this.api.setBusinessAccountUsername(
+            orThrow(this.businessConnectionId, "setBusinessAccountUsername"),
+            username,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountBio`. Changes the bio of a managed business account. Requires the can_change_bio business bot right. Returns True on success.
+     *
+     * @param bio The new value of the bio for the business account; 0-140 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountbio
+     */
+    setBusinessAccountBio(bio: string, signal?: AbortSignal) {
+        return this.api.setBusinessAccountBio(
+            orThrow(this.businessConnectionId, "setBusinessAccountBio"),
+            bio,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountProfilePhoto`. CsetBusinessAccountProfilePhotohanges the profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param photo The new profile photo to set
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
+     */
+    setBusinessAccountProfilePhoto(
+        photo: InputProfilePhoto,
+        other: Other<
+            "setBusinessAccountProfilePhoto",
+            "business_connection_id" | "photo"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setBusinessAccountProfilePhoto(
+            orThrow(
+                this.businessConnectionId,
+                "setBusinessAccountProfilePhoto",
+            ),
+            photo,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.removeBusinessAccountProfilePhoto`. Removes the current profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removebusinessaccountprofilephoto
+     */
+    removeBusinessAccountProfilePhoto(
+        other: Other<
+            "removeBusinessAccountProfilePhoto",
+            "business_connection_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.removeBusinessAccountProfilePhoto(
+            orThrow(
+                this.businessConnectionId,
+                "removeBusinessAccountProfilePhoto",
+            ),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountGiftSettings`. Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the can_change_gift_settings business bot right. Returns True on success.
+     *
+     * @param show_gift_button Pass True, if a button for sending a gift to the user or by the business account must always be shown in the input field
+     * @param accepted_gift_types Types of gifts accepted by the business account
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+     */
+    setBusinessAccountGiftSettings(
+        show_gift_button: boolean,
+        accepted_gift_types: AcceptedGiftTypes,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setBusinessAccountGiftSettings(
+            orThrow(
+                this.businessConnectionId,
+                "setBusinessAccountGiftSettings",
+            ),
+            show_gift_button,
+            accepted_gift_types,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getBusinessAccountStarBalance`. Returns the amount of Telegram Stars owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns StarAmount on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountstarbalance
+     */
+    getBusinessAccountStarBalance(signal?: AbortSignal) {
+        return this.api.getBusinessAccountStarBalance(
+            orThrow(this.businessConnectionId, "getBusinessAccountStarBalance"),
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.transferBusinessAccountStars`. Transfers Telegram Stars from the business account balance to the bot's balance. Requires the can_transfer_stars business bot right. Returns True on success.
+     *
+     * @param star_count Number of Telegram Stars to transfer; 1-10000
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transferbusinessaccountstars
+     */
+    transferBusinessAccountStars(star_count: number, signal?: AbortSignal) {
+        return this.api.transferBusinessAccountStars(
+            orThrow(this.businessConnectionId, "transferBusinessAccountStars"),
+            star_count,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getBusinessAccountGifts`. Returns the gifts received and owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns OwnedGifts on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountgifts
+     */
+    getBusinessAccountGifts(
+        other: Other<"getBusinessAccountGifts", "business_connection_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.getBusinessAccountGifts(
+            orThrow(this.businessConnectionId, "getBusinessAccountGifts"),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.convertGiftToStars`. Converts a given regular gift to Telegram Stars. Requires the can_convert_gifts_to_stars business bot right. Returns True on success.
+     *
+     * @param owned_gift_id Unique identifier of the regular gift that should be converted to Telegram Stars
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#convertgifttostars
+     */
+    convertGiftToStars(
+        owned_gift_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.api.convertGiftToStars(
+            orThrow(this.businessConnectionId, "convertGiftToStars"),
+            owned_gift_id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.upgradeGift`. Upgrades a given regular gift to a unique gift. Requires the can_transfer_and_upgrade_gifts business bot right. Additionally requires the can_transfer_stars business bot right if the upgrade is paid. Returns True on success.
+     *
+     * @param owned_gift_id Unique identifier of the regular gift that should be upgraded to a unique one
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#upgradegift
+     */
+    upgradeGift(
+        owned_gift_id: string,
+        other: Other<
+            "getBusinessAccountGifts",
+            "business_connection_id" | "owned_gift_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.upgradeGift(
+            orThrow(this.businessConnectionId, "upgradeGift"),
+            owned_gift_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.transferGift`. Transfers an owned unique gift to another user. Requires the can_transfer_and_upgrade_gifts business bot right. Requires can_transfer_stars business bot right if the transfer is paid. Returns True on success.
+     *
+     * @param owned_gift_id Unique identifier of the regular gift that should be transferred
+     * @param new_owner_chat_id Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.
+     * @param star_count The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the can_transfer_stars business bot right is required.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transfergift
+     */
+    transferGift(
+        owned_gift_id: string,
+        new_owner_chat_id: number,
+        star_count: number,
+        signal?: AbortSignal,
+    ) {
+        return this.api.transferGift(
+            orThrow(this.businessConnectionId, "transferGift"),
+            owned_gift_id,
+            new_owner_chat_id,
+            star_count,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.postStory`. Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param content Content of the story
+     * @param active_period Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#poststory
+     */
+    postStory(
+        content: InputStoryContent,
+        active_period: number,
+        other: Other<
+            "postStory",
+            "business_connection_id" | "content" | "active_period"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.postStory(
+            orThrow(this.businessConnectionId, "postStory"),
+            content,
+            active_period,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.`. editStoryEdits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param story_id Unique identifier of the story to edit
+     * @param content Content of the story
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editstory
+     */
+    editStory(
+        story_id: number,
+        content: InputStoryContent,
+        other: Other<
+            "editStory",
+            "business_connection_id" | "story_id" | "content"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.editStory(
+            orThrow(this.businessConnectionId, "editStory"),
+            story_id,
+            content,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.deleteStory`. Deletes a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns True on success.
+     *
+     * @param story_id Unique identifier of the story to delete
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletestory
+     */
+    deleteStory(story_id: number, signal?: AbortSignal) {
+        return this.api.deleteStory(
+            orThrow(this.businessConnectionId, "deleteStory"),
+            story_id,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.sendSticker`. Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
      * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL.
@@ -2866,6 +3210,34 @@ export class Context implements RenamedUpdate {
         return this.api.sendGift(
             orThrow(this.from, "sendGift").id,
             gift_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.giftPremiumSubscription`. Gifts a Telegram Premium subscription to the given user. Returns True on success.
+     *
+     * @param month_count Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
+     * @param star_count Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#giftpremiumsubscription
+     */
+    giftPremiumSubscription(
+        month_count: 3 | 6 | 12,
+        star_count: 1000 | 1500 | 2500,
+        other?: Other<
+            "giftPremiumSubscription",
+            "user_id" | "month_count" | "star_count"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.giftPremiumSubscription(
+            orThrow(this.from, "giftPremiumSubscription").id,
+            month_count,
+            star_count,
             other,
             signal,
         );
@@ -3131,6 +3503,22 @@ export class Context implements RenamedUpdate {
     ) {
         return this.api.removeChatVerification(
             orThrow(this.chatId, "removeChatVerification"),
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.readBusinessMessage`. Marks incoming message as read on behalf of a business account. Requires the can_read_messages business bot right. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#readbusinessmessage
+     */
+    readBusinessMessage(signal?: AbortSignal) {
+        return this.api.readBusinessMessage(
+            orThrow(this.businessConnectionId, "readBusinessMessage"),
+            orThrow(this.chatId, "readBusinessMessage"),
+            orThrow(this.msgId, "readBusinessMessage"),
             signal,
         );
     }
