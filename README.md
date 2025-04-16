@@ -328,6 +328,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/mishkatik"><img src="https://avatars.githubusercontent.com/u/101044644?v=4?s=100" width="100px;" alt="mish"/><br /><sub><b>mish</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Amishkatik" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=mishkatik" title="Code">💻</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/eddienubes"><img src="https://avatars.githubusercontent.com/u/53977359?v=4?s=100" width="100px;" alt="Dmytro Tiapukhin"/><br /><sub><b>Dmytro Tiapukhin</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=eddienubes" title="Documentation">📖</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/Arctomachine"><img src="https://avatars.githubusercontent.com/u/29041820?v=4?s=100" width="100px;" alt="Alexander"/><br /><sub><b>Alexander</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Arctomachine" title="Documentation">📖</a></td>
+    </tr>
   </tbody>
 </table>
 
