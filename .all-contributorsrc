@@ -1583,6 +1583,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "OfficialCodinary",
+      "name": "Codinary",
+      "avatar_url": "https://avatars.githubusercontent.com/u/133005277?v=4",
+      "profile": "https://github.com/OfficialCodinary",
+      "contributions": [
+        "review"
+      ]
     }
   ]
 }

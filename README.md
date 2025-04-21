@@ -330,6 +330,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/Arctomachine"><img src="https://avatars.githubusercontent.com/u/29041820?v=4?s=100" width="100px;" alt="Alexander"/><br /><sub><b>Alexander</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/commits?author=Arctomachine" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/OfficialCodinary"><img src="https://avatars.githubusercontent.com/u/133005277?v=4?s=100" width="100px;" alt="Codinary"/><br /><sub><b>Codinary</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3AOfficialCodinary" title="Reviewed Pull Requests">👀</a></td>
     </tr>
   </tbody>
 </table>
