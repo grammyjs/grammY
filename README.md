@@ -44,7 +44,7 @@ npm install grammy
 inside it. Then create a file `bot.js` with this content:
 
 ```ts
-const { Bot } = require("grammy");
+import { Bot } from "grammy";
 
 // Create a bot object
 const bot = new Bot(""); // <-- place your bot token in this string
