@@ -1,5 +1,5 @@
 // === Needed imports
-import { basename } from "jsr:@std/path@1.0.9";
+import { basename } from "jsr:@std/path@1.0.9/basename";
 
 import {
     type ApiMethods as ApiMethodsF,
