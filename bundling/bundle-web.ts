@@ -1,5 +1,5 @@
-import { bundle } from "https://deno.land/x/emit@0.28.0/mod.ts";
-import { createCache } from "https://deno.land/x/deno_cache@0.6.0/mod.ts";
+import { createCache } from "jsr:@deno/cache-dir@0.13.2";
+import { bundle } from "jsr:@deno/emit@0.46.0";
 
 // Parse args
 const [release, source = `https://deno.land/x/grammy@${release}/mod.ts`] =
