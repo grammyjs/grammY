@@ -1,5 +1,6 @@
 // === Needed imports
-import { basename } from "https://deno.land/std@0.211.0/path/basename.ts";
+import { basename } from "jsr:@std/path@1.0.9/basename";
+
 import {
     type ApiMethods as ApiMethodsF,
     type InputMedia as InputMediaF,
