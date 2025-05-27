@@ -29,9 +29,6 @@ const { code: bundledCode } = await bundle(source, {
 
 console.log("Emitting ...");
 await Deno.writeTextFile("../out/web.mjs", bundledCode);
-await Deno.writeTextFile(
-    "../out/web.d.ts",
-    'export * from "./mod";\n',
-);
+await Deno.writeTextFile("../out/web.d.ts", 'export * from "./mod";\n');
 
 console.log("Done.");
