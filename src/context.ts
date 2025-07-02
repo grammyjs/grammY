@@ -1458,7 +1458,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.sendPoll`. Use this method to send a native poll. On success, the sent Message is returned.
      *
      * @param question Poll question, 1-300 characters
-     * @param options A list of answer options, 2-10 strings 1-100 characters each
+     * @param options A list of answer options, 2-12 strings 1-100 characters each
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1466,7 +1466,7 @@ export class Context implements RenamedUpdate {
      */
     replyWithPoll(
         question: string,
-        options: InputPollOption[],
+        options: (string | InputPollOption)[],
         other?: Other<"sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {

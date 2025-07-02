@@ -379,7 +379,8 @@ export function createRawApi<R extends RawApi>(
                         m === "getForumTopicIconStickers" ||
                         m === "getAvailableGifts" ||
                         m === "logOut" ||
-                        m === "close"
+                        m === "close" ||
+                        m === "getMyStarBalance"
                 ? client.callApi.bind(client, m, {} as Payload<typeof m, R>)
                 : client.callApi.bind(client, m);
         },

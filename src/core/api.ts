@@ -4,6 +4,7 @@ import {
     type BotCommand,
     type ChatPermissions,
     type InlineQueryResult,
+    type InputChecklist,
     type InputFile,
     type InputMedia,
     type InputMediaAudio,
@@ -746,7 +747,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param question Poll question, 1-300 characters
-     * @param options A list of answer options, 2-10 strings 1-100 characters each
+     * @param options A list of answer options, 2-12 strings 1-100 characters each
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -755,14 +756,80 @@ export class Api<R extends RawApi = RawApi> {
     sendPoll(
         chat_id: number | string,
         question: string,
-        options: InputPollOption[],
+        options: (string | InputPollOption)[],
         other?: Other<R, "sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {
+        const opts = options.map((o) =>
+            typeof o === "string" ? { text: o } : o
+        );
         return this.raw.sendPoll(
-            { chat_id, question, options, ...other },
+            { chat_id, question, options: opts, ...other },
             signal,
         );
+    }
+
+    /**
+     * Use this method to send a checklist on behalf of a connected business account. On success, the sent Message is returned.
+     *
+     * @param business_connection_id Unique identifier of the business connection on behalf of which the message will be sent
+     * @param chat_id Unique identifier for the target chat
+     * @param checklist An object for the checklist to send
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendchecklist
+     */
+    sendChecklist(
+        business_connection_id: string,
+        chat_id: number,
+        checklist: InputChecklist,
+        other?: Other<
+            R,
+            "sendChecklist",
+            "business_connection_id" | "chat_id" | "checklist"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendChecklist({
+            business_connection_id,
+            chat_id,
+            checklist,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned.
+     *
+     * @param business_connection_id Unique identifier of the business connection on behalf of which the message will be sent
+     * @param chat_id Unique identifier for the target chat
+     * @param message_id Unique identifier for the target message
+     * @param checklist An object for the new checklist
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagechecklist
+     */
+    editMessageChecklist(
+        business_connection_id: string,
+        chat_id: number,
+        message_id: number,
+        checklist: InputChecklist,
+        other?: Other<
+            R,
+            "editMessageChecklist",
+            "business_connection_id" | "chat_id" | "messaage_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editMessageChecklist({
+            business_connection_id,
+            chat_id,
+            message_id,
+            checklist,
+            ...other,
+        }, signal);
     }
 
     /**
@@ -1920,6 +1987,17 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getMyDefaultAdministratorRights({ ...other }, signal);
+    }
+
+    /**
+     * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a StarAmount object.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmystarbalance
+     */
+    getMyStarBalance(signal?: AbortSignal) {
+        return this.raw.getMyStarBalance(signal);
     }
 
     /**
