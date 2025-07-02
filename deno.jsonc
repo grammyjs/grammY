@@ -22,5 +22,6 @@
     "fmt": {
         "indentWidth": 4,
         "proseWrap": "preserve"
-    }
+    },
+    "compilerOptions": {}
 }
