@@ -1519,7 +1519,7 @@ export class Context implements RenamedUpdate {
         checklist: InputChecklist,
         other?: Other<
             "editMessageChecklist",
-            "business_connection_id" | "chat_id" | "messaage_id"
+            "business_connection_id" | "chat_id" | "messaage_id" | "checklist"
         >,
         signal?: AbortSignal,
     ) {
@@ -1530,7 +1530,7 @@ export class Context implements RenamedUpdate {
         return this.api.editMessageChecklist(
             orThrow(this.businessConnectionId, "editMessageChecklist"),
             orThrow(target.chat.id, "editMessageChecklist"),
-            orThrow(target.chat.id, "editMessageChecklist"),
+            orThrow(target.message_id, "editMessageChecklist"),
             checklist,
             other,
             signal,
