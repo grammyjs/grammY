@@ -12,6 +12,7 @@ import {
     type Chat,
     type ChatPermissions,
     type InlineQueryResult,
+    type InputChecklist,
     type InputFile,
     type InputMedia,
     type InputMediaAudio,
@@ -1458,7 +1459,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.sendPoll`. Use this method to send a native poll. On success, the sent Message is returned.
      *
      * @param question Poll question, 1-300 characters
-     * @param options A list of answer options, 2-10 strings 1-100 characters each
+     * @param options A list of answer options, 2-12 strings 1-100 characters each
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1466,7 +1467,7 @@ export class Context implements RenamedUpdate {
      */
     replyWithPoll(
         question: string,
-        options: InputPollOption[],
+        options: (string | InputPollOption)[],
         other?: Other<"sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {
@@ -1475,6 +1476,63 @@ export class Context implements RenamedUpdate {
             question,
             options,
             { business_connection_id: this.businessConnectionId, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.sendChecklist`. Use this method to send a checklist on behalf of a connected business account. On success, the sent Message is returned.
+     *
+     * @param checklist An object for the checklist to send
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendchecklist
+     */
+    replyWithChecklist(
+        checklist: InputChecklist,
+        other?: Other<
+            "sendChecklist",
+            "business_connection_id" | "chat_id" | "checklist"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.sendChecklist(
+            orThrow(this.businessConnectionId, "sendChecklist"),
+            orThrow(this.chatId, "sendChecklist"),
+            checklist,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editMessageChecklist`. Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned.
+     *
+     * @param checklist An object for the new checklist
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagechecklist
+     */
+    editMessageChecklist(
+        checklist: InputChecklist,
+        other?: Other<
+            "editMessageChecklist",
+            "business_connection_id" | "chat_id" | "messaage_id" | "checklist"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const msg = orThrow(this.msg, "editMessageChecklist");
+        const target = msg.checklist_tasks_done?.checklist_message ??
+            msg.checklist_tasks_added?.checklist_message ??
+            msg;
+        return this.api.editMessageChecklist(
+            orThrow(this.businessConnectionId, "editMessageChecklist"),
+            orThrow(target.chat.id, "editMessageChecklist"),
+            orThrow(target.message_id, "editMessageChecklist"),
+            checklist,
+            other,
             signal,
         );
     }

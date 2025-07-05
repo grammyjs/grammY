@@ -343,11 +343,16 @@ const MESSAGE_KEYS = {
     general_forum_topic_hidden: {},
     general_forum_topic_unhidden: {},
 
+    checklist: { others_can_add_tasks: {}, others_can_mark_tasks_as_done: {} },
+    checklist_tasks_done: {},
+    checklist_tasks_added: {},
+
     sender_boost_count: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
+    direct_message_price_changed: {},
 } as const;
 const BUSINESS_CONNECTION_KEYS = {
     can_reply: {},
