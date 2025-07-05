@@ -819,7 +819,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "editMessageChecklist",
-            "business_connection_id" | "chat_id" | "messaage_id"
+            "business_connection_id" | "chat_id" | "messaage_id" | "checklist"
         >,
         signal?: AbortSignal,
     ) {
