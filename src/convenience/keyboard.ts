@@ -118,7 +118,9 @@ export class Keyboard {
      * @param buttons A number of buttons to add to the next row
      */
     row(...buttons: KeyboardButton[]) {
-        if (!this.keyboard[this.keyboard.length - 1]?.length) return this;
+        if (!this.keyboard[this.keyboard.length - 1]?.length) {
+            return this.add(...buttons);
+        }
 
         this.keyboard.push(buttons);
         return this;
@@ -575,7 +577,7 @@ export class InlineKeyboard {
      */
     row(...buttons: InlineKeyboardButton[]) {
         if (!this.inline_keyboard[this.inline_keyboard.length - 1]?.length) {
-            return this;
+            return this.add(...buttons);
         }
 
         this.inline_keyboard.push(buttons);
