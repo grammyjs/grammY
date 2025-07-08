@@ -16,10 +16,13 @@ describe("Keyboard", () => {
     it("should create rows and columns", () => {
         const keyboard = new Keyboard([[{ text: "0" }]])
             .add({ text: "1" }, { text: "2" }).row()
-            .add({ text: "3" }, { text: "4" }).add({ text: "5" });
+            .addIf(false, { text: "3" })
+            .addIf(true, { text: "4" }, { text: "5" }, { text: "6" }).row()
+            .add({ text: "7" }, { text: "8" }).add({ text: "9" });
         assertEquals(keyboard.build(), [
             [{ text: "0" }, { text: "1" }, { text: "2" }],
-            [{ text: "3" }, { text: "4" }, { text: "5" }],
+            [{ text: "4" }, { text: "5" }, { text: "6" }],
+            [{ text: "7" }, { text: "8" }, { text: "9" }],
         ]);
     });
 
@@ -153,8 +156,11 @@ describe("InlineKeyboard", () => {
     it("should create rows and columns", () => {
         const keyboard = new InlineKeyboard([[btn]])
             .add(btn, btn).row()
+            .addIf(false, btn)
+            .addIf(true, btn, btn, btn).row()
             .add(btn, btn).add(btn);
         assertEquals(keyboard.inline_keyboard, [
+            [btn, btn, btn],
             [btn, btn, btn],
             [btn, btn, btn],
         ]);

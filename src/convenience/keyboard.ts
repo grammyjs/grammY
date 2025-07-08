@@ -98,6 +98,16 @@ export class Keyboard {
         return this;
     }
     /**
+     * Allows you to dynamically add your own `KeyboardButton` objects
+     *
+     * @param condition Condition
+     * @param buttons The buttons to add
+     */
+    addIf(condition: boolean, ...buttons: KeyboardButton[]) {
+        if (condition) this.add(...buttons);
+        return this;
+    }
+    /**
      * Adds a 'line break'. Call this method to make sure that the next added
      * buttons will be on a new row.
      *
@@ -108,6 +118,8 @@ export class Keyboard {
      * @param buttons A number of buttons to add to the next row
      */
     row(...buttons: KeyboardButton[]) {
+        if (!this.keyboard[this.keyboard.length - 1]?.length) return this;
+
         this.keyboard.push(buttons);
         return this;
     }
@@ -542,6 +554,16 @@ export class InlineKeyboard {
         return this;
     }
     /**
+     * Allows you to dynamically add your own `InlineKeyboardButton` objects
+     *
+     * @param condition Condition
+     * @param buttons The buttons to add
+     */
+    addIf(condition: boolean, ...buttons: InlineKeyboardButton[]) {
+        if (condition) this.add(...buttons);
+        return this;
+    }
+    /**
      * Adds a 'line break'. Call this method to make sure that the next added
      * buttons will be on a new row.
      *
@@ -552,6 +574,10 @@ export class InlineKeyboard {
      * @param buttons A number of buttons to add to the next row
      */
     row(...buttons: InlineKeyboardButton[]) {
+        if (!this.inline_keyboard[this.inline_keyboard.length - 1]?.length) {
+            return this;
+        }
+
         this.inline_keyboard.push(buttons);
         return this;
     }
