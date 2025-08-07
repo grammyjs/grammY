@@ -106,7 +106,6 @@ The Russian community chat can be found [here](https://t.me/grammyjs_ru).
 ### [grammY news](https://t.me/grammyjs_news)
 
 —The channel where updates to grammY and the ecosystem are posted.
-We are also [on Twitter](https://twitter.com/grammy_js).
 
 ### [Telegram Bot API Reference](https://core.telegram.org/bots/api)
 
