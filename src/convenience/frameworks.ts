@@ -280,11 +280,7 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
                 body: json,
             }),
         unauthorized: () => resolveResponse({ statusCode: 401 }),
-        get handlerReturn() {
-            return new Promise<void>((resolve) => {
-                resolveResponse = resolve;
-            });
-        },
+        handlerReturn: new Promise<void>((res) => resolveResponse = res),
     };
 };
 
@@ -320,11 +316,7 @@ const azureV4: AzureAdapterV4 = (request) => {
         respond: (json) => resolveResponse({ jsonBody: json }),
         unauthorized: () =>
             resolveResponse({ status: 401, body: WRONG_TOKEN_ERROR }),
-        get handlerReturn() {
-            return new Promise<Res>((resolve) => {
-                resolveResponse = resolve;
-            });
-        },
+        handlerReturn: new Promise<Res>((resolve) => resolveResponse = resolve),
     };
 };
 
@@ -345,11 +337,7 @@ const bun: BunAdapter = (request) => {
         unauthorized: () => {
             resolveResponse(unauthorized());
         },
-        get handlerReturn() {
-            return new Promise<Response>((resolve) => {
-                resolveResponse = resolve;
-            });
-        },
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
@@ -395,11 +383,7 @@ const cloudflareModule: CloudflareModuleAdapter = (request) => {
         unauthorized: () => {
             resolveResponse(unauthorized());
         },
-        get handlerReturn() {
-            return new Promise<Response>((resolve) => {
-                resolveResponse = resolve;
-            });
-        },
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
@@ -449,9 +433,7 @@ const hono: HonoAdapter = (c) => {
             c.status(401);
             resolveResponse(c.body(""));
         },
-        handlerReturn: new Promise<Response>((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
@@ -572,11 +554,7 @@ const stdHttp: StdHttpAdapter = (req) => {
         unauthorized: () => {
             if (resolveResponse) resolveResponse(unauthorized());
         },
-        get handlerReturn() {
-            return new Promise<Response>((resolve) => {
-                resolveResponse = resolve;
-            });
-        },
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
@@ -597,11 +575,7 @@ const sveltekit: SveltekitAdapter = ({ request }) => {
         unauthorized: () => {
             if (resolveResponse) resolveResponse(unauthorized());
         },
-        get handlerReturn() {
-            return new Promise<Response>((resolve) => {
-                resolveResponse = resolve;
-            });
-        },
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 /** worktop Cloudflare workers framework */
@@ -619,7 +593,7 @@ const elysia: ElysiaAdapter = (ctx) => {
     // @note upgrade target to use modern code?
     // const { promise, resolve } = Promise.withResolvers<string>();
 
-    let resolve: (result: string) => void;
+    let resolveResponse: (result: string) => void;
 
     return {
         // @note technically the type shouldn't be limited to Promise, because it's fine to await plain values as well
@@ -628,20 +602,18 @@ const elysia: ElysiaAdapter = (ctx) => {
         },
         header: ctx.headers[SECRET_HEADER_LOWERCASE],
         end() {
-            resolve("");
+            resolveResponse("");
         },
         respond(json) {
             // @note since json is passed as string here, we gotta define proper content-type
             ctx.set.headers["content-type"] = "application/json";
-            resolve(json);
+            resolveResponse(json);
         },
         unauthorized() {
             ctx.set.status = 401;
-            resolve("");
+            resolveResponse("");
         },
-        get handlerReturn() {
-            return new Promise<string>((res) => resolve = res);
-        },
+        handlerReturn: new Promise<string>((res) => resolveResponse = res),
     };
 };
 
