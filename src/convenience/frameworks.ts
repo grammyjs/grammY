@@ -318,7 +318,13 @@ const azureV4: AzureAdapterV4 = (request) => {
 const bun: BunAdapter = (request) => {
     let resolveResponse: (response: Response) => void;
     return {
-        update: Promise.try(() => request.json()),
+        update: new Promise<Update>((resolve, reject) => {
+            try {
+                resolve(request.json());
+            } catch (e) {
+                reject(e);
+            }
+        }),
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             resolveResponse(ok());
