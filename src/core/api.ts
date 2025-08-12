@@ -895,7 +895,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername). Channel chats and channel direct messages chats aren't supported.
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1338,6 +1338,50 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat.  Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target direct messages chat
+     * @param message_id Identifier of a suggested post message to approve
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#approvesuggestedpost
+     */
+    approveSuggestedPost(
+        chat_id: number,
+        message_id: number,
+        other?: Other<R, "approveSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.approveSuggestedPost(
+            { chat_id, message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target direct messages chat
+     * @param message_id Identifier of a suggested post message to decline
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#declinesuggestedpost
+     */
+    declineSuggestedPost(
+        chat_id: number,
+        message_id: number,
+        other?: Other<R, "declineSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.declineSuggestedPost(
+            { chat_id, message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -1401,7 +1445,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of a message to pin
@@ -1423,7 +1467,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
@@ -1445,7 +1489,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1459,7 +1503,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername). Channel direct messages chats aren't supported; leave the corresponding channel instead.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#leavechat
@@ -2234,7 +2278,8 @@ export class Api<R extends RawApi = RawApi> {
      * - Bots can delete incoming messages in private chats.
      * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
      * - If the bot is an administrator of a group, it can delete any message there.
-     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_delete_messages administrator right in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_manage_direct_messages administrator right in a channel, it can delete any message in the corresponding direct messages chat.
      * Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -3283,7 +3328,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Verifies a chat on behalf of the organization which is represented by the bot. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername). Channel direct messages chats can't be verified.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -3368,7 +3413,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send a game. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat
+     * @param chat_id Unique identifier for the target chat. Games can't be sent to channel direct messages chats and channel chats.
      * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request

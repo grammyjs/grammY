@@ -983,6 +983,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1010,7 +1012,12 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "forwardMessage"),
             orThrow(this.msgId, "forwardMessage"),
-            { message_thread_id: this.msg?.message_thread_id, ...other },
+            {
+                message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1038,7 +1045,12 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "forwardMessages"),
             message_ids,
-            { message_thread_id: this.msg?.message_thread_id, ...other },
+            {
+                message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1061,7 +1073,12 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "copyMessage"),
             orThrow(this.msgId, "copyMessage"),
-            { message_thread_id: this.msg?.message_thread_id, ...other },
+            {
+                message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1089,7 +1106,12 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "copyMessages"),
             message_ids,
-            { message_thread_id: this.msg?.message_thread_id, ...other },
+            {
+                message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1114,6 +1136,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1142,6 +1166,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1168,6 +1194,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1194,6 +1222,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1220,6 +1250,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1246,6 +1278,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1273,6 +1307,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1304,6 +1340,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1333,6 +1371,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1431,7 +1471,12 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendPaidMedia"),
             star_count,
             media,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1468,6 +1513,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1497,6 +1544,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -1616,6 +1665,8 @@ export class Context implements RenamedUpdate {
             {
                 business_connection_id: this.businessConnectionId,
                 message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
                 ...other,
             },
             signal,
@@ -2221,6 +2272,46 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.approveSuggestedPost`. Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat.  Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#approvesuggestedpost
+     */
+    approveSuggestedPost(
+        other?: Other<"approveSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.approveSuggestedPost(
+            orThrow(this.chatId, "approveSuggestedPost"),
+            orThrow(this.msgId, "approveSuggestedPost"),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.declineSuggestedPost`. Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#declinesuggestedpost
+     */
+    declineSuggestedPost(
+        other?: Other<"declineSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.declineSuggestedPost(
+            orThrow(this.chatId, "declineSuggestedPost"),
+            orThrow(this.msgId, "declineSuggestedPost"),
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.setChatPhoto`. Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param photo New chat photo, uploaded using multipart/form-data
@@ -2283,7 +2374,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.pinChatMessage`. Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Context-aware alias for `api.pinChatMessage`. Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns True on success.
      *
      * @param message_id Identifier of a message to pin
      * @param other Optional remaining parameters, confer the official reference below
@@ -2305,7 +2396,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Context-aware alias for `api.unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns True on success.
      *
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
      * @param other Optional remaining parameters, confer the official reference below
@@ -2327,7 +2418,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.unpinAllChatMessages`. Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Context-aware alias for `api.unpinAllChatMessages`. Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2895,7 +2986,8 @@ export class Context implements RenamedUpdate {
      * - Bots can delete incoming messages in private chats.
      * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
      * - If the bot is an administrator of a group, it can delete any message there.
-     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_delete_messages administrator right in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_manage_direct_messages administrator right in a channel, it can delete any message in the corresponding direct messages chat.
      * Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
@@ -3472,7 +3564,12 @@ export class Context implements RenamedUpdate {
             payload,
             currency,
             prices,
-            { message_thread_id: this.msg?.message_thread_id, ...other },
+            {
+                message_thread_id: this.msg?.message_thread_id,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
             signal,
         );
     }

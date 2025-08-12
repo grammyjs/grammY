@@ -322,6 +322,8 @@ const COMMON_MESSAGE_KEYS = {
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
 
+    direct_messages_topic: {},
+
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
     group_chat_created: {},
@@ -347,12 +349,20 @@ const MESSAGE_KEYS = {
     checklist_tasks_done: {},
     checklist_tasks_added: {},
 
+    suggested_post_info: {},
+    suggested_post_approved: {},
+    suggested_post_approval_failed: {},
+    suggested_post_declined: {},
+    suggested_post_paid: {},
+    suggested_post_refunded: {},
+
     sender_boost_count: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
     direct_message_price_changed: {},
+    is_paid_post: {},
 } as const;
 const BUSINESS_CONNECTION_KEYS = {
     can_reply: {},
