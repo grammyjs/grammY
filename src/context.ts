@@ -1077,7 +1077,7 @@ export class Context implements RenamedUpdate {
         message_ids: number[],
         other?: Other<
             "copyMessages",
-            "chat_id" | "from_chat_id" | "message_id"
+            "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
     ) {

@@ -343,7 +343,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "copyMessages",
-            "chat_id" | "from_chat_id" | "message_id"
+            "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
     ) {
