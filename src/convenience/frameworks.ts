@@ -52,7 +52,7 @@ export interface ReqResHandler<T = void> {
      * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
      * handler returns something
      */
-    handlerReturn?: MaybePromise<T>;
+    handlerReturn?: Promise<T>;
 }
 
 /**
