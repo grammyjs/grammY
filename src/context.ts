@@ -980,7 +980,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendMessage(
             orThrow(this.chatId, "sendMessage"),
             text,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1006,7 +1010,7 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "forwardMessage"),
             orThrow(this.msgId, "forwardMessage"),
-            other,
+            { message_thread_id: this.msg?.message_thread_id, ...other },
             signal,
         );
     }
@@ -1034,7 +1038,7 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "forwardMessages"),
             message_ids,
-            other,
+            { message_thread_id: this.msg?.message_thread_id, ...other },
             signal,
         );
     }
@@ -1057,7 +1061,7 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "copyMessage"),
             orThrow(this.msgId, "copyMessage"),
-            other,
+            { message_thread_id: this.msg?.message_thread_id, ...other },
             signal,
         );
     }
@@ -1085,7 +1089,7 @@ export class Context implements RenamedUpdate {
             chat_id,
             orThrow(this.chatId, "copyMessages"),
             message_ids,
-            other,
+            { message_thread_id: this.msg?.message_thread_id, ...other },
             signal,
         );
     }
@@ -1107,7 +1111,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendPhoto(
             orThrow(this.chatId, "sendPhoto"),
             photo,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1131,7 +1139,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendAudio(
             orThrow(this.chatId, "sendAudio"),
             audio,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1153,7 +1165,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendDocument(
             orThrow(this.chatId, "sendDocument"),
             document,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1175,7 +1191,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendVideo(
             orThrow(this.chatId, "sendVideo"),
             video,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1197,7 +1217,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendAnimation(
             orThrow(this.chatId, "sendAnimation"),
             animation,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1219,7 +1243,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendVoice(
             orThrow(this.chatId, "sendVoice"),
             voice,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1242,7 +1270,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendVideoNote(
             orThrow(this.chatId, "sendVideoNote"),
             video_note,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1269,7 +1301,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendMediaGroup(
             orThrow(this.chatId, "sendMediaGroup"),
             media,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1294,7 +1330,11 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendLocation"),
             latitude,
             longitude,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1425,7 +1465,11 @@ export class Context implements RenamedUpdate {
             longitude,
             title,
             address,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1450,7 +1494,11 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendContact"),
             phone_number,
             first_name,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1475,7 +1523,11 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "sendPoll"),
             question,
             options,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1561,7 +1613,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendDice(
             orThrow(this.chatId, "sendDice"),
             emoji,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1598,7 +1654,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendChatAction(
             orThrow(this.chatId, "sendChatAction"),
             action,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -3228,7 +3288,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendSticker(
             orThrow(this.chatId, "sendSticker"),
             sticker,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -3407,7 +3471,7 @@ export class Context implements RenamedUpdate {
             payload,
             currency,
             prices,
-            other,
+            { message_thread_id: this.msg?.message_thread_id, ...other },
             signal,
         );
     }
@@ -3619,7 +3683,11 @@ export class Context implements RenamedUpdate {
         return this.api.sendGame(
             orThrow(this.chatId, "sendGame"),
             game_short_name,
-            { business_connection_id: this.businessConnectionId, ...other },
+            {
+                business_connection_id: this.businessConnectionId,
+                message_thread_id: this.msg?.message_thread_id,
+                ...other,
+            },
             signal,
         );
     }
