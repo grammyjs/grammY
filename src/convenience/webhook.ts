@@ -113,33 +113,30 @@ export function webhookCallback<C extends Context = Context>(
         ? adapters[adapter]
         : adapter;
     return async (...args: any[]) => {
-        const { update, respond, unauthorized, end, handlerReturn, header } =
-            server(...args);
+        const handler = server(...args);
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
             initialized = true;
         }
-        if (header !== token) {
-            await unauthorized();
-            // TODO: investigate deno bug that happens when this console logging is removed
-            console.log(handlerReturn);
-            return handlerReturn;
+        if (handler.header !== token) {
+            await handler.unauthorized();
+            return handler.handlerReturn;
         }
         let usedWebhookReply = false;
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
             async send(json) {
                 usedWebhookReply = true;
-                await respond(json);
+                await handler.respond(json);
             },
         };
         await timeoutIfNecessary(
-            bot.handleUpdate(await update, webhookReplyEnvelope),
+            bot.handleUpdate(await handler.update, webhookReplyEnvelope),
             typeof timeout === "function" ? () => timeout(...args) : timeout,
             ms,
         );
-        if (!usedWebhookReply) end?.();
-        return handlerReturn;
+        if (!usedWebhookReply) handler.end?.();
+        return handler.handlerReturn;
     };
 }
 
