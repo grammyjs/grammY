@@ -16,6 +16,8 @@ const unauthorized = () =>
         statusText: WRONG_TOKEN_ERROR,
     });
 
+type MaybePromise<T> = T | Promise<T>;
+
 /**
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
@@ -25,7 +27,7 @@ export interface ReqResHandler<T = void> {
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
      */
-    update: Promise<Update>;
+    update: MaybePromise<Update>;
     /**
      * X-Telegram-Bot-Api-Secret-Token header of the request, or undefined if
      * not present
@@ -246,7 +248,9 @@ export type WorktopAdapter = (req: {
 
 /** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
-    update: JSON.parse(event.body ?? "{}"),
+    get update() {
+        return JSON.parse(event.body ?? "{}");
+    },
     header: event.headers[SECRET_HEADER],
     end: () => callback(null, { statusCode: 200 }),
     respond: (json) =>
@@ -264,7 +268,9 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
     let resolveResponse: (response: any) => void;
 
     return {
-        update: JSON.parse(event.body ?? "{}"),
+        get update() {
+            return JSON.parse(event.body ?? "{}");
+        },
         header: event.headers[SECRET_HEADER],
         end: () => resolveResponse({ statusCode: 200 }),
         respond: (json) =>
@@ -274,15 +280,15 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
                 body: json,
             }),
         unauthorized: () => resolveResponse({ statusCode: 401 }),
-        handlerReturn: new Promise((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<void>((res) => resolveResponse = res),
     };
 };
 
 /** Azure Functions v3 and v4 */
 const azure: AzureAdapter = (context, request) => ({
-    update: Promise.resolve(request.body as Update),
+    get update() {
+        return request.body as Update;
+    },
     header: context.res?.headers?.[SECRET_HEADER],
     end: () => (context.res = {
         status: 200,
@@ -302,15 +308,15 @@ const azureV4: AzureAdapterV4 = (request) => {
     >;
     let resolveResponse: (response: Res) => void;
     return {
-        update: Promise.resolve(request.json()) as Promise<Update>,
+        get update() {
+            return request.json() as Promise<Update>;
+        },
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => resolveResponse({ status: 204 }),
         respond: (json) => resolveResponse({ jsonBody: json }),
         unauthorized: () =>
             resolveResponse({ status: 401, body: WRONG_TOKEN_ERROR }),
-        handlerReturn: new Promise<Res>((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<Res>((resolve) => resolveResponse = resolve),
     };
 };
 
@@ -318,7 +324,9 @@ const azureV4: AzureAdapterV4 = (request) => {
 const bun: BunAdapter = (request) => {
     let resolveResponse: (response: Response) => void;
     return {
-        update: request.json(),
+        get update() {
+            return request.json() as Promise<Update>;
+        },
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             resolveResponse(ok());
@@ -329,9 +337,7 @@ const bun: BunAdapter = (request) => {
         unauthorized: () => {
             resolveResponse(unauthorized());
         },
-        handlerReturn: new Promise<Response>((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
@@ -344,7 +350,9 @@ const cloudflare: CloudflareAdapter = (event) => {
         }),
     );
     return {
-        update: event.request.json(),
+        get update() {
+            return event.request.json() as Promise<Update>;
+        },
         header: event.request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             resolveResponse(ok());
@@ -362,7 +370,9 @@ const cloudflare: CloudflareAdapter = (event) => {
 const cloudflareModule: CloudflareModuleAdapter = (request) => {
     let resolveResponse: (res: Response) => void;
     return {
-        update: request.json(),
+        get update() {
+            return request.json() as Promise<Update>;
+        },
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             resolveResponse(ok());
@@ -373,15 +383,15 @@ const cloudflareModule: CloudflareModuleAdapter = (request) => {
         unauthorized: () => {
             resolveResponse(unauthorized());
         },
-        handlerReturn: new Promise<Response>((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
 /** express web framework */
 const express: ExpressAdapter = (req, res) => ({
-    update: Promise.resolve(req.body),
+    get update() {
+        return req.body as Update;
+    },
     header: req.header(SECRET_HEADER),
     end: () => res.end(),
     respond: (json) => {
@@ -395,7 +405,9 @@ const express: ExpressAdapter = (req, res) => ({
 
 /** fastify web framework */
 const fastify: FastifyAdapter = (request, reply) => ({
-    update: Promise.resolve(request.body as Update),
+    get update() {
+        return request.body as Update;
+    },
     header: request.headers[SECRET_HEADER_LOWERCASE],
     end: () => reply.status(200).send(),
     respond: (json) =>
@@ -407,7 +419,9 @@ const fastify: FastifyAdapter = (request, reply) => ({
 const hono: HonoAdapter = (c) => {
     let resolveResponse: (response: Response) => void;
     return {
-        update: c.req.json(),
+        get update() {
+            return c.req.json() as Promise<Update>;
+        },
         header: c.req.header(SECRET_HEADER),
         end: () => {
             resolveResponse(c.body(""));
@@ -419,9 +433,7 @@ const hono: HonoAdapter = (c) => {
             c.status(401);
             resolveResponse(c.body(""));
         },
-        handlerReturn: new Promise<Response>((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
@@ -429,19 +441,21 @@ const hono: HonoAdapter = (c) => {
 const http: HttpAdapter = (req, res) => {
     const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
     return {
-        update: new Promise((resolve, reject) => {
-            // deno-lint-ignore no-explicit-any
-            type Chunk = any;
-            const chunks: Chunk[] = [];
-            req.on("data", (chunk: Chunk) => chunks.push(chunk))
-                .once("end", () => {
-                    // @ts-ignore `Buffer` is Node-only
-                    // deno-lint-ignore no-node-globals
-                    const raw = Buffer.concat(chunks).toString("utf-8");
-                    resolve(JSON.parse(raw));
-                })
-                .once("error", reject);
-        }),
+        get update() {
+            return new Promise((resolve, reject) => {
+                // deno-lint-ignore no-explicit-any
+                type Chunk = any;
+                const chunks: Chunk[] = [];
+                req.on("data", (chunk: Chunk) => chunks.push(chunk))
+                    .once("end", () => {
+                        // @ts-ignore `Buffer` is Node-only
+                        // deno-lint-ignore no-node-globals
+                        const raw = Buffer.concat(chunks).toString("utf-8");
+                        resolve(JSON.parse(raw));
+                    })
+                    .once("error", reject);
+            }) as Promise<Update>;
+        },
         header: Array.isArray(secretHeaderFromRequest)
             ? secretHeaderFromRequest[0]
             : secretHeaderFromRequest,
@@ -456,7 +470,9 @@ const http: HttpAdapter = (req, res) => {
 
 /** koa web framework */
 const koa: KoaAdapter = (ctx) => ({
-    update: Promise.resolve(ctx.request.body as Update),
+    get update() {
+        return ctx.request.body as Update;
+    },
     header: ctx.get(SECRET_HEADER) || undefined,
     end: () => {
         ctx.body = "";
@@ -472,7 +488,9 @@ const koa: KoaAdapter = (ctx) => ({
 
 /** Next.js Serverless Functions */
 const nextJs: NextAdapter = (request, response) => ({
-    update: Promise.resolve(request.body),
+    get update() {
+        return request.body as Update;
+    },
     header: request.headers[SECRET_HEADER_LOWERCASE] as string,
     end: () => response.end(),
     respond: (json) => response.status(200).json(json),
@@ -481,7 +499,9 @@ const nextJs: NextAdapter = (request, response) => ({
 
 /** nhttp web framework */
 const nhttp: NHttpAdapter = (rev) => ({
-    update: Promise.resolve(rev.body as Update),
+    get update() {
+        return rev.body as Update;
+    },
     header: rev.headers.get(SECRET_HEADER) || undefined,
     end: () => rev.response.sendStatus(200),
     respond: (json) => rev.response.status(200).send(json),
@@ -490,7 +510,9 @@ const nhttp: NHttpAdapter = (rev) => ({
 
 /** oak web framework */
 const oak: OakAdapter = (ctx) => ({
-    update: ctx.request.body.json(),
+    get update() {
+        return ctx.request.body.json() as Promise<Update>;
+    },
     header: ctx.request.headers.get(SECRET_HEADER) || undefined,
     end: () => {
         ctx.response.status = 200;
@@ -506,7 +528,9 @@ const oak: OakAdapter = (ctx) => ({
 
 /** Deno.serve */
 const serveHttp: ServeHttpAdapter = (requestEvent) => ({
-    update: requestEvent.request.json(),
+    get update() {
+        return requestEvent.request.json() as Promise<Update>;
+    },
     header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
     end: () => requestEvent.respondWith(ok()),
     respond: (json) => requestEvent.respondWith(okJson(json)),
@@ -517,7 +541,9 @@ const serveHttp: ServeHttpAdapter = (requestEvent) => ({
 const stdHttp: StdHttpAdapter = (req) => {
     let resolveResponse: (response: Response) => void;
     return {
-        update: req.json(),
+        get update() {
+            return req.json() as Promise<Update>;
+        },
         header: req.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             if (resolveResponse) resolveResponse(ok());
@@ -528,9 +554,7 @@ const stdHttp: StdHttpAdapter = (req) => {
         unauthorized: () => {
             if (resolveResponse) resolveResponse(unauthorized());
         },
-        handlerReturn: new Promise((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 
@@ -538,7 +562,9 @@ const stdHttp: StdHttpAdapter = (req) => {
 const sveltekit: SveltekitAdapter = ({ request }) => {
     let resolveResponse: (res: Response) => void;
     return {
-        update: Promise.resolve(request.json()),
+        get update() {
+            return request.json() as Promise<Update>;
+        },
         header: request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             if (resolveResponse) resolveResponse(ok());
@@ -549,14 +575,14 @@ const sveltekit: SveltekitAdapter = ({ request }) => {
         unauthorized: () => {
             if (resolveResponse) resolveResponse(unauthorized());
         },
-        handlerReturn: new Promise((resolve) => {
-            resolveResponse = resolve;
-        }),
+        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
     };
 };
 /** worktop Cloudflare workers framework */
 const worktop: WorktopAdapter = (req, res) => ({
-    update: Promise.resolve(req.json()),
+    get update() {
+        return req.json() as Promise<Update>;
+    },
     header: req.headers.get(SECRET_HEADER) ?? undefined,
     end: () => res.end(null),
     respond: (json) => res.send(200, json),
@@ -567,26 +593,27 @@ const elysia: ElysiaAdapter = (ctx) => {
     // @note upgrade target to use modern code?
     // const { promise, resolve } = Promise.withResolvers<string>();
 
-    let resolve: (result: string) => void;
-    const handlerReturn = new Promise<string>((res) => resolve = res);
+    let resolveResponse: (result: string) => void;
 
     return {
         // @note technically the type shouldn't be limited to Promise, because it's fine to await plain values as well
-        update: Promise.resolve(ctx.body as Update),
+        get update() {
+            return ctx.body as Update;
+        },
         header: ctx.headers[SECRET_HEADER_LOWERCASE],
         end() {
-            resolve("");
+            resolveResponse("");
         },
         respond(json) {
             // @note since json is passed as string here, we gotta define proper content-type
             ctx.set.headers["content-type"] = "application/json";
-            resolve(json);
+            resolveResponse(json);
         },
         unauthorized() {
             ctx.set.status = 401;
-            resolve("");
+            resolveResponse("");
         },
-        handlerReturn,
+        handlerReturn: new Promise<string>((res) => resolveResponse = res),
     };
 };
 
