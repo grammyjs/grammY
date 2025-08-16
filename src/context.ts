@@ -407,6 +407,15 @@ export class Context implements RenamedUpdate {
          */
         public readonly me: UserFromGetMe,
     ) {}
+    // Lazy-init backing fields: these values can legitimately be `undefined`,
+    // so we keep a boolean flag per value to indicate whether we already
+    // computed (inited) them.
+    private _msg?: Message;
+    private _msgInited = false;
+    private _chat?: Chat;
+    private _chatInited = false;
+    private _from?: User;
+    private _fromInited = false;
 
     // UPDATE SHORTCUTS
 
@@ -514,15 +523,17 @@ export class Context implements RenamedUpdate {
      */
     get msg(): Message | undefined {
         // Keep in sync with types in `filter.ts`.
-        return (
-            this.message ??
+        if (!this._msgInited) {
+            this._msg = this.message ??
                 this.editedMessage ??
                 this.channelPost ??
                 this.editedChannelPost ??
                 this.businessMessage ??
                 this.editedBusinessMessage ??
-                this.callbackQuery?.message
-        );
+                this.callbackQuery?.message;
+            this._msgInited = true;
+        }
+        return this._msg;
     }
     /**
      * Get the chat object from wherever possible. Alias for `(this.msg ??
@@ -532,17 +543,21 @@ export class Context implements RenamedUpdate {
      */
     get chat(): Chat | undefined {
         // Keep in sync with types in `filter.ts`.
-        return (
-            this.msg ??
-                this.deletedBusinessMessages ??
-                this.messageReaction ??
-                this.messageReactionCount ??
-                this.myChatMember ??
-                this.chatMember ??
-                this.chatJoinRequest ??
-                this.chatBoost ??
-                this.removedChatBoost
-        )?.chat;
+        if (!this._chatInited) {
+            this._chat = (
+                this.msg ??
+                    this.deletedBusinessMessages ??
+                    this.messageReaction ??
+                    this.messageReactionCount ??
+                    this.myChatMember ??
+                    this.chatMember ??
+                    this.chatJoinRequest ??
+                    this.chatBoost ??
+                    this.removedChatBoost
+            )?.chat;
+            this._chatInited = true;
+        }
+        return this._chat;
     }
     /**
      * Get the sender chat object from wherever possible. Alias for
@@ -563,23 +578,27 @@ export class Context implements RenamedUpdate {
      */
     get from(): User | undefined {
         // Keep in sync with types in `filter.ts`.
-        return (
-            this.businessConnection ??
-                this.messageReaction ??
-                (this.chatBoost?.boost ?? this.removedChatBoost)?.source
-        )?.user ??
-            (
-                this.callbackQuery ??
-                    this.msg ??
-                    this.inlineQuery ??
-                    this.chosenInlineResult ??
-                    this.shippingQuery ??
-                    this.preCheckoutQuery ??
-                    this.myChatMember ??
-                    this.chatMember ??
-                    this.chatJoinRequest ??
-                    this.purchasedPaidMedia
-            )?.from;
+        if (!this._fromInited) {
+            this._from = (
+                this.businessConnection ??
+                    this.messageReaction ??
+                    (this.chatBoost?.boost ?? this.removedChatBoost)?.source
+            )?.user ??
+                (
+                    this.callbackQuery ??
+                        this.msg ??
+                        this.inlineQuery ??
+                        this.chosenInlineResult ??
+                        this.shippingQuery ??
+                        this.preCheckoutQuery ??
+                        this.myChatMember ??
+                        this.chatMember ??
+                        this.chatJoinRequest ??
+                        this.purchasedPaidMedia
+                )?.from;
+            this._fromInited = true;
+        }
+        return this._from;
     }
 
     /**
