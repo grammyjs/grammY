@@ -982,7 +982,9 @@ export class Context implements RenamedUpdate {
             text,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1013,7 +1015,9 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "forwardMessage"),
             orThrow(this.msgId, "forwardMessage"),
             {
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1046,7 +1050,9 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "forwardMessages"),
             message_ids,
             {
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1074,7 +1080,9 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "copyMessage"),
             orThrow(this.msgId, "copyMessage"),
             {
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1107,7 +1115,9 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "copyMessages"),
             message_ids,
             {
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1135,7 +1145,9 @@ export class Context implements RenamedUpdate {
             photo,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1165,7 +1177,9 @@ export class Context implements RenamedUpdate {
             audio,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1193,7 +1207,9 @@ export class Context implements RenamedUpdate {
             document,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1221,7 +1237,9 @@ export class Context implements RenamedUpdate {
             video,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1249,7 +1267,9 @@ export class Context implements RenamedUpdate {
             animation,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1277,7 +1297,9 @@ export class Context implements RenamedUpdate {
             voice,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1306,7 +1328,9 @@ export class Context implements RenamedUpdate {
             video_note,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1339,7 +1363,9 @@ export class Context implements RenamedUpdate {
             media,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1370,7 +1396,9 @@ export class Context implements RenamedUpdate {
             longitude,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1512,7 +1540,9 @@ export class Context implements RenamedUpdate {
             address,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1543,7 +1573,9 @@ export class Context implements RenamedUpdate {
             first_name,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1574,7 +1606,9 @@ export class Context implements RenamedUpdate {
             options,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 ...other,
             },
             signal,
@@ -1664,7 +1698,9 @@ export class Context implements RenamedUpdate {
             emoji,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1707,7 +1743,9 @@ export class Context implements RenamedUpdate {
             action,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 ...other,
             },
             signal,
@@ -3383,7 +3421,9 @@ export class Context implements RenamedUpdate {
             sticker,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -3567,7 +3607,9 @@ export class Context implements RenamedUpdate {
             currency,
             prices,
             {
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -3785,7 +3827,9 @@ export class Context implements RenamedUpdate {
             game_short_name,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(this.msg?.is_topic_message
+                    ? { message_thread_id: this.msg?.message_thread_id }
+                    : {}),
                 ...other,
             },
             signal,
