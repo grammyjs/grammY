@@ -406,7 +406,23 @@ export class Context implements RenamedUpdate {
          * Information about the bot itself.
          */
         public readonly me: UserFromGetMe,
-    ) {}
+    ) {
+        // Do not include these fields in JSON.stringify
+        const internalFields = [
+            "_msg",
+            "_msgInited",
+            "_chat",
+            "_chatInited",
+            "_from",
+            "_fromInited",
+        ];
+        for (const internalField of internalFields) {
+            Object.defineProperty(this, internalField, {
+                enumerable: false,
+                writable: true,
+            });
+        }
+    }
 
     // Internal fields to back getters lazy init behavior
     _msg?: Message;
