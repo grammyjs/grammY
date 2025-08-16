@@ -977,16 +977,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendMessage(
             orThrow(this.chatId, "sendMessage"),
             text,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1010,16 +1010,16 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.forwardMessage(
             chat_id,
             orThrow(this.chatId, "forwardMessage"),
             orThrow(this.msgId, "forwardMessage"),
             {
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1045,16 +1045,16 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.forwardMessages(
             chat_id,
             orThrow(this.chatId, "forwardMessages"),
             message_ids,
             {
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1075,16 +1075,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"copyMessage", "chat_id" | "from_chat_id" | "message_id">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.copyMessage(
             chat_id,
             orThrow(this.chatId, "copyMessage"),
             orThrow(this.msgId, "copyMessage"),
             {
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1110,16 +1110,16 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.copyMessages(
             chat_id,
             orThrow(this.chatId, "copyMessages"),
             message_ids,
             {
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1140,16 +1140,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendPhoto(
             orThrow(this.chatId, "sendPhoto"),
             photo,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1172,16 +1172,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendAudio(
             orThrow(this.chatId, "sendAudio"),
             audio,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1202,16 +1202,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendDocument(
             orThrow(this.chatId, "sendDocument"),
             document,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1232,16 +1232,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVideo(
             orThrow(this.chatId, "sendVideo"),
             video,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1262,16 +1262,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendAnimation(
             orThrow(this.chatId, "sendAnimation"),
             animation,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1292,16 +1292,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVoice(
             orThrow(this.chatId, "sendVoice"),
             voice,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1323,16 +1323,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVideoNote(
             orThrow(this.chatId, "sendVideoNote"),
             video_note,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1358,16 +1358,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendMediaGroup", "chat_id" | "media">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendMediaGroup(
             orThrow(this.chatId, "sendMediaGroup"),
             media,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1390,17 +1390,17 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendLocation", "chat_id" | "latitude" | "longitude">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendLocation(
             orThrow(this.chatId, "sendLocation"),
             latitude,
             longitude,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1532,6 +1532,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVenue(
             orThrow(this.chatId, "sendVenue"),
             latitude,
@@ -1540,11 +1541,10 @@ export class Context implements RenamedUpdate {
             address,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1567,17 +1567,17 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendContact", "chat_id" | "phone_number" | "first_name">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendContact(
             orThrow(this.chatId, "sendContact"),
             phone_number,
             first_name,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1600,14 +1600,15 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendPoll(
             orThrow(this.chatId, "sendPoll"),
             question,
             options,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
                 ...other,
             },
@@ -1693,16 +1694,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendDice", "chat_id" | "emoji">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendDice(
             orThrow(this.chatId, "sendDice"),
             emoji,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1738,13 +1739,14 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendChatAction(
             orThrow(this.chatId, "sendChatAction"),
             action,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
                 ...other,
             },
@@ -3416,16 +3418,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendSticker(
             orThrow(this.chatId, "sendSticker"),
             sticker,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -3599,6 +3601,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendInvoice(
             orThrow(this.chatId, "sendInvoice"),
             title,
@@ -3607,11 +3610,10 @@ export class Context implements RenamedUpdate {
             currency,
             prices,
             {
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -3822,13 +3824,14 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendGame", "chat_id" | "game_short_name">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendGame(
             orThrow(this.chatId, "sendGame"),
             game_short_name,
             {
                 business_connection_id: this.businessConnectionId,
-                ...(this.msg?.is_topic_message
-                    ? { message_thread_id: this.msg?.message_thread_id }
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
                     : {}),
                 ...other,
             },
