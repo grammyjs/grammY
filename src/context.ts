@@ -407,15 +407,14 @@ export class Context implements RenamedUpdate {
          */
         public readonly me: UserFromGetMe,
     ) {}
-    // Lazy-init backing fields: these values can legitimately be `undefined`,
-    // so we keep a boolean flag per value to indicate whether we already
-    // computed (inited) them.
-    private _msg?: Message;
-    private _msgInited = false;
-    private _chat?: Chat;
-    private _chatInited = false;
-    private _from?: User;
-    private _fromInited = false;
+
+    // Internal fields to back getters lazy init behavior
+    _msg?: Message;
+    _msgInited = false;
+    _chat?: Chat;
+    _chatInited = false;
+    _from?: User;
+    _fromInited = false;
 
     // UPDATE SHORTCUTS
 
