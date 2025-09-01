@@ -1595,6 +1595,16 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "dotvhs",
+      "name": ".vhs",
+      "avatar_url": "https://avatars.githubusercontent.com/u/681416?v=4",
+      "profile": "https://github.com/dotvhs",
+      "contributions": [
+        "bug",
+        "review"
+      ]
     }
   ]
 }
