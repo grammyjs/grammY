@@ -1016,9 +1016,6 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "forwardMessage"),
             orThrow(this.msgId, "forwardMessage"),
             {
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg?.message_thread_id }
-                    : {}),
                 direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
@@ -1051,9 +1048,6 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "forwardMessages"),
             message_ids,
             {
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg?.message_thread_id }
-                    : {}),
                 direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
@@ -1081,9 +1075,6 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "copyMessage"),
             orThrow(this.msgId, "copyMessage"),
             {
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg?.message_thread_id }
-                    : {}),
                 direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
@@ -1116,9 +1107,6 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "copyMessages"),
             message_ids,
             {
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg?.message_thread_id }
-                    : {}),
                 direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
