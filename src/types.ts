@@ -7572,102 +7572,106 @@ export class InputFile {}
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="formatting-options" href="#formatting-options"><i class="anchor-icon"></i></a>Formatting options</h4>
-<p>The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.</p>
-<p>Note that Telegram clients will display an **alert** to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).</p>
-<p>Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.<br>- _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.</p>
-<p>Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username. Please note:</p>
-<ul>
-<li>These links will work **only** if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.</li>
-<li>Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.</li>
-</ul>
-<p>You can find the list of programming and markup languages for which syntax highlighting is supported at <a href="https://github.com/TelegramMessenger/libprisma#supported-languages">libprisma#supported-languages</a>.</p>
-<h6><a class="anchor" name="markdownv2-style" href="#markdownv2-style"><i class="anchor-icon"></i></a>MarkdownV2 style</h6>
-<p>To use this mode, pass _MarkdownV2_ in the _parse_mode_ field. Use the following syntax in your message:</p>
-<pre>`*bold \*text*
-_italic \*text_
-__underline__
-~strikethrough~
-||spoiler||
-*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
-[inline URL](http://www.example.com/)
-[inline mention of a user](tg://user?id=123456789)
-![<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />](tg://emoji?id=5368324170671202286)
-`inline fixed-width code`
-```
-pre-formatted fixed-width code block
-```
-```python
-pre-formatted fixed-width code block written in the Python programming language
-```
-&gt;Block quotation started
-&gt;Block quotation continued
-&gt;Block quotation continued
-&gt;Block quotation continued
-&gt;The last line of the block quotation
-**&gt;The expandable block quotation started right after the previous block quotation
-&gt;It is separated from the previous block quotation by an empty bold entity
-&gt;Expandable block quotation continued
-&gt;Hidden by default part of the expandable block quotation started
-&gt;Expandable block quotation continued
-&gt;The last line of the expandable block quotation with the expandability mark||`</pre>
-<p>Please note:</p>
-<ul>
-<li>Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding &#39;\&#39; character, in which case it is treated as an ordinary character and not a part of the markup. This implies that &#39;\&#39; character usually must be escaped with a preceding &#39;\&#39; character.</li>
-<li>Inside `pre` and `code` entities, all &#39;`&#39; and &#39;\&#39; characters must be escaped with a preceding &#39;\&#39; character.</li>
-<li>Inside the `(...)` part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.</li>
-<li>In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.</li>
-<li>In case of ambiguity between `italic` and `underline` entities `__` is always greadily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.</li>
-<li>A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.</li>
-<li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
-</ul>
-<h6><a class="anchor" name="html-style" href="#html-style"><i class="anchor-icon"></i></a>HTML style</h6>
-<p>To use this mode, pass _HTML_ in the _parse_mode_ field. The following tags are currently supported:</p>
-<pre>`&lt;b&gt;bold&lt;/b&gt;, &lt;strong&gt;bold&lt;/strong&gt;
-&lt;i&gt;italic&lt;/i&gt;, &lt;em&gt;italic&lt;/em&gt;
-&lt;u&gt;underline&lt;/u&gt;, &lt;ins&gt;underline&lt;/ins&gt;
-&lt;s&gt;strikethrough&lt;/s&gt;, &lt;strike&gt;strikethrough&lt;/strike&gt;, &lt;del&gt;strikethrough&lt;/del&gt;
-&lt;span class=&quot;tg-spoiler&quot;&gt;spoiler&lt;/span&gt;, &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
-&lt;b&gt;bold &lt;i&gt;italic bold &lt;s&gt;italic bold strikethrough &lt;span class=&quot;tg-spoiler&quot;&gt;italic bold strikethrough spoiler&lt;/span&gt;&lt;/s&gt; &lt;u&gt;underline italic bold&lt;/u&gt;&lt;/i&gt; bold&lt;/b&gt;
-&lt;a href=&quot;http://www.example.com/&quot;&gt;inline URL&lt;/a&gt;
-&lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
-&lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&lt;/tg-emoji&gt;
-&lt;code&gt;inline fixed-width code&lt;/code&gt;
-&lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;pre-formatted fixed-width code block written in the Python programming language&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;Block quotation started\nBlock quotation continued\nThe last line of the block quotation&lt;/blockquote&gt;
-&lt;blockquote expandable&gt;Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation&lt;/blockquote&gt;`</pre>
-<p>Please note:</p>
-<ul>
-<li>Only the tags mentioned above are currently supported.</li>
-<li>All `&lt;`, `&gt;` and `&amp;` symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (`&lt;` with `&amp;lt;`, `&gt;` with `&amp;gt;` and `&amp;` with `&amp;amp;`).</li>
-<li>All numerical HTML entities are supported.</li>
-<li>The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;` and `&amp;quot;`.</li>
-<li>Use nested `pre` and `code` tags, to define programming language for `pre` entity.</li>
-<li>Programming language can&#39;t be specified for standalone `code` tags.</li>
-<li>A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.</li>
-<li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
-</ul>
-<h6><a class="anchor" name="markdown-style" href="#markdown-style"><i class="anchor-icon"></i></a>Markdown style</h6>
-<p>This is a legacy mode, retained for backward compatibility. To use this mode, pass _Markdown_ in the _parse_mode_ field. Use the following syntax in your message:</p>
-<pre>`*bold text*
-_italic text_
-[inline URL](http://www.example.com/)
-[inline mention of a user](tg://user?id=123456789)
-`inline fixed-width code`
-```
-pre-formatted fixed-width code block
-```
-```python
-pre-formatted fixed-width code block written in the Python programming language
-````</pre>
-<p>Please note:</p>
-<ul>
-<li>Entities must not be nested, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.</li>
-<li>There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.</li>
-<li>To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the characters &#39;\&#39; before them.</li>
-<li>Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.</li>
-</ul>
+/**
+ * <p>The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.</p>
+ * <p>Note that Telegram clients will display an **alert** to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).</p>
+ * <p>Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.<br>- _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.</p>
+ * <p>Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username. Please note:</p>
+ * <ul>
+ * <li>These links will work **only** if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.</li>
+ * <li>Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.</li>
+ * </ul>
+ * <p>You can find the list of programming and markup languages for which syntax highlighting is supported at <a href="https://github.com/TelegramMessenger/libprisma#supported-languages">libprisma#supported-languages</a>.</p>
+ * <h6><a class="anchor" name="markdownv2-style" href="#markdownv2-style"><i class="anchor-icon"></i></a>MarkdownV2 style</h6>
+ * <p>To use this mode, pass _MarkdownV2_ in the _parse_mode_ field. Use the following syntax in your message:</p>
+ * <pre>`*bold \*text*
+ * _italic \*text_
+ * __underline__
+ * ~strikethrough~
+ * ||spoiler||
+ * *bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+ * [inline URL](http://www.example.com/)
+ * [inline mention of a user](tg://user?id=123456789)
+ * ![<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />](tg://emoji?id=5368324170671202286)
+ * `inline fixed-width code`
+ * ```
+ * pre-formatted fixed-width code block
+ * ```
+ * ```python
+ * pre-formatted fixed-width code block written in the Python programming language
+ * ```
+ * &gt;Block quotation started
+ * &gt;Block quotation continued
+ * &gt;Block quotation continued
+ * &gt;Block quotation continued
+ * &gt;The last line of the block quotation
+ * **&gt;The expandable block quotation started right after the previous block quotation
+ * &gt;It is separated from the previous block quotation by an empty bold entity
+ * &gt;Expandable block quotation continued
+ * &gt;Hidden by default part of the expandable block quotation started
+ * &gt;Expandable block quotation continued
+ * &gt;The last line of the expandable block quotation with the expandability mark||`</pre>
+ * <p>Please note:</p>
+ * <ul>
+ * <li>Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding &#39;\&#39; character, in which case it is treated as an ordinary character and not a part of the markup. This implies that &#39;\&#39; character usually must be escaped with a preceding &#39;\&#39; character.</li>
+ * <li>Inside `pre` and `code` entities, all &#39;`&#39; and &#39;\&#39; characters must be escaped with a preceding &#39;\&#39; character.</li>
+ * <li>Inside the `(...)` part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.</li>
+ * <li>In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.</li>
+ * <li>In case of ambiguity between `italic` and `underline` entities `__` is always greadily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.</li>
+ * <li>A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.</li>
+ * <li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
+ * </ul>
+ * <h6><a class="anchor" name="html-style" href="#html-style"><i class="anchor-icon"></i></a>HTML style</h6>
+ * <p>To use this mode, pass _HTML_ in the _parse_mode_ field. The following tags are currently supported:</p>
+ * <pre>`&lt;b&gt;bold&lt;/b&gt;, &lt;strong&gt;bold&lt;/strong&gt;
+ * &lt;i&gt;italic&lt;/i&gt;, &lt;em&gt;italic&lt;/em&gt;
+ * &lt;u&gt;underline&lt;/u&gt;, &lt;ins&gt;underline&lt;/ins&gt;
+ * &lt;s&gt;strikethrough&lt;/s&gt;, &lt;strike&gt;strikethrough&lt;/strike&gt;, &lt;del&gt;strikethrough&lt;/del&gt;
+ * &lt;span class=&quot;tg-spoiler&quot;&gt;spoiler&lt;/span&gt;, &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
+ * &lt;b&gt;bold &lt;i&gt;italic bold &lt;s&gt;italic bold strikethrough &lt;span class=&quot;tg-spoiler&quot;&gt;italic bold strikethrough spoiler&lt;/span&gt;&lt;/s&gt; &lt;u&gt;underline italic bold&lt;/u&gt;&lt;/i&gt; bold&lt;/b&gt;
+ * &lt;a href=&quot;http://www.example.com/&quot;&gt;inline URL&lt;/a&gt;
+ * &lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
+ * &lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&lt;/tg-emoji&gt;
+ * &lt;code&gt;inline fixed-width code&lt;/code&gt;
+ * &lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
+ * &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;pre-formatted fixed-width code block written in the Python programming language&lt;/code&gt;&lt;/pre&gt;
+ * &lt;blockquote&gt;Block quotation started\nBlock quotation continued\nThe last line of the block quotation&lt;/blockquote&gt;
+ * &lt;blockquote expandable&gt;Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation&lt;/blockquote&gt;`</pre>
+ * <p>Please note:</p>
+ * <ul>
+ * <li>Only the tags mentioned above are currently supported.</li>
+ * <li>All `&lt;`, `&gt;` and `&amp;` symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (`&lt;` with `&amp;lt;`, `&gt;` with `&amp;gt;` and `&amp;` with `&amp;amp;`).</li>
+ * <li>All numerical HTML entities are supported.</li>
+ * <li>The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;` and `&amp;quot;`.</li>
+ * <li>Use nested `pre` and `code` tags, to define programming language for `pre` entity.</li>
+ * <li>Programming language can&#39;t be specified for standalone `code` tags.</li>
+ * <li>A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.</li>
+ * <li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
+ * </ul>
+ * <h6><a class="anchor" name="markdown-style" href="#markdown-style"><i class="anchor-icon"></i></a>Markdown style</h6>
+ * <p>This is a legacy mode, retained for backward compatibility. To use this mode, pass _Markdown_ in the _parse_mode_ field. Use the following syntax in your message:</p>
+ * <pre>`*bold text*
+ * _italic text_
+ * [inline URL](http://www.example.com/)
+ * [inline mention of a user](tg://user?id=123456789)
+ * `inline fixed-width code`
+ * ```
+ * pre-formatted fixed-width code block
+ * ```
+ * ```python
+ * pre-formatted fixed-width code block written in the Python programming language
+ * ````</pre>
+ * <p>Please note:</p>
+ * <ul>
+ * <li>Entities must not be nested, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.</li>
+ * <li>There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.</li>
+ * <li>To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the characters &#39;\&#39; before them.</li>
+ * <li>Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.</li>
+ * </ul>
+ *
+ * @see {@link https://core.telegram.org/bots/api#formatting-options}
+ */
+type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <h4><a class="anchor" name="forwardmessage" href="#forwardmessage"><i class="anchor-icon"></i></a>forwardMessage</h4>
 <p>Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
