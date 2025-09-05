@@ -132,18 +132,13 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getupdates" href="#getupdates"><i class="anchor-icon"></i></a>getUpdates</h4>
-<p>Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getupdates}
+   */
+  getUpdates({
 <tr>
 <td>offset</td>
 <td>Integer</td>
@@ -168,24 +163,19 @@
 <td>Optional</td>
 <td>A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.</td>
 </tr>
-</tbody>
-</table>
+  }): Update[];
+}
 <blockquote>
 <p>**Notes**<br>**1.** This method will not work if an outgoing webhook is set up.<br>**2.** In order to avoid getting duplicate updates, recalculate _offset_ after each server response.</p>
 </blockquote>
-<h4><a class="anchor" name="setwebhook" href="#setwebhook"><i class="anchor-icon"></i></a>setWebhook</h4>
-<p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.</p>
-<p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.</p>
+   * <p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#setwebhook}
+   */
+  setWebhook({
 <tr>
 <td>url</td>
 <td>String</td>
@@ -228,38 +218,35 @@
 <td>Optional</td>
 <td>A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed. The header is useful to ensure that the request comes from a webhook set by you.</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
 <blockquote>
 <p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
 <p>If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.</p>
 </blockquote>
-<h4><a class="anchor" name="deletewebhook" href="#deletewebhook"><i class="anchor-icon"></i></a>deleteWebhook</h4>
-<p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns _True_ on success.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#deletewebhook}
+   */
+  deleteWebhook({
 <tr>
 <td>drop_pending_updates</td>
 <td>Boolean</td>
 <td>Optional</td>
 <td>Pass _True_ to drop all pending updates</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
+export interface ApiMethods {
   /**
    * <p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the _url_ field empty.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getwebhookinfo}
    */
   getWebhookInfo(args: Empty): WebhookInfo;
+}
 <h4><a class="anchor" name="webhookinfo" href="#webhookinfo"><i class="anchor-icon"></i></a>WebhookInfo</h4>
 <p>Describes the current status of a webhook.</p>
 <table class="table">
@@ -7556,18 +7543,13 @@ export type InputStoryContent =
    * @see {@link https://core.telegram.org/bots/api#close}
    */
   close(args: Empty): true;
-<h4><a class="anchor" name="sendmessage" href="#sendmessage"><i class="anchor-icon"></i></a>sendMessage</h4>
-<p>Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendmessage}
+   */
+  sendMessage({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -7658,8 +7640,8 @@ export type InputStoryContent =
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
+  }): Message;
+}
 /**
  * <p>The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.</p>
  * <p>Note that Telegram clients will display an **alert** to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).</p>
@@ -7760,18 +7742,13 @@ export type InputStoryContent =
  * @see {@link https://core.telegram.org/bots/api#formatting-options}
  */
 type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
-<h4><a class="anchor" name="forwardmessage" href="#forwardmessage"><i class="anchor-icon"></i></a>forwardMessage</h4>
-<p>Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#forwardmessage}
+   */
+  forwardMessage({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -7826,20 +7803,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Message identifier in the chat specified in _from_chat_id_</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="forwardmessages" href="#forwardmessages"><i class="anchor-icon"></i></a>forwardMessages</h4>
-<p>Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#forwardmessages}
+   */
+  forwardMessages({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -7882,20 +7854,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Protects the contents of the forwarded messages from forwarding and saving</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="copymessage" href="#copymessage"><i class="anchor-icon"></i></a>copyMessage</h4>
-<p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): MessageId;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#copymessage}
+   */
+  copyMessage({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -7992,20 +7959,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="copymessages" href="#copymessages"><i class="anchor-icon"></i></a>copyMessages</h4>
-<p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): MessageId;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#copymessages}
+   */
+  copyMessages({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -8054,20 +8016,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ to copy the messages without their captions</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendphoto" href="#sendphoto"><i class="anchor-icon"></i></a>sendPhoto</h4>
-<p>Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): MessageId[];
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendphoto}
+   */
+  sendPhoto({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -8170,21 +8127,16 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendaudio" href="#sendaudio"><i class="anchor-icon"></i></a>sendAudio</h4>
-<p>Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.</p>
-<p>For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.</p>
+   * <p>For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendaudio}
+   */
+  sendAudio({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -8299,20 +8251,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="senddocument" href="#senddocument"><i class="anchor-icon"></i></a>sendDocument</h4>
-<p>Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#senddocument}
+   */
+  sendDocument({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -8415,20 +8362,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendvideo" href="#sendvideo"><i class="anchor-icon"></i></a>sendVideo</h4>
-<p>Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendvideo}
+   */
+  sendVideo({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -8573,20 +8515,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendanimation" href="#sendanimation"><i class="anchor-icon"></i></a>sendAnimation</h4>
-<p>Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendanimation}
+   */
+  sendAnimation({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -8713,20 +8650,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendvoice" href="#sendvoice"><i class="anchor-icon"></i></a>sendVoice</h4>
-<p>Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendvoice}
+   */
+  sendVoice({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -8823,20 +8755,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendvideonote" href="#sendvideonote"><i class="anchor-icon"></i></a>sendVideoNote</h4>
-<p>As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendvideonote}
+   */
+  sendVideoNote({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -8927,20 +8854,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendpaidmedia" href="#sendpaidmedia"><i class="anchor-icon"></i></a>sendPaidMedia</h4>
-<p>Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendpaidmedia}
+   */
+  sendPaidMedia({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9043,20 +8965,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendmediagroup" href="#sendmediagroup"><i class="anchor-icon"></i></a>sendMediaGroup</h4>
-<p>Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of <a href="#message">Message</a> objects that were sent is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of <a href="#message">Message</a> objects that were sent is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendmediagroup}
+   */
+  sendMediaGroup({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9117,20 +9034,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendlocation" href="#sendlocation"><i class="anchor-icon"></i></a>sendLocation</h4>
-<p>Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message[];
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendlocation}
+   */
+  sendLocation({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9233,20 +9145,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendvenue" href="#sendvenue"><i class="anchor-icon"></i></a>sendVenue</h4>
-<p>Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendvenue}
+   */
+  sendVenue({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9361,20 +9268,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendcontact" href="#sendcontact"><i class="anchor-icon"></i></a>sendContact</h4>
-<p>Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendcontact}
+   */
+  sendContact({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9465,20 +9367,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendpoll" href="#sendpoll"><i class="anchor-icon"></i></a>sendPoll</h4>
-<p>Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendpoll}
+   */
+  sendPoll({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9617,20 +9514,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendchecklist" href="#sendchecklist"><i class="anchor-icon"></i></a>sendChecklist</h4>
-<p>Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendchecklist}
+   */
+  sendChecklist({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9679,20 +9571,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for an inline keyboard</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="senddice" href="#senddice"><i class="anchor-icon"></i></a>sendDice</h4>
-<p>Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#senddice}
+   */
+  sendDice({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9765,24 +9652,19 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="sendchataction" href="#sendchataction"><i class="anchor-icon"></i></a>sendChatAction</h4>
-<p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.</p>
-<blockquote>
-<p>Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.</p>
-</blockquote>
-<p>We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.</p>
+   * <blockquote>
+   * <p>Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.</p>
+   * </blockquote>
+   * <p>We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendchataction}
+   */
+  sendChatAction({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -9807,20 +9689,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for <a href="#sendmessage">text messages</a>, _upload_photo_ for <a href="#sendphoto">photos</a>, _record_video_ or _upload_video_ for <a href="#sendvideo">videos</a>, _record_voice_ or _upload_voice_ for <a href="#sendvoice">voice notes</a>, _upload_document_ for <a href="#senddocument">general files</a>, _choose_sticker_ for <a href="#sendsticker">stickers</a>, _find_location_ for <a href="#sendlocation">location data</a>, _record_video_note_ or _upload_video_note_ for <a href="#sendvideonote">video notes</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setmessagereaction" href="#setmessagereaction"><i class="anchor-icon"></i></a>setMessageReaction</h4>
-<p>Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns _True_ on success.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
+   */
+  setMessageReaction({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9845,20 +9722,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ to set the reaction with a big animation</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getuserprofilephotos" href="#getuserprofilephotos"><i class="anchor-icon"></i></a>getUserProfilePhotos</h4>
-<p>Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getuserprofilephotos}
+   */
+  getUserProfilePhotos({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -9877,20 +9749,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setuseremojistatus" href="#setuseremojistatus"><i class="anchor-icon"></i></a>setUserEmojiStatus</h4>
-<p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): UserProfilePhotos;
+}
+export interface ApiMethods {
+  /**
+   * <p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns _True_ on success.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#setuseremojistatus}
+   */
+  setUserEmojiStatus({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -9909,41 +9776,31 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Expiration date of the emoji status, if any</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getfile" href="#getfile"><i class="anchor-icon"></i></a>getFile</h4>
-<p>Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getfile}
+   */
+  getFile({
 <tr>
 <td>file_id</td>
 <td>String</td>
 <td>Yes</td>
 <td>File identifier to get information about</td>
 </tr>
-</tbody>
-</table>
+  }): File;
+}
 <p>**Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.</p>
-<h4><a class="anchor" name="banchatmember" href="#banchatmember"><i class="anchor-icon"></i></a>banChatMember</h4>
-<p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#banchatmember}
+    */
+  banChatMember({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9968,20 +9825,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ to delete all messages from the chat for the user that is being removed. If _False_, the user will be able to see messages in the group that were sent before the user was removed. Always _True_ for supergroups and channels.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="unbanchatmember" href="#unbanchatmember"><i class="anchor-icon"></i></a>unbanChatMember</h4>
-<p>Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don&#39;t want this, use the parameter _only_if_banned_. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don&#39;t want this, use the parameter _only_if_banned_. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
+    */
+  unbanChatMember({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10000,20 +9852,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Do nothing if the user is not banned</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="restrictchatmember" href="#restrictchatmember"><i class="anchor-icon"></i></a>restrictChatMember</h4>
-<p>Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#restrictchatmember}
+    */
+  restrictChatMember({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10044,20 +9891,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="promotechatmember" href="#promotechatmember"><i class="anchor-icon"></i></a>promoteChatMember</h4>
-<p>Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass _False_ for all boolean parameters to demote a user. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass _False_ for all boolean parameters to demote a user. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#promotechatmember}
+    */
+  promoteChatMember({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10166,20 +10008,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ if the administrator can manage direct messages within the channel and decline suggested posts; for channels only</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setchatadministratorcustomtitle" href="#setchatadministratorcustomtitle"><i class="anchor-icon"></i></a>setChatAdministratorCustomTitle</h4>
-<p>Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setchatadministratorcustomtitle}
+    */
+  setChatAdministratorCustomTitle({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10198,20 +10035,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>New custom title for the administrator; 0-16 characters, emoji are not allowed</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="banchatsenderchat" href="#banchatsenderchat"><i class="anchor-icon"></i></a>banChatSenderChat</h4>
-<p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
+    */
+  banChatSenderChat({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10224,20 +10056,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the target sender chat</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="unbanchatsenderchat" href="#unbanchatsenderchat"><i class="anchor-icon"></i></a>unbanChatSenderChat</h4>
-<p>Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#unbanchatsenderchat}
+    */
+  unbanChatSenderChat({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10250,20 +10077,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the target sender chat</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setchatpermissions" href="#setchatpermissions"><i class="anchor-icon"></i></a>setChatPermissions</h4>
-<p>Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the _can_restrict_members_ administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the _can_restrict_members_ administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setchatpermissions}
+    */
+  setChatPermissions({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10282,43 +10104,33 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ if chat permissions are set independently. Otherwise, the _can_send_other_messages_ and _can_add_web_page_previews_ permissions will imply the _can_send_messages_, _can_send_audios_, _can_send_documents_, _can_send_photos_, _can_send_videos_, _can_send_video_notes_, and _can_send_voice_notes_ permissions; the _can_send_polls_ permission will imply the _can_send_messages_ permission.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="exportchatinvitelink" href="#exportchatinvitelink"><i class="anchor-icon"></i></a>exportChatInviteLink</h4>
-<p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as _String_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as _String_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
+    */
+  exportChatInviteLink({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
-</tbody>
-</table>
+  }): string;
+}
 <blockquote>
 <p>Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.</p>
 </blockquote>
-<h4><a class="anchor" name="createchatinvitelink" href="#createchatinvitelink"><i class="anchor-icon"></i></a>createChatInviteLink</h4>
-<p>Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#createchatinvitelink}
+    */
+  createChatInviteLink({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10349,20 +10161,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>_True_, if users joining the chat via the link need to be approved by chat administrators. If _True_, _member_limit_ can&#39;t be specified</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editchatinvitelink" href="#editchatinvitelink"><i class="anchor-icon"></i></a>editChatInviteLink</h4>
-<p>Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatInviteLink;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editchatinvitelink}
+    */
+  editChatInviteLink({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10399,20 +10206,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>_True_, if users joining the chat via the link need to be approved by chat administrators. If _True_, _member_limit_ can&#39;t be specified</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="createchatsubscriptioninvitelink" href="#createchatsubscriptioninvitelink"><i class="anchor-icon"></i></a>createChatSubscriptionInviteLink</h4>
-<p>Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatInviteLink;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink}
+    */
+  createChatSubscriptionInviteLink({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10437,20 +10239,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editchatsubscriptioninvitelink" href="#editchatsubscriptioninvitelink"><i class="anchor-icon"></i></a>editChatSubscriptionInviteLink</h4>
-<p>Use this method to edit a subscription invite link created by the bot. The bot must have the _can_invite_users_ administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatInviteLink;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit a subscription invite link created by the bot. The bot must have the _can_invite_users_ administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editchatsubscriptioninvitelink}
+    */
+  editChatSubscriptionInviteLink({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10469,20 +10266,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="revokechatinvitelink" href="#revokechatinvitelink"><i class="anchor-icon"></i></a>revokeChatInviteLink</h4>
-<p>Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatInviteLink;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#revokechatinvitelink}
+    */
+  revokeChatInviteLink({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10495,20 +10287,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>The invite link to revoke</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="approvechatjoinrequest" href="#approvechatjoinrequest"><i class="anchor-icon"></i></a>approveChatJoinRequest</h4>
-<p>Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatInviteLink;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#approvechatjoinrequest}
+    */
+  approveChatJoinRequest({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10521,20 +10308,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="declinechatjoinrequest" href="#declinechatjoinrequest"><i class="anchor-icon"></i></a>declineChatJoinRequest</h4>
-<p>Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#declinechatjoinrequest}
+    */
+  declineChatJoinRequest({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10547,20 +10329,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setchatphoto" href="#setchatphoto"><i class="anchor-icon"></i></a>setChatPhoto</h4>
-<p>Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setchatphoto}
+    */
+  setChatPhoto({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10573,40 +10350,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>New chat photo, uploaded using multipart/form-data</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletechatphoto" href="#deletechatphoto"><i class="anchor-icon"></i></a>deleteChatPhoto</h4>
-<p>Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletechatphoto}
+    */
+  deleteChatPhoto({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setchattitle" href="#setchattitle"><i class="anchor-icon"></i></a>setChatTitle</h4>
-<p>Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setchattitle}
+    */
+  setChatTitle({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10619,20 +10386,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>New chat title, 1-128 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setchatdescription" href="#setchatdescription"><i class="anchor-icon"></i></a>setChatDescription</h4>
-<p>Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setchatdescription}
+    */
+  setChatDescription({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10645,20 +10407,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>New chat description, 0-255 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="pinchatmessage" href="#pinchatmessage"><i class="anchor-icon"></i></a>pinChatMessage</h4>
-<p>Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#pinchatmessage}
+    */
+  pinChatMessage({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -10683,20 +10440,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="unpinchatmessage" href="#unpinchatmessage"><i class="anchor-icon"></i></a>unpinChatMessage</h4>
-<p>Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#unpinchatmessage}
+    */
+  unpinChatMessage({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -10715,120 +10467,90 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Identifier of the message to unpin. Required if _business_connection_id_ is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="unpinallchatmessages" href="#unpinallchatmessages"><i class="anchor-icon"></i></a>unpinAllChatMessages</h4>
-<p>Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#unpinallchatmessages}
+    */
+  unpinAllChatMessages({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="leavechat" href="#leavechat"><i class="anchor-icon"></i></a>leaveChat</h4>
-<p>Use this method for your bot to leave a group, supergroup or channel. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method for your bot to leave a group, supergroup or channel. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#leavechat}
+    */
+  leaveChat({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`). Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getchat" href="#getchat"><i class="anchor-icon"></i></a>getChat</h4>
-<p>Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getchat}
+    */
+  getChat({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getchatadministrators" href="#getchatadministrators"><i class="anchor-icon"></i></a>getChatAdministrators</h4>
-<p>Use this method to get a list of administrators in a chat, which aren&#39;t bots. Returns an Array of <a href="#chatmember">ChatMember</a> objects.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatFullInfo;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get a list of administrators in a chat, which aren&#39;t bots. Returns an Array of <a href="#chatmember">ChatMember</a> objects.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getchatadministrators}
+    */
+  getChatAdministrators({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getchatmembercount" href="#getchatmembercount"><i class="anchor-icon"></i></a>getChatMemberCount</h4>
-<p>Use this method to get the number of members in a chat. Returns _Int_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatMember;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the number of members in a chat. Returns _Int_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getchatmembercount}
+    */
+  getChatMemberCount({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getchatmember" href="#getchatmember"><i class="anchor-icon"></i></a>getChatMember</h4>
-<p>Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): number;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getchatmember}
+    */
+  getChatMember({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10841,20 +10563,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setchatstickerset" href="#setchatstickerset"><i class="anchor-icon"></i></a>setChatStickerSet</h4>
-<p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ChatMember;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setchatstickerset}
+    */
+  setChatStickerSet({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10867,46 +10584,36 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Name of the sticker set to be set as the group sticker set</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletechatstickerset" href="#deletechatstickerset"><i class="anchor-icon"></i></a>deleteChatStickerSet</h4>
-<p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletechatstickerset}
+    */
+  deleteChatStickerSet({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
   /**
    * <p>Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getforumtopiciconstickers}
    */
   getForumTopicIconStickers(args: Empty): Sticker[];
-<h4><a class="anchor" name="createforumtopic" href="#createforumtopic"><i class="anchor-icon"></i></a>createForumTopic</h4>
-<p>Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#createforumtopic}
+    */
+  createForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10931,20 +10638,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editforumtopic" href="#editforumtopic"><i class="anchor-icon"></i></a>editForumTopic</h4>
-<p>Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): ForumTopic;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editforumtopic}
+    */
+  editForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10969,20 +10671,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>New unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="closeforumtopic" href="#closeforumtopic"><i class="anchor-icon"></i></a>closeForumTopic</h4>
-<p>Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#closeforumtopic}
+    */
+  closeForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10995,20 +10692,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="reopenforumtopic" href="#reopenforumtopic"><i class="anchor-icon"></i></a>reopenForumTopic</h4>
-<p>Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#reopenforumtopic}
+    */
+  reopenForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11021,20 +10713,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deleteforumtopic" href="#deleteforumtopic"><i class="anchor-icon"></i></a>deleteForumTopic</h4>
-<p>Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deleteforumtopic}
+    */
+  deleteForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11047,20 +10734,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="unpinallforumtopicmessages" href="#unpinallforumtopicmessages"><i class="anchor-icon"></i></a>unpinAllForumTopicMessages</h4>
-<p>Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#unpinallforumtopicmessages}
+    */
+  unpinAllForumTopicMessages({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11073,20 +10755,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editgeneralforumtopic" href="#editgeneralforumtopic"><i class="anchor-icon"></i></a>editGeneralForumTopic</h4>
-<p>Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editgeneralforumtopic}
+    */
+  editGeneralForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11099,123 +10776,93 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>New topic name, 1-128 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="closegeneralforumtopic" href="#closegeneralforumtopic"><i class="anchor-icon"></i></a>closeGeneralForumTopic</h4>
-<p>Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#closegeneralforumtopic}
+    */
+  closeGeneralForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="reopengeneralforumtopic" href="#reopengeneralforumtopic"><i class="anchor-icon"></i></a>reopenGeneralForumTopic</h4>
-<p>Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically unhidden if it was hidden. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically unhidden if it was hidden. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#reopengeneralforumtopic}
+    */
+  reopenGeneralForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="hidegeneralforumtopic" href="#hidegeneralforumtopic"><i class="anchor-icon"></i></a>hideGeneralForumTopic</h4>
-<p>Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically closed if it was open. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically closed if it was open. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#hidegeneralforumtopic}
+    */
+  hideGeneralForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="unhidegeneralforumtopic" href="#unhidegeneralforumtopic"><i class="anchor-icon"></i></a>unhideGeneralForumTopic</h4>
-<p>Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#unhidegeneralforumtopic}
+    */
+  unhideGeneralForumTopic({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="unpinallgeneralforumtopicmessages" href="#unpinallgeneralforumtopicmessages"><i class="anchor-icon"></i></a>unpinAllGeneralForumTopicMessages</h4>
-<p>Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages}
+    */
+  unpinAllGeneralForumTopicMessages({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="answercallbackquery" href="#answercallbackquery"><i class="anchor-icon"></i></a>answerCallbackQuery</h4>
-<p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.</p>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.</p>
 <blockquote>
 <p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.</p>
 </blockquote>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+    *
+    * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
+    */
+  answerCallbackQuery({
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -11246,20 +10893,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getuserchatboosts" href="#getuserchatboosts"><i class="anchor-icon"></i></a>getUserChatBoosts</h4>
-<p>Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getuserchatboosts}
+    */
+  getUserChatBoosts({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11272,40 +10914,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getbusinessconnection" href="#getbusinessconnection"><i class="anchor-icon"></i></a>getBusinessConnection</h4>
-<p>Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): UserChatBoosts;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getbusinessconnection}
+    */
+  getBusinessConnection({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setmycommands" href="#setmycommands"><i class="anchor-icon"></i></a>setMyCommands</h4>
-<p>Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): BusinessConnection;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setmycommands}
+    */
+  setMyCommands({
 <tr>
 <td>commands</td>
 <td>Array of <a href="#botcommand">BotCommand</a></td>
@@ -11324,20 +10956,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletemycommands" href="#deletemycommands"><i class="anchor-icon"></i></a>deleteMyCommands</h4>
-<p>Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletemycommands}
+    */
+  deleteMyCommands({
 <tr>
 <td>scope</td>
 <td><a href="#botcommandscope">BotCommandScope</a></td>
@@ -11350,20 +10977,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getmycommands" href="#getmycommands"><i class="anchor-icon"></i></a>getMyCommands</h4>
-<p>Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getmycommands}
+    */
+  getMyCommands({
 <tr>
 <td>scope</td>
 <td><a href="#botcommandscope">BotCommandScope</a></td>
@@ -11376,20 +10998,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setmyname" href="#setmyname"><i class="anchor-icon"></i></a>setMyName</h4>
-<p>Use this method to change the bot&#39;s name. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): BotCommand[];
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the bot&#39;s name. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setmyname}
+    */
+  setMyName({
 <tr>
 <td>name</td>
 <td>String</td>
@@ -11402,40 +11019,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getmyname" href="#getmyname"><i class="anchor-icon"></i></a>getMyName</h4>
-<p>Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getmyname}
+    */
+  getMyName({
 <tr>
 <td>language_code</td>
 <td>String</td>
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setmydescription" href="#setmydescription"><i class="anchor-icon"></i></a>setMyDescription</h4>
-<p>Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): BotName;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setmydescription}
+    */
+  setMyDescription({
 <tr>
 <td>description</td>
 <td>String</td>
@@ -11448,40 +11055,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getmydescription" href="#getmydescription"><i class="anchor-icon"></i></a>getMyDescription</h4>
-<p>Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getmydescription}
+    */
+  getMyDescription({
 <tr>
 <td>language_code</td>
 <td>String</td>
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setmyshortdescription" href="#setmyshortdescription"><i class="anchor-icon"></i></a>setMyShortDescription</h4>
-<p>Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): BotDescription;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setmyshortdescription}
+    */
+  setMyShortDescription({
 <tr>
 <td>short_description</td>
 <td>String</td>
@@ -11494,40 +11091,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getmyshortdescription" href="#getmyshortdescription"><i class="anchor-icon"></i></a>getMyShortDescription</h4>
-<p>Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getmyshortdescription}
+    */
+  getMyShortDescription({
 <tr>
 <td>language_code</td>
 <td>String</td>
 <td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setchatmenubutton" href="#setchatmenubutton"><i class="anchor-icon"></i></a>setChatMenuButton</h4>
-<p>Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): BotShortDescription;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setchatmenubutton}
+    */
+  setChatMenuButton({
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
@@ -11540,40 +11127,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for the bot&#39;s new menu button. Defaults to <a href="#menubuttondefault">MenuButtonDefault</a></td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getchatmenubutton" href="#getchatmenubutton"><i class="anchor-icon"></i></a>getChatMenuButton</h4>
-<p>Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getchatmenubutton}
+    */
+  getChatMenuButton({
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
 <td>Optional</td>
 <td>Unique identifier for the target private chat. If not specified, default bot&#39;s menu button will be returned</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setmydefaultadministratorrights" href="#setmydefaultadministratorrights"><i class="anchor-icon"></i></a>setMyDefaultAdministratorRights</h4>
-<p>Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): MenuButton;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setmydefaultadministratorrights}
+    */
+  setMyDefaultAdministratorRights({
 <tr>
 <td>rights</td>
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
@@ -11586,46 +11163,36 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getmydefaultadministratorrights" href="#getmydefaultadministratorrights"><i class="anchor-icon"></i></a>getMyDefaultAdministratorRights</h4>
-<p>Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getmydefaultadministratorrights}
+    */
+  getMyDefaultAdministratorRights({
 <tr>
 <td>for_channels</td>
 <td>Boolean</td>
 <td>Optional</td>
 <td>Pass _True_ to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.</td>
 </tr>
-</tbody>
-</table>
+  }): ChatAdministratorRights;
+}
   /**
    * <p>Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getavailablegifts}
    */
   getAvailableGifts(args: Empty): Gifts;
-<h4><a class="anchor" name="sendgift" href="#sendgift"><i class="anchor-icon"></i></a>sendGift</h4>
-<p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#sendgift}
+    */
+  sendGift({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -11668,20 +11235,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="giftpremiumsubscription" href="#giftpremiumsubscription"><i class="anchor-icon"></i></a>giftPremiumSubscription</h4>
-<p>Gifts a Telegram Premium subscription to the given user. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Gifts a Telegram Premium subscription to the given user. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#giftpremiumsubscription}
+    */
+  giftPremiumSubscription({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -11718,20 +11280,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="verifyuser" href="#verifyuser"><i class="anchor-icon"></i></a>verifyUser</h4>
-<p>Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
+     *
+     * @see {@link https://core.telegram.org/bots/api#verifyuser}
+    */
+  verifyUser({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -11744,20 +11301,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="verifychat" href="#verifychat"><i class="anchor-icon"></i></a>verifyChat</h4>
-<p>Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
+     *
+     * @see {@link https://core.telegram.org/bots/api#verifychat}
+    */
+  verifyChat({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11770,60 +11322,45 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="removeuserverification" href="#removeuserverification"><i class="anchor-icon"></i></a>removeUserVerification</h4>
-<p>Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
+     *
+     * @see {@link https://core.telegram.org/bots/api#removeuserverification}
+    */
+  removeUserVerification({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="removechatverification" href="#removechatverification"><i class="anchor-icon"></i></a>removeChatVerification</h4>
-<p>Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
+     *
+     * @see {@link https://core.telegram.org/bots/api#removechatverification}
+    */
+  removeChatVerification({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="readbusinessmessage" href="#readbusinessmessage"><i class="anchor-icon"></i></a>readBusinessMessage</h4>
-<p>Marks incoming message as read on behalf of a business account. Requires the _can_read_messages_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Marks incoming message as read on behalf of a business account. Requires the _can_read_messages_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#readbusinessmessage}
+    */
+  readBusinessMessage({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -11842,20 +11379,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the message to mark as read</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletebusinessmessages" href="#deletebusinessmessages"><i class="anchor-icon"></i></a>deleteBusinessMessages</h4>
-<p>Delete messages on behalf of a business account. Requires the _can_delete_sent_messages_ business bot right to delete messages sent by the bot itself, or the _can_delete_all_messages_ business bot right to delete any message. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Delete messages on behalf of a business account. Requires the _can_delete_sent_messages_ business bot right to delete messages sent by the bot itself, or the _can_delete_all_messages_ business bot right to delete any message. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletebusinessmessages}
+    */
+  deleteBusinessMessages({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -11868,20 +11400,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setbusinessaccountname" href="#setbusinessaccountname"><i class="anchor-icon"></i></a>setBusinessAccountName</h4>
-<p>Changes the first and last name of a managed business account. Requires the _can_change_name_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Changes the first and last name of a managed business account. Requires the _can_change_name_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setbusinessaccountname}
+    */
+  setBusinessAccountName({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -11900,20 +11427,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>The new value of the last name for the business account; 0-64 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setbusinessaccountusername" href="#setbusinessaccountusername"><i class="anchor-icon"></i></a>setBusinessAccountUsername</h4>
-<p>Changes the username of a managed business account. Requires the _can_change_username_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Changes the username of a managed business account. Requires the _can_change_username_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setbusinessaccountusername}
+    */
+  setBusinessAccountUsername({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -11926,20 +11448,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>The new value of the username for the business account; 0-32 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setbusinessaccountbio" href="#setbusinessaccountbio"><i class="anchor-icon"></i></a>setBusinessAccountBio</h4>
-<p>Changes the bio of a managed business account. Requires the _can_change_bio_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Changes the bio of a managed business account. Requires the _can_change_bio_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setbusinessaccountbio}
+    */
+  setBusinessAccountBio({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -11952,20 +11469,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>The new value of the bio for the business account; 0-140 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setbusinessaccountprofilephoto" href="#setbusinessaccountprofilephoto"><i class="anchor-icon"></i></a>setBusinessAccountProfilePhoto</h4>
-<p>Changes the profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Changes the profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setbusinessaccountprofilephoto}
+    */
+  setBusinessAccountProfilePhoto({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -11984,20 +11496,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="removebusinessaccountprofilephoto" href="#removebusinessaccountprofilephoto"><i class="anchor-icon"></i></a>removeBusinessAccountProfilePhoto</h4>
-<p>Removes the current profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Removes the current profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#removebusinessaccountprofilephoto}
+    */
+  removeBusinessAccountProfilePhoto({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12010,20 +11517,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setbusinessaccountgiftsettings" href="#setbusinessaccountgiftsettings"><i class="anchor-icon"></i></a>setBusinessAccountGiftSettings</h4>
-<p>Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings}
+    */
+  setBusinessAccountGiftSettings({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12042,40 +11544,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Types of gifts accepted by the business account</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getbusinessaccountstarbalance" href="#getbusinessaccountstarbalance"><i class="anchor-icon"></i></a>getBusinessAccountStarBalance</h4>
-<p>Returns the amount of Telegram Stars owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#staramount">StarAmount</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Returns the amount of Telegram Stars owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#staramount">StarAmount</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getbusinessaccountstarbalance}
+    */
+  getBusinessAccountStarBalance({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="transferbusinessaccountstars" href="#transferbusinessaccountstars"><i class="anchor-icon"></i></a>transferBusinessAccountStars</h4>
-<p>Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the _can_transfer_stars_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): StarAmount;
+}
+export interface ApiMethods {
+  /**
+    * <p>Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the _can_transfer_stars_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#transferbusinessaccountstars}
+    */
+  transferBusinessAccountStars({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12088,20 +11580,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Number of Telegram Stars to transfer; 1-10000</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getbusinessaccountgifts" href="#getbusinessaccountgifts"><i class="anchor-icon"></i></a>getBusinessAccountGifts</h4>
-<p>Returns the gifts received and owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Returns the gifts received and owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getbusinessaccountgifts}
+    */
+  getBusinessAccountGifts({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12156,20 +11643,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>The maximum number of gifts to be returned; 1-100. Defaults to 100</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="convertgifttostars" href="#convertgifttostars"><i class="anchor-icon"></i></a>convertGiftToStars</h4>
-<p>Converts a given regular gift to Telegram Stars. Requires the _can_convert_gifts_to_stars_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): OwnedGifts;
+}
+export interface ApiMethods {
+  /**
+    * <p>Converts a given regular gift to Telegram Stars. Requires the _can_convert_gifts_to_stars_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#convertgifttostars}
+    */
+  convertGiftToStars({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12182,20 +11664,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the regular gift that should be converted to Telegram Stars</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="upgradegift" href="#upgradegift"><i class="anchor-icon"></i></a>upgradeGift</h4>
-<p>Upgrades a given regular gift to a unique gift. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Additionally requires the _can_transfer_stars_ business bot right if the upgrade is paid. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Upgrades a given regular gift to a unique gift. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Additionally requires the _can_transfer_stars_ business bot right if the upgrade is paid. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#upgradegift}
+    */
+  upgradeGift({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12220,20 +11697,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If `gift.prepaid_upgrade_star_count &gt; 0`, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and `gift.upgrade_star_count` must be passed.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="transfergift" href="#transfergift"><i class="anchor-icon"></i></a>transferGift</h4>
-<p>Transfers an owned unique gift to another user. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Requires _can_transfer_stars_ business bot right if the transfer is paid. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Transfers an owned unique gift to another user. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Requires _can_transfer_stars_ business bot right if the transfer is paid. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#transfergift}
+    */
+  transferGift({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12258,20 +11730,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the _can_transfer_stars_ business bot right is required.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="poststory" href="#poststory"><i class="anchor-icon"></i></a>postStory</h4>
-<p>Posts a story on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Posts a story on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#poststory}
+    */
+  postStory({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12326,20 +11793,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ if the content of the story must be protected from forwarding and screenshotting</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editstory" href="#editstory"><i class="anchor-icon"></i></a>editStory</h4>
-<p>Edits a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Story;
+}
+export interface ApiMethods {
+  /**
+    * <p>Edits a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editstory}
+    */
+  editStory({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12382,20 +11844,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized list of clickable areas to be shown on the story</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletestory" href="#deletestory"><i class="anchor-icon"></i></a>deleteStory</h4>
-<p>Deletes a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Story;
+}
+export interface ApiMethods {
+  /**
+    * <p>Deletes a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletestory}
+    */
+  deleteStory({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12408,22 +11865,17 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Unique identifier of the story to delete</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
 
 // === UPDATING MESSAGES ===
-<h4><a class="anchor" name="editmessagetext" href="#editmessagetext"><i class="anchor-icon"></i></a>editMessageText</h4>
-<p>Use this method to edit text and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit text and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editmessagetext}
+    */
+  editMessageText({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12478,20 +11930,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editmessagecaption" href="#editmessagecaption"><i class="anchor-icon"></i></a>editMessageCaption</h4>
-<p>Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true | Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
+    */
+  editMessageCaption({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12546,20 +11993,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editmessagemedia" href="#editmessagemedia"><i class="anchor-icon"></i></a>editMessageMedia</h4>
-<p>Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true | Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
+    */
+  editMessageMedia({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12596,20 +12038,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editmessagelivelocation" href="#editmessagelivelocation"><i class="anchor-icon"></i></a>editMessageLiveLocation</h4>
-<p>Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true | Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
+    */
+  editMessageLiveLocation({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12676,20 +12113,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="stopmessagelivelocation" href="#stopmessagelivelocation"><i class="anchor-icon"></i></a>stopMessageLiveLocation</h4>
-<p>Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true | Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
+    */
+  stopMessageLiveLocation({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12720,20 +12152,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editmessagechecklist" href="#editmessagechecklist"><i class="anchor-icon"></i></a>editMessageChecklist</h4>
-<p>Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true | Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editmessagechecklist}
+    */
+  editMessageChecklist({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12764,20 +12191,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for the new inline keyboard for the message</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="editmessagereplymarkup" href="#editmessagereplymarkup"><i class="anchor-icon"></i></a>editMessageReplyMarkup</h4>
-<p>Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
+    */
+  editMessageReplyMarkup({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12808,20 +12230,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="stoppoll" href="#stoppoll"><i class="anchor-icon"></i></a>stopPoll</h4>
-<p>Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true | Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#stoppoll}
+    */
+  stopPoll({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -12846,20 +12263,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="approvesuggestedpost" href="#approvesuggestedpost"><i class="anchor-icon"></i></a>approveSuggestedPost</h4>
-<p>Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Poll;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#approvesuggestedpost}
+    */
+  approveSuggestedPost({
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
@@ -12878,20 +12290,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="declinesuggestedpost" href="#declinesuggestedpost"><i class="anchor-icon"></i></a>declineSuggestedPost</h4>
-<p>Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#declinesuggestedpost}
+    */
+  declineSuggestedPost({
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
@@ -12910,20 +12317,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Comment for the creator of the suggested post; 0-128 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletemessage" href="#deletemessage"><i class="anchor-icon"></i></a>deleteMessage</h4>
-<p>Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted _can_post_messages_ permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has _can_delete_messages_ administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has _can_manage_direct_messages_ administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted _can_post_messages_ permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has _can_delete_messages_ administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has _can_manage_direct_messages_ administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletemessage}
+    */
+  deleteMessage({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -12936,20 +12338,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Identifier of the message to delete</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletemessages" href="#deletemessages"><i class="anchor-icon"></i></a>deleteMessages</h4>
-<p>Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletemessages}
+    */
+  deleteMessages({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -12962,8 +12359,8 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
 
 // === STICKERS ===
 <h4><a class="anchor" name="sticker" href="#sticker"><i class="anchor-icon"></i></a>Sticker</h4>
@@ -13163,18 +12560,13 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendsticker" href="#sendsticker"><i class="anchor-icon"></i></a>sendSticker</h4>
-<p>Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.</p>
+     *
+     * @see {@link https://core.telegram.org/bots/api#sendsticker}
+    */
+  sendSticker({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -13253,60 +12645,45 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getstickerset" href="#getstickerset"><i class="anchor-icon"></i></a>getStickerSet</h4>
-<p>Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getstickerset}
+    */
+  getStickerSet({
 <tr>
 <td>name</td>
 <td>String</td>
 <td>Yes</td>
 <td>Name of the sticker set</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getcustomemojistickers" href="#getcustomemojistickers"><i class="anchor-icon"></i></a>getCustomEmojiStickers</h4>
-<p>Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): StickerSet;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getcustomemojistickers}
+    */
+  getCustomEmojiStickers({
 <tr>
 <td>custom_emoji_ids</td>
 <td>Array of String</td>
 <td>Yes</td>
 <td>A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="uploadstickerfile" href="#uploadstickerfile"><i class="anchor-icon"></i></a>uploadStickerFile</h4>
-<p>Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Sticker[];
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#uploadstickerfile}
+    */
+  uploadStickerFile({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -13325,20 +12702,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Format of the sticker, must be one of “static”, “animated”, “video”</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="createnewstickerset" href="#createnewstickerset"><i class="anchor-icon"></i></a>createNewStickerSet</h4>
-<p>Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): File;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#createnewstickerset}
+    */
+  createNewStickerSet({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -13375,20 +12747,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Pass _True_ if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="addstickertoset" href="#addstickertoset"><i class="anchor-icon"></i></a>addStickerToSet</h4>
-<p>Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#addstickertoset}
+    */
+  addStickerToSet({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -13407,20 +12774,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn&#39;t changed.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setstickerpositioninset" href="#setstickerpositioninset"><i class="anchor-icon"></i></a>setStickerPositionInSet</h4>
-<p>Use this method to move a sticker in a set created by the bot to a specific position. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to move a sticker in a set created by the bot to a specific position. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setstickerpositioninset}
+    */
+  setStickerPositionInSet({
 <tr>
 <td>sticker</td>
 <td>String</td>
@@ -13433,40 +12795,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>New sticker position in the set, zero-based</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletestickerfromset" href="#deletestickerfromset"><i class="anchor-icon"></i></a>deleteStickerFromSet</h4>
-<p>Use this method to delete a sticker from a set created by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete a sticker from a set created by the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletestickerfromset}
+    */
+  deleteStickerFromSet({
 <tr>
 <td>sticker</td>
 <td>String</td>
 <td>Yes</td>
 <td>File identifier of the sticker</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="replacestickerinset" href="#replacestickerinset"><i class="anchor-icon"></i></a>replaceStickerInSet</h4>
-<p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#replacestickerinset}
+    */
+  replaceStickerInSet({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -13491,20 +12843,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setstickeremojilist" href="#setstickeremojilist"><i class="anchor-icon"></i></a>setStickerEmojiList</h4>
-<p>Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setstickeremojilist}
+    */
+  setStickerEmojiList({
 <tr>
 <td>sticker</td>
 <td>String</td>
@@ -13517,20 +12864,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>A JSON-serialized list of 1-20 emoji associated with the sticker</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setstickerkeywords" href="#setstickerkeywords"><i class="anchor-icon"></i></a>setStickerKeywords</h4>
-<p>Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setstickerkeywords}
+    */
+  setStickerKeywords({
 <tr>
 <td>sticker</td>
 <td>String</td>
@@ -13543,20 +12885,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setstickermaskposition" href="#setstickermaskposition"><i class="anchor-icon"></i></a>setStickerMaskPosition</h4>
-<p>Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setstickermaskposition}
+    */
+  setStickerMaskPosition({
 <tr>
 <td>sticker</td>
 <td>String</td>
@@ -13569,20 +12906,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setstickersettitle" href="#setstickersettitle"><i class="anchor-icon"></i></a>setStickerSetTitle</h4>
-<p>Use this method to set the title of a created sticker set. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set the title of a created sticker set. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setstickersettitle}
+    */
+  setStickerSetTitle({
 <tr>
 <td>name</td>
 <td>String</td>
@@ -13595,20 +12927,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Sticker set title, 1-64 characters</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setstickersetthumbnail" href="#setstickersetthumbnail"><i class="anchor-icon"></i></a>setStickerSetThumbnail</h4>
-<p>Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setstickersetthumbnail}
+    */
+  setStickerSetThumbnail({
 <tr>
 <td>name</td>
 <td>String</td>
@@ -13633,20 +12960,15 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Yes</td>
 <td>Format of the thumbnail, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, or “video” for a **.WEBM** video</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="setcustomemojistickersetthumbnail" href="#setcustomemojistickersetthumbnail"><i class="anchor-icon"></i></a>setCustomEmojiStickerSetThumbnail</h4>
-<p>Use this method to set the thumbnail of a custom emoji sticker set. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set the thumbnail of a custom emoji sticker set. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail}
+    */
+  setCustomEmojiStickerSetThumbnail({
 <tr>
 <td>name</td>
 <td>String</td>
@@ -13659,28 +12981,23 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="deletestickerset" href="#deletestickerset"><i class="anchor-icon"></i></a>deleteStickerSet</h4>
-<p>Use this method to delete a sticker set that was created by the bot. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to delete a sticker set that was created by the bot. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#deletestickerset}
+    */
+  deleteStickerSet({
 <tr>
 <td>name</td>
 <td>String</td>
 <td>Yes</td>
 <td>Sticker set name</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
 
 // === INLINE MODE ===
 <h4><a class="anchor" name="inlinequery" href="#inlinequery"><i class="anchor-icon"></i></a>InlineQuery</h4>
@@ -13726,18 +13043,13 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answerinlinequery" href="#answerinlinequery"><i class="anchor-icon"></i></a>answerInlineQuery</h4>
-<p>Use this method to send answers to an inline query. On success, _True_ is returned.<br>No more than **50** results per query are allowed.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to send answers to an inline query. On success, _True_ is returned.<br>No more than **50** results per query are allowed.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#answerinlinequery}
+    */
+  answerInlineQuery({
 <tr>
 <td>inline_query_id</td>
 <td>String</td>
@@ -13774,8 +13086,8 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 <td>Optional</td>
 <td>A JSON-serialized object describing a button to be shown above inline query results</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
 <h4><a class="anchor" name="inlinequeryresultsbutton" href="#inlinequeryresultsbutton"><i class="anchor-icon"></i></a>InlineQueryResultsButton</h4>
 <p>This object represents a button to be shown above inline query results. You **must** use exactly one of the optional fields.</p>
 <table class="table">
@@ -15559,18 +14871,13 @@ export type InputMessageContent =
 </tbody>
 </table>
 <p>**Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.</p>
-<h4><a class="anchor" name="answerwebappquery" href="#answerwebappquery"><i class="anchor-icon"></i></a>answerWebAppQuery</h4>
-<p>Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#answerwebappquery}
+    */
+  answerWebAppQuery({
 <tr>
 <td>web_app_query_id</td>
 <td>String</td>
@@ -15583,8 +14890,8 @@ export type InputMessageContent =
 <td>Yes</td>
 <td>A JSON-serialized object describing the message to be sent</td>
 </tr>
-</tbody>
-</table>
+  }): SentWebAppMessage;
+}
 <h4><a class="anchor" name="sentwebappmessage" href="#sentwebappmessage"><i class="anchor-icon"></i></a>SentWebAppMessage</h4>
 <p>Describes an inline message sent by a <a href="/bots/webapps">Web App</a> on behalf of a user.</p>
 <table class="table">
@@ -15603,18 +14910,13 @@ export type InputMessageContent =
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="savepreparedinlinemessage" href="#savepreparedinlinemessage"><i class="anchor-icon"></i></a>savePreparedInlineMessage</h4>
-<p>Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#savepreparedinlinemessage}
+    */
+  savePreparedInlineMessage({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -15651,8 +14953,8 @@ export type InputMessageContent =
 <td>Optional</td>
 <td>Pass _True_ if the message can be sent to channel chats</td>
 </tr>
-</tbody>
-</table>
+  }): PreparedInlineMessage;
+}
 <h4><a class="anchor" name="preparedinlinemessage" href="#preparedinlinemessage"><i class="anchor-icon"></i></a>PreparedInlineMessage</h4>
 <p>Describes an inline message to be sent by a user of a Mini App.</p>
 <table class="table">
@@ -15678,18 +14980,13 @@ export type InputMessageContent =
 </table>
 
 // === PAYMENTS ===
-<h4><a class="anchor" name="sendinvoice" href="#sendinvoice"><i class="anchor-icon"></i></a>sendInvoice</h4>
-<p>Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#sendinvoice}
+    */
+  sendInvoice({
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -15876,20 +15173,15 @@ export type InputMessageContent =
 <td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="createinvoicelink" href="#createinvoicelink"><i class="anchor-icon"></i></a>createInvoiceLink</h4>
-<p>Use this method to create a link for an invoice. Returns the created invoice link as _String_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): Message;
+}
+export interface ApiMethods {
+  /**
+    * <p>Use this method to create a link for an invoice. Returns the created invoice link as _String_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#createinvoicelink}
+    */
+  createInvoiceLink({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -16022,20 +15314,15 @@ export type InputMessageContent =
 <td>Optional</td>
 <td>Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="answershippingquery" href="#answershippingquery"><i class="anchor-icon"></i></a>answerShippingQuery</h4>
-<p>If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an <a href="#update">Update</a> with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+    }): string;
+}
+export interface ApiMethods {
+  /**
+    * <p>If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an <a href="#update">Update</a> with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#answershippingquery}
+    */
+  answerShippingQuery({
 <tr>
 <td>shipping_query_id</td>
 <td>String</td>
@@ -16060,20 +15347,15 @@ export type InputMessageContent =
 <td>Optional</td>
 <td>Required if _ok_ is _False_. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="answerprecheckoutquery" href="#answerprecheckoutquery"><i class="anchor-icon"></i></a>answerPreCheckoutQuery</h4>
-<p>Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
+    */
+  answerPreCheckoutQuery({
 <tr>
 <td>pre_checkout_query_id</td>
 <td>String</td>
@@ -16092,26 +15374,21 @@ export type InputMessageContent =
 <td>Optional</td>
 <td>Required if _ok_ is _False_. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
   /**
    * <p>A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getmystarbalance}
    */
   getMyStarBalance(args: Empty): StarAmount;
-<h4><a class="anchor" name="getstartransactions" href="#getstartransactions"><i class="anchor-icon"></i></a>getStarTransactions</h4>
-<p>Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+    * <p>Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#getstartransactions}
+    */
+  getStarTransactions({
 <tr>
 <td>offset</td>
 <td>Integer</td>
@@ -16124,20 +15401,15 @@ export type InputMessageContent =
 <td>Optional</td>
 <td>The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="refundstarpayment" href="#refundstarpayment"><i class="anchor-icon"></i></a>refundStarPayment</h4>
-<p>Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): StarTransactions;
+}
+export interface ApiMethods {
+  /**
+    * <p>Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns _True_ on success.</p>
+     *
+     * @see {@link https://core.telegram.org/bots/api#refundstarpayment}
+    */
+  refundStarPayment({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -16150,20 +15422,15 @@ export type InputMessageContent =
 <td>Yes</td>
 <td>Telegram payment identifier</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="edituserstarsubscription" href="#edituserstarsubscription"><i class="anchor-icon"></i></a>editUserStarSubscription</h4>
-<p>Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns _True_ on success.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true;
+}
+export interface ApiMethods {
+  /**
+    * <p>Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns _True_ on success.</p>
+   *
+     * @see {@link https://core.telegram.org/bots/api#edituserstarsubscription}
+    */
+  editUserStarSubscription({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -16182,8 +15449,8 @@ export type InputMessageContent =
 <td>Yes</td>
 <td>Pass _True_ to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass _False_ to allow the user to re-enable a subscription that was previously canceled by the bot.</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
 <h4><a class="anchor" name="labeledprice" href="#labeledprice"><i class="anchor-icon"></i></a>LabeledPrice</h4>
 <p>This object represents a portion of the price for goods or services.</p>
 <table class="table">
@@ -17099,19 +16366,14 @@ export type TransactionPartner =
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setpassportdataerrors" href="#setpassportdataerrors"><i class="anchor-icon"></i></a>setPassportDataErrors</h4>
-<p>Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns _True_ on success.</p>
-<p>Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns _True_ on success.</p>
+   * <p>Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#setpassportdataerrors}
+   */
+  setPassportDataErrors({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -17124,8 +16386,8 @@ export type TransactionPartner =
 <td>Yes</td>
 <td>A JSON-serialized array describing the errors</td>
 </tr>
-</tbody>
-</table>
+  }): true;
+}
 /**
  * <p>This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:</p>
  * - PassportElementErrorDataField
@@ -17454,18 +16716,13 @@ export type PassportElementError =
 </table>
 
 // === GAMES ===
-<h4><a class="anchor" name="sendgame" href="#sendgame"><i class="anchor-icon"></i></a>sendGame</h4>
-<p>Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#sendgame}
+   */
+  sendGame({
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
@@ -17526,8 +16783,8 @@ export type PassportElementError =
 <td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.</td>
 </tr>
-</tbody>
-</table>
+  }): Message;
+}
 <h4><a class="anchor" name="game" href="#game"><i class="anchor-icon"></i></a>Game</h4>
 <p>This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.</p>
 <table class="table">
@@ -17577,18 +16834,13 @@ export type PassportElementError =
  * @see {@link https://core.telegram.org/bots/api#callbackgame}
  */
 export type CallbackGame = Empty;
-<h4><a class="anchor" name="setgamescore" href="#setgamescore"><i class="anchor-icon"></i></a>setGameScore</h4>
-<p>Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise _True_ is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and _force_ is _False_.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+export interface ApiMethods {
+  /**
+   * <p>Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise _True_ is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and _force_ is _False_.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#setgamescore}
+   */
+  setGameScore({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -17631,23 +16883,18 @@ export type CallbackGame = Empty;
 <td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
-</tbody>
-</table>
-<h4><a class="anchor" name="getgamehighscores" href="#getgamehighscores"><i class="anchor-icon"></i></a>getGameHighScores</h4>
-<p>Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of <a href="#gamehighscore">GameHighScore</a> objects.</p>
-<blockquote>
-<p>This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.</p>
-</blockquote>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
+  }): true | Message;
+}
+export interface ApiMethods {
+  /**
+   * <p>Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of <a href="#gamehighscore">GameHighScore</a> objects.</p>
+   * <blockquote>
+   * <p>This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.</p>
+   * </blockquote>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getgamehighscores}
+   */
+  getGameHighScores({
 <tr>
 <td>user_id</td>
 <td>Integer</td>
@@ -17672,8 +16919,8 @@ export type CallbackGame = Empty;
 <td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
-</tbody>
-</table>
+  }): GameHighScore[];
+}
 <h4><a class="anchor" name="gamehighscore" href="#gamehighscore"><i class="anchor-icon"></i></a>GameHighScore</h4>
 <p>This object represents one row of the high scores table for a game.</p>
 <table class="table">
