@@ -254,8 +254,12 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getwebhookinfo" href="#getwebhookinfo"><i class="anchor-icon"></i></a>getWebhookInfo</h4>
-<p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the _url_ field empty.</p>
+  /**
+   * <p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the _url_ field empty.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getwebhookinfo}
+   */
+  getWebhookInfo(args: Empty): WebhookInfo;
 <h4><a class="anchor" name="webhookinfo" href="#webhookinfo"><i class="anchor-icon"></i></a>WebhookInfo</h4>
 <p>Describes the current status of a webhook.</p>
 <table class="table">
@@ -7520,12 +7524,24 @@
 <p>Objects and methods used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
 
 // === AVAILABLE METHODS ===
-<h4><a class="anchor" name="getme" href="#getme"><i class="anchor-icon"></i></a>getMe</h4>
-<p>A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.</p>
-<h4><a class="anchor" name="logout" href="#logout"><i class="anchor-icon"></i></a>logOut</h4>
-<p>Use this method to log out from the cloud Bot API server before launching the bot locally. You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns _True_ on success. Requires no parameters.</p>
-<h4><a class="anchor" name="close" href="#close"><i class="anchor-icon"></i></a>close</h4>
-<p>Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns _True_ on success. Requires no parameters.</p>
+  /**
+   * <p>A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getme}
+   */
+  getMe(args: Empty): User;
+  /**
+   * <p>Use this method to log out from the cloud Bot API server before launching the bot locally. You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns _True_ on success. Requires no parameters.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#logout}
+   */
+  logOut(args: Empty): true;
+  /**
+   * <p>Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns _True_ on success. Requires no parameters.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#close}
+   */
+  close(args: Empty): true;
 <h4><a class="anchor" name="sendmessage" href="#sendmessage"><i class="anchor-icon"></i></a>sendMessage</h4>
 <p>Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
@@ -10861,8 +10877,12 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getforumtopiciconstickers" href="#getforumtopiciconstickers"><i class="anchor-icon"></i></a>getForumTopicIconStickers</h4>
-<p>Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
+  /**
+   * <p>Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getforumtopiciconstickers}
+   */
+  getForumTopicIconStickers(args: Empty): Sticker[];
 <h4><a class="anchor" name="createforumtopic" href="#createforumtopic"><i class="anchor-icon"></i></a>createForumTopic</h4>
 <p>Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
 <table class="table">
@@ -11576,8 +11596,12 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getavailablegifts" href="#getavailablegifts"><i class="anchor-icon"></i></a>getAvailableGifts</h4>
-<p>Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.</p>
+  /**
+   * <p>Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getavailablegifts}
+   */
+  getAvailableGifts(args: Empty): Gifts;
 <h4><a class="anchor" name="sendgift" href="#sendgift"><i class="anchor-icon"></i></a>sendGift</h4>
 <p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns _True_ on success.</p>
 <table class="table">
@@ -16031,8 +16055,12 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmystarbalance" href="#getmystarbalance"><i class="anchor-icon"></i></a>getMyStarBalance</h4>
-<p>A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.</p>
+  /**
+   * <p>A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.</p>
+   *
+   * @see {@link https://core.telegram.org/bots/api#getmystarbalance}
+   */
+  getMyStarBalance(args: Empty): StarAmount;
 <h4><a class="anchor" name="getstartransactions" href="#getstartransactions"><i class="anchor-icon"></i></a>getStarTransactions</h4>
 <p>Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.</p>
 <table class="table">
