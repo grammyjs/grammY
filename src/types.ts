@@ -1268,12 +1268,16 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="maybeinaccessiblemessage" href="#maybeinaccessiblemessage"><i class="anchor-icon"></i></a>MaybeInaccessibleMessage</h4>
-<p>This object describes a message that can be inaccessible to the bot. It can be one of</p>
-<ul>
-<li><a href="#message">Message</a></li>
-<li><a href="#inaccessiblemessage">InaccessibleMessage</a></li>
-</ul>
+/**
+ * <p>This object describes a message that can be inaccessible to the bot. It can be one of</p>
+ * - Message
+ * - InaccessibleMessage
+ *
+ * @see {@link https://core.telegram.org/bots/api#maybeinaccessiblemessage}
+ */
+export type MaybeInaccessibleMessage =
+ | Message
+ | InaccessibleMessage
 <h4><a class="anchor" name="messageentity" href="#messageentity"><i class="anchor-icon"></i></a>MessageEntity</h4>
 <p>This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.</p>
 <table class="table">
@@ -1546,14 +1550,20 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messageorigin" href="#messageorigin"><i class="anchor-icon"></i></a>MessageOrigin</h4>
-<p>This object describes the origin of a message. It can be one of</p>
-<ul>
-<li><a href="#messageoriginuser">MessageOriginUser</a></li>
-<li><a href="#messageoriginhiddenuser">MessageOriginHiddenUser</a></li>
-<li><a href="#messageoriginchat">MessageOriginChat</a></li>
-<li><a href="#messageoriginchannel">MessageOriginChannel</a></li>
-</ul>
+/**
+ * <p>This object describes the origin of a message. It can be one of</p>
+ * - MessageOriginUser
+ * - MessageOriginHiddenUser
+ * - MessageOriginChat
+ * - MessageOriginChannel
+ *
+ * @see {@link https://core.telegram.org/bots/api#messageorigin}
+ */
+export type MessageOrigin =
+ | MessageOriginUser
+ | MessageOriginHiddenUser
+ | MessageOriginChat
+ | MessageOriginChannel
 <h4><a class="anchor" name="messageoriginuser" href="#messageoriginuser"><i class="anchor-icon"></i></a>MessageOriginUser</h4>
 <p>The message was originally sent by a known user.</p>
 <table class="table">
@@ -2073,13 +2083,18 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmedia" href="#paidmedia"><i class="anchor-icon"></i></a>PaidMedia</h4>
-<p>This object describes paid media. Currently, it can be one of</p>
-<ul>
-<li><a href="#paidmediapreview">PaidMediaPreview</a></li>
-<li><a href="#paidmediaphoto">PaidMediaPhoto</a></li>
-<li><a href="#paidmediavideo">PaidMediaVideo</a></li>
-</ul>
+/**
+ * <p>This object describes paid media. Currently, it can be one of</p>
+ * - PaidMediaPreview
+ * - PaidMediaPhoto
+ * - PaidMediaVideo
+ *
+ * @see {@link https://core.telegram.org/bots/api#paidmedia}
+ */
+export type PaidMedia =
+ | PaidMediaPreview
+ | PaidMediaPhoto
+ | PaidMediaVideo
 <h4><a class="anchor" name="paidmediapreview" href="#paidmediapreview"><i class="anchor-icon"></i></a>PaidMediaPreview</h4>
 <p>The paid media isn&#39;t available before the payment.</p>
 <table class="table">
@@ -2773,13 +2788,18 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundfill" href="#backgroundfill"><i class="anchor-icon"></i></a>BackgroundFill</h4>
-<p>This object describes the way a background is filled based on the selected colors. Currently, it can be one of</p>
-<ul>
-<li><a href="#backgroundfillsolid">BackgroundFillSolid</a></li>
-<li><a href="#backgroundfillgradient">BackgroundFillGradient</a></li>
-<li><a href="#backgroundfillfreeformgradient">BackgroundFillFreeformGradient</a></li>
-</ul>
+/**
+ * <p>This object describes the way a background is filled based on the selected colors. Currently, it can be one of</p>
+ * - BackgroundFillSolid
+ * - BackgroundFillGradient
+ * - BackgroundFillFreeformGradient
+ *
+ * @see {@link https://core.telegram.org/bots/api#backgroundfill}
+ */
+export type BackgroundFill =
+ | BackgroundFillSolid
+ | BackgroundFillGradient
+ | BackgroundFillFreeformGradient
 <h4><a class="anchor" name="backgroundfillsolid" href="#backgroundfillsolid"><i class="anchor-icon"></i></a>BackgroundFillSolid</h4>
 <p>The background is filled using the selected color.</p>
 <table class="table">
@@ -2859,14 +2879,20 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundtype" href="#backgroundtype"><i class="anchor-icon"></i></a>BackgroundType</h4>
-<p>This object describes the type of a background. Currently, it can be one of</p>
-<ul>
-<li><a href="#backgroundtypefill">BackgroundTypeFill</a></li>
-<li><a href="#backgroundtypewallpaper">BackgroundTypeWallpaper</a></li>
-<li><a href="#backgroundtypepattern">BackgroundTypePattern</a></li>
-<li><a href="#backgroundtypechattheme">BackgroundTypeChatTheme</a></li>
-</ul>
+/**
+ * <p>This object describes the type of a background. Currently, it can be one of</p>
+ * - BackgroundTypeFill
+ * - BackgroundTypeWallpaper
+ * - BackgroundTypePattern
+ * - BackgroundTypeChatTheme
+ *
+ * @see {@link https://core.telegram.org/bots/api#backgroundtype}
+ */
+export type BackgroundType =
+ | BackgroundTypeFill
+ | BackgroundTypeWallpaper
+ | BackgroundTypePattern
+ | BackgroundTypeChatTheme
 <h4><a class="anchor" name="backgroundtypefill" href="#backgroundtypefill"><i class="anchor-icon"></i></a>BackgroundTypeFill</h4>
 <p>The background is automatically filled based on the selected colors.</p>
 <table class="table">
@@ -4610,16 +4636,24 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmember" href="#chatmember"><i class="anchor-icon"></i></a>ChatMember</h4>
-<p>This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:</p>
-<ul>
-<li><a href="#chatmemberowner">ChatMemberOwner</a></li>
-<li><a href="#chatmemberadministrator">ChatMemberAdministrator</a></li>
-<li><a href="#chatmembermember">ChatMemberMember</a></li>
-<li><a href="#chatmemberrestricted">ChatMemberRestricted</a></li>
-<li><a href="#chatmemberleft">ChatMemberLeft</a></li>
-<li><a href="#chatmemberbanned">ChatMemberBanned</a></li>
-</ul>
+/**
+ * <p>This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:</p>
+ * - ChatMemberOwner
+ * - ChatMemberAdministrator
+ * - ChatMemberMember
+ * - ChatMemberRestricted
+ * - ChatMemberLeft
+ * - ChatMemberBanned
+ *
+ * @see {@link https://core.telegram.org/bots/api#chatmember}
+ */
+export type ChatMember =
+ | ChatMemberOwner
+ | ChatMemberAdministrator
+ | ChatMemberMember
+ | ChatMemberRestricted
+ | ChatMemberLeft
+ | ChatMemberBanned
 <h4><a class="anchor" name="chatmemberowner" href="#chatmemberowner"><i class="anchor-icon"></i></a>ChatMemberOwner</h4>
 <p>Represents a <a href="#chatmember">chat member</a> that owns the chat and has all administrator privileges.</p>
 <table class="table">
@@ -5275,15 +5309,22 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyareatype" href="#storyareatype"><i class="anchor-icon"></i></a>StoryAreaType</h4>
-<p>Describes the type of a clickable area on a story. Currently, it can be one of</p>
-<ul>
-<li><a href="#storyareatypelocation">StoryAreaTypeLocation</a></li>
-<li><a href="#storyareatypesuggestedreaction">StoryAreaTypeSuggestedReaction</a></li>
-<li><a href="#storyareatypelink">StoryAreaTypeLink</a></li>
-<li><a href="#storyareatypeweather">StoryAreaTypeWeather</a></li>
-<li><a href="#storyareatypeuniquegift">StoryAreaTypeUniqueGift</a></li>
-</ul>
+/**
+ * <p>Describes the type of a clickable area on a story. Currently, it can be one of</p>
+ * - StoryAreaTypeLocation
+ * - StoryAreaTypeSuggestedReaction
+ * - StoryAreaTypeLink
+ * - StoryAreaTypeWeather
+ * - StoryAreaTypeUniqueGift
+ *
+ * @see {@link https://core.telegram.org/bots/api#storyareatype}
+ */
+export type StoryAreaType =
+ | StoryAreaTypeLocation
+ | StoryAreaTypeSuggestedReaction
+ | StoryAreaTypeLink
+ | StoryAreaTypeWeather
+ | StoryAreaTypeUniqueGift
 <h4><a class="anchor" name="storyareatypelocation" href="#storyareatypelocation"><i class="anchor-icon"></i></a>StoryAreaTypeLocation</h4>
 <p>Describes a story area pointing to a location. Currently, a story can have up to 10 location areas.</p>
 <table class="table">
@@ -5475,13 +5516,18 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="reactiontype" href="#reactiontype"><i class="anchor-icon"></i></a>ReactionType</h4>
-<p>This object describes the type of a reaction. Currently, it can be one of</p>
-<ul>
-<li><a href="#reactiontypeemoji">ReactionTypeEmoji</a></li>
-<li><a href="#reactiontypecustomemoji">ReactionTypeCustomEmoji</a></li>
-<li><a href="#reactiontypepaid">ReactionTypePaid</a></li>
-</ul>
+/**
+ * <p>This object describes the type of a reaction. Currently, it can be one of</p>
+ * - ReactionTypeEmoji
+ * - ReactionTypeCustomEmoji
+ * - ReactionTypePaid
+ *
+ * @see {@link https://core.telegram.org/bots/api#reactiontype}
+ */
+export type ReactionType =
+ | ReactionTypeEmoji
+ | ReactionTypeCustomEmoji
+ | ReactionTypePaid
 <h4><a class="anchor" name="reactiontypeemoji" href="#reactiontypeemoji"><i class="anchor-icon"></i></a>ReactionTypeEmoji</h4>
 <p>The reaction is based on an emoji.</p>
 <table class="table">
@@ -6010,12 +6056,16 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="ownedgift" href="#ownedgift"><i class="anchor-icon"></i></a>OwnedGift</h4>
-<p>This object describes a gift received and owned by a user or a chat. Currently, it can be one of</p>
-<ul>
-<li><a href="#ownedgiftregular">OwnedGiftRegular</a></li>
-<li><a href="#ownedgiftunique">OwnedGiftUnique</a></li>
-</ul>
+/**
+ * <p>This object describes a gift received and owned by a user or a chat. Currently, it can be one of</p>
+ * - OwnedGiftRegular
+ * - OwnedGiftUnique
+ *
+ * @see {@link https://core.telegram.org/bots/api#ownedgift}
+ */
+export type OwnedGift =
+ | OwnedGiftRegular
+ | OwnedGiftUnique
 <h4><a class="anchor" name="ownedgiftregular" href="#ownedgiftregular"><i class="anchor-icon"></i></a>OwnedGiftRegular</h4>
 <p>Describes a regular gift owned by a user or a chat.</p>
 <table class="table">
@@ -6259,17 +6309,26 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscope" href="#botcommandscope"><i class="anchor-icon"></i></a>BotCommandScope</h4>
-<p>This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:</p>
-<ul>
-<li><a href="#botcommandscopedefault">BotCommandScopeDefault</a></li>
-<li><a href="#botcommandscopeallprivatechats">BotCommandScopeAllPrivateChats</a></li>
-<li><a href="#botcommandscopeallgroupchats">BotCommandScopeAllGroupChats</a></li>
-<li><a href="#botcommandscopeallchatadministrators">BotCommandScopeAllChatAdministrators</a></li>
-<li><a href="#botcommandscopechat">BotCommandScopeChat</a></li>
-<li><a href="#botcommandscopechatadministrators">BotCommandScopeChatAdministrators</a></li>
-<li><a href="#botcommandscopechatmember">BotCommandScopeChatMember</a></li>
-</ul>
+/**
+ * <p>This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:</p>
+ * - BotCommandScopeDefault
+ * - BotCommandScopeAllPrivateChats
+ * - BotCommandScopeAllGroupChats
+ * - BotCommandScopeAllChatAdministrators
+ * - BotCommandScopeChat
+ * - BotCommandScopeChatAdministrators
+ * - BotCommandScopeChatMember
+ *
+ * @see {@link https://core.telegram.org/bots/api#botcommandscope}
+ */
+export type BotCommandScope =
+ | BotCommandScopeDefault
+ | BotCommandScopeAllPrivateChats
+ | BotCommandScopeAllGroupChats
+ | BotCommandScopeAllChatAdministrators
+ | BotCommandScopeChat
+ | BotCommandScopeChatAdministrators
+ | BotCommandScopeChatMember
 <h4><a class="anchor" name="botcommandscopedefault" href="#botcommandscopedefault"><i class="anchor-icon"></i></a>BotCommandScopeDefault</h4>
 <p>Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.</p>
 <table class="table">
@@ -6470,13 +6529,18 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="menubutton" href="#menubutton"><i class="anchor-icon"></i></a>MenuButton</h4>
-<p>This object describes the bot&#39;s menu button in a private chat. It should be one of</p>
-<ul>
-<li><a href="#menubuttoncommands">MenuButtonCommands</a></li>
-<li><a href="#menubuttonwebapp">MenuButtonWebApp</a></li>
-<li><a href="#menubuttondefault">MenuButtonDefault</a></li>
-</ul>
+/**
+ * <p>This object describes the bot&#39;s menu button in a private chat. It should be one of</p>
+ * - MenuButtonCommands
+ * - MenuButtonWebApp
+ * - MenuButtonDefault
+ *
+ * @see {@link https://core.telegram.org/bots/api#menubutton}
+ */
+export type MenuButton =
+ | MenuButtonCommands
+ | MenuButtonWebApp
+ | MenuButtonDefault
 <p>If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.</p>
 <h4><a class="anchor" name="menubuttoncommands" href="#menubuttoncommands"><i class="anchor-icon"></i></a>MenuButtonCommands</h4>
 <p>Represents a menu button, which opens the bot&#39;s list of commands.</p>
@@ -6542,13 +6606,18 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboostsource" href="#chatboostsource"><i class="anchor-icon"></i></a>ChatBoostSource</h4>
-<p>This object describes the source of a chat boost. It can be one of</p>
-<ul>
-<li><a href="#chatboostsourcepremium">ChatBoostSourcePremium</a></li>
-<li><a href="#chatboostsourcegiftcode">ChatBoostSourceGiftCode</a></li>
-<li><a href="#chatboostsourcegiveaway">ChatBoostSourceGiveaway</a></li>
-</ul>
+/**
+ * <p>This object describes the source of a chat boost. It can be one of</p>
+ * - ChatBoostSourcePremium
+ * - ChatBoostSourceGiftCode
+ * - ChatBoostSourceGiveaway
+ *
+ * @see {@link https://core.telegram.org/bots/api#chatboostsource}
+ */
+export type ChatBoostSource =
+ | ChatBoostSourcePremium
+ | ChatBoostSourceGiftCode
+ | ChatBoostSourceGiveaway
 <h4><a class="anchor" name="chatboostsourcepremium" href="#chatboostsourcepremium"><i class="anchor-icon"></i></a>ChatBoostSourcePremium</h4>
 <p>The boost was obtained by subscribing to Telegram Premium or by gifting a Telegram Premium subscription to another user.</p>
 <table class="table">
@@ -6917,15 +6986,22 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmedia" href="#inputmedia"><i class="anchor-icon"></i></a>InputMedia</h4>
-<p>This object represents the content of a media message to be sent. It should be one of</p>
-<ul>
-<li><a href="#inputmediaanimation">InputMediaAnimation</a></li>
-<li><a href="#inputmediadocument">InputMediaDocument</a></li>
-<li><a href="#inputmediaaudio">InputMediaAudio</a></li>
-<li><a href="#inputmediaphoto">InputMediaPhoto</a></li>
-<li><a href="#inputmediavideo">InputMediaVideo</a></li>
-</ul>
+/**
+ * <p>This object represents the content of a media message to be sent. It should be one of</p>
+ * - InputMediaAnimation
+ * - InputMediaDocument
+ * - InputMediaAudio
+ * - InputMediaPhoto
+ * - InputMediaVideo
+ *
+ * @see {@link https://core.telegram.org/bots/api#inputmedia}
+ */
+export type InputMedia =
+ | InputMediaAnimation
+ | InputMediaDocument
+ | InputMediaAudio
+ | InputMediaPhoto
+ | InputMediaVideo
 <h4><a class="anchor" name="inputmediaphoto" href="#inputmediaphoto"><i class="anchor-icon"></i></a>InputMediaPhoto</h4>
 <p>Represents a photo to be sent.</p>
 <table class="table">
@@ -7237,12 +7313,16 @@ export type VideoChatStarted = Empty;
  * @see {@link https://core.telegram.org/bots/api#inputfile}
  */
 export class InputFile {}
-<h4><a class="anchor" name="inputpaidmedia" href="#inputpaidmedia"><i class="anchor-icon"></i></a>InputPaidMedia</h4>
-<p>This object describes the paid media to be sent. Currently, it can be one of</p>
-<ul>
-<li><a href="#inputpaidmediaphoto">InputPaidMediaPhoto</a></li>
-<li><a href="#inputpaidmediavideo">InputPaidMediaVideo</a></li>
-</ul>
+/**
+ * <p>This object describes the paid media to be sent. Currently, it can be one of</p>
+ * - InputPaidMediaPhoto
+ * - InputPaidMediaVideo
+ *
+ * @see {@link https://core.telegram.org/bots/api#inputpaidmedia}
+ */
+export type InputPaidMedia =
+ | InputPaidMediaPhoto
+ | InputPaidMediaVideo
 <h4><a class="anchor" name="inputpaidmediaphoto" href="#inputpaidmediaphoto"><i class="anchor-icon"></i></a>InputPaidMediaPhoto</h4>
 <p>The paid media to send is a photo.</p>
 <table class="table">
@@ -7324,12 +7404,16 @@ export class InputFile {}
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputprofilephoto" href="#inputprofilephoto"><i class="anchor-icon"></i></a>InputProfilePhoto</h4>
-<p>This object describes a profile photo to set. Currently, it can be one of</p>
-<ul>
-<li><a href="#inputprofilephotostatic">InputProfilePhotoStatic</a></li>
-<li><a href="#inputprofilephotoanimated">InputProfilePhotoAnimated</a></li>
-</ul>
+/**
+ * <p>This object describes a profile photo to set. Currently, it can be one of</p>
+ * - InputProfilePhotoStatic
+ * - InputProfilePhotoAnimated
+ *
+ * @see {@link https://core.telegram.org/bots/api#inputprofilephoto}
+ */
+export type InputProfilePhoto =
+ | InputProfilePhotoStatic
+ | InputProfilePhotoAnimated
 <h4><a class="anchor" name="inputprofilephotostatic" href="#inputprofilephotostatic"><i class="anchor-icon"></i></a>InputProfilePhotoStatic</h4>
 <p>A static profile photo in the .JPG format.</p>
 <table class="table">
@@ -7381,12 +7465,16 @@ export class InputFile {}
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputstorycontent" href="#inputstorycontent"><i class="anchor-icon"></i></a>InputStoryContent</h4>
-<p>This object describes the content of a story to post. Currently, it can be one of</p>
-<ul>
-<li><a href="#inputstorycontentphoto">InputStoryContentPhoto</a></li>
-<li><a href="#inputstorycontentvideo">InputStoryContentVideo</a></li>
-</ul>
+/**
+ * <p>This object describes the content of a story to post. Currently, it can be one of</p>
+ * - InputStoryContentPhoto
+ * - InputStoryContentVideo
+ *
+ * @see {@link https://core.telegram.org/bots/api#inputstorycontent}
+ */
+export type InputStoryContent =
+ | InputStoryContentPhoto
+ | InputStoryContentVideo
 <h4><a class="anchor" name="inputstorycontentphoto" href="#inputstorycontentphoto"><i class="anchor-icon"></i></a>InputStoryContentPhoto</h4>
 <p>Describes a photo to post as a story.</p>
 <table class="table">
@@ -13716,30 +13804,52 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresult" href="#inlinequeryresult"><i class="anchor-icon"></i></a>InlineQueryResult</h4>
-<p>This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:</p>
-<ul>
-<li><a href="#inlinequeryresultcachedaudio">InlineQueryResultCachedAudio</a></li>
-<li><a href="#inlinequeryresultcacheddocument">InlineQueryResultCachedDocument</a></li>
-<li><a href="#inlinequeryresultcachedgif">InlineQueryResultCachedGif</a></li>
-<li><a href="#inlinequeryresultcachedmpeg4gif">InlineQueryResultCachedMpeg4Gif</a></li>
-<li><a href="#inlinequeryresultcachedphoto">InlineQueryResultCachedPhoto</a></li>
-<li><a href="#inlinequeryresultcachedsticker">InlineQueryResultCachedSticker</a></li>
-<li><a href="#inlinequeryresultcachedvideo">InlineQueryResultCachedVideo</a></li>
-<li><a href="#inlinequeryresultcachedvoice">InlineQueryResultCachedVoice</a></li>
-<li><a href="#inlinequeryresultarticle">InlineQueryResultArticle</a></li>
-<li><a href="#inlinequeryresultaudio">InlineQueryResultAudio</a></li>
-<li><a href="#inlinequeryresultcontact">InlineQueryResultContact</a></li>
-<li><a href="#inlinequeryresultgame">InlineQueryResultGame</a></li>
-<li><a href="#inlinequeryresultdocument">InlineQueryResultDocument</a></li>
-<li><a href="#inlinequeryresultgif">InlineQueryResultGif</a></li>
-<li><a href="#inlinequeryresultlocation">InlineQueryResultLocation</a></li>
-<li><a href="#inlinequeryresultmpeg4gif">InlineQueryResultMpeg4Gif</a></li>
-<li><a href="#inlinequeryresultphoto">InlineQueryResultPhoto</a></li>
-<li><a href="#inlinequeryresultvenue">InlineQueryResultVenue</a></li>
-<li><a href="#inlinequeryresultvideo">InlineQueryResultVideo</a></li>
-<li><a href="#inlinequeryresultvoice">InlineQueryResultVoice</a></li>
-</ul>
+/**
+ * <p>This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:</p>
+ * - InlineQueryResultCachedAudio
+ * - InlineQueryResultCachedDocument
+ * - InlineQueryResultCachedGif
+ * - InlineQueryResultCachedMpeg4Gif
+ * - InlineQueryResultCachedPhoto
+ * - InlineQueryResultCachedSticker
+ * - InlineQueryResultCachedVideo
+ * - InlineQueryResultCachedVoice
+ * - InlineQueryResultArticle
+ * - InlineQueryResultAudio
+ * - InlineQueryResultContact
+ * - InlineQueryResultGame
+ * - InlineQueryResultDocument
+ * - InlineQueryResultGif
+ * - InlineQueryResultLocation
+ * - InlineQueryResultMpeg4Gif
+ * - InlineQueryResultPhoto
+ * - InlineQueryResultVenue
+ * - InlineQueryResultVideo
+ * - InlineQueryResultVoice
+ *
+ * @see {@link https://core.telegram.org/bots/api#inlinequeryresult}
+ */
+export type InlineQueryResult =
+ | InlineQueryResultCachedAudio
+ | InlineQueryResultCachedDocument
+ | InlineQueryResultCachedGif
+ | InlineQueryResultCachedMpeg4Gif
+ | InlineQueryResultCachedPhoto
+ | InlineQueryResultCachedSticker
+ | InlineQueryResultCachedVideo
+ | InlineQueryResultCachedVoice
+ | InlineQueryResultArticle
+ | InlineQueryResultAudio
+ | InlineQueryResultContact
+ | InlineQueryResultGame
+ | InlineQueryResultDocument
+ | InlineQueryResultGif
+ | InlineQueryResultLocation
+ | InlineQueryResultMpeg4Gif
+ | InlineQueryResultPhoto
+ | InlineQueryResultVenue
+ | InlineQueryResultVideo
+ | InlineQueryResultVoice
 <p>**Note:** All URLs passed in inline query results will be available to end users and therefore must be assumed to be **public**.</p>
 <h4><a class="anchor" name="inlinequeryresultarticle" href="#inlinequeryresultarticle"><i class="anchor-icon"></i></a>InlineQueryResultArticle</h4>
 <p>Represents a link to an article or web page.</p>
@@ -15119,15 +15229,22 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmessagecontent" href="#inputmessagecontent"><i class="anchor-icon"></i></a>InputMessageContent</h4>
-<p>This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:</p>
-<ul>
-<li><a href="#inputtextmessagecontent">InputTextMessageContent</a></li>
-<li><a href="#inputlocationmessagecontent">InputLocationMessageContent</a></li>
-<li><a href="#inputvenuemessagecontent">InputVenueMessageContent</a></li>
-<li><a href="#inputcontactmessagecontent">InputContactMessageContent</a></li>
-<li><a href="#inputinvoicemessagecontent">InputInvoiceMessageContent</a></li>
-</ul>
+/**
+ * <p>This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:</p>
+ * - InputTextMessageContent
+ * - InputLocationMessageContent
+ * - InputVenueMessageContent
+ * - InputContactMessageContent
+ * - InputInvoiceMessageContent
+ *
+ * @see {@link https://core.telegram.org/bots/api#inputmessagecontent}
+ */
+export type InputMessageContent =
+ | InputTextMessageContent
+ | InputLocationMessageContent
+ | InputVenueMessageContent
+ | InputContactMessageContent
+ | InputInvoiceMessageContent
 <h4><a class="anchor" name="inputtextmessagecontent" href="#inputtextmessagecontent"><i class="anchor-icon"></i></a>InputTextMessageContent</h4>
 <p>Represents the <a href="#inputmessagecontent">content</a> of a text message to be sent as the result of an inline query.</p>
 <table class="table">
@@ -16437,13 +16554,18 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="revenuewithdrawalstate" href="#revenuewithdrawalstate"><i class="anchor-icon"></i></a>RevenueWithdrawalState</h4>
-<p>This object describes the state of a revenue withdrawal operation. Currently, it can be one of</p>
-<ul>
-<li><a href="#revenuewithdrawalstatepending">RevenueWithdrawalStatePending</a></li>
-<li><a href="#revenuewithdrawalstatesucceeded">RevenueWithdrawalStateSucceeded</a></li>
-<li><a href="#revenuewithdrawalstatefailed">RevenueWithdrawalStateFailed</a></li>
-</ul>
+/**
+ * <p>This object describes the state of a revenue withdrawal operation. Currently, it can be one of</p>
+ * - RevenueWithdrawalStatePending
+ * - RevenueWithdrawalStateSucceeded
+ * - RevenueWithdrawalStateFailed
+ *
+ * @see {@link https://core.telegram.org/bots/api#revenuewithdrawalstate}
+ */
+export type RevenueWithdrawalState =
+ | RevenueWithdrawalStatePending
+ | RevenueWithdrawalStateSucceeded
+ | RevenueWithdrawalStateFailed
 <h4><a class="anchor" name="revenuewithdrawalstatepending" href="#revenuewithdrawalstatepending"><i class="anchor-icon"></i></a>RevenueWithdrawalStatePending</h4>
 <p>The withdrawal is in progress.</p>
 <table class="table">
@@ -16546,17 +16668,26 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartner" href="#transactionpartner"><i class="anchor-icon"></i></a>TransactionPartner</h4>
-<p>This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of</p>
-<ul>
-<li><a href="#transactionpartneruser">TransactionPartnerUser</a></li>
-<li><a href="#transactionpartnerchat">TransactionPartnerChat</a></li>
-<li><a href="#transactionpartneraffiliateprogram">TransactionPartnerAffiliateProgram</a></li>
-<li><a href="#transactionpartnerfragment">TransactionPartnerFragment</a></li>
-<li><a href="#transactionpartnertelegramads">TransactionPartnerTelegramAds</a></li>
-<li><a href="#transactionpartnertelegramapi">TransactionPartnerTelegramApi</a></li>
-<li><a href="#transactionpartnerother">TransactionPartnerOther</a></li>
-</ul>
+/**
+ * <p>This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of</p>
+ * - TransactionPartnerUser
+ * - TransactionPartnerChat
+ * - TransactionPartnerAffiliateProgram
+ * - TransactionPartnerFragment
+ * - TransactionPartnerTelegramAds
+ * - TransactionPartnerTelegramApi
+ * - TransactionPartnerOther
+ *
+ * @see {@link https://core.telegram.org/bots/api#transactionpartner}
+ */
+export type TransactionPartner =
+ | TransactionPartnerUser
+ | TransactionPartnerChat
+ | TransactionPartnerAffiliateProgram
+ | TransactionPartnerFragment
+ | TransactionPartnerTelegramAds
+ | TransactionPartnerTelegramApi
+ | TransactionPartnerOther
 <h4><a class="anchor" name="transactionpartneruser" href="#transactionpartneruser"><i class="anchor-icon"></i></a>TransactionPartnerUser</h4>
 <p>Describes a transaction with a user.</p>
 <table class="table">
@@ -16995,19 +17126,30 @@ type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerror" href="#passportelementerror"><i class="anchor-icon"></i></a>PassportElementError</h4>
-<p>This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:</p>
-<ul>
-<li><a href="#passportelementerrordatafield">PassportElementErrorDataField</a></li>
-<li><a href="#passportelementerrorfrontside">PassportElementErrorFrontSide</a></li>
-<li><a href="#passportelementerrorreverseside">PassportElementErrorReverseSide</a></li>
-<li><a href="#passportelementerrorselfie">PassportElementErrorSelfie</a></li>
-<li><a href="#passportelementerrorfile">PassportElementErrorFile</a></li>
-<li><a href="#passportelementerrorfiles">PassportElementErrorFiles</a></li>
-<li><a href="#passportelementerrortranslationfile">PassportElementErrorTranslationFile</a></li>
-<li><a href="#passportelementerrortranslationfiles">PassportElementErrorTranslationFiles</a></li>
-<li><a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a></li>
-</ul>
+/**
+ * <p>This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:</p>
+ * - PassportElementErrorDataField
+ * - PassportElementErrorFrontSide
+ * - PassportElementErrorReverseSide
+ * - PassportElementErrorSelfie
+ * - PassportElementErrorFile
+ * - PassportElementErrorFiles
+ * - PassportElementErrorTranslationFile
+ * - PassportElementErrorTranslationFiles
+ * - PassportElementErrorUnspecified
+ *
+ * @see {@link https://core.telegram.org/bots/api#passportelementerror}
+ */
+export type PassportElementError =
+ | PassportElementErrorDataField
+ | PassportElementErrorFrontSide
+ | PassportElementErrorReverseSide
+ | PassportElementErrorSelfie
+ | PassportElementErrorFile
+ | PassportElementErrorFiles
+ | PassportElementErrorTranslationFile
+ | PassportElementErrorTranslationFiles
+ | PassportElementErrorUnspecified
 <h4><a class="anchor" name="passportelementerrordatafield" href="#passportelementerrordatafield"><i class="anchor-icon"></i></a>PassportElementErrorDataField</h4>
 <p>Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field&#39;s value changes.</p>
 <table class="table">
