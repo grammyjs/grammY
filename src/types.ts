@@ -6270,32 +6270,6 @@ export type VideoChatStarted = Empty;
 <li><a href="#botcommandscopechatadministrators">BotCommandScopeChatAdministrators</a></li>
 <li><a href="#botcommandscopechatmember">BotCommandScopeChatMember</a></li>
 </ul>
-<h4><a class="anchor" name="determining-list-of-commands" href="#determining-list-of-commands"><i class="anchor-icon"></i></a>Determining list of commands</h4>
-<p>The following algorithm is used to determine the list of commands for a particular user viewing the bot menu. The first list of commands which is set is returned:</p>
-<p>**Commands in the chat with the bot**</p>
-<ul>
-<li>botCommandScopeChat + language_code</li>
-<li>botCommandScopeChat</li>
-<li>botCommandScopeAllPrivateChats + language_code</li>
-<li>botCommandScopeAllPrivateChats</li>
-<li>botCommandScopeDefault + language_code</li>
-<li>botCommandScopeDefault</li>
-</ul>
-<p>**Commands in group and supergroup chats**</p>
-<ul>
-<li>botCommandScopeChatMember + language_code</li>
-<li>botCommandScopeChatMember</li>
-<li>botCommandScopeChatAdministrators + language_code (administrators only)</li>
-<li>botCommandScopeChatAdministrators (administrators only)</li>
-<li>botCommandScopeChat + language_code</li>
-<li>botCommandScopeChat</li>
-<li>botCommandScopeAllChatAdministrators + language_code (administrators only)</li>
-<li>botCommandScopeAllChatAdministrators (administrators only)</li>
-<li>botCommandScopeAllGroupChats + language_code</li>
-<li>botCommandScopeAllGroupChats</li>
-<li>botCommandScopeDefault + language_code</li>
-<li>botCommandScopeDefault</li>
-</ul>
 <h4><a class="anchor" name="botcommandscopedefault" href="#botcommandscopedefault"><i class="anchor-icon"></i></a>BotCommandScopeDefault</h4>
 <p>Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.</p>
 <table class="table">
@@ -7474,78 +7448,6 @@ export class InputFile {}
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sending-files" href="#sending-files"><i class="anchor-icon"></i></a>Sending files</h4>
-<p>There are three ways to send files (photos, stickers, audio, media, etc.):</p>
-<ol>
-<li>If the file is already stored somewhere on the Telegram servers, you don&#39;t need to reupload it: each file object has a **file_id** field, simply pass this **file_id** as a parameter instead of uploading. There are **no limits** for files sent this way.</li>
-<li>Provide Telegram with an HTTP URL for the file to be sent. Telegram will download and send the file. 5 MB max size for photos and 20 MB max for other types of content.</li>
-<li>Post the file using multipart/form-data in the usual way that files are uploaded via the browser. 10 MB max size for photos, 50 MB for other files.</li>
-</ol>
-<p>**Sending by file_id**</p>
-<ul>
-<li>It is not possible to change the file type when resending by **file_id**. I.e. a <a href="#video">video</a> can&#39;t be <a href="#sendphoto">sent as a photo</a>, a <a href="#photosize">photo</a> can&#39;t be <a href="#senddocument">sent as a document</a>, etc.</li>
-<li>It is not possible to resend thumbnails.</li>
-<li>Resending a photo by **file_id** will send all of its <a href="#photosize">sizes</a>.</li>
-<li>**file_id** is unique for each individual bot and **can&#39;t** be transferred from one bot to another.</li>
-<li>**file_id** uniquely identifies a file, but a file can have different valid **file_id**s even for the same bot.</li>
-</ul>
-<p>**Sending by URL**</p>
-<ul>
-<li>When sending by URL the target file must have the correct MIME type (e.g., audio/mpeg for <a href="#sendaudio">sendAudio</a>, etc.).</li>
-<li>In <a href="#senddocument">sendDocument</a>, sending by URL will currently only work for **.PDF** and **.ZIP** files.</li>
-<li>To use <a href="#sendvoice">sendVoice</a>, the file must have the type audio/ogg and be no more than 1MB in size. 1-20MB voice notes will be sent as files.</li>
-<li>Other configurations may work but we can&#39;t guarantee that they will.</li>
-</ul>
-<h4><a class="anchor" name="accent-colors" href="#accent-colors"><i class="anchor-icon"></i></a>Accent colors</h4>
-<p>Colors with identifiers 0 (red), 1 (orange), 2 (purple/violet), 3 (green), 4 (cyan), 5 (blue), 6 (pink) can be customized by app themes. Additionally, the following colors in RGB format are currently in use.</p>
-<p><table class="table table-hover table-bordered">
-<thead>
-<tr><th>Color identifier</th><th>Light colors</th><th>Dark colors</th></tr>
-</thead>
-<tbody>
-<tr><td>7</td><td>E15052 F9AE63</td><td>FF9380 992F37</td></tr>
-<tr><td>8</td><td>E0802B FAC534</td><td>ECB04E C35714</td></tr>
-<tr><td>9</td><td>A05FF3 F48FFF</td><td>C697FF 5E31C8</td></tr>
-<tr><td>10</td><td>27A910 A7DC57</td><td>A7EB6E 167E2D</td></tr>
-<tr><td>11</td><td>27ACCE 82E8D6</td><td>40D8D0 045C7F</td></tr>
-<tr><td>12</td><td>3391D4 7DD3F0</td><td>52BFFF 0B5494</td></tr>
-<tr><td>13</td><td>DD4371 FFBE9F</td><td>FF86A6 8E366E</td></tr>
-<tr><td>14</td><td>247BED F04856 FFFFFF</td><td>3FA2FE E5424F FFFFFF</td></tr>
-<tr><td>15</td><td>D67722 1EA011 FFFFFF</td><td>FF905E 32A527 FFFFFF</td></tr>
-<tr><td>16</td><td>179E42 E84A3F FFFFFF</td><td>66D364 D5444F FFFFFF</td></tr>
-<tr><td>17</td><td>2894AF 6FC456 FFFFFF</td><td>22BCE2 3DA240 FFFFFF</td></tr>
-<tr><td>18</td><td>0C9AB3 FFAD95 FFE6B5</td><td>22BCE2 FF9778 FFDA6B</td></tr>
-<tr><td>19</td><td>7757D6 F79610 FFDE8E</td><td>9791FF F2731D FFDB59</td></tr>
-<tr><td>20</td><td>1585CF F2AB1D FFFFFF</td><td>3DA6EB EEA51D FFFFFF</td></tr>
-</tbody>
-</table></p>
-<h4><a class="anchor" name="profile-accent-colors" href="#profile-accent-colors"><i class="anchor-icon"></i></a>Profile accent colors</h4>
-<p>Currently, the following colors in RGB format are in use for profile backgrounds.</p>
-<p><table class="table table-hover table-bordered">
-<thead>
-<tr><th>Color identifier</th><th>Light colors</th><th>Dark colors</th></tr>
-</thead>
-<tbody>
-<tr><td>0</td><td>BA5650</td><td>9C4540</td></tr>
-<tr><td>1</td><td>C27C3E</td><td>945E2C</td></tr>
-<tr><td>2</td><td>956AC8</td><td>715099</td></tr>
-<tr><td>3</td><td>49A355</td><td>33713B</td></tr>
-<tr><td>4</td><td>3E97AD</td><td>387E87</td></tr>
-<tr><td>5</td><td>5A8FBB</td><td>477194</td></tr>
-<tr><td>6</td><td>B85378</td><td>944763</td></tr>
-<tr><td>7</td><td>7F8B95</td><td>435261</td></tr>
-<tr><td>8</td><td>C9565D D97C57</td><td>994343 AC583E</td></tr>
-<tr><td>9</td><td>CF7244 CC9433</td><td>8F552F A17232</td></tr>
-<tr><td>10</td><td>9662D4 B966B6</td><td>634691 9250A2</td></tr>
-<tr><td>11</td><td>3D9755 89A650</td><td>296A43 5F8F44</td></tr>
-<tr><td>12</td><td>3D95BA 50AD98</td><td>306C7C 3E987E</td></tr>
-<tr><td>13</td><td>538BC2 4DA8BD</td><td>38618C 458BA1</td></tr>
-<tr><td>14</td><td>B04F74 D1666D</td><td>884160 A65259</td></tr>
-<tr><td>15</td><td>637482 7B8A97</td><td>53606E 384654</td></tr>
-</tbody>
-</table></p>
-<h4><a class="anchor" name="inline-mode-objects" href="#inline-mode-objects"><i class="anchor-icon"></i></a>Inline mode objects</h4>
-<p>Objects and methods used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
 
 // === AVAILABLE METHODS ===
   /**
@@ -7766,12 +7668,6 @@ pre-formatted fixed-width code block written in the Python programming language
 <li>To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the characters &#39;\&#39; before them.</li>
 <li>Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.</li>
 </ul>
-<h4><a class="anchor" name="paid-broadcasts" href="#paid-broadcasts"><i class="anchor-icon"></i></a>Paid Broadcasts</h4>
-<p>By default, all bots are able to broadcast up to <a href="https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this">30 messages</a> per second to their users. Developers can increase this limit by enabling _Paid Broadcasts_ in <a href="https://t.me/botfather">@Botfather</a> - allowing their bot to broadcast **up to 1000 messages** per second.</p>
-<p>Each message broadcasted over the free amount of 30 messages per second incurs a cost of 0.1 Stars per message, paid with Telegram Stars from the bot&#39;s balance. In order to use this feature, a bot must have at least _10,000 Stars_ on its balance.</p>
-<blockquote>
-<p>Bots with increased limits are only charged for messages that are broadcasted successfully.</p>
-</blockquote>
 <h4><a class="anchor" name="forwardmessage" href="#forwardmessage"><i class="anchor-icon"></i></a>forwardMessage</h4>
 <p>Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
@@ -12422,8 +12318,6 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inline-mode-methods" href="#inline-mode-methods"><i class="anchor-icon"></i></a>Inline mode methods</h4>
-<p>Methods and objects used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
 
 // === UPDATING MESSAGES ===
 <h4><a class="anchor" name="editmessagetext" href="#editmessagetext"><i class="anchor-icon"></i></a>editMessageText</h4>
