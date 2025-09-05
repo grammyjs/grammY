@@ -11,119 +11,119 @@ export interface Update {
 <td>The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using <a href="#setwebhook">webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.</td>
 </tr>
 <tr>
-<td>message</td>
+<td>message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. New incoming message of any kind - text, photo, sticker, etc.</td>
+<td>New incoming message of any kind - text, photo, sticker, etc.</td>
 </tr>
 <tr>
-<td>edited_message</td>
+<td>edited_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
+<td>New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
 </tr>
 <tr>
-<td>channel_post</td>
+<td>channel_post?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. New incoming channel post of any kind - text, photo, sticker, etc.</td>
+<td>New incoming channel post of any kind - text, photo, sticker, etc.</td>
 </tr>
 <tr>
-<td>edited_channel_post</td>
+<td>edited_channel_post?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
+<td>New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
 </tr>
 <tr>
-<td>business_connection</td>
+<td>business_connection?</td>
 <td><a href="#businessconnection">BusinessConnection</a></td>
-<td>_Optional_. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot</td>
+<td>The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot</td>
 </tr>
 <tr>
-<td>business_message</td>
+<td>business_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. New message from a connected business account</td>
+<td>New message from a connected business account</td>
 </tr>
 <tr>
-<td>edited_business_message</td>
+<td>edited_business_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. New version of a message from a connected business account</td>
+<td>New version of a message from a connected business account</td>
 </tr>
 <tr>
-<td>deleted_business_messages</td>
+<td>deleted_business_messages?</td>
 <td><a href="#businessmessagesdeleted">BusinessMessagesDeleted</a></td>
-<td>_Optional_. Messages were deleted from a connected business account</td>
+<td>Messages were deleted from a connected business account</td>
 </tr>
 <tr>
-<td>message_reaction</td>
+<td>message_reaction?</td>
 <td><a href="#messagereactionupdated">MessageReactionUpdated</a></td>
-<td>_Optional_. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction&quot;` in the list of _allowed_updates_ to receive these updates. The update isn&#39;t received for reactions set by bots.</td>
+<td>A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction&quot;` in the list of _allowed_updates_ to receive these updates. The update isn&#39;t received for reactions set by bots.</td>
 </tr>
 <tr>
-<td>message_reaction_count</td>
+<td>message_reaction_count?</td>
 <td><a href="#messagereactioncountupdated">MessageReactionCountUpdated</a></td>
-<td>_Optional_. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction_count&quot;` in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.</td>
+<td>Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction_count&quot;` in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.</td>
 </tr>
 <tr>
-<td>inline_query</td>
+<td>inline_query?</td>
 <td><a href="#inlinequery">InlineQuery</a></td>
-<td>_Optional_. New incoming <a href="#inline-mode">inline</a> query</td>
+<td>New incoming <a href="#inline-mode">inline</a> query</td>
 </tr>
 <tr>
-<td>chosen_inline_result</td>
+<td>chosen_inline_result?</td>
 <td><a href="#choseninlineresult">ChosenInlineResult</a></td>
-<td>_Optional_. The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.</td>
+<td>The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.</td>
 </tr>
 <tr>
-<td>callback_query</td>
+<td>callback_query?</td>
 <td><a href="#callbackquery">CallbackQuery</a></td>
-<td>_Optional_. New incoming callback query</td>
+<td>New incoming callback query</td>
 </tr>
 <tr>
-<td>shipping_query</td>
+<td>shipping_query?</td>
 <td><a href="#shippingquery">ShippingQuery</a></td>
-<td>_Optional_. New incoming shipping query. Only for invoices with flexible price</td>
+<td>New incoming shipping query. Only for invoices with flexible price</td>
 </tr>
 <tr>
-<td>pre_checkout_query</td>
+<td>pre_checkout_query?</td>
 <td><a href="#precheckoutquery">PreCheckoutQuery</a></td>
-<td>_Optional_. New incoming pre-checkout query. Contains full information about checkout</td>
+<td>New incoming pre-checkout query. Contains full information about checkout</td>
 </tr>
 <tr>
-<td>purchased_paid_media</td>
+<td>purchased_paid_media?</td>
 <td><a href="#paidmediapurchased">PaidMediaPurchased</a></td>
-<td>_Optional_. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat</td>
+<td>A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat</td>
 </tr>
 <tr>
-<td>poll</td>
+<td>poll?</td>
 <td><a href="#poll">Poll</a></td>
-<td>_Optional_. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot</td>
+<td>New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot</td>
 </tr>
 <tr>
-<td>poll_answer</td>
+<td>poll_answer?</td>
 <td><a href="#pollanswer">PollAnswer</a></td>
-<td>_Optional_. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.</td>
+<td>A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.</td>
 </tr>
 <tr>
-<td>my_chat_member</td>
+<td>my_chat_member?</td>
 <td><a href="#chatmemberupdated">ChatMemberUpdated</a></td>
-<td>_Optional_. The bot&#39;s chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.</td>
+<td>The bot&#39;s chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.</td>
 </tr>
 <tr>
-<td>chat_member</td>
+<td>chat_member?</td>
 <td><a href="#chatmemberupdated">ChatMemberUpdated</a></td>
-<td>_Optional_. A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify `&quot;chat_member&quot;` in the list of _allowed_updates_ to receive these updates.</td>
+<td>A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify `&quot;chat_member&quot;` in the list of _allowed_updates_ to receive these updates.</td>
 </tr>
 <tr>
-<td>chat_join_request</td>
+<td>chat_join_request?</td>
 <td><a href="#chatjoinrequest">ChatJoinRequest</a></td>
-<td>_Optional_. A request to join the chat has been sent. The bot must have the _can_invite_users_ administrator right in the chat to receive these updates.</td>
+<td>A request to join the chat has been sent. The bot must have the _can_invite_users_ administrator right in the chat to receive these updates.</td>
 </tr>
 <tr>
-<td>chat_boost</td>
+<td>chat_boost?</td>
 <td><a href="#chatboostupdated">ChatBoostUpdated</a></td>
-<td>_Optional_. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.</td>
+<td>A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.</td>
 </tr>
 <tr>
-<td>removed_chat_boost</td>
+<td>removed_chat_boost?</td>
 <td><a href="#chatboostremoved">ChatBoostRemoved</a></td>
-<td>_Optional_. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.</td>
+<td>A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.</td>
 </tr>
 }
 export interface ApiMethods {
@@ -134,27 +134,23 @@ export interface ApiMethods {
    */
   getUpdates({
 <tr>
-<td>offset</td>
+<td>offset?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an _offset_ higher than its _update_id_. The negative offset can be specified to retrieve updates starting from _-offset_ update from the end of the updates queue. All previous updates will be forgotten.</td>
 </tr>
 <tr>
-<td>limit</td>
+<td>limit?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
 </tr>
 <tr>
-<td>timeout</td>
+<td>timeout?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.</td>
 </tr>
 <tr>
-<td>allowed_updates</td>
+<td>allowed_updates?</td>
 <td>Array of String</td>
-<td>Optional</td>
 <td>A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.</td>
 </tr>
   }): Update[];
@@ -173,43 +169,36 @@ export interface ApiMethods {
 <tr>
 <td>url</td>
 <td>String</td>
-<td>Yes</td>
 <td>HTTPS URL to send updates to. Use an empty string to remove webhook integration</td>
 </tr>
 <tr>
-<td>certificate</td>
+<td>certificate?</td>
 <td><a href="#inputfile">InputFile</a></td>
-<td>Optional</td>
 <td>Upload your public key certificate so that the root certificate in use can be checked. See our <a href="/bots/self-signed">self-signed guide</a> for details.</td>
 </tr>
 <tr>
-<td>ip_address</td>
+<td>ip_address?</td>
 <td>String</td>
-<td>Optional</td>
 <td>The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS</td>
 </tr>
 <tr>
-<td>max_connections</td>
+<td>max_connections?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to _40_. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.</td>
 </tr>
 <tr>
-<td>allowed_updates</td>
+<td>allowed_updates?</td>
 <td>Array of String</td>
-<td>Optional</td>
 <td>A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.</td>
 </tr>
 <tr>
-<td>drop_pending_updates</td>
+<td>drop_pending_updates?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to drop all pending updates</td>
 </tr>
 <tr>
-<td>secret_token</td>
+<td>secret_token?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed. The header is useful to ensure that the request comes from a webhook set by you.</td>
 </tr>
   }): true;
@@ -226,9 +215,8 @@ export interface ApiMethods {
    */
   deleteWebhook({
 <tr>
-<td>drop_pending_updates</td>
+<td>drop_pending_updates?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to drop all pending updates</td>
 </tr>
   }): true;
@@ -263,34 +251,34 @@ export interface WebhookInfo {
 <td>Number of updates awaiting delivery</td>
 </tr>
 <tr>
-<td>ip_address</td>
+<td>ip_address?</td>
 <td>String</td>
-<td>_Optional_. Currently used webhook IP address</td>
+<td>Currently used webhook IP address</td>
 </tr>
 <tr>
-<td>last_error_date</td>
+<td>last_error_date?</td>
 <td>Integer</td>
-<td>_Optional_. Unix time for the most recent error that happened when trying to deliver an update via webhook</td>
+<td>Unix time for the most recent error that happened when trying to deliver an update via webhook</td>
 </tr>
 <tr>
-<td>last_error_message</td>
+<td>last_error_message?</td>
 <td>String</td>
-<td>_Optional_. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook</td>
+<td>Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook</td>
 </tr>
 <tr>
-<td>last_synchronization_error_date</td>
+<td>last_synchronization_error_date?</td>
 <td>Integer</td>
-<td>_Optional_. Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters</td>
+<td>Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters</td>
 </tr>
 <tr>
-<td>max_connections</td>
+<td>max_connections?</td>
 <td>Integer</td>
-<td>_Optional_. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery</td>
+<td>The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery</td>
 </tr>
 <tr>
-<td>allowed_updates</td>
+<td>allowed_updates?</td>
 <td>Array of String</td>
-<td>_Optional_. A list of update types the bot is subscribed to. Defaults to all update types except _chat_member_</td>
+<td>A list of update types the bot is subscribed to. Defaults to all update types except _chat_member_</td>
 </tr>
 }
 
@@ -317,54 +305,54 @@ export interface User {
 <td>User&#39;s or bot&#39;s first name</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>_Optional_. User&#39;s or bot&#39;s last name</td>
+<td>User&#39;s or bot&#39;s last name</td>
 </tr>
 <tr>
-<td>username</td>
+<td>username?</td>
 <td>String</td>
-<td>_Optional_. User&#39;s or bot&#39;s username</td>
+<td>User&#39;s or bot&#39;s username</td>
 </tr>
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>_Optional_. <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language</td>
+<td><a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language</td>
 </tr>
 <tr>
-<td>is_premium</td>
+<td>is_premium?</td>
 <td>True</td>
-<td>_Optional_. _True_, if this user is a Telegram Premium user</td>
+<td>_True_, if this user is a Telegram Premium user</td>
 </tr>
 <tr>
-<td>added_to_attachment_menu</td>
+<td>added_to_attachment_menu?</td>
 <td>True</td>
-<td>_Optional_. _True_, if this user added the bot to the attachment menu</td>
+<td>_True_, if this user added the bot to the attachment menu</td>
 </tr>
 <tr>
-<td>can_join_groups</td>
+<td>can_join_groups?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_True_, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
-<td>can_read_all_group_messages</td>
+<td>can_read_all_group_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_True_, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
-<td>supports_inline_queries</td>
+<td>supports_inline_queries?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_True_, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
-<td>can_connect_to_business</td>
+<td>can_connect_to_business?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_True_, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
-<td>has_main_web_app</td>
+<td>has_main_web_app?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_True_, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 }
 /**
@@ -384,34 +372,34 @@ export interface Chat {
 <td>Type of the chat, can be either “private”, “group”, “supergroup” or “channel”</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title, for supergroups, channels and group chats</td>
+<td>Title, for supergroups, channels and group chats</td>
 </tr>
 <tr>
-<td>username</td>
+<td>username?</td>
 <td>String</td>
-<td>_Optional_. Username, for private chats, supergroups and channels if available</td>
+<td>Username, for private chats, supergroups and channels if available</td>
 </tr>
 <tr>
-<td>first_name</td>
+<td>first_name?</td>
 <td>String</td>
-<td>_Optional_. First name of the other party in a private chat</td>
+<td>First name of the other party in a private chat</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>_Optional_. Last name of the other party in a private chat</td>
+<td>Last name of the other party in a private chat</td>
 </tr>
 <tr>
-<td>is_forum</td>
+<td>is_forum?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
+<td>_True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
 </tr>
 <tr>
-<td>is_direct_messages</td>
+<td>is_direct_messages?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the chat is the direct messages chat of a channel</td>
+<td>_True_, if the chat is the direct messages chat of a channel</td>
 </tr>
 }
 /**
@@ -431,34 +419,34 @@ export interface ChatFullInfo {
 <td>Type of the chat, can be either “private”, “group”, “supergroup” or “channel”</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title, for supergroups, channels and group chats</td>
+<td>Title, for supergroups, channels and group chats</td>
 </tr>
 <tr>
-<td>username</td>
+<td>username?</td>
 <td>String</td>
-<td>_Optional_. Username, for private chats, supergroups and channels if available</td>
+<td>Username, for private chats, supergroups and channels if available</td>
 </tr>
 <tr>
-<td>first_name</td>
+<td>first_name?</td>
 <td>String</td>
-<td>_Optional_. First name of the other party in a private chat</td>
+<td>First name of the other party in a private chat</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>_Optional_. Last name of the other party in a private chat</td>
+<td>Last name of the other party in a private chat</td>
 </tr>
 <tr>
-<td>is_forum</td>
+<td>is_forum?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
+<td>_True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
 </tr>
 <tr>
-<td>is_direct_messages</td>
+<td>is_direct_messages?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the chat is the direct messages chat of a channel</td>
+<td>_True_, if the chat is the direct messages chat of a channel</td>
 </tr>
 <tr>
 <td>accent_color_id</td>
@@ -471,119 +459,119 @@ export interface ChatFullInfo {
 <td>The maximum number of reactions that can be set on a message in the chat</td>
 </tr>
 <tr>
-<td>photo</td>
+<td>photo?</td>
 <td><a href="#chatphoto">ChatPhoto</a></td>
-<td>_Optional_. Chat photo</td>
+<td>Chat photo</td>
 </tr>
 <tr>
-<td>active_usernames</td>
+<td>active_usernames?</td>
 <td>Array of String</td>
-<td>_Optional_. If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels</td>
+<td>If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels</td>
 </tr>
 <tr>
-<td>birthdate</td>
+<td>birthdate?</td>
 <td><a href="#birthdate">Birthdate</a></td>
-<td>_Optional_. For private chats, the date of birth of the user</td>
+<td>For private chats, the date of birth of the user</td>
 </tr>
 <tr>
-<td>business_intro</td>
+<td>business_intro?</td>
 <td><a href="#businessintro">BusinessIntro</a></td>
-<td>_Optional_. For private chats with business accounts, the intro of the business</td>
+<td>For private chats with business accounts, the intro of the business</td>
 </tr>
 <tr>
-<td>business_location</td>
+<td>business_location?</td>
 <td><a href="#businesslocation">BusinessLocation</a></td>
-<td>_Optional_. For private chats with business accounts, the location of the business</td>
+<td>For private chats with business accounts, the location of the business</td>
 </tr>
 <tr>
-<td>business_opening_hours</td>
+<td>business_opening_hours?</td>
 <td><a href="#businessopeninghours">BusinessOpeningHours</a></td>
-<td>_Optional_. For private chats with business accounts, the opening hours of the business</td>
+<td>For private chats with business accounts, the opening hours of the business</td>
 </tr>
 <tr>
-<td>personal_chat</td>
+<td>personal_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. For private chats, the personal channel of the user</td>
+<td>For private chats, the personal channel of the user</td>
 </tr>
 <tr>
-<td>parent_chat</td>
+<td>parent_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. Information about the corresponding channel chat; for direct messages chats only</td>
+<td>Information about the corresponding channel chat; for direct messages chats only</td>
 </tr>
 <tr>
-<td>available_reactions</td>
+<td>available_reactions?</td>
 <td>Array of <a href="#reactiontype">ReactionType</a></td>
-<td>_Optional_. List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.</td>
+<td>List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.</td>
 </tr>
 <tr>
-<td>background_custom_emoji_id</td>
+<td>background_custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background</td>
+<td>Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background</td>
 </tr>
 <tr>
-<td>profile_accent_color_id</td>
+<td>profile_accent_color_id?</td>
 <td>Integer</td>
-<td>_Optional_. Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.</td>
+<td>Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.</td>
 </tr>
 <tr>
-<td>profile_background_custom_emoji_id</td>
+<td>profile_background_custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. Custom emoji identifier of the emoji chosen by the chat for its profile background</td>
+<td>Custom emoji identifier of the emoji chosen by the chat for its profile background</td>
 </tr>
 <tr>
-<td>emoji_status_custom_emoji_id</td>
+<td>emoji_status_custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. Custom emoji identifier of the emoji status of the chat or the other party in a private chat</td>
+<td>Custom emoji identifier of the emoji status of the chat or the other party in a private chat</td>
 </tr>
 <tr>
-<td>emoji_status_expiration_date</td>
+<td>emoji_status_expiration_date?</td>
 <td>Integer</td>
-<td>_Optional_. Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any</td>
+<td>Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any</td>
 </tr>
 <tr>
-<td>bio</td>
+<td>bio?</td>
 <td>String</td>
-<td>_Optional_. Bio of the other party in a private chat</td>
+<td>Bio of the other party in a private chat</td>
 </tr>
 <tr>
-<td>has_private_forwards</td>
+<td>has_private_forwards?</td>
 <td>True</td>
-<td>_Optional_. _True_, if privacy settings of the other party in the private chat allows to use `tg://user?id=&lt;user_id&gt;` links only in chats with the user</td>
+<td>_True_, if privacy settings of the other party in the private chat allows to use `tg://user?id=&lt;user_id&gt;` links only in chats with the user</td>
 </tr>
 <tr>
-<td>has_restricted_voice_and_video_messages</td>
+<td>has_restricted_voice_and_video_messages?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the privacy settings of the other party restrict sending voice and video note messages in the private chat</td>
+<td>_True_, if the privacy settings of the other party restrict sending voice and video note messages in the private chat</td>
 </tr>
 <tr>
-<td>join_to_send_messages</td>
+<td>join_to_send_messages?</td>
 <td>True</td>
-<td>_Optional_. _True_, if users need to join the supergroup before they can send messages</td>
+<td>_True_, if users need to join the supergroup before they can send messages</td>
 </tr>
 <tr>
-<td>join_by_request</td>
+<td>join_by_request?</td>
 <td>True</td>
-<td>_Optional_. _True_, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators</td>
+<td>_True_, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Description, for groups, supergroups and channel chats</td>
+<td>Description, for groups, supergroups and channel chats</td>
 </tr>
 <tr>
-<td>invite_link</td>
+<td>invite_link?</td>
 <td>String</td>
-<td>_Optional_. Primary invite link, for groups, supergroups and channel chats</td>
+<td>Primary invite link, for groups, supergroups and channel chats</td>
 </tr>
 <tr>
-<td>pinned_message</td>
+<td>pinned_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. The most recent pinned message (by sending date)</td>
+<td>The most recent pinned message (by sending date)</td>
 </tr>
 <tr>
-<td>permissions</td>
+<td>permissions?</td>
 <td><a href="#chatpermissions">ChatPermissions</a></td>
-<td>_Optional_. Default chat member permissions, for groups and supergroups</td>
+<td>Default chat member permissions, for groups and supergroups</td>
 </tr>
 <tr>
 <td>accepted_gift_types</td>
@@ -591,69 +579,69 @@ export interface ChatFullInfo {
 <td>Information about types of gifts that are accepted by the chat or by the corresponding user for private chats</td>
 </tr>
 <tr>
-<td>can_send_paid_media</td>
+<td>can_send_paid_media?</td>
 <td>True</td>
-<td>_Optional_. _True_, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.</td>
+<td>_True_, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.</td>
 </tr>
 <tr>
-<td>slow_mode_delay</td>
+<td>slow_mode_delay?</td>
 <td>Integer</td>
-<td>_Optional_. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds</td>
+<td>For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds</td>
 </tr>
 <tr>
-<td>unrestrict_boost_count</td>
+<td>unrestrict_boost_count?</td>
 <td>Integer</td>
-<td>_Optional_. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions</td>
+<td>For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions</td>
 </tr>
 <tr>
-<td>message_auto_delete_time</td>
+<td>message_auto_delete_time?</td>
 <td>Integer</td>
-<td>_Optional_. The time after which all messages sent to the chat will be automatically deleted; in seconds</td>
+<td>The time after which all messages sent to the chat will be automatically deleted; in seconds</td>
 </tr>
 <tr>
-<td>has_aggressive_anti_spam_enabled</td>
+<td>has_aggressive_anti_spam_enabled?</td>
 <td>True</td>
-<td>_Optional_. _True_, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.</td>
+<td>_True_, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.</td>
 </tr>
 <tr>
-<td>has_hidden_members</td>
+<td>has_hidden_members?</td>
 <td>True</td>
-<td>_Optional_. _True_, if non-administrators can only get the list of bots and administrators in the chat</td>
+<td>_True_, if non-administrators can only get the list of bots and administrators in the chat</td>
 </tr>
 <tr>
-<td>has_protected_content</td>
+<td>has_protected_content?</td>
 <td>True</td>
-<td>_Optional_. _True_, if messages from the chat can&#39;t be forwarded to other chats</td>
+<td>_True_, if messages from the chat can&#39;t be forwarded to other chats</td>
 </tr>
 <tr>
-<td>has_visible_history</td>
+<td>has_visible_history?</td>
 <td>True</td>
-<td>_Optional_. _True_, if new chat members will have access to old messages; available only to chat administrators</td>
+<td>_True_, if new chat members will have access to old messages; available only to chat administrators</td>
 </tr>
 <tr>
-<td>sticker_set_name</td>
+<td>sticker_set_name?</td>
 <td>String</td>
-<td>_Optional_. For supergroups, name of the group sticker set</td>
+<td>For supergroups, name of the group sticker set</td>
 </tr>
 <tr>
-<td>can_set_sticker_set</td>
+<td>can_set_sticker_set?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can change the group sticker set</td>
+<td>_True_, if the bot can change the group sticker set</td>
 </tr>
 <tr>
-<td>custom_emoji_sticker_set_name</td>
+<td>custom_emoji_sticker_set_name?</td>
 <td>String</td>
-<td>_Optional_. For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.</td>
+<td>For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.</td>
 </tr>
 <tr>
-<td>linked_chat_id</td>
+<td>linked_chat_id?</td>
 <td>Integer</td>
-<td>_Optional_. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
-<td>location</td>
+<td>location?</td>
 <td><a href="#chatlocation">ChatLocation</a></td>
-<td>_Optional_. For supergroups, the location to which the supergroup is connected</td>
+<td>For supergroups, the location to which the supergroup is connected</td>
 </tr>
 }
 /**
@@ -668,34 +656,34 @@ export interface Message {
 <td>Unique message identifier inside this chat. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>_Optional_. Unique identifier of a message thread to which the message belongs; for supergroups only</td>
+<td>Unique identifier of a message thread to which the message belongs; for supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic</td>
+<td>direct_messages_topic?</td>
 <td><a href="#directmessagestopic">DirectMessagesTopic</a></td>
-<td>_Optional_. Information about the direct messages chat topic that contains the message</td>
+<td>Information about the direct messages chat topic that contains the message</td>
 </tr>
 <tr>
-<td>from</td>
+<td>from?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats</td>
+<td>Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats</td>
 </tr>
 <tr>
-<td>sender_chat</td>
+<td>sender_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field _from_ contains a fake sender user in non-channel chats.</td>
+<td>Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field _from_ contains a fake sender user in non-channel chats.</td>
 </tr>
 <tr>
-<td>sender_boost_count</td>
+<td>sender_boost_count?</td>
 <td>Integer</td>
-<td>_Optional_. If the sender of the message boosted the chat, the number of boosts added by the user</td>
+<td>If the sender of the message boosted the chat, the number of boosts added by the user</td>
 </tr>
 <tr>
-<td>sender_business_bot</td>
+<td>sender_business_bot?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.</td>
+<td>The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.</td>
 </tr>
 <tr>
 <td>date</td>
@@ -703,9 +691,9 @@ export interface Message {
 <td>Date the message was sent in Unix time. It is always a positive number, representing a valid date.</td>
 </tr>
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.</td>
+<td>Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.</td>
 </tr>
 <tr>
 <td>chat</td>
@@ -713,464 +701,464 @@ export interface Message {
 <td>Chat the message belongs to</td>
 </tr>
 <tr>
-<td>forward_origin</td>
+<td>forward_origin?</td>
 <td><a href="#messageorigin">MessageOrigin</a></td>
-<td>_Optional_. Information about the original message for forwarded messages</td>
+<td>Information about the original message for forwarded messages</td>
 </tr>
 <tr>
-<td>is_topic_message</td>
+<td>is_topic_message?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the message is sent to a forum topic</td>
+<td>_True_, if the message is sent to a forum topic</td>
 </tr>
 <tr>
-<td>is_automatic_forward</td>
+<td>is_automatic_forward?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the message is a channel post that was automatically forwarded to the connected discussion group</td>
+<td>_True_, if the message is a channel post that was automatically forwarded to the connected discussion group</td>
 </tr>
 <tr>
-<td>reply_to_message</td>
+<td>reply_to_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. For replies in the same chat and message thread, the original message. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.</td>
+<td>For replies in the same chat and message thread, the original message. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.</td>
 </tr>
 <tr>
-<td>external_reply</td>
+<td>external_reply?</td>
 <td><a href="#externalreplyinfo">ExternalReplyInfo</a></td>
-<td>_Optional_. Information about the message that is being replied to, which may come from another chat or forum topic</td>
+<td>Information about the message that is being replied to, which may come from another chat or forum topic</td>
 </tr>
 <tr>
-<td>quote</td>
+<td>quote?</td>
 <td><a href="#textquote">TextQuote</a></td>
-<td>_Optional_. For replies that quote part of the original message, the quoted part of the message</td>
+<td>For replies that quote part of the original message, the quoted part of the message</td>
 </tr>
 <tr>
-<td>reply_to_story</td>
+<td>reply_to_story?</td>
 <td><a href="#story">Story</a></td>
-<td>_Optional_. For replies to a story, the original story</td>
+<td>For replies to a story, the original story</td>
 </tr>
 <tr>
-<td>reply_to_checklist_task_id</td>
+<td>reply_to_checklist_task_id?</td>
 <td>Integer</td>
-<td>_Optional_. Identifier of the specific checklist task that is being replied to</td>
+<td>Identifier of the specific checklist task that is being replied to</td>
 </tr>
 <tr>
-<td>via_bot</td>
+<td>via_bot?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. Bot through which the message was sent</td>
+<td>Bot through which the message was sent</td>
 </tr>
 <tr>
-<td>edit_date</td>
+<td>edit_date?</td>
 <td>Integer</td>
-<td>_Optional_. Date the message was last edited in Unix time</td>
+<td>Date the message was last edited in Unix time</td>
 </tr>
 <tr>
-<td>has_protected_content</td>
+<td>has_protected_content?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the message can&#39;t be forwarded</td>
+<td>_True_, if the message can&#39;t be forwarded</td>
 </tr>
 <tr>
-<td>is_from_offline</td>
+<td>is_from_offline?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message</td>
+<td>_True_, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message</td>
 </tr>
 <tr>
-<td>is_paid_post</td>
+<td>is_paid_post?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.</td>
+<td>_True_, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.</td>
 </tr>
 <tr>
-<td>media_group_id</td>
+<td>media_group_id?</td>
 <td>String</td>
-<td>_Optional_. The unique identifier of a media message group this message belongs to</td>
+<td>The unique identifier of a media message group this message belongs to</td>
 </tr>
 <tr>
-<td>author_signature</td>
+<td>author_signature?</td>
 <td>String</td>
-<td>_Optional_. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator</td>
+<td>Signature of the post author for messages in channels, or the custom title of an anonymous group administrator</td>
 </tr>
 <tr>
-<td>paid_star_count</td>
+<td>paid_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of Telegram Stars that were paid by the sender of the message to send it</td>
+<td>The number of Telegram Stars that were paid by the sender of the message to send it</td>
 </tr>
 <tr>
-<td>text</td>
+<td>text?</td>
 <td>String</td>
-<td>_Optional_. For text messages, the actual UTF-8 text of the message</td>
+<td>For text messages, the actual UTF-8 text of the message</td>
 </tr>
 <tr>
-<td>entities</td>
+<td>entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text</td>
+<td>For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text</td>
 </tr>
 <tr>
-<td>link_preview_options</td>
+<td>link_preview_options?</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>_Optional_. Options used for link preview generation for the message, if it is a text message and link preview options were changed</td>
+<td>Options used for link preview generation for the message, if it is a text message and link preview options were changed</td>
 </tr>
 <tr>
-<td>suggested_post_info</td>
+<td>suggested_post_info?</td>
 <td><a href="#suggestedpostinfo">SuggestedPostInfo</a></td>
-<td>_Optional_. Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.</td>
+<td>Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.</td>
 </tr>
 <tr>
-<td>effect_id</td>
+<td>effect_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the message effect added to the message</td>
+<td>Unique identifier of the message effect added to the message</td>
 </tr>
 <tr>
-<td>animation</td>
+<td>animation?</td>
 <td><a href="#animation">Animation</a></td>
-<td>_Optional_. Message is an animation, information about the animation. For backward compatibility, when this field is set, the _document_ field will also be set</td>
+<td>Message is an animation, information about the animation. For backward compatibility, when this field is set, the _document_ field will also be set</td>
 </tr>
 <tr>
-<td>audio</td>
+<td>audio?</td>
 <td><a href="#audio">Audio</a></td>
-<td>_Optional_. Message is an audio file, information about the file</td>
+<td>Message is an audio file, information about the file</td>
 </tr>
 <tr>
-<td>document</td>
+<td>document?</td>
 <td><a href="#document">Document</a></td>
-<td>_Optional_. Message is a general file, information about the file</td>
+<td>Message is a general file, information about the file</td>
 </tr>
 <tr>
-<td>paid_media</td>
+<td>paid_media?</td>
 <td><a href="#paidmediainfo">PaidMediaInfo</a></td>
-<td>_Optional_. Message contains paid media; information about the paid media</td>
+<td>Message contains paid media; information about the paid media</td>
 </tr>
 <tr>
-<td>photo</td>
+<td>photo?</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Message is a photo, available sizes of the photo</td>
+<td>Message is a photo, available sizes of the photo</td>
 </tr>
 <tr>
-<td>sticker</td>
+<td>sticker?</td>
 <td><a href="#sticker">Sticker</a></td>
-<td>_Optional_. Message is a sticker, information about the sticker</td>
+<td>Message is a sticker, information about the sticker</td>
 </tr>
 <tr>
-<td>story</td>
+<td>story?</td>
 <td><a href="#story">Story</a></td>
-<td>_Optional_. Message is a forwarded story</td>
+<td>Message is a forwarded story</td>
 </tr>
 <tr>
-<td>video</td>
+<td>video?</td>
 <td><a href="#video">Video</a></td>
-<td>_Optional_. Message is a video, information about the video</td>
+<td>Message is a video, information about the video</td>
 </tr>
 <tr>
-<td>video_note</td>
+<td>video_note?</td>
 <td><a href="#videonote">VideoNote</a></td>
-<td>_Optional_. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
+<td>Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
 </tr>
 <tr>
-<td>voice</td>
+<td>voice?</td>
 <td><a href="#voice">Voice</a></td>
-<td>_Optional_. Message is a voice message, information about the file</td>
+<td>Message is a voice message, information about the file</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption for the animation, audio, document, paid media, photo, video or voice</td>
+<td>Caption for the animation, audio, document, paid media, photo, video or voice</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption</td>
+<td>For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the caption must be shown above the message media</td>
+<td>_True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>has_media_spoiler</td>
+<td>has_media_spoiler?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the message media is covered by a spoiler animation</td>
+<td>_True_, if the message media is covered by a spoiler animation</td>
 </tr>
 <tr>
-<td>checklist</td>
+<td>checklist?</td>
 <td><a href="#checklist">Checklist</a></td>
-<td>_Optional_. Message is a checklist</td>
+<td>Message is a checklist</td>
 </tr>
 <tr>
-<td>contact</td>
+<td>contact?</td>
 <td><a href="#contact">Contact</a></td>
-<td>_Optional_. Message is a shared contact, information about the contact</td>
+<td>Message is a shared contact, information about the contact</td>
 </tr>
 <tr>
-<td>dice</td>
+<td>dice?</td>
 <td><a href="#dice">Dice</a></td>
-<td>_Optional_. Message is a dice with random value</td>
+<td>Message is a dice with random value</td>
 </tr>
 <tr>
-<td>game</td>
+<td>game?</td>
 <td><a href="#game">Game</a></td>
-<td>_Optional_. Message is a game, information about the game. <a href="#games">More about games »</a></td>
+<td>Message is a game, information about the game. <a href="#games">More about games »</a></td>
 </tr>
 <tr>
-<td>poll</td>
+<td>poll?</td>
 <td><a href="#poll">Poll</a></td>
-<td>_Optional_. Message is a native poll, information about the poll</td>
+<td>Message is a native poll, information about the poll</td>
 </tr>
 <tr>
-<td>venue</td>
+<td>venue?</td>
 <td><a href="#venue">Venue</a></td>
-<td>_Optional_. Message is a venue, information about the venue. For backward compatibility, when this field is set, the _location_ field will also be set</td>
+<td>Message is a venue, information about the venue. For backward compatibility, when this field is set, the _location_ field will also be set</td>
 </tr>
 <tr>
-<td>location</td>
+<td>location?</td>
 <td><a href="#location">Location</a></td>
-<td>_Optional_. Message is a shared location, information about the location</td>
+<td>Message is a shared location, information about the location</td>
 </tr>
 <tr>
-<td>new_chat_members</td>
+<td>new_chat_members?</td>
 <td>Array of <a href="#user">User</a></td>
-<td>_Optional_. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)</td>
+<td>New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)</td>
 </tr>
 <tr>
-<td>left_chat_member</td>
+<td>left_chat_member?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. A member was removed from the group, information about them (this member may be the bot itself)</td>
+<td>A member was removed from the group, information about them (this member may be the bot itself)</td>
 </tr>
 <tr>
-<td>new_chat_title</td>
+<td>new_chat_title?</td>
 <td>String</td>
-<td>_Optional_. A chat title was changed to this value</td>
+<td>A chat title was changed to this value</td>
 </tr>
 <tr>
-<td>new_chat_photo</td>
+<td>new_chat_photo?</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. A chat photo was change to this value</td>
+<td>A chat photo was change to this value</td>
 </tr>
 <tr>
-<td>delete_chat_photo</td>
+<td>delete_chat_photo?</td>
 <td>True</td>
-<td>_Optional_. Service message: the chat photo was deleted</td>
+<td>Service message: the chat photo was deleted</td>
 </tr>
 <tr>
-<td>group_chat_created</td>
+<td>group_chat_created?</td>
 <td>True</td>
-<td>_Optional_. Service message: the group has been created</td>
+<td>Service message: the group has been created</td>
 </tr>
 <tr>
-<td>supergroup_chat_created</td>
+<td>supergroup_chat_created?</td>
 <td>True</td>
-<td>_Optional_. Service message: the supergroup has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.</td>
+<td>Service message: the supergroup has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.</td>
 </tr>
 <tr>
-<td>channel_chat_created</td>
+<td>channel_chat_created?</td>
 <td>True</td>
-<td>_Optional_. Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.</td>
+<td>Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.</td>
 </tr>
 <tr>
-<td>message_auto_delete_timer_changed</td>
+<td>message_auto_delete_timer_changed?</td>
 <td><a href="#messageautodeletetimerchanged">MessageAutoDeleteTimerChanged</a></td>
-<td>_Optional_. Service message: auto-delete timer settings changed in the chat</td>
+<td>Service message: auto-delete timer settings changed in the chat</td>
 </tr>
 <tr>
-<td>migrate_to_chat_id</td>
+<td>migrate_to_chat_id?</td>
 <td>Integer</td>
-<td>_Optional_. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
-<td>migrate_from_chat_id</td>
+<td>migrate_from_chat_id?</td>
 <td>Integer</td>
-<td>_Optional_. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
-<td>pinned_message</td>
+<td>pinned_message?</td>
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td>_Optional_. Specified message was pinned. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.</td>
+<td>Specified message was pinned. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.</td>
 </tr>
 <tr>
-<td>invoice</td>
+<td>invoice?</td>
 <td><a href="#invoice">Invoice</a></td>
-<td>_Optional_. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
+<td>Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
-<td>successful_payment</td>
+<td>successful_payment?</td>
 <td><a href="#successfulpayment">SuccessfulPayment</a></td>
-<td>_Optional_. Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a></td>
+<td>Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
-<td>refunded_payment</td>
+<td>refunded_payment?</td>
 <td><a href="#refundedpayment">RefundedPayment</a></td>
-<td>_Optional_. Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a></td>
+<td>Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
-<td>users_shared</td>
+<td>users_shared?</td>
 <td><a href="#usersshared">UsersShared</a></td>
-<td>_Optional_. Service message: users were shared with the bot</td>
+<td>Service message: users were shared with the bot</td>
 </tr>
 <tr>
-<td>chat_shared</td>
+<td>chat_shared?</td>
 <td><a href="#chatshared">ChatShared</a></td>
-<td>_Optional_. Service message: a chat was shared with the bot</td>
+<td>Service message: a chat was shared with the bot</td>
 </tr>
 <tr>
-<td>gift</td>
+<td>gift?</td>
 <td><a href="#giftinfo">GiftInfo</a></td>
-<td>_Optional_. Service message: a regular gift was sent or received</td>
+<td>Service message: a regular gift was sent or received</td>
 </tr>
 <tr>
-<td>unique_gift</td>
+<td>unique_gift?</td>
 <td><a href="#uniquegiftinfo">UniqueGiftInfo</a></td>
-<td>_Optional_. Service message: a unique gift was sent or received</td>
+<td>Service message: a unique gift was sent or received</td>
 </tr>
 <tr>
-<td>connected_website</td>
+<td>connected_website?</td>
 <td>String</td>
-<td>_Optional_. The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a></td>
+<td>The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a></td>
 </tr>
 <tr>
-<td>write_access_allowed</td>
+<td>write_access_allowed?</td>
 <td><a href="#writeaccessallowed">WriteAccessAllowed</a></td>
-<td>_Optional_. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
+<td>Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
 </tr>
 <tr>
-<td>passport_data</td>
+<td>passport_data?</td>
 <td><a href="#passportdata">PassportData</a></td>
-<td>_Optional_. Telegram Passport data</td>
+<td>Telegram Passport data</td>
 </tr>
 <tr>
-<td>proximity_alert_triggered</td>
+<td>proximity_alert_triggered?</td>
 <td><a href="#proximityalerttriggered">ProximityAlertTriggered</a></td>
-<td>_Optional_. Service message. A user in the chat triggered another user&#39;s proximity alert while sharing Live Location.</td>
+<td>Service message. A user in the chat triggered another user&#39;s proximity alert while sharing Live Location.</td>
 </tr>
 <tr>
-<td>boost_added</td>
+<td>boost_added?</td>
 <td><a href="#chatboostadded">ChatBoostAdded</a></td>
-<td>_Optional_. Service message: user boosted the chat</td>
+<td>Service message: user boosted the chat</td>
 </tr>
 <tr>
-<td>chat_background_set</td>
+<td>chat_background_set?</td>
 <td><a href="#chatbackground">ChatBackground</a></td>
-<td>_Optional_. Service message: chat background set</td>
+<td>Service message: chat background set</td>
 </tr>
 <tr>
-<td>checklist_tasks_done</td>
+<td>checklist_tasks_done?</td>
 <td><a href="#checklisttasksdone">ChecklistTasksDone</a></td>
-<td>_Optional_. Service message: some tasks in a checklist were marked as done or not done</td>
+<td>Service message: some tasks in a checklist were marked as done or not done</td>
 </tr>
 <tr>
-<td>checklist_tasks_added</td>
+<td>checklist_tasks_added?</td>
 <td><a href="#checklisttasksadded">ChecklistTasksAdded</a></td>
-<td>_Optional_. Service message: tasks were added to a checklist</td>
+<td>Service message: tasks were added to a checklist</td>
 </tr>
 <tr>
-<td>direct_message_price_changed</td>
+<td>direct_message_price_changed?</td>
 <td><a href="#directmessagepricechanged">DirectMessagePriceChanged</a></td>
-<td>_Optional_. Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed</td>
+<td>Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed</td>
 </tr>
 <tr>
-<td>forum_topic_created</td>
+<td>forum_topic_created?</td>
 <td><a href="#forumtopiccreated">ForumTopicCreated</a></td>
-<td>_Optional_. Service message: forum topic created</td>
+<td>Service message: forum topic created</td>
 </tr>
 <tr>
-<td>forum_topic_edited</td>
+<td>forum_topic_edited?</td>
 <td><a href="#forumtopicedited">ForumTopicEdited</a></td>
-<td>_Optional_. Service message: forum topic edited</td>
+<td>Service message: forum topic edited</td>
 </tr>
 <tr>
-<td>forum_topic_closed</td>
+<td>forum_topic_closed?</td>
 <td><a href="#forumtopicclosed">ForumTopicClosed</a></td>
-<td>_Optional_. Service message: forum topic closed</td>
+<td>Service message: forum topic closed</td>
 </tr>
 <tr>
-<td>forum_topic_reopened</td>
+<td>forum_topic_reopened?</td>
 <td><a href="#forumtopicreopened">ForumTopicReopened</a></td>
-<td>_Optional_. Service message: forum topic reopened</td>
+<td>Service message: forum topic reopened</td>
 </tr>
 <tr>
-<td>general_forum_topic_hidden</td>
+<td>general_forum_topic_hidden?</td>
 <td><a href="#generalforumtopichidden">GeneralForumTopicHidden</a></td>
-<td>_Optional_. Service message: the &#39;General&#39; forum topic hidden</td>
+<td>Service message: the &#39;General&#39; forum topic hidden</td>
 </tr>
 <tr>
-<td>general_forum_topic_unhidden</td>
+<td>general_forum_topic_unhidden?</td>
 <td><a href="#generalforumtopicunhidden">GeneralForumTopicUnhidden</a></td>
-<td>_Optional_. Service message: the &#39;General&#39; forum topic unhidden</td>
+<td>Service message: the &#39;General&#39; forum topic unhidden</td>
 </tr>
 <tr>
-<td>giveaway_created</td>
+<td>giveaway_created?</td>
 <td><a href="#giveawaycreated">GiveawayCreated</a></td>
-<td>_Optional_. Service message: a scheduled giveaway was created</td>
+<td>Service message: a scheduled giveaway was created</td>
 </tr>
 <tr>
-<td>giveaway</td>
+<td>giveaway?</td>
 <td><a href="#giveaway">Giveaway</a></td>
-<td>_Optional_. The message is a scheduled giveaway message</td>
+<td>The message is a scheduled giveaway message</td>
 </tr>
 <tr>
-<td>giveaway_winners</td>
+<td>giveaway_winners?</td>
 <td><a href="#giveawaywinners">GiveawayWinners</a></td>
-<td>_Optional_. A giveaway with public winners was completed</td>
+<td>A giveaway with public winners was completed</td>
 </tr>
 <tr>
-<td>giveaway_completed</td>
+<td>giveaway_completed?</td>
 <td><a href="#giveawaycompleted">GiveawayCompleted</a></td>
-<td>_Optional_. Service message: a giveaway without public winners was completed</td>
+<td>Service message: a giveaway without public winners was completed</td>
 </tr>
 <tr>
-<td>paid_message_price_changed</td>
+<td>paid_message_price_changed?</td>
 <td><a href="#paidmessagepricechanged">PaidMessagePriceChanged</a></td>
-<td>_Optional_. Service message: the price for paid messages has changed in the chat</td>
+<td>Service message: the price for paid messages has changed in the chat</td>
 </tr>
 <tr>
-<td>suggested_post_approved</td>
+<td>suggested_post_approved?</td>
 <td><a href="#suggestedpostapproved">SuggestedPostApproved</a></td>
-<td>_Optional_. Service message: a suggested post was approved</td>
+<td>Service message: a suggested post was approved</td>
 </tr>
 <tr>
-<td>suggested_post_approval_failed</td>
+<td>suggested_post_approval_failed?</td>
 <td><a href="#suggestedpostapprovalfailed">SuggestedPostApprovalFailed</a></td>
-<td>_Optional_. Service message: approval of a suggested post has failed</td>
+<td>Service message: approval of a suggested post has failed</td>
 </tr>
 <tr>
-<td>suggested_post_declined</td>
+<td>suggested_post_declined?</td>
 <td><a href="#suggestedpostdeclined">SuggestedPostDeclined</a></td>
-<td>_Optional_. Service message: a suggested post was declined</td>
+<td>Service message: a suggested post was declined</td>
 </tr>
 <tr>
-<td>suggested_post_paid</td>
+<td>suggested_post_paid?</td>
 <td><a href="#suggestedpostpaid">SuggestedPostPaid</a></td>
-<td>_Optional_. Service message: payment for a suggested post was received</td>
+<td>Service message: payment for a suggested post was received</td>
 </tr>
 <tr>
-<td>suggested_post_refunded</td>
+<td>suggested_post_refunded?</td>
 <td><a href="#suggestedpostrefunded">SuggestedPostRefunded</a></td>
-<td>_Optional_. Service message: payment for a suggested post was refunded</td>
+<td>Service message: payment for a suggested post was refunded</td>
 </tr>
 <tr>
-<td>video_chat_scheduled</td>
+<td>video_chat_scheduled?</td>
 <td><a href="#videochatscheduled">VideoChatScheduled</a></td>
-<td>_Optional_. Service message: video chat scheduled</td>
+<td>Service message: video chat scheduled</td>
 </tr>
 <tr>
-<td>video_chat_started</td>
+<td>video_chat_started?</td>
 <td><a href="#videochatstarted">VideoChatStarted</a></td>
-<td>_Optional_. Service message: video chat started</td>
+<td>Service message: video chat started</td>
 </tr>
 <tr>
-<td>video_chat_ended</td>
+<td>video_chat_ended?</td>
 <td><a href="#videochatended">VideoChatEnded</a></td>
-<td>_Optional_. Service message: video chat ended</td>
+<td>Service message: video chat ended</td>
 </tr>
 <tr>
-<td>video_chat_participants_invited</td>
+<td>video_chat_participants_invited?</td>
 <td><a href="#videochatparticipantsinvited">VideoChatParticipantsInvited</a></td>
-<td>_Optional_. Service message: new participants invited to a video chat</td>
+<td>Service message: new participants invited to a video chat</td>
 </tr>
 <tr>
-<td>web_app_data</td>
+<td>web_app_data?</td>
 <td><a href="#webappdata">WebAppData</a></td>
-<td>_Optional_. Service message: data sent by a Web App</td>
+<td>Service message: data sent by a Web App</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. Inline keyboard attached to the message. `login_url` buttons are represented as ordinary `url` buttons.</td>
+<td>Inline keyboard attached to the message. `login_url` buttons are represented as ordinary `url` buttons.</td>
 </tr>
 }
 /**
@@ -1239,24 +1227,24 @@ export interface MessageEntity {
 <td>Length of the entity in <a href="/api/entities#entity-length">UTF-16 code units</a></td>
 </tr>
 <tr>
-<td>url</td>
+<td>url?</td>
 <td>String</td>
-<td>_Optional_. For “text_link” only, URL that will be opened after user taps on the text</td>
+<td>For “text_link” only, URL that will be opened after user taps on the text</td>
 </tr>
 <tr>
-<td>user</td>
+<td>user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. For “text_mention” only, the mentioned user</td>
+<td>For “text_mention” only, the mentioned user</td>
 </tr>
 <tr>
-<td>language</td>
+<td>language?</td>
 <td>String</td>
-<td>_Optional_. For “pre” only, the programming language of the entity text</td>
+<td>For “pre” only, the programming language of the entity text</td>
 </tr>
 <tr>
-<td>custom_emoji_id</td>
+<td>custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker</td>
+<td>For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker</td>
 </tr>
 }
 /**
@@ -1271,9 +1259,9 @@ export interface TextQuote {
 <td>Text of the quoted part of a message that is replied to by the given message</td>
 </tr>
 <tr>
-<td>entities</td>
+<td>entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in the quote. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are kept in quotes.</td>
+<td>Special entities that appear in the quote. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are kept in quotes.</td>
 </tr>
 <tr>
 <td>position</td>
@@ -1281,9 +1269,9 @@ export interface TextQuote {
 <td>Approximate quote position in the original message in UTF-16 code units as specified by the sender</td>
 </tr>
 <tr>
-<td>is_manual</td>
+<td>is_manual?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.</td>
+<td>_True_, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.</td>
 </tr>
 }
 /**
@@ -1298,124 +1286,124 @@ export interface ExternalReplyInfo {
 <td>Origin of the message replied to by the given message</td>
 </tr>
 <tr>
-<td>chat</td>
+<td>chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. Chat the original message belongs to. Available only if the chat is a supergroup or a channel.</td>
+<td>Chat the original message belongs to. Available only if the chat is a supergroup or a channel.</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>_Optional_. Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel.</td>
+<td>Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel.</td>
 </tr>
 <tr>
-<td>link_preview_options</td>
+<td>link_preview_options?</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>_Optional_. Options used for link preview generation for the original message, if it is a text message</td>
+<td>Options used for link preview generation for the original message, if it is a text message</td>
 </tr>
 <tr>
-<td>animation</td>
+<td>animation?</td>
 <td><a href="#animation">Animation</a></td>
-<td>_Optional_. Message is an animation, information about the animation</td>
+<td>Message is an animation, information about the animation</td>
 </tr>
 <tr>
-<td>audio</td>
+<td>audio?</td>
 <td><a href="#audio">Audio</a></td>
-<td>_Optional_. Message is an audio file, information about the file</td>
+<td>Message is an audio file, information about the file</td>
 </tr>
 <tr>
-<td>document</td>
+<td>document?</td>
 <td><a href="#document">Document</a></td>
-<td>_Optional_. Message is a general file, information about the file</td>
+<td>Message is a general file, information about the file</td>
 </tr>
 <tr>
-<td>paid_media</td>
+<td>paid_media?</td>
 <td><a href="#paidmediainfo">PaidMediaInfo</a></td>
-<td>_Optional_. Message contains paid media; information about the paid media</td>
+<td>Message contains paid media; information about the paid media</td>
 </tr>
 <tr>
-<td>photo</td>
+<td>photo?</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Message is a photo, available sizes of the photo</td>
+<td>Message is a photo, available sizes of the photo</td>
 </tr>
 <tr>
-<td>sticker</td>
+<td>sticker?</td>
 <td><a href="#sticker">Sticker</a></td>
-<td>_Optional_. Message is a sticker, information about the sticker</td>
+<td>Message is a sticker, information about the sticker</td>
 </tr>
 <tr>
-<td>story</td>
+<td>story?</td>
 <td><a href="#story">Story</a></td>
-<td>_Optional_. Message is a forwarded story</td>
+<td>Message is a forwarded story</td>
 </tr>
 <tr>
-<td>video</td>
+<td>video?</td>
 <td><a href="#video">Video</a></td>
-<td>_Optional_. Message is a video, information about the video</td>
+<td>Message is a video, information about the video</td>
 </tr>
 <tr>
-<td>video_note</td>
+<td>video_note?</td>
 <td><a href="#videonote">VideoNote</a></td>
-<td>_Optional_. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
+<td>Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
 </tr>
 <tr>
-<td>voice</td>
+<td>voice?</td>
 <td><a href="#voice">Voice</a></td>
-<td>_Optional_. Message is a voice message, information about the file</td>
+<td>Message is a voice message, information about the file</td>
 </tr>
 <tr>
-<td>has_media_spoiler</td>
+<td>has_media_spoiler?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the message media is covered by a spoiler animation</td>
+<td>_True_, if the message media is covered by a spoiler animation</td>
 </tr>
 <tr>
-<td>checklist</td>
+<td>checklist?</td>
 <td><a href="#checklist">Checklist</a></td>
-<td>_Optional_. Message is a checklist</td>
+<td>Message is a checklist</td>
 </tr>
 <tr>
-<td>contact</td>
+<td>contact?</td>
 <td><a href="#contact">Contact</a></td>
-<td>_Optional_. Message is a shared contact, information about the contact</td>
+<td>Message is a shared contact, information about the contact</td>
 </tr>
 <tr>
-<td>dice</td>
+<td>dice?</td>
 <td><a href="#dice">Dice</a></td>
-<td>_Optional_. Message is a dice with random value</td>
+<td>Message is a dice with random value</td>
 </tr>
 <tr>
-<td>game</td>
+<td>game?</td>
 <td><a href="#game">Game</a></td>
-<td>_Optional_. Message is a game, information about the game. <a href="#games">More about games »</a></td>
+<td>Message is a game, information about the game. <a href="#games">More about games »</a></td>
 </tr>
 <tr>
-<td>giveaway</td>
+<td>giveaway?</td>
 <td><a href="#giveaway">Giveaway</a></td>
-<td>_Optional_. Message is a scheduled giveaway, information about the giveaway</td>
+<td>Message is a scheduled giveaway, information about the giveaway</td>
 </tr>
 <tr>
-<td>giveaway_winners</td>
+<td>giveaway_winners?</td>
 <td><a href="#giveawaywinners">GiveawayWinners</a></td>
-<td>_Optional_. A giveaway with public winners was completed</td>
+<td>A giveaway with public winners was completed</td>
 </tr>
 <tr>
-<td>invoice</td>
+<td>invoice?</td>
 <td><a href="#invoice">Invoice</a></td>
-<td>_Optional_. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
+<td>Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
-<td>location</td>
+<td>location?</td>
 <td><a href="#location">Location</a></td>
-<td>_Optional_. Message is a shared location, information about the location</td>
+<td>Message is a shared location, information about the location</td>
 </tr>
 <tr>
-<td>poll</td>
+<td>poll?</td>
 <td><a href="#poll">Poll</a></td>
-<td>_Optional_. Message is a native poll, information about the poll</td>
+<td>Message is a native poll, information about the poll</td>
 </tr>
 <tr>
-<td>venue</td>
+<td>venue?</td>
 <td><a href="#venue">Venue</a></td>
-<td>_Optional_. Message is a venue, information about the venue</td>
+<td>Message is a venue, information about the venue</td>
 </tr>
 }
 /**
@@ -1430,39 +1418,39 @@ export interface ReplyParameters {
 <td>Identifier of the message that will be replied to in the current chat, or in the chat _chat_id_ if it is specified</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>_Optional_. If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format `@channelusername`). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats.</td>
+<td>If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format `@channelusername`). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats.</td>
 </tr>
 <tr>
-<td>allow_sending_without_reply</td>
+<td>allow_sending_without_reply?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the message should be sent even if the specified message to be replied to is not found. Always _False_ for replies in another chat or forum topic. Always _True_ for messages sent on behalf of a business account.</td>
+<td>Pass _True_ if the message should be sent even if the specified message to be replied to is not found. Always _False_ for replies in another chat or forum topic. Always _True_ for messages sent on behalf of a business account.</td>
 </tr>
 <tr>
-<td>quote</td>
+<td>quote?</td>
 <td>String</td>
-<td>_Optional_. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities. The message will fail to send if the quote isn&#39;t found in the original message.</td>
+<td>Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities. The message will fail to send if the quote isn&#39;t found in the original message.</td>
 </tr>
 <tr>
-<td>quote_parse_mode</td>
+<td>quote_parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>quote_entities</td>
+<td>quote_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. A JSON-serialized list of special entities that appear in the quote. It can be specified instead of _quote_parse_mode_.</td>
+<td>A JSON-serialized list of special entities that appear in the quote. It can be specified instead of _quote_parse_mode_.</td>
 </tr>
 <tr>
-<td>quote_position</td>
+<td>quote_position?</td>
 <td>Integer</td>
-<td>_Optional_. Position of the quote in the original message in UTF-16 code units</td>
+<td>Position of the quote in the original message in UTF-16 code units</td>
 </tr>
 <tr>
-<td>checklist_task_id</td>
+<td>checklist_task_id?</td>
 <td>Integer</td>
-<td>_Optional_. Identifier of the specific checklist task to be replied to</td>
+<td>Identifier of the specific checklist task to be replied to</td>
 </tr>
 }
 /**
@@ -1545,9 +1533,9 @@ export interface MessageOriginChat {
 <td>Chat that sent the message originally</td>
 </tr>
 <tr>
-<td>author_signature</td>
+<td>author_signature?</td>
 <td>String</td>
-<td>_Optional_. For messages originally sent by an anonymous chat administrator, original message author signature</td>
+<td>For messages originally sent by an anonymous chat administrator, original message author signature</td>
 </tr>
 }
 /**
@@ -1577,9 +1565,9 @@ export interface MessageOriginChannel {
 <td>Unique message identifier inside the chat</td>
 </tr>
 <tr>
-<td>author_signature</td>
+<td>author_signature?</td>
 <td>String</td>
-<td>_Optional_. Signature of the original post author</td>
+<td>Signature of the original post author</td>
 </tr>
 }
 /**
@@ -1609,9 +1597,9 @@ export interface PhotoSize {
 <td>Photo height</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes</td>
+<td>File size in bytes</td>
 </tr>
 }
 /**
@@ -1646,24 +1634,24 @@ export interface Animation {
 <td>Duration of the video in seconds as defined by the sender</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Animation thumbnail as defined by the sender</td>
+<td>Animation thumbnail as defined by the sender</td>
 </tr>
 <tr>
-<td>file_name</td>
+<td>file_name?</td>
 <td>String</td>
-<td>_Optional_. Original animation filename as defined by the sender</td>
+<td>Original animation filename as defined by the sender</td>
 </tr>
 <tr>
-<td>mime_type</td>
+<td>mime_type?</td>
 <td>String</td>
-<td>_Optional_. MIME type of the file as defined by the sender</td>
+<td>MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 }
 /**
@@ -1688,34 +1676,34 @@ export interface Audio {
 <td>Duration of the audio in seconds as defined by the sender</td>
 </tr>
 <tr>
-<td>performer</td>
+<td>performer?</td>
 <td>String</td>
-<td>_Optional_. Performer of the audio as defined by the sender or by audio tags</td>
+<td>Performer of the audio as defined by the sender or by audio tags</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title of the audio as defined by the sender or by audio tags</td>
+<td>Title of the audio as defined by the sender or by audio tags</td>
 </tr>
 <tr>
-<td>file_name</td>
+<td>file_name?</td>
 <td>String</td>
-<td>_Optional_. Original filename as defined by the sender</td>
+<td>Original filename as defined by the sender</td>
 </tr>
 <tr>
-<td>mime_type</td>
+<td>mime_type?</td>
 <td>String</td>
-<td>_Optional_. MIME type of the file as defined by the sender</td>
+<td>MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Thumbnail of the album cover to which the music file belongs</td>
+<td>Thumbnail of the album cover to which the music file belongs</td>
 </tr>
 }
 /**
@@ -1735,24 +1723,24 @@ export interface Document {
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Document thumbnail as defined by the sender</td>
+<td>Document thumbnail as defined by the sender</td>
 </tr>
 <tr>
-<td>file_name</td>
+<td>file_name?</td>
 <td>String</td>
-<td>_Optional_. Original filename as defined by the sender</td>
+<td>Original filename as defined by the sender</td>
 </tr>
 <tr>
-<td>mime_type</td>
+<td>mime_type?</td>
 <td>String</td>
-<td>_Optional_. MIME type of the file as defined by the sender</td>
+<td>MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 }
 /**
@@ -1804,34 +1792,34 @@ export interface Video {
 <td>Duration of the video in seconds as defined by the sender</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Video thumbnail</td>
+<td>Video thumbnail</td>
 </tr>
 <tr>
-<td>cover</td>
+<td>cover?</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Available sizes of the cover of the video in the message</td>
+<td>Available sizes of the cover of the video in the message</td>
 </tr>
 <tr>
-<td>start_timestamp</td>
+<td>start_timestamp?</td>
 <td>Integer</td>
-<td>_Optional_. Timestamp in seconds from which the video will play in the message</td>
+<td>Timestamp in seconds from which the video will play in the message</td>
 </tr>
 <tr>
-<td>file_name</td>
+<td>file_name?</td>
 <td>String</td>
-<td>_Optional_. Original filename as defined by the sender</td>
+<td>Original filename as defined by the sender</td>
 </tr>
 <tr>
-<td>mime_type</td>
+<td>mime_type?</td>
 <td>String</td>
-<td>_Optional_. MIME type of the file as defined by the sender</td>
+<td>MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 }
 /**
@@ -1861,14 +1849,14 @@ export interface VideoNote {
 <td>Duration of the video in seconds as defined by the sender</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Video thumbnail</td>
+<td>Video thumbnail</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes</td>
+<td>File size in bytes</td>
 </tr>
 }
 /**
@@ -1893,14 +1881,14 @@ export interface Voice {
 <td>Duration of the audio in seconds as defined by the sender</td>
 </tr>
 <tr>
-<td>mime_type</td>
+<td>mime_type?</td>
 <td>String</td>
-<td>_Optional_. MIME type of the file as defined by the sender</td>
+<td>MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 }
 /**
@@ -1944,19 +1932,19 @@ export interface PaidMediaPreview {
 <td>Type of the paid media, always “preview”</td>
 </tr>
 <tr>
-<td>width</td>
+<td>width?</td>
 <td>Integer</td>
-<td>_Optional_. Media width as defined by the sender</td>
+<td>Media width as defined by the sender</td>
 </tr>
 <tr>
-<td>height</td>
+<td>height?</td>
 <td>Integer</td>
-<td>_Optional_. Media height as defined by the sender</td>
+<td>Media height as defined by the sender</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>_Optional_. Duration of the media in seconds as defined by the sender</td>
+<td>Duration of the media in seconds as defined by the sender</td>
 </tr>
 }
 /**
@@ -2010,19 +1998,19 @@ export interface Contact {
 <td>Contact&#39;s first name</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>_Optional_. Contact&#39;s last name</td>
+<td>Contact&#39;s last name</td>
 </tr>
 <tr>
-<td>user_id</td>
+<td>user_id?</td>
 <td>Integer</td>
-<td>_Optional_. Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
-<td>vcard</td>
+<td>vcard?</td>
 <td>String</td>
-<td>_Optional_. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a></td>
+<td>Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a></td>
 </tr>
 }
 /**
@@ -2054,9 +2042,9 @@ export interface PollOption {
 <td>Option text, 1-100 characters</td>
 </tr>
 <tr>
-<td>text_entities</td>
+<td>text_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in the option _text_. Currently, only custom emoji entities are allowed in poll option texts</td>
+<td>Special entities that appear in the option _text_. Currently, only custom emoji entities are allowed in poll option texts</td>
 </tr>
 <tr>
 <td>voter_count</td>
@@ -2076,14 +2064,14 @@ export interface InputPollOption {
 <td>Option text, 1-100 characters</td>
 </tr>
 <tr>
-<td>text_parse_mode</td>
+<td>text_parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed</td>
+<td>Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed</td>
 </tr>
 <tr>
-<td>text_entities</td>
+<td>text_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of _text_parse_mode_</td>
+<td>A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of _text_parse_mode_</td>
 </tr>
 }
 /**
@@ -2098,14 +2086,14 @@ export interface PollAnswer {
 <td>Unique poll identifier</td>
 </tr>
 <tr>
-<td>voter_chat</td>
+<td>voter_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. The chat that changed the answer to the poll, if the voter is anonymous</td>
+<td>The chat that changed the answer to the poll, if the voter is anonymous</td>
 </tr>
 <tr>
-<td>user</td>
+<td>user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. The user that changed the answer to the poll, if the voter isn&#39;t anonymous</td>
+<td>The user that changed the answer to the poll, if the voter isn&#39;t anonymous</td>
 </tr>
 <tr>
 <td>option_ids</td>
@@ -2130,9 +2118,9 @@ export interface Poll {
 <td>Poll question, 1-300 characters</td>
 </tr>
 <tr>
-<td>question_entities</td>
+<td>question_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in the _question_. Currently, only custom emoji entities are allowed in poll questions</td>
+<td>Special entities that appear in the _question_. Currently, only custom emoji entities are allowed in poll questions</td>
 </tr>
 <tr>
 <td>options</td>
@@ -2165,29 +2153,29 @@ export interface Poll {
 <td>_True_, if the poll allows multiple answers</td>
 </tr>
 <tr>
-<td>correct_option_id</td>
+<td>correct_option_id?</td>
 <td>Integer</td>
-<td>_Optional_. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.</td>
+<td>0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.</td>
 </tr>
 <tr>
-<td>explanation</td>
+<td>explanation?</td>
 <td>String</td>
-<td>_Optional_. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters</td>
+<td>Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters</td>
 </tr>
 <tr>
-<td>explanation_entities</td>
+<td>explanation_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities like usernames, URLs, bot commands, etc. that appear in the _explanation_</td>
+<td>Special entities like usernames, URLs, bot commands, etc. that appear in the _explanation_</td>
 </tr>
 <tr>
-<td>open_period</td>
+<td>open_period?</td>
 <td>Integer</td>
-<td>_Optional_. Amount of time in seconds the poll will be active after creation</td>
+<td>Amount of time in seconds the poll will be active after creation</td>
 </tr>
 <tr>
-<td>close_date</td>
+<td>close_date?</td>
 <td>Integer</td>
-<td>_Optional_. Point in time (Unix timestamp) when the poll will be automatically closed</td>
+<td>Point in time (Unix timestamp) when the poll will be automatically closed</td>
 </tr>
 }
 /**
@@ -2207,19 +2195,19 @@ export interface ChecklistTask {
 <td>Text of the task</td>
 </tr>
 <tr>
-<td>text_entities</td>
+<td>text_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in the task text</td>
+<td>Special entities that appear in the task text</td>
 </tr>
 <tr>
-<td>completed_by_user</td>
+<td>completed_by_user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. User that completed the task; omitted if the task wasn&#39;t completed</td>
+<td>User that completed the task; omitted if the task wasn&#39;t completed</td>
 </tr>
 <tr>
-<td>completion_date</td>
+<td>completion_date?</td>
 <td>Integer</td>
-<td>_Optional_. Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed</td>
+<td>Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed</td>
 </tr>
 }
 /**
@@ -2234,9 +2222,9 @@ export interface Checklist {
 <td>Title of the checklist</td>
 </tr>
 <tr>
-<td>title_entities</td>
+<td>title_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in the checklist title</td>
+<td>Special entities that appear in the checklist title</td>
 </tr>
 <tr>
 <td>tasks</td>
@@ -2244,14 +2232,14 @@ export interface Checklist {
 <td>List of tasks in the checklist</td>
 </tr>
 <tr>
-<td>others_can_add_tasks</td>
+<td>others_can_add_tasks?</td>
 <td>True</td>
-<td>_Optional_. _True_, if users other than the creator of the list can add tasks to the list</td>
+<td>_True_, if users other than the creator of the list can add tasks to the list</td>
 </tr>
 <tr>
-<td>others_can_mark_tasks_as_done</td>
+<td>others_can_mark_tasks_as_done?</td>
 <td>True</td>
-<td>_Optional_. _True_, if users other than the creator of the list can mark tasks as done or not done</td>
+<td>_True_, if users other than the creator of the list can mark tasks as done or not done</td>
 </tr>
 }
 /**
@@ -2276,9 +2264,9 @@ export interface InputChecklistTask {
 <td>Optional. Mode for parsing entities in the text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>text_entities</td>
+<td>text_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.</td>
+<td>List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.</td>
 </tr>
 }
 /**
@@ -2298,9 +2286,9 @@ export interface InputChecklist {
 <td>Optional. Mode for parsing entities in the title. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>title_entities</td>
+<td>title_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.</td>
+<td>List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.</td>
 </tr>
 <tr>
 <td>tasks</td>
@@ -2308,14 +2296,14 @@ export interface InputChecklist {
 <td>List of 1-30 tasks in the checklist</td>
 </tr>
 <tr>
-<td>others_can_add_tasks</td>
+<td>others_can_add_tasks?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if other users can add tasks to the checklist</td>
+<td>Pass _True_ if other users can add tasks to the checklist</td>
 </tr>
 <tr>
-<td>others_can_mark_tasks_as_done</td>
+<td>others_can_mark_tasks_as_done?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if other users can mark tasks as done or not done in the checklist</td>
+<td>Pass _True_ if other users can mark tasks as done or not done in the checklist</td>
 </tr>
 }
 /**
@@ -2325,19 +2313,19 @@ export interface InputChecklist {
  */
 export interface ChecklistTasksDone {
 <tr>
-<td>checklist_message</td>
+<td>checklist_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
+<td>Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
-<td>marked_as_done_task_ids</td>
+<td>marked_as_done_task_ids?</td>
 <td>Array of Integer</td>
-<td>_Optional_. Identifiers of the tasks that were marked as done</td>
+<td>Identifiers of the tasks that were marked as done</td>
 </tr>
 <tr>
-<td>marked_as_not_done_task_ids</td>
+<td>marked_as_not_done_task_ids?</td>
 <td>Array of Integer</td>
-<td>_Optional_. Identifiers of the tasks that were marked as not done</td>
+<td>Identifiers of the tasks that were marked as not done</td>
 </tr>
 }
 /**
@@ -2347,9 +2335,9 @@ export interface ChecklistTasksDone {
  */
 export interface ChecklistTasksAdded {
 <tr>
-<td>checklist_message</td>
+<td>checklist_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
+<td>Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>tasks</td>
@@ -2374,24 +2362,24 @@ export interface Location {
 <td>Longitude as defined by the sender</td>
 </tr>
 <tr>
-<td>horizontal_accuracy</td>
+<td>horizontal_accuracy?</td>
 <td>Float</td>
-<td>_Optional_. The radius of uncertainty for the location, measured in meters; 0-1500</td>
+<td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
-<td>live_period</td>
+<td>live_period?</td>
 <td>Integer</td>
-<td>_Optional_. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.</td>
+<td>Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.</td>
 </tr>
 <tr>
-<td>heading</td>
+<td>heading?</td>
 <td>Integer</td>
-<td>_Optional_. The direction in which user is moving, in degrees; 1-360. For active live locations only.</td>
+<td>The direction in which user is moving, in degrees; 1-360. For active live locations only.</td>
 </tr>
 <tr>
-<td>proximity_alert_radius</td>
+<td>proximity_alert_radius?</td>
 <td>Integer</td>
-<td>_Optional_. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.</td>
+<td>The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.</td>
 </tr>
 }
 /**
@@ -2416,24 +2404,24 @@ export interface Venue {
 <td>Address of the venue</td>
 </tr>
 <tr>
-<td>foursquare_id</td>
+<td>foursquare_id?</td>
 <td>String</td>
-<td>_Optional_. Foursquare identifier of the venue</td>
+<td>Foursquare identifier of the venue</td>
 </tr>
 <tr>
-<td>foursquare_type</td>
+<td>foursquare_type?</td>
 <td>String</td>
-<td>_Optional_. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
+<td>Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
 </tr>
 <tr>
-<td>google_place_id</td>
+<td>google_place_id?</td>
 <td>String</td>
-<td>_Optional_. Google Places identifier of the venue</td>
+<td>Google Places identifier of the venue</td>
 </tr>
 <tr>
-<td>google_place_type</td>
+<td>google_place_type?</td>
 <td>String</td>
-<td>_Optional_. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
+<td>Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
 </tr>
 }
 /**
@@ -2630,14 +2618,14 @@ export interface BackgroundTypeWallpaper {
 <td>Dimming of the background in dark themes, as a percentage; 0-100</td>
 </tr>
 <tr>
-<td>is_blurred</td>
+<td>is_blurred?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12</td>
+<td>_True_, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12</td>
 </tr>
 <tr>
-<td>is_moving</td>
+<td>is_moving?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the background moves slightly when the device is tilted</td>
+<td>_True_, if the background moves slightly when the device is tilted</td>
 </tr>
 }
 /**
@@ -2667,14 +2655,14 @@ export interface BackgroundTypePattern {
 <td>Intensity of the pattern when it is shown above the filled background; 0-100</td>
 </tr>
 <tr>
-<td>is_inverted</td>
+<td>is_inverted?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only</td>
+<td>_True_, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only</td>
 </tr>
 <tr>
-<td>is_moving</td>
+<td>is_moving?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the background moves slightly when the device is tilted</td>
+<td>_True_, if the background moves slightly when the device is tilted</td>
 </tr>
 }
 /**
@@ -2723,9 +2711,9 @@ export interface ForumTopicCreated {
 <td>Color of the topic icon in RGB format</td>
 </tr>
 <tr>
-<td>icon_custom_emoji_id</td>
+<td>icon_custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the custom emoji shown as the topic icon</td>
+<td>Unique identifier of the custom emoji shown as the topic icon</td>
 </tr>
 }
 /**
@@ -2741,14 +2729,14 @@ export type ForumTopicClosed = Empty;
  */
 export interface ForumTopicEdited {
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>_Optional_. New name of the topic, if it was edited</td>
+<td>New name of the topic, if it was edited</td>
 </tr>
 <tr>
-<td>icon_custom_emoji_id</td>
+<td>icon_custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed</td>
+<td>New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed</td>
 </tr>
 }
 /**
@@ -2781,24 +2769,24 @@ export interface SharedUser {
 <td>Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.</td>
 </tr>
 <tr>
-<td>first_name</td>
+<td>first_name?</td>
 <td>String</td>
-<td>_Optional_. First name of the user, if the name was requested by the bot</td>
+<td>First name of the user, if the name was requested by the bot</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>_Optional_. Last name of the user, if the name was requested by the bot</td>
+<td>Last name of the user, if the name was requested by the bot</td>
 </tr>
 <tr>
-<td>username</td>
+<td>username?</td>
 <td>String</td>
-<td>_Optional_. Username of the user, if the username was requested by the bot</td>
+<td>Username of the user, if the username was requested by the bot</td>
 </tr>
 <tr>
-<td>photo</td>
+<td>photo?</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Available sizes of the chat photo, if the photo was requested by the bot</td>
+<td>Available sizes of the chat photo, if the photo was requested by the bot</td>
 </tr>
 }
 /**
@@ -2835,19 +2823,19 @@ export interface ChatShared {
 <td>Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means.</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title of the chat, if the title was requested by the bot.</td>
+<td>Title of the chat, if the title was requested by the bot.</td>
 </tr>
 <tr>
-<td>username</td>
+<td>username?</td>
 <td>String</td>
-<td>_Optional_. Username of the chat, if the username was requested by the bot and available.</td>
+<td>Username of the chat, if the username was requested by the bot and available.</td>
 </tr>
 <tr>
-<td>photo</td>
+<td>photo?</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Available sizes of the chat photo, if the photo was requested by the bot</td>
+<td>Available sizes of the chat photo, if the photo was requested by the bot</td>
 </tr>
 }
 /**
@@ -2857,19 +2845,19 @@ export interface ChatShared {
  */
 export interface WriteAccessAllowed {
 <tr>
-<td>from_request</td>
+<td>from_request?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
+<td>_True_, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
 </tr>
 <tr>
-<td>web_app_name</td>
+<td>web_app_name?</td>
 <td>String</td>
-<td>_Optional_. Name of the Web App, if the access was granted when the Web App was launched from a link</td>
+<td>Name of the Web App, if the access was granted when the Web App was launched from a link</td>
 </tr>
 <tr>
-<td>from_attachment_menu</td>
+<td>from_attachment_menu?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the access was granted when the bot was added to the attachment or side menu</td>
+<td>_True_, if the access was granted when the bot was added to the attachment or side menu</td>
 </tr>
 }
 /**
@@ -2938,9 +2926,9 @@ export interface DirectMessagePriceChanged {
 <td>_True_, if direct messages are enabled for the channel chat; false otherwise</td>
 </tr>
 <tr>
-<td>direct_message_star_count</td>
+<td>direct_message_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.</td>
+<td>The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.</td>
 </tr>
 }
 /**
@@ -2950,14 +2938,14 @@ export interface DirectMessagePriceChanged {
  */
 export interface SuggestedPostApproved {
 <tr>
-<td>suggested_post_message</td>
+<td>suggested_post_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
+<td>Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
-<td>price</td>
+<td>price?</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td>_Optional_. Amount paid for the post</td>
+<td>Amount paid for the post</td>
 </tr>
 <tr>
 <td>send_date</td>
@@ -2972,9 +2960,9 @@ export interface SuggestedPostApproved {
  */
 export interface SuggestedPostApprovalFailed {
 <tr>
-<td>suggested_post_message</td>
+<td>suggested_post_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
+<td>Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>price</td>
@@ -2989,14 +2977,14 @@ export interface SuggestedPostApprovalFailed {
  */
 export interface SuggestedPostDeclined {
 <tr>
-<td>suggested_post_message</td>
+<td>suggested_post_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
+<td>Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
-<td>comment</td>
+<td>comment?</td>
 <td>String</td>
-<td>_Optional_. Comment with which the post was declined</td>
+<td>Comment with which the post was declined</td>
 </tr>
 }
 /**
@@ -3006,9 +2994,9 @@ export interface SuggestedPostDeclined {
  */
 export interface SuggestedPostPaid {
 <tr>
-<td>suggested_post_message</td>
+<td>suggested_post_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
+<td>Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>currency</td>
@@ -3016,14 +3004,14 @@ export interface SuggestedPostPaid {
 <td>Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins</td>
 </tr>
 <tr>
-<td>amount</td>
+<td>amount?</td>
 <td>Integer</td>
-<td>_Optional_. The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only</td>
+<td>The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only</td>
 </tr>
 <tr>
-<td>star_amount</td>
+<td>star_amount?</td>
 <td><a href="#staramount">StarAmount</a></td>
-<td>_Optional_. The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only</td>
+<td>The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only</td>
 </tr>
 }
 /**
@@ -3033,9 +3021,9 @@ export interface SuggestedPostPaid {
  */
 export interface SuggestedPostRefunded {
 <tr>
-<td>suggested_post_message</td>
+<td>suggested_post_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
+<td>Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>reason</td>
@@ -3050,9 +3038,9 @@ export interface SuggestedPostRefunded {
  */
 export interface GiveawayCreated {
 <tr>
-<td>prize_star_count</td>
+<td>prize_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
+<td>The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 }
 /**
@@ -3077,34 +3065,34 @@ export interface Giveaway {
 <td>The number of users which are supposed to be selected as winners of the giveaway</td>
 </tr>
 <tr>
-<td>only_new_members</td>
+<td>only_new_members?</td>
 <td>True</td>
-<td>_Optional_. _True_, if only users who join the chats after the giveaway started should be eligible to win</td>
+<td>_True_, if only users who join the chats after the giveaway started should be eligible to win</td>
 </tr>
 <tr>
-<td>has_public_winners</td>
+<td>has_public_winners?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the list of giveaway winners will be visible to everyone</td>
+<td>_True_, if the list of giveaway winners will be visible to everyone</td>
 </tr>
 <tr>
-<td>prize_description</td>
+<td>prize_description?</td>
 <td>String</td>
-<td>_Optional_. Description of additional giveaway prize</td>
+<td>Description of additional giveaway prize</td>
 </tr>
 <tr>
-<td>country_codes</td>
+<td>country_codes?</td>
 <td>Array of String</td>
-<td>_Optional_. A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.</td>
+<td>A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.</td>
 </tr>
 <tr>
-<td>prize_star_count</td>
+<td>prize_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
+<td>The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 <tr>
-<td>premium_subscription_month_count</td>
+<td>premium_subscription_month_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
+<td>The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
 </tr>
 }
 /**
@@ -3139,39 +3127,39 @@ export interface GiveawayWinners {
 <td>List of up to 100 winners of the giveaway</td>
 </tr>
 <tr>
-<td>additional_chat_count</td>
+<td>additional_chat_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of other chats the user had to join in order to be eligible for the giveaway</td>
+<td>The number of other chats the user had to join in order to be eligible for the giveaway</td>
 </tr>
 <tr>
-<td>prize_star_count</td>
+<td>prize_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only</td>
+<td>The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 <tr>
-<td>premium_subscription_month_count</td>
+<td>premium_subscription_month_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
+<td>The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
 </tr>
 <tr>
-<td>unclaimed_prize_count</td>
+<td>unclaimed_prize_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of undistributed prizes</td>
+<td>Number of undistributed prizes</td>
 </tr>
 <tr>
-<td>only_new_members</td>
+<td>only_new_members?</td>
 <td>True</td>
-<td>_Optional_. _True_, if only users who had joined the chats after the giveaway started were eligible to win</td>
+<td>_True_, if only users who had joined the chats after the giveaway started were eligible to win</td>
 </tr>
 <tr>
-<td>was_refunded</td>
+<td>was_refunded?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the giveaway was canceled because the payment for it was refunded</td>
+<td>_True_, if the giveaway was canceled because the payment for it was refunded</td>
 </tr>
 <tr>
-<td>prize_description</td>
+<td>prize_description?</td>
 <td>String</td>
-<td>_Optional_. Description of additional giveaway prize</td>
+<td>Description of additional giveaway prize</td>
 </tr>
 }
 /**
@@ -3186,19 +3174,19 @@ export interface GiveawayCompleted {
 <td>Number of winners in the giveaway</td>
 </tr>
 <tr>
-<td>unclaimed_prize_count</td>
+<td>unclaimed_prize_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of undistributed prizes</td>
+<td>Number of undistributed prizes</td>
 </tr>
 <tr>
-<td>giveaway_message</td>
+<td>giveaway_message?</td>
 <td><a href="#message">Message</a></td>
-<td>_Optional_. Message with the giveaway that was completed, if it wasn&#39;t deleted</td>
+<td>Message with the giveaway that was completed, if it wasn&#39;t deleted</td>
 </tr>
 <tr>
-<td>is_star_giveaway</td>
+<td>is_star_giveaway?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.</td>
+<td>_True_, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.</td>
 </tr>
 }
 /**
@@ -3208,29 +3196,29 @@ export interface GiveawayCompleted {
  */
 export interface LinkPreviewOptions {
 <tr>
-<td>is_disabled</td>
+<td>is_disabled?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the link preview is disabled</td>
+<td>_True_, if the link preview is disabled</td>
 </tr>
 <tr>
-<td>url</td>
+<td>url?</td>
 <td>String</td>
-<td>_Optional_. URL to use for the link preview. If empty, then the first URL found in the message text will be used</td>
+<td>URL to use for the link preview. If empty, then the first URL found in the message text will be used</td>
 </tr>
 <tr>
-<td>prefer_small_media</td>
+<td>prefer_small_media?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
+<td>_True_, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
 </tr>
 <tr>
-<td>prefer_large_media</td>
+<td>prefer_large_media?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
+<td>_True_, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
 </tr>
 <tr>
-<td>show_above_text</td>
+<td>show_above_text?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text</td>
+<td>_True_, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text</td>
 </tr>
 }
 /**
@@ -3262,14 +3250,14 @@ export interface SuggestedPostInfo {
 <td>State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”.</td>
 </tr>
 <tr>
-<td>price</td>
+<td>price?</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td>_Optional_. Proposed price of the post. If the field is omitted, then the post is unpaid.</td>
+<td>Proposed price of the post. If the field is omitted, then the post is unpaid.</td>
 </tr>
 <tr>
-<td>send_date</td>
+<td>send_date?</td>
 <td>Integer</td>
-<td>_Optional_. Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.</td>
+<td>Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.</td>
 </tr>
 }
 /**
@@ -3279,14 +3267,14 @@ export interface SuggestedPostInfo {
  */
 export interface SuggestedPostParameters {
 <tr>
-<td>price</td>
+<td>price?</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td>_Optional_. Proposed price for the post. If the field is omitted, then the post is unpaid.</td>
+<td>Proposed price for the post. If the field is omitted, then the post is unpaid.</td>
 </tr>
 <tr>
-<td>send_date</td>
+<td>send_date?</td>
 <td>Integer</td>
-<td>_Optional_. Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.</td>
+<td>Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.</td>
 </tr>
 }
 /**
@@ -3301,9 +3289,9 @@ export interface DirectMessagesTopic {
 <td>Unique identifier of the topic. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
-<td>user</td>
+<td>user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. Information about the user that created the topic. Currently, it is always present</td>
+<td>Information about the user that created the topic. Currently, it is always present</td>
 </tr>
 }
 /**
@@ -3343,14 +3331,14 @@ export interface File {
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 <tr>
-<td>file_path</td>
+<td>file_path?</td>
 <td>String</td>
-<td>_Optional_. File path. Use `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;` to get the file.</td>
+<td>File path. Use `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;` to get the file.</td>
 </tr>
 }
 /**
@@ -3377,29 +3365,29 @@ export interface ReplyKeyboardMarkup {
 <td>Array of button rows, each represented by an Array of <a href="#keyboardbutton">KeyboardButton</a> objects</td>
 </tr>
 <tr>
-<td>is_persistent</td>
+<td>is_persistent?</td>
 <td>Boolean</td>
-<td>_Optional_. Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to _false_, in which case the custom keyboard can be hidden and opened with a keyboard icon.</td>
+<td>Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to _false_, in which case the custom keyboard can be hidden and opened with a keyboard icon.</td>
 </tr>
 <tr>
-<td>resize_keyboard</td>
+<td>resize_keyboard?</td>
 <td>Boolean</td>
-<td>_Optional_. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to _false_, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.</td>
+<td>Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to _false_, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.</td>
 </tr>
 <tr>
-<td>one_time_keyboard</td>
+<td>one_time_keyboard?</td>
 <td>Boolean</td>
-<td>_Optional_. Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to _false_.</td>
+<td>Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to _false_.</td>
 </tr>
 <tr>
-<td>input_field_placeholder</td>
+<td>input_field_placeholder?</td>
 <td>String</td>
-<td>_Optional_. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters</td>
+<td>The placeholder to be shown in the input field when the keyboard is active; 1-64 characters</td>
 </tr>
 <tr>
-<td>selective</td>
+<td>selective?</td>
 <td>Boolean</td>
-<td>_Optional_. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.</td>
+<td>Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.</td>
 </tr>
 }
 /**
@@ -3424,24 +3412,24 @@ export interface KeyboardButton {
 <td>_Optional._ If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.</td>
 </tr>
 <tr>
-<td>request_contact</td>
+<td>request_contact?</td>
 <td>Boolean</td>
-<td>_Optional_. If _True_, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.</td>
+<td>If _True_, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.</td>
 </tr>
 <tr>
-<td>request_location</td>
+<td>request_location?</td>
 <td>Boolean</td>
-<td>_Optional_. If _True_, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.</td>
+<td>If _True_, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.</td>
 </tr>
 <tr>
-<td>request_poll</td>
+<td>request_poll?</td>
 <td><a href="#keyboardbuttonpolltype">KeyboardButtonPollType</a></td>
-<td>_Optional_. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.</td>
+<td>If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.</td>
 </tr>
 <tr>
-<td>web_app</td>
+<td>web_app?</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
-<td>_Optional_. If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.</td>
+<td>If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.</td>
 </tr>
 }
 <p>**Note:** _request_users_ and _request_chat_ options will only work in Telegram versions released after 3 February, 2023. Older clients will display _unsupported message_.</p>
@@ -3457,34 +3445,34 @@ export interface KeyboardButtonRequestUsers {
 <td>Signed 32-bit identifier of the request that will be received back in the <a href="#usersshared">UsersShared</a> object. Must be unique within the message</td>
 </tr>
 <tr>
-<td>user_is_bot</td>
+<td>user_is_bot?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request bots, pass _False_ to request regular users. If not specified, no additional restrictions are applied.</td>
+<td>Pass _True_ to request bots, pass _False_ to request regular users. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>user_is_premium</td>
+<td>user_is_premium?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request premium users, pass _False_ to request non-premium users. If not specified, no additional restrictions are applied.</td>
+<td>Pass _True_ to request premium users, pass _False_ to request non-premium users. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>max_quantity</td>
+<td>max_quantity?</td>
 <td>Integer</td>
-<td>_Optional_. The maximum number of users to be selected; 1-10. Defaults to 1.</td>
+<td>The maximum number of users to be selected; 1-10. Defaults to 1.</td>
 </tr>
 <tr>
-<td>request_name</td>
+<td>request_name?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request the users&#39; first and last names</td>
+<td>Pass _True_ to request the users&#39; first and last names</td>
 </tr>
 <tr>
-<td>request_username</td>
+<td>request_username?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request the users&#39; usernames</td>
+<td>Pass _True_ to request the users&#39; usernames</td>
 </tr>
 <tr>
-<td>request_photo</td>
+<td>request_photo?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request the users&#39; photos</td>
+<td>Pass _True_ to request the users&#39; photos</td>
 </tr>
 }
 /**
@@ -3504,49 +3492,49 @@ export interface KeyboardButtonRequestChat {
 <td>Pass _True_ to request a channel chat, pass _False_ to request a group or a supergroup chat.</td>
 </tr>
 <tr>
-<td>chat_is_forum</td>
+<td>chat_is_forum?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request a forum supergroup, pass _False_ to request a non-forum chat. If not specified, no additional restrictions are applied.</td>
+<td>Pass _True_ to request a forum supergroup, pass _False_ to request a non-forum chat. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>chat_has_username</td>
+<td>chat_has_username?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request a supergroup or a channel with a username, pass _False_ to request a chat without a username. If not specified, no additional restrictions are applied.</td>
+<td>Pass _True_ to request a supergroup or a channel with a username, pass _False_ to request a chat without a username. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>chat_is_created</td>
+<td>chat_is_created?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request a chat owned by the user. Otherwise, no additional restrictions are applied.</td>
+<td>Pass _True_ to request a chat owned by the user. Otherwise, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>user_administrator_rights</td>
+<td>user_administrator_rights?</td>
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td>_Optional_. A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of _bot_administrator_rights_. If not specified, no additional restrictions are applied.</td>
+<td>A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of _bot_administrator_rights_. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>bot_administrator_rights</td>
+<td>bot_administrator_rights?</td>
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td>_Optional_. A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of _user_administrator_rights_. If not specified, no additional restrictions are applied.</td>
+<td>A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of _user_administrator_rights_. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>bot_is_member</td>
+<td>bot_is_member?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.</td>
+<td>Pass _True_ to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.</td>
 </tr>
 <tr>
-<td>request_title</td>
+<td>request_title?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request the chat&#39;s title</td>
+<td>Pass _True_ to request the chat&#39;s title</td>
 </tr>
 <tr>
-<td>request_username</td>
+<td>request_username?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request the chat&#39;s username</td>
+<td>Pass _True_ to request the chat&#39;s username</td>
 </tr>
 <tr>
-<td>request_photo</td>
+<td>request_photo?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request the chat&#39;s photo</td>
+<td>Pass _True_ to request the chat&#39;s photo</td>
 </tr>
 }
 /**
@@ -3556,9 +3544,9 @@ export interface KeyboardButtonRequestChat {
  */
 export interface KeyboardButtonPollType {
 <tr>
-<td>type</td>
+<td>type?</td>
 <td>String</td>
-<td>_Optional_. If _quiz_ is passed, the user will be allowed to create only polls in the quiz mode. If _regular_ is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.</td>
+<td>If _quiz_ is passed, the user will be allowed to create only polls in the quiz mode. If _regular_ is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.</td>
 </tr>
 }
 /**
@@ -3573,9 +3561,9 @@ export interface ReplyKeyboardRemove {
 <td>Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use _one_time_keyboard_ in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)</td>
 </tr>
 <tr>
-<td>selective</td>
+<td>selective?</td>
 <td>Boolean</td>
-<td>_Optional_. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.</td>
+<td>Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.</td>
 </tr>
 }
 /**
@@ -3602,54 +3590,54 @@ export interface InlineKeyboardButton {
 <td>Label text on the button</td>
 </tr>
 <tr>
-<td>url</td>
+<td>url?</td>
 <td>String</td>
-<td>_Optional_. HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.</td>
+<td>HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.</td>
 </tr>
 <tr>
-<td>callback_data</td>
+<td>callback_data?</td>
 <td>String</td>
-<td>_Optional_. Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes</td>
+<td>Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes</td>
 </tr>
 <tr>
-<td>web_app</td>
+<td>web_app?</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
-<td>_Optional_. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.</td>
+<td>Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
-<td>login_url</td>
+<td>login_url?</td>
 <td><a href="#loginurl">LoginUrl</a></td>
-<td>_Optional_. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.</td>
+<td>An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.</td>
 </tr>
 <tr>
-<td>switch_inline_query</td>
+<td>switch_inline_query?</td>
 <td>String</td>
-<td>_Optional_. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
+<td>If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
-<td>switch_inline_query_current_chat</td>
+<td>switch_inline_query_current_chat?</td>
 <td>String</td>
-<td>_Optional_. If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
+<td>If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
-<td>switch_inline_query_chosen_chat</td>
+<td>switch_inline_query_chosen_chat?</td>
 <td><a href="#switchinlinequerychosenchat">SwitchInlineQueryChosenChat</a></td>
-<td>_Optional_. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot&#39;s username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
+<td>If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot&#39;s username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
-<td>copy_text</td>
+<td>copy_text?</td>
 <td><a href="#copytextbutton">CopyTextButton</a></td>
-<td>_Optional_. Description of the button that copies the specified text to the clipboard.</td>
+<td>Description of the button that copies the specified text to the clipboard.</td>
 </tr>
 <tr>
-<td>callback_game</td>
+<td>callback_game?</td>
 <td><a href="#callbackgame">CallbackGame</a></td>
-<td>_Optional_. Description of the game that will be launched when the user presses the button.<br><br>**NOTE:** This type of button **must** always be the first button in the first row.</td>
+<td>Description of the game that will be launched when the user presses the button.<br><br>**NOTE:** This type of button **must** always be the first button in the first row.</td>
 </tr>
 <tr>
-<td>pay</td>
+<td>pay?</td>
 <td>Boolean</td>
-<td>_Optional_. Specify _True_, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br>**NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.</td>
+<td>Specify _True_, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br>**NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.</td>
 </tr>
 }
 /**
@@ -3672,19 +3660,19 @@ export interface LoginUrl {
 <td>An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.<br><br>**NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.</td>
 </tr>
 <tr>
-<td>forward_text</td>
+<td>forward_text?</td>
 <td>String</td>
-<td>_Optional_. New text of the button in forwarded messages.</td>
+<td>New text of the button in forwarded messages.</td>
 </tr>
 <tr>
-<td>bot_username</td>
+<td>bot_username?</td>
 <td>String</td>
-<td>_Optional_. Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.</td>
+<td>Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.</td>
 </tr>
 <tr>
-<td>request_write_access</td>
+<td>request_write_access?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ to request the permission for your bot to send messages to the user.</td>
+<td>Pass _True_ to request the permission for your bot to send messages to the user.</td>
 </tr>
 }
 /**
@@ -3694,29 +3682,29 @@ export interface LoginUrl {
  */
 export interface SwitchInlineQueryChosenChat {
 <tr>
-<td>query</td>
+<td>query?</td>
 <td>String</td>
-<td>_Optional_. The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted</td>
+<td>The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted</td>
 </tr>
 <tr>
-<td>allow_user_chats</td>
+<td>allow_user_chats?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if private chats with users can be chosen</td>
+<td>_True_, if private chats with users can be chosen</td>
 </tr>
 <tr>
-<td>allow_bot_chats</td>
+<td>allow_bot_chats?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if private chats with bots can be chosen</td>
+<td>_True_, if private chats with bots can be chosen</td>
 </tr>
 <tr>
-<td>allow_group_chats</td>
+<td>allow_group_chats?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if group and supergroup chats can be chosen</td>
+<td>_True_, if group and supergroup chats can be chosen</td>
 </tr>
 <tr>
-<td>allow_channel_chats</td>
+<td>allow_channel_chats?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if channel chats can be chosen</td>
+<td>_True_, if channel chats can be chosen</td>
 </tr>
 }
 /**
@@ -3748,14 +3736,14 @@ export interface CallbackQuery {
 <td>Sender</td>
 </tr>
 <tr>
-<td>message</td>
+<td>message?</td>
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td>_Optional_. Message sent by the bot with the callback button that originated the query</td>
+<td>Message sent by the bot with the callback button that originated the query</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>_Optional_. Identifier of the message sent via the bot in inline mode, that originated the query.</td>
+<td>Identifier of the message sent via the bot in inline mode, that originated the query.</td>
 </tr>
 <tr>
 <td>chat_instance</td>
@@ -3763,14 +3751,14 @@ export interface CallbackQuery {
 <td>Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in <a href="#games">games</a>.</td>
 </tr>
 <tr>
-<td>data</td>
+<td>data?</td>
 <td>String</td>
-<td>_Optional_. Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.</td>
+<td>Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.</td>
 </tr>
 <tr>
-<td>game_short_name</td>
+<td>game_short_name?</td>
 <td>String</td>
-<td>_Optional_. Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game</td>
+<td>Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game</td>
 </tr>
 }
 <blockquote>
@@ -3788,14 +3776,14 @@ export interface ForceReply {
 <td>Shows reply interface to the user, as if they manually selected the bot&#39;s message and tapped &#39;Reply&#39;</td>
 </tr>
 <tr>
-<td>input_field_placeholder</td>
+<td>input_field_placeholder?</td>
 <td>String</td>
-<td>_Optional_. The placeholder to be shown in the input field when the reply is active; 1-64 characters</td>
+<td>The placeholder to be shown in the input field when the reply is active; 1-64 characters</td>
 </tr>
 <tr>
-<td>selective</td>
+<td>selective?</td>
 <td>Boolean</td>
-<td>_Optional_. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.</td>
+<td>Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.</td>
 </tr>
 }
 <blockquote>
@@ -3865,34 +3853,34 @@ export interface ChatInviteLink {
 <td>_True_, if the link is revoked</td>
 </tr>
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>_Optional_. Invite link name</td>
+<td>Invite link name</td>
 </tr>
 <tr>
-<td>expire_date</td>
+<td>expire_date?</td>
 <td>Integer</td>
-<td>_Optional_. Point in time (Unix timestamp) when the link will expire or has been expired</td>
+<td>Point in time (Unix timestamp) when the link will expire or has been expired</td>
 </tr>
 <tr>
-<td>member_limit</td>
+<td>member_limit?</td>
 <td>Integer</td>
-<td>_Optional_. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
+<td>The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
 </tr>
 <tr>
-<td>pending_join_request_count</td>
+<td>pending_join_request_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of pending join requests created using this link</td>
+<td>Number of pending join requests created using this link</td>
 </tr>
 <tr>
-<td>subscription_period</td>
+<td>subscription_period?</td>
 <td>Integer</td>
-<td>_Optional_. The number of seconds the subscription will be active for before the next payment</td>
+<td>The number of seconds the subscription will be active for before the next payment</td>
 </tr>
 <tr>
-<td>subscription_price</td>
+<td>subscription_price?</td>
 <td>Integer</td>
-<td>_Optional_. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link</td>
+<td>The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link</td>
 </tr>
 }
 /**
@@ -3957,29 +3945,29 @@ export interface ChatAdministratorRights {
 <td>_True_, if the administrator can delete stories posted by other users</td>
 </tr>
 <tr>
-<td>can_post_messages</td>
+<td>can_post_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
+<td>_True_, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
 </tr>
 <tr>
-<td>can_edit_messages</td>
+<td>can_edit_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the administrator can edit messages of other users and can pin messages; for channels only</td>
+<td>_True_, if the administrator can edit messages of other users and can pin messages; for channels only</td>
 </tr>
 <tr>
-<td>can_pin_messages</td>
+<td>can_pin_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to pin messages; for groups and supergroups only</td>
+<td>_True_, if the user is allowed to pin messages; for groups and supergroups only</td>
 </tr>
 <tr>
-<td>can_manage_topics</td>
+<td>can_manage_topics?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
+<td>_True_, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
 </tr>
 <tr>
-<td>can_manage_direct_messages</td>
+<td>can_manage_direct_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
+<td>_True_, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
 </tr>
 }
 /**
@@ -4014,19 +4002,19 @@ export interface ChatMemberUpdated {
 <td>New information about the chat member</td>
 </tr>
 <tr>
-<td>invite_link</td>
+<td>invite_link?</td>
 <td><a href="#chatinvitelink">ChatInviteLink</a></td>
-<td>_Optional_. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.</td>
+<td>Chat invite link, which was used by the user to join the chat; for joining by invite link events only.</td>
 </tr>
 <tr>
-<td>via_join_request</td>
+<td>via_join_request?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator</td>
+<td>_True_, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator</td>
 </tr>
 <tr>
-<td>via_chat_folder_invite_link</td>
+<td>via_chat_folder_invite_link?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user joined the chat via a chat folder invite link</td>
+<td>_True_, if the user joined the chat via a chat folder invite link</td>
 </tr>
 }
 /**
@@ -4069,9 +4057,9 @@ export interface ChatMemberOwner {
 <td>_True_, if the user&#39;s presence in the chat is hidden</td>
 </tr>
 <tr>
-<td>custom_title</td>
+<td>custom_title?</td>
 <td>String</td>
-<td>_Optional_. Custom title for this user</td>
+<td>Custom title for this user</td>
 </tr>
 }
 /**
@@ -4151,34 +4139,34 @@ export interface ChatMemberAdministrator {
 <td>_True_, if the administrator can delete stories posted by other users</td>
 </tr>
 <tr>
-<td>can_post_messages</td>
+<td>can_post_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
+<td>_True_, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
 </tr>
 <tr>
-<td>can_edit_messages</td>
+<td>can_edit_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the administrator can edit messages of other users and can pin messages; for channels only</td>
+<td>_True_, if the administrator can edit messages of other users and can pin messages; for channels only</td>
 </tr>
 <tr>
-<td>can_pin_messages</td>
+<td>can_pin_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to pin messages; for groups and supergroups only</td>
+<td>_True_, if the user is allowed to pin messages; for groups and supergroups only</td>
 </tr>
 <tr>
-<td>can_manage_topics</td>
+<td>can_manage_topics?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
+<td>_True_, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
 </tr>
 <tr>
-<td>can_manage_direct_messages</td>
+<td>can_manage_direct_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
+<td>_True_, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
 </tr>
 <tr>
-<td>custom_title</td>
+<td>custom_title?</td>
 <td>String</td>
-<td>_Optional_. Custom title for this user</td>
+<td>Custom title for this user</td>
 </tr>
 }
 /**
@@ -4198,9 +4186,9 @@ export interface ChatMemberMember {
 <td>Information about the user</td>
 </tr>
 <tr>
-<td>until_date</td>
+<td>until_date?</td>
 <td>Integer</td>
-<td>_Optional_. Date when the user&#39;s subscription will expire; Unix time</td>
+<td>Date when the user&#39;s subscription will expire; Unix time</td>
 </tr>
 }
 /**
@@ -4366,14 +4354,14 @@ export interface ChatJoinRequest {
 <td>Date the request was sent in Unix time</td>
 </tr>
 <tr>
-<td>bio</td>
+<td>bio?</td>
 <td>String</td>
-<td>_Optional_. Bio of the user.</td>
+<td>Bio of the user.</td>
 </tr>
 <tr>
-<td>invite_link</td>
+<td>invite_link?</td>
 <td><a href="#chatinvitelink">ChatInviteLink</a></td>
-<td>_Optional_. Chat invite link that was used by the user to send the join request</td>
+<td>Chat invite link that was used by the user to send the join request</td>
 </tr>
 }
 /**
@@ -4383,74 +4371,74 @@ export interface ChatJoinRequest {
  */
 export interface ChatPermissions {
 <tr>
-<td>can_send_messages</td>
+<td>can_send_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
+<td>_True_, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
 </tr>
 <tr>
-<td>can_send_audios</td>
+<td>can_send_audios?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send audios</td>
+<td>_True_, if the user is allowed to send audios</td>
 </tr>
 <tr>
-<td>can_send_documents</td>
+<td>can_send_documents?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send documents</td>
+<td>_True_, if the user is allowed to send documents</td>
 </tr>
 <tr>
-<td>can_send_photos</td>
+<td>can_send_photos?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send photos</td>
+<td>_True_, if the user is allowed to send photos</td>
 </tr>
 <tr>
-<td>can_send_videos</td>
+<td>can_send_videos?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send videos</td>
+<td>_True_, if the user is allowed to send videos</td>
 </tr>
 <tr>
-<td>can_send_video_notes</td>
+<td>can_send_video_notes?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send video notes</td>
+<td>_True_, if the user is allowed to send video notes</td>
 </tr>
 <tr>
-<td>can_send_voice_notes</td>
+<td>can_send_voice_notes?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send voice notes</td>
+<td>_True_, if the user is allowed to send voice notes</td>
 </tr>
 <tr>
-<td>can_send_polls</td>
+<td>can_send_polls?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send polls and checklists</td>
+<td>_True_, if the user is allowed to send polls and checklists</td>
 </tr>
 <tr>
-<td>can_send_other_messages</td>
+<td>can_send_other_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to send animations, games, stickers and use inline bots</td>
+<td>_True_, if the user is allowed to send animations, games, stickers and use inline bots</td>
 </tr>
 <tr>
-<td>can_add_web_page_previews</td>
+<td>can_add_web_page_previews?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to add web page previews to their messages</td>
+<td>_True_, if the user is allowed to add web page previews to their messages</td>
 </tr>
 <tr>
-<td>can_change_info</td>
+<td>can_change_info?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups</td>
+<td>_True_, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups</td>
 </tr>
 <tr>
-<td>can_invite_users</td>
+<td>can_invite_users?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to invite new users to the chat</td>
+<td>_True_, if the user is allowed to invite new users to the chat</td>
 </tr>
 <tr>
-<td>can_pin_messages</td>
+<td>can_pin_messages?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to pin messages. Ignored in public supergroups</td>
+<td>_True_, if the user is allowed to pin messages. Ignored in public supergroups</td>
 </tr>
 <tr>
-<td>can_manage_topics</td>
+<td>can_manage_topics?</td>
 <td>Boolean</td>
-<td>_Optional_. _True_, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages</td>
+<td>_True_, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages</td>
 </tr>
 }
 /**
@@ -4470,9 +4458,9 @@ export interface Birthdate {
 <td>Month of the user&#39;s birth; 1-12</td>
 </tr>
 <tr>
-<td>year</td>
+<td>year?</td>
 <td>Integer</td>
-<td>_Optional_. Year of the user&#39;s birth</td>
+<td>Year of the user&#39;s birth</td>
 </tr>
 }
 /**
@@ -4482,19 +4470,19 @@ export interface Birthdate {
  */
 export interface BusinessIntro {
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title text of the business intro</td>
+<td>Title text of the business intro</td>
 </tr>
 <tr>
-<td>message</td>
+<td>message?</td>
 <td>String</td>
-<td>_Optional_. Message text of the business intro</td>
+<td>Message text of the business intro</td>
 </tr>
 <tr>
-<td>sticker</td>
+<td>sticker?</td>
 <td><a href="#sticker">Sticker</a></td>
-<td>_Optional_. Sticker of the business intro</td>
+<td>Sticker of the business intro</td>
 </tr>
 }
 /**
@@ -4509,9 +4497,9 @@ export interface BusinessLocation {
 <td>Address of the business</td>
 </tr>
 <tr>
-<td>location</td>
+<td>location?</td>
 <td><a href="#location">Location</a></td>
-<td>_Optional_. Location of the business</td>
+<td>Location of the business</td>
 </tr>
 }
 /**
@@ -4597,19 +4585,19 @@ export interface LocationAddress {
 <td>The two-letter ISO 3166-1 alpha-2 country code of the country where the location is located</td>
 </tr>
 <tr>
-<td>state</td>
+<td>state?</td>
 <td>String</td>
-<td>_Optional_. State of the location</td>
+<td>State of the location</td>
 </tr>
 <tr>
-<td>city</td>
+<td>city?</td>
 <td>String</td>
-<td>_Optional_. City of the location</td>
+<td>City of the location</td>
 </tr>
 <tr>
-<td>street</td>
+<td>street?</td>
 <td>String</td>
-<td>_Optional_. Street address of the location</td>
+<td>Street address of the location</td>
 </tr>
 }
 /**
@@ -4650,9 +4638,9 @@ export interface StoryAreaTypeLocation {
 <td>Location longitude in degrees</td>
 </tr>
 <tr>
-<td>address</td>
+<td>address?</td>
 <td><a href="#locationaddress">LocationAddress</a></td>
-<td>_Optional_. Address of the location</td>
+<td>Address of the location</td>
 </tr>
 }
 /**
@@ -4672,14 +4660,14 @@ export interface StoryAreaTypeSuggestedReaction {
 <td>Type of the reaction</td>
 </tr>
 <tr>
-<td>is_dark</td>
+<td>is_dark?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the reaction area has a dark background</td>
+<td>Pass _True_ if the reaction area has a dark background</td>
 </tr>
 <tr>
-<td>is_flipped</td>
+<td>is_flipped?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if reaction area corner is flipped</td>
+<td>Pass _True_ if reaction area corner is flipped</td>
 </tr>
 }
 /**
@@ -4869,14 +4857,14 @@ export interface MessageReactionUpdated {
 <td>Unique identifier of the message inside the chat</td>
 </tr>
 <tr>
-<td>user</td>
+<td>user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. The user that changed the reaction, if the user isn&#39;t anonymous</td>
+<td>The user that changed the reaction, if the user isn&#39;t anonymous</td>
 </tr>
 <tr>
-<td>actor_chat</td>
+<td>actor_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. The chat on behalf of which the reaction was changed, if the user is anonymous</td>
+<td>The chat on behalf of which the reaction was changed, if the user is anonymous</td>
 </tr>
 <tr>
 <td>date</td>
@@ -4943,9 +4931,9 @@ export interface ForumTopic {
 <td>Color of the topic icon in RGB format</td>
 </tr>
 <tr>
-<td>icon_custom_emoji_id</td>
+<td>icon_custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the custom emoji shown as the topic icon</td>
+<td>Unique identifier of the custom emoji shown as the topic icon</td>
 </tr>
 }
 /**
@@ -4970,24 +4958,24 @@ export interface Gift {
 <td>The number of Telegram Stars that must be paid to send the sticker</td>
 </tr>
 <tr>
-<td>upgrade_star_count</td>
+<td>upgrade_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of Telegram Stars that must be paid to upgrade the gift to a unique one</td>
+<td>The number of Telegram Stars that must be paid to upgrade the gift to a unique one</td>
 </tr>
 <tr>
-<td>total_count</td>
+<td>total_count?</td>
 <td>Integer</td>
-<td>_Optional_. The total number of the gifts of this type that can be sent; for limited gifts only</td>
+<td>The total number of the gifts of this type that can be sent; for limited gifts only</td>
 </tr>
 <tr>
-<td>remaining_count</td>
+<td>remaining_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of remaining gifts of this type that can be sent; for limited gifts only</td>
+<td>The number of remaining gifts of this type that can be sent; for limited gifts only</td>
 </tr>
 <tr>
-<td>publisher_chat</td>
+<td>publisher_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. Information about the chat that published the gift</td>
+<td>Information about the chat that published the gift</td>
 </tr>
 }
 /**
@@ -5132,9 +5120,9 @@ export interface UniqueGift {
 <td>Backdrop of the gift</td>
 </tr>
 <tr>
-<td>publisher_chat</td>
+<td>publisher_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. Information about the chat that published the gift</td>
+<td>Information about the chat that published the gift</td>
 </tr>
 }
 /**
@@ -5149,39 +5137,39 @@ export interface GiftInfo {
 <td>Information about the gift</td>
 </tr>
 <tr>
-<td>owned_gift_id</td>
+<td>owned_gift_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
+<td>Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
 </tr>
 <tr>
-<td>convert_star_count</td>
+<td>convert_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of Telegram Stars that can be claimed by the receiver by converting the gift; omitted if conversion to Telegram Stars is impossible</td>
+<td>Number of Telegram Stars that can be claimed by the receiver by converting the gift; omitted if conversion to Telegram Stars is impossible</td>
 </tr>
 <tr>
-<td>prepaid_upgrade_star_count</td>
+<td>prepaid_upgrade_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of Telegram Stars that were prepaid by the sender for the ability to upgrade the gift</td>
+<td>Number of Telegram Stars that were prepaid by the sender for the ability to upgrade the gift</td>
 </tr>
 <tr>
-<td>can_be_upgraded</td>
+<td>can_be_upgraded?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the gift can be upgraded to a unique gift</td>
+<td>_True_, if the gift can be upgraded to a unique gift</td>
 </tr>
 <tr>
-<td>text</td>
+<td>text?</td>
 <td>String</td>
-<td>_Optional_. Text of the message that was added to the gift</td>
+<td>Text of the message that was added to the gift</td>
 </tr>
 <tr>
-<td>entities</td>
+<td>entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in the text</td>
+<td>Special entities that appear in the text</td>
 </tr>
 <tr>
-<td>is_private</td>
+<td>is_private?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
+<td>_True_, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
 </tr>
 }
 /**
@@ -5201,24 +5189,24 @@ export interface UniqueGiftInfo {
 <td>Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, or “resale” for gifts bought from other users</td>
 </tr>
 <tr>
-<td>last_resale_star_count</td>
+<td>last_resale_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. For gifts bought from other users, the price paid for the gift</td>
+<td>For gifts bought from other users, the price paid for the gift</td>
 </tr>
 <tr>
-<td>owned_gift_id</td>
+<td>owned_gift_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
+<td>Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
 </tr>
 <tr>
-<td>transfer_star_count</td>
+<td>transfer_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
+<td>Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
 </tr>
 <tr>
-<td>next_transfer_date</td>
+<td>next_transfer_date?</td>
 <td>Integer</td>
-<td>_Optional_. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
+<td>Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
 </tr>
 }
 /**
@@ -5248,14 +5236,14 @@ export interface OwnedGiftRegular {
 <td>Information about the regular gift</td>
 </tr>
 <tr>
-<td>owned_gift_id</td>
+<td>owned_gift_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only</td>
+<td>Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
-<td>sender_user</td>
+<td>sender_user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. Sender of the gift if it is a known user</td>
+<td>Sender of the gift if it is a known user</td>
 </tr>
 <tr>
 <td>send_date</td>
@@ -5263,44 +5251,44 @@ export interface OwnedGiftRegular {
 <td>Date the gift was sent in Unix time</td>
 </tr>
 <tr>
-<td>text</td>
+<td>text?</td>
 <td>String</td>
-<td>_Optional_. Text of the message that was added to the gift</td>
+<td>Text of the message that was added to the gift</td>
 </tr>
 <tr>
-<td>entities</td>
+<td>entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in the text</td>
+<td>Special entities that appear in the text</td>
 </tr>
 <tr>
-<td>is_private</td>
+<td>is_private?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
+<td>_True_, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
 </tr>
 <tr>
-<td>is_saved</td>
+<td>is_saved?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
+<td>_True_, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
-<td>can_be_upgraded</td>
+<td>can_be_upgraded?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only</td>
+<td>_True_, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
-<td>was_refunded</td>
+<td>was_refunded?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the gift was refunded and isn&#39;t available anymore</td>
+<td>_True_, if the gift was refunded and isn&#39;t available anymore</td>
 </tr>
 <tr>
-<td>convert_star_count</td>
+<td>convert_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars</td>
+<td>Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars</td>
 </tr>
 <tr>
-<td>prepaid_upgrade_star_count</td>
+<td>prepaid_upgrade_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift</td>
+<td>Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift</td>
 </tr>
 }
 /**
@@ -5320,14 +5308,14 @@ export interface OwnedGiftUnique {
 <td>Information about the unique gift</td>
 </tr>
 <tr>
-<td>owned_gift_id</td>
+<td>owned_gift_id?</td>
 <td>String</td>
-<td>_Optional_. Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only</td>
+<td>Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
-<td>sender_user</td>
+<td>sender_user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. Sender of the gift if it is a known user</td>
+<td>Sender of the gift if it is a known user</td>
 </tr>
 <tr>
 <td>send_date</td>
@@ -5335,24 +5323,24 @@ export interface OwnedGiftUnique {
 <td>Date the gift was sent in Unix time</td>
 </tr>
 <tr>
-<td>is_saved</td>
+<td>is_saved?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
+<td>_True_, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
-<td>can_be_transferred</td>
+<td>can_be_transferred?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only</td>
+<td>_True_, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
-<td>transfer_star_count</td>
+<td>transfer_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
+<td>Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
 </tr>
 <tr>
-<td>next_transfer_date</td>
+<td>next_transfer_date?</td>
 <td>Integer</td>
-<td>_Optional_. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
+<td>Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
 </tr>
 }
 /**
@@ -5372,9 +5360,9 @@ export interface OwnedGifts {
 <td>The list of gifts</td>
 </tr>
 <tr>
-<td>next_offset</td>
+<td>next_offset?</td>
 <td>String</td>
-<td>_Optional_. Offset for the next request. If empty, then there are no more results</td>
+<td>Offset for the next request. If empty, then there are no more results</td>
 </tr>
 }
 /**
@@ -5416,9 +5404,9 @@ export interface StarAmount {
 <td>Integer amount of Telegram Stars, rounded to 0; can be negative</td>
 </tr>
 <tr>
-<td>nanostar_amount</td>
+<td>nanostar_amount?</td>
 <td>Integer</td>
-<td>_Optional_. The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if _amount_ is non-positive</td>
+<td>The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if _amount_ is non-positive</td>
 </tr>
 }
 /**
@@ -5720,19 +5708,19 @@ export interface ChatBoostSourceGiveaway {
 <td>Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn&#39;t sent yet.</td>
 </tr>
 <tr>
-<td>user</td>
+<td>user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. User that won the prize in the giveaway if any; for Telegram Premium giveaways only</td>
+<td>User that won the prize in the giveaway if any; for Telegram Premium giveaways only</td>
 </tr>
 <tr>
-<td>prize_star_count</td>
+<td>prize_star_count?</td>
 <td>Integer</td>
-<td>_Optional_. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
+<td>The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 <tr>
-<td>is_unclaimed</td>
+<td>is_unclaimed?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the giveaway was completed, but there was no user to win the prize</td>
+<td>_True_, if the giveaway was completed, but there was no user to win the prize</td>
 </tr>
 }
 /**
@@ -5825,74 +5813,74 @@ export interface UserChatBoosts {
  */
 export interface BusinessBotRights {
 <tr>
-<td>can_reply</td>
+<td>can_reply?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours</td>
+<td>_True_, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours</td>
 </tr>
 <tr>
-<td>can_read_messages</td>
+<td>can_read_messages?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can mark incoming private messages as read</td>
+<td>_True_, if the bot can mark incoming private messages as read</td>
 </tr>
 <tr>
-<td>can_delete_sent_messages</td>
+<td>can_delete_sent_messages?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can delete messages sent by the bot</td>
+<td>_True_, if the bot can delete messages sent by the bot</td>
 </tr>
 <tr>
-<td>can_delete_all_messages</td>
+<td>can_delete_all_messages?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can delete all private messages in managed chats</td>
+<td>_True_, if the bot can delete all private messages in managed chats</td>
 </tr>
 <tr>
-<td>can_edit_name</td>
+<td>can_edit_name?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can edit the first and last name of the business account</td>
+<td>_True_, if the bot can edit the first and last name of the business account</td>
 </tr>
 <tr>
-<td>can_edit_bio</td>
+<td>can_edit_bio?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can edit the bio of the business account</td>
+<td>_True_, if the bot can edit the bio of the business account</td>
 </tr>
 <tr>
-<td>can_edit_profile_photo</td>
+<td>can_edit_profile_photo?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can edit the profile photo of the business account</td>
+<td>_True_, if the bot can edit the profile photo of the business account</td>
 </tr>
 <tr>
-<td>can_edit_username</td>
+<td>can_edit_username?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can edit the username of the business account</td>
+<td>_True_, if the bot can edit the username of the business account</td>
 </tr>
 <tr>
-<td>can_change_gift_settings</td>
+<td>can_change_gift_settings?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can change the privacy settings pertaining to gifts for the business account</td>
+<td>_True_, if the bot can change the privacy settings pertaining to gifts for the business account</td>
 </tr>
 <tr>
-<td>can_view_gifts_and_stars</td>
+<td>can_view_gifts_and_stars?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can view gifts and the amount of Telegram Stars owned by the business account</td>
+<td>_True_, if the bot can view gifts and the amount of Telegram Stars owned by the business account</td>
 </tr>
 <tr>
-<td>can_convert_gifts_to_stars</td>
+<td>can_convert_gifts_to_stars?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can convert regular gifts owned by the business account to Telegram Stars</td>
+<td>_True_, if the bot can convert regular gifts owned by the business account to Telegram Stars</td>
 </tr>
 <tr>
-<td>can_transfer_and_upgrade_gifts</td>
+<td>can_transfer_and_upgrade_gifts?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can transfer and upgrade gifts owned by the business account</td>
+<td>_True_, if the bot can transfer and upgrade gifts owned by the business account</td>
 </tr>
 <tr>
-<td>can_transfer_stars</td>
+<td>can_transfer_stars?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts</td>
+<td>_True_, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts</td>
 </tr>
 <tr>
-<td>can_manage_stories</td>
+<td>can_manage_stories?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the bot can post, edit and delete stories on behalf of the business account</td>
+<td>_True_, if the bot can post, edit and delete stories on behalf of the business account</td>
 </tr>
 }
 /**
@@ -5922,9 +5910,9 @@ export interface BusinessConnection {
 <td>Date the connection was established in Unix time</td>
 </tr>
 <tr>
-<td>rights</td>
+<td>rights?</td>
 <td><a href="#businessbotrights">BusinessBotRights</a></td>
-<td>_Optional_. Rights of the business bot</td>
+<td>Rights of the business bot</td>
 </tr>
 <tr>
 <td>is_enabled</td>
@@ -5961,14 +5949,14 @@ export interface BusinessMessagesDeleted {
  */
 export interface ResponseParameters {
 <tr>
-<td>migrate_to_chat_id</td>
+<td>migrate_to_chat_id?</td>
 <td>Integer</td>
-<td>_Optional_. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
-<td>retry_after</td>
+<td>retry_after?</td>
 <td>Integer</td>
-<td>_Optional_. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated</td>
+<td>In case of exceeding flood control, the number of seconds left to wait before the request can be repeated</td>
 </tr>
 }
 /**
@@ -6004,29 +5992,29 @@ export interface InputMediaPhoto {
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>has_spoiler</td>
+<td>has_spoiler?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the photo needs to be covered with a spoiler animation</td>
+<td>Pass _True_ if the photo needs to be covered with a spoiler animation</td>
 </tr>
 }
 /**
@@ -6046,64 +6034,64 @@ export interface InputMediaVideo {
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td>String</td>
-<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>cover</td>
+<td>cover?</td>
 <td>String</td>
-<td>_Optional_. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>start_timestamp</td>
+<td>start_timestamp?</td>
 <td>Integer</td>
-<td>_Optional_. Start timestamp for the video in the message</td>
+<td>Start timestamp for the video in the message</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the video to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>width</td>
+<td>width?</td>
 <td>Integer</td>
-<td>_Optional_. Video width</td>
+<td>Video width</td>
 </tr>
 <tr>
-<td>height</td>
+<td>height?</td>
 <td>Integer</td>
-<td>_Optional_. Video height</td>
+<td>Video height</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>_Optional_. Video duration in seconds</td>
+<td>Video duration in seconds</td>
 </tr>
 <tr>
-<td>supports_streaming</td>
+<td>supports_streaming?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the uploaded video is suitable for streaming</td>
+<td>Pass _True_ if the uploaded video is suitable for streaming</td>
 </tr>
 <tr>
-<td>has_spoiler</td>
+<td>has_spoiler?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the video needs to be covered with a spoiler animation</td>
+<td>Pass _True_ if the video needs to be covered with a spoiler animation</td>
 </tr>
 }
 /**
@@ -6123,49 +6111,49 @@ export interface InputMediaAnimation {
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td>String</td>
-<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the animation to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the animation to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>width</td>
+<td>width?</td>
 <td>Integer</td>
-<td>_Optional_. Animation width</td>
+<td>Animation width</td>
 </tr>
 <tr>
-<td>height</td>
+<td>height?</td>
 <td>Integer</td>
-<td>_Optional_. Animation height</td>
+<td>Animation height</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>_Optional_. Animation duration in seconds</td>
+<td>Animation duration in seconds</td>
 </tr>
 <tr>
-<td>has_spoiler</td>
+<td>has_spoiler?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the animation needs to be covered with a spoiler animation</td>
+<td>Pass _True_ if the animation needs to be covered with a spoiler animation</td>
 </tr>
 }
 /**
@@ -6185,39 +6173,39 @@ export interface InputMediaAudio {
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td>String</td>
-<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the audio to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the audio to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>_Optional_. Duration of the audio in seconds</td>
+<td>Duration of the audio in seconds</td>
 </tr>
 <tr>
-<td>performer</td>
+<td>performer?</td>
 <td>String</td>
-<td>_Optional_. Performer of the audio</td>
+<td>Performer of the audio</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title of the audio</td>
+<td>Title of the audio</td>
 </tr>
 }
 /**
@@ -6237,29 +6225,29 @@ export interface InputMediaDocument {
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td>String</td>
-<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the document to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>disable_content_type_detection</td>
+<td>disable_content_type_detection?</td>
 <td>Boolean</td>
-<td>_Optional_. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always _True_, if the document is sent as part of an album.</td>
+<td>Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always _True_, if the document is sent as part of an album.</td>
 </tr>
 }
 /**
@@ -6312,39 +6300,39 @@ export interface InputPaidMediaVideo {
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td>String</td>
-<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>cover</td>
+<td>cover?</td>
 <td>String</td>
-<td>_Optional_. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>start_timestamp</td>
+<td>start_timestamp?</td>
 <td>Integer</td>
-<td>_Optional_. Start timestamp for the video in the message</td>
+<td>Start timestamp for the video in the message</td>
 </tr>
 <tr>
-<td>width</td>
+<td>width?</td>
 <td>Integer</td>
-<td>_Optional_. Video width</td>
+<td>Video width</td>
 </tr>
 <tr>
-<td>height</td>
+<td>height?</td>
 <td>Integer</td>
-<td>_Optional_. Video height</td>
+<td>Video height</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>_Optional_. Video duration in seconds</td>
+<td>Video duration in seconds</td>
 </tr>
 <tr>
-<td>supports_streaming</td>
+<td>supports_streaming?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the uploaded video is suitable for streaming</td>
+<td>Pass _True_ if the uploaded video is suitable for streaming</td>
 </tr>
 }
 /**
@@ -6391,9 +6379,9 @@ export interface InputProfilePhotoAnimated {
 <td>The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>main_frame_timestamp</td>
+<td>main_frame_timestamp?</td>
 <td>Float</td>
-<td>_Optional_. Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.</td>
+<td>Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.</td>
 </tr>
 }
 /**
@@ -6440,19 +6428,19 @@ export interface InputStoryContentVideo {
 <td>The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Float</td>
-<td>_Optional_. Precise duration of the video in seconds; 0-60</td>
+<td>Precise duration of the video in seconds; 0-60</td>
 </tr>
 <tr>
-<td>cover_frame_timestamp</td>
+<td>cover_frame_timestamp?</td>
 <td>Float</td>
-<td>_Optional_. Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0.</td>
+<td>Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0.</td>
 </tr>
 <tr>
-<td>is_animation</td>
+<td>is_animation?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the video has no sound</td>
+<td>Pass _True_ if the video has no sound</td>
 </tr>
 }
 
@@ -6483,93 +6471,78 @@ export interface ApiMethods {
    */
   sendMessage({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>text</td>
 <td>String</td>
-<td>Yes</td>
 <td>Text of the message to be sent, 1-4096 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>entities</td>
+<td>entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>link_preview_options</td>
+<td>link_preview_options?</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>Optional</td>
 <td>Link preview generation options for the message</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -6684,55 +6657,46 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be forwarded; required if the message is forwarded to a direct messages chat</td>
 </tr>
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the chat where the original message was sent (or channel username in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>video_start_timestamp</td>
+<td>video_start_timestamp?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>New start timestamp for the forwarded video in the message</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the forwarded message from forwarding and saving</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Message identifier in the chat specified in _from_chat_id_</td>
 </tr>
   }): Message;
@@ -6747,43 +6711,36 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the messages will be forwarded; required if the messages are forwarded to a direct messages chat</td>
 </tr>
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the chat where the original messages were sent (or channel username in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_ids</td>
 <td>Array of Integer</td>
-<td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages in the chat _from_chat_id_ to forward. The identifiers must be specified in a strictly increasing order.</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the forwarded messages from forwarding and saving</td>
 </tr>
   }): MessageId;
@@ -6798,97 +6755,81 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the chat where the original message was sent (or channel username in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Message identifier in the chat specified in _from_chat_id_</td>
 </tr>
 <tr>
-<td>video_start_timestamp</td>
+<td>video_start_timestamp?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>New start timestamp for the copied video in the message</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the new caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_, if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): MessageId;
@@ -6903,49 +6844,41 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the chat where the original messages were sent (or channel username in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_ids</td>
 <td>Array of Integer</td>
-<td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages in the chat _from_chat_id_ to copy. The identifiers must be specified in a strictly increasing order.</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent messages from forwarding and saving</td>
 </tr>
 <tr>
-<td>remove_caption</td>
+<td>remove_caption?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to copy the messages without their captions</td>
 </tr>
   }): MessageId[];
@@ -6958,105 +6891,88 @@ export interface ApiMethods {
    */
   sendPhoto({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>photo</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Photo caption (may also be used when resending photos by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>has_spoiler</td>
+<td>has_spoiler?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the photo needs to be covered with a spoiler animation</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7070,117 +6986,98 @@ export interface ApiMethods {
    */
   sendAudio({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>audio</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Audio caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Duration of the audio in seconds</td>
 </tr>
 <tr>
-<td>performer</td>
+<td>performer?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Performer</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Track name</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7193,105 +7090,88 @@ export interface ApiMethods {
    */
   sendDocument({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>document</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Document caption (may also be used when resending documents by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>disable_content_type_detection</td>
+<td>disable_content_type_detection?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Disables automatic server-side content type detection for files uploaded using multipart/form-data</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7304,147 +7184,123 @@ export interface ApiMethods {
    */
   sendVideo({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>video</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Duration of sent video in seconds</td>
 </tr>
 <tr>
-<td>width</td>
+<td>width?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Video width</td>
 </tr>
 <tr>
-<td>height</td>
+<td>height?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Video height</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>cover</td>
+<td>cover?</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Optional</td>
 <td>Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>start_timestamp</td>
+<td>start_timestamp?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Start timestamp for the video in the message</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Video caption (may also be used when resending videos by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>has_spoiler</td>
+<td>has_spoiler?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the video needs to be covered with a spoiler animation</td>
 </tr>
 <tr>
-<td>supports_streaming</td>
+<td>supports_streaming?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the uploaded video is suitable for streaming</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7457,129 +7313,108 @@ export interface ApiMethods {
    */
   sendAnimation({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>animation</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Duration of sent animation in seconds</td>
 </tr>
 <tr>
-<td>width</td>
+<td>width?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Animation width</td>
 </tr>
 <tr>
-<td>height</td>
+<td>height?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Animation height</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Animation caption (may also be used when resending animation by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>has_spoiler</td>
+<td>has_spoiler?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the animation needs to be covered with a spoiler animation</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7592,99 +7427,83 @@ export interface ApiMethods {
    */
   sendVoice({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>voice</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Voice message caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Duration of the voice message in seconds</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7697,93 +7516,78 @@ export interface ApiMethods {
    */
   sendVideoNote({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>video_note</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending video notes by a URL is currently unsupported</td>
 </tr>
 <tr>
-<td>duration</td>
+<td>duration?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Duration of sent video in seconds</td>
 </tr>
 <tr>
-<td>length</td>
+<td>length?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Video width and height, i.e. diameter of the video message</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7796,105 +7600,88 @@ export interface ApiMethods {
    */
   sendPaidMedia({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`). If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat&#39;s balance. Otherwise, they will be credited to the bot&#39;s balance.</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>star_count</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>The number of Telegram Stars that must be paid to buy access to the media; 1-10000</td>
 </tr>
 <tr>
 <td>media</td>
 <td>Array of <a href="#inputpaidmedia">InputPaidMedia</a></td>
-<td>Yes</td>
 <td>A JSON-serialized array describing the media to be sent; up to 10 items</td>
 </tr>
 <tr>
-<td>payload</td>
+<td>payload?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Bot-defined paid media payload, 0-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Media caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the media caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -7907,63 +7694,53 @@ export interface ApiMethods {
    */
   sendMediaGroup({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>media</td>
 <td>Array of <a href="#inputmediaaudio">InputMediaAudio</a>, <a href="#inputmediadocument">InputMediaDocument</a>, <a href="#inputmediaphoto">InputMediaPhoto</a> and <a href="#inputmediavideo">InputMediaVideo</a></td>
-<td>Yes</td>
 <td>A JSON-serialized array describing messages to be sent, must include 2-10 items</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent messages from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
   }): Message[];
@@ -7976,105 +7753,88 @@ export interface ApiMethods {
    */
   sendLocation({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>latitude</td>
 <td>Float</td>
-<td>Yes</td>
 <td>Latitude of the location</td>
 </tr>
 <tr>
 <td>longitude</td>
 <td>Float</td>
-<td>Yes</td>
 <td>Longitude of the location</td>
 </tr>
 <tr>
-<td>horizontal_accuracy</td>
+<td>horizontal_accuracy?</td>
 <td>Float</td>
-<td>Optional</td>
 <td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
-<td>live_period</td>
+<td>live_period?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Period in seconds during which the location will be updated (see <a href="https://telegram.org/blog/live-locations">Live Locations</a>, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
 </tr>
 <tr>
-<td>heading</td>
+<td>heading?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
 </tr>
 <tr>
-<td>proximity_alert_radius</td>
+<td>proximity_alert_radius?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -8087,117 +7847,98 @@ export interface ApiMethods {
    */
   sendVenue({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>latitude</td>
 <td>Float</td>
-<td>Yes</td>
 <td>Latitude of the venue</td>
 </tr>
 <tr>
 <td>longitude</td>
 <td>Float</td>
-<td>Yes</td>
 <td>Longitude of the venue</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td>Yes</td>
 <td>Name of the venue</td>
 </tr>
 <tr>
 <td>address</td>
 <td>String</td>
-<td>Yes</td>
 <td>Address of the venue</td>
 </tr>
 <tr>
-<td>foursquare_id</td>
+<td>foursquare_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Foursquare identifier of the venue</td>
 </tr>
 <tr>
-<td>foursquare_type</td>
+<td>foursquare_type?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
 </tr>
 <tr>
-<td>google_place_id</td>
+<td>google_place_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Google Places identifier of the venue</td>
 </tr>
 <tr>
-<td>google_place_type</td>
+<td>google_place_type?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -8210,93 +7951,78 @@ export interface ApiMethods {
    */
   sendContact({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>phone_number</td>
 <td>String</td>
-<td>Yes</td>
 <td>Contact&#39;s phone number</td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Contact&#39;s first name</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Contact&#39;s last name</td>
 </tr>
 <tr>
-<td>vcard</td>
+<td>vcard?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -8309,141 +8035,118 @@ export interface ApiMethods {
    */
   sendPoll({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`). Polls can&#39;t be sent to channel direct messages chats.</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
 <td>question</td>
 <td>String</td>
-<td>Yes</td>
 <td>Poll question, 1-300 characters</td>
 </tr>
 <tr>
-<td>question_parse_mode</td>
+<td>question_parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the question. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed</td>
 </tr>
 <tr>
-<td>question_entities</td>
+<td>question_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of _question_parse_mode_</td>
 </tr>
 <tr>
 <td>options</td>
 <td>Array of <a href="#inputpolloption">InputPollOption</a></td>
-<td>Yes</td>
 <td>A JSON-serialized list of 2-12 answer options</td>
 </tr>
 <tr>
-<td>is_anonymous</td>
+<td>is_anonymous?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>_True_, if the poll needs to be anonymous, defaults to _True_</td>
 </tr>
 <tr>
-<td>type</td>
+<td>type?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Poll type, “quiz” or “regular”, defaults to “regular”</td>
 </tr>
 <tr>
-<td>allows_multiple_answers</td>
+<td>allows_multiple_answers?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>_True_, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to _False_</td>
 </tr>
 <tr>
-<td>correct_option_id</td>
+<td>correct_option_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>0-based identifier of the correct answer option, required for polls in quiz mode</td>
 </tr>
 <tr>
-<td>explanation</td>
+<td>explanation?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing</td>
 </tr>
 <tr>
-<td>explanation_parse_mode</td>
+<td>explanation_parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the explanation. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>explanation_entities</td>
+<td>explanation_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of _explanation_parse_mode_</td>
 </tr>
 <tr>
-<td>open_period</td>
+<td>open_period?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Amount of time in seconds the poll will be active after creation, 5-600. Can&#39;t be used together with _close_date_.</td>
 </tr>
 <tr>
-<td>close_date</td>
+<td>close_date?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can&#39;t be used together with _open_period_.</td>
 </tr>
 <tr>
-<td>is_closed</td>
+<td>is_closed?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the poll needs to be immediately closed. This can be useful for poll preview.</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -8458,49 +8161,41 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat</td>
 </tr>
 <tr>
 <td>checklist</td>
 <td><a href="#inputchecklist">InputChecklist</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object for the checklist to send</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message silently. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for an inline keyboard</td>
 </tr>
   }): Message;
@@ -8513,75 +8208,63 @@ export interface ApiMethods {
    */
   sendDice({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
-<td>emoji</td>
+<td>emoji?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Emoji on which the dice throw animation is based. Currently, must be one of “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, or “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Dice can have values 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, values 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, and values 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Defaults to “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -8598,27 +8281,23 @@ export interface ApiMethods {
    */
   sendChatAction({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the action will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`). Channel chats and channel direct messages chats aren&#39;t supported.</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread; for supergroups only</td>
 </tr>
 <tr>
 <td>action</td>
 <td>String</td>
-<td>Yes</td>
 <td>Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for <a href="#sendmessage">text messages</a>, _upload_photo_ for <a href="#sendphoto">photos</a>, _record_video_ or _upload_video_ for <a href="#sendvideo">videos</a>, _record_voice_ or _upload_voice_ for <a href="#sendvoice">voice notes</a>, _upload_document_ for <a href="#senddocument">general files</a>, _choose_sticker_ for <a href="#sendsticker">stickers</a>, _find_location_ for <a href="#sendlocation">location data</a>, _record_video_note_ or _upload_video_note_ for <a href="#sendvideonote">video notes</a>.</td>
 </tr>
   }): true;
@@ -8633,25 +8312,21 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.</td>
 </tr>
 <tr>
-<td>reaction</td>
+<td>reaction?</td>
 <td>Array of <a href="#reactiontype">ReactionType</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can&#39;t be used by bots.</td>
 </tr>
 <tr>
-<td>is_big</td>
+<td>is_big?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to set the reaction with a big animation</td>
 </tr>
   }): true;
@@ -8666,19 +8341,16 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
-<td>offset</td>
+<td>offset?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Sequential number of the first photo to be returned. By default, all photos are returned.</td>
 </tr>
 <tr>
-<td>limit</td>
+<td>limit?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
 </tr>
   }): UserProfilePhotos;
@@ -8693,19 +8365,16 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
-<td>emoji_status_custom_emoji_id</td>
+<td>emoji_status_custom_emoji_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Custom emoji identifier of the emoji status to set. Pass an empty string to remove the status.</td>
 </tr>
 <tr>
-<td>emoji_status_expiration_date</td>
+<td>emoji_status_expiration_date?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Expiration date of the emoji status, if any</td>
 </tr>
   }): true;
@@ -8720,7 +8389,6 @@ export interface ApiMethods {
 <tr>
 <td>file_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>File identifier to get information about</td>
 </tr>
   }): File;
@@ -8736,25 +8404,21 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target group or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
-<td>until_date</td>
+<td>until_date?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Date when the user will be unbanned; Unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.</td>
 </tr>
 <tr>
-<td>revoke_messages</td>
+<td>revoke_messages?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to delete all messages from the chat for the user that is being removed. If _False_, the user will be able to see messages in the group that were sent before the user was removed. Always _True_ for supergroups and channels.</td>
 </tr>
   }): true;
@@ -8769,19 +8433,16 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target group or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
-<td>only_if_banned</td>
+<td>only_if_banned?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Do nothing if the user is not banned</td>
 </tr>
   }): true;
@@ -8796,31 +8457,26 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
 <td>permissions</td>
 <td><a href="#chatpermissions">ChatPermissions</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object for new user permissions</td>
 </tr>
 <tr>
-<td>use_independent_chat_permissions</td>
+<td>use_independent_chat_permissions?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if chat permissions are set independently. Otherwise, the _can_send_other_messages_ and _can_add_web_page_previews_ permissions will imply the _can_send_messages_, _can_send_audios_, _can_send_documents_, _can_send_photos_, _can_send_videos_, _can_send_video_notes_, and _can_send_voice_notes_ permissions; the _can_send_polls_ permission will imply the _can_send_messages_ permission.</td>
 </tr>
 <tr>
-<td>until_date</td>
+<td>until_date?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever</td>
 </tr>
   }): true;
@@ -8835,109 +8491,91 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
-<td>is_anonymous</td>
+<td>is_anonymous?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator&#39;s presence in the chat is hidden</td>
 </tr>
 <tr>
-<td>can_manage_chat</td>
+<td>can_manage_chat?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
 </tr>
 <tr>
-<td>can_delete_messages</td>
+<td>can_delete_messages?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can delete messages of other users</td>
 </tr>
 <tr>
-<td>can_manage_video_chats</td>
+<td>can_manage_video_chats?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can manage video chats</td>
 </tr>
 <tr>
-<td>can_restrict_members</td>
+<td>can_restrict_members?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
 </tr>
 <tr>
-<td>can_promote_members</td>
+<td>can_promote_members?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)</td>
 </tr>
 <tr>
-<td>can_change_info</td>
+<td>can_change_info?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can change chat title, photo and other settings</td>
 </tr>
 <tr>
-<td>can_invite_users</td>
+<td>can_invite_users?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can invite new users to the chat</td>
 </tr>
 <tr>
-<td>can_post_stories</td>
+<td>can_post_stories?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can post stories to the chat</td>
 </tr>
 <tr>
-<td>can_edit_stories</td>
+<td>can_edit_stories?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
 </tr>
 <tr>
-<td>can_delete_stories</td>
+<td>can_delete_stories?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can delete stories posted by other users</td>
 </tr>
 <tr>
-<td>can_post_messages</td>
+<td>can_post_messages?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
 </tr>
 <tr>
-<td>can_edit_messages</td>
+<td>can_edit_messages?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can edit messages of other users and can pin messages; for channels only</td>
 </tr>
 <tr>
-<td>can_pin_messages</td>
+<td>can_pin_messages?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can pin messages; for supergroups only</td>
 </tr>
 <tr>
-<td>can_manage_topics</td>
+<td>can_manage_topics?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
 </tr>
 <tr>
-<td>can_manage_direct_messages</td>
+<td>can_manage_direct_messages?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the administrator can manage direct messages within the channel and decline suggested posts; for channels only</td>
 </tr>
   }): true;
@@ -8952,19 +8590,16 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
 <td>custom_title</td>
 <td>String</td>
-<td>Yes</td>
 <td>New custom title for the administrator; 0-16 characters, emoji are not allowed</td>
 </tr>
   }): true;
@@ -8979,13 +8614,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>sender_chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target sender chat</td>
 </tr>
   }): true;
@@ -9000,13 +8633,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>sender_chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target sender chat</td>
 </tr>
   }): true;
@@ -9021,19 +8652,16 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>permissions</td>
 <td><a href="#chatpermissions">ChatPermissions</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object for new default chat permissions</td>
 </tr>
 <tr>
-<td>use_independent_chat_permissions</td>
+<td>use_independent_chat_permissions?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if chat permissions are set independently. Otherwise, the _can_send_other_messages_ and _can_add_web_page_previews_ permissions will imply the _can_send_messages_, _can_send_audios_, _can_send_documents_, _can_send_photos_, _can_send_videos_, _can_send_video_notes_, and _can_send_voice_notes_ permissions; the _can_send_polls_ permission will imply the _can_send_messages_ permission.</td>
 </tr>
   }): true;
@@ -9048,7 +8676,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
   }): string;
@@ -9066,31 +8693,26 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
 <tr>
-<td>expire_date</td>
+<td>expire_date?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Point in time (Unix timestamp) when the link will expire</td>
 </tr>
 <tr>
-<td>member_limit</td>
+<td>member_limit?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
 </tr>
 <tr>
-<td>creates_join_request</td>
+<td>creates_join_request?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>_True_, if users joining the chat via the link need to be approved by chat administrators. If _True_, _member_limit_ can&#39;t be specified</td>
 </tr>
   }): ChatInviteLink;
@@ -9105,37 +8727,31 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>invite_link</td>
 <td>String</td>
-<td>Yes</td>
 <td>The invite link to edit</td>
 </tr>
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
 <tr>
-<td>expire_date</td>
+<td>expire_date?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Point in time (Unix timestamp) when the link will expire</td>
 </tr>
 <tr>
-<td>member_limit</td>
+<td>member_limit?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
 </tr>
 <tr>
-<td>creates_join_request</td>
+<td>creates_join_request?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>_True_, if users joining the chat via the link need to be approved by chat administrators. If _True_, _member_limit_ can&#39;t be specified</td>
 </tr>
   }): ChatInviteLink;
@@ -9150,25 +8766,21 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target channel chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
 <tr>
 <td>subscription_period</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).</td>
 </tr>
 <tr>
 <td>subscription_price</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000</td>
 </tr>
   }): ChatInviteLink;
@@ -9183,19 +8795,16 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>invite_link</td>
 <td>String</td>
-<td>Yes</td>
 <td>The invite link to edit</td>
 </tr>
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
   }): ChatInviteLink;
@@ -9210,13 +8819,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier of the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>invite_link</td>
 <td>String</td>
-<td>Yes</td>
 <td>The invite link to revoke</td>
 </tr>
   }): ChatInviteLink;
@@ -9231,13 +8838,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
   }): true;
@@ -9252,13 +8857,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
   }): true;
@@ -9273,13 +8876,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>photo</td>
 <td><a href="#inputfile">InputFile</a></td>
-<td>Yes</td>
 <td>New chat photo, uploaded using multipart/form-data</td>
 </tr>
   }): true;
@@ -9294,7 +8895,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
   }): true;
@@ -9309,13 +8909,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td>Yes</td>
 <td>New chat title, 1-128 characters</td>
 </tr>
   }): true;
@@ -9330,13 +8928,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New chat description, 0-255 characters</td>
 </tr>
   }): true;
@@ -9349,27 +8945,23 @@ export interface ApiMethods {
     */
   pinChatMessage({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be pinned</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of a message to pin</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.</td>
 </tr>
   }): true;
@@ -9382,21 +8974,18 @@ export interface ApiMethods {
     */
   unpinChatMessage({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be unpinned</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the message to unpin. Required if _business_connection_id_ is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.</td>
 </tr>
   }): true;
@@ -9411,7 +9000,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
   }): true;
@@ -9426,7 +9014,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`). Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.</td>
 </tr>
   }): true;
@@ -9441,7 +9028,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
   }): ChatFullInfo;
@@ -9456,7 +9042,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
   }): ChatMember;
@@ -9471,7 +9056,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
   }): number;
@@ -9486,13 +9070,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
   }): ChatMember;
@@ -9507,13 +9089,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>sticker_set_name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Name of the sticker set to be set as the group sticker set</td>
 </tr>
   }): true;
@@ -9528,7 +9108,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
   }): true;
@@ -9549,25 +9128,21 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Topic name, 1-128 characters</td>
 </tr>
 <tr>
-<td>icon_color</td>
+<td>icon_color?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F)</td>
 </tr>
 <tr>
-<td>icon_custom_emoji_id</td>
+<td>icon_custom_emoji_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers.</td>
 </tr>
   }): ForumTopic;
@@ -9582,25 +9157,21 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>message_thread_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New topic name, 0-128 characters. If not specified or empty, the current name of the topic will be kept</td>
 </tr>
 <tr>
-<td>icon_custom_emoji_id</td>
+<td>icon_custom_emoji_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept</td>
 </tr>
   }): true;
@@ -9615,13 +9186,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>message_thread_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
   }): true;
@@ -9636,13 +9205,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>message_thread_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
   }): true;
@@ -9657,13 +9224,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>message_thread_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
   }): true;
@@ -9678,13 +9243,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>message_thread_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target message thread of the forum topic</td>
 </tr>
   }): true;
@@ -9699,13 +9262,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>New topic name, 1-128 characters</td>
 </tr>
   }): true;
@@ -9720,7 +9281,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
   }): true;
@@ -9735,7 +9295,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
   }): true;
@@ -9750,7 +9309,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
   }): true;
@@ -9765,7 +9323,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
   }): true;
@@ -9780,7 +9337,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)</td>
 </tr>
   }): true;
@@ -9798,31 +9354,26 @@ export interface ApiMethods {
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier for the query to be answered</td>
 </tr>
 <tr>
-<td>text</td>
+<td>text?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters</td>
 </tr>
 <tr>
-<td>show_alert</td>
+<td>show_alert?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>If _True_, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to _false_.</td>
 </tr>
 <tr>
-<td>url</td>
+<td>url?</td>
 <td>String</td>
-<td>Optional</td>
 <td>URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.<br><br>Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.</td>
 </tr>
 <tr>
-<td>cache_time</td>
+<td>cache_time?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.</td>
 </tr>
   }): true;
@@ -9837,13 +9388,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the chat or username of the channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
   }): UserChatBoosts;
@@ -9858,7 +9407,6 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
   }): BusinessConnection;
@@ -9873,19 +9421,16 @@ export interface ApiMethods {
 <tr>
 <td>commands</td>
 <td>Array of <a href="#botcommand">BotCommand</a></td>
-<td>Yes</td>
 <td>A JSON-serialized list of bot commands to be set as the list of the bot&#39;s commands. At most 100 commands can be specified.</td>
 </tr>
 <tr>
-<td>scope</td>
+<td>scope?</td>
 <td><a href="#botcommandscope">BotCommandScope</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
 </tr>
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands</td>
 </tr>
   }): true;
@@ -9898,15 +9443,13 @@ export interface ApiMethods {
     */
   deleteMyCommands({
 <tr>
-<td>scope</td>
+<td>scope?</td>
 <td><a href="#botcommandscope">BotCommandScope</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
 </tr>
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands</td>
 </tr>
   }): true;
@@ -9919,15 +9462,13 @@ export interface ApiMethods {
     */
   getMyCommands({
 <tr>
-<td>scope</td>
+<td>scope?</td>
 <td><a href="#botcommandscope">BotCommandScope</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object, describing scope of users. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
 </tr>
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
   }): BotCommand[];
@@ -9940,15 +9481,13 @@ export interface ApiMethods {
     */
   setMyName({
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.</td>
 </tr>
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name.</td>
 </tr>
   }): true;
@@ -9961,9 +9500,8 @@ export interface ApiMethods {
     */
   getMyName({
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
   }): BotName;
@@ -9976,15 +9514,13 @@ export interface ApiMethods {
     */
   setMyDescription({
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.</td>
 </tr>
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.</td>
 </tr>
   }): true;
@@ -9997,9 +9533,8 @@ export interface ApiMethods {
     */
   getMyDescription({
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
   }): BotDescription;
@@ -10012,15 +9547,13 @@ export interface ApiMethods {
     */
   setMyShortDescription({
 <tr>
-<td>short_description</td>
+<td>short_description?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.</td>
 </tr>
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.</td>
 </tr>
   }): true;
@@ -10033,9 +9566,8 @@ export interface ApiMethods {
     */
   getMyShortDescription({
 <tr>
-<td>language_code</td>
+<td>language_code?</td>
 <td>String</td>
-<td>Optional</td>
 <td>A two-letter ISO 639-1 language code or an empty string</td>
 </tr>
   }): BotShortDescription;
@@ -10048,15 +9580,13 @@ export interface ApiMethods {
     */
   setChatMenuButton({
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target private chat. If not specified, default bot&#39;s menu button will be changed</td>
 </tr>
 <tr>
-<td>menu_button</td>
+<td>menu_button?</td>
 <td><a href="#menubutton">MenuButton</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for the bot&#39;s new menu button. Defaults to <a href="#menubuttondefault">MenuButtonDefault</a></td>
 </tr>
   }): true;
@@ -10069,9 +9599,8 @@ export interface ApiMethods {
     */
   getChatMenuButton({
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target private chat. If not specified, default bot&#39;s menu button will be returned</td>
 </tr>
   }): MenuButton;
@@ -10084,15 +9613,13 @@ export interface ApiMethods {
     */
   setMyDefaultAdministratorRights({
 <tr>
-<td>rights</td>
+<td>rights?</td>
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared.</td>
 </tr>
 <tr>
-<td>for_channels</td>
+<td>for_channels?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.</td>
 </tr>
   }): true;
@@ -10105,9 +9632,8 @@ export interface ApiMethods {
     */
   getMyDefaultAdministratorRights({
 <tr>
-<td>for_channels</td>
+<td>for_channels?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.</td>
 </tr>
   }): ChatAdministratorRights;
@@ -10126,45 +9652,38 @@ export interface ApiMethods {
     */
   sendGift({
 <tr>
-<td>user_id</td>
+<td>user_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _chat_id_ is not specified. Unique identifier of the target user who will receive the gift.</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>Optional</td>
 <td>Required if _user_id_ is not specified. Unique identifier for the chat or username of the channel (in the format `@channelusername`) that will receive the gift.</td>
 </tr>
 <tr>
 <td>gift_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Identifier of the gift</td>
 </tr>
 <tr>
-<td>pay_for_upgrade</td>
+<td>pay_for_upgrade?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver</td>
 </tr>
 <tr>
-<td>text</td>
+<td>text?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Text that will be shown along with the gift; 0-128 characters</td>
 </tr>
 <tr>
-<td>text_parse_mode</td>
+<td>text_parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
 <tr>
-<td>text_entities</td>
+<td>text_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
   }): true;
@@ -10179,37 +9698,31 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user who will receive a Telegram Premium subscription</td>
 </tr>
 <tr>
 <td>month_count</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12</td>
 </tr>
 <tr>
 <td>star_count</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months</td>
 </tr>
 <tr>
-<td>text</td>
+<td>text?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Text that will be shown along with the service message about the subscription; 0-128 characters</td>
 </tr>
 <tr>
-<td>text_parse_mode</td>
+<td>text_parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
 <tr>
-<td>text_entities</td>
+<td>text_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
   }): true;
@@ -10224,13 +9737,11 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
 <tr>
-<td>custom_description</td>
+<td>custom_description?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.</td>
 </tr>
   }): true;
@@ -10245,13 +9756,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`). Channel direct messages chats can&#39;t be verified.</td>
 </tr>
 <tr>
-<td>custom_description</td>
+<td>custom_description?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.</td>
 </tr>
   }): true;
@@ -10266,7 +9775,6 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
   }): true;
@@ -10281,7 +9789,6 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
   }): true;
@@ -10296,19 +9803,16 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection on behalf of which to read the message</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the chat in which the message was received. The chat must have been active in the last 24 hours.</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the message to mark as read</td>
 </tr>
   }): true;
@@ -10323,13 +9827,11 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection on behalf of which to delete the messages</td>
 </tr>
 <tr>
 <td>message_ids</td>
 <td>Array of Integer</td>
-<td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted</td>
 </tr>
   }): true;
@@ -10344,19 +9846,16 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>String</td>
-<td>Yes</td>
 <td>The new value of the first name for the business account; 1-64 characters</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>Optional</td>
 <td>The new value of the last name for the business account; 0-64 characters</td>
 </tr>
   }): true;
@@ -10371,13 +9870,11 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
-<td>username</td>
+<td>username?</td>
 <td>String</td>
-<td>Optional</td>
 <td>The new value of the username for the business account; 0-32 characters</td>
 </tr>
   }): true;
@@ -10392,13 +9889,11 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
-<td>bio</td>
+<td>bio?</td>
 <td>String</td>
-<td>Optional</td>
 <td>The new value of the bio for the business account; 0-140 characters</td>
 </tr>
   }): true;
@@ -10413,19 +9908,16 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>photo</td>
 <td><a href="#inputprofilephoto">InputProfilePhoto</a></td>
-<td>Yes</td>
 <td>The new profile photo to set</td>
 </tr>
 <tr>
-<td>is_public</td>
+<td>is_public?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.</td>
 </tr>
   }): true;
@@ -10440,13 +9932,11 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
-<td>is_public</td>
+<td>is_public?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.</td>
 </tr>
   }): true;
@@ -10461,19 +9951,16 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>show_gift_button</td>
 <td>Boolean</td>
-<td>Yes</td>
 <td>Pass _True_, if a button for sending a gift to the user or by the business account must always be shown in the input field</td>
 </tr>
 <tr>
 <td>accepted_gift_types</td>
 <td><a href="#acceptedgifttypes">AcceptedGiftTypes</a></td>
-<td>Yes</td>
 <td>Types of gifts accepted by the business account</td>
 </tr>
   }): true;
@@ -10488,7 +9975,6 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
   }): StarAmount;
@@ -10503,13 +9989,11 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>star_count</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Number of Telegram Stars to transfer; 1-10000</td>
 </tr>
   }): true;
@@ -10524,55 +10008,46 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
-<td>exclude_unsaved</td>
+<td>exclude_unsaved?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to exclude gifts that aren&#39;t saved to the account&#39;s profile page</td>
 </tr>
 <tr>
-<td>exclude_saved</td>
+<td>exclude_saved?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to exclude gifts that are saved to the account&#39;s profile page</td>
 </tr>
 <tr>
-<td>exclude_unlimited</td>
+<td>exclude_unlimited?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to exclude gifts that can be purchased an unlimited number of times</td>
 </tr>
 <tr>
-<td>exclude_limited</td>
+<td>exclude_limited?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to exclude gifts that can be purchased a limited number of times</td>
 </tr>
 <tr>
-<td>exclude_unique</td>
+<td>exclude_unique?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to exclude unique gifts</td>
 </tr>
 <tr>
-<td>sort_by_price</td>
+<td>sort_by_price?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
 </tr>
 <tr>
-<td>offset</td>
+<td>offset?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results</td>
 </tr>
 <tr>
-<td>limit</td>
+<td>limit?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum number of gifts to be returned; 1-100. Defaults to 100</td>
 </tr>
   }): OwnedGifts;
@@ -10587,13 +10062,11 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the regular gift that should be converted to Telegram Stars</td>
 </tr>
   }): true;
@@ -10608,25 +10081,21 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the regular gift that should be upgraded to a unique one</td>
 </tr>
 <tr>
-<td>keep_original_details</td>
+<td>keep_original_details?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to keep the original gift text, sender and receiver in the upgraded gift</td>
 </tr>
 <tr>
-<td>star_count</td>
+<td>star_count?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If `gift.prepaid_upgrade_star_count &gt; 0`, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and `gift.upgrade_star_count` must be passed.</td>
 </tr>
   }): true;
@@ -10641,25 +10110,21 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the regular gift that should be transferred</td>
 </tr>
 <tr>
 <td>new_owner_chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.</td>
 </tr>
 <tr>
-<td>star_count</td>
+<td>star_count?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the _can_transfer_stars_ business bot right is required.</td>
 </tr>
   }): true;
@@ -10674,55 +10139,46 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>content</td>
 <td><a href="#inputstorycontent">InputStoryContent</a></td>
-<td>Yes</td>
 <td>Content of the story</td>
 </tr>
 <tr>
 <td>active_period</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Caption of the story, 0-2048 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>areas</td>
+<td>areas?</td>
 <td>Array of <a href="#storyarea">StoryArea</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of clickable areas to be shown on the story</td>
 </tr>
 <tr>
-<td>post_to_chat_page</td>
+<td>post_to_chat_page?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to keep the story accessible after it expires</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the content of the story must be protected from forwarding and screenshotting</td>
 </tr>
   }): Story;
@@ -10737,43 +10193,36 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>story_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the story to edit</td>
 </tr>
 <tr>
 <td>content</td>
 <td><a href="#inputstorycontent">InputStoryContent</a></td>
-<td>Yes</td>
 <td>Content of the story</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Caption of the story, 0-2048 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>areas</td>
+<td>areas?</td>
 <td>Array of <a href="#storyarea">StoryArea</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of clickable areas to be shown on the story</td>
 </tr>
   }): Story;
@@ -10788,13 +10237,11 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
 <tr>
 <td>story_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the story to delete</td>
 </tr>
   }): true;
@@ -10809,57 +10256,48 @@ export interface ApiMethods {
     */
   editMessageText({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>text</td>
 <td>String</td>
-<td>Yes</td>
 <td>New text of the message, 1-4096 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>entities</td>
+<td>entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>link_preview_options</td>
+<td>link_preview_options?</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>Optional</td>
 <td>Link preview generation options for the message</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
   }): true | Message;
@@ -10872,57 +10310,48 @@ export interface ApiMethods {
     */
   editMessageCaption({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>Optional</td>
 <td>New caption of the message, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_, if the caption must be shown above the message media. Supported only for animation, photo and video messages.</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
   }): true | Message;
@@ -10935,39 +10364,33 @@ export interface ApiMethods {
     */
   editMessageMedia({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>media</td>
 <td><a href="#inputmedia">InputMedia</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object for a new media content of the message</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
   }): true | Message;
@@ -10980,69 +10403,58 @@ export interface ApiMethods {
     */
   editMessageLiveLocation({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>latitude</td>
 <td>Float</td>
-<td>Yes</td>
 <td>Latitude of new location</td>
 </tr>
 <tr>
 <td>longitude</td>
 <td>Float</td>
-<td>Yes</td>
 <td>Longitude of new location</td>
 </tr>
 <tr>
-<td>live_period</td>
+<td>live_period?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current _live_period_ by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then _live_period_ remains unchanged</td>
 </tr>
 <tr>
-<td>horizontal_accuracy</td>
+<td>horizontal_accuracy?</td>
 <td>Float</td>
-<td>Optional</td>
 <td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
-<td>heading</td>
+<td>heading?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
 </tr>
 <tr>
-<td>proximity_alert_radius</td>
+<td>proximity_alert_radius?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
   }): true | Message;
@@ -11055,33 +10467,28 @@ export interface ApiMethods {
     */
   stopMessageLiveLocation({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the message with live location to stop</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
   }): true | Message;
@@ -11096,31 +10503,26 @@ export interface ApiMethods {
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target message</td>
 </tr>
 <tr>
 <td>checklist</td>
 <td><a href="#inputchecklist">InputChecklist</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object for the new checklist</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for the new inline keyboard for the message</td>
 </tr>
   }): Message;
@@ -11133,33 +10535,28 @@ export interface ApiMethods {
     */
   editMessageReplyMarkup({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer or String</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
   }): true | Message;
@@ -11172,27 +10569,23 @@ export interface ApiMethods {
     */
   stopPoll({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of the original message with the poll</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a>.</td>
 </tr>
   }): Poll;
@@ -11207,19 +10600,16 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target direct messages chat</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of a suggested post message to approve</td>
 </tr>
 <tr>
-<td>send_date</td>
+<td>send_date?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future</td>
 </tr>
   }): true;
@@ -11234,19 +10624,16 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target direct messages chat</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of a suggested post message to decline</td>
 </tr>
 <tr>
-<td>comment</td>
+<td>comment?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Comment for the creator of the suggested post; 0-128 characters</td>
 </tr>
   }): true;
@@ -11261,13 +10648,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of the message to delete</td>
 </tr>
   }): true;
@@ -11282,13 +10667,11 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
 <td>message_ids</td>
 <td>Array of Integer</td>
-<td>Yes</td>
 <td>A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted</td>
 </tr>
   }): true;
@@ -11337,44 +10720,44 @@ export interface Sticker {
 <td>_True_, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a></td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Sticker thumbnail in the .WEBP or .JPG format</td>
+<td>Sticker thumbnail in the .WEBP or .JPG format</td>
 </tr>
 <tr>
-<td>emoji</td>
+<td>emoji?</td>
 <td>String</td>
-<td>_Optional_. Emoji associated with the sticker</td>
+<td>Emoji associated with the sticker</td>
 </tr>
 <tr>
-<td>set_name</td>
+<td>set_name?</td>
 <td>String</td>
-<td>_Optional_. Name of the sticker set to which the sticker belongs</td>
+<td>Name of the sticker set to which the sticker belongs</td>
 </tr>
 <tr>
-<td>premium_animation</td>
+<td>premium_animation?</td>
 <td><a href="#file">File</a></td>
-<td>_Optional_. For premium regular stickers, premium animation for the sticker</td>
+<td>For premium regular stickers, premium animation for the sticker</td>
 </tr>
 <tr>
-<td>mask_position</td>
+<td>mask_position?</td>
 <td><a href="#maskposition">MaskPosition</a></td>
-<td>_Optional_. For mask stickers, the position where the mask should be placed</td>
+<td>For mask stickers, the position where the mask should be placed</td>
 </tr>
 <tr>
-<td>custom_emoji_id</td>
+<td>custom_emoji_id?</td>
 <td>String</td>
-<td>_Optional_. For custom emoji stickers, unique identifier of the custom emoji</td>
+<td>For custom emoji stickers, unique identifier of the custom emoji</td>
 </tr>
 <tr>
-<td>needs_repainting</td>
+<td>needs_repainting?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places</td>
+<td>_True_, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places</td>
 </tr>
 <tr>
-<td>file_size</td>
+<td>file_size?</td>
 <td>Integer</td>
-<td>_Optional_. File size in bytes</td>
+<td>File size in bytes</td>
 </tr>
 }
 /**
@@ -11404,9 +10787,9 @@ export interface StickerSet {
 <td>List of all set stickers</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td>_Optional_. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format</td>
+<td>Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format</td>
 </tr>
 }
 /**
@@ -11458,14 +10841,14 @@ export interface InputSticker {
 <td>List of 1-20 emoji associated with the sticker</td>
 </tr>
 <tr>
-<td>mask_position</td>
+<td>mask_position?</td>
 <td><a href="#maskposition">MaskPosition</a></td>
-<td>_Optional_. Position where the mask should be placed on faces. For “mask” stickers only.</td>
+<td>Position where the mask should be placed on faces. For “mask” stickers only.</td>
 </tr>
 <tr>
-<td>keywords</td>
+<td>keywords?</td>
 <td>Array of String</td>
-<td>_Optional_. List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.</td>
+<td>List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.</td>
 </tr>
 }
 export interface ApiMethods {
@@ -11476,81 +10859,68 @@ export interface ApiMethods {
     */
   sendSticker({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>sticker</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
 <td>Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Video and animated stickers can&#39;t be sent via an HTTP URL.</td>
 </tr>
 <tr>
-<td>emoji</td>
+<td>emoji?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Emoji associated with the sticker; only for just uploaded stickers</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a> or <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a> or <a href="#replykeyboardremove">ReplyKeyboardRemove</a> or <a href="#forcereply">ForceReply</a></td>
-<td>Optional</td>
 <td>Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user</td>
 </tr>
   }): Message;
@@ -11565,7 +10935,6 @@ export interface ApiMethods {
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Name of the sticker set</td>
 </tr>
   }): StickerSet;
@@ -11580,7 +10949,6 @@ export interface ApiMethods {
 <tr>
 <td>custom_emoji_ids</td>
 <td>Array of String</td>
-<td>Yes</td>
 <td>A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.</td>
 </tr>
   }): Sticker[];
@@ -11595,19 +10963,16 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>User identifier of sticker file owner</td>
 </tr>
 <tr>
 <td>sticker</td>
 <td><a href="#inputfile">InputFile</a></td>
-<td>Yes</td>
 <td>A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers"><a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a></a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>sticker_format</td>
 <td>String</td>
-<td>Yes</td>
 <td>Format of the sticker, must be one of “static”, “animated”, “video”</td>
 </tr>
   }): File;
@@ -11622,37 +10987,31 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>User identifier of created sticker set owner</td>
 </tr>
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., _animals_). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in `&quot;_by_&lt;bot_username&gt;&quot;`. `&lt;bot_username&gt;` is case insensitive. 1-64 characters.</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set title, 1-64 characters</td>
 </tr>
 <tr>
 <td>stickers</td>
 <td>Array of <a href="#inputsticker">InputSticker</a></td>
-<td>Yes</td>
 <td>A JSON-serialized list of 1-50 initial stickers to be added to the sticker set</td>
 </tr>
 <tr>
-<td>sticker_type</td>
+<td>sticker_type?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.</td>
 </tr>
 <tr>
-<td>needs_repainting</td>
+<td>needs_repainting?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only</td>
 </tr>
   }): true;
@@ -11667,19 +11026,16 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>User identifier of sticker set owner</td>
 </tr>
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set name</td>
 </tr>
 <tr>
 <td>sticker</td>
 <td><a href="#inputsticker">InputSticker</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn&#39;t changed.</td>
 </tr>
   }): true;
@@ -11694,13 +11050,11 @@ export interface ApiMethods {
 <tr>
 <td>sticker</td>
 <td>String</td>
-<td>Yes</td>
 <td>File identifier of the sticker</td>
 </tr>
 <tr>
 <td>position</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>New sticker position in the set, zero-based</td>
 </tr>
   }): true;
@@ -11715,7 +11069,6 @@ export interface ApiMethods {
 <tr>
 <td>sticker</td>
 <td>String</td>
-<td>Yes</td>
 <td>File identifier of the sticker</td>
 </tr>
   }): true;
@@ -11730,25 +11083,21 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>User identifier of the sticker set owner</td>
 </tr>
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set name</td>
 </tr>
 <tr>
 <td>old_sticker</td>
 <td>String</td>
-<td>Yes</td>
 <td>File identifier of the replaced sticker</td>
 </tr>
 <tr>
 <td>sticker</td>
 <td><a href="#inputsticker">InputSticker</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.</td>
 </tr>
   }): true;
@@ -11763,13 +11112,11 @@ export interface ApiMethods {
 <tr>
 <td>sticker</td>
 <td>String</td>
-<td>Yes</td>
 <td>File identifier of the sticker</td>
 </tr>
 <tr>
 <td>emoji_list</td>
 <td>Array of String</td>
-<td>Yes</td>
 <td>A JSON-serialized list of 1-20 emoji associated with the sticker</td>
 </tr>
   }): true;
@@ -11784,13 +11131,11 @@ export interface ApiMethods {
 <tr>
 <td>sticker</td>
 <td>String</td>
-<td>Yes</td>
 <td>File identifier of the sticker</td>
 </tr>
 <tr>
-<td>keywords</td>
+<td>keywords?</td>
 <td>Array of String</td>
-<td>Optional</td>
 <td>A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters</td>
 </tr>
   }): true;
@@ -11805,13 +11150,11 @@ export interface ApiMethods {
 <tr>
 <td>sticker</td>
 <td>String</td>
-<td>Yes</td>
 <td>File identifier of the sticker</td>
 </tr>
 <tr>
-<td>mask_position</td>
+<td>mask_position?</td>
 <td><a href="#maskposition">MaskPosition</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.</td>
 </tr>
   }): true;
@@ -11826,13 +11169,11 @@ export interface ApiMethods {
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set name</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set title, 1-64 characters</td>
 </tr>
   }): true;
@@ -11847,25 +11188,21 @@ export interface ApiMethods {
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set name</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>User identifier of the sticker set owner</td>
 </tr>
 <tr>
-<td>thumbnail</td>
+<td>thumbnail?</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
-<td>Optional</td>
 <td>A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.</td>
 </tr>
 <tr>
 <td>format</td>
 <td>String</td>
-<td>Yes</td>
 <td>Format of the thumbnail, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, or “video” for a **.WEBM** video</td>
 </tr>
   }): true;
@@ -11880,13 +11217,11 @@ export interface ApiMethods {
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set name</td>
 </tr>
 <tr>
-<td>custom_emoji_id</td>
+<td>custom_emoji_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail.</td>
 </tr>
   }): true;
@@ -11901,7 +11236,6 @@ export interface ApiMethods {
 <tr>
 <td>name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Sticker set name</td>
 </tr>
   }): true;
@@ -11935,14 +11269,14 @@ export interface InlineQuery {
 <td>Offset of the results to be returned, can be controlled by the bot</td>
 </tr>
 <tr>
-<td>chat_type</td>
+<td>chat_type?</td>
 <td>String</td>
-<td>_Optional_. Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat</td>
+<td>Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat</td>
 </tr>
 <tr>
-<td>location</td>
+<td>location?</td>
 <td><a href="#location">Location</a></td>
-<td>_Optional_. Sender location, only for bots that request user location</td>
+<td>Sender location, only for bots that request user location</td>
 </tr>
 }
 export interface ApiMethods {
@@ -11955,37 +11289,31 @@ export interface ApiMethods {
 <tr>
 <td>inline_query_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier for the answered query</td>
 </tr>
 <tr>
 <td>results</td>
 <td>Array of <a href="#inlinequeryresult">InlineQueryResult</a></td>
-<td>Yes</td>
 <td>A JSON-serialized array of results for the inline query</td>
 </tr>
 <tr>
-<td>cache_time</td>
+<td>cache_time?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.</td>
 </tr>
 <tr>
-<td>is_personal</td>
+<td>is_personal?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.</td>
 </tr>
 <tr>
-<td>next_offset</td>
+<td>next_offset?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don&#39;t support pagination. Offset length can&#39;t exceed 64 bytes.</td>
 </tr>
 <tr>
-<td>button</td>
+<td>button?</td>
 <td><a href="#inlinequeryresultsbutton">InlineQueryResultsButton</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object describing a button to be shown above inline query results</td>
 </tr>
   }): true;
@@ -12002,14 +11330,14 @@ export interface InlineQueryResultsButton {
 <td>Label text on the button</td>
 </tr>
 <tr>
-<td>web_app</td>
+<td>web_app?</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
-<td>_Optional_. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.</td>
+<td>Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.</td>
 </tr>
 <tr>
-<td>start_parameter</td>
+<td>start_parameter?</td>
 <td>String</td>
-<td>_Optional_. <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.</td>
+<td><a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.</td>
 </tr>
 }
 /**
@@ -12086,34 +11414,34 @@ export interface InlineQueryResultArticle {
 <td>Content of the message to be sent</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>url</td>
+<td>url?</td>
 <td>String</td>
-<td>_Optional_. URL of the result</td>
+<td>URL of the result</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Short description of the result</td>
+<td>Short description of the result</td>
 </tr>
 <tr>
-<td>thumbnail_url</td>
+<td>thumbnail_url?</td>
 <td>String</td>
-<td>_Optional_. Url of the thumbnail for the result</td>
+<td>Url of the thumbnail for the result</td>
 </tr>
 <tr>
-<td>thumbnail_width</td>
+<td>thumbnail_width?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail width</td>
+<td>Thumbnail width</td>
 </tr>
 <tr>
-<td>thumbnail_height</td>
+<td>thumbnail_height?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail height</td>
+<td>Thumbnail height</td>
 </tr>
 }
 /**
@@ -12143,54 +11471,54 @@ export interface InlineQueryResultPhoto {
 <td>URL of the thumbnail for the photo</td>
 </tr>
 <tr>
-<td>photo_width</td>
+<td>photo_width?</td>
 <td>Integer</td>
-<td>_Optional_. Width of the photo</td>
+<td>Width of the photo</td>
 </tr>
 <tr>
-<td>photo_height</td>
+<td>photo_height?</td>
 <td>Integer</td>
-<td>_Optional_. Height of the photo</td>
+<td>Height of the photo</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title for the result</td>
+<td>Title for the result</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Short description of the result</td>
+<td>Short description of the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the photo</td>
+<td>Content of the message to be sent instead of the photo</td>
 </tr>
 }
 /**
@@ -12215,19 +11543,19 @@ export interface InlineQueryResultGif {
 <td>A valid URL for the GIF file</td>
 </tr>
 <tr>
-<td>gif_width</td>
+<td>gif_width?</td>
 <td>Integer</td>
-<td>_Optional_. Width of the GIF</td>
+<td>Width of the GIF</td>
 </tr>
 <tr>
-<td>gif_height</td>
+<td>gif_height?</td>
 <td>Integer</td>
-<td>_Optional_. Height of the GIF</td>
+<td>Height of the GIF</td>
 </tr>
 <tr>
-<td>gif_duration</td>
+<td>gif_duration?</td>
 <td>Integer</td>
-<td>_Optional_. Duration of the GIF in seconds</td>
+<td>Duration of the GIF in seconds</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
@@ -12235,44 +11563,44 @@ export interface InlineQueryResultGif {
 <td>URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result</td>
 </tr>
 <tr>
-<td>thumbnail_mime_type</td>
+<td>thumbnail_mime_type?</td>
 <td>String</td>
-<td>_Optional_. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
+<td>MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title for the result</td>
+<td>Title for the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the GIF animation</td>
+<td>Content of the message to be sent instead of the GIF animation</td>
 </tr>
 }
 /**
@@ -12297,19 +11625,19 @@ export interface InlineQueryResultMpeg4Gif {
 <td>A valid URL for the MPEG4 file</td>
 </tr>
 <tr>
-<td>mpeg4_width</td>
+<td>mpeg4_width?</td>
 <td>Integer</td>
-<td>_Optional_. Video width</td>
+<td>Video width</td>
 </tr>
 <tr>
-<td>mpeg4_height</td>
+<td>mpeg4_height?</td>
 <td>Integer</td>
-<td>_Optional_. Video height</td>
+<td>Video height</td>
 </tr>
 <tr>
-<td>mpeg4_duration</td>
+<td>mpeg4_duration?</td>
 <td>Integer</td>
-<td>_Optional_. Video duration in seconds</td>
+<td>Video duration in seconds</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
@@ -12317,44 +11645,44 @@ export interface InlineQueryResultMpeg4Gif {
 <td>URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result</td>
 </tr>
 <tr>
-<td>thumbnail_mime_type</td>
+<td>thumbnail_mime_type?</td>
 <td>String</td>
-<td>_Optional_. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
+<td>MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title for the result</td>
+<td>Title for the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the video animation</td>
+<td>Content of the message to be sent instead of the video animation</td>
 </tr>
 }
 /**
@@ -12397,54 +11725,54 @@ export interface InlineQueryResultVideo {
 <td>Title for the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the video to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>video_width</td>
+<td>video_width?</td>
 <td>Integer</td>
-<td>_Optional_. Video width</td>
+<td>Video width</td>
 </tr>
 <tr>
-<td>video_height</td>
+<td>video_height?</td>
 <td>Integer</td>
-<td>_Optional_. Video height</td>
+<td>Video height</td>
 </tr>
 <tr>
-<td>video_duration</td>
+<td>video_duration?</td>
 <td>Integer</td>
-<td>_Optional_. Video duration in seconds</td>
+<td>Video duration in seconds</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Short description of the result</td>
+<td>Short description of the result</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the video. This field is **required** if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).</td>
+<td>Content of the message to be sent instead of the video. This field is **required** if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).</td>
 </tr>
 }
 /**
@@ -12474,39 +11802,39 @@ export interface InlineQueryResultAudio {
 <td>Title</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
+<td>Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>performer</td>
+<td>performer?</td>
 <td>String</td>
-<td>_Optional_. Performer</td>
+<td>Performer</td>
 </tr>
 <tr>
-<td>audio_duration</td>
+<td>audio_duration?</td>
 <td>Integer</td>
-<td>_Optional_. Audio duration in seconds</td>
+<td>Audio duration in seconds</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the audio</td>
+<td>Content of the message to be sent instead of the audio</td>
 </tr>
 }
 /**
@@ -12536,34 +11864,34 @@ export interface InlineQueryResultVoice {
 <td>Recording title</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
+<td>Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>voice_duration</td>
+<td>voice_duration?</td>
 <td>Integer</td>
-<td>_Optional_. Recording duration in seconds</td>
+<td>Recording duration in seconds</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the voice recording</td>
+<td>Content of the message to be sent instead of the voice recording</td>
 </tr>
 }
 /**
@@ -12588,19 +11916,19 @@ export interface InlineQueryResultDocument {
 <td>Title for the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the document to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>document_url</td>
@@ -12613,34 +11941,34 @@ export interface InlineQueryResultDocument {
 <td>MIME type of the content of the file, either “application/pdf” or “application/zip”</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Short description of the result</td>
+<td>Short description of the result</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. Inline keyboard attached to the message</td>
+<td>Inline keyboard attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the file</td>
+<td>Content of the message to be sent instead of the file</td>
 </tr>
 <tr>
-<td>thumbnail_url</td>
+<td>thumbnail_url?</td>
 <td>String</td>
-<td>_Optional_. URL of the thumbnail (JPEG only) for the file</td>
+<td>URL of the thumbnail (JPEG only) for the file</td>
 </tr>
 <tr>
-<td>thumbnail_width</td>
+<td>thumbnail_width?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail width</td>
+<td>Thumbnail width</td>
 </tr>
 <tr>
-<td>thumbnail_height</td>
+<td>thumbnail_height?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail height</td>
+<td>Thumbnail height</td>
 </tr>
 }
 /**
@@ -12675,49 +12003,49 @@ export interface InlineQueryResultLocation {
 <td>Location title</td>
 </tr>
 <tr>
-<td>horizontal_accuracy</td>
+<td>horizontal_accuracy?</td>
 <td>Float</td>
-<td>_Optional_. The radius of uncertainty for the location, measured in meters; 0-1500</td>
+<td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
-<td>live_period</td>
+<td>live_period?</td>
 <td>Integer</td>
-<td>_Optional_. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
+<td>Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
 </tr>
 <tr>
-<td>heading</td>
+<td>heading?</td>
 <td>Integer</td>
-<td>_Optional_. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
+<td>For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
 </tr>
 <tr>
-<td>proximity_alert_radius</td>
+<td>proximity_alert_radius?</td>
 <td>Integer</td>
-<td>_Optional_. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
+<td>For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the location</td>
+<td>Content of the message to be sent instead of the location</td>
 </tr>
 <tr>
-<td>thumbnail_url</td>
+<td>thumbnail_url?</td>
 <td>String</td>
-<td>_Optional_. Url of the thumbnail for the result</td>
+<td>Url of the thumbnail for the result</td>
 </tr>
 <tr>
-<td>thumbnail_width</td>
+<td>thumbnail_width?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail width</td>
+<td>Thumbnail width</td>
 </tr>
 <tr>
-<td>thumbnail_height</td>
+<td>thumbnail_height?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail height</td>
+<td>Thumbnail height</td>
 </tr>
 }
 /**
@@ -12757,49 +12085,49 @@ export interface InlineQueryResultVenue {
 <td>Address of the venue</td>
 </tr>
 <tr>
-<td>foursquare_id</td>
+<td>foursquare_id?</td>
 <td>String</td>
-<td>_Optional_. Foursquare identifier of the venue if known</td>
+<td>Foursquare identifier of the venue if known</td>
 </tr>
 <tr>
-<td>foursquare_type</td>
+<td>foursquare_type?</td>
 <td>String</td>
-<td>_Optional_. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
+<td>Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
 </tr>
 <tr>
-<td>google_place_id</td>
+<td>google_place_id?</td>
 <td>String</td>
-<td>_Optional_. Google Places identifier of the venue</td>
+<td>Google Places identifier of the venue</td>
 </tr>
 <tr>
-<td>google_place_type</td>
+<td>google_place_type?</td>
 <td>String</td>
-<td>_Optional_. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
+<td>Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the venue</td>
+<td>Content of the message to be sent instead of the venue</td>
 </tr>
 <tr>
-<td>thumbnail_url</td>
+<td>thumbnail_url?</td>
 <td>String</td>
-<td>_Optional_. Url of the thumbnail for the result</td>
+<td>Url of the thumbnail for the result</td>
 </tr>
 <tr>
-<td>thumbnail_width</td>
+<td>thumbnail_width?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail width</td>
+<td>Thumbnail width</td>
 </tr>
 <tr>
-<td>thumbnail_height</td>
+<td>thumbnail_height?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail height</td>
+<td>Thumbnail height</td>
 </tr>
 }
 /**
@@ -12829,39 +12157,39 @@ export interface InlineQueryResultContact {
 <td>Contact&#39;s first name</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>_Optional_. Contact&#39;s last name</td>
+<td>Contact&#39;s last name</td>
 </tr>
 <tr>
-<td>vcard</td>
+<td>vcard?</td>
 <td>String</td>
-<td>_Optional_. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
+<td>Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the contact</td>
+<td>Content of the message to be sent instead of the contact</td>
 </tr>
 <tr>
-<td>thumbnail_url</td>
+<td>thumbnail_url?</td>
 <td>String</td>
-<td>_Optional_. Url of the thumbnail for the result</td>
+<td>Url of the thumbnail for the result</td>
 </tr>
 <tr>
-<td>thumbnail_width</td>
+<td>thumbnail_width?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail width</td>
+<td>Thumbnail width</td>
 </tr>
 <tr>
-<td>thumbnail_height</td>
+<td>thumbnail_height?</td>
 <td>Integer</td>
-<td>_Optional_. Thumbnail height</td>
+<td>Thumbnail height</td>
 </tr>
 }
 /**
@@ -12886,9 +12214,9 @@ export interface InlineQueryResultGame {
 <td>Short name of the game</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 }
 /**
@@ -12913,44 +12241,44 @@ export interface InlineQueryResultCachedPhoto {
 <td>A valid file identifier of the photo</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title for the result</td>
+<td>Title for the result</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Short description of the result</td>
+<td>Short description of the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the photo</td>
+<td>Content of the message to be sent instead of the photo</td>
 </tr>
 }
 /**
@@ -12975,39 +12303,39 @@ export interface InlineQueryResultCachedGif {
 <td>A valid file identifier for the GIF file</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title for the result</td>
+<td>Title for the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the GIF animation</td>
+<td>Content of the message to be sent instead of the GIF animation</td>
 </tr>
 }
 /**
@@ -13032,39 +12360,39 @@ export interface InlineQueryResultCachedMpeg4Gif {
 <td>A valid file identifier for the MPEG4 file</td>
 </tr>
 <tr>
-<td>title</td>
+<td>title?</td>
 <td>String</td>
-<td>_Optional_. Title for the result</td>
+<td>Title for the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the video animation</td>
+<td>Content of the message to be sent instead of the video animation</td>
 </tr>
 }
 /**
@@ -13089,14 +12417,14 @@ export interface InlineQueryResultCachedSticker {
 <td>A valid file identifier of the sticker</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the sticker</td>
+<td>Content of the message to be sent instead of the sticker</td>
 </tr>
 }
 /**
@@ -13126,34 +12454,34 @@ export interface InlineQueryResultCachedDocument {
 <td>A valid file identifier for the file</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Short description of the result</td>
+<td>Short description of the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the document to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the file</td>
+<td>Content of the message to be sent instead of the file</td>
 </tr>
 }
 /**
@@ -13183,39 +12511,39 @@ export interface InlineQueryResultCachedVideo {
 <td>Title for the result</td>
 </tr>
 <tr>
-<td>description</td>
+<td>description?</td>
 <td>String</td>
-<td>_Optional_. Short description of the result</td>
+<td>Short description of the result</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
+<td>Caption of the video to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>show_caption_above_media</td>
+<td>show_caption_above_media?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the video</td>
+<td>Content of the message to be sent instead of the video</td>
 </tr>
 }
 /**
@@ -13245,29 +12573,29 @@ export interface InlineQueryResultCachedVoice {
 <td>Voice message title</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
+<td>Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the voice message</td>
+<td>Content of the message to be sent instead of the voice message</td>
 </tr>
 }
 /**
@@ -13292,29 +12620,29 @@ export interface InlineQueryResultCachedAudio {
 <td>A valid file identifier for the audio file</td>
 </tr>
 <tr>
-<td>caption</td>
+<td>caption?</td>
 <td>String</td>
-<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
+<td>Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>caption_entities</td>
+<td>caption_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td><a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
-<td>input_message_content</td>
+<td>input_message_content?</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>_Optional_. Content of the message to be sent instead of the audio</td>
+<td>Content of the message to be sent instead of the audio</td>
 </tr>
 }
 /**
@@ -13345,19 +12673,19 @@ export interface InputTextMessageContent {
 <td>Text of the message to be sent, 1-4096 characters</td>
 </tr>
 <tr>
-<td>parse_mode</td>
+<td>parse_mode?</td>
 <td>String</td>
-<td>_Optional_. Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
-<td>entities</td>
+<td>entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. List of special entities that appear in message text, which can be specified instead of _parse_mode_</td>
+<td>List of special entities that appear in message text, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
-<td>link_preview_options</td>
+<td>link_preview_options?</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td>_Optional_. Link preview generation options for the message</td>
+<td>Link preview generation options for the message</td>
 </tr>
 }
 /**
@@ -13377,24 +12705,24 @@ export interface InputLocationMessageContent {
 <td>Longitude of the location in degrees</td>
 </tr>
 <tr>
-<td>horizontal_accuracy</td>
+<td>horizontal_accuracy?</td>
 <td>Float</td>
-<td>_Optional_. The radius of uncertainty for the location, measured in meters; 0-1500</td>
+<td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
-<td>live_period</td>
+<td>live_period?</td>
 <td>Integer</td>
-<td>_Optional_. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
+<td>Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
 </tr>
 <tr>
-<td>heading</td>
+<td>heading?</td>
 <td>Integer</td>
-<td>_Optional_. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
+<td>For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
 </tr>
 <tr>
-<td>proximity_alert_radius</td>
+<td>proximity_alert_radius?</td>
 <td>Integer</td>
-<td>_Optional_. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
+<td>For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
 </tr>
 }
 /**
@@ -13424,24 +12752,24 @@ export interface InputVenueMessageContent {
 <td>Address of the venue</td>
 </tr>
 <tr>
-<td>foursquare_id</td>
+<td>foursquare_id?</td>
 <td>String</td>
-<td>_Optional_. Foursquare identifier of the venue, if known</td>
+<td>Foursquare identifier of the venue, if known</td>
 </tr>
 <tr>
-<td>foursquare_type</td>
+<td>foursquare_type?</td>
 <td>String</td>
-<td>_Optional_. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
+<td>Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
 </tr>
 <tr>
-<td>google_place_id</td>
+<td>google_place_id?</td>
 <td>String</td>
-<td>_Optional_. Google Places identifier of the venue</td>
+<td>Google Places identifier of the venue</td>
 </tr>
 <tr>
-<td>google_place_type</td>
+<td>google_place_type?</td>
 <td>String</td>
-<td>_Optional_. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
+<td>Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
 </tr>
 }
 /**
@@ -13461,14 +12789,14 @@ export interface InputContactMessageContent {
 <td>Contact&#39;s first name</td>
 </tr>
 <tr>
-<td>last_name</td>
+<td>last_name?</td>
 <td>String</td>
-<td>_Optional_. Contact&#39;s last name</td>
+<td>Contact&#39;s last name</td>
 </tr>
 <tr>
-<td>vcard</td>
+<td>vcard?</td>
 <td>String</td>
-<td>_Optional_. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
+<td>Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
 </tr>
 }
 /**
@@ -13493,9 +12821,9 @@ export interface InputInvoiceMessageContent {
 <td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
 </tr>
 <tr>
-<td>provider_token</td>
+<td>provider_token?</td>
 <td>String</td>
-<td>_Optional_. Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>currency</td>
@@ -13508,74 +12836,74 @@ export interface InputInvoiceMessageContent {
 <td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>max_tip_amount</td>
+<td>max_tip_amount?</td>
 <td>Integer</td>
-<td>_Optional_. The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>suggested_tip_amounts</td>
+<td>suggested_tip_amounts?</td>
 <td>Array of Integer</td>
-<td>_Optional_. A JSON-serialized array of suggested amounts of tip in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.</td>
+<td>A JSON-serialized array of suggested amounts of tip in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.</td>
 </tr>
 <tr>
-<td>provider_data</td>
+<td>provider_data?</td>
 <td>String</td>
-<td>_Optional_. A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.</td>
+<td>A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.</td>
 </tr>
 <tr>
-<td>photo_url</td>
+<td>photo_url?</td>
 <td>String</td>
-<td>_Optional_. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
+<td>URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
 </tr>
 <tr>
-<td>photo_size</td>
+<td>photo_size?</td>
 <td>Integer</td>
-<td>_Optional_. Photo size in bytes</td>
+<td>Photo size in bytes</td>
 </tr>
 <tr>
-<td>photo_width</td>
+<td>photo_width?</td>
 <td>Integer</td>
-<td>_Optional_. Photo width</td>
+<td>Photo width</td>
 </tr>
 <tr>
-<td>photo_height</td>
+<td>photo_height?</td>
 <td>Integer</td>
-<td>_Optional_. Photo height</td>
+<td>Photo height</td>
 </tr>
 <tr>
-<td>need_name</td>
+<td>need_name?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_phone_number</td>
+<td>need_phone_number?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_email</td>
+<td>need_email?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_shipping_address</td>
+<td>need_shipping_address?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>send_phone_number_to_provider</td>
+<td>send_phone_number_to_provider?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>send_email_to_provider</td>
+<td>send_email_to_provider?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>is_flexible</td>
+<td>is_flexible?</td>
 <td>Boolean</td>
-<td>_Optional_. Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 }
 /**
@@ -13595,14 +12923,14 @@ export interface ChosenInlineResult {
 <td>The user that chose the result</td>
 </tr>
 <tr>
-<td>location</td>
+<td>location?</td>
 <td><a href="#location">Location</a></td>
-<td>_Optional_. Sender location, only for bots that require user location</td>
+<td>Sender location, only for bots that require user location</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>_Optional_. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.</td>
+<td>Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.</td>
 </tr>
 <tr>
 <td>query</td>
@@ -13621,13 +12949,11 @@ export interface ApiMethods {
 <tr>
 <td>web_app_query_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier for the query to be answered</td>
 </tr>
 <tr>
 <td>result</td>
 <td><a href="#inlinequeryresult">InlineQueryResult</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object describing the message to be sent</td>
 </tr>
   }): SentWebAppMessage;
@@ -13639,9 +12965,9 @@ export interface ApiMethods {
  */
 export interface SentWebAppMessage {
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>_Optional_. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.</td>
+<td>Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.</td>
 </tr>
 }
 export interface ApiMethods {
@@ -13654,37 +12980,31 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier of the target user that can use the prepared message</td>
 </tr>
 <tr>
 <td>result</td>
 <td><a href="#inlinequeryresult">InlineQueryResult</a></td>
-<td>Yes</td>
 <td>A JSON-serialized object describing the message to be sent</td>
 </tr>
 <tr>
-<td>allow_user_chats</td>
+<td>allow_user_chats?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the message can be sent to private chats with users</td>
 </tr>
 <tr>
-<td>allow_bot_chats</td>
+<td>allow_bot_chats?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the message can be sent to private chats with bots</td>
 </tr>
 <tr>
-<td>allow_group_chats</td>
+<td>allow_group_chats?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the message can be sent to group and supergroup chats</td>
 </tr>
 <tr>
-<td>allow_channel_chats</td>
+<td>allow_channel_chats?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the message can be sent to channel chats</td>
 </tr>
   }): PreparedInlineMessage;
@@ -13718,187 +13038,156 @@ export interface ApiMethods {
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
-<td>direct_messages_topic_id</td>
+<td>direct_messages_topic_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td>Yes</td>
 <td>Product name, 1-32 characters</td>
 </tr>
 <tr>
 <td>description</td>
 <td>String</td>
-<td>Yes</td>
 <td>Product description, 1-255 characters</td>
 </tr>
 <tr>
 <td>payload</td>
 <td>String</td>
-<td>Yes</td>
 <td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
 </tr>
 <tr>
-<td>provider_token</td>
+<td>provider_token?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>currency</td>
 <td>String</td>
-<td>Yes</td>
 <td>Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>prices</td>
 <td>Array of <a href="#labeledprice">LabeledPrice</a></td>
-<td>Yes</td>
 <td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>max_tip_amount</td>
+<td>max_tip_amount?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>suggested_tip_amounts</td>
+<td>suggested_tip_amounts?</td>
 <td>Array of Integer</td>
-<td>Optional</td>
 <td>A JSON-serialized array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.</td>
 </tr>
 <tr>
-<td>start_parameter</td>
+<td>start_parameter?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique deep-linking parameter. If left empty, **forwarded copies** of the sent message will have a _Pay_ button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a _URL_ button with a deep link to the bot (instead of a _Pay_ button), with the value used as the start parameter</td>
 </tr>
 <tr>
-<td>provider_data</td>
+<td>provider_data?</td>
 <td>String</td>
-<td>Optional</td>
 <td>JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.</td>
 </tr>
 <tr>
-<td>photo_url</td>
+<td>photo_url?</td>
 <td>String</td>
-<td>Optional</td>
 <td>URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.</td>
 </tr>
 <tr>
-<td>photo_size</td>
+<td>photo_size?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Photo size in bytes</td>
 </tr>
 <tr>
-<td>photo_width</td>
+<td>photo_width?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Photo width</td>
 </tr>
 <tr>
-<td>photo_height</td>
+<td>photo_height?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Photo height</td>
 </tr>
 <tr>
-<td>need_name</td>
+<td>need_name?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_phone_number</td>
+<td>need_phone_number?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_email</td>
+<td>need_email?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_shipping_address</td>
+<td>need_shipping_address?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>send_phone_number_to_provider</td>
+<td>send_phone_number_to_provider?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>send_email_to_provider</td>
+<td>send_email_to_provider?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>is_flexible</td>
+<td>is_flexible?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>suggested_post_parameters</td>
+<td>suggested_post_parameters?</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.</td>
 </tr>
   }): Message;
@@ -13911,135 +13200,113 @@ export interface ApiMethods {
     */
   createInvoiceLink({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the link will be created. For payments in <a href="https://t.me/BotNews/90">Telegram Stars</a> only.</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td>Yes</td>
 <td>Product name, 1-32 characters</td>
 </tr>
 <tr>
 <td>description</td>
 <td>String</td>
-<td>Yes</td>
 <td>Product description, 1-255 characters</td>
 </tr>
 <tr>
 <td>payload</td>
 <td>String</td>
-<td>Yes</td>
 <td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
 </tr>
 <tr>
-<td>provider_token</td>
+<td>provider_token?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>currency</td>
 <td>String</td>
-<td>Yes</td>
 <td>Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>prices</td>
 <td>Array of <a href="#labeledprice">LabeledPrice</a></td>
-<td>Yes</td>
 <td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>subscription_period</td>
+<td>subscription_period?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The number of seconds the subscription will be active for before the next payment. The currency must be set to “XTR” (Telegram Stars) if the parameter is used. Currently, it must always be 2592000 (30 days) if specified. Any number of subscriptions can be active for a given bot at the same time, including multiple concurrent subscriptions from the same user. Subscription price must no exceed 10000 Telegram Stars.</td>
 </tr>
 <tr>
-<td>max_tip_amount</td>
+<td>max_tip_amount?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>suggested_tip_amounts</td>
+<td>suggested_tip_amounts?</td>
 <td>Array of Integer</td>
-<td>Optional</td>
 <td>A JSON-serialized array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.</td>
 </tr>
 <tr>
-<td>provider_data</td>
+<td>provider_data?</td>
 <td>String</td>
-<td>Optional</td>
 <td>JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.</td>
 </tr>
 <tr>
-<td>photo_url</td>
+<td>photo_url?</td>
 <td>String</td>
-<td>Optional</td>
 <td>URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
 </tr>
 <tr>
-<td>photo_size</td>
+<td>photo_size?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Photo size in bytes</td>
 </tr>
 <tr>
-<td>photo_width</td>
+<td>photo_width?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Photo width</td>
 </tr>
 <tr>
-<td>photo_height</td>
+<td>photo_height?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Photo height</td>
 </tr>
 <tr>
-<td>need_name</td>
+<td>need_name?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_phone_number</td>
+<td>need_phone_number?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_email</td>
+<td>need_email?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>need_shipping_address</td>
+<td>need_shipping_address?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>send_phone_number_to_provider</td>
+<td>send_phone_number_to_provider?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>send_email_to_provider</td>
+<td>send_email_to_provider?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
-<td>is_flexible</td>
+<td>is_flexible?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
     }): string;
@@ -14054,25 +13321,21 @@ export interface ApiMethods {
 <tr>
 <td>shipping_query_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier for the query to be answered</td>
 </tr>
 <tr>
 <td>ok</td>
 <td>Boolean</td>
-<td>Yes</td>
 <td>Pass _True_ if delivery to the specified address is possible and _False_ if there are any problems (for example, if delivery to the specified address is not possible)</td>
 </tr>
 <tr>
-<td>shipping_options</td>
+<td>shipping_options?</td>
 <td>Array of <a href="#shippingoption">ShippingOption</a></td>
-<td>Optional</td>
 <td>Required if _ok_ is _True_. A JSON-serialized array of available shipping options.</td>
 </tr>
 <tr>
-<td>error_message</td>
+<td>error_message?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _ok_ is _False_. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.</td>
 </tr>
   }): true;
@@ -14087,19 +13350,16 @@ export interface ApiMethods {
 <tr>
 <td>pre_checkout_query_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Unique identifier for the query to be answered</td>
 </tr>
 <tr>
 <td>ok</td>
 <td>Boolean</td>
-<td>Yes</td>
 <td>Specify _True_ if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use _False_ if there are any problems.</td>
 </tr>
 <tr>
-<td>error_message</td>
+<td>error_message?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _ok_ is _False_. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.</td>
 </tr>
   }): true;
@@ -14118,15 +13378,13 @@ export interface ApiMethods {
     */
   getStarTransactions({
 <tr>
-<td>offset</td>
+<td>offset?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Number of transactions to skip in the response</td>
 </tr>
 <tr>
-<td>limit</td>
+<td>limit?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
 </tr>
   }): StarTransactions;
@@ -14141,13 +13399,11 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of the user whose payment will be refunded</td>
 </tr>
 <tr>
 <td>telegram_payment_charge_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Telegram payment identifier</td>
 </tr>
   }): true;
@@ -14162,19 +13418,16 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Identifier of the user whose subscription will be edited</td>
 </tr>
 <tr>
 <td>telegram_payment_charge_id</td>
 <td>String</td>
-<td>Yes</td>
 <td>Telegram payment identifier for the subscription</td>
 </tr>
 <tr>
 <td>is_canceled</td>
 <td>Boolean</td>
-<td>Yes</td>
 <td>Pass _True_ to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass _False_ to allow the user to re-enable a subscription that was previously canceled by the bot.</td>
 </tr>
   }): true;
@@ -14272,24 +13525,24 @@ export interface ShippingAddress {
  */
 export interface OrderInfo {
 <tr>
-<td>name</td>
+<td>name?</td>
 <td>String</td>
-<td>_Optional_. User name</td>
+<td>User name</td>
 </tr>
 <tr>
-<td>phone_number</td>
+<td>phone_number?</td>
 <td>String</td>
-<td>_Optional_. User&#39;s phone number</td>
+<td>User&#39;s phone number</td>
 </tr>
 <tr>
-<td>email</td>
+<td>email?</td>
 <td>String</td>
-<td>_Optional_. User email</td>
+<td>User email</td>
 </tr>
 <tr>
-<td>shipping_address</td>
+<td>shipping_address?</td>
 <td><a href="#shippingaddress">ShippingAddress</a></td>
-<td>_Optional_. User shipping address</td>
+<td>User shipping address</td>
 </tr>
 }
 /**
@@ -14336,29 +13589,29 @@ export interface SuccessfulPayment {
 <td>Bot-specified invoice payload</td>
 </tr>
 <tr>
-<td>subscription_expiration_date</td>
+<td>subscription_expiration_date?</td>
 <td>Integer</td>
-<td>_Optional_. Expiration date of the subscription, in Unix time; for recurring payments only</td>
+<td>Expiration date of the subscription, in Unix time; for recurring payments only</td>
 </tr>
 <tr>
-<td>is_recurring</td>
+<td>is_recurring?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the payment is a recurring payment for a subscription</td>
+<td>_True_, if the payment is a recurring payment for a subscription</td>
 </tr>
 <tr>
-<td>is_first_recurring</td>
+<td>is_first_recurring?</td>
 <td>True</td>
-<td>_Optional_. _True_, if the payment is the first payment for a subscription</td>
+<td>_True_, if the payment is the first payment for a subscription</td>
 </tr>
 <tr>
-<td>shipping_option_id</td>
+<td>shipping_option_id?</td>
 <td>String</td>
-<td>_Optional_. Identifier of the shipping option chosen by the user</td>
+<td>Identifier of the shipping option chosen by the user</td>
 </tr>
 <tr>
-<td>order_info</td>
+<td>order_info?</td>
 <td><a href="#orderinfo">OrderInfo</a></td>
-<td>_Optional_. Order information provided by the user</td>
+<td>Order information provided by the user</td>
 </tr>
 <tr>
 <td>telegram_payment_charge_id</td>
@@ -14398,9 +13651,9 @@ export interface RefundedPayment {
 <td>Telegram payment identifier</td>
 </tr>
 <tr>
-<td>provider_payment_charge_id</td>
+<td>provider_payment_charge_id?</td>
 <td>String</td>
-<td>_Optional_. Provider payment identifier</td>
+<td>Provider payment identifier</td>
 </tr>
 }
 /**
@@ -14462,14 +13715,14 @@ export interface PreCheckoutQuery {
 <td>Bot-specified invoice payload</td>
 </tr>
 <tr>
-<td>shipping_option_id</td>
+<td>shipping_option_id?</td>
 <td>String</td>
-<td>_Optional_. Identifier of the shipping option chosen by the user</td>
+<td>Identifier of the shipping option chosen by the user</td>
 </tr>
 <tr>
-<td>order_info</td>
+<td>order_info?</td>
 <td><a href="#orderinfo">OrderInfo</a></td>
-<td>_Optional_. Order information provided by the user</td>
+<td>Order information provided by the user</td>
 </tr>
 }
 /**
@@ -14554,14 +13807,14 @@ export interface RevenueWithdrawalStateFailed {
  */
 export interface AffiliateInfo {
 <tr>
-<td>affiliate_user</td>
+<td>affiliate_user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. The bot or the user that received an affiliate commission if it was received by a bot or a user</td>
+<td>The bot or the user that received an affiliate commission if it was received by a bot or a user</td>
 </tr>
 <tr>
-<td>affiliate_chat</td>
+<td>affiliate_chat?</td>
 <td><a href="#chat">Chat</a></td>
-<td>_Optional_. The chat that received an affiliate commission if it was received by a chat</td>
+<td>The chat that received an affiliate commission if it was received by a chat</td>
 </tr>
 <tr>
 <td>commission_per_mille</td>
@@ -14574,9 +13827,9 @@ export interface AffiliateInfo {
 <td>Integer amount of Telegram Stars received by the affiliate from the transaction, rounded to 0; can be negative for refunds</td>
 </tr>
 <tr>
-<td>nanostar_amount</td>
+<td>nanostar_amount?</td>
 <td>Integer</td>
-<td>_Optional_. The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds</td>
+<td>The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds</td>
 </tr>
 }
 /**
@@ -14621,39 +13874,39 @@ export interface TransactionPartnerUser {
 <td>Information about the user</td>
 </tr>
 <tr>
-<td>affiliate</td>
+<td>affiliate?</td>
 <td><a href="#affiliateinfo">AffiliateInfo</a></td>
-<td>_Optional_. Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.</td>
+<td>Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.</td>
 </tr>
 <tr>
-<td>invoice_payload</td>
+<td>invoice_payload?</td>
 <td>String</td>
-<td>_Optional_. Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.</td>
+<td>Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.</td>
 </tr>
 <tr>
-<td>subscription_period</td>
+<td>subscription_period?</td>
 <td>Integer</td>
-<td>_Optional_. The duration of the paid subscription. Can be available only for “invoice_payment” transactions.</td>
+<td>The duration of the paid subscription. Can be available only for “invoice_payment” transactions.</td>
 </tr>
 <tr>
-<td>paid_media</td>
+<td>paid_media?</td>
 <td>Array of <a href="#paidmedia">PaidMedia</a></td>
-<td>_Optional_. Information about the paid media bought by the user; for “paid_media_payment” transactions only</td>
+<td>Information about the paid media bought by the user; for “paid_media_payment” transactions only</td>
 </tr>
 <tr>
-<td>paid_media_payload</td>
+<td>paid_media_payload?</td>
 <td>String</td>
-<td>_Optional_. Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.</td>
+<td>Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.</td>
 </tr>
 <tr>
-<td>gift</td>
+<td>gift?</td>
 <td><a href="#gift">Gift</a></td>
-<td>_Optional_. The gift sent to the user by the bot; for “gift_purchase” transactions only</td>
+<td>The gift sent to the user by the bot; for “gift_purchase” transactions only</td>
 </tr>
 <tr>
-<td>premium_subscription_duration</td>
+<td>premium_subscription_duration?</td>
 <td>Integer</td>
-<td>_Optional_. Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only</td>
+<td>Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only</td>
 </tr>
 }
 /**
@@ -14673,9 +13926,9 @@ export interface TransactionPartnerChat {
 <td>Information about the chat</td>
 </tr>
 <tr>
-<td>gift</td>
+<td>gift?</td>
 <td><a href="#gift">Gift</a></td>
-<td>_Optional_. The gift sent to the chat by the bot</td>
+<td>The gift sent to the chat by the bot</td>
 </tr>
 }
 /**
@@ -14690,9 +13943,9 @@ export interface TransactionPartnerAffiliateProgram {
 <td>Type of the transaction partner, always “affiliate_program”</td>
 </tr>
 <tr>
-<td>sponsor_user</td>
+<td>sponsor_user?</td>
 <td><a href="#user">User</a></td>
-<td>_Optional_. Information about the bot that sponsored the affiliate program</td>
+<td>Information about the bot that sponsored the affiliate program</td>
 </tr>
 <tr>
 <td>commission_per_mille</td>
@@ -14712,9 +13965,9 @@ export interface TransactionPartnerFragment {
 <td>Type of the transaction partner, always “fragment”</td>
 </tr>
 <tr>
-<td>withdrawal_state</td>
+<td>withdrawal_state?</td>
 <td><a href="#revenuewithdrawalstate">RevenueWithdrawalState</a></td>
-<td>_Optional_. State of the transaction if the transaction is outgoing</td>
+<td>State of the transaction if the transaction is outgoing</td>
 </tr>
 }
 /**
@@ -14775,9 +14028,9 @@ export interface StarTransaction {
 <td>Integer amount of Telegram Stars transferred by the transaction</td>
 </tr>
 <tr>
-<td>nanostar_amount</td>
+<td>nanostar_amount?</td>
 <td>Integer</td>
-<td>_Optional_. The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999</td>
+<td>The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999</td>
 </tr>
 <tr>
 <td>date</td>
@@ -14785,14 +14038,14 @@ export interface StarTransaction {
 <td>Date the transaction was created in Unix time</td>
 </tr>
 <tr>
-<td>source</td>
+<td>source?</td>
 <td><a href="#transactionpartner">TransactionPartner</a></td>
-<td>_Optional_. Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions</td>
+<td>Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions</td>
 </tr>
 <tr>
-<td>receiver</td>
+<td>receiver?</td>
 <td><a href="#transactionpartner">TransactionPartner</a></td>
-<td>_Optional_. Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions</td>
+<td>Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions</td>
 </tr>
 }
 /**
@@ -14865,44 +14118,44 @@ export interface EncryptedPassportElement {
 <td>Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.</td>
 </tr>
 <tr>
-<td>data</td>
+<td>data?</td>
 <td>String</td>
-<td>_Optional_. Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
-<td>phone_number</td>
+<td>phone_number?</td>
 <td>String</td>
-<td>_Optional_. User&#39;s verified phone number; available only for “phone_number” type</td>
+<td>User&#39;s verified phone number; available only for “phone_number” type</td>
 </tr>
 <tr>
-<td>email</td>
+<td>email?</td>
 <td>String</td>
-<td>_Optional_. User&#39;s verified email address; available only for “email” type</td>
+<td>User&#39;s verified email address; available only for “email” type</td>
 </tr>
 <tr>
-<td>files</td>
+<td>files?</td>
 <td>Array of <a href="#passportfile">PassportFile</a></td>
-<td>_Optional_. Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
-<td>front_side</td>
+<td>front_side?</td>
 <td><a href="#passportfile">PassportFile</a></td>
-<td>_Optional_. Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
-<td>reverse_side</td>
+<td>reverse_side?</td>
 <td><a href="#passportfile">PassportFile</a></td>
-<td>_Optional_. Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
-<td>selfie</td>
+<td>selfie?</td>
 <td><a href="#passportfile">PassportFile</a></td>
-<td>_Optional_. Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
-<td>translation</td>
+<td>translation?</td>
 <td>Array of <a href="#passportfile">PassportFile</a></td>
-<td>_Optional_. Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
 <td>hash</td>
@@ -14943,13 +14196,11 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>User identifier</td>
 </tr>
 <tr>
 <td>errors</td>
 <td>Array of <a href="#passportelementerror">PassportElementError</a></td>
-<td>Yes</td>
 <td>A JSON-serialized array describing the errors</td>
 </tr>
   }): true;
@@ -15236,63 +14487,53 @@ export interface ApiMethods {
    */
   sendGame({
 <tr>
-<td>business_connection_id</td>
+<td>business_connection_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the business connection on behalf of which the message will be sent</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Unique identifier for the target chat. Games can&#39;t be sent to channel direct messages chats and channel chats.</td>
 </tr>
 <tr>
-<td>message_thread_id</td>
+<td>message_thread_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Unique identifier for the target message thread (topic) of the forum; for forum supergroups only</td>
 </tr>
 <tr>
 <td>game_short_name</td>
 <td>String</td>
-<td>Yes</td>
 <td>Short name of the game, serves as the unique identifier for the game. Set up your games via <a href="https://t.me/botfather">@BotFather</a>.</td>
 </tr>
 <tr>
-<td>disable_notification</td>
+<td>disable_notification?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.</td>
 </tr>
 <tr>
-<td>protect_content</td>
+<td>protect_content?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
 <tr>
-<td>allow_paid_broadcast</td>
+<td>allow_paid_broadcast?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
-<td>message_effect_id</td>
+<td>message_effect_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Unique identifier of the message effect to be added to the message; for private chats only</td>
 </tr>
 <tr>
-<td>reply_parameters</td>
+<td>reply_parameters?</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
-<td>Optional</td>
 <td>Description of the message to reply to</td>
 </tr>
 <tr>
-<td>reply_markup</td>
+<td>reply_markup?</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td>Optional</td>
 <td>A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.</td>
 </tr>
   }): Message;
@@ -15319,19 +14560,19 @@ export interface Game {
 <td>Photo that will be displayed in the game message in chats.</td>
 </tr>
 <tr>
-<td>text</td>
+<td>text?</td>
 <td>String</td>
-<td>_Optional_. Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.</td>
+<td>Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.</td>
 </tr>
 <tr>
-<td>text_entities</td>
+<td>text_entities?</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>_Optional_. Special entities that appear in _text_, such as usernames, URLs, bot commands, etc.</td>
+<td>Special entities that appear in _text_, such as usernames, URLs, bot commands, etc.</td>
 </tr>
 <tr>
-<td>animation</td>
+<td>animation?</td>
 <td><a href="#animation">Animation</a></td>
-<td>_Optional_. Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a></td>
+<td>Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a></td>
 </tr>
 }
 /**
@@ -15350,43 +14591,36 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>User identifier</td>
 </tr>
 <tr>
 <td>score</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>New score, must be non-negative</td>
 </tr>
 <tr>
-<td>force</td>
+<td>force?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters</td>
 </tr>
 <tr>
-<td>disable_edit_message</td>
+<td>disable_edit_message?</td>
 <td>Boolean</td>
-<td>Optional</td>
 <td>Pass _True_ if the game message should not be automatically edited to include the current scoreboard</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the sent message</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
   }): true | Message;
@@ -15404,25 +14638,21 @@ export interface ApiMethods {
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td>Yes</td>
 <td>Target user id</td>
 </tr>
 <tr>
-<td>chat_id</td>
+<td>chat_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat</td>
 </tr>
 <tr>
-<td>message_id</td>
+<td>message_id?</td>
 <td>Integer</td>
-<td>Optional</td>
 <td>Required if _inline_message_id_ is not specified. Identifier of the sent message</td>
 </tr>
 <tr>
-<td>inline_message_id</td>
+<td>inline_message_id?</td>
 <td>String</td>
-<td>Optional</td>
 <td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
   }): GameHighScore[];
