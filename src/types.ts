@@ -1,3 +1,4 @@
+type Empty = Record<never, never>;
 // === GETTING UPDATES ===
 /**
  * <p>This <a href="#available-types">object</a> represents an incoming update.<br>At most **one** of the optional parameters can be present in any given update.</p>
@@ -106,9 +107,13 @@ export interface ApiMethods {
   /**
    * <p>Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.</p>
    *
+   * <blockquote>
+   * <p>**Notes**<br>**1.** This method will not work if an outgoing webhook is set up.<br>**2.** In order to avoid getting duplicate updates, recalculate _offset_ after each server response.</p>
+   * </blockquote>
+   *
    * @see {@link https://core.telegram.org/bots/api#getupdates}
    */
-  getUpdates({
+  getUpdates(args: {  
   /**
    * Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an _offset_ higher than its _update_id_. The negative offset can be specified to retrieve updates starting from _-offset_ update from the end of the updates queue. All previous updates will be forgotten.
    */
@@ -127,17 +132,19 @@ export interface ApiMethods {
   allowed_updates?: string[];
   }): Update[];
 }
-<blockquote>
-<p>**Notes**<br>**1.** This method will not work if an outgoing webhook is set up.<br>**2.** In order to avoid getting duplicate updates, recalculate _offset_ after each server response.</p>
-</blockquote>
 export interface ApiMethods {
   /**
    * <p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.</p>
    * <p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
    *
+   * <blockquote>
+   * <p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
+   * <p>If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.</p>
+   * </blockquote>
+   *
    * @see {@link https://core.telegram.org/bots/api#setwebhook}
    */
-  setWebhook({
+  setWebhook(args: {  
   /**
    * HTTPS URL to send updates to. Use an empty string to remove webhook integration
    */
@@ -168,17 +175,13 @@ export interface ApiMethods {
   secret_token?: string;
   }): true;
 }
-<blockquote>
-<p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
-<p>If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.</p>
-</blockquote>
 export interface ApiMethods {
   /**
    * <p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns _True_ on success.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#deletewebhook}
    */
-  deleteWebhook({
+  deleteWebhook(args: {  
   /**
    * Pass _True_ to drop all pending updates
    */
@@ -2859,6 +2862,8 @@ export interface ReplyKeyboardMarkup {
 /**
  * <p>This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, _String_ can be used instead of this object to specify the button text.</p>
  *
+ * <p>**Note:** _request_users_ and _request_chat_ options will only work in Telegram versions released after 3 February, 2023. Older clients will display _unsupported message_.</p>
+ *
  * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
  */
 export interface KeyboardButton {
@@ -2891,7 +2896,6 @@ export interface KeyboardButton {
    */
   web_app?: WebAppInfo;
 }
-<p>**Note:** _request_users_ and _request_chat_ options will only work in Telegram versions released after 3 February, 2023. Older clients will display _unsupported message_.</p>
 /**
  * <p>This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="/bots/features#chat-and-user-selection">More about requesting users »</a></p>
  *
@@ -3138,6 +3142,10 @@ export interface CopyTextButton {
 /**
  * <p>This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.</p>
  *
+ * <blockquote>
+ * <p>**NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).</p>
+ * </blockquote>
+ *
  * @see {@link https://core.telegram.org/bots/api#callbackquery}
  */
 export interface CallbackQuery {
@@ -3170,11 +3178,17 @@ export interface CallbackQuery {
    */
   game_short_name?: string;
 }
-<blockquote>
-<p>**NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).</p>
-</blockquote>
 /**
  * <p>Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a Telegram Business account.</p>
+ *
+ * <blockquote>
+ * <p>**Example:** A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:</p>
+ * <ul>
+ * <li>Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.</li>
+ * <li>Guide the user through a step-by-step process. &#39;Please send me your question&#39;, &#39;Cool, now let&#39;s add the first answer option&#39;, &#39;Great. Keep adding answer options, then send /done when you&#39;re ready&#39;.</li>
+ * </ul>
+ * <p>The last option is definitely more attractive. And if you use <a href="#forcereply">ForceReply</a> in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.</p>
+ * </blockquote>
  *
  * @see {@link https://core.telegram.org/bots/api#forcereply}
  */
@@ -3192,14 +3206,6 @@ export interface ForceReply {
    */
   selective?: boolean;
 }
-<blockquote>
-<p>**Example:** A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:</p>
-<ul>
-<li>Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.</li>
-<li>Guide the user through a step-by-step process. &#39;Please send me your question&#39;, &#39;Cool, now let&#39;s add the first answer option&#39;, &#39;Great. Keep adding answer options, then send /done when you&#39;re ready&#39;.</li>
-</ul>
-<p>The last option is definitely more attractive. And if you use <a href="#forcereply">ForceReply</a> in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.</p>
-</blockquote>
 /**
  * <p>This object represents a chat photo.</p>
  *
@@ -4736,13 +4742,14 @@ export interface BotShortDescription {
  * - MenuButtonWebApp
  * - MenuButtonDefault
  *
+ * <p>If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.</p>
+ *
  * @see {@link https://core.telegram.org/bots/api#menubutton}
  */
 export type MenuButton =
  | MenuButtonCommands
  | MenuButtonWebApp
  | MenuButtonDefault
-<p>If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.</p>
   /**
    * <p>Represents a menu button, which opens the bot&#39;s list of commands.</p>
  *
@@ -5468,31 +5475,37 @@ export interface InputStoryContentVideo {
 }
 
 // === AVAILABLE METHODS ===
+export interface ApiMethods {
   /**
    * <p>A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getme}
    */
   getMe(args: Empty): User;
+}
+export interface ApiMethods {
   /**
    * <p>Use this method to log out from the cloud Bot API server before launching the bot locally. You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns _True_ on success. Requires no parameters.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#logout}
    */
   logOut(args: Empty): true;
+}
+export interface ApiMethods {
   /**
    * <p>Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns _True_ on success. Requires no parameters.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#close}
    */
   close(args: Empty): true;
+}
 export interface ApiMethods {
   /**
    * <p>Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#sendmessage}
    */
-  sendMessage({
+  sendMessage(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -5661,7 +5674,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#forwardmessage}
    */
-  forwardMessage({
+  forwardMessage(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -5706,7 +5719,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#forwardmessages}
    */
-  forwardMessages({
+  forwardMessages(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -5743,7 +5756,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#copymessage}
    */
-  copyMessage({
+  copyMessage(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -5816,7 +5829,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#copymessages}
    */
-  copyMessages({
+  copyMessages(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -5857,7 +5870,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendphoto}
    */
-  sendPhoto({
+  sendPhoto(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -5935,7 +5948,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendaudio}
    */
-  sendAudio({
+  sendAudio(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6020,7 +6033,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#senddocument}
    */
-  sendDocument({
+  sendDocument(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6097,7 +6110,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendvideo}
    */
-  sendVideo({
+  sendVideo(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6202,7 +6215,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendanimation}
    */
-  sendAnimation({
+  sendAnimation(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6295,7 +6308,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendvoice}
    */
-  sendVoice({
+  sendVoice(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6368,7 +6381,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendvideonote}
    */
-  sendVideoNote({
+  sendVideoNote(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6437,7 +6450,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendpaidmedia}
    */
-  sendPaidMedia({
+  sendPaidMedia(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6514,7 +6527,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendmediagroup}
    */
-  sendMediaGroup({
+  sendMediaGroup(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6563,7 +6576,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendlocation}
    */
-  sendLocation({
+  sendLocation(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6640,7 +6653,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendvenue}
    */
-  sendVenue({
+  sendVenue(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6725,7 +6738,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendcontact}
    */
-  sendContact({
+  sendContact(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6794,7 +6807,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendpoll}
    */
-  sendPoll({
+  sendPoll(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6895,7 +6908,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendchecklist}
    */
-  sendChecklist({
+  sendChecklist(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6936,7 +6949,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#senddice}
    */
-  sendDice({
+  sendDice(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -6997,7 +7010,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendchataction}
    */
-  sendChatAction({
+  sendChatAction(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the action will be sent
    */
@@ -7022,7 +7035,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
    */
-  setMessageReaction({
+  setMessageReaction(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7047,7 +7060,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#getuserprofilephotos}
    */
-  getUserProfilePhotos({
+  getUserProfilePhotos(args: {  
   /**
    * Unique identifier of the target user
    */
@@ -7068,7 +7081,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#setuseremojistatus}
    */
-  setUserEmojiStatus({
+  setUserEmojiStatus(args: {  
   /**
    * Unique identifier of the target user
    */
@@ -7087,23 +7100,24 @@ export interface ApiMethods {
   /**
    * <p>Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.</p>
    *
+   * <p>**Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.</p>
+   * 
    * @see {@link https://core.telegram.org/bots/api#getfile}
    */
-  getFile({
+  getFile(args: {  
   /**
    * File identifier to get information about
    */
   file_id: string;
   }): File;
 }
-<p>**Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.</p>
 export interface ApiMethods {
   /**
     * <p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
    *
      * @see {@link https://core.telegram.org/bots/api#banchatmember}
     */
-  banChatMember({
+  banChatMember(args: {  
   /**
    * Unique identifier for the target group or username of the target supergroup or channel (in the format `@channelusername`)
    */
@@ -7128,7 +7142,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
     */
-  unbanChatMember({
+  unbanChatMember(args: {  
   /**
    * Unique identifier for the target group or username of the target supergroup or channel (in the format `@channelusername`)
    */
@@ -7149,7 +7163,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#restrictchatmember}
     */
-  restrictChatMember({
+  restrictChatMember(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7178,7 +7192,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#promotechatmember}
     */
-  promoteChatMember({
+  promoteChatMember(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7259,7 +7273,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setchatadministratorcustomtitle}
     */
-  setChatAdministratorCustomTitle({
+  setChatAdministratorCustomTitle(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7280,7 +7294,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
     */
-  banChatSenderChat({
+  banChatSenderChat(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7297,7 +7311,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#unbanchatsenderchat}
     */
-  unbanChatSenderChat({
+  unbanChatSenderChat(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7314,7 +7328,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setchatpermissions}
     */
-  setChatPermissions({
+  setChatPermissions(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7332,26 +7346,27 @@ export interface ApiMethods {
 export interface ApiMethods {
   /**
     * <p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as _String_ on success.</p>
-   *
-     * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
+    *
+    * <blockquote>
+    * <p>Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.</p>
+    * </blockquote>
+    *
+    * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
     */
-  exportChatInviteLink({
+  exportChatInviteLink(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
   chat_id: number | string;
   }): string;
 }
-<blockquote>
-<p>Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.</p>
-</blockquote>
 export interface ApiMethods {
   /**
     * <p>Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
    *
      * @see {@link https://core.telegram.org/bots/api#createchatinvitelink}
     */
-  createChatInviteLink({
+  createChatInviteLink(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7380,7 +7395,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editchatinvitelink}
     */
-  editChatInviteLink({
+  editChatInviteLink(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7413,7 +7428,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink}
     */
-  createChatSubscriptionInviteLink({
+  createChatSubscriptionInviteLink(args: {  
   /**
    * Unique identifier for the target channel chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7438,7 +7453,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editchatsubscriptioninvitelink}
     */
-  editChatSubscriptionInviteLink({
+  editChatSubscriptionInviteLink(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7459,7 +7474,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#revokechatinvitelink}
     */
-  revokeChatInviteLink({
+  revokeChatInviteLink(args: {  
   /**
    * Unique identifier of the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7476,7 +7491,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#approvechatjoinrequest}
     */
-  approveChatJoinRequest({
+  approveChatJoinRequest(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7493,7 +7508,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#declinechatjoinrequest}
     */
-  declineChatJoinRequest({
+  declineChatJoinRequest(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7510,7 +7525,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setchatphoto}
     */
-  setChatPhoto({
+  setChatPhoto(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7527,7 +7542,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletechatphoto}
     */
-  deleteChatPhoto({
+  deleteChatPhoto(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7540,7 +7555,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setchattitle}
     */
-  setChatTitle({
+  setChatTitle(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7557,7 +7572,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setchatdescription}
     */
-  setChatDescription({
+  setChatDescription(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7574,7 +7589,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#pinchatmessage}
     */
-  pinChatMessage({
+  pinChatMessage(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be pinned
    */
@@ -7599,7 +7614,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#unpinchatmessage}
     */
-  unpinChatMessage({
+  unpinChatMessage(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be unpinned
    */
@@ -7620,7 +7635,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#unpinallchatmessages}
     */
-  unpinAllChatMessages({
+  unpinAllChatMessages(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -7633,7 +7648,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#leavechat}
     */
-  leaveChat({
+  leaveChat(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`). Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.
    */
@@ -7646,7 +7661,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getchat}
     */
-  getChat({
+  getChat(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)
    */
@@ -7659,7 +7674,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getchatadministrators}
     */
-  getChatAdministrators({
+  getChatAdministrators(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)
    */
@@ -7672,7 +7687,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getchatmembercount}
     */
-  getChatMemberCount({
+  getChatMemberCount(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)
    */
@@ -7685,7 +7700,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getchatmember}
     */
-  getChatMember({
+  getChatMember(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)
    */
@@ -7702,7 +7717,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setchatstickerset}
     */
-  setChatStickerSet({
+  setChatStickerSet(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7719,26 +7734,28 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletechatstickerset}
     */
-  deleteChatStickerSet({
+  deleteChatStickerSet(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
   chat_id: number | string;
   }): true;
 }
+export interface ApiMethods {
   /**
    * <p>Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getforumtopiciconstickers}
    */
   getForumTopicIconStickers(args: Empty): Sticker[];
+}
 export interface ApiMethods {
   /**
     * <p>Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
    *
      * @see {@link https://core.telegram.org/bots/api#createforumtopic}
     */
-  createForumTopic({
+  createForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7763,7 +7780,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editforumtopic}
     */
-  editForumTopic({
+  editForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7788,7 +7805,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#closeforumtopic}
     */
-  closeForumTopic({
+  closeForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7805,7 +7822,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#reopenforumtopic}
     */
-  reopenForumTopic({
+  reopenForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7822,7 +7839,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deleteforumtopic}
     */
-  deleteForumTopic({
+  deleteForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7839,7 +7856,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#unpinallforumtopicmessages}
     */
-  unpinAllForumTopicMessages({
+  unpinAllForumTopicMessages(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7856,7 +7873,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editgeneralforumtopic}
     */
-  editGeneralForumTopic({
+  editGeneralForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7873,7 +7890,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#closegeneralforumtopic}
     */
-  closeGeneralForumTopic({
+  closeGeneralForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7886,7 +7903,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#reopengeneralforumtopic}
     */
-  reopenGeneralForumTopic({
+  reopenGeneralForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7899,7 +7916,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#hidegeneralforumtopic}
     */
-  hideGeneralForumTopic({
+  hideGeneralForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7912,7 +7929,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#unhidegeneralforumtopic}
     */
-  unhideGeneralForumTopic({
+  unhideGeneralForumTopic(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7925,7 +7942,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages}
     */
-  unpinAllGeneralForumTopicMessages({
+  unpinAllGeneralForumTopicMessages(args: {  
   /**
    * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
    */
@@ -7941,7 +7958,7 @@ export interface ApiMethods {
     *
     * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
     */
-  answerCallbackQuery({
+  answerCallbackQuery(args: {  
   /**
    * Unique identifier for the query to be answered
    */
@@ -7970,7 +7987,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getuserchatboosts}
     */
-  getUserChatBoosts({
+  getUserChatBoosts(args: {  
   /**
    * Unique identifier for the chat or username of the channel (in the format `@channelusername`)
    */
@@ -7987,7 +8004,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getbusinessconnection}
     */
-  getBusinessConnection({
+  getBusinessConnection(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8000,7 +8017,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setmycommands}
     */
-  setMyCommands({
+  setMyCommands(args: {  
   /**
    * A JSON-serialized list of bot commands to be set as the list of the bot&#39;s commands. At most 100 commands can be specified.
    */
@@ -8021,7 +8038,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletemycommands}
     */
-  deleteMyCommands({
+  deleteMyCommands(args: {  
   /**
    * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
    */
@@ -8038,7 +8055,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getmycommands}
     */
-  getMyCommands({
+  getMyCommands(args: {  
   /**
    * A JSON-serialized object, describing scope of users. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
    */
@@ -8055,7 +8072,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setmyname}
     */
-  setMyName({
+  setMyName(args: {  
   /**
    * New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.
    */
@@ -8072,7 +8089,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getmyname}
     */
-  getMyName({
+  getMyName(args: {  
   /**
    * A two-letter ISO 639-1 language code or an empty string
    */
@@ -8085,7 +8102,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setmydescription}
     */
-  setMyDescription({
+  setMyDescription(args: {  
   /**
    * New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.
    */
@@ -8102,7 +8119,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getmydescription}
     */
-  getMyDescription({
+  getMyDescription(args: {  
   /**
    * A two-letter ISO 639-1 language code or an empty string
    */
@@ -8115,7 +8132,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setmyshortdescription}
     */
-  setMyShortDescription({
+  setMyShortDescription(args: {  
   /**
    * New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.
    */
@@ -8132,7 +8149,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getmyshortdescription}
     */
-  getMyShortDescription({
+  getMyShortDescription(args: {  
   /**
    * A two-letter ISO 639-1 language code or an empty string
    */
@@ -8145,7 +8162,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setchatmenubutton}
     */
-  setChatMenuButton({
+  setChatMenuButton(args: {  
   /**
    * Unique identifier for the target private chat. If not specified, default bot&#39;s menu button will be changed
    */
@@ -8162,7 +8179,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getchatmenubutton}
     */
-  getChatMenuButton({
+  getChatMenuButton(args: {  
   /**
    * Unique identifier for the target private chat. If not specified, default bot&#39;s menu button will be returned
    */
@@ -8175,7 +8192,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setmydefaultadministratorrights}
     */
-  setMyDefaultAdministratorRights({
+  setMyDefaultAdministratorRights(args: {  
   /**
    * A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared.
    */
@@ -8192,26 +8209,28 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getmydefaultadministratorrights}
     */
-  getMyDefaultAdministratorRights({
+  getMyDefaultAdministratorRights(args: {  
   /**
    * Pass _True_ to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
    */
   for_channels?: boolean;
   }): ChatAdministratorRights;
 }
+export interface ApiMethods {
   /**
    * <p>Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getavailablegifts}
    */
   getAvailableGifts(args: Empty): Gifts;
+}
 export interface ApiMethods {
   /**
     * <p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns _True_ on success.</p>
    *
      * @see {@link https://core.telegram.org/bots/api#sendgift}
     */
-  sendGift({
+  sendGift(args: {  
   /**
    * Required if _chat_id_ is not specified. Unique identifier of the target user who will receive the gift.
    */
@@ -8248,7 +8267,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#giftpremiumsubscription}
     */
-  giftPremiumSubscription({
+  giftPremiumSubscription(args: {  
   /**
    * Unique identifier of the target user who will receive a Telegram Premium subscription
    */
@@ -8281,7 +8300,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#verifyuser}
     */
-  verifyUser({
+  verifyUser(args: {  
   /**
    * Unique identifier of the target user
    */
@@ -8298,7 +8317,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#verifychat}
     */
-  verifyChat({
+  verifyChat(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`). Channel direct messages chats can&#39;t be verified.
    */
@@ -8315,7 +8334,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#removeuserverification}
     */
-  removeUserVerification({
+  removeUserVerification(args: {  
   /**
    * Unique identifier of the target user
    */
@@ -8328,7 +8347,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#removechatverification}
     */
-  removeChatVerification({
+  removeChatVerification(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -8341,7 +8360,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#readbusinessmessage}
     */
-  readBusinessMessage({
+  readBusinessMessage(args: {  
   /**
    * Unique identifier of the business connection on behalf of which to read the message
    */
@@ -8362,7 +8381,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletebusinessmessages}
     */
-  deleteBusinessMessages({
+  deleteBusinessMessages(args: {  
   /**
    * Unique identifier of the business connection on behalf of which to delete the messages
    */
@@ -8379,7 +8398,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountname}
     */
-  setBusinessAccountName({
+  setBusinessAccountName(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8400,7 +8419,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountusername}
     */
-  setBusinessAccountUsername({
+  setBusinessAccountUsername(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8417,7 +8436,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountbio}
     */
-  setBusinessAccountBio({
+  setBusinessAccountBio(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8434,7 +8453,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountprofilephoto}
     */
-  setBusinessAccountProfilePhoto({
+  setBusinessAccountProfilePhoto(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8455,7 +8474,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#removebusinessaccountprofilephoto}
     */
-  removeBusinessAccountProfilePhoto({
+  removeBusinessAccountProfilePhoto(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8472,7 +8491,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings}
     */
-  setBusinessAccountGiftSettings({
+  setBusinessAccountGiftSettings(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8493,7 +8512,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getbusinessaccountstarbalance}
     */
-  getBusinessAccountStarBalance({
+  getBusinessAccountStarBalance(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8506,7 +8525,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#transferbusinessaccountstars}
     */
-  transferBusinessAccountStars({
+  transferBusinessAccountStars(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8523,7 +8542,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getbusinessaccountgifts}
     */
-  getBusinessAccountGifts({
+  getBusinessAccountGifts(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8568,7 +8587,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#convertgifttostars}
     */
-  convertGiftToStars({
+  convertGiftToStars(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8585,7 +8604,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#upgradegift}
     */
-  upgradeGift({
+  upgradeGift(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8610,7 +8629,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#transfergift}
     */
-  transferGift({
+  transferGift(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8635,7 +8654,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#poststory}
     */
-  postStory({
+  postStory(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8680,7 +8699,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editstory}
     */
-  editStory({
+  editStory(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8717,7 +8736,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletestory}
     */
-  deleteStory({
+  deleteStory(args: {  
   /**
    * Unique identifier of the business connection
    */
@@ -8736,7 +8755,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editmessagetext}
     */
-  editMessageText({
+  editMessageText(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message to be edited was sent
    */
@@ -8781,7 +8800,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
     */
-  editMessageCaption({
+  editMessageCaption(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message to be edited was sent
    */
@@ -8826,7 +8845,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
     */
-  editMessageMedia({
+  editMessageMedia(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message to be edited was sent
    */
@@ -8859,7 +8878,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
     */
-  editMessageLiveLocation({
+  editMessageLiveLocation(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message to be edited was sent
    */
@@ -8912,7 +8931,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
     */
-  stopMessageLiveLocation({
+  stopMessageLiveLocation(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message to be edited was sent
    */
@@ -8941,7 +8960,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editmessagechecklist}
     */
-  editMessageChecklist({
+  editMessageChecklist(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -8970,7 +8989,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
     */
-  editMessageReplyMarkup({
+  editMessageReplyMarkup(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message to be edited was sent
    */
@@ -8999,7 +9018,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#stoppoll}
     */
-  stopPoll({
+  stopPoll(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message to be edited was sent
    */
@@ -9024,7 +9043,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#approvesuggestedpost}
     */
-  approveSuggestedPost({
+  approveSuggestedPost(args: {  
   /**
    * Unique identifier for the target direct messages chat
    */
@@ -9045,7 +9064,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#declinesuggestedpost}
     */
-  declineSuggestedPost({
+  declineSuggestedPost(args: {  
   /**
    * Unique identifier for the target direct messages chat
    */
@@ -9066,7 +9085,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletemessage}
     */
-  deleteMessage({
+  deleteMessage(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -9083,7 +9102,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletemessages}
     */
-  deleteMessages({
+  deleteMessages(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -9246,7 +9265,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#sendsticker}
     */
-  sendSticker({
+  sendSticker(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -9307,7 +9326,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getstickerset}
     */
-  getStickerSet({
+  getStickerSet(args: {  
   /**
    * Name of the sticker set
    */
@@ -9320,7 +9339,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#getcustomemojistickers}
     */
-  getCustomEmojiStickers({
+  getCustomEmojiStickers(args: {  
   /**
    * A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
    */
@@ -9333,7 +9352,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#uploadstickerfile}
     */
-  uploadStickerFile({
+  uploadStickerFile(args: {  
   /**
    * User identifier of sticker file owner
    */
@@ -9354,7 +9373,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#createnewstickerset}
     */
-  createNewStickerSet({
+  createNewStickerSet(args: {  
   /**
    * User identifier of created sticker set owner
    */
@@ -9387,7 +9406,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#addstickertoset}
     */
-  addStickerToSet({
+  addStickerToSet(args: {  
   /**
    * User identifier of sticker set owner
    */
@@ -9408,7 +9427,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setstickerpositioninset}
     */
-  setStickerPositionInSet({
+  setStickerPositionInSet(args: {  
   /**
    * File identifier of the sticker
    */
@@ -9425,7 +9444,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletestickerfromset}
     */
-  deleteStickerFromSet({
+  deleteStickerFromSet(args: {  
   /**
    * File identifier of the sticker
    */
@@ -9438,7 +9457,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#replacestickerinset}
     */
-  replaceStickerInSet({
+  replaceStickerInSet(args: {  
   /**
    * User identifier of the sticker set owner
    */
@@ -9463,7 +9482,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setstickeremojilist}
     */
-  setStickerEmojiList({
+  setStickerEmojiList(args: {  
   /**
    * File identifier of the sticker
    */
@@ -9480,7 +9499,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setstickerkeywords}
     */
-  setStickerKeywords({
+  setStickerKeywords(args: {  
   /**
    * File identifier of the sticker
    */
@@ -9497,7 +9516,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setstickermaskposition}
     */
-  setStickerMaskPosition({
+  setStickerMaskPosition(args: {  
   /**
    * File identifier of the sticker
    */
@@ -9514,7 +9533,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setstickersettitle}
     */
-  setStickerSetTitle({
+  setStickerSetTitle(args: {  
   /**
    * Sticker set name
    */
@@ -9531,7 +9550,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setstickersetthumbnail}
     */
-  setStickerSetThumbnail({
+  setStickerSetThumbnail(args: {  
   /**
    * Sticker set name
    */
@@ -9556,7 +9575,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail}
     */
-  setCustomEmojiStickerSetThumbnail({
+  setCustomEmojiStickerSetThumbnail(args: {  
   /**
    * Sticker set name
    */
@@ -9573,7 +9592,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#deletestickerset}
     */
-  deleteStickerSet({
+  deleteStickerSet(args: {  
   /**
    * Sticker set name
    */
@@ -9619,7 +9638,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#answerinlinequery}
     */
-  answerInlineQuery({
+  answerInlineQuery(args: {  
   /**
    * Unique identifier for the answered query
    */
@@ -9687,6 +9706,8 @@ export interface InlineQueryResultsButton {
  * - InlineQueryResultVenue
  * - InlineQueryResultVideo
  * - InlineQueryResultVoice
+ * 
+ * <p>**Note:** All URLs passed in inline query results will be available to end users and therefore must be assumed to be **public**.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#inlinequeryresult}
  */
@@ -9711,7 +9732,6 @@ export type InlineQueryResult =
  | InlineQueryResultVenue
  | InlineQueryResultVideo
  | InlineQueryResultVoice
-<p>**Note:** All URLs passed in inline query results will be available to end users and therefore must be assumed to be **public**.</p>
 /**
  * <p>Represents a link to an article or web page.</p>
  *
@@ -9903,26 +9923,22 @@ export interface InlineQueryResultMpeg4Gif {
    * Unique identifier for this result, 1-64 bytes
    */
   id: string;
-<tr>
-<td>mpeg4_url</td>
-<td>string</td>
-<td>A valid URL for the MPEG4 file</td>
-</tr>
-<tr>
-<td>mpeg4_width?</td>
-<td>number</td>
-<td>Video width</td>
-</tr>
-<tr>
-<td>mpeg4_height?</td>
-<td>number</td>
-<td>Video height</td>
-</tr>
-<tr>
-<td>mpeg4_duration?</td>
-<td>number</td>
-<td>Video duration in seconds</td>
-</tr>
+  /**
+   * A valid URL for the MPEG4 file
+   */
+  mpeg4_url: string;
+  /**
+   * Video width
+   */
+  mpeg4_width?: number;
+  /**
+   * Video height
+   */
+  mpeg4_height?: number;
+  /**
+   * Video duration in seconds
+   */
+  mpeg4_duration?: number;
   /**
    * URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
    */
@@ -10511,11 +10527,10 @@ export interface InlineQueryResultCachedMpeg4Gif {
    * Unique identifier for this result, 1-64 bytes
    */
   id: string;
-<tr>
-<td>mpeg4_file_id</td>
-<td>string</td>
-<td>A valid file identifier for the MPEG4 file</td>
-</tr>
+  /**
+   * A valid file identifier for the MPEG4 file
+   */
+  mpeg4_file_id: string;
   /**
    * Title for the result
    */
@@ -10973,6 +10988,8 @@ export interface InputInvoiceMessageContent {
 }
 /**
  * <p>Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.</p>
+ * 
+ * <p>**Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#choseninlineresult}
  */
@@ -10998,14 +11015,13 @@ export interface ChosenInlineResult {
    */
   query: string;
 }
-<p>**Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.</p>
 export interface ApiMethods {
   /**
     * <p>Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.</p>
    *
      * @see {@link https://core.telegram.org/bots/api#answerwebappquery}
     */
-  answerWebAppQuery({
+  answerWebAppQuery(args: {  
   /**
    * Unique identifier for the query to be answered
    */
@@ -11033,7 +11049,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#savepreparedinlinemessage}
     */
-  savePreparedInlineMessage({
+  savePreparedInlineMessage(args: {  
   /**
    * Unique identifier of the target user that can use the prepared message
    */
@@ -11083,7 +11099,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#sendinvoice}
     */
-  sendInvoice({
+  sendInvoice(args: {  
   /**
    * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
    */
@@ -11216,7 +11232,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#createinvoicelink}
     */
-  createInvoiceLink({
+  createInvoiceLink(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the link will be created. For payments in <a href="https://t.me/BotNews/90">Telegram Stars</a> only.
    */
@@ -11313,7 +11329,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#answershippingquery}
     */
-  answerShippingQuery({
+  answerShippingQuery(args: {  
   /**
    * Unique identifier for the query to be answered
    */
@@ -11338,7 +11354,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
     */
-  answerPreCheckoutQuery({
+  answerPreCheckoutQuery(args: {  
   /**
    * Unique identifier for the query to be answered
    */
@@ -11353,19 +11369,21 @@ export interface ApiMethods {
   error_message?: string;
   }): true;
 }
+export interface ApiMethods {
   /**
    * <p>A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.</p>
    *
    * @see {@link https://core.telegram.org/bots/api#getmystarbalance}
    */
   getMyStarBalance(args: Empty): StarAmount;
+}
 export interface ApiMethods {
   /**
     * <p>Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.</p>
    *
      * @see {@link https://core.telegram.org/bots/api#getstartransactions}
     */
-  getStarTransactions({
+  getStarTransactions(args: {  
   /**
    * Number of transactions to skip in the response
    */
@@ -11382,7 +11400,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#refundstarpayment}
     */
-  refundStarPayment({
+  refundStarPayment(args: {  
   /**
    * Identifier of the user whose payment will be refunded
    */
@@ -11399,7 +11417,7 @@ export interface ApiMethods {
    *
      * @see {@link https://core.telegram.org/bots/api#edituserstarsubscription}
     */
-  editUserStarSubscription({
+  editUserStarSubscription(args: {  
   /**
    * Identifier of the user whose subscription will be edited
    */
@@ -11474,16 +11492,14 @@ export interface ShippingAddress {
    * City
    */
   city: string;
-<tr>
-<td>street_line1</td>
-<td>string</td>
-<td>First line for the address</td>
-</tr>
-<tr>
-<td>street_line2</td>
-<td>string</td>
-<td>Second line for the address</td>
-</tr>
+  /**
+   * First line for the address
+   */
+  street_line1: string;
+  /**
+   * Second line for the address
+   */
+  street_line2: string;
   /**
    * Address post code
    */
@@ -12070,7 +12086,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#setpassportdataerrors}
    */
-  setPassportDataErrors({
+  setPassportDataErrors(args: {  
   /**
    * User identifier
    */
@@ -12324,7 +12340,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#sendgame}
    */
-  sendGame({
+  sendGame(args: {  
   /**
    * Unique identifier of the business connection on behalf of which the message will be sent
    */
@@ -12410,7 +12426,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#setgamescore}
    */
-  setGameScore({
+  setGameScore(args: {  
   /**
    * User identifier
    */
@@ -12450,7 +12466,7 @@ export interface ApiMethods {
    *
    * @see {@link https://core.telegram.org/bots/api#getgamehighscores}
    */
-  getGameHighScores({
+  getGameHighScores(args: {  
   /**
    * Target user id
    */
