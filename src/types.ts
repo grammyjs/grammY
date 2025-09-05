@@ -3045,8 +3045,12 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="forumtopicclosed" href="#forumtopicclosed"><i class="anchor-icon"></i></a>ForumTopicClosed</h4>
-<p>This object represents a service message about a forum topic closed in the chat. Currently holds no information.</p>
+/**
+ * <p>This object represents a service message about a forum topic closed in the chat. Currently holds no information.</p>
+ *
+ * @see {@link https://core.telegram.org/bots/api#forumtopicclosed}
+ */
+export type ForumTopicClosed = Empty;
 <h4><a class="anchor" name="forumtopicedited" href="#forumtopicedited"><i class="anchor-icon"></i></a>ForumTopicEdited</h4>
 <p>This object represents a service message about an edited forum topic.</p>
 <table class="table">
@@ -3070,12 +3074,24 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="forumtopicreopened" href="#forumtopicreopened"><i class="anchor-icon"></i></a>ForumTopicReopened</h4>
-<p>This object represents a service message about a forum topic reopened in the chat. Currently holds no information.</p>
-<h4><a class="anchor" name="generalforumtopichidden" href="#generalforumtopichidden"><i class="anchor-icon"></i></a>GeneralForumTopicHidden</h4>
-<p>This object represents a service message about General forum topic hidden in the chat. Currently holds no information.</p>
-<h4><a class="anchor" name="generalforumtopicunhidden" href="#generalforumtopicunhidden"><i class="anchor-icon"></i></a>GeneralForumTopicUnhidden</h4>
-<p>This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.</p>
+/**
+ * <p>This object represents a service message about a forum topic reopened in the chat. Currently holds no information.</p>
+ *
+ * @see {@link https://core.telegram.org/bots/api#forumtopicreopened}
+ */
+export type ForumTopicReopened = Empty;
+/**
+ * <p>This object represents a service message about General forum topic hidden in the chat. Currently holds no information.</p>
+ *
+ * @see {@link https://core.telegram.org/bots/api#generalforumtopichidden}
+ */
+export type GeneralForumTopicHidden = Empty;
+/**
+ * <p>This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.</p>
+ *
+ * @see {@link https://core.telegram.org/bots/api#generalforumtopicunhidden}
+ */
+export type GeneralForumTopicUnhidden = Empty;
 <h4><a class="anchor" name="shareduser" href="#shareduser"><i class="anchor-icon"></i></a>SharedUser</h4>
 <p>This object contains information about a user that was shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.</p>
 <table class="table">
@@ -3221,8 +3237,12 @@
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="videochatstarted" href="#videochatstarted"><i class="anchor-icon"></i></a>VideoChatStarted</h4>
-<p>This object represents a service message about a video chat started in the chat. Currently holds no information.</p>
+/**
+ * <p>This object represents a service message about a video chat started in the chat. Currently holds no information.</p>
+ *
+ * @see {@link https://core.telegram.org/bots/api#videochatstarted}
+ */
+export type VideoChatStarted = Empty;
 <h4><a class="anchor" name="videochatended" href="#videochatended"><i class="anchor-icon"></i></a>VideoChatEnded</h4>
 <p>This object represents a service message about a video chat ended in the chat.</p>
 <table class="table">
@@ -17507,8 +17527,12 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="callbackgame" href="#callbackgame"><i class="anchor-icon"></i></a>CallbackGame</h4>
-<p>A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.</p>
+/**
+ * <p>A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.</p>
+ *
+ * @see {@link https://core.telegram.org/bots/api#callbackgame}
+ */
+export type CallbackGame = Empty;
 <h4><a class="anchor" name="setgamescore" href="#setgamescore"><i class="anchor-icon"></i></a>setGameScore</h4>
 <p>Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise _True_ is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and _force_ is _False_.</p>
 <table class="table">
