@@ -1605,6 +1605,16 @@
         "bug",
         "review"
       ]
+    },
+    {
+      "login": "agoudbg",
+      "name": "agoudbg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55237525?v=4",
+      "profile": "https://agou.im/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
