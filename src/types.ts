@@ -18,117 +18,117 @@
 <tr>
 <td>message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New incoming message of any kind - text, photo, sticker, etc.</td>
+<td>_Optional_. New incoming message of any kind - text, photo, sticker, etc.</td>
 </tr>
 <tr>
 <td>edited_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
+<td>_Optional_. New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
 </tr>
 <tr>
 <td>channel_post</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New incoming channel post of any kind - text, photo, sticker, etc.</td>
+<td>_Optional_. New incoming channel post of any kind - text, photo, sticker, etc.</td>
 </tr>
 <tr>
 <td>edited_channel_post</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
+<td>_Optional_. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
 </tr>
 <tr>
 <td>business_connection</td>
 <td><a href="#businessconnection">BusinessConnection</a></td>
-<td><em>Optional</em>. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot</td>
+<td>_Optional_. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot</td>
 </tr>
 <tr>
 <td>business_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New message from a connected business account</td>
+<td>_Optional_. New message from a connected business account</td>
 </tr>
 <tr>
 <td>edited_business_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New version of a message from a connected business account</td>
+<td>_Optional_. New version of a message from a connected business account</td>
 </tr>
 <tr>
 <td>deleted_business_messages</td>
 <td><a href="#businessmessagesdeleted">BusinessMessagesDeleted</a></td>
-<td><em>Optional</em>. Messages were deleted from a connected business account</td>
+<td>_Optional_. Messages were deleted from a connected business account</td>
 </tr>
 <tr>
 <td>message_reaction</td>
 <td><a href="#messagereactionupdated">MessageReactionUpdated</a></td>
-<td><em>Optional</em>. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction&quot;</code> in the list of <em>allowed_updates</em> to receive these updates. The update isn&#39;t received for reactions set by bots.</td>
+<td>_Optional_. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction&quot;</code> in the list of _allowed_updates_ to receive these updates. The update isn&#39;t received for reactions set by bots.</td>
 </tr>
 <tr>
 <td>message_reaction_count</td>
 <td><a href="#messagereactioncountupdated">MessageReactionCountUpdated</a></td>
-<td><em>Optional</em>. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction_count&quot;</code> in the list of <em>allowed_updates</em> to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.</td>
+<td>_Optional_. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction_count&quot;</code> in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.</td>
 </tr>
 <tr>
 <td>inline_query</td>
 <td><a href="#inlinequery">InlineQuery</a></td>
-<td><em>Optional</em>. New incoming <a href="#inline-mode">inline</a> query</td>
+<td>_Optional_. New incoming <a href="#inline-mode">inline</a> query</td>
 </tr>
 <tr>
 <td>chosen_inline_result</td>
 <td><a href="#choseninlineresult">ChosenInlineResult</a></td>
-<td><em>Optional</em>. The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.</td>
+<td>_Optional_. The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.</td>
 </tr>
 <tr>
 <td>callback_query</td>
 <td><a href="#callbackquery">CallbackQuery</a></td>
-<td><em>Optional</em>. New incoming callback query</td>
+<td>_Optional_. New incoming callback query</td>
 </tr>
 <tr>
 <td>shipping_query</td>
 <td><a href="#shippingquery">ShippingQuery</a></td>
-<td><em>Optional</em>. New incoming shipping query. Only for invoices with flexible price</td>
+<td>_Optional_. New incoming shipping query. Only for invoices with flexible price</td>
 </tr>
 <tr>
 <td>pre_checkout_query</td>
 <td><a href="#precheckoutquery">PreCheckoutQuery</a></td>
-<td><em>Optional</em>. New incoming pre-checkout query. Contains full information about checkout</td>
+<td>_Optional_. New incoming pre-checkout query. Contains full information about checkout</td>
 </tr>
 <tr>
 <td>purchased_paid_media</td>
 <td><a href="#paidmediapurchased">PaidMediaPurchased</a></td>
-<td><em>Optional</em>. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat</td>
+<td>_Optional_. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat</td>
 </tr>
 <tr>
 <td>poll</td>
 <td><a href="#poll">Poll</a></td>
-<td><em>Optional</em>. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot</td>
+<td>_Optional_. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot</td>
 </tr>
 <tr>
 <td>poll_answer</td>
 <td><a href="#pollanswer">PollAnswer</a></td>
-<td><em>Optional</em>. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.</td>
+<td>_Optional_. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.</td>
 </tr>
 <tr>
 <td>my_chat_member</td>
 <td><a href="#chatmemberupdated">ChatMemberUpdated</a></td>
-<td><em>Optional</em>. The bot&#39;s chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.</td>
+<td>_Optional_. The bot&#39;s chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.</td>
 </tr>
 <tr>
 <td>chat_member</td>
 <td><a href="#chatmemberupdated">ChatMemberUpdated</a></td>
-<td><em>Optional</em>. A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify <code>&quot;chat_member&quot;</code> in the list of <em>allowed_updates</em> to receive these updates.</td>
+<td>_Optional_. A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify <code>&quot;chat_member&quot;</code> in the list of _allowed_updates_ to receive these updates.</td>
 </tr>
 <tr>
 <td>chat_join_request</td>
 <td><a href="#chatjoinrequest">ChatJoinRequest</a></td>
-<td><em>Optional</em>. A request to join the chat has been sent. The bot must have the <em>can_invite_users</em> administrator right in the chat to receive these updates.</td>
+<td>_Optional_. A request to join the chat has been sent. The bot must have the _can_invite_users_ administrator right in the chat to receive these updates.</td>
 </tr>
 <tr>
 <td>chat_boost</td>
 <td><a href="#chatboostupdated">ChatBoostUpdated</a></td>
-<td><em>Optional</em>. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.</td>
+<td>_Optional_. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.</td>
 </tr>
 <tr>
 <td>removed_chat_boost</td>
 <td><a href="#chatboostremoved">ChatBoostRemoved</a></td>
-<td><em>Optional</em>. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.</td>
+<td>_Optional_. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.</td>
 </tr>
 </tbody>
 </table>
@@ -148,7 +148,7 @@
 <td>offset</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an <em>offset</em> higher than its <em>update_id</em>. The negative offset can be specified to retrieve updates starting from <em>-offset</em> update from the end of the updates queue. All previous updates will be forgotten.</td>
+<td>Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an _offset_ higher than its _update_id_. The negative offset can be specified to retrieve updates starting from _-offset_ update from the end of the updates queue. All previous updates will be forgotten.</td>
 </tr>
 <tr>
 <td>limit</td>
@@ -166,16 +166,16 @@
 <td>allowed_updates</td>
 <td>Array of String</td>
 <td>Optional</td>
-<td>A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.</td>
+<td>A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>**Notes**<br>**1.** This method will not work if an outgoing webhook is set up.<br>**2.** In order to avoid getting duplicate updates, recalculate <em>offset</em> after each server response.</p>
+<p>**Notes**<br>**1.** This method will not work if an outgoing webhook is set up.<br>**2.** In order to avoid getting duplicate updates, recalculate _offset_ after each server response.</p>
 </blockquote>
 <h4><a class="anchor" name="setwebhook" href="#setwebhook"><i class="anchor-icon"></i></a>setWebhook</h4>
-<p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns <em>True</em> on success.</p>
-<p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter <em>secret_token</em>. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
+<p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.</p>
+<p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
 <table class="table">
 <thead>
 <tr>
@@ -208,19 +208,19 @@
 <td>max_connections</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to <em>40</em>. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.</td>
+<td>The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to _40_. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.</td>
 </tr>
 <tr>
 <td>allowed_updates</td>
 <td>Array of String</td>
 <td>Optional</td>
-<td>A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.</td>
+<td>A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.</td>
 </tr>
 <tr>
 <td>drop_pending_updates</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to drop all pending updates</td>
+<td>Pass _True_ to drop all pending updates</td>
 </tr>
 <tr>
 <td>secret_token</td>
@@ -231,11 +231,11 @@
 </tbody>
 </table>
 <blockquote>
-<p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using <em>certificate</em> parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported <em>for webhooks</em>: **443, 80, 88, 8443**.</p>
+<p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
 <p>If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.</p>
 </blockquote>
 <h4><a class="anchor" name="deletewebhook" href="#deletewebhook"><i class="anchor-icon"></i></a>deleteWebhook</h4>
-<p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns <em>True</em> on success.</p>
+<p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -250,12 +250,12 @@
 <td>drop_pending_updates</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to drop all pending updates</td>
+<td>Pass _True_ to drop all pending updates</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="getwebhookinfo" href="#getwebhookinfo"><i class="anchor-icon"></i></a>getWebhookInfo</h4>
-<p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the <em>url</em> field empty.</p>
+<p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the _url_ field empty.</p>
 <h4><a class="anchor" name="webhookinfo" href="#webhookinfo"><i class="anchor-icon"></i></a>WebhookInfo</h4>
 <p>Describes the current status of a webhook.</p>
 <table class="table">
@@ -275,7 +275,7 @@
 <tr>
 <td>has_custom_certificate</td>
 <td>Boolean</td>
-<td><em>True</em>, if a custom certificate was provided for webhook certificate checks</td>
+<td>_True_, if a custom certificate was provided for webhook certificate checks</td>
 </tr>
 <tr>
 <td>pending_update_count</td>
@@ -285,32 +285,32 @@
 <tr>
 <td>ip_address</td>
 <td>String</td>
-<td><em>Optional</em>. Currently used webhook IP address</td>
+<td>_Optional_. Currently used webhook IP address</td>
 </tr>
 <tr>
 <td>last_error_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Unix time for the most recent error that happened when trying to deliver an update via webhook</td>
+<td>_Optional_. Unix time for the most recent error that happened when trying to deliver an update via webhook</td>
 </tr>
 <tr>
 <td>last_error_message</td>
 <td>String</td>
-<td><em>Optional</em>. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook</td>
+<td>_Optional_. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook</td>
 </tr>
 <tr>
 <td>last_synchronization_error_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters</td>
+<td>_Optional_. Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters</td>
 </tr>
 <tr>
 <td>max_connections</td>
 <td>Integer</td>
-<td><em>Optional</em>. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery</td>
+<td>_Optional_. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery</td>
 </tr>
 <tr>
 <td>allowed_updates</td>
 <td>Array of String</td>
-<td><em>Optional</em>. A list of update types the bot is subscribed to. Defaults to all update types except <em>chat_member</em></td>
+<td>_Optional_. A list of update types the bot is subscribed to. Defaults to all update types except _chat_member_</td>
 </tr>
 </tbody>
 </table>
@@ -335,7 +335,7 @@
 <tr>
 <td>is_bot</td>
 <td>Boolean</td>
-<td><em>True</em>, if this user is a bot</td>
+<td>_True_, if this user is a bot</td>
 </tr>
 <tr>
 <td>first_name</td>
@@ -345,52 +345,52 @@
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td><em>Optional</em>. User&#39;s or bot&#39;s last name</td>
+<td>_Optional_. User&#39;s or bot&#39;s last name</td>
 </tr>
 <tr>
 <td>username</td>
 <td>String</td>
-<td><em>Optional</em>. User&#39;s or bot&#39;s username</td>
+<td>_Optional_. User&#39;s or bot&#39;s username</td>
 </tr>
 <tr>
 <td>language_code</td>
 <td>String</td>
-<td><em>Optional</em>. <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language</td>
+<td>_Optional_. <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language</td>
 </tr>
 <tr>
 <td>is_premium</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if this user is a Telegram Premium user</td>
+<td>_Optional_. _True_, if this user is a Telegram Premium user</td>
 </tr>
 <tr>
 <td>added_to_attachment_menu</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if this user added the bot to the attachment menu</td>
+<td>_Optional_. _True_, if this user added the bot to the attachment menu</td>
 </tr>
 <tr>
 <td>can_join_groups</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_Optional_. _True_, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
 <td>can_read_all_group_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_Optional_. _True_, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
 <td>supports_inline_queries</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_Optional_. _True_, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
 <td>can_connect_to_business</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_Optional_. _True_, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 <tr>
 <td>has_main_web_app</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.</td>
+<td>_Optional_. _True_, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -418,32 +418,32 @@
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title, for supergroups, channels and group chats</td>
+<td>_Optional_. Title, for supergroups, channels and group chats</td>
 </tr>
 <tr>
 <td>username</td>
 <td>String</td>
-<td><em>Optional</em>. Username, for private chats, supergroups and channels if available</td>
+<td>_Optional_. Username, for private chats, supergroups and channels if available</td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>String</td>
-<td><em>Optional</em>. First name of the other party in a private chat</td>
+<td>_Optional_. First name of the other party in a private chat</td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td><em>Optional</em>. Last name of the other party in a private chat</td>
+<td>_Optional_. Last name of the other party in a private chat</td>
 </tr>
 <tr>
 <td>is_forum</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
+<td>_Optional_. _True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
 </tr>
 <tr>
 <td>is_direct_messages</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the chat is the direct messages chat of a channel</td>
+<td>_Optional_. _True_, if the chat is the direct messages chat of a channel</td>
 </tr>
 </tbody>
 </table>
@@ -471,32 +471,32 @@
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title, for supergroups, channels and group chats</td>
+<td>_Optional_. Title, for supergroups, channels and group chats</td>
 </tr>
 <tr>
 <td>username</td>
 <td>String</td>
-<td><em>Optional</em>. Username, for private chats, supergroups and channels if available</td>
+<td>_Optional_. Username, for private chats, supergroups and channels if available</td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>String</td>
-<td><em>Optional</em>. First name of the other party in a private chat</td>
+<td>_Optional_. First name of the other party in a private chat</td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td><em>Optional</em>. Last name of the other party in a private chat</td>
+<td>_Optional_. Last name of the other party in a private chat</td>
 </tr>
 <tr>
 <td>is_forum</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
+<td>_Optional_. _True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
 </tr>
 <tr>
 <td>is_direct_messages</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the chat is the direct messages chat of a channel</td>
+<td>_Optional_. _True_, if the chat is the direct messages chat of a channel</td>
 </tr>
 <tr>
 <td>accent_color_id</td>
@@ -511,117 +511,117 @@
 <tr>
 <td>photo</td>
 <td><a href="#chatphoto">ChatPhoto</a></td>
-<td><em>Optional</em>. Chat photo</td>
+<td>_Optional_. Chat photo</td>
 </tr>
 <tr>
 <td>active_usernames</td>
 <td>Array of String</td>
-<td><em>Optional</em>. If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels</td>
+<td>_Optional_. If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels</td>
 </tr>
 <tr>
 <td>birthdate</td>
 <td><a href="#birthdate">Birthdate</a></td>
-<td><em>Optional</em>. For private chats, the date of birth of the user</td>
+<td>_Optional_. For private chats, the date of birth of the user</td>
 </tr>
 <tr>
 <td>business_intro</td>
 <td><a href="#businessintro">BusinessIntro</a></td>
-<td><em>Optional</em>. For private chats with business accounts, the intro of the business</td>
+<td>_Optional_. For private chats with business accounts, the intro of the business</td>
 </tr>
 <tr>
 <td>business_location</td>
 <td><a href="#businesslocation">BusinessLocation</a></td>
-<td><em>Optional</em>. For private chats with business accounts, the location of the business</td>
+<td>_Optional_. For private chats with business accounts, the location of the business</td>
 </tr>
 <tr>
 <td>business_opening_hours</td>
 <td><a href="#businessopeninghours">BusinessOpeningHours</a></td>
-<td><em>Optional</em>. For private chats with business accounts, the opening hours of the business</td>
+<td>_Optional_. For private chats with business accounts, the opening hours of the business</td>
 </tr>
 <tr>
 <td>personal_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. For private chats, the personal channel of the user</td>
+<td>_Optional_. For private chats, the personal channel of the user</td>
 </tr>
 <tr>
 <td>parent_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Information about the corresponding channel chat; for direct messages chats only</td>
+<td>_Optional_. Information about the corresponding channel chat; for direct messages chats only</td>
 </tr>
 <tr>
 <td>available_reactions</td>
 <td>Array of <a href="#reactiontype">ReactionType</a></td>
-<td><em>Optional</em>. List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.</td>
+<td>_Optional_. List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.</td>
 </tr>
 <tr>
 <td>background_custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background</td>
+<td>_Optional_. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background</td>
 </tr>
 <tr>
 <td>profile_accent_color_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.</td>
+<td>_Optional_. Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.</td>
 </tr>
 <tr>
 <td>profile_background_custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. Custom emoji identifier of the emoji chosen by the chat for its profile background</td>
+<td>_Optional_. Custom emoji identifier of the emoji chosen by the chat for its profile background</td>
 </tr>
 <tr>
 <td>emoji_status_custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. Custom emoji identifier of the emoji status of the chat or the other party in a private chat</td>
+<td>_Optional_. Custom emoji identifier of the emoji status of the chat or the other party in a private chat</td>
 </tr>
 <tr>
 <td>emoji_status_expiration_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any</td>
+<td>_Optional_. Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any</td>
 </tr>
 <tr>
 <td>bio</td>
 <td>String</td>
-<td><em>Optional</em>. Bio of the other party in a private chat</td>
+<td>_Optional_. Bio of the other party in a private chat</td>
 </tr>
 <tr>
 <td>has_private_forwards</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if privacy settings of the other party in the private chat allows to use <code>tg://user?id=&lt;user_id&gt;</code> links only in chats with the user</td>
+<td>_Optional_. _True_, if privacy settings of the other party in the private chat allows to use <code>tg://user?id=&lt;user_id&gt;</code> links only in chats with the user</td>
 </tr>
 <tr>
 <td>has_restricted_voice_and_video_messages</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the privacy settings of the other party restrict sending voice and video note messages in the private chat</td>
+<td>_Optional_. _True_, if the privacy settings of the other party restrict sending voice and video note messages in the private chat</td>
 </tr>
 <tr>
 <td>join_to_send_messages</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if users need to join the supergroup before they can send messages</td>
+<td>_Optional_. _True_, if users need to join the supergroup before they can send messages</td>
 </tr>
 <tr>
 <td>join_by_request</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators</td>
+<td>_Optional_. _True_, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators</td>
 </tr>
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Description, for groups, supergroups and channel chats</td>
+<td>_Optional_. Description, for groups, supergroups and channel chats</td>
 </tr>
 <tr>
 <td>invite_link</td>
 <td>String</td>
-<td><em>Optional</em>. Primary invite link, for groups, supergroups and channel chats</td>
+<td>_Optional_. Primary invite link, for groups, supergroups and channel chats</td>
 </tr>
 <tr>
 <td>pinned_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. The most recent pinned message (by sending date)</td>
+<td>_Optional_. The most recent pinned message (by sending date)</td>
 </tr>
 <tr>
 <td>permissions</td>
 <td><a href="#chatpermissions">ChatPermissions</a></td>
-<td><em>Optional</em>. Default chat member permissions, for groups and supergroups</td>
+<td>_Optional_. Default chat member permissions, for groups and supergroups</td>
 </tr>
 <tr>
 <td>accepted_gift_types</td>
@@ -631,67 +631,67 @@
 <tr>
 <td>can_send_paid_media</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.</td>
+<td>_Optional_. _True_, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.</td>
 </tr>
 <tr>
 <td>slow_mode_delay</td>
 <td>Integer</td>
-<td><em>Optional</em>. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds</td>
+<td>_Optional_. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds</td>
 </tr>
 <tr>
 <td>unrestrict_boost_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions</td>
+<td>_Optional_. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions</td>
 </tr>
 <tr>
 <td>message_auto_delete_time</td>
 <td>Integer</td>
-<td><em>Optional</em>. The time after which all messages sent to the chat will be automatically deleted; in seconds</td>
+<td>_Optional_. The time after which all messages sent to the chat will be automatically deleted; in seconds</td>
 </tr>
 <tr>
 <td>has_aggressive_anti_spam_enabled</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.</td>
+<td>_Optional_. _True_, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.</td>
 </tr>
 <tr>
 <td>has_hidden_members</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if non-administrators can only get the list of bots and administrators in the chat</td>
+<td>_Optional_. _True_, if non-administrators can only get the list of bots and administrators in the chat</td>
 </tr>
 <tr>
 <td>has_protected_content</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if messages from the chat can&#39;t be forwarded to other chats</td>
+<td>_Optional_. _True_, if messages from the chat can&#39;t be forwarded to other chats</td>
 </tr>
 <tr>
 <td>has_visible_history</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if new chat members will have access to old messages; available only to chat administrators</td>
+<td>_Optional_. _True_, if new chat members will have access to old messages; available only to chat administrators</td>
 </tr>
 <tr>
 <td>sticker_set_name</td>
 <td>String</td>
-<td><em>Optional</em>. For supergroups, name of the group sticker set</td>
+<td>_Optional_. For supergroups, name of the group sticker set</td>
 </tr>
 <tr>
 <td>can_set_sticker_set</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can change the group sticker set</td>
+<td>_Optional_. _True_, if the bot can change the group sticker set</td>
 </tr>
 <tr>
 <td>custom_emoji_sticker_set_name</td>
 <td>String</td>
-<td><em>Optional</em>. For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.</td>
+<td>_Optional_. For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.</td>
 </tr>
 <tr>
 <td>linked_chat_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>_Optional_. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
 <td>location</td>
 <td><a href="#chatlocation">ChatLocation</a></td>
-<td><em>Optional</em>. For supergroups, the location to which the supergroup is connected</td>
+<td>_Optional_. For supergroups, the location to which the supergroup is connected</td>
 </tr>
 </tbody>
 </table>
@@ -714,32 +714,32 @@
 <tr>
 <td>message_thread_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. Unique identifier of a message thread to which the message belongs; for supergroups only</td>
+<td>_Optional_. Unique identifier of a message thread to which the message belongs; for supergroups only</td>
 </tr>
 <tr>
 <td>direct_messages_topic</td>
 <td><a href="#directmessagestopic">DirectMessagesTopic</a></td>
-<td><em>Optional</em>. Information about the direct messages chat topic that contains the message</td>
+<td>_Optional_. Information about the direct messages chat topic that contains the message</td>
 </tr>
 <tr>
 <td>from</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats</td>
+<td>_Optional_. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats</td>
 </tr>
 <tr>
 <td>sender_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field <em>from</em> contains a fake sender user in non-channel chats.</td>
+<td>_Optional_. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field _from_ contains a fake sender user in non-channel chats.</td>
 </tr>
 <tr>
 <td>sender_boost_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. If the sender of the message boosted the chat, the number of boosts added by the user</td>
+<td>_Optional_. If the sender of the message boosted the chat, the number of boosts added by the user</td>
 </tr>
 <tr>
 <td>sender_business_bot</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.</td>
+<td>_Optional_. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.</td>
 </tr>
 <tr>
 <td>date</td>
@@ -749,7 +749,7 @@
 <tr>
 <td>business_connection_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.</td>
+<td>_Optional_. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.</td>
 </tr>
 <tr>
 <td>chat</td>
@@ -759,462 +759,462 @@
 <tr>
 <td>forward_origin</td>
 <td><a href="#messageorigin">MessageOrigin</a></td>
-<td><em>Optional</em>. Information about the original message for forwarded messages</td>
+<td>_Optional_. Information about the original message for forwarded messages</td>
 </tr>
 <tr>
 <td>is_topic_message</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message is sent to a forum topic</td>
+<td>_Optional_. _True_, if the message is sent to a forum topic</td>
 </tr>
 <tr>
 <td>is_automatic_forward</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message is a channel post that was automatically forwarded to the connected discussion group</td>
+<td>_Optional_. _True_, if the message is a channel post that was automatically forwarded to the connected discussion group</td>
 </tr>
 <tr>
 <td>reply_to_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. For replies in the same chat and message thread, the original message. Note that the <a href="#message">Message</a> object in this field will not contain further <em>reply_to_message</em> fields even if it itself is a reply.</td>
+<td>_Optional_. For replies in the same chat and message thread, the original message. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>external_reply</td>
 <td><a href="#externalreplyinfo">ExternalReplyInfo</a></td>
-<td><em>Optional</em>. Information about the message that is being replied to, which may come from another chat or forum topic</td>
+<td>_Optional_. Information about the message that is being replied to, which may come from another chat or forum topic</td>
 </tr>
 <tr>
 <td>quote</td>
 <td><a href="#textquote">TextQuote</a></td>
-<td><em>Optional</em>. For replies that quote part of the original message, the quoted part of the message</td>
+<td>_Optional_. For replies that quote part of the original message, the quoted part of the message</td>
 </tr>
 <tr>
 <td>reply_to_story</td>
 <td><a href="#story">Story</a></td>
-<td><em>Optional</em>. For replies to a story, the original story</td>
+<td>_Optional_. For replies to a story, the original story</td>
 </tr>
 <tr>
 <td>reply_to_checklist_task_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. Identifier of the specific checklist task that is being replied to</td>
+<td>_Optional_. Identifier of the specific checklist task that is being replied to</td>
 </tr>
 <tr>
 <td>via_bot</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. Bot through which the message was sent</td>
+<td>_Optional_. Bot through which the message was sent</td>
 </tr>
 <tr>
 <td>edit_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Date the message was last edited in Unix time</td>
+<td>_Optional_. Date the message was last edited in Unix time</td>
 </tr>
 <tr>
 <td>has_protected_content</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message can&#39;t be forwarded</td>
+<td>_Optional_. _True_, if the message can&#39;t be forwarded</td>
 </tr>
 <tr>
 <td>is_from_offline</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message</td>
+<td>_Optional_. _True_, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message</td>
 </tr>
 <tr>
 <td>is_paid_post</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.</td>
+<td>_Optional_. _True_, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.</td>
 </tr>
 <tr>
 <td>media_group_id</td>
 <td>String</td>
-<td><em>Optional</em>. The unique identifier of a media message group this message belongs to</td>
+<td>_Optional_. The unique identifier of a media message group this message belongs to</td>
 </tr>
 <tr>
 <td>author_signature</td>
 <td>String</td>
-<td><em>Optional</em>. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator</td>
+<td>_Optional_. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator</td>
 </tr>
 <tr>
 <td>paid_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars that were paid by the sender of the message to send it</td>
+<td>_Optional_. The number of Telegram Stars that were paid by the sender of the message to send it</td>
 </tr>
 <tr>
 <td>text</td>
 <td>String</td>
-<td><em>Optional</em>. For text messages, the actual UTF-8 text of the message</td>
+<td>_Optional_. For text messages, the actual UTF-8 text of the message</td>
 </tr>
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text</td>
+<td>_Optional_. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text</td>
 </tr>
 <tr>
 <td>link_preview_options</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td><em>Optional</em>. Options used for link preview generation for the message, if it is a text message and link preview options were changed</td>
+<td>_Optional_. Options used for link preview generation for the message, if it is a text message and link preview options were changed</td>
 </tr>
 <tr>
 <td>suggested_post_info</td>
 <td><a href="#suggestedpostinfo">SuggestedPostInfo</a></td>
-<td><em>Optional</em>. Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.</td>
+<td>_Optional_. Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.</td>
 </tr>
 <tr>
 <td>effect_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the message effect added to the message</td>
+<td>_Optional_. Unique identifier of the message effect added to the message</td>
 </tr>
 <tr>
 <td>animation</td>
 <td><a href="#animation">Animation</a></td>
-<td><em>Optional</em>. Message is an animation, information about the animation. For backward compatibility, when this field is set, the <em>document</em> field will also be set</td>
+<td>_Optional_. Message is an animation, information about the animation. For backward compatibility, when this field is set, the _document_ field will also be set</td>
 </tr>
 <tr>
 <td>audio</td>
 <td><a href="#audio">Audio</a></td>
-<td><em>Optional</em>. Message is an audio file, information about the file</td>
+<td>_Optional_. Message is an audio file, information about the file</td>
 </tr>
 <tr>
 <td>document</td>
 <td><a href="#document">Document</a></td>
-<td><em>Optional</em>. Message is a general file, information about the file</td>
+<td>_Optional_. Message is a general file, information about the file</td>
 </tr>
 <tr>
 <td>paid_media</td>
 <td><a href="#paidmediainfo">PaidMediaInfo</a></td>
-<td><em>Optional</em>. Message contains paid media; information about the paid media</td>
+<td>_Optional_. Message contains paid media; information about the paid media</td>
 </tr>
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Message is a photo, available sizes of the photo</td>
+<td>_Optional_. Message is a photo, available sizes of the photo</td>
 </tr>
 <tr>
 <td>sticker</td>
 <td><a href="#sticker">Sticker</a></td>
-<td><em>Optional</em>. Message is a sticker, information about the sticker</td>
+<td>_Optional_. Message is a sticker, information about the sticker</td>
 </tr>
 <tr>
 <td>story</td>
 <td><a href="#story">Story</a></td>
-<td><em>Optional</em>. Message is a forwarded story</td>
+<td>_Optional_. Message is a forwarded story</td>
 </tr>
 <tr>
 <td>video</td>
 <td><a href="#video">Video</a></td>
-<td><em>Optional</em>. Message is a video, information about the video</td>
+<td>_Optional_. Message is a video, information about the video</td>
 </tr>
 <tr>
 <td>video_note</td>
 <td><a href="#videonote">VideoNote</a></td>
-<td><em>Optional</em>. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
+<td>_Optional_. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
 </tr>
 <tr>
 <td>voice</td>
 <td><a href="#voice">Voice</a></td>
-<td><em>Optional</em>. Message is a voice message, information about the file</td>
+<td>_Optional_. Message is a voice message, information about the file</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption for the animation, audio, document, paid media, photo, video or voice</td>
+<td>_Optional_. Caption for the animation, audio, document, paid media, photo, video or voice</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption</td>
+<td>_Optional_. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>has_media_spoiler</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message media is covered by a spoiler animation</td>
+<td>_Optional_. _True_, if the message media is covered by a spoiler animation</td>
 </tr>
 <tr>
 <td>checklist</td>
 <td><a href="#checklist">Checklist</a></td>
-<td><em>Optional</em>. Message is a checklist</td>
+<td>_Optional_. Message is a checklist</td>
 </tr>
 <tr>
 <td>contact</td>
 <td><a href="#contact">Contact</a></td>
-<td><em>Optional</em>. Message is a shared contact, information about the contact</td>
+<td>_Optional_. Message is a shared contact, information about the contact</td>
 </tr>
 <tr>
 <td>dice</td>
 <td><a href="#dice">Dice</a></td>
-<td><em>Optional</em>. Message is a dice with random value</td>
+<td>_Optional_. Message is a dice with random value</td>
 </tr>
 <tr>
 <td>game</td>
 <td><a href="#game">Game</a></td>
-<td><em>Optional</em>. Message is a game, information about the game. <a href="#games">More about games »</a></td>
+<td>_Optional_. Message is a game, information about the game. <a href="#games">More about games »</a></td>
 </tr>
 <tr>
 <td>poll</td>
 <td><a href="#poll">Poll</a></td>
-<td><em>Optional</em>. Message is a native poll, information about the poll</td>
+<td>_Optional_. Message is a native poll, information about the poll</td>
 </tr>
 <tr>
 <td>venue</td>
 <td><a href="#venue">Venue</a></td>
-<td><em>Optional</em>. Message is a venue, information about the venue. For backward compatibility, when this field is set, the <em>location</em> field will also be set</td>
+<td>_Optional_. Message is a venue, information about the venue. For backward compatibility, when this field is set, the _location_ field will also be set</td>
 </tr>
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Message is a shared location, information about the location</td>
+<td>_Optional_. Message is a shared location, information about the location</td>
 </tr>
 <tr>
 <td>new_chat_members</td>
 <td>Array of <a href="#user">User</a></td>
-<td><em>Optional</em>. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)</td>
+<td>_Optional_. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)</td>
 </tr>
 <tr>
 <td>left_chat_member</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. A member was removed from the group, information about them (this member may be the bot itself)</td>
+<td>_Optional_. A member was removed from the group, information about them (this member may be the bot itself)</td>
 </tr>
 <tr>
 <td>new_chat_title</td>
 <td>String</td>
-<td><em>Optional</em>. A chat title was changed to this value</td>
+<td>_Optional_. A chat title was changed to this value</td>
 </tr>
 <tr>
 <td>new_chat_photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. A chat photo was change to this value</td>
+<td>_Optional_. A chat photo was change to this value</td>
 </tr>
 <tr>
 <td>delete_chat_photo</td>
 <td>True</td>
-<td><em>Optional</em>. Service message: the chat photo was deleted</td>
+<td>_Optional_. Service message: the chat photo was deleted</td>
 </tr>
 <tr>
 <td>group_chat_created</td>
 <td>True</td>
-<td><em>Optional</em>. Service message: the group has been created</td>
+<td>_Optional_. Service message: the group has been created</td>
 </tr>
 <tr>
 <td>supergroup_chat_created</td>
 <td>True</td>
-<td><em>Optional</em>. Service message: the supergroup has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.</td>
+<td>_Optional_. Service message: the supergroup has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.</td>
 </tr>
 <tr>
 <td>channel_chat_created</td>
 <td>True</td>
-<td><em>Optional</em>. Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.</td>
+<td>_Optional_. Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.</td>
 </tr>
 <tr>
 <td>message_auto_delete_timer_changed</td>
 <td><a href="#messageautodeletetimerchanged">MessageAutoDeleteTimerChanged</a></td>
-<td><em>Optional</em>. Service message: auto-delete timer settings changed in the chat</td>
+<td>_Optional_. Service message: auto-delete timer settings changed in the chat</td>
 </tr>
 <tr>
 <td>migrate_to_chat_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>_Optional_. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
 <td>migrate_from_chat_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>_Optional_. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
 <td>pinned_message</td>
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td><em>Optional</em>. Specified message was pinned. Note that the <a href="#message">Message</a> object in this field will not contain further <em>reply_to_message</em> fields even if it itself is a reply.</td>
+<td>_Optional_. Specified message was pinned. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>invoice</td>
 <td><a href="#invoice">Invoice</a></td>
-<td><em>Optional</em>. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
+<td>_Optional_. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
 <td>successful_payment</td>
 <td><a href="#successfulpayment">SuccessfulPayment</a></td>
-<td><em>Optional</em>. Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a></td>
+<td>_Optional_. Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
 <td>refunded_payment</td>
 <td><a href="#refundedpayment">RefundedPayment</a></td>
-<td><em>Optional</em>. Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a></td>
+<td>_Optional_. Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
 <td>users_shared</td>
 <td><a href="#usersshared">UsersShared</a></td>
-<td><em>Optional</em>. Service message: users were shared with the bot</td>
+<td>_Optional_. Service message: users were shared with the bot</td>
 </tr>
 <tr>
 <td>chat_shared</td>
 <td><a href="#chatshared">ChatShared</a></td>
-<td><em>Optional</em>. Service message: a chat was shared with the bot</td>
+<td>_Optional_. Service message: a chat was shared with the bot</td>
 </tr>
 <tr>
 <td>gift</td>
 <td><a href="#giftinfo">GiftInfo</a></td>
-<td><em>Optional</em>. Service message: a regular gift was sent or received</td>
+<td>_Optional_. Service message: a regular gift was sent or received</td>
 </tr>
 <tr>
 <td>unique_gift</td>
 <td><a href="#uniquegiftinfo">UniqueGiftInfo</a></td>
-<td><em>Optional</em>. Service message: a unique gift was sent or received</td>
+<td>_Optional_. Service message: a unique gift was sent or received</td>
 </tr>
 <tr>
 <td>connected_website</td>
 <td>String</td>
-<td><em>Optional</em>. The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a></td>
+<td>_Optional_. The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a></td>
 </tr>
 <tr>
 <td>write_access_allowed</td>
 <td><a href="#writeaccessallowed">WriteAccessAllowed</a></td>
-<td><em>Optional</em>. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
+<td>_Optional_. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
 </tr>
 <tr>
 <td>passport_data</td>
 <td><a href="#passportdata">PassportData</a></td>
-<td><em>Optional</em>. Telegram Passport data</td>
+<td>_Optional_. Telegram Passport data</td>
 </tr>
 <tr>
 <td>proximity_alert_triggered</td>
 <td><a href="#proximityalerttriggered">ProximityAlertTriggered</a></td>
-<td><em>Optional</em>. Service message. A user in the chat triggered another user&#39;s proximity alert while sharing Live Location.</td>
+<td>_Optional_. Service message. A user in the chat triggered another user&#39;s proximity alert while sharing Live Location.</td>
 </tr>
 <tr>
 <td>boost_added</td>
 <td><a href="#chatboostadded">ChatBoostAdded</a></td>
-<td><em>Optional</em>. Service message: user boosted the chat</td>
+<td>_Optional_. Service message: user boosted the chat</td>
 </tr>
 <tr>
 <td>chat_background_set</td>
 <td><a href="#chatbackground">ChatBackground</a></td>
-<td><em>Optional</em>. Service message: chat background set</td>
+<td>_Optional_. Service message: chat background set</td>
 </tr>
 <tr>
 <td>checklist_tasks_done</td>
 <td><a href="#checklisttasksdone">ChecklistTasksDone</a></td>
-<td><em>Optional</em>. Service message: some tasks in a checklist were marked as done or not done</td>
+<td>_Optional_. Service message: some tasks in a checklist were marked as done or not done</td>
 </tr>
 <tr>
 <td>checklist_tasks_added</td>
 <td><a href="#checklisttasksadded">ChecklistTasksAdded</a></td>
-<td><em>Optional</em>. Service message: tasks were added to a checklist</td>
+<td>_Optional_. Service message: tasks were added to a checklist</td>
 </tr>
 <tr>
 <td>direct_message_price_changed</td>
 <td><a href="#directmessagepricechanged">DirectMessagePriceChanged</a></td>
-<td><em>Optional</em>. Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed</td>
+<td>_Optional_. Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed</td>
 </tr>
 <tr>
 <td>forum_topic_created</td>
 <td><a href="#forumtopiccreated">ForumTopicCreated</a></td>
-<td><em>Optional</em>. Service message: forum topic created</td>
+<td>_Optional_. Service message: forum topic created</td>
 </tr>
 <tr>
 <td>forum_topic_edited</td>
 <td><a href="#forumtopicedited">ForumTopicEdited</a></td>
-<td><em>Optional</em>. Service message: forum topic edited</td>
+<td>_Optional_. Service message: forum topic edited</td>
 </tr>
 <tr>
 <td>forum_topic_closed</td>
 <td><a href="#forumtopicclosed">ForumTopicClosed</a></td>
-<td><em>Optional</em>. Service message: forum topic closed</td>
+<td>_Optional_. Service message: forum topic closed</td>
 </tr>
 <tr>
 <td>forum_topic_reopened</td>
 <td><a href="#forumtopicreopened">ForumTopicReopened</a></td>
-<td><em>Optional</em>. Service message: forum topic reopened</td>
+<td>_Optional_. Service message: forum topic reopened</td>
 </tr>
 <tr>
 <td>general_forum_topic_hidden</td>
 <td><a href="#generalforumtopichidden">GeneralForumTopicHidden</a></td>
-<td><em>Optional</em>. Service message: the &#39;General&#39; forum topic hidden</td>
+<td>_Optional_. Service message: the &#39;General&#39; forum topic hidden</td>
 </tr>
 <tr>
 <td>general_forum_topic_unhidden</td>
 <td><a href="#generalforumtopicunhidden">GeneralForumTopicUnhidden</a></td>
-<td><em>Optional</em>. Service message: the &#39;General&#39; forum topic unhidden</td>
+<td>_Optional_. Service message: the &#39;General&#39; forum topic unhidden</td>
 </tr>
 <tr>
 <td>giveaway_created</td>
 <td><a href="#giveawaycreated">GiveawayCreated</a></td>
-<td><em>Optional</em>. Service message: a scheduled giveaway was created</td>
+<td>_Optional_. Service message: a scheduled giveaway was created</td>
 </tr>
 <tr>
 <td>giveaway</td>
 <td><a href="#giveaway">Giveaway</a></td>
-<td><em>Optional</em>. The message is a scheduled giveaway message</td>
+<td>_Optional_. The message is a scheduled giveaway message</td>
 </tr>
 <tr>
 <td>giveaway_winners</td>
 <td><a href="#giveawaywinners">GiveawayWinners</a></td>
-<td><em>Optional</em>. A giveaway with public winners was completed</td>
+<td>_Optional_. A giveaway with public winners was completed</td>
 </tr>
 <tr>
 <td>giveaway_completed</td>
 <td><a href="#giveawaycompleted">GiveawayCompleted</a></td>
-<td><em>Optional</em>. Service message: a giveaway without public winners was completed</td>
+<td>_Optional_. Service message: a giveaway without public winners was completed</td>
 </tr>
 <tr>
 <td>paid_message_price_changed</td>
 <td><a href="#paidmessagepricechanged">PaidMessagePriceChanged</a></td>
-<td><em>Optional</em>. Service message: the price for paid messages has changed in the chat</td>
+<td>_Optional_. Service message: the price for paid messages has changed in the chat</td>
 </tr>
 <tr>
 <td>suggested_post_approved</td>
 <td><a href="#suggestedpostapproved">SuggestedPostApproved</a></td>
-<td><em>Optional</em>. Service message: a suggested post was approved</td>
+<td>_Optional_. Service message: a suggested post was approved</td>
 </tr>
 <tr>
 <td>suggested_post_approval_failed</td>
 <td><a href="#suggestedpostapprovalfailed">SuggestedPostApprovalFailed</a></td>
-<td><em>Optional</em>. Service message: approval of a suggested post has failed</td>
+<td>_Optional_. Service message: approval of a suggested post has failed</td>
 </tr>
 <tr>
 <td>suggested_post_declined</td>
 <td><a href="#suggestedpostdeclined">SuggestedPostDeclined</a></td>
-<td><em>Optional</em>. Service message: a suggested post was declined</td>
+<td>_Optional_. Service message: a suggested post was declined</td>
 </tr>
 <tr>
 <td>suggested_post_paid</td>
 <td><a href="#suggestedpostpaid">SuggestedPostPaid</a></td>
-<td><em>Optional</em>. Service message: payment for a suggested post was received</td>
+<td>_Optional_. Service message: payment for a suggested post was received</td>
 </tr>
 <tr>
 <td>suggested_post_refunded</td>
 <td><a href="#suggestedpostrefunded">SuggestedPostRefunded</a></td>
-<td><em>Optional</em>. Service message: payment for a suggested post was refunded</td>
+<td>_Optional_. Service message: payment for a suggested post was refunded</td>
 </tr>
 <tr>
 <td>video_chat_scheduled</td>
 <td><a href="#videochatscheduled">VideoChatScheduled</a></td>
-<td><em>Optional</em>. Service message: video chat scheduled</td>
+<td>_Optional_. Service message: video chat scheduled</td>
 </tr>
 <tr>
 <td>video_chat_started</td>
 <td><a href="#videochatstarted">VideoChatStarted</a></td>
-<td><em>Optional</em>. Service message: video chat started</td>
+<td>_Optional_. Service message: video chat started</td>
 </tr>
 <tr>
 <td>video_chat_ended</td>
 <td><a href="#videochatended">VideoChatEnded</a></td>
-<td><em>Optional</em>. Service message: video chat ended</td>
+<td>_Optional_. Service message: video chat ended</td>
 </tr>
 <tr>
 <td>video_chat_participants_invited</td>
 <td><a href="#videochatparticipantsinvited">VideoChatParticipantsInvited</a></td>
-<td><em>Optional</em>. Service message: new participants invited to a video chat</td>
+<td>_Optional_. Service message: new participants invited to a video chat</td>
 </tr>
 <tr>
 <td>web_app_data</td>
 <td><a href="#webappdata">WebAppData</a></td>
-<td><em>Optional</em>. Service message: data sent by a Web App</td>
+<td>_Optional_. Service message: data sent by a Web App</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. Inline keyboard attached to the message. <code>login_url</code> buttons are represented as ordinary <code>url</code> buttons.</td>
+<td>_Optional_. Inline keyboard attached to the message. <code>login_url</code> buttons are represented as ordinary <code>url</code> buttons.</td>
 </tr>
 </tbody>
 </table>
@@ -1284,7 +1284,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag” (<code>#hashtag</code> or <code>#hashtag@chatusername</code>), “cashtag” (<code>$USD</code> or <code>$USD@chatusername</code>), “bot_command” (<code>/start@jobs_bot</code>), “url” (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number” (<code>+1-212-555-0123</code>), “bold” (**bold text**), “italic” (<em>italic text</em>), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers)</td>
+<td>Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag” (<code>#hashtag</code> or <code>#hashtag@chatusername</code>), “cashtag” (<code>$USD</code> or <code>$USD@chatusername</code>), “bot_command” (<code>/start@jobs_bot</code>), “url” (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number” (<code>+1-212-555-0123</code>), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers)</td>
 </tr>
 <tr>
 <td>offset</td>
@@ -1299,22 +1299,22 @@
 <tr>
 <td>url</td>
 <td>String</td>
-<td><em>Optional</em>. For “text_link” only, URL that will be opened after user taps on the text</td>
+<td>_Optional_. For “text_link” only, URL that will be opened after user taps on the text</td>
 </tr>
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. For “text_mention” only, the mentioned user</td>
+<td>_Optional_. For “text_mention” only, the mentioned user</td>
 </tr>
 <tr>
 <td>language</td>
 <td>String</td>
-<td><em>Optional</em>. For “pre” only, the programming language of the entity text</td>
+<td>_Optional_. For “pre” only, the programming language of the entity text</td>
 </tr>
 <tr>
 <td>custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker</td>
+<td>_Optional_. For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker</td>
 </tr>
 </tbody>
 </table>
@@ -1337,7 +1337,7 @@
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the quote. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, and <em>custom_emoji</em> entities are kept in quotes.</td>
+<td>_Optional_. Special entities that appear in the quote. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are kept in quotes.</td>
 </tr>
 <tr>
 <td>position</td>
@@ -1347,7 +1347,7 @@
 <tr>
 <td>is_manual</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.</td>
+<td>_Optional_. _True_, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.</td>
 </tr>
 </tbody>
 </table>
@@ -1370,122 +1370,122 @@
 <tr>
 <td>chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Chat the original message belongs to. Available only if the chat is a supergroup or a channel.</td>
+<td>_Optional_. Chat the original message belongs to. Available only if the chat is a supergroup or a channel.</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel.</td>
+<td>_Optional_. Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel.</td>
 </tr>
 <tr>
 <td>link_preview_options</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td><em>Optional</em>. Options used for link preview generation for the original message, if it is a text message</td>
+<td>_Optional_. Options used for link preview generation for the original message, if it is a text message</td>
 </tr>
 <tr>
 <td>animation</td>
 <td><a href="#animation">Animation</a></td>
-<td><em>Optional</em>. Message is an animation, information about the animation</td>
+<td>_Optional_. Message is an animation, information about the animation</td>
 </tr>
 <tr>
 <td>audio</td>
 <td><a href="#audio">Audio</a></td>
-<td><em>Optional</em>. Message is an audio file, information about the file</td>
+<td>_Optional_. Message is an audio file, information about the file</td>
 </tr>
 <tr>
 <td>document</td>
 <td><a href="#document">Document</a></td>
-<td><em>Optional</em>. Message is a general file, information about the file</td>
+<td>_Optional_. Message is a general file, information about the file</td>
 </tr>
 <tr>
 <td>paid_media</td>
 <td><a href="#paidmediainfo">PaidMediaInfo</a></td>
-<td><em>Optional</em>. Message contains paid media; information about the paid media</td>
+<td>_Optional_. Message contains paid media; information about the paid media</td>
 </tr>
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Message is a photo, available sizes of the photo</td>
+<td>_Optional_. Message is a photo, available sizes of the photo</td>
 </tr>
 <tr>
 <td>sticker</td>
 <td><a href="#sticker">Sticker</a></td>
-<td><em>Optional</em>. Message is a sticker, information about the sticker</td>
+<td>_Optional_. Message is a sticker, information about the sticker</td>
 </tr>
 <tr>
 <td>story</td>
 <td><a href="#story">Story</a></td>
-<td><em>Optional</em>. Message is a forwarded story</td>
+<td>_Optional_. Message is a forwarded story</td>
 </tr>
 <tr>
 <td>video</td>
 <td><a href="#video">Video</a></td>
-<td><em>Optional</em>. Message is a video, information about the video</td>
+<td>_Optional_. Message is a video, information about the video</td>
 </tr>
 <tr>
 <td>video_note</td>
 <td><a href="#videonote">VideoNote</a></td>
-<td><em>Optional</em>. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
+<td>_Optional_. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
 </tr>
 <tr>
 <td>voice</td>
 <td><a href="#voice">Voice</a></td>
-<td><em>Optional</em>. Message is a voice message, information about the file</td>
+<td>_Optional_. Message is a voice message, information about the file</td>
 </tr>
 <tr>
 <td>has_media_spoiler</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message media is covered by a spoiler animation</td>
+<td>_Optional_. _True_, if the message media is covered by a spoiler animation</td>
 </tr>
 <tr>
 <td>checklist</td>
 <td><a href="#checklist">Checklist</a></td>
-<td><em>Optional</em>. Message is a checklist</td>
+<td>_Optional_. Message is a checklist</td>
 </tr>
 <tr>
 <td>contact</td>
 <td><a href="#contact">Contact</a></td>
-<td><em>Optional</em>. Message is a shared contact, information about the contact</td>
+<td>_Optional_. Message is a shared contact, information about the contact</td>
 </tr>
 <tr>
 <td>dice</td>
 <td><a href="#dice">Dice</a></td>
-<td><em>Optional</em>. Message is a dice with random value</td>
+<td>_Optional_. Message is a dice with random value</td>
 </tr>
 <tr>
 <td>game</td>
 <td><a href="#game">Game</a></td>
-<td><em>Optional</em>. Message is a game, information about the game. <a href="#games">More about games »</a></td>
+<td>_Optional_. Message is a game, information about the game. <a href="#games">More about games »</a></td>
 </tr>
 <tr>
 <td>giveaway</td>
 <td><a href="#giveaway">Giveaway</a></td>
-<td><em>Optional</em>. Message is a scheduled giveaway, information about the giveaway</td>
+<td>_Optional_. Message is a scheduled giveaway, information about the giveaway</td>
 </tr>
 <tr>
 <td>giveaway_winners</td>
 <td><a href="#giveawaywinners">GiveawayWinners</a></td>
-<td><em>Optional</em>. A giveaway with public winners was completed</td>
+<td>_Optional_. A giveaway with public winners was completed</td>
 </tr>
 <tr>
 <td>invoice</td>
 <td><a href="#invoice">Invoice</a></td>
-<td><em>Optional</em>. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
+<td>_Optional_. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
 </tr>
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Message is a shared location, information about the location</td>
+<td>_Optional_. Message is a shared location, information about the location</td>
 </tr>
 <tr>
 <td>poll</td>
 <td><a href="#poll">Poll</a></td>
-<td><em>Optional</em>. Message is a native poll, information about the poll</td>
+<td>_Optional_. Message is a native poll, information about the poll</td>
 </tr>
 <tr>
 <td>venue</td>
 <td><a href="#venue">Venue</a></td>
-<td><em>Optional</em>. Message is a venue, information about the venue</td>
+<td>_Optional_. Message is a venue, information about the venue</td>
 </tr>
 </tbody>
 </table>
@@ -1503,42 +1503,42 @@
 <tr>
 <td>message_id</td>
 <td>Integer</td>
-<td>Identifier of the message that will be replied to in the current chat, or in the chat <em>chat_id</em> if it is specified</td>
+<td>Identifier of the message that will be replied to in the current chat, or in the chat _chat_id_ if it is specified</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
-<td><em>Optional</em>. If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format <code>@channelusername</code>). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats.</td>
+<td>_Optional_. If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format <code>@channelusername</code>). Not supported for messages sent on behalf of a business account and messages from channel direct messages chats.</td>
 </tr>
 <tr>
 <td>allow_sending_without_reply</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the message should be sent even if the specified message to be replied to is not found. Always <em>False</em> for replies in another chat or forum topic. Always <em>True</em> for messages sent on behalf of a business account.</td>
+<td>_Optional_. Pass _True_ if the message should be sent even if the specified message to be replied to is not found. Always _False_ for replies in another chat or forum topic. Always _True_ for messages sent on behalf of a business account.</td>
 </tr>
 <tr>
 <td>quote</td>
 <td>String</td>
-<td><em>Optional</em>. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, and <em>custom_emoji</em> entities. The message will fail to send if the quote isn&#39;t found in the original message.</td>
+<td>_Optional_. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities. The message will fail to send if the quote isn&#39;t found in the original message.</td>
 </tr>
 <tr>
 <td>quote_parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>quote_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. A JSON-serialized list of special entities that appear in the quote. It can be specified instead of <em>quote_parse_mode</em>.</td>
+<td>_Optional_. A JSON-serialized list of special entities that appear in the quote. It can be specified instead of _quote_parse_mode_.</td>
 </tr>
 <tr>
 <td>quote_position</td>
 <td>Integer</td>
-<td><em>Optional</em>. Position of the quote in the original message in UTF-16 code units</td>
+<td>_Optional_. Position of the quote in the original message in UTF-16 code units</td>
 </tr>
 <tr>
 <td>checklist_task_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. Identifier of the specific checklist task to be replied to</td>
+<td>_Optional_. Identifier of the specific checklist task to be replied to</td>
 </tr>
 </tbody>
 </table>
@@ -1635,7 +1635,7 @@
 <tr>
 <td>author_signature</td>
 <td>String</td>
-<td><em>Optional</em>. For messages originally sent by an anonymous chat administrator, original message author signature</td>
+<td>_Optional_. For messages originally sent by an anonymous chat administrator, original message author signature</td>
 </tr>
 </tbody>
 </table>
@@ -1673,7 +1673,7 @@
 <tr>
 <td>author_signature</td>
 <td>String</td>
-<td><em>Optional</em>. Signature of the original post author</td>
+<td>_Optional_. Signature of the original post author</td>
 </tr>
 </tbody>
 </table>
@@ -1711,7 +1711,7 @@
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes</td>
+<td>_Optional_. File size in bytes</td>
 </tr>
 </tbody>
 </table>
@@ -1754,22 +1754,22 @@
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Animation thumbnail as defined by the sender</td>
+<td>_Optional_. Animation thumbnail as defined by the sender</td>
 </tr>
 <tr>
 <td>file_name</td>
 <td>String</td>
-<td><em>Optional</em>. Original animation filename as defined by the sender</td>
+<td>_Optional_. Original animation filename as defined by the sender</td>
 </tr>
 <tr>
 <td>mime_type</td>
 <td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
+<td>_Optional_. MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 </tbody>
 </table>
@@ -1802,32 +1802,32 @@
 <tr>
 <td>performer</td>
 <td>String</td>
-<td><em>Optional</em>. Performer of the audio as defined by the sender or by audio tags</td>
+<td>_Optional_. Performer of the audio as defined by the sender or by audio tags</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title of the audio as defined by the sender or by audio tags</td>
+<td>_Optional_. Title of the audio as defined by the sender or by audio tags</td>
 </tr>
 <tr>
 <td>file_name</td>
 <td>String</td>
-<td><em>Optional</em>. Original filename as defined by the sender</td>
+<td>_Optional_. Original filename as defined by the sender</td>
 </tr>
 <tr>
 <td>mime_type</td>
 <td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
+<td>_Optional_. MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Thumbnail of the album cover to which the music file belongs</td>
+<td>_Optional_. Thumbnail of the album cover to which the music file belongs</td>
 </tr>
 </tbody>
 </table>
@@ -1855,22 +1855,22 @@
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Document thumbnail as defined by the sender</td>
+<td>_Optional_. Document thumbnail as defined by the sender</td>
 </tr>
 <tr>
 <td>file_name</td>
 <td>String</td>
-<td><em>Optional</em>. Original filename as defined by the sender</td>
+<td>_Optional_. Original filename as defined by the sender</td>
 </tr>
 <tr>
 <td>mime_type</td>
 <td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
+<td>_Optional_. MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 </tbody>
 </table>
@@ -1936,32 +1936,32 @@
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Video thumbnail</td>
+<td>_Optional_. Video thumbnail</td>
 </tr>
 <tr>
 <td>cover</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Available sizes of the cover of the video in the message</td>
+<td>_Optional_. Available sizes of the cover of the video in the message</td>
 </tr>
 <tr>
 <td>start_timestamp</td>
 <td>Integer</td>
-<td><em>Optional</em>. Timestamp in seconds from which the video will play in the message</td>
+<td>_Optional_. Timestamp in seconds from which the video will play in the message</td>
 </tr>
 <tr>
 <td>file_name</td>
 <td>String</td>
-<td><em>Optional</em>. Original filename as defined by the sender</td>
+<td>_Optional_. Original filename as defined by the sender</td>
 </tr>
 <tr>
 <td>mime_type</td>
 <td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
+<td>_Optional_. MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 </tbody>
 </table>
@@ -1999,12 +1999,12 @@
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Video thumbnail</td>
+<td>_Optional_. Video thumbnail</td>
 </tr>
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes</td>
+<td>_Optional_. File size in bytes</td>
 </tr>
 </tbody>
 </table>
@@ -2037,12 +2037,12 @@
 <tr>
 <td>mime_type</td>
 <td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
+<td>_Optional_. MIME type of the file as defined by the sender</td>
 </tr>
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 </tbody>
 </table>
@@ -2095,17 +2095,17 @@
 <tr>
 <td>width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Media width as defined by the sender</td>
+<td>_Optional_. Media width as defined by the sender</td>
 </tr>
 <tr>
 <td>height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Media height as defined by the sender</td>
+<td>_Optional_. Media height as defined by the sender</td>
 </tr>
 <tr>
 <td>duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Duration of the media in seconds as defined by the sender</td>
+<td>_Optional_. Duration of the media in seconds as defined by the sender</td>
 </tr>
 </tbody>
 </table>
@@ -2179,17 +2179,17 @@
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td><em>Optional</em>. Contact&#39;s last name</td>
+<td>_Optional_. Contact&#39;s last name</td>
 </tr>
 <tr>
 <td>user_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>_Optional_. Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
 <td>vcard</td>
 <td>String</td>
-<td><em>Optional</em>. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a></td>
+<td>_Optional_. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a></td>
 </tr>
 </tbody>
 </table>
@@ -2235,7 +2235,7 @@
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the option <em>text</em>. Currently, only custom emoji entities are allowed in poll option texts</td>
+<td>_Optional_. Special entities that appear in the option _text_. Currently, only custom emoji entities are allowed in poll option texts</td>
 </tr>
 <tr>
 <td>voter_count</td>
@@ -2263,12 +2263,12 @@
 <tr>
 <td>text_parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed</td>
+<td>_Optional_. Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed</td>
 </tr>
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of <em>text_parse_mode</em></td>
+<td>_Optional_. A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of _text_parse_mode_</td>
 </tr>
 </tbody>
 </table>
@@ -2291,12 +2291,12 @@
 <tr>
 <td>voter_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. The chat that changed the answer to the poll, if the voter is anonymous</td>
+<td>_Optional_. The chat that changed the answer to the poll, if the voter is anonymous</td>
 </tr>
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. The user that changed the answer to the poll, if the voter isn&#39;t anonymous</td>
+<td>_Optional_. The user that changed the answer to the poll, if the voter isn&#39;t anonymous</td>
 </tr>
 <tr>
 <td>option_ids</td>
@@ -2329,7 +2329,7 @@
 <tr>
 <td>question_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the <em>question</em>. Currently, only custom emoji entities are allowed in poll questions</td>
+<td>_Optional_. Special entities that appear in the _question_. Currently, only custom emoji entities are allowed in poll questions</td>
 </tr>
 <tr>
 <td>options</td>
@@ -2344,12 +2344,12 @@
 <tr>
 <td>is_closed</td>
 <td>Boolean</td>
-<td><em>True</em>, if the poll is closed</td>
+<td>_True_, if the poll is closed</td>
 </tr>
 <tr>
 <td>is_anonymous</td>
 <td>Boolean</td>
-<td><em>True</em>, if the poll is anonymous</td>
+<td>_True_, if the poll is anonymous</td>
 </tr>
 <tr>
 <td>type</td>
@@ -2359,32 +2359,32 @@
 <tr>
 <td>allows_multiple_answers</td>
 <td>Boolean</td>
-<td><em>True</em>, if the poll allows multiple answers</td>
+<td>_True_, if the poll allows multiple answers</td>
 </tr>
 <tr>
 <td>correct_option_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.</td>
+<td>_Optional_. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.</td>
 </tr>
 <tr>
 <td>explanation</td>
 <td>String</td>
-<td><em>Optional</em>. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters</td>
+<td>_Optional_. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters</td>
 </tr>
 <tr>
 <td>explanation_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities like usernames, URLs, bot commands, etc. that appear in the <em>explanation</em></td>
+<td>_Optional_. Special entities like usernames, URLs, bot commands, etc. that appear in the _explanation_</td>
 </tr>
 <tr>
 <td>open_period</td>
 <td>Integer</td>
-<td><em>Optional</em>. Amount of time in seconds the poll will be active after creation</td>
+<td>_Optional_. Amount of time in seconds the poll will be active after creation</td>
 </tr>
 <tr>
 <td>close_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the poll will be automatically closed</td>
+<td>_Optional_. Point in time (Unix timestamp) when the poll will be automatically closed</td>
 </tr>
 </tbody>
 </table>
@@ -2412,17 +2412,17 @@
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the task text</td>
+<td>_Optional_. Special entities that appear in the task text</td>
 </tr>
 <tr>
 <td>completed_by_user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. User that completed the task; omitted if the task wasn&#39;t completed</td>
+<td>_Optional_. User that completed the task; omitted if the task wasn&#39;t completed</td>
 </tr>
 <tr>
 <td>completion_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed</td>
+<td>_Optional_. Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed</td>
 </tr>
 </tbody>
 </table>
@@ -2445,7 +2445,7 @@
 <tr>
 <td>title_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the checklist title</td>
+<td>_Optional_. Special entities that appear in the checklist title</td>
 </tr>
 <tr>
 <td>tasks</td>
@@ -2455,12 +2455,12 @@
 <tr>
 <td>others_can_add_tasks</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if users other than the creator of the list can add tasks to the list</td>
+<td>_Optional_. _True_, if users other than the creator of the list can add tasks to the list</td>
 </tr>
 <tr>
 <td>others_can_mark_tasks_as_done</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if users other than the creator of the list can mark tasks as done or not done</td>
+<td>_Optional_. _True_, if users other than the creator of the list can mark tasks as done or not done</td>
 </tr>
 </tbody>
 </table>
@@ -2493,7 +2493,7 @@
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, and <em>custom_emoji</em> entities are allowed.</td>
+<td>_Optional_. List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.</td>
 </tr>
 </tbody>
 </table>
@@ -2521,7 +2521,7 @@
 <tr>
 <td>title_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, and <em>custom_emoji</em> entities are allowed.</td>
+<td>_Optional_. List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.</td>
 </tr>
 <tr>
 <td>tasks</td>
@@ -2531,12 +2531,12 @@
 <tr>
 <td>others_can_add_tasks</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if other users can add tasks to the checklist</td>
+<td>_Optional_. Pass _True_ if other users can add tasks to the checklist</td>
 </tr>
 <tr>
 <td>others_can_mark_tasks_as_done</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if other users can mark tasks as done or not done in the checklist</td>
+<td>_Optional_. Pass _True_ if other users can mark tasks as done or not done in the checklist</td>
 </tr>
 </tbody>
 </table>
@@ -2554,17 +2554,17 @@
 <tr>
 <td>checklist_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
+<td>_Optional_. Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>marked_as_done_task_ids</td>
 <td>Array of Integer</td>
-<td><em>Optional</em>. Identifiers of the tasks that were marked as done</td>
+<td>_Optional_. Identifiers of the tasks that were marked as done</td>
 </tr>
 <tr>
 <td>marked_as_not_done_task_ids</td>
 <td>Array of Integer</td>
-<td><em>Optional</em>. Identifiers of the tasks that were marked as not done</td>
+<td>_Optional_. Identifiers of the tasks that were marked as not done</td>
 </tr>
 </tbody>
 </table>
@@ -2582,7 +2582,7 @@
 <tr>
 <td>checklist_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
+<td>_Optional_. Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>tasks</td>
@@ -2615,22 +2615,22 @@
 <tr>
 <td>horizontal_accuracy</td>
 <td>Float</td>
-<td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
+<td>_Optional_. The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
 <td>live_period</td>
 <td>Integer</td>
-<td><em>Optional</em>. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.</td>
+<td>_Optional_. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.</td>
 </tr>
 <tr>
 <td>heading</td>
 <td>Integer</td>
-<td><em>Optional</em>. The direction in which user is moving, in degrees; 1-360. For active live locations only.</td>
+<td>_Optional_. The direction in which user is moving, in degrees; 1-360. For active live locations only.</td>
 </tr>
 <tr>
 <td>proximity_alert_radius</td>
 <td>Integer</td>
-<td><em>Optional</em>. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.</td>
+<td>_Optional_. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.</td>
 </tr>
 </tbody>
 </table>
@@ -2663,22 +2663,22 @@
 <tr>
 <td>foursquare_id</td>
 <td>String</td>
-<td><em>Optional</em>. Foursquare identifier of the venue</td>
+<td>_Optional_. Foursquare identifier of the venue</td>
 </tr>
 <tr>
 <td>foursquare_type</td>
 <td>String</td>
-<td><em>Optional</em>. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
+<td>_Optional_. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
 </tr>
 <tr>
 <td>google_place_id</td>
 <td>String</td>
-<td><em>Optional</em>. Google Places identifier of the venue</td>
+<td>_Optional_. Google Places identifier of the venue</td>
 </tr>
 <tr>
 <td>google_place_type</td>
 <td>String</td>
-<td><em>Optional</em>. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
+<td>_Optional_. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
 </tr>
 </tbody>
 </table>
@@ -2701,7 +2701,7 @@
 <tr>
 <td>button_text</td>
 <td>String</td>
-<td>Text of the <em>web_app</em> keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.</td>
+<td>Text of the _web_app_ keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.</td>
 </tr>
 </tbody>
 </table>
@@ -2920,12 +2920,12 @@
 <tr>
 <td>is_blurred</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12</td>
+<td>_Optional_. _True_, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12</td>
 </tr>
 <tr>
 <td>is_moving</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the background moves slightly when the device is tilted</td>
+<td>_Optional_. _True_, if the background moves slightly when the device is tilted</td>
 </tr>
 </tbody>
 </table>
@@ -2963,12 +2963,12 @@
 <tr>
 <td>is_inverted</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only</td>
+<td>_Optional_. _True_, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only</td>
 </tr>
 <tr>
 <td>is_moving</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the background moves slightly when the device is tilted</td>
+<td>_Optional_. _True_, if the background moves slightly when the device is tilted</td>
 </tr>
 </tbody>
 </table>
@@ -3037,7 +3037,7 @@
 <tr>
 <td>icon_custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the custom emoji shown as the topic icon</td>
+<td>_Optional_. Unique identifier of the custom emoji shown as the topic icon</td>
 </tr>
 </tbody>
 </table>
@@ -3057,12 +3057,12 @@
 <tr>
 <td>name</td>
 <td>String</td>
-<td><em>Optional</em>. New name of the topic, if it was edited</td>
+<td>_Optional_. New name of the topic, if it was edited</td>
 </tr>
 <tr>
 <td>icon_custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed</td>
+<td>_Optional_. New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed</td>
 </tr>
 </tbody>
 </table>
@@ -3091,22 +3091,22 @@
 <tr>
 <td>first_name</td>
 <td>String</td>
-<td><em>Optional</em>. First name of the user, if the name was requested by the bot</td>
+<td>_Optional_. First name of the user, if the name was requested by the bot</td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td><em>Optional</em>. Last name of the user, if the name was requested by the bot</td>
+<td>_Optional_. Last name of the user, if the name was requested by the bot</td>
 </tr>
 <tr>
 <td>username</td>
 <td>String</td>
-<td><em>Optional</em>. Username of the user, if the username was requested by the bot</td>
+<td>_Optional_. Username of the user, if the username was requested by the bot</td>
 </tr>
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Available sizes of the chat photo, if the photo was requested by the bot</td>
+<td>_Optional_. Available sizes of the chat photo, if the photo was requested by the bot</td>
 </tr>
 </tbody>
 </table>
@@ -3157,17 +3157,17 @@
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title of the chat, if the title was requested by the bot.</td>
+<td>_Optional_. Title of the chat, if the title was requested by the bot.</td>
 </tr>
 <tr>
 <td>username</td>
 <td>String</td>
-<td><em>Optional</em>. Username of the chat, if the username was requested by the bot and available.</td>
+<td>_Optional_. Username of the chat, if the username was requested by the bot and available.</td>
 </tr>
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Available sizes of the chat photo, if the photo was requested by the bot</td>
+<td>_Optional_. Available sizes of the chat photo, if the photo was requested by the bot</td>
 </tr>
 </tbody>
 </table>
@@ -3185,17 +3185,17 @@
 <tr>
 <td>from_request</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
+<td>_Optional_. _True_, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
 </tr>
 <tr>
 <td>web_app_name</td>
 <td>String</td>
-<td><em>Optional</em>. Name of the Web App, if the access was granted when the Web App was launched from a link</td>
+<td>_Optional_. Name of the Web App, if the access was granted when the Web App was launched from a link</td>
 </tr>
 <tr>
 <td>from_attachment_menu</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the access was granted when the bot was added to the attachment or side menu</td>
+<td>_Optional_. _True_, if the access was granted when the bot was added to the attachment or side menu</td>
 </tr>
 </tbody>
 </table>
@@ -3287,12 +3287,12 @@
 <tr>
 <td>are_direct_messages_enabled</td>
 <td>Boolean</td>
-<td><em>True</em>, if direct messages are enabled for the channel chat; false otherwise</td>
+<td>_True_, if direct messages are enabled for the channel chat; false otherwise</td>
 </tr>
 <tr>
 <td>direct_message_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.</td>
+<td>_Optional_. The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.</td>
 </tr>
 </tbody>
 </table>
@@ -3310,12 +3310,12 @@
 <tr>
 <td>suggested_post_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
+<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>price</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td><em>Optional</em>. Amount paid for the post</td>
+<td>_Optional_. Amount paid for the post</td>
 </tr>
 <tr>
 <td>send_date</td>
@@ -3338,7 +3338,7 @@
 <tr>
 <td>suggested_post_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
+<td>_Optional_. Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>price</td>
@@ -3361,12 +3361,12 @@
 <tr>
 <td>suggested_post_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
+<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>comment</td>
 <td>String</td>
-<td><em>Optional</em>. Comment with which the post was declined</td>
+<td>_Optional_. Comment with which the post was declined</td>
 </tr>
 </tbody>
 </table>
@@ -3384,7 +3384,7 @@
 <tr>
 <td>suggested_post_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
+<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>currency</td>
@@ -3394,12 +3394,12 @@
 <tr>
 <td>amount</td>
 <td>Integer</td>
-<td><em>Optional</em>. The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only</td>
+<td>_Optional_. The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only</td>
 </tr>
 <tr>
 <td>star_amount</td>
 <td><a href="#staramount">StarAmount</a></td>
-<td><em>Optional</em>. The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only</td>
+<td>_Optional_. The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only</td>
 </tr>
 </tbody>
 </table>
@@ -3417,7 +3417,7 @@
 <tr>
 <td>suggested_post_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
+<td>_Optional_. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.</td>
 </tr>
 <tr>
 <td>reason</td>
@@ -3440,7 +3440,7 @@
 <tr>
 <td>prize_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
+<td>_Optional_. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 </tbody>
 </table>
@@ -3473,32 +3473,32 @@
 <tr>
 <td>only_new_members</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if only users who join the chats after the giveaway started should be eligible to win</td>
+<td>_Optional_. _True_, if only users who join the chats after the giveaway started should be eligible to win</td>
 </tr>
 <tr>
 <td>has_public_winners</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the list of giveaway winners will be visible to everyone</td>
+<td>_Optional_. _True_, if the list of giveaway winners will be visible to everyone</td>
 </tr>
 <tr>
 <td>prize_description</td>
 <td>String</td>
-<td><em>Optional</em>. Description of additional giveaway prize</td>
+<td>_Optional_. Description of additional giveaway prize</td>
 </tr>
 <tr>
 <td>country_codes</td>
 <td>Array of String</td>
-<td><em>Optional</em>. A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.</td>
+<td>_Optional_. A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.</td>
 </tr>
 <tr>
 <td>prize_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
+<td>_Optional_. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 <tr>
 <td>premium_subscription_month_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
+<td>_Optional_. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
 </tr>
 </tbody>
 </table>
@@ -3541,37 +3541,37 @@
 <tr>
 <td>additional_chat_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of other chats the user had to join in order to be eligible for the giveaway</td>
+<td>_Optional_. The number of other chats the user had to join in order to be eligible for the giveaway</td>
 </tr>
 <tr>
 <td>prize_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only</td>
+<td>_Optional_. The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 <tr>
 <td>premium_subscription_month_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
+<td>_Optional_. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
 </tr>
 <tr>
 <td>unclaimed_prize_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of undistributed prizes</td>
+<td>_Optional_. Number of undistributed prizes</td>
 </tr>
 <tr>
 <td>only_new_members</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if only users who had joined the chats after the giveaway started were eligible to win</td>
+<td>_Optional_. _True_, if only users who had joined the chats after the giveaway started were eligible to win</td>
 </tr>
 <tr>
 <td>was_refunded</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the giveaway was canceled because the payment for it was refunded</td>
+<td>_Optional_. _True_, if the giveaway was canceled because the payment for it was refunded</td>
 </tr>
 <tr>
 <td>prize_description</td>
 <td>String</td>
-<td><em>Optional</em>. Description of additional giveaway prize</td>
+<td>_Optional_. Description of additional giveaway prize</td>
 </tr>
 </tbody>
 </table>
@@ -3594,17 +3594,17 @@
 <tr>
 <td>unclaimed_prize_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of undistributed prizes</td>
+<td>_Optional_. Number of undistributed prizes</td>
 </tr>
 <tr>
 <td>giveaway_message</td>
 <td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message with the giveaway that was completed, if it wasn&#39;t deleted</td>
+<td>_Optional_. Message with the giveaway that was completed, if it wasn&#39;t deleted</td>
 </tr>
 <tr>
 <td>is_star_giveaway</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.</td>
+<td>_Optional_. _True_, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.</td>
 </tr>
 </tbody>
 </table>
@@ -3622,27 +3622,27 @@
 <tr>
 <td>is_disabled</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the link preview is disabled</td>
+<td>_Optional_. _True_, if the link preview is disabled</td>
 </tr>
 <tr>
 <td>url</td>
 <td>String</td>
-<td><em>Optional</em>. URL to use for the link preview. If empty, then the first URL found in the message text will be used</td>
+<td>_Optional_. URL to use for the link preview. If empty, then the first URL found in the message text will be used</td>
 </tr>
 <tr>
 <td>prefer_small_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
+<td>_Optional_. _True_, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
 </tr>
 <tr>
 <td>prefer_large_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
+<td>_Optional_. _True_, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
 </tr>
 <tr>
 <td>show_above_text</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text</td>
+<td>_Optional_. _True_, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text</td>
 </tr>
 </tbody>
 </table>
@@ -3665,7 +3665,7 @@
 <tr>
 <td>amount</td>
 <td>Integer</td>
-<td>The amount of the currency that will be paid for the post in the <em>smallest units</em> of the currency, i.e. Telegram Stars or nanotoncoins. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanotoncoins must be between 10000000 and 10000000000000.</td>
+<td>The amount of the currency that will be paid for the post in the _smallest units_ of the currency, i.e. Telegram Stars or nanotoncoins. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanotoncoins must be between 10000000 and 10000000000000.</td>
 </tr>
 </tbody>
 </table>
@@ -3688,12 +3688,12 @@
 <tr>
 <td>price</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td><em>Optional</em>. Proposed price of the post. If the field is omitted, then the post is unpaid.</td>
+<td>_Optional_. Proposed price of the post. If the field is omitted, then the post is unpaid.</td>
 </tr>
 <tr>
 <td>send_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.</td>
+<td>_Optional_. Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.</td>
 </tr>
 </tbody>
 </table>
@@ -3711,12 +3711,12 @@
 <tr>
 <td>price</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td><em>Optional</em>. Proposed price for the post. If the field is omitted, then the post is unpaid.</td>
+<td>_Optional_. Proposed price for the post. If the field is omitted, then the post is unpaid.</td>
 </tr>
 <tr>
 <td>send_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.</td>
+<td>_Optional_. Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.</td>
 </tr>
 </tbody>
 </table>
@@ -3739,7 +3739,7 @@
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. Information about the user that created the topic. Currently, it is always present</td>
+<td>_Optional_. Information about the user that created the topic. Currently, it is always present</td>
 </tr>
 </tbody>
 </table>
@@ -3793,12 +3793,12 @@
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
+<td>_Optional_. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
 </tr>
 <tr>
 <td>file_path</td>
 <td>String</td>
-<td><em>Optional</em>. File path. Use <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code> to get the file.</td>
+<td>_Optional_. File path. Use <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code> to get the file.</td>
 </tr>
 </tbody>
 </table>
@@ -3839,32 +3839,32 @@
 <tr>
 <td>is_persistent</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to <em>false</em>, in which case the custom keyboard can be hidden and opened with a keyboard icon.</td>
+<td>_Optional_. Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to _false_, in which case the custom keyboard can be hidden and opened with a keyboard icon.</td>
 </tr>
 <tr>
 <td>resize_keyboard</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to <em>false</em>, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.</td>
+<td>_Optional_. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to _false_, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.</td>
 </tr>
 <tr>
 <td>one_time_keyboard</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to <em>false</em>.</td>
+<td>_Optional_. Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to _false_.</td>
 </tr>
 <tr>
 <td>input_field_placeholder</td>
 <td>String</td>
-<td><em>Optional</em>. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters</td>
+<td>_Optional_. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters</td>
 </tr>
 <tr>
 <td>selective</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.</td>
+<td>_Optional_. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="keyboardbutton" href="#keyboardbutton"><i class="anchor-icon"></i></a>KeyboardButton</h4>
-<p>This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, <em>String</em> can be used instead of this object to specify the button text.</p>
+<p>This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, _String_ can be used instead of this object to specify the button text.</p>
 <table class="table">
 <thead>
 <tr>
@@ -3882,36 +3882,36 @@
 <tr>
 <td>request_users</td>
 <td><a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a></td>
-<td><em>Optional.</em> If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.</td>
+<td>_Optional._ If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.</td>
 </tr>
 <tr>
 <td>request_chat</td>
 <td><a href="#keyboardbuttonrequestchat">KeyboardButtonRequestChat</a></td>
-<td><em>Optional.</em> If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.</td>
+<td>_Optional._ If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.</td>
 </tr>
 <tr>
 <td>request_contact</td>
 <td>Boolean</td>
-<td><em>Optional</em>. If <em>True</em>, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.</td>
+<td>_Optional_. If _True_, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.</td>
 </tr>
 <tr>
 <td>request_location</td>
 <td>Boolean</td>
-<td><em>Optional</em>. If <em>True</em>, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.</td>
+<td>_Optional_. If _True_, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.</td>
 </tr>
 <tr>
 <td>request_poll</td>
 <td><a href="#keyboardbuttonpolltype">KeyboardButtonPollType</a></td>
-<td><em>Optional</em>. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.</td>
+<td>_Optional_. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.</td>
 </tr>
 <tr>
 <td>web_app</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
-<td><em>Optional</em>. If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.</td>
+<td>_Optional_. If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.</td>
 </tr>
 </tbody>
 </table>
-<p>**Note:** <em>request_users</em> and <em>request_chat</em> options will only work in Telegram versions released after 3 February, 2023. Older clients will display <em>unsupported message</em>.</p>
+<p>**Note:** _request_users_ and _request_chat_ options will only work in Telegram versions released after 3 February, 2023. Older clients will display _unsupported message_.</p>
 <h4><a class="anchor" name="keyboardbuttonrequestusers" href="#keyboardbuttonrequestusers"><i class="anchor-icon"></i></a>KeyboardButtonRequestUsers</h4>
 <p>This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="/bots/features#chat-and-user-selection">More about requesting users »</a></p>
 <table class="table">
@@ -3931,32 +3931,32 @@
 <tr>
 <td>user_is_bot</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request bots, pass <em>False</em> to request regular users. If not specified, no additional restrictions are applied.</td>
+<td>_Optional_. Pass _True_ to request bots, pass _False_ to request regular users. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>user_is_premium</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request premium users, pass <em>False</em> to request non-premium users. If not specified, no additional restrictions are applied.</td>
+<td>_Optional_. Pass _True_ to request premium users, pass _False_ to request non-premium users. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>max_quantity</td>
 <td>Integer</td>
-<td><em>Optional</em>. The maximum number of users to be selected; 1-10. Defaults to 1.</td>
+<td>_Optional_. The maximum number of users to be selected; 1-10. Defaults to 1.</td>
 </tr>
 <tr>
 <td>request_name</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the users&#39; first and last names</td>
+<td>_Optional_. Pass _True_ to request the users&#39; first and last names</td>
 </tr>
 <tr>
 <td>request_username</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the users&#39; usernames</td>
+<td>_Optional_. Pass _True_ to request the users&#39; usernames</td>
 </tr>
 <tr>
 <td>request_photo</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the users&#39; photos</td>
+<td>_Optional_. Pass _True_ to request the users&#39; photos</td>
 </tr>
 </tbody>
 </table>
@@ -3979,52 +3979,52 @@
 <tr>
 <td>chat_is_channel</td>
 <td>Boolean</td>
-<td>Pass <em>True</em> to request a channel chat, pass <em>False</em> to request a group or a supergroup chat.</td>
+<td>Pass _True_ to request a channel chat, pass _False_ to request a group or a supergroup chat.</td>
 </tr>
 <tr>
 <td>chat_is_forum</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a forum supergroup, pass <em>False</em> to request a non-forum chat. If not specified, no additional restrictions are applied.</td>
+<td>_Optional_. Pass _True_ to request a forum supergroup, pass _False_ to request a non-forum chat. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>chat_has_username</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a supergroup or a channel with a username, pass <em>False</em> to request a chat without a username. If not specified, no additional restrictions are applied.</td>
+<td>_Optional_. Pass _True_ to request a supergroup or a channel with a username, pass _False_ to request a chat without a username. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>chat_is_created</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a chat owned by the user. Otherwise, no additional restrictions are applied.</td>
+<td>_Optional_. Pass _True_ to request a chat owned by the user. Otherwise, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>user_administrator_rights</td>
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td><em>Optional</em>. A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of <em>bot_administrator_rights</em>. If not specified, no additional restrictions are applied.</td>
+<td>_Optional_. A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of _bot_administrator_rights_. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>bot_administrator_rights</td>
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td><em>Optional</em>. A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of <em>user_administrator_rights</em>. If not specified, no additional restrictions are applied.</td>
+<td>_Optional_. A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of _user_administrator_rights_. If not specified, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>bot_is_member</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.</td>
+<td>_Optional_. Pass _True_ to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.</td>
 </tr>
 <tr>
 <td>request_title</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the chat&#39;s title</td>
+<td>_Optional_. Pass _True_ to request the chat&#39;s title</td>
 </tr>
 <tr>
 <td>request_username</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the chat&#39;s username</td>
+<td>_Optional_. Pass _True_ to request the chat&#39;s username</td>
 </tr>
 <tr>
 <td>request_photo</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the chat&#39;s photo</td>
+<td>_Optional_. Pass _True_ to request the chat&#39;s photo</td>
 </tr>
 </tbody>
 </table>
@@ -4042,7 +4042,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td><em>Optional</em>. If <em>quiz</em> is passed, the user will be allowed to create only polls in the quiz mode. If <em>regular</em> is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.</td>
+<td>_Optional_. If _quiz_ is passed, the user will be allowed to create only polls in the quiz mode. If _regular_ is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.</td>
 </tr>
 </tbody>
 </table>
@@ -4060,12 +4060,12 @@
 <tr>
 <td>remove_keyboard</td>
 <td>True</td>
-<td>Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use <em>one_time_keyboard</em> in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)</td>
+<td>Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use _one_time_keyboard_ in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)</td>
 </tr>
 <tr>
 <td>selective</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.</td>
+<td>_Optional_. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.</td>
 </tr>
 </tbody>
 </table>
@@ -4106,52 +4106,52 @@
 <tr>
 <td>url</td>
 <td>String</td>
-<td><em>Optional</em>. HTTP or tg:// URL to be opened when the button is pressed. Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.</td>
+<td>_Optional_. HTTP or tg:// URL to be opened when the button is pressed. Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.</td>
 </tr>
 <tr>
 <td>callback_data</td>
 <td>String</td>
-<td><em>Optional</em>. Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes</td>
+<td>_Optional_. Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes</td>
 </tr>
 <tr>
 <td>web_app</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
-<td><em>Optional</em>. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.</td>
+<td>_Optional_. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
 <td>login_url</td>
 <td><a href="#loginurl">LoginUrl</a></td>
-<td><em>Optional</em>. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.</td>
+<td>_Optional_. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.</td>
 </tr>
 <tr>
 <td>switch_inline_query</td>
 <td>String</td>
-<td><em>Optional</em>. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
+<td>_Optional_. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
 <td>switch_inline_query_current_chat</td>
 <td>String</td>
-<td><em>Optional</em>. If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
+<td>_Optional_. If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
 <td>switch_inline_query_chosen_chat</td>
 <td><a href="#switchinlinequerychosenchat">SwitchInlineQueryChosenChat</a></td>
-<td><em>Optional</em>. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot&#39;s username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
+<td>_Optional_. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot&#39;s username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.</td>
 </tr>
 <tr>
 <td>copy_text</td>
 <td><a href="#copytextbutton">CopyTextButton</a></td>
-<td><em>Optional</em>. Description of the button that copies the specified text to the clipboard.</td>
+<td>_Optional_. Description of the button that copies the specified text to the clipboard.</td>
 </tr>
 <tr>
 <td>callback_game</td>
 <td><a href="#callbackgame">CallbackGame</a></td>
-<td><em>Optional</em>. Description of the game that will be launched when the user presses the button.<br><br>**NOTE:** This type of button **must** always be the first button in the first row.</td>
+<td>_Optional_. Description of the game that will be launched when the user presses the button.<br><br>**NOTE:** This type of button **must** always be the first button in the first row.</td>
 </tr>
 <tr>
 <td>pay</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Specify <em>True</em>, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br>**NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.</td>
+<td>_Optional_. Specify _True_, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br>**NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.</td>
 </tr>
 </tbody>
 </table>
@@ -4182,17 +4182,17 @@
 <tr>
 <td>forward_text</td>
 <td>String</td>
-<td><em>Optional</em>. New text of the button in forwarded messages.</td>
+<td>_Optional_. New text of the button in forwarded messages.</td>
 </tr>
 <tr>
 <td>bot_username</td>
 <td>String</td>
-<td><em>Optional</em>. Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The <em>url</em>&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.</td>
+<td>_Optional_. Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.</td>
 </tr>
 <tr>
 <td>request_write_access</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the permission for your bot to send messages to the user.</td>
+<td>_Optional_. Pass _True_ to request the permission for your bot to send messages to the user.</td>
 </tr>
 </tbody>
 </table>
@@ -4210,27 +4210,27 @@
 <tr>
 <td>query</td>
 <td>String</td>
-<td><em>Optional</em>. The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted</td>
+<td>_Optional_. The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted</td>
 </tr>
 <tr>
 <td>allow_user_chats</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if private chats with users can be chosen</td>
+<td>_Optional_. _True_, if private chats with users can be chosen</td>
 </tr>
 <tr>
 <td>allow_bot_chats</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if private chats with bots can be chosen</td>
+<td>_Optional_. _True_, if private chats with bots can be chosen</td>
 </tr>
 <tr>
 <td>allow_group_chats</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if group and supergroup chats can be chosen</td>
+<td>_Optional_. _True_, if group and supergroup chats can be chosen</td>
 </tr>
 <tr>
 <td>allow_channel_chats</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if channel chats can be chosen</td>
+<td>_Optional_. _True_, if channel chats can be chosen</td>
 </tr>
 </tbody>
 </table>
@@ -4253,7 +4253,7 @@
 </tbody>
 </table>
 <h4><a class="anchor" name="callbackquery" href="#callbackquery"><i class="anchor-icon"></i></a>CallbackQuery</h4>
-<p>This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field <em>message</em> will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field <em>inline_message_id</em> will be present. Exactly one of the fields <em>data</em> or <em>game_short_name</em> will be present.</p>
+<p>This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.</p>
 <table class="table">
 <thead>
 <tr>
@@ -4276,12 +4276,12 @@
 <tr>
 <td>message</td>
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td><em>Optional</em>. Message sent by the bot with the callback button that originated the query</td>
+<td>_Optional_. Message sent by the bot with the callback button that originated the query</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
-<td><em>Optional</em>. Identifier of the message sent via the bot in inline mode, that originated the query.</td>
+<td>_Optional_. Identifier of the message sent via the bot in inline mode, that originated the query.</td>
 </tr>
 <tr>
 <td>chat_instance</td>
@@ -4291,12 +4291,12 @@
 <tr>
 <td>data</td>
 <td>String</td>
-<td><em>Optional</em>. Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.</td>
+<td>_Optional_. Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.</td>
 </tr>
 <tr>
 <td>game_short_name</td>
 <td>String</td>
-<td><em>Optional</em>. Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game</td>
+<td>_Optional_. Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game</td>
 </tr>
 </tbody>
 </table>
@@ -4322,12 +4322,12 @@
 <tr>
 <td>input_field_placeholder</td>
 <td>String</td>
-<td><em>Optional</em>. The placeholder to be shown in the input field when the reply is active; 1-64 characters</td>
+<td>_Optional_. The placeholder to be shown in the input field when the reply is active; 1-64 characters</td>
 </tr>
 <tr>
 <td>selective</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.</td>
+<td>_Optional_. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.</td>
 </tr>
 </tbody>
 </table>
@@ -4396,47 +4396,47 @@
 <tr>
 <td>creates_join_request</td>
 <td>Boolean</td>
-<td><em>True</em>, if users joining the chat via the link need to be approved by chat administrators</td>
+<td>_True_, if users joining the chat via the link need to be approved by chat administrators</td>
 </tr>
 <tr>
 <td>is_primary</td>
 <td>Boolean</td>
-<td><em>True</em>, if the link is primary</td>
+<td>_True_, if the link is primary</td>
 </tr>
 <tr>
 <td>is_revoked</td>
 <td>Boolean</td>
-<td><em>True</em>, if the link is revoked</td>
+<td>_True_, if the link is revoked</td>
 </tr>
 <tr>
 <td>name</td>
 <td>String</td>
-<td><em>Optional</em>. Invite link name</td>
+<td>_Optional_. Invite link name</td>
 </tr>
 <tr>
 <td>expire_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the link will expire or has been expired</td>
+<td>_Optional_. Point in time (Unix timestamp) when the link will expire or has been expired</td>
 </tr>
 <tr>
 <td>member_limit</td>
 <td>Integer</td>
-<td><em>Optional</em>. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
+<td>_Optional_. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
 </tr>
 <tr>
 <td>pending_join_request_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of pending join requests created using this link</td>
+<td>_Optional_. Number of pending join requests created using this link</td>
 </tr>
 <tr>
 <td>subscription_period</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of seconds the subscription will be active for before the next payment</td>
+<td>_Optional_. The number of seconds the subscription will be active for before the next payment</td>
 </tr>
 <tr>
 <td>subscription_price</td>
 <td>Integer</td>
-<td><em>Optional</em>. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link</td>
+<td>_Optional_. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link</td>
 </tr>
 </tbody>
 </table>
@@ -4454,82 +4454,82 @@
 <tr>
 <td>is_anonymous</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user&#39;s presence in the chat is hidden</td>
+<td>_True_, if the user&#39;s presence in the chat is hidden</td>
 </tr>
 <tr>
 <td>can_manage_chat</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
+<td>_True_, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
 </tr>
 <tr>
 <td>can_delete_messages</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can delete messages of other users</td>
+<td>_True_, if the administrator can delete messages of other users</td>
 </tr>
 <tr>
 <td>can_manage_video_chats</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can manage video chats</td>
+<td>_True_, if the administrator can manage video chats</td>
 </tr>
 <tr>
 <td>can_restrict_members</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
+<td>_True_, if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
 </tr>
 <tr>
 <td>can_promote_members</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)</td>
+<td>_True_, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)</td>
 </tr>
 <tr>
 <td>can_change_info</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to change the chat title, photo and other settings</td>
+<td>_True_, if the user is allowed to change the chat title, photo and other settings</td>
 </tr>
 <tr>
 <td>can_invite_users</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to invite new users to the chat</td>
+<td>_True_, if the user is allowed to invite new users to the chat</td>
 </tr>
 <tr>
 <td>can_post_stories</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can post stories to the chat</td>
+<td>_True_, if the administrator can post stories to the chat</td>
 </tr>
 <tr>
 <td>can_edit_stories</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
+<td>_True_, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
 </tr>
 <tr>
 <td>can_delete_stories</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can delete stories posted by other users</td>
+<td>_True_, if the administrator can delete stories posted by other users</td>
 </tr>
 <tr>
 <td>can_post_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
+<td>_Optional_. _True_, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
 </tr>
 <tr>
 <td>can_edit_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only</td>
+<td>_Optional_. _True_, if the administrator can edit messages of other users and can pin messages; for channels only</td>
 </tr>
 <tr>
 <td>can_pin_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only</td>
+<td>_Optional_. _True_, if the user is allowed to pin messages; for groups and supergroups only</td>
 </tr>
 <tr>
 <td>can_manage_topics</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
+<td>_Optional_. _True_, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
 </tr>
 <tr>
 <td>can_manage_direct_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
+<td>_Optional_. _True_, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
 </tr>
 </tbody>
 </table>
@@ -4572,17 +4572,17 @@
 <tr>
 <td>invite_link</td>
 <td><a href="#chatinvitelink">ChatInviteLink</a></td>
-<td><em>Optional</em>. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.</td>
+<td>_Optional_. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.</td>
 </tr>
 <tr>
 <td>via_join_request</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator</td>
+<td>_Optional_. _True_, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator</td>
 </tr>
 <tr>
 <td>via_chat_folder_invite_link</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user joined the chat via a chat folder invite link</td>
+<td>_Optional_. _True_, if the user joined the chat via a chat folder invite link</td>
 </tr>
 </tbody>
 </table>
@@ -4620,12 +4620,12 @@
 <tr>
 <td>is_anonymous</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user&#39;s presence in the chat is hidden</td>
+<td>_True_, if the user&#39;s presence in the chat is hidden</td>
 </tr>
 <tr>
 <td>custom_title</td>
 <td>String</td>
-<td><em>Optional</em>. Custom title for this user</td>
+<td>_Optional_. Custom title for this user</td>
 </tr>
 </tbody>
 </table>
@@ -4653,92 +4653,92 @@
 <tr>
 <td>can_be_edited</td>
 <td>Boolean</td>
-<td><em>True</em>, if the bot is allowed to edit administrator privileges of that user</td>
+<td>_True_, if the bot is allowed to edit administrator privileges of that user</td>
 </tr>
 <tr>
 <td>is_anonymous</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user&#39;s presence in the chat is hidden</td>
+<td>_True_, if the user&#39;s presence in the chat is hidden</td>
 </tr>
 <tr>
 <td>can_manage_chat</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
+<td>_True_, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
 </tr>
 <tr>
 <td>can_delete_messages</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can delete messages of other users</td>
+<td>_True_, if the administrator can delete messages of other users</td>
 </tr>
 <tr>
 <td>can_manage_video_chats</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can manage video chats</td>
+<td>_True_, if the administrator can manage video chats</td>
 </tr>
 <tr>
 <td>can_restrict_members</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
+<td>_True_, if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
 </tr>
 <tr>
 <td>can_promote_members</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)</td>
+<td>_True_, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)</td>
 </tr>
 <tr>
 <td>can_change_info</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to change the chat title, photo and other settings</td>
+<td>_True_, if the user is allowed to change the chat title, photo and other settings</td>
 </tr>
 <tr>
 <td>can_invite_users</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to invite new users to the chat</td>
+<td>_True_, if the user is allowed to invite new users to the chat</td>
 </tr>
 <tr>
 <td>can_post_stories</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can post stories to the chat</td>
+<td>_True_, if the administrator can post stories to the chat</td>
 </tr>
 <tr>
 <td>can_edit_stories</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
+<td>_True_, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
 </tr>
 <tr>
 <td>can_delete_stories</td>
 <td>Boolean</td>
-<td><em>True</em>, if the administrator can delete stories posted by other users</td>
+<td>_True_, if the administrator can delete stories posted by other users</td>
 </tr>
 <tr>
 <td>can_post_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
+<td>_Optional_. _True_, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
 </tr>
 <tr>
 <td>can_edit_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only</td>
+<td>_Optional_. _True_, if the administrator can edit messages of other users and can pin messages; for channels only</td>
 </tr>
 <tr>
 <td>can_pin_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only</td>
+<td>_Optional_. _True_, if the user is allowed to pin messages; for groups and supergroups only</td>
 </tr>
 <tr>
 <td>can_manage_topics</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
+<td>_Optional_. _True_, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
 </tr>
 <tr>
 <td>can_manage_direct_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
+<td>_Optional_. _True_, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
 </tr>
 <tr>
 <td>custom_title</td>
 <td>String</td>
-<td><em>Optional</em>. Custom title for this user</td>
+<td>_Optional_. Custom title for this user</td>
 </tr>
 </tbody>
 </table>
@@ -4766,7 +4766,7 @@
 <tr>
 <td>until_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Date when the user&#39;s subscription will expire; Unix time</td>
+<td>_Optional_. Date when the user&#39;s subscription will expire; Unix time</td>
 </tr>
 </tbody>
 </table>
@@ -4794,77 +4794,77 @@
 <tr>
 <td>is_member</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is a member of the chat at the moment of the request</td>
+<td>_True_, if the user is a member of the chat at the moment of the request</td>
 </tr>
 <tr>
 <td>can_send_messages</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
+<td>_True_, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
 </tr>
 <tr>
 <td>can_send_audios</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send audios</td>
+<td>_True_, if the user is allowed to send audios</td>
 </tr>
 <tr>
 <td>can_send_documents</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send documents</td>
+<td>_True_, if the user is allowed to send documents</td>
 </tr>
 <tr>
 <td>can_send_photos</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send photos</td>
+<td>_True_, if the user is allowed to send photos</td>
 </tr>
 <tr>
 <td>can_send_videos</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send videos</td>
+<td>_True_, if the user is allowed to send videos</td>
 </tr>
 <tr>
 <td>can_send_video_notes</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send video notes</td>
+<td>_True_, if the user is allowed to send video notes</td>
 </tr>
 <tr>
 <td>can_send_voice_notes</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send voice notes</td>
+<td>_True_, if the user is allowed to send voice notes</td>
 </tr>
 <tr>
 <td>can_send_polls</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send polls and checklists</td>
+<td>_True_, if the user is allowed to send polls and checklists</td>
 </tr>
 <tr>
 <td>can_send_other_messages</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots</td>
+<td>_True_, if the user is allowed to send animations, games, stickers and use inline bots</td>
 </tr>
 <tr>
 <td>can_add_web_page_previews</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to add web page previews to their messages</td>
+<td>_True_, if the user is allowed to add web page previews to their messages</td>
 </tr>
 <tr>
 <td>can_change_info</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to change the chat title, photo and other settings</td>
+<td>_True_, if the user is allowed to change the chat title, photo and other settings</td>
 </tr>
 <tr>
 <td>can_invite_users</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to invite new users to the chat</td>
+<td>_True_, if the user is allowed to invite new users to the chat</td>
 </tr>
 <tr>
 <td>can_pin_messages</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to pin messages</td>
+<td>_True_, if the user is allowed to pin messages</td>
 </tr>
 <tr>
 <td>can_manage_topics</td>
 <td>Boolean</td>
-<td><em>True</em>, if the user is allowed to create forum topics</td>
+<td>_True_, if the user is allowed to create forum topics</td>
 </tr>
 <tr>
 <td>until_date</td>
@@ -4958,12 +4958,12 @@
 <tr>
 <td>bio</td>
 <td>String</td>
-<td><em>Optional</em>. Bio of the user.</td>
+<td>_Optional_. Bio of the user.</td>
 </tr>
 <tr>
 <td>invite_link</td>
 <td><a href="#chatinvitelink">ChatInviteLink</a></td>
-<td><em>Optional</em>. Chat invite link that was used by the user to send the join request</td>
+<td>_Optional_. Chat invite link that was used by the user to send the join request</td>
 </tr>
 </tbody>
 </table>
@@ -4981,72 +4981,72 @@
 <tr>
 <td>can_send_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
+<td>_Optional_. _True_, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
 </tr>
 <tr>
 <td>can_send_audios</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send audios</td>
+<td>_Optional_. _True_, if the user is allowed to send audios</td>
 </tr>
 <tr>
 <td>can_send_documents</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send documents</td>
+<td>_Optional_. _True_, if the user is allowed to send documents</td>
 </tr>
 <tr>
 <td>can_send_photos</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send photos</td>
+<td>_Optional_. _True_, if the user is allowed to send photos</td>
 </tr>
 <tr>
 <td>can_send_videos</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send videos</td>
+<td>_Optional_. _True_, if the user is allowed to send videos</td>
 </tr>
 <tr>
 <td>can_send_video_notes</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send video notes</td>
+<td>_Optional_. _True_, if the user is allowed to send video notes</td>
 </tr>
 <tr>
 <td>can_send_voice_notes</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send voice notes</td>
+<td>_Optional_. _True_, if the user is allowed to send voice notes</td>
 </tr>
 <tr>
 <td>can_send_polls</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send polls and checklists</td>
+<td>_Optional_. _True_, if the user is allowed to send polls and checklists</td>
 </tr>
 <tr>
 <td>can_send_other_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots</td>
+<td>_Optional_. _True_, if the user is allowed to send animations, games, stickers and use inline bots</td>
 </tr>
 <tr>
 <td>can_add_web_page_previews</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to add web page previews to their messages</td>
+<td>_Optional_. _True_, if the user is allowed to add web page previews to their messages</td>
 </tr>
 <tr>
 <td>can_change_info</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups</td>
+<td>_Optional_. _True_, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups</td>
 </tr>
 <tr>
 <td>can_invite_users</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to invite new users to the chat</td>
+<td>_Optional_. _True_, if the user is allowed to invite new users to the chat</td>
 </tr>
 <tr>
 <td>can_pin_messages</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to pin messages. Ignored in public supergroups</td>
+<td>_Optional_. _True_, if the user is allowed to pin messages. Ignored in public supergroups</td>
 </tr>
 <tr>
 <td>can_manage_topics</td>
 <td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages</td>
+<td>_Optional_. _True_, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages</td>
 </tr>
 </tbody>
 </table>
@@ -5074,7 +5074,7 @@
 <tr>
 <td>year</td>
 <td>Integer</td>
-<td><em>Optional</em>. Year of the user&#39;s birth</td>
+<td>_Optional_. Year of the user&#39;s birth</td>
 </tr>
 </tbody>
 </table>
@@ -5092,17 +5092,17 @@
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title text of the business intro</td>
+<td>_Optional_. Title text of the business intro</td>
 </tr>
 <tr>
 <td>message</td>
 <td>String</td>
-<td><em>Optional</em>. Message text of the business intro</td>
+<td>_Optional_. Message text of the business intro</td>
 </tr>
 <tr>
 <td>sticker</td>
 <td><a href="#sticker">Sticker</a></td>
-<td><em>Optional</em>. Sticker of the business intro</td>
+<td>_Optional_. Sticker of the business intro</td>
 </tr>
 </tbody>
 </table>
@@ -5125,7 +5125,7 @@
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Location of the business</td>
+<td>_Optional_. Location of the business</td>
 </tr>
 </tbody>
 </table>
@@ -5237,17 +5237,17 @@
 <tr>
 <td>state</td>
 <td>String</td>
-<td><em>Optional</em>. State of the location</td>
+<td>_Optional_. State of the location</td>
 </tr>
 <tr>
 <td>city</td>
 <td>String</td>
-<td><em>Optional</em>. City of the location</td>
+<td>_Optional_. City of the location</td>
 </tr>
 <tr>
 <td>street</td>
 <td>String</td>
-<td><em>Optional</em>. Street address of the location</td>
+<td>_Optional_. Street address of the location</td>
 </tr>
 </tbody>
 </table>
@@ -5289,7 +5289,7 @@
 <tr>
 <td>address</td>
 <td><a href="#locationaddress">LocationAddress</a></td>
-<td><em>Optional</em>. Address of the location</td>
+<td>_Optional_. Address of the location</td>
 </tr>
 </tbody>
 </table>
@@ -5317,12 +5317,12 @@
 <tr>
 <td>is_dark</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the reaction area has a dark background</td>
+<td>_Optional_. Pass _True_ if the reaction area has a dark background</td>
 </tr>
 <tr>
 <td>is_flipped</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if reaction area corner is flipped</td>
+<td>_Optional_. Pass _True_ if reaction area corner is flipped</td>
 </tr>
 </tbody>
 </table>
@@ -5569,12 +5569,12 @@
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. The user that changed the reaction, if the user isn&#39;t anonymous</td>
+<td>_Optional_. The user that changed the reaction, if the user isn&#39;t anonymous</td>
 </tr>
 <tr>
 <td>actor_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. The chat on behalf of which the reaction was changed, if the user is anonymous</td>
+<td>_Optional_. The chat on behalf of which the reaction was changed, if the user is anonymous</td>
 </tr>
 <tr>
 <td>date</td>
@@ -5655,7 +5655,7 @@
 <tr>
 <td>icon_custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the custom emoji shown as the topic icon</td>
+<td>_Optional_. Unique identifier of the custom emoji shown as the topic icon</td>
 </tr>
 </tbody>
 </table>
@@ -5688,22 +5688,22 @@
 <tr>
 <td>upgrade_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars that must be paid to upgrade the gift to a unique one</td>
+<td>_Optional_. The number of Telegram Stars that must be paid to upgrade the gift to a unique one</td>
 </tr>
 <tr>
 <td>total_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The total number of the gifts of this type that can be sent; for limited gifts only</td>
+<td>_Optional_. The total number of the gifts of this type that can be sent; for limited gifts only</td>
 </tr>
 <tr>
 <td>remaining_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of remaining gifts of this type that can be sent; for limited gifts only</td>
+<td>_Optional_. The number of remaining gifts of this type that can be sent; for limited gifts only</td>
 </tr>
 <tr>
 <td>publisher_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Information about the chat that published the gift</td>
+<td>_Optional_. Information about the chat that published the gift</td>
 </tr>
 </tbody>
 </table>
@@ -5886,7 +5886,7 @@
 <tr>
 <td>publisher_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Information about the chat that published the gift</td>
+<td>_Optional_. Information about the chat that published the gift</td>
 </tr>
 </tbody>
 </table>
@@ -5909,37 +5909,37 @@
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
+<td>_Optional_. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
 </tr>
 <tr>
 <td>convert_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that can be claimed by the receiver by converting the gift; omitted if conversion to Telegram Stars is impossible</td>
+<td>_Optional_. Number of Telegram Stars that can be claimed by the receiver by converting the gift; omitted if conversion to Telegram Stars is impossible</td>
 </tr>
 <tr>
 <td>prepaid_upgrade_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that were prepaid by the sender for the ability to upgrade the gift</td>
+<td>_Optional_. Number of Telegram Stars that were prepaid by the sender for the ability to upgrade the gift</td>
 </tr>
 <tr>
 <td>can_be_upgraded</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can be upgraded to a unique gift</td>
+<td>_Optional_. _True_, if the gift can be upgraded to a unique gift</td>
 </tr>
 <tr>
 <td>text</td>
 <td>String</td>
-<td><em>Optional</em>. Text of the message that was added to the gift</td>
+<td>_Optional_. Text of the message that was added to the gift</td>
 </tr>
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the text</td>
+<td>_Optional_. Special entities that appear in the text</td>
 </tr>
 <tr>
 <td>is_private</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
+<td>_Optional_. _True_, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
 </tr>
 </tbody>
 </table>
@@ -5967,22 +5967,22 @@
 <tr>
 <td>last_resale_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. For gifts bought from other users, the price paid for the gift</td>
+<td>_Optional_. For gifts bought from other users, the price paid for the gift</td>
 </tr>
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
+<td>_Optional_. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
 </tr>
 <tr>
 <td>transfer_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
+<td>_Optional_. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
 </tr>
 <tr>
 <td>next_transfer_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
+<td>_Optional_. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
 </tr>
 </tbody>
 </table>
@@ -6016,12 +6016,12 @@
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only</td>
+<td>_Optional_. Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
 <td>sender_user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. Sender of the gift if it is a known user</td>
+<td>_Optional_. Sender of the gift if it is a known user</td>
 </tr>
 <tr>
 <td>send_date</td>
@@ -6031,42 +6031,42 @@
 <tr>
 <td>text</td>
 <td>String</td>
-<td><em>Optional</em>. Text of the message that was added to the gift</td>
+<td>_Optional_. Text of the message that was added to the gift</td>
 </tr>
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in the text</td>
+<td>_Optional_. Special entities that appear in the text</td>
 </tr>
 <tr>
 <td>is_private</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
+<td>_Optional_. _True_, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
 </tr>
 <tr>
 <td>is_saved</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
+<td>_Optional_. _True_, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
 <td>can_be_upgraded</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only</td>
+<td>_Optional_. _True_, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
 <td>was_refunded</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift was refunded and isn&#39;t available anymore</td>
+<td>_Optional_. _True_, if the gift was refunded and isn&#39;t available anymore</td>
 </tr>
 <tr>
 <td>convert_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars</td>
+<td>_Optional_. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars</td>
 </tr>
 <tr>
 <td>prepaid_upgrade_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift</td>
+<td>_Optional_. Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift</td>
 </tr>
 </tbody>
 </table>
@@ -6094,12 +6094,12 @@
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
-<td><em>Optional</em>. Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only</td>
+<td>_Optional_. Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
 <td>sender_user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. Sender of the gift if it is a known user</td>
+<td>_Optional_. Sender of the gift if it is a known user</td>
 </tr>
 <tr>
 <td>send_date</td>
@@ -6109,22 +6109,22 @@
 <tr>
 <td>is_saved</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
+<td>_Optional_. _True_, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
 <td>can_be_transferred</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only</td>
+<td>_Optional_. _True_, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only</td>
 </tr>
 <tr>
 <td>transfer_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
+<td>_Optional_. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
 </tr>
 <tr>
 <td>next_transfer_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
+<td>_Optional_. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now</td>
 </tr>
 </tbody>
 </table>
@@ -6152,7 +6152,7 @@
 <tr>
 <td>next_offset</td>
 <td>String</td>
-<td><em>Optional</em>. Offset for the next request. If empty, then there are no more results</td>
+<td>_Optional_. Offset for the next request. If empty, then there are no more results</td>
 </tr>
 </tbody>
 </table>
@@ -6170,22 +6170,22 @@
 <tr>
 <td>unlimited_gifts</td>
 <td>Boolean</td>
-<td><em>True</em>, if unlimited regular gifts are accepted</td>
+<td>_True_, if unlimited regular gifts are accepted</td>
 </tr>
 <tr>
 <td>limited_gifts</td>
 <td>Boolean</td>
-<td><em>True</em>, if limited regular gifts are accepted</td>
+<td>_True_, if limited regular gifts are accepted</td>
 </tr>
 <tr>
 <td>unique_gifts</td>
 <td>Boolean</td>
-<td><em>True</em>, if unique gifts or gifts that can be upgraded to unique for free are accepted</td>
+<td>_True_, if unique gifts or gifts that can be upgraded to unique for free are accepted</td>
 </tr>
 <tr>
 <td>premium_subscription</td>
 <td>Boolean</td>
-<td><em>True</em>, if a Telegram Premium subscription is accepted</td>
+<td>_True_, if a Telegram Premium subscription is accepted</td>
 </tr>
 </tbody>
 </table>
@@ -6208,7 +6208,7 @@
 <tr>
 <td>nanostar_amount</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if <em>amount</em> is non-positive</td>
+<td>_Optional_. The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if _amount_ is non-positive</td>
 </tr>
 </tbody>
 </table>
@@ -6286,7 +6286,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Scope type, must be <em>default</em></td>
+<td>Scope type, must be _default_</td>
 </tr>
 </tbody>
 </table>
@@ -6304,7 +6304,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Scope type, must be <em>all_private_chats</em></td>
+<td>Scope type, must be _all_private_chats_</td>
 </tr>
 </tbody>
 </table>
@@ -6322,7 +6322,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Scope type, must be <em>all_group_chats</em></td>
+<td>Scope type, must be _all_group_chats_</td>
 </tr>
 </tbody>
 </table>
@@ -6340,7 +6340,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Scope type, must be <em>all_chat_administrators</em></td>
+<td>Scope type, must be _all_chat_administrators_</td>
 </tr>
 </tbody>
 </table>
@@ -6358,7 +6358,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Scope type, must be <em>chat</em></td>
+<td>Scope type, must be _chat_</td>
 </tr>
 <tr>
 <td>chat_id</td>
@@ -6381,7 +6381,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Scope type, must be <em>chat_administrators</em></td>
+<td>Scope type, must be _chat_administrators_</td>
 </tr>
 <tr>
 <td>chat_id</td>
@@ -6404,7 +6404,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Scope type, must be <em>chat_member</em></td>
+<td>Scope type, must be _chat_member_</td>
 </tr>
 <tr>
 <td>chat_id</td>
@@ -6494,7 +6494,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the button, must be <em>commands</em></td>
+<td>Type of the button, must be _commands_</td>
 </tr>
 </tbody>
 </table>
@@ -6512,7 +6512,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the button, must be <em>web_app</em></td>
+<td>Type of the button, must be _web_app_</td>
 </tr>
 <tr>
 <td>text</td>
@@ -6540,7 +6540,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the button, must be <em>default</em></td>
+<td>Type of the button, must be _default_</td>
 </tr>
 </tbody>
 </table>
@@ -6598,7 +6598,7 @@
 </tbody>
 </table>
 <h4><a class="anchor" name="chatboostsourcegiveaway" href="#chatboostsourcegiveaway"><i class="anchor-icon"></i></a>ChatBoostSourceGiveaway</h4>
-<p>The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway. This boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription for Telegram Premium giveaways and <em>prize_star_count</em> / 500 times for one year for Telegram Star giveaways.</p>
+<p>The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway. This boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription for Telegram Premium giveaways and _prize_star_count_ / 500 times for one year for Telegram Star giveaways.</p>
 <table class="table">
 <thead>
 <tr>
@@ -6621,17 +6621,17 @@
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. User that won the prize in the giveaway if any; for Telegram Premium giveaways only</td>
+<td>_Optional_. User that won the prize in the giveaway if any; for Telegram Premium giveaways only</td>
 </tr>
 <tr>
 <td>prize_star_count</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
+<td>_Optional_. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
 </tr>
 <tr>
 <td>is_unclaimed</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the giveaway was completed, but there was no user to win the prize</td>
+<td>_Optional_. _True_, if the giveaway was completed, but there was no user to win the prize</td>
 </tr>
 </tbody>
 </table>
@@ -6756,72 +6756,72 @@
 <tr>
 <td>can_reply</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours</td>
+<td>_Optional_. _True_, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours</td>
 </tr>
 <tr>
 <td>can_read_messages</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can mark incoming private messages as read</td>
+<td>_Optional_. _True_, if the bot can mark incoming private messages as read</td>
 </tr>
 <tr>
 <td>can_delete_sent_messages</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can delete messages sent by the bot</td>
+<td>_Optional_. _True_, if the bot can delete messages sent by the bot</td>
 </tr>
 <tr>
 <td>can_delete_all_messages</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can delete all private messages in managed chats</td>
+<td>_Optional_. _True_, if the bot can delete all private messages in managed chats</td>
 </tr>
 <tr>
 <td>can_edit_name</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the first and last name of the business account</td>
+<td>_Optional_. _True_, if the bot can edit the first and last name of the business account</td>
 </tr>
 <tr>
 <td>can_edit_bio</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the bio of the business account</td>
+<td>_Optional_. _True_, if the bot can edit the bio of the business account</td>
 </tr>
 <tr>
 <td>can_edit_profile_photo</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the profile photo of the business account</td>
+<td>_Optional_. _True_, if the bot can edit the profile photo of the business account</td>
 </tr>
 <tr>
 <td>can_edit_username</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the username of the business account</td>
+<td>_Optional_. _True_, if the bot can edit the username of the business account</td>
 </tr>
 <tr>
 <td>can_change_gift_settings</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can change the privacy settings pertaining to gifts for the business account</td>
+<td>_Optional_. _True_, if the bot can change the privacy settings pertaining to gifts for the business account</td>
 </tr>
 <tr>
 <td>can_view_gifts_and_stars</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can view gifts and the amount of Telegram Stars owned by the business account</td>
+<td>_Optional_. _True_, if the bot can view gifts and the amount of Telegram Stars owned by the business account</td>
 </tr>
 <tr>
 <td>can_convert_gifts_to_stars</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can convert regular gifts owned by the business account to Telegram Stars</td>
+<td>_Optional_. _True_, if the bot can convert regular gifts owned by the business account to Telegram Stars</td>
 </tr>
 <tr>
 <td>can_transfer_and_upgrade_gifts</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can transfer and upgrade gifts owned by the business account</td>
+<td>_Optional_. _True_, if the bot can transfer and upgrade gifts owned by the business account</td>
 </tr>
 <tr>
 <td>can_transfer_stars</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts</td>
+<td>_Optional_. _True_, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts</td>
 </tr>
 <tr>
 <td>can_manage_stories</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can post, edit and delete stories on behalf of the business account</td>
+<td>_Optional_. _True_, if the bot can post, edit and delete stories on behalf of the business account</td>
 </tr>
 </tbody>
 </table>
@@ -6859,12 +6859,12 @@
 <tr>
 <td>rights</td>
 <td><a href="#businessbotrights">BusinessBotRights</a></td>
-<td><em>Optional</em>. Rights of the business bot</td>
+<td>_Optional_. Rights of the business bot</td>
 </tr>
 <tr>
 <td>is_enabled</td>
 <td>Boolean</td>
-<td><em>True</em>, if the connection is active</td>
+<td>_True_, if the connection is active</td>
 </tr>
 </tbody>
 </table>
@@ -6910,12 +6910,12 @@
 <tr>
 <td>migrate_to_chat_id</td>
 <td>Integer</td>
-<td><em>Optional</em>. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
+<td>_Optional_. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
 </tr>
 <tr>
 <td>retry_after</td>
 <td>Integer</td>
-<td><em>Optional</em>. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated</td>
+<td>_Optional_. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated</td>
 </tr>
 </tbody>
 </table>
@@ -6942,7 +6942,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>photo</em></td>
+<td>Type of the result, must be _photo_</td>
 </tr>
 <tr>
 <td>media</td>
@@ -6952,27 +6952,27 @@
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>has_spoiler</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the photo needs to be covered with a spoiler animation</td>
+<td>_Optional_. Pass _True_ if the photo needs to be covered with a spoiler animation</td>
 </tr>
 </tbody>
 </table>
@@ -6990,7 +6990,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>video</em></td>
+<td>Type of the result, must be _video_</td>
 </tr>
 <tr>
 <td>media</td>
@@ -7000,62 +7000,62 @@
 <tr>
 <td>thumbnail</td>
 <td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>cover</td>
 <td>String</td>
-<td><em>Optional</em>. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>_Optional_. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>start_timestamp</td>
 <td>Integer</td>
-<td><em>Optional</em>. Start timestamp for the video in the message</td>
+<td>_Optional_. Start timestamp for the video in the message</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video width</td>
+<td>_Optional_. Video width</td>
 </tr>
 <tr>
 <td>height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video height</td>
+<td>_Optional_. Video height</td>
 </tr>
 <tr>
 <td>duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
+<td>_Optional_. Video duration in seconds</td>
 </tr>
 <tr>
 <td>supports_streaming</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the uploaded video is suitable for streaming</td>
+<td>_Optional_. Pass _True_ if the uploaded video is suitable for streaming</td>
 </tr>
 <tr>
 <td>has_spoiler</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the video needs to be covered with a spoiler animation</td>
+<td>_Optional_. Pass _True_ if the video needs to be covered with a spoiler animation</td>
 </tr>
 </tbody>
 </table>
@@ -7073,7 +7073,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>animation</em></td>
+<td>Type of the result, must be _animation_</td>
 </tr>
 <tr>
 <td>media</td>
@@ -7083,47 +7083,47 @@
 <tr>
 <td>thumbnail</td>
 <td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the animation to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the animation to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Animation width</td>
+<td>_Optional_. Animation width</td>
 </tr>
 <tr>
 <td>height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Animation height</td>
+<td>_Optional_. Animation height</td>
 </tr>
 <tr>
 <td>duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Animation duration in seconds</td>
+<td>_Optional_. Animation duration in seconds</td>
 </tr>
 <tr>
 <td>has_spoiler</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the animation needs to be covered with a spoiler animation</td>
+<td>_Optional_. Pass _True_ if the animation needs to be covered with a spoiler animation</td>
 </tr>
 </tbody>
 </table>
@@ -7141,7 +7141,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>audio</em></td>
+<td>Type of the result, must be _audio_</td>
 </tr>
 <tr>
 <td>media</td>
@@ -7151,37 +7151,37 @@
 <tr>
 <td>thumbnail</td>
 <td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the audio to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the audio to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Duration of the audio in seconds</td>
+<td>_Optional_. Duration of the audio in seconds</td>
 </tr>
 <tr>
 <td>performer</td>
 <td>String</td>
-<td><em>Optional</em>. Performer of the audio</td>
+<td>_Optional_. Performer of the audio</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title of the audio</td>
+<td>_Optional_. Title of the audio</td>
 </tr>
 </tbody>
 </table>
@@ -7199,7 +7199,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>document</em></td>
+<td>Type of the result, must be _document_</td>
 </tr>
 <tr>
 <td>media</td>
@@ -7209,27 +7209,27 @@
 <tr>
 <td>thumbnail</td>
 <td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>disable_content_type_detection</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always <em>True</em>, if the document is sent as part of an album.</td>
+<td>_Optional_. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always _True_, if the document is sent as part of an album.</td>
 </tr>
 </tbody>
 </table>
@@ -7255,7 +7255,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the media, must be <em>photo</em></td>
+<td>Type of the media, must be _photo_</td>
 </tr>
 <tr>
 <td>media</td>
@@ -7278,7 +7278,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the media, must be <em>video</em></td>
+<td>Type of the media, must be _video_</td>
 </tr>
 <tr>
 <td>media</td>
@@ -7288,37 +7288,37 @@
 <tr>
 <td>thumbnail</td>
 <td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>_Optional_. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>cover</td>
 <td>String</td>
-<td><em>Optional</em>. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>_Optional_. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>start_timestamp</td>
 <td>Integer</td>
-<td><em>Optional</em>. Start timestamp for the video in the message</td>
+<td>_Optional_. Start timestamp for the video in the message</td>
 </tr>
 <tr>
 <td>width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video width</td>
+<td>_Optional_. Video width</td>
 </tr>
 <tr>
 <td>height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video height</td>
+<td>_Optional_. Video height</td>
 </tr>
 <tr>
 <td>duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
+<td>_Optional_. Video duration in seconds</td>
 </tr>
 <tr>
 <td>supports_streaming</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the uploaded video is suitable for streaming</td>
+<td>_Optional_. Pass _True_ if the uploaded video is suitable for streaming</td>
 </tr>
 </tbody>
 </table>
@@ -7342,7 +7342,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the profile photo, must be <em>static</em></td>
+<td>Type of the profile photo, must be _static_</td>
 </tr>
 <tr>
 <td>photo</td>
@@ -7365,7 +7365,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the profile photo, must be <em>animated</em></td>
+<td>Type of the profile photo, must be _animated_</td>
 </tr>
 <tr>
 <td>animation</td>
@@ -7375,7 +7375,7 @@
 <tr>
 <td>main_frame_timestamp</td>
 <td>Float</td>
-<td><em>Optional</em>. Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.</td>
+<td>_Optional_. Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.</td>
 </tr>
 </tbody>
 </table>
@@ -7399,7 +7399,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the content, must be <em>photo</em></td>
+<td>Type of the content, must be _photo_</td>
 </tr>
 <tr>
 <td>photo</td>
@@ -7422,7 +7422,7 @@
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the content, must be <em>video</em></td>
+<td>Type of the content, must be _video_</td>
 </tr>
 <tr>
 <td>video</td>
@@ -7432,17 +7432,17 @@
 <tr>
 <td>duration</td>
 <td>Float</td>
-<td><em>Optional</em>. Precise duration of the video in seconds; 0-60</td>
+<td>_Optional_. Precise duration of the video in seconds; 0-60</td>
 </tr>
 <tr>
 <td>cover_frame_timestamp</td>
 <td>Float</td>
-<td><em>Optional</em>. Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0.</td>
+<td>_Optional_. Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0.</td>
 </tr>
 <tr>
 <td>is_animation</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the video has no sound</td>
+<td>_Optional_. Pass _True_ if the video has no sound</td>
 </tr>
 </tbody>
 </table>
@@ -7523,9 +7523,9 @@
 <h4><a class="anchor" name="getme" href="#getme"><i class="anchor-icon"></i></a>getMe</h4>
 <p>A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.</p>
 <h4><a class="anchor" name="logout" href="#logout"><i class="anchor-icon"></i></a>logOut</h4>
-<p>Use this method to log out from the cloud Bot API server before launching the bot locally. You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns <em>True</em> on success. Requires no parameters.</p>
+<p>Use this method to log out from the cloud Bot API server before launching the bot locally. You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns _True_ on success. Requires no parameters.</p>
 <h4><a class="anchor" name="close" href="#close"><i class="anchor-icon"></i></a>close</h4>
-<p>Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns <em>True</em> on success. Requires no parameters.</p>
+<p>Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns _True_ on success. Requires no parameters.</p>
 <h4><a class="anchor" name="sendmessage" href="#sendmessage"><i class="anchor-icon"></i></a>sendMessage</h4>
 <p>Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
@@ -7578,7 +7578,7 @@
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>link_preview_options</td>
@@ -7602,7 +7602,7 @@
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -7633,7 +7633,7 @@
 <h4><a class="anchor" name="formatting-options" href="#formatting-options"><i class="anchor-icon"></i></a>Formatting options</h4>
 <p>The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.</p>
 <p>Note that Telegram clients will display an **alert** to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).</p>
-<p>Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, and <em>spoiler</em> entities can contain and can be part of any other entities, except <em>pre</em> and <em>code</em>.<br>- <em>blockquote</em> and <em>expandable_blockquote</em> entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.</p>
+<p>Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.<br>- _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.</p>
 <p>Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username. Please note:</p>
 <ul>
 <li>These links will work **only** if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.</li>
@@ -7641,7 +7641,7 @@
 </ul>
 <p>You can find the list of programming and markup languages for which syntax highlighting is supported at <a href="https://github.com/TelegramMessenger/libprisma#supported-languages">libprisma#supported-languages</a>.</p>
 <h6><a class="anchor" name="markdownv2-style" href="#markdownv2-style"><i class="anchor-icon"></i></a>MarkdownV2 style</h6>
-<p>To use this mode, pass <em>MarkdownV2</em> in the <em>parse_mode</em> field. Use the following syntax in your message:</p>
+<p>To use this mode, pass _MarkdownV2_ in the _parse_mode_ field. Use the following syntax in your message:</p>
 <pre><code>*bold \*text*
 _italic \*text_
 __underline__
@@ -7680,7 +7680,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
 </ul>
 <h6><a class="anchor" name="html-style" href="#html-style"><i class="anchor-icon"></i></a>HTML style</h6>
-<p>To use this mode, pass <em>HTML</em> in the <em>parse_mode</em> field. The following tags are currently supported:</p>
+<p>To use this mode, pass _HTML_ in the _parse_mode_ field. The following tags are currently supported:</p>
 <pre><code>&lt;b&gt;bold&lt;/b&gt;, &lt;strong&gt;bold&lt;/strong&gt;
 &lt;i&gt;italic&lt;/i&gt;, &lt;em&gt;italic&lt;/em&gt;
 &lt;u&gt;underline&lt;/u&gt;, &lt;ins&gt;underline&lt;/ins&gt;
@@ -7707,7 +7707,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
 </ul>
 <h6><a class="anchor" name="markdown-style" href="#markdown-style"><i class="anchor-icon"></i></a>Markdown style</h6>
-<p>This is a legacy mode, retained for backward compatibility. To use this mode, pass <em>Markdown</em> in the <em>parse_mode</em> field. Use the following syntax in your message:</p>
+<p>This is a legacy mode, retained for backward compatibility. To use this mode, pass _Markdown_ in the _parse_mode_ field. Use the following syntax in your message:</p>
 <pre><code>*bold text*
 _italic text_
 [inline URL](http://www.example.com/)
@@ -7727,8 +7727,8 @@ pre-formatted fixed-width code block written in the Python programming language
 <li>Escaping inside entities is not allowed, so entity must be closed first and reopened again: use <code>_snake_\__case_</code> for italic <code>snake_case</code> and <code>*2*\**2=4*</code> for bold <code>2*2=4</code>.</li>
 </ul>
 <h4><a class="anchor" name="paid-broadcasts" href="#paid-broadcasts"><i class="anchor-icon"></i></a>Paid Broadcasts</h4>
-<p>By default, all bots are able to broadcast up to <a href="https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this">30 messages</a> per second to their users. Developers can increase this limit by enabling <em>Paid Broadcasts</em> in <a href="https://t.me/botfather">@Botfather</a> - allowing their bot to broadcast **up to 1000 messages** per second.</p>
-<p>Each message broadcasted over the free amount of 30 messages per second incurs a cost of 0.1 Stars per message, paid with Telegram Stars from the bot&#39;s balance. In order to use this feature, a bot must have at least <em>10,000 Stars</em> on its balance.</p>
+<p>By default, all bots are able to broadcast up to <a href="https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this">30 messages</a> per second to their users. Developers can increase this limit by enabling _Paid Broadcasts_ in <a href="https://t.me/botfather">@Botfather</a> - allowing their bot to broadcast **up to 1000 messages** per second.</p>
+<p>Each message broadcasted over the free amount of 30 messages per second incurs a cost of 0.1 Stars per message, paid with Telegram Stars from the bot&#39;s balance. In order to use this feature, a bot must have at least _10,000 Stars_ on its balance.</p>
 <blockquote>
 <p>Bots with increased limits are only charged for messages that are broadcasted successfully.</p>
 </blockquote>
@@ -7796,7 +7796,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>message_id</td>
 <td>Integer</td>
 <td>Yes</td>
-<td>Message identifier in the chat specified in <em>from_chat_id</em></td>
+<td>Message identifier in the chat specified in _from_chat_id_</td>
 </tr>
 </tbody>
 </table>
@@ -7840,7 +7840,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>message_ids</td>
 <td>Array of Integer</td>
 <td>Yes</td>
-<td>A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to forward. The identifiers must be specified in a strictly increasing order.</td>
+<td>A JSON-serialized list of 1-100 identifiers of messages in the chat _from_chat_id_ to forward. The identifiers must be specified in a strictly increasing order.</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -7857,7 +7857,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="copymessage" href="#copymessage"><i class="anchor-icon"></i></a>copyMessage</h4>
-<p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_id</em> is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
+<p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -7896,7 +7896,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>message_id</td>
 <td>Integer</td>
 <td>Yes</td>
-<td>Message identifier in the chat specified in <em>from_chat_id</em></td>
+<td>Message identifier in the chat specified in _from_chat_id_</td>
 </tr>
 <tr>
 <td>video_start_timestamp</td>
@@ -7920,13 +7920,13 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em>, if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.</td>
+<td>Pass _True_, if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -7944,7 +7944,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>suggested_post_parameters</td>
@@ -7967,7 +7967,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="copymessages" href="#copymessages"><i class="anchor-icon"></i></a>copyMessages</h4>
-<p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_id</em> is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
+<p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -8006,7 +8006,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>message_ids</td>
 <td>Array of Integer</td>
 <td>Yes</td>
-<td>A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to copy. The identifiers must be specified in a strictly increasing order.</td>
+<td>A JSON-serialized list of 1-100 identifiers of messages in the chat _from_chat_id_ to copy. The identifiers must be specified in a strictly increasing order.</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -8024,7 +8024,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>remove_caption</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to copy the messages without their captions</td>
+<td>Pass _True_ to copy the messages without their captions</td>
 </tr>
 </tbody>
 </table>
@@ -8074,7 +8074,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption</td>
 <td>String</td>
 <td>Optional</td>
-<td>Photo caption (may also be used when resending photos by <em>file_id</em>), 0-1024 characters after entities parsing</td>
+<td>Photo caption (may also be used when resending photos by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
@@ -8086,19 +8086,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>has_spoiler</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the photo needs to be covered with a spoiler animation</td>
+<td>Pass _True_ if the photo needs to be covered with a spoiler animation</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -8116,7 +8116,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -8203,7 +8203,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>duration</td>
@@ -8245,7 +8245,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -8325,7 +8325,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption</td>
 <td>String</td>
 <td>Optional</td>
-<td>Document caption (may also be used when resending documents by <em>file_id</em>), 0-1024 characters after entities parsing</td>
+<td>Document caption (may also be used when resending documents by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
@@ -8337,7 +8337,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>disable_content_type_detection</td>
@@ -8361,7 +8361,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -8471,7 +8471,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption</td>
 <td>String</td>
 <td>Optional</td>
-<td>Video caption (may also be used when resending videos by <em>file_id</em>), 0-1024 characters after entities parsing</td>
+<td>Video caption (may also be used when resending videos by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
@@ -8483,25 +8483,25 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>has_spoiler</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the video needs to be covered with a spoiler animation</td>
+<td>Pass _True_ if the video needs to be covered with a spoiler animation</td>
 </tr>
 <tr>
 <td>supports_streaming</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the uploaded video is suitable for streaming</td>
+<td>Pass _True_ if the uploaded video is suitable for streaming</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -8519,7 +8519,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -8617,7 +8617,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption</td>
 <td>String</td>
 <td>Optional</td>
-<td>Animation caption (may also be used when resending animation by <em>file_id</em>), 0-1024 characters after entities parsing</td>
+<td>Animation caption (may also be used when resending animation by _file_id_), 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
@@ -8629,19 +8629,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>has_spoiler</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the animation needs to be covered with a spoiler animation</td>
+<td>Pass _True_ if the animation needs to be covered with a spoiler animation</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -8659,7 +8659,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -8745,7 +8745,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>duration</td>
@@ -8769,7 +8769,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -8873,7 +8873,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -8971,13 +8971,13 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -8995,7 +8995,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>suggested_post_parameters</td>
@@ -9075,7 +9075,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -9179,7 +9179,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -9307,7 +9307,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -9411,7 +9411,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -9485,7 +9485,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>question_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of <em>question_parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of _question_parse_mode_</td>
 </tr>
 <tr>
 <td>options</td>
@@ -9497,7 +9497,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>is_anonymous</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td><em>True</em>, if the poll needs to be anonymous, defaults to <em>True</em></td>
+<td>_True_, if the poll needs to be anonymous, defaults to _True_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -9509,7 +9509,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allows_multiple_answers</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td><em>True</em>, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to <em>False</em></td>
+<td>_True_, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to _False_</td>
 </tr>
 <tr>
 <td>correct_option_id</td>
@@ -9533,25 +9533,25 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>explanation_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of <em>explanation_parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of _explanation_parse_mode_</td>
 </tr>
 <tr>
 <td>open_period</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Amount of time in seconds the poll will be active after creation, 5-600. Can&#39;t be used together with <em>close_date</em>.</td>
+<td>Amount of time in seconds the poll will be active after creation, 5-600. Can&#39;t be used together with _close_date_.</td>
 </tr>
 <tr>
 <td>close_date</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can&#39;t be used together with <em>open_period</em>.</td>
+<td>Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can&#39;t be used together with _open_period_.</td>
 </tr>
 <tr>
 <td>is_closed</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the poll needs to be immediately closed. This can be useful for poll preview.</td>
+<td>Pass _True_ if the poll needs to be immediately closed. This can be useful for poll preview.</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -9569,7 +9569,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -9711,7 +9711,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -9740,9 +9740,9 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="sendchataction" href="#sendchataction"><i class="anchor-icon"></i></a>sendChatAction</h4>
-<p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns <em>True</em> on success.</p>
+<p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.</p>
 <blockquote>
-<p>Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with <em>action</em> = <em>upload_photo</em>. The user will see a “sending photo” status for the bot.</p>
+<p>Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.</p>
 </blockquote>
 <p>We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.</p>
 <table class="table">
@@ -9777,12 +9777,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>action</td>
 <td>String</td>
 <td>Yes</td>
-<td>Type of action to broadcast. Choose one, depending on what the user is about to receive: <em>typing</em> for <a href="#sendmessage">text messages</a>, <em>upload_photo</em> for <a href="#sendphoto">photos</a>, <em>record_video</em> or <em>upload_video</em> for <a href="#sendvideo">videos</a>, <em>record_voice</em> or <em>upload_voice</em> for <a href="#sendvoice">voice notes</a>, <em>upload_document</em> for <a href="#senddocument">general files</a>, <em>choose_sticker</em> for <a href="#sendsticker">stickers</a>, <em>find_location</em> for <a href="#sendlocation">location data</a>, <em>record_video_note</em> or <em>upload_video_note</em> for <a href="#sendvideonote">video notes</a>.</td>
+<td>Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for <a href="#sendmessage">text messages</a>, _upload_photo_ for <a href="#sendphoto">photos</a>, _record_video_ or _upload_video_ for <a href="#sendvideo">videos</a>, _record_voice_ or _upload_voice_ for <a href="#sendvoice">voice notes</a>, _upload_document_ for <a href="#senddocument">general files</a>, _choose_sticker_ for <a href="#sendsticker">stickers</a>, _find_location_ for <a href="#sendlocation">location data</a>, _record_video_note_ or _upload_video_note_ for <a href="#sendvideonote">video notes</a>.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="setmessagereaction" href="#setmessagereaction"><i class="anchor-icon"></i></a>setMessageReaction</h4>
-<p>Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.</p>
+<p>Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -9815,7 +9815,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>is_big</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to set the reaction with a big animation</td>
+<td>Pass _True_ to set the reaction with a big animation</td>
 </tr>
 </tbody>
 </table>
@@ -9852,7 +9852,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setuseremojistatus" href="#setuseremojistatus"><i class="anchor-icon"></i></a>setUserEmojiStatus</h4>
-<p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns <em>True</em> on success.</p>
+<p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -9905,7 +9905,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </table>
 <p>**Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.</p>
 <h4><a class="anchor" name="banchatmember" href="#banchatmember"><i class="anchor-icon"></i></a>banChatMember</h4>
-<p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -9938,12 +9938,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>revoke_messages</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to delete all messages from the chat for the user that is being removed. If <em>False</em>, the user will be able to see messages in the group that were sent before the user was removed. Always <em>True</em> for supergroups and channels.</td>
+<td>Pass _True_ to delete all messages from the chat for the user that is being removed. If _False_, the user will be able to see messages in the group that were sent before the user was removed. Always _True_ for supergroups and channels.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="unbanchatmember" href="#unbanchatmember"><i class="anchor-icon"></i></a>unbanChatMember</h4>
-<p>Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns <em>True</em> on success.</p>
+<p>Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don&#39;t want this, use the parameter _only_if_banned_. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -9975,7 +9975,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="restrictchatmember" href="#restrictchatmember"><i class="anchor-icon"></i></a>restrictChatMember</h4>
-<p>Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift restrictions from a user. Returns <em>True</em> on success.</p>
+<p>Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10008,7 +10008,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>use_independent_chat_permissions</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.</td>
+<td>Pass _True_ if chat permissions are set independently. Otherwise, the _can_send_other_messages_ and _can_add_web_page_previews_ permissions will imply the _can_send_messages_, _can_send_audios_, _can_send_documents_, _can_send_photos_, _can_send_videos_, _can_send_video_notes_, and _can_send_voice_notes_ permissions; the _can_send_polls_ permission will imply the _can_send_messages_ permission.</td>
 </tr>
 <tr>
 <td>until_date</td>
@@ -10019,7 +10019,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="promotechatmember" href="#promotechatmember"><i class="anchor-icon"></i></a>promoteChatMember</h4>
-<p>Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all boolean parameters to demote a user. Returns <em>True</em> on success.</p>
+<p>Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass _False_ for all boolean parameters to demote a user. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10046,102 +10046,102 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>is_anonymous</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator&#39;s presence in the chat is hidden</td>
+<td>Pass _True_ if the administrator&#39;s presence in the chat is hidden</td>
 </tr>
 <tr>
 <td>can_manage_chat</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
+<td>Pass _True_ if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
 </tr>
 <tr>
 <td>can_delete_messages</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can delete messages of other users</td>
+<td>Pass _True_ if the administrator can delete messages of other users</td>
 </tr>
 <tr>
 <td>can_manage_video_chats</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can manage video chats</td>
+<td>Pass _True_ if the administrator can manage video chats</td>
 </tr>
 <tr>
 <td>can_restrict_members</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
+<td>Pass _True_ if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
 </tr>
 <tr>
 <td>can_promote_members</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)</td>
+<td>Pass _True_ if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)</td>
 </tr>
 <tr>
 <td>can_change_info</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can change chat title, photo and other settings</td>
+<td>Pass _True_ if the administrator can change chat title, photo and other settings</td>
 </tr>
 <tr>
 <td>can_invite_users</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can invite new users to the chat</td>
+<td>Pass _True_ if the administrator can invite new users to the chat</td>
 </tr>
 <tr>
 <td>can_post_stories</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can post stories to the chat</td>
+<td>Pass _True_ if the administrator can post stories to the chat</td>
 </tr>
 <tr>
 <td>can_edit_stories</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
+<td>Pass _True_ if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
 </tr>
 <tr>
 <td>can_delete_stories</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can delete stories posted by other users</td>
+<td>Pass _True_ if the administrator can delete stories posted by other users</td>
 </tr>
 <tr>
 <td>can_post_messages</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
+<td>Pass _True_ if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
 </tr>
 <tr>
 <td>can_edit_messages</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can edit messages of other users and can pin messages; for channels only</td>
+<td>Pass _True_ if the administrator can edit messages of other users and can pin messages; for channels only</td>
 </tr>
 <tr>
 <td>can_pin_messages</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can pin messages; for supergroups only</td>
+<td>Pass _True_ if the administrator can pin messages; for supergroups only</td>
 </tr>
 <tr>
 <td>can_manage_topics</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
+<td>Pass _True_ if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
 </tr>
 <tr>
 <td>can_manage_direct_messages</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the administrator can manage direct messages within the channel and decline suggested posts; for channels only</td>
+<td>Pass _True_ if the administrator can manage direct messages within the channel and decline suggested posts; for channels only</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="setchatadministratorcustomtitle" href="#setchatadministratorcustomtitle"><i class="anchor-icon"></i></a>setChatAdministratorCustomTitle</h4>
-<p>Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10173,7 +10173,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="banchatsenderchat" href="#banchatsenderchat"><i class="anchor-icon"></i></a>banChatSenderChat</h4>
-<p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10199,7 +10199,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="unbanchatsenderchat" href="#unbanchatsenderchat"><i class="anchor-icon"></i></a>unbanChatSenderChat</h4>
-<p>Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10225,7 +10225,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setchatpermissions" href="#setchatpermissions"><i class="anchor-icon"></i></a>setChatPermissions</h4>
-<p>Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the _can_restrict_members_ administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10252,12 +10252,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>use_independent_chat_permissions</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.</td>
+<td>Pass _True_ if chat permissions are set independently. Otherwise, the _can_send_other_messages_ and _can_add_web_page_previews_ permissions will imply the _can_send_messages_, _can_send_audios_, _can_send_documents_, _can_send_photos_, _can_send_videos_, _can_send_video_notes_, and _can_send_voice_notes_ permissions; the _can_send_polls_ permission will imply the _can_send_messages_ permission.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="exportchatinvitelink" href="#exportchatinvitelink"><i class="anchor-icon"></i></a>exportChatInviteLink</h4>
-<p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as <em>String</em> on success.</p>
+<p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as _String_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10319,7 +10319,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>creates_join_request</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td><em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified</td>
+<td>_True_, if users joining the chat via the link need to be approved by chat administrators. If _True_, _member_limit_ can&#39;t be specified</td>
 </tr>
 </tbody>
 </table>
@@ -10369,12 +10369,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>creates_join_request</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td><em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified</td>
+<td>_True_, if users joining the chat via the link need to be approved by chat administrators. If _True_, _member_limit_ can&#39;t be specified</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="createchatsubscriptioninvitelink" href="#createchatsubscriptioninvitelink"><i class="anchor-icon"></i></a>createChatSubscriptionInviteLink</h4>
-<p>Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the <em>can_invite_users</em> administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+<p>Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10412,7 +10412,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="editchatsubscriptioninvitelink" href="#editchatsubscriptioninvitelink"><i class="anchor-icon"></i></a>editChatSubscriptionInviteLink</h4>
-<p>Use this method to edit a subscription invite link created by the bot. The bot must have the <em>can_invite_users</em> administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+<p>Use this method to edit a subscription invite link created by the bot. The bot must have the _can_invite_users_ administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10470,7 +10470,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="approvechatjoinrequest" href="#approvechatjoinrequest"><i class="anchor-icon"></i></a>approveChatJoinRequest</h4>
-<p>Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.</p>
+<p>Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10496,7 +10496,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="declinechatjoinrequest" href="#declinechatjoinrequest"><i class="anchor-icon"></i></a>declineChatJoinRequest</h4>
-<p>Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.</p>
+<p>Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10522,7 +10522,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setchatphoto" href="#setchatphoto"><i class="anchor-icon"></i></a>setChatPhoto</h4>
-<p>Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10548,7 +10548,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletechatphoto" href="#deletechatphoto"><i class="anchor-icon"></i></a>deleteChatPhoto</h4>
-<p>Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10568,7 +10568,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setchattitle" href="#setchattitle"><i class="anchor-icon"></i></a>setChatTitle</h4>
-<p>Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10594,7 +10594,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setchatdescription" href="#setchatdescription"><i class="anchor-icon"></i></a>setChatDescription</h4>
-<p>Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10620,7 +10620,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="pinchatmessage" href="#pinchatmessage"><i class="anchor-icon"></i></a>pinChatMessage</h4>
-<p>Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns <em>True</em> on success.</p>
+<p>Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10653,12 +10653,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>disable_notification</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.</td>
+<td>Pass _True_ if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="unpinchatmessage" href="#unpinchatmessage"><i class="anchor-icon"></i></a>unpinChatMessage</h4>
-<p>Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns <em>True</em> on success.</p>
+<p>Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10685,12 +10685,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Identifier of the message to unpin. Required if <em>business_connection_id</em> is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.</td>
+<td>Identifier of the message to unpin. Required if _business_connection_id_ is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="unpinallchatmessages" href="#unpinallchatmessages"><i class="anchor-icon"></i></a>unpinAllChatMessages</h4>
-<p>Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns <em>True</em> on success.</p>
+<p>Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10710,7 +10710,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="leavechat" href="#leavechat"><i class="anchor-icon"></i></a>leaveChat</h4>
-<p>Use this method for your bot to leave a group, supergroup or channel. Returns <em>True</em> on success.</p>
+<p>Use this method for your bot to leave a group, supergroup or channel. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10770,7 +10770,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="getchatmembercount" href="#getchatmembercount"><i class="anchor-icon"></i></a>getChatMemberCount</h4>
-<p>Use this method to get the number of members in a chat. Returns <em>Int</em> on success.</p>
+<p>Use this method to get the number of members in a chat. Returns _Int_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10816,7 +10816,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setchatstickerset" href="#setchatstickerset"><i class="anchor-icon"></i></a>setChatStickerSet</h4>
-<p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.</p>
+<p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10842,7 +10842,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletechatstickerset" href="#deletechatstickerset"><i class="anchor-icon"></i></a>deleteChatStickerSet</h4>
-<p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.</p>
+<p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10864,7 +10864,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <h4><a class="anchor" name="getforumtopiciconstickers" href="#getforumtopiciconstickers"><i class="anchor-icon"></i></a>getForumTopicIconStickers</h4>
 <p>Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
 <h4><a class="anchor" name="createforumtopic" href="#createforumtopic"><i class="anchor-icon"></i></a>createForumTopic</h4>
-<p>Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
+<p>Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10902,7 +10902,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="editforumtopic" href="#editforumtopic"><i class="anchor-icon"></i></a>editForumTopic</h4>
-<p>Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
+<p>Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10940,7 +10940,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="closeforumtopic" href="#closeforumtopic"><i class="anchor-icon"></i></a>closeForumTopic</h4>
-<p>Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
+<p>Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10966,7 +10966,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="reopenforumtopic" href="#reopenforumtopic"><i class="anchor-icon"></i></a>reopenForumTopic</h4>
-<p>Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
+<p>Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10992,7 +10992,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deleteforumtopic" href="#deleteforumtopic"><i class="anchor-icon"></i></a>deleteForumTopic</h4>
-<p>Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11018,7 +11018,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="unpinallforumtopicmessages" href="#unpinallforumtopicmessages"><i class="anchor-icon"></i></a>unpinAllForumTopicMessages</h4>
-<p>Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.</p>
+<p>Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11044,7 +11044,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="editgeneralforumtopic" href="#editgeneralforumtopic"><i class="anchor-icon"></i></a>editGeneralForumTopic</h4>
-<p>Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11070,7 +11070,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="closegeneralforumtopic" href="#closegeneralforumtopic"><i class="anchor-icon"></i></a>closeGeneralForumTopic</h4>
-<p>Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11090,7 +11090,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="reopengeneralforumtopic" href="#reopengeneralforumtopic"><i class="anchor-icon"></i></a>reopenGeneralForumTopic</h4>
-<p>Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns <em>True</em> on success.</p>
+<p>Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically unhidden if it was hidden. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11110,7 +11110,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="hidegeneralforumtopic" href="#hidegeneralforumtopic"><i class="anchor-icon"></i></a>hideGeneralForumTopic</h4>
-<p>Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns <em>True</em> on success.</p>
+<p>Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically closed if it was open. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11130,7 +11130,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="unhidegeneralforumtopic" href="#unhidegeneralforumtopic"><i class="anchor-icon"></i></a>unhideGeneralForumTopic</h4>
-<p>Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
+<p>Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11150,7 +11150,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="unpinallgeneralforumtopicmessages" href="#unpinallgeneralforumtopicmessages"><i class="anchor-icon"></i></a>unpinAllGeneralForumTopicMessages</h4>
-<p>Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.</p>
+<p>Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11170,7 +11170,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="answercallbackquery" href="#answercallbackquery"><i class="anchor-icon"></i></a>answerCallbackQuery</h4>
-<p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, <em>True</em> is returned.</p>
+<p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.</p>
 <blockquote>
 <p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.</p>
 </blockquote>
@@ -11200,13 +11200,13 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>show_alert</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>If <em>True</em>, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to <em>false</em>.</td>
+<td>If _True_, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to _false_.</td>
 </tr>
 <tr>
 <td>url</td>
 <td>String</td>
 <td>Optional</td>
-<td>URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton"><em>callback_game</em></a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.</td>
+<td>URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.</td>
 </tr>
 <tr>
 <td>cache_time</td>
@@ -11263,7 +11263,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setmycommands" href="#setmycommands"><i class="anchor-icon"></i></a>setMyCommands</h4>
-<p>Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns <em>True</em> on success.</p>
+<p>Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11295,7 +11295,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletemycommands" href="#deletemycommands"><i class="anchor-icon"></i></a>deleteMyCommands</h4>
-<p>Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns <em>True</em> on success.</p>
+<p>Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11347,7 +11347,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setmyname" href="#setmyname"><i class="anchor-icon"></i></a>setMyName</h4>
-<p>Use this method to change the bot&#39;s name. Returns <em>True</em> on success.</p>
+<p>Use this method to change the bot&#39;s name. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11393,7 +11393,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setmydescription" href="#setmydescription"><i class="anchor-icon"></i></a>setMyDescription</h4>
-<p>Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns <em>True</em> on success.</p>
+<p>Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11439,7 +11439,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setmyshortdescription" href="#setmyshortdescription"><i class="anchor-icon"></i></a>setMyShortDescription</h4>
-<p>Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11485,7 +11485,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setchatmenubutton" href="#setchatmenubutton"><i class="anchor-icon"></i></a>setChatMenuButton</h4>
-<p>Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns <em>True</em> on success.</p>
+<p>Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11531,7 +11531,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setmydefaultadministratorrights" href="#setmydefaultadministratorrights"><i class="anchor-icon"></i></a>setMyDefaultAdministratorRights</h4>
-<p>Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11552,7 +11552,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>for_channels</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.</td>
+<td>Pass _True_ to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.</td>
 </tr>
 </tbody>
 </table>
@@ -11572,14 +11572,14 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>for_channels</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.</td>
+<td>Pass _True_ to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="getavailablegifts" href="#getavailablegifts"><i class="anchor-icon"></i></a>getAvailableGifts</h4>
 <p>Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.</p>
 <h4><a class="anchor" name="sendgift" href="#sendgift"><i class="anchor-icon"></i></a>sendGift</h4>
-<p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns <em>True</em> on success.</p>
+<p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11594,13 +11594,13 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>user_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> is not specified. Unique identifier of the target user who will receive the gift.</td>
+<td>Required if _chat_id_ is not specified. Unique identifier of the target user who will receive the gift.</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Optional</td>
-<td>Required if <em>user_id</em> is not specified. Unique identifier for the chat or username of the channel (in the format <code>@channelusername</code>) that will receive the gift.</td>
+<td>Required if _user_id_ is not specified. Unique identifier for the chat or username of the channel (in the format <code>@channelusername</code>) that will receive the gift.</td>
 </tr>
 <tr>
 <td>gift_id</td>
@@ -11612,7 +11612,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>pay_for_upgrade</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver</td>
+<td>Pass _True_ to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver</td>
 </tr>
 <tr>
 <td>text</td>
@@ -11630,12 +11630,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
+<td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="giftpremiumsubscription" href="#giftpremiumsubscription"><i class="anchor-icon"></i></a>giftPremiumSubscription</h4>
-<p>Gifts a Telegram Premium subscription to the given user. Returns <em>True</em> on success.</p>
+<p>Gifts a Telegram Premium subscription to the given user. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11680,12 +11680,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
+<td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="verifyuser" href="#verifyuser"><i class="anchor-icon"></i></a>verifyUser</h4>
-<p>Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.</p>
+<p>Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11711,7 +11711,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="verifychat" href="#verifychat"><i class="anchor-icon"></i></a>verifyChat</h4>
-<p>Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.</p>
+<p>Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11737,7 +11737,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="removeuserverification" href="#removeuserverification"><i class="anchor-icon"></i></a>removeUserVerification</h4>
-<p>Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.</p>
+<p>Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11757,7 +11757,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="removechatverification" href="#removechatverification"><i class="anchor-icon"></i></a>removeChatVerification</h4>
-<p>Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.</p>
+<p>Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11777,7 +11777,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="readbusinessmessage" href="#readbusinessmessage"><i class="anchor-icon"></i></a>readBusinessMessage</h4>
-<p>Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Marks incoming message as read on behalf of a business account. Requires the _can_read_messages_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11809,7 +11809,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletebusinessmessages" href="#deletebusinessmessages"><i class="anchor-icon"></i></a>deleteBusinessMessages</h4>
-<p>Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns <em>True</em> on success.</p>
+<p>Delete messages on behalf of a business account. Requires the _can_delete_sent_messages_ business bot right to delete messages sent by the bot itself, or the _can_delete_all_messages_ business bot right to delete any message. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11835,7 +11835,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setbusinessaccountname" href="#setbusinessaccountname"><i class="anchor-icon"></i></a>setBusinessAccountName</h4>
-<p>Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Changes the first and last name of a managed business account. Requires the _can_change_name_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11867,7 +11867,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setbusinessaccountusername" href="#setbusinessaccountusername"><i class="anchor-icon"></i></a>setBusinessAccountUsername</h4>
-<p>Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Changes the username of a managed business account. Requires the _can_change_username_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11893,7 +11893,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setbusinessaccountbio" href="#setbusinessaccountbio"><i class="anchor-icon"></i></a>setBusinessAccountBio</h4>
-<p>Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Changes the bio of a managed business account. Requires the _can_change_bio_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11919,7 +11919,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setbusinessaccountprofilephoto" href="#setbusinessaccountprofilephoto"><i class="anchor-icon"></i></a>setBusinessAccountProfilePhoto</h4>
-<p>Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Changes the profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11946,12 +11946,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>is_public</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.</td>
+<td>Pass _True_ to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="removebusinessaccountprofilephoto" href="#removebusinessaccountprofilephoto"><i class="anchor-icon"></i></a>removeBusinessAccountProfilePhoto</h4>
-<p>Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Removes the current profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11972,12 +11972,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>is_public</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.</td>
+<td>Pass _True_ to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="setbusinessaccountgiftsettings" href="#setbusinessaccountgiftsettings"><i class="anchor-icon"></i></a>setBusinessAccountGiftSettings</h4>
-<p>Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11998,7 +11998,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>show_gift_button</td>
 <td>Boolean</td>
 <td>Yes</td>
-<td>Pass <em>True</em>, if a button for sending a gift to the user or by the business account must always be shown in the input field</td>
+<td>Pass _True_, if a button for sending a gift to the user or by the business account must always be shown in the input field</td>
 </tr>
 <tr>
 <td>accepted_gift_types</td>
@@ -12009,7 +12009,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="getbusinessaccountstarbalance" href="#getbusinessaccountstarbalance"><i class="anchor-icon"></i></a>getBusinessAccountStarBalance</h4>
-<p>Returns the amount of Telegram Stars owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#staramount">StarAmount</a> on success.</p>
+<p>Returns the amount of Telegram Stars owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#staramount">StarAmount</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12029,7 +12029,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="transferbusinessaccountstars" href="#transferbusinessaccountstars"><i class="anchor-icon"></i></a>transferBusinessAccountStars</h4>
-<p>Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the _can_transfer_stars_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12055,7 +12055,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="getbusinessaccountgifts" href="#getbusinessaccountgifts"><i class="anchor-icon"></i></a>getBusinessAccountGifts</h4>
-<p>Returns the gifts received and owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
+<p>Returns the gifts received and owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12076,37 +12076,37 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>exclude_unsaved</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that aren&#39;t saved to the account&#39;s profile page</td>
+<td>Pass _True_ to exclude gifts that aren&#39;t saved to the account&#39;s profile page</td>
 </tr>
 <tr>
 <td>exclude_saved</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that are saved to the account&#39;s profile page</td>
+<td>Pass _True_ to exclude gifts that are saved to the account&#39;s profile page</td>
 </tr>
 <tr>
 <td>exclude_unlimited</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times</td>
+<td>Pass _True_ to exclude gifts that can be purchased an unlimited number of times</td>
 </tr>
 <tr>
 <td>exclude_limited</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to exclude gifts that can be purchased a limited number of times</td>
+<td>Pass _True_ to exclude gifts that can be purchased a limited number of times</td>
 </tr>
 <tr>
 <td>exclude_unique</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to exclude unique gifts</td>
+<td>Pass _True_ to exclude unique gifts</td>
 </tr>
 <tr>
 <td>sort_by_price</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
+<td>Pass _True_ to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
 </tr>
 <tr>
 <td>offset</td>
@@ -12123,7 +12123,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="convertgifttostars" href="#convertgifttostars"><i class="anchor-icon"></i></a>convertGiftToStars</h4>
-<p>Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Converts a given regular gift to Telegram Stars. Requires the _can_convert_gifts_to_stars_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12149,7 +12149,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="upgradegift" href="#upgradegift"><i class="anchor-icon"></i></a>upgradeGift</h4>
-<p>Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns <em>True</em> on success.</p>
+<p>Upgrades a given regular gift to a unique gift. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Additionally requires the _can_transfer_stars_ business bot right if the upgrade is paid. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12176,18 +12176,18 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>keep_original_details</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to keep the original gift text, sender and receiver in the upgraded gift</td>
+<td>Pass _True_ to keep the original gift text, sender and receiver in the upgraded gift</td>
 </tr>
 <tr>
 <td>star_count</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If <code>gift.prepaid_upgrade_star_count &gt; 0</code>, then pass 0, otherwise, the <em>can_transfer_stars</em> business bot right is required and <code>gift.upgrade_star_count</code> must be passed.</td>
+<td>The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If <code>gift.prepaid_upgrade_star_count &gt; 0</code>, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and <code>gift.upgrade_star_count</code> must be passed.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="transfergift" href="#transfergift"><i class="anchor-icon"></i></a>transferGift</h4>
-<p>Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns <em>True</em> on success.</p>
+<p>Transfers an owned unique gift to another user. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Requires _can_transfer_stars_ business bot right if the transfer is paid. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12220,12 +12220,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>star_count</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the <em>can_transfer_stars</em> business bot right is required.</td>
+<td>The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the _can_transfer_stars_ business bot right is required.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="poststory" href="#poststory"><i class="anchor-icon"></i></a>postStory</h4>
-<p>Posts a story on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.</p>
+<p>Posts a story on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12270,7 +12270,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>areas</td>
@@ -12282,18 +12282,18 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>post_to_chat_page</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to keep the story accessible after it expires</td>
+<td>Pass _True_ to keep the story accessible after it expires</td>
 </tr>
 <tr>
 <td>protect_content</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting</td>
+<td>Pass _True_ if the content of the story must be protected from forwarding and screenshotting</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="editstory" href="#editstory"><i class="anchor-icon"></i></a>editStory</h4>
-<p>Edits a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.</p>
+<p>Edits a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12338,7 +12338,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>areas</td>
@@ -12349,7 +12349,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletestory" href="#deletestory"><i class="anchor-icon"></i></a>deleteStory</h4>
-<p>Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <em>True</em> on success.</p>
+<p>Deletes a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12379,7 +12379,7 @@ pre-formatted fixed-width code block written in the Python programming language
 
 // === UPDATING MESSAGES ===
 <h4><a class="anchor" name="editmessagetext" href="#editmessagetext"><i class="anchor-icon"></i></a>editMessageText</h4>
-<p>Use this method to edit text and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+<p>Use this method to edit text and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12400,19 +12400,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>text</td>
@@ -12430,7 +12430,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>link_preview_options</td>
@@ -12447,7 +12447,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="editmessagecaption" href="#editmessagecaption"><i class="anchor-icon"></i></a>editMessageCaption</h4>
-<p>Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+<p>Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12468,19 +12468,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>caption</td>
@@ -12498,13 +12498,13 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em>, if the caption must be shown above the message media. Supported only for animation, photo and video messages.</td>
+<td>Pass _True_, if the caption must be shown above the message media. Supported only for animation, photo and video messages.</td>
 </tr>
 <tr>
 <td>reply_markup</td>
@@ -12515,7 +12515,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="editmessagemedia" href="#editmessagemedia"><i class="anchor-icon"></i></a>editMessageMedia</h4>
-<p>Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+<p>Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12536,19 +12536,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>media</td>
@@ -12565,7 +12565,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="editmessagelivelocation" href="#editmessagelivelocation"><i class="anchor-icon"></i></a>editMessageLiveLocation</h4>
-<p>Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.</p>
+<p>Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12586,19 +12586,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>latitude</td>
@@ -12616,7 +12616,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>live_period</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current <em>live_period</em> by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then <em>live_period</em> remains unchanged</td>
+<td>New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current _live_period_ by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then _live_period_ remains unchanged</td>
 </tr>
 <tr>
 <td>horizontal_accuracy</td>
@@ -12645,7 +12645,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="stopmessagelivelocation" href="#stopmessagelivelocation"><i class="anchor-icon"></i></a>stopMessageLiveLocation</h4>
-<p>Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.</p>
+<p>Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12666,19 +12666,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message with live location to stop</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the message with live location to stop</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>reply_markup</td>
@@ -12733,7 +12733,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="editmessagereplymarkup" href="#editmessagereplymarkup"><i class="anchor-icon"></i></a>editMessageReplyMarkup</h4>
-<p>Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+<p>Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12754,19 +12754,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>chat_id</td>
 <td>Integer or String</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the message to edit</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 <tr>
 <td>reply_markup</td>
@@ -12815,7 +12815,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="approvesuggestedpost" href="#approvesuggestedpost"><i class="anchor-icon"></i></a>approveSuggestedPost</h4>
-<p>Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.</p>
+<p>Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12847,7 +12847,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="declinesuggestedpost" href="#declinesuggestedpost"><i class="anchor-icon"></i></a>declineSuggestedPost</h4>
-<p>Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.</p>
+<p>Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12879,7 +12879,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletemessage" href="#deletemessage"><i class="anchor-icon"></i></a>deleteMessage</h4>
-<p>Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns <em>True</em> on success.</p>
+<p>Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted _can_post_messages_ permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has _can_delete_messages_ administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has _can_manage_direct_messages_ administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12905,7 +12905,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletemessages" href="#deletemessages"><i class="anchor-icon"></i></a>deleteMessages</h4>
-<p>Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns <em>True</em> on success.</p>
+<p>Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12956,7 +12956,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields <em>is_animated</em> and <em>is_video</em>.</td>
+<td>Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields _is_animated_ and _is_video_.</td>
 </tr>
 <tr>
 <td>width</td>
@@ -12971,52 +12971,52 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>is_animated</td>
 <td>Boolean</td>
-<td><em>True</em>, if the sticker is <a href="https://telegram.org/blog/animated-stickers">animated</a></td>
+<td>_True_, if the sticker is <a href="https://telegram.org/blog/animated-stickers">animated</a></td>
 </tr>
 <tr>
 <td>is_video</td>
 <td>Boolean</td>
-<td><em>True</em>, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a></td>
+<td>_True_, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a></td>
 </tr>
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Sticker thumbnail in the .WEBP or .JPG format</td>
+<td>_Optional_. Sticker thumbnail in the .WEBP or .JPG format</td>
 </tr>
 <tr>
 <td>emoji</td>
 <td>String</td>
-<td><em>Optional</em>. Emoji associated with the sticker</td>
+<td>_Optional_. Emoji associated with the sticker</td>
 </tr>
 <tr>
 <td>set_name</td>
 <td>String</td>
-<td><em>Optional</em>. Name of the sticker set to which the sticker belongs</td>
+<td>_Optional_. Name of the sticker set to which the sticker belongs</td>
 </tr>
 <tr>
 <td>premium_animation</td>
 <td><a href="#file">File</a></td>
-<td><em>Optional</em>. For premium regular stickers, premium animation for the sticker</td>
+<td>_Optional_. For premium regular stickers, premium animation for the sticker</td>
 </tr>
 <tr>
 <td>mask_position</td>
 <td><a href="#maskposition">MaskPosition</a></td>
-<td><em>Optional</em>. For mask stickers, the position where the mask should be placed</td>
+<td>_Optional_. For mask stickers, the position where the mask should be placed</td>
 </tr>
 <tr>
 <td>custom_emoji_id</td>
 <td>String</td>
-<td><em>Optional</em>. For custom emoji stickers, unique identifier of the custom emoji</td>
+<td>_Optional_. For custom emoji stickers, unique identifier of the custom emoji</td>
 </tr>
 <tr>
 <td>needs_repainting</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places</td>
+<td>_Optional_. _True_, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places</td>
 </tr>
 <tr>
 <td>file_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. File size in bytes</td>
+<td>_Optional_. File size in bytes</td>
 </tr>
 </tbody>
 </table>
@@ -13054,7 +13054,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format</td>
+<td>_Optional_. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format</td>
 </tr>
 </tbody>
 </table>
@@ -13105,7 +13105,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>sticker</td>
 <td>String</td>
-<td>The added sticker. Pass a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="#sending-files">More information on Sending Files »</a></td>
+<td>The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
 <tr>
 <td>format</td>
@@ -13120,12 +13120,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>mask_position</td>
 <td><a href="#maskposition">MaskPosition</a></td>
-<td><em>Optional</em>. Position where the mask should be placed on faces. For “mask” stickers only.</td>
+<td>_Optional_. Position where the mask should be placed on faces. For “mask” stickers only.</td>
 </tr>
 <tr>
 <td>keywords</td>
 <td>Array of String</td>
-<td><em>Optional</em>. List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.</td>
+<td>_Optional_. List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.</td>
 </tr>
 </tbody>
 </table>
@@ -13193,7 +13193,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -13294,7 +13294,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="createnewstickerset" href="#createnewstickerset"><i class="anchor-icon"></i></a>createNewStickerSet</h4>
-<p>Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns <em>True</em> on success.</p>
+<p>Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13315,7 +13315,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>name</td>
 <td>String</td>
 <td>Yes</td>
-<td>Short name of sticker set, to be used in <code>t.me/addstickers/</code> URLs (e.g., <em>animals</em>). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in <code>&quot;_by_&lt;bot_username&gt;&quot;</code>. <code>&lt;bot_username&gt;</code> is case insensitive. 1-64 characters.</td>
+<td>Short name of sticker set, to be used in <code>t.me/addstickers/</code> URLs (e.g., _animals_). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in <code>&quot;_by_&lt;bot_username&gt;&quot;</code>. <code>&lt;bot_username&gt;</code> is case insensitive. 1-64 characters.</td>
 </tr>
 <tr>
 <td>title</td>
@@ -13339,12 +13339,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>needs_repainting</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only</td>
+<td>Pass _True_ if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="addstickertoset" href="#addstickertoset"><i class="anchor-icon"></i></a>addStickerToSet</h4>
-<p>Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns <em>True</em> on success.</p>
+<p>Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13376,7 +13376,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setstickerpositioninset" href="#setstickerpositioninset"><i class="anchor-icon"></i></a>setStickerPositionInSet</h4>
-<p>Use this method to move a sticker in a set created by the bot to a specific position. Returns <em>True</em> on success.</p>
+<p>Use this method to move a sticker in a set created by the bot to a specific position. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13402,7 +13402,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletestickerfromset" href="#deletestickerfromset"><i class="anchor-icon"></i></a>deleteStickerFromSet</h4>
-<p>Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to delete a sticker from a set created by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13422,7 +13422,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="replacestickerinset" href="#replacestickerinset"><i class="anchor-icon"></i></a>replaceStickerInSet</h4>
-<p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns <em>True</em> on success.</p>
+<p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13460,7 +13460,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setstickeremojilist" href="#setstickeremojilist"><i class="anchor-icon"></i></a>setStickerEmojiList</h4>
-<p>Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13486,7 +13486,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setstickerkeywords" href="#setstickerkeywords"><i class="anchor-icon"></i></a>setStickerKeywords</h4>
-<p>Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13512,7 +13512,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setstickermaskposition" href="#setstickermaskposition"><i class="anchor-icon"></i></a>setStickerMaskPosition</h4>
-<p>Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13538,7 +13538,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setstickersettitle" href="#setstickersettitle"><i class="anchor-icon"></i></a>setStickerSetTitle</h4>
-<p>Use this method to set the title of a created sticker set. Returns <em>True</em> on success.</p>
+<p>Use this method to set the title of a created sticker set. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13564,7 +13564,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setstickersetthumbnail" href="#setstickersetthumbnail"><i class="anchor-icon"></i></a>setStickerSetThumbnail</h4>
-<p>Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns <em>True</em> on success.</p>
+<p>Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13591,7 +13591,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>thumbnail</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
 <td>Optional</td>
-<td>A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.</td>
+<td>A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.</td>
 </tr>
 <tr>
 <td>format</td>
@@ -13602,7 +13602,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setcustomemojistickersetthumbnail" href="#setcustomemojistickersetthumbnail"><i class="anchor-icon"></i></a>setCustomEmojiStickerSetThumbnail</h4>
-<p>Use this method to set the thumbnail of a custom emoji sticker set. Returns <em>True</em> on success.</p>
+<p>Use this method to set the thumbnail of a custom emoji sticker set. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13628,7 +13628,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="deletestickerset" href="#deletestickerset"><i class="anchor-icon"></i></a>deleteStickerSet</h4>
-<p>Use this method to delete a sticker set that was created by the bot. Returns <em>True</em> on success.</p>
+<p>Use this method to delete a sticker set that was created by the bot. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13683,17 +13683,17 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>chat_type</td>
 <td>String</td>
-<td><em>Optional</em>. Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat</td>
+<td>_Optional_. Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat</td>
 </tr>
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Sender location, only for bots that request user location</td>
+<td>_Optional_. Sender location, only for bots that request user location</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="answerinlinequery" href="#answerinlinequery"><i class="anchor-icon"></i></a>answerInlineQuery</h4>
-<p>Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than **50** results per query are allowed.</p>
+<p>Use this method to send answers to an inline query. On success, _True_ is returned.<br>No more than **50** results per query are allowed.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13726,7 +13726,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>is_personal</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.</td>
+<td>Pass _True_ if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.</td>
 </tr>
 <tr>
 <td>next_offset</td>
@@ -13761,12 +13761,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>web_app</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
-<td><em>Optional</em>. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.</td>
+<td>_Optional_. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.</td>
 </tr>
 <tr>
 <td>start_parameter</td>
 <td>String</td>
-<td><em>Optional</em>. <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.<br><br><em>Example:</em> An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.</td>
+<td>_Optional_. <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.</td>
 </tr>
 </tbody>
 </table>
@@ -13809,7 +13809,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>article</em></td>
+<td>Type of the result, must be _article_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -13829,37 +13829,37 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>url</td>
 <td>String</td>
-<td><em>Optional</em>. URL of the result</td>
+<td>_Optional_. URL of the result</td>
 </tr>
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
+<td>_Optional_. Short description of the result</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
 <td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
+<td>_Optional_. Url of the thumbnail for the result</td>
 </tr>
 <tr>
 <td>thumbnail_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
+<td>_Optional_. Thumbnail width</td>
 </tr>
 <tr>
 <td>thumbnail_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
+<td>_Optional_. Thumbnail height</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultphoto" href="#inlinequeryresultphoto"><i class="anchor-icon"></i></a>InlineQueryResultPhoto</h4>
-<p>Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.</p>
+<p>Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the photo.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13872,7 +13872,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>photo</em></td>
+<td>Type of the result, must be _photo_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -13892,57 +13892,57 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>photo_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Width of the photo</td>
+<td>_Optional_. Width of the photo</td>
 </tr>
 <tr>
 <td>photo_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Height of the photo</td>
+<td>_Optional_. Height of the photo</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title for the result</td>
+<td>_Optional_. Title for the result</td>
 </tr>
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
+<td>_Optional_. Short description of the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the photo</td>
+<td>_Optional_. Content of the message to be sent instead of the photo</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultgif" href="#inlinequeryresultgif"><i class="anchor-icon"></i></a>InlineQueryResultGif</h4>
-<p>Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.</p>
+<p>Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the animation.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13955,7 +13955,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>gif</em></td>
+<td>Type of the result, must be _gif_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -13970,17 +13970,17 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>gif_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Width of the GIF</td>
+<td>_Optional_. Width of the GIF</td>
 </tr>
 <tr>
 <td>gif_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Height of the GIF</td>
+<td>_Optional_. Height of the GIF</td>
 </tr>
 <tr>
 <td>gif_duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Duration of the GIF in seconds</td>
+<td>_Optional_. Duration of the GIF in seconds</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
@@ -13990,47 +13990,47 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>thumbnail_mime_type</td>
 <td>String</td>
-<td><em>Optional</em>. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
+<td>_Optional_. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title for the result</td>
+<td>_Optional_. Title for the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the GIF animation</td>
+<td>_Optional_. Content of the message to be sent instead of the GIF animation</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultmpeg4gif" href="#inlinequeryresultmpeg4gif"><i class="anchor-icon"></i></a>InlineQueryResultMpeg4Gif</h4>
-<p>Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.</p>
+<p>Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the animation.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14043,7 +14043,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>mpeg4_gif</em></td>
+<td>Type of the result, must be _mpeg4_gif_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14058,17 +14058,17 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>mpeg4_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video width</td>
+<td>_Optional_. Video width</td>
 </tr>
 <tr>
 <td>mpeg4_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video height</td>
+<td>_Optional_. Video height</td>
 </tr>
 <tr>
 <td>mpeg4_duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
+<td>_Optional_. Video duration in seconds</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
@@ -14078,49 +14078,49 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>thumbnail_mime_type</td>
 <td>String</td>
-<td><em>Optional</em>. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
+<td>_Optional_. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”</td>
 </tr>
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title for the result</td>
+<td>_Optional_. Title for the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video animation</td>
+<td>_Optional_. Content of the message to be sent instead of the video animation</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultvideo" href="#inlinequeryresultvideo"><i class="anchor-icon"></i></a>InlineQueryResultVideo</h4>
-<p>Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.</p>
+<p>Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the video.</p>
 <blockquote>
-<p>If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you **must** replace its content using <em>input_message_content</em>.</p>
+<p>If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you **must** replace its content using _input_message_content_.</p>
 </blockquote>
 <table class="table">
 <thead>
@@ -14134,7 +14134,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>video</em></td>
+<td>Type of the result, must be _video_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14164,57 +14164,57 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>video_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video width</td>
+<td>_Optional_. Video width</td>
 </tr>
 <tr>
 <td>video_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video height</td>
+<td>_Optional_. Video height</td>
 </tr>
 <tr>
 <td>video_duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
+<td>_Optional_. Video duration in seconds</td>
 </tr>
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
+<td>_Optional_. Short description of the result</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video. This field is **required** if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).</td>
+<td>_Optional_. Content of the message to be sent instead of the video. This field is **required** if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultaudio" href="#inlinequeryresultaudio"><i class="anchor-icon"></i></a>InlineQueryResultAudio</h4>
-<p>Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.</p>
+<p>Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the audio.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14227,7 +14227,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>audio</em></td>
+<td>Type of the result, must be _audio_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14247,42 +14247,42 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>performer</td>
 <td>String</td>
-<td><em>Optional</em>. Performer</td>
+<td>_Optional_. Performer</td>
 </tr>
 <tr>
 <td>audio_duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Audio duration in seconds</td>
+<td>_Optional_. Audio duration in seconds</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the audio</td>
+<td>_Optional_. Content of the message to be sent instead of the audio</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultvoice" href="#inlinequeryresultvoice"><i class="anchor-icon"></i></a>InlineQueryResultVoice</h4>
-<p>Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the the voice message.</p>
+<p>Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the the voice message.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14295,7 +14295,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>voice</em></td>
+<td>Type of the result, must be _voice_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14315,37 +14315,37 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>voice_duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Recording duration in seconds</td>
+<td>_Optional_. Recording duration in seconds</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the voice recording</td>
+<td>_Optional_. Content of the message to be sent instead of the voice recording</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultdocument" href="#inlinequeryresultdocument"><i class="anchor-icon"></i></a>InlineQueryResultDocument</h4>
-<p>Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file. Currently, only **.PDF** and **.ZIP** files can be sent using this method.</p>
+<p>Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the file. Currently, only **.PDF** and **.ZIP** files can be sent using this method.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14358,7 +14358,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>document</em></td>
+<td>Type of the result, must be _document_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14373,17 +14373,17 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>document_url</td>
@@ -14398,37 +14398,37 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
+<td>_Optional_. Short description of the result</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. Inline keyboard attached to the message</td>
+<td>_Optional_. Inline keyboard attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the file</td>
+<td>_Optional_. Content of the message to be sent instead of the file</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
 <td>String</td>
-<td><em>Optional</em>. URL of the thumbnail (JPEG only) for the file</td>
+<td>_Optional_. URL of the thumbnail (JPEG only) for the file</td>
 </tr>
 <tr>
 <td>thumbnail_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
+<td>_Optional_. Thumbnail width</td>
 </tr>
 <tr>
 <td>thumbnail_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
+<td>_Optional_. Thumbnail height</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultlocation" href="#inlinequeryresultlocation"><i class="anchor-icon"></i></a>InlineQueryResultLocation</h4>
-<p>Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the location.</p>
+<p>Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the location.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14441,7 +14441,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>location</em></td>
+<td>Type of the result, must be _location_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14466,52 +14466,52 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>horizontal_accuracy</td>
 <td>Float</td>
-<td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
+<td>_Optional_. The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
 <td>live_period</td>
 <td>Integer</td>
-<td><em>Optional</em>. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
+<td>_Optional_. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
 </tr>
 <tr>
 <td>heading</td>
 <td>Integer</td>
-<td><em>Optional</em>. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
+<td>_Optional_. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
 </tr>
 <tr>
 <td>proximity_alert_radius</td>
 <td>Integer</td>
-<td><em>Optional</em>. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
+<td>_Optional_. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the location</td>
+<td>_Optional_. Content of the message to be sent instead of the location</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
 <td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
+<td>_Optional_. Url of the thumbnail for the result</td>
 </tr>
 <tr>
 <td>thumbnail_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
+<td>_Optional_. Thumbnail width</td>
 </tr>
 <tr>
 <td>thumbnail_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
+<td>_Optional_. Thumbnail height</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultvenue" href="#inlinequeryresultvenue"><i class="anchor-icon"></i></a>InlineQueryResultVenue</h4>
-<p>Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the venue.</p>
+<p>Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the venue.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14524,7 +14524,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>venue</em></td>
+<td>Type of the result, must be _venue_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14554,52 +14554,52 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>foursquare_id</td>
 <td>String</td>
-<td><em>Optional</em>. Foursquare identifier of the venue if known</td>
+<td>_Optional_. Foursquare identifier of the venue if known</td>
 </tr>
 <tr>
 <td>foursquare_type</td>
 <td>String</td>
-<td><em>Optional</em>. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
+<td>_Optional_. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
 </tr>
 <tr>
 <td>google_place_id</td>
 <td>String</td>
-<td><em>Optional</em>. Google Places identifier of the venue</td>
+<td>_Optional_. Google Places identifier of the venue</td>
 </tr>
 <tr>
 <td>google_place_type</td>
 <td>String</td>
-<td><em>Optional</em>. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
+<td>_Optional_. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the venue</td>
+<td>_Optional_. Content of the message to be sent instead of the venue</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
 <td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
+<td>_Optional_. Url of the thumbnail for the result</td>
 </tr>
 <tr>
 <td>thumbnail_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
+<td>_Optional_. Thumbnail width</td>
 </tr>
 <tr>
 <td>thumbnail_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
+<td>_Optional_. Thumbnail height</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcontact" href="#inlinequeryresultcontact"><i class="anchor-icon"></i></a>InlineQueryResultContact</h4>
-<p>Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the contact.</p>
+<p>Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the contact.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14612,7 +14612,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>contact</em></td>
+<td>Type of the result, must be _contact_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14632,37 +14632,37 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td><em>Optional</em>. Contact&#39;s last name</td>
+<td>_Optional_. Contact&#39;s last name</td>
 </tr>
 <tr>
 <td>vcard</td>
 <td>String</td>
-<td><em>Optional</em>. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
+<td>_Optional_. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the contact</td>
+<td>_Optional_. Content of the message to be sent instead of the contact</td>
 </tr>
 <tr>
 <td>thumbnail_url</td>
 <td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
+<td>_Optional_. Url of the thumbnail for the result</td>
 </tr>
 <tr>
 <td>thumbnail_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
+<td>_Optional_. Thumbnail width</td>
 </tr>
 <tr>
 <td>thumbnail_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
+<td>_Optional_. Thumbnail height</td>
 </tr>
 </tbody>
 </table>
@@ -14680,7 +14680,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>game</em></td>
+<td>Type of the result, must be _game_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14695,12 +14695,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcachedphoto" href="#inlinequeryresultcachedphoto"><i class="anchor-icon"></i></a>InlineQueryResultCachedPhoto</h4>
-<p>Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.</p>
+<p>Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the photo.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14713,7 +14713,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>photo</em></td>
+<td>Type of the result, must be _photo_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14728,47 +14728,47 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title for the result</td>
+<td>_Optional_. Title for the result</td>
 </tr>
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
+<td>_Optional_. Short description of the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the photo</td>
+<td>_Optional_. Content of the message to be sent instead of the photo</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcachedgif" href="#inlinequeryresultcachedgif"><i class="anchor-icon"></i></a>InlineQueryResultCachedGif</h4>
-<p>Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with specified content instead of the animation.</p>
+<p>Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with specified content instead of the animation.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14781,7 +14781,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>gif</em></td>
+<td>Type of the result, must be _gif_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14796,42 +14796,42 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title for the result</td>
+<td>_Optional_. Title for the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the GIF animation</td>
+<td>_Optional_. Content of the message to be sent instead of the GIF animation</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcachedmpeg4gif" href="#inlinequeryresultcachedmpeg4gif"><i class="anchor-icon"></i></a>InlineQueryResultCachedMpeg4Gif</h4>
-<p>Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.</p>
+<p>Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the animation.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14844,7 +14844,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>mpeg4_gif</em></td>
+<td>Type of the result, must be _mpeg4_gif_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14859,42 +14859,42 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>title</td>
 <td>String</td>
-<td><em>Optional</em>. Title for the result</td>
+<td>_Optional_. Title for the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video animation</td>
+<td>_Optional_. Content of the message to be sent instead of the video animation</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcachedsticker" href="#inlinequeryresultcachedsticker"><i class="anchor-icon"></i></a>InlineQueryResultCachedSticker</h4>
-<p>Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the sticker.</p>
+<p>Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the sticker.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14907,7 +14907,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>sticker</em></td>
+<td>Type of the result, must be _sticker_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14922,17 +14922,17 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the sticker</td>
+<td>_Optional_. Content of the message to be sent instead of the sticker</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcacheddocument" href="#inlinequeryresultcacheddocument"><i class="anchor-icon"></i></a>InlineQueryResultCachedDocument</h4>
-<p>Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file.</p>
+<p>Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the file.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14945,7 +14945,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>document</em></td>
+<td>Type of the result, must be _document_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -14965,37 +14965,37 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
+<td>_Optional_. Short description of the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the file</td>
+<td>_Optional_. Content of the message to be sent instead of the file</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcachedvideo" href="#inlinequeryresultcachedvideo"><i class="anchor-icon"></i></a>InlineQueryResultCachedVideo</h4>
-<p>Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.</p>
+<p>Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the video.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15008,7 +15008,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>video</em></td>
+<td>Type of the result, must be _video_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -15028,42 +15028,42 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>description</td>
 <td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
+<td>_Optional_. Short description of the result</td>
 </tr>
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>show_caption_above_media</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em>, if the caption must be shown above the message media</td>
+<td>_Optional_. Pass _True_, if the caption must be shown above the message media</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video</td>
+<td>_Optional_. Content of the message to be sent instead of the video</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcachedvoice" href="#inlinequeryresultcachedvoice"><i class="anchor-icon"></i></a>InlineQueryResultCachedVoice</h4>
-<p>Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the voice message.</p>
+<p>Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the voice message.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15076,7 +15076,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>voice</em></td>
+<td>Type of the result, must be _voice_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -15096,32 +15096,32 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the voice message</td>
+<td>_Optional_. Content of the message to be sent instead of the voice message</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="inlinequeryresultcachedaudio" href="#inlinequeryresultcachedaudio"><i class="anchor-icon"></i></a>InlineQueryResultCachedAudio</h4>
-<p>Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.</p>
+<p>Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the audio.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15134,7 +15134,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>type</td>
 <td>String</td>
-<td>Type of the result, must be <em>audio</em></td>
+<td>Type of the result, must be _audio_</td>
 </tr>
 <tr>
 <td>id</td>
@@ -15149,27 +15149,27 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>caption</td>
 <td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
+<td>_Optional_. Caption, 0-1024 characters after entities parsing</td>
 </tr>
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in the caption, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
+<td>_Optional_. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the audio</td>
+<td>_Optional_. Content of the message to be sent instead of the audio</td>
 </tr>
 </tbody>
 </table>
@@ -15201,17 +15201,17 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>parse_mode</td>
 <td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
+<td>_Optional_. Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
 </tr>
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. List of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
+<td>_Optional_. List of special entities that appear in message text, which can be specified instead of _parse_mode_</td>
 </tr>
 <tr>
 <td>link_preview_options</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td><em>Optional</em>. Link preview generation options for the message</td>
+<td>_Optional_. Link preview generation options for the message</td>
 </tr>
 </tbody>
 </table>
@@ -15239,22 +15239,22 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>horizontal_accuracy</td>
 <td>Float</td>
-<td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
+<td>_Optional_. The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
 <tr>
 <td>live_period</td>
 <td>Integer</td>
-<td><em>Optional</em>. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
+<td>_Optional_. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.</td>
 </tr>
 <tr>
 <td>heading</td>
 <td>Integer</td>
-<td><em>Optional</em>. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
+<td>_Optional_. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
 </tr>
 <tr>
 <td>proximity_alert_radius</td>
 <td>Integer</td>
-<td><em>Optional</em>. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
+<td>_Optional_. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
 </tr>
 </tbody>
 </table>
@@ -15292,22 +15292,22 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>foursquare_id</td>
 <td>String</td>
-<td><em>Optional</em>. Foursquare identifier of the venue, if known</td>
+<td>_Optional_. Foursquare identifier of the venue, if known</td>
 </tr>
 <tr>
 <td>foursquare_type</td>
 <td>String</td>
-<td><em>Optional</em>. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
+<td>_Optional_. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
 </tr>
 <tr>
 <td>google_place_id</td>
 <td>String</td>
-<td><em>Optional</em>. Google Places identifier of the venue</td>
+<td>_Optional_. Google Places identifier of the venue</td>
 </tr>
 <tr>
 <td>google_place_type</td>
 <td>String</td>
-<td><em>Optional</em>. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
+<td>_Optional_. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
 </tr>
 </tbody>
 </table>
@@ -15335,12 +15335,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td><em>Optional</em>. Contact&#39;s last name</td>
+<td>_Optional_. Contact&#39;s last name</td>
 </tr>
 <tr>
 <td>vcard</td>
 <td>String</td>
-<td><em>Optional</em>. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
+<td>_Optional_. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
 </tr>
 </tbody>
 </table>
@@ -15373,7 +15373,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>provider_token</td>
 <td>String</td>
-<td><em>Optional</em>. Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>currency</td>
@@ -15388,72 +15388,72 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>max_tip_amount</td>
 <td>Integer</td>
-<td><em>Optional</em>. The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, **not** float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>suggested_tip_amounts</td>
 <td>Array of Integer</td>
-<td><em>Optional</em>. A JSON-serialized array of suggested amounts of tip in the <em>smallest units</em> of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.</td>
+<td>_Optional_. A JSON-serialized array of suggested amounts of tip in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.</td>
 </tr>
 <tr>
 <td>provider_data</td>
 <td>String</td>
-<td><em>Optional</em>. A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.</td>
+<td>_Optional_. A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.</td>
 </tr>
 <tr>
 <td>photo_url</td>
 <td>String</td>
-<td><em>Optional</em>. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
+<td>_Optional_. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
 </tr>
 <tr>
 <td>photo_size</td>
 <td>Integer</td>
-<td><em>Optional</em>. Photo size in bytes</td>
+<td>_Optional_. Photo size in bytes</td>
 </tr>
 <tr>
 <td>photo_width</td>
 <td>Integer</td>
-<td><em>Optional</em>. Photo width</td>
+<td>_Optional_. Photo width</td>
 </tr>
 <tr>
 <td>photo_height</td>
 <td>Integer</td>
-<td><em>Optional</em>. Photo height</td>
+<td>_Optional_. Photo height</td>
 </tr>
 <tr>
 <td>need_name</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_phone_number</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_email</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_shipping_address</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>send_phone_number_to_provider</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>send_email_to_provider</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>is_flexible</td>
 <td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>_Optional_. Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -15481,12 +15481,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Sender location, only for bots that require user location</td>
+<td>_Optional_. Sender location, only for bots that require user location</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
-<td><em>Optional</em>. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.</td>
+<td>_Optional_. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.</td>
 </tr>
 <tr>
 <td>query</td>
@@ -15536,7 +15536,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
-<td><em>Optional</em>. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.</td>
+<td>_Optional_. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.</td>
 </tr>
 </tbody>
 </table>
@@ -15568,25 +15568,25 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_user_chats</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to private chats with users</td>
+<td>Pass _True_ if the message can be sent to private chats with users</td>
 </tr>
 <tr>
 <td>allow_bot_chats</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to private chats with bots</td>
+<td>Pass _True_ if the message can be sent to private chats with bots</td>
 </tr>
 <tr>
 <td>allow_group_chats</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to group and supergroup chats</td>
+<td>Pass _True_ if the message can be sent to group and supergroup chats</td>
 </tr>
 <tr>
 <td>allow_channel_chats</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the message can be sent to channel chats</td>
+<td>Pass _True_ if the message can be sent to channel chats</td>
 </tr>
 </tbody>
 </table>
@@ -15685,19 +15685,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>max_tip_amount</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, **not** float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>suggested_tip_amounts</td>
 <td>Array of Integer</td>
 <td>Optional</td>
-<td>A JSON-serialized array of suggested amounts of tips in the <em>smallest units</em> of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.</td>
+<td>A JSON-serialized array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.</td>
 </tr>
 <tr>
 <td>start_parameter</td>
 <td>String</td>
 <td>Optional</td>
-<td>Unique deep-linking parameter. If left empty, **forwarded copies** of the sent message will have a <em>Pay</em> button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a <em>URL</em> button with a deep link to the bot (instead of a <em>Pay</em> button), with the value used as the start parameter</td>
+<td>Unique deep-linking parameter. If left empty, **forwarded copies** of the sent message will have a _Pay_ button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a _URL_ button with a deep link to the bot (instead of a _Pay_ button), with the value used as the start parameter</td>
 </tr>
 <tr>
 <td>provider_data</td>
@@ -15733,43 +15733,43 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>need_name</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_phone_number</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_email</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_shipping_address</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>send_phone_number_to_provider</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>send_email_to_provider</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>is_flexible</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>disable_notification</td>
@@ -15787,7 +15787,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -15816,7 +15816,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="createinvoicelink" href="#createinvoicelink"><i class="anchor-icon"></i></a>createInvoiceLink</h4>
-<p>Use this method to create a link for an invoice. Returns the created invoice link as <em>String</em> on success.</p>
+<p>Use this method to create a link for an invoice. Returns the created invoice link as _String_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15879,13 +15879,13 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>max_tip_amount</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, **not** float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>suggested_tip_amounts</td>
 <td>Array of Integer</td>
 <td>Optional</td>
-<td>A JSON-serialized array of suggested amounts of tips in the <em>smallest units</em> of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.</td>
+<td>A JSON-serialized array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.</td>
 </tr>
 <tr>
 <td>provider_data</td>
@@ -15921,48 +15921,48 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>need_name</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_phone_number</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_email</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>need_shipping_address</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>send_phone_number_to_provider</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>send_email_to_provider</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 <tr>
 <td>is_flexible</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
+<td>Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="answershippingquery" href="#answershippingquery"><i class="anchor-icon"></i></a>answerShippingQuery</h4>
-<p>If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, <em>True</em> is returned.</p>
+<p>If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an <a href="#update">Update</a> with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15983,24 +15983,24 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>ok</td>
 <td>Boolean</td>
 <td>Yes</td>
-<td>Pass <em>True</em> if delivery to the specified address is possible and <em>False</em> if there are any problems (for example, if delivery to the specified address is not possible)</td>
+<td>Pass _True_ if delivery to the specified address is possible and _False_ if there are any problems (for example, if delivery to the specified address is not possible)</td>
 </tr>
 <tr>
 <td>shipping_options</td>
 <td>Array of <a href="#shippingoption">ShippingOption</a></td>
 <td>Optional</td>
-<td>Required if <em>ok</em> is <em>True</em>. A JSON-serialized array of available shipping options.</td>
+<td>Required if _ok_ is _True_. A JSON-serialized array of available shipping options.</td>
 </tr>
 <tr>
 <td>error_message</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.</td>
+<td>Required if _ok_ is _False_. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.</td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="answerprecheckoutquery" href="#answerprecheckoutquery"><i class="anchor-icon"></i></a>answerPreCheckoutQuery</h4>
-<p>Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, <em>True</em> is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.</p>
+<p>Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16021,13 +16021,13 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>ok</td>
 <td>Boolean</td>
 <td>Yes</td>
-<td>Specify <em>True</em> if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use <em>False</em> if there are any problems.</td>
+<td>Specify _True_ if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use _False_ if there are any problems.</td>
 </tr>
 <tr>
 <td>error_message</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.</td>
+<td>Required if _ok_ is _False_. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.</td>
 </tr>
 </tbody>
 </table>
@@ -16060,7 +16060,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="refundstarpayment" href="#refundstarpayment"><i class="anchor-icon"></i></a>refundStarPayment</h4>
-<p>Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns <em>True</em> on success.</p>
+<p>Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16086,7 +16086,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="edituserstarsubscription" href="#edituserstarsubscription"><i class="anchor-icon"></i></a>editUserStarSubscription</h4>
-<p>Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns <em>True</em> on success.</p>
+<p>Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns _True_ on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16113,7 +16113,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>is_canceled</td>
 <td>Boolean</td>
 <td>Yes</td>
-<td>Pass <em>True</em> to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass <em>False</em> to allow the user to re-enable a subscription that was previously canceled by the bot.</td>
+<td>Pass _True_ to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass _False_ to allow the user to re-enable a subscription that was previously canceled by the bot.</td>
 </tr>
 </tbody>
 </table>
@@ -16136,7 +16136,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>amount</td>
 <td>Integer</td>
-<td>Price of the product in the <em>smallest units</em> of the <a href="/bots/payments#supported-currencies">currency</a> (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
+<td>Price of the product in the _smallest units_ of the <a href="/bots/payments#supported-currencies">currency</a> (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
 </tr>
 </tbody>
 </table>
@@ -16174,7 +16174,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>total_amount</td>
 <td>Integer</td>
-<td>Total price in the <em>smallest units</em> of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
+<td>Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
 </tr>
 </tbody>
 </table>
@@ -16235,22 +16235,22 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>name</td>
 <td>String</td>
-<td><em>Optional</em>. User name</td>
+<td>_Optional_. User name</td>
 </tr>
 <tr>
 <td>phone_number</td>
 <td>String</td>
-<td><em>Optional</em>. User&#39;s phone number</td>
+<td>_Optional_. User&#39;s phone number</td>
 </tr>
 <tr>
 <td>email</td>
 <td>String</td>
-<td><em>Optional</em>. User email</td>
+<td>_Optional_. User email</td>
 </tr>
 <tr>
 <td>shipping_address</td>
 <td><a href="#shippingaddress">ShippingAddress</a></td>
-<td><em>Optional</em>. User shipping address</td>
+<td>_Optional_. User shipping address</td>
 </tr>
 </tbody>
 </table>
@@ -16301,7 +16301,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>total_amount</td>
 <td>Integer</td>
-<td>Total price in the <em>smallest units</em> of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
+<td>Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
 </tr>
 <tr>
 <td>invoice_payload</td>
@@ -16311,27 +16311,27 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>subscription_expiration_date</td>
 <td>Integer</td>
-<td><em>Optional</em>. Expiration date of the subscription, in Unix time; for recurring payments only</td>
+<td>_Optional_. Expiration date of the subscription, in Unix time; for recurring payments only</td>
 </tr>
 <tr>
 <td>is_recurring</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the payment is a recurring payment for a subscription</td>
+<td>_Optional_. _True_, if the payment is a recurring payment for a subscription</td>
 </tr>
 <tr>
 <td>is_first_recurring</td>
 <td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the payment is the first payment for a subscription</td>
+<td>_Optional_. _True_, if the payment is the first payment for a subscription</td>
 </tr>
 <tr>
 <td>shipping_option_id</td>
 <td>String</td>
-<td><em>Optional</em>. Identifier of the shipping option chosen by the user</td>
+<td>_Optional_. Identifier of the shipping option chosen by the user</td>
 </tr>
 <tr>
 <td>order_info</td>
 <td><a href="#orderinfo">OrderInfo</a></td>
-<td><em>Optional</em>. Order information provided by the user</td>
+<td>_Optional_. Order information provided by the user</td>
 </tr>
 <tr>
 <td>telegram_payment_charge_id</td>
@@ -16364,7 +16364,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>total_amount</td>
 <td>Integer</td>
-<td>Total refunded price in the <em>smallest units</em> of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code>, <code>total_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
+<td>Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code>, <code>total_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
 </tr>
 <tr>
 <td>invoice_payload</td>
@@ -16379,7 +16379,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>provider_payment_charge_id</td>
 <td>String</td>
-<td><em>Optional</em>. Provider payment identifier</td>
+<td>_Optional_. Provider payment identifier</td>
 </tr>
 </tbody>
 </table>
@@ -16445,7 +16445,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>total_amount</td>
 <td>Integer</td>
-<td>Total price in the <em>smallest units</em> of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
+<td>Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
 </tr>
 <tr>
 <td>invoice_payload</td>
@@ -16455,12 +16455,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>shipping_option_id</td>
 <td>String</td>
-<td><em>Optional</em>. Identifier of the shipping option chosen by the user</td>
+<td>_Optional_. Identifier of the shipping option chosen by the user</td>
 </tr>
 <tr>
 <td>order_info</td>
 <td><a href="#orderinfo">OrderInfo</a></td>
-<td><em>Optional</em>. Order information provided by the user</td>
+<td>_Optional_. Order information provided by the user</td>
 </tr>
 </tbody>
 </table>
@@ -16572,12 +16572,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>affiliate_user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. The bot or the user that received an affiliate commission if it was received by a bot or a user</td>
+<td>_Optional_. The bot or the user that received an affiliate commission if it was received by a bot or a user</td>
 </tr>
 <tr>
 <td>affiliate_chat</td>
 <td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. The chat that received an affiliate commission if it was received by a chat</td>
+<td>_Optional_. The chat that received an affiliate commission if it was received by a chat</td>
 </tr>
 <tr>
 <td>commission_per_mille</td>
@@ -16592,7 +16592,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>nanostar_amount</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds</td>
+<td>_Optional_. The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds</td>
 </tr>
 </tbody>
 </table>
@@ -16636,37 +16636,37 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>affiliate</td>
 <td><a href="#affiliateinfo">AffiliateInfo</a></td>
-<td><em>Optional</em>. Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.</td>
+<td>_Optional_. Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.</td>
 </tr>
 <tr>
 <td>invoice_payload</td>
 <td>String</td>
-<td><em>Optional</em>. Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.</td>
+<td>_Optional_. Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.</td>
 </tr>
 <tr>
 <td>subscription_period</td>
 <td>Integer</td>
-<td><em>Optional</em>. The duration of the paid subscription. Can be available only for “invoice_payment” transactions.</td>
+<td>_Optional_. The duration of the paid subscription. Can be available only for “invoice_payment” transactions.</td>
 </tr>
 <tr>
 <td>paid_media</td>
 <td>Array of <a href="#paidmedia">PaidMedia</a></td>
-<td><em>Optional</em>. Information about the paid media bought by the user; for “paid_media_payment” transactions only</td>
+<td>_Optional_. Information about the paid media bought by the user; for “paid_media_payment” transactions only</td>
 </tr>
 <tr>
 <td>paid_media_payload</td>
 <td>String</td>
-<td><em>Optional</em>. Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.</td>
+<td>_Optional_. Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.</td>
 </tr>
 <tr>
 <td>gift</td>
 <td><a href="#gift">Gift</a></td>
-<td><em>Optional</em>. The gift sent to the user by the bot; for “gift_purchase” transactions only</td>
+<td>_Optional_. The gift sent to the user by the bot; for “gift_purchase” transactions only</td>
 </tr>
 <tr>
 <td>premium_subscription_duration</td>
 <td>Integer</td>
-<td><em>Optional</em>. Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only</td>
+<td>_Optional_. Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only</td>
 </tr>
 </tbody>
 </table>
@@ -16694,7 +16694,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>gift</td>
 <td><a href="#gift">Gift</a></td>
-<td><em>Optional</em>. The gift sent to the chat by the bot</td>
+<td>_Optional_. The gift sent to the chat by the bot</td>
 </tr>
 </tbody>
 </table>
@@ -16717,7 +16717,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>sponsor_user</td>
 <td><a href="#user">User</a></td>
-<td><em>Optional</em>. Information about the bot that sponsored the affiliate program</td>
+<td>_Optional_. Information about the bot that sponsored the affiliate program</td>
 </tr>
 <tr>
 <td>commission_per_mille</td>
@@ -16745,7 +16745,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>withdrawal_state</td>
 <td><a href="#revenuewithdrawalstate">RevenueWithdrawalState</a></td>
-<td><em>Optional</em>. State of the transaction if the transaction is outgoing</td>
+<td>_Optional_. State of the transaction if the transaction is outgoing</td>
 </tr>
 </tbody>
 </table>
@@ -16822,7 +16822,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>id</td>
 <td>String</td>
-<td>Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with <em>SuccessfulPayment.telegram_payment_charge_id</em> for successful incoming payments from users.</td>
+<td>Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with _SuccessfulPayment.telegram_payment_charge_id_ for successful incoming payments from users.</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -16832,7 +16832,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>nanostar_amount</td>
 <td>Integer</td>
-<td><em>Optional</em>. The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999</td>
+<td>_Optional_. The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999</td>
 </tr>
 <tr>
 <td>date</td>
@@ -16842,12 +16842,12 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td><a href="#transactionpartner">TransactionPartner</a></td>
-<td><em>Optional</em>. Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions</td>
+<td>_Optional_. Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions</td>
 </tr>
 <tr>
 <td>receiver</td>
 <td><a href="#transactionpartner">TransactionPartner</a></td>
-<td><em>Optional</em>. Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions</td>
+<td>_Optional_. Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions</td>
 </tr>
 </tbody>
 </table>
@@ -16946,42 +16946,42 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>data</td>
 <td>String</td>
-<td><em>Optional</em>. Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>_Optional_. Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
 <td>phone_number</td>
 <td>String</td>
-<td><em>Optional</em>. User&#39;s verified phone number; available only for “phone_number” type</td>
+<td>_Optional_. User&#39;s verified phone number; available only for “phone_number” type</td>
 </tr>
 <tr>
 <td>email</td>
 <td>String</td>
-<td><em>Optional</em>. User&#39;s verified email address; available only for “email” type</td>
+<td>_Optional_. User&#39;s verified email address; available only for “email” type</td>
 </tr>
 <tr>
 <td>files</td>
 <td>Array of <a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>_Optional_. Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
 <td>front_side</td>
 <td><a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>_Optional_. Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
 <td>reverse_side</td>
 <td><a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>_Optional_. Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
 <td>selfie</td>
 <td><a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>_Optional_. Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
 <td>translation</td>
 <td>Array of <a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
+<td>_Optional_. Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
 <tr>
 <td>hash</td>
@@ -17019,7 +17019,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <h4><a class="anchor" name="setpassportdataerrors" href="#setpassportdataerrors"><i class="anchor-icon"></i></a>setPassportDataErrors</h4>
-<p>Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns <em>True</em> on success.</p>
+<p>Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns _True_ on success.</p>
 <p>Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.</p>
 <table class="table">
 <thead>
@@ -17072,7 +17072,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>data</em></td>
+<td>Error source, must be _data_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17110,7 +17110,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>front_side</em></td>
+<td>Error source, must be _front_side_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17143,7 +17143,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>reverse_side</em></td>
+<td>Error source, must be _reverse_side_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17176,7 +17176,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>selfie</em></td>
+<td>Error source, must be _selfie_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17209,7 +17209,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>file</em></td>
+<td>Error source, must be _file_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17242,7 +17242,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>files</em></td>
+<td>Error source, must be _files_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17275,7 +17275,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>translation_file</em></td>
+<td>Error source, must be _translation_file_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17308,7 +17308,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>translation_files</em></td>
+<td>Error source, must be _translation_files_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17341,7 +17341,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>source</td>
 <td>String</td>
-<td>Error source, must be <em>unspecified</em></td>
+<td>Error source, must be _unspecified_</td>
 </tr>
 <tr>
 <td>type</td>
@@ -17414,7 +17414,7 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>allow_paid_broadcast</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
+<td>Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance</td>
 </tr>
 <tr>
 <td>message_effect_id</td>
@@ -17465,24 +17465,24 @@ pre-formatted fixed-width code block written in the Python programming language
 <tr>
 <td>text</td>
 <td>String</td>
-<td><em>Optional</em>. Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.</td>
+<td>_Optional_. Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.</td>
 </tr>
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td><em>Optional</em>. Special entities that appear in <em>text</em>, such as usernames, URLs, bot commands, etc.</td>
+<td>_Optional_. Special entities that appear in _text_, such as usernames, URLs, bot commands, etc.</td>
 </tr>
 <tr>
 <td>animation</td>
 <td><a href="#animation">Animation</a></td>
-<td><em>Optional</em>. Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a></td>
+<td>_Optional_. Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a></td>
 </tr>
 </tbody>
 </table>
 <h4><a class="anchor" name="callbackgame" href="#callbackgame"><i class="anchor-icon"></i></a>CallbackGame</h4>
 <p>A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.</p>
 <h4><a class="anchor" name="setgamescore" href="#setgamescore"><i class="anchor-icon"></i></a>setGameScore</h4>
-<p>Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.</p>
+<p>Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise _True_ is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and _force_ is _False_.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17509,31 +17509,31 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>force</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters</td>
+<td>Pass _True_ if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters</td>
 </tr>
 <tr>
 <td>disable_edit_message</td>
 <td>Boolean</td>
 <td>Optional</td>
-<td>Pass <em>True</em> if the game message should not be automatically edited to include the current scoreboard</td>
+<td>Pass _True_ if the game message should not be automatically edited to include the current scoreboard</td>
 </tr>
 <tr>
 <td>chat_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the sent message</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the sent message</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 </tbody>
 </table>
@@ -17562,19 +17562,19 @@ pre-formatted fixed-width code block written in the Python programming language
 <td>chat_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat</td>
+<td>Required if _inline_message_id_ is not specified. Unique identifier for the target chat</td>
 </tr>
 <tr>
 <td>message_id</td>
 <td>Integer</td>
 <td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the sent message</td>
+<td>Required if _inline_message_id_ is not specified. Identifier of the sent message</td>
 </tr>
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
 <td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message</td>
+<td>Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message</td>
 </tr>
 </tbody>
 </table>
