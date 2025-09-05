@@ -105,7 +105,7 @@ export interface Update {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.</p>
+     * <p>Use this method to receive incoming updates using long polling ({@link https://en.wikipedia.org/wiki/Push_technology#Long_polling | wiki}). Returns an Array of <a href="#update">Update</a> objects.</p>
      *
      * <blockquote>
      * <p>**Notes**<br>**1.** This method will not work if an outgoing webhook is set up.<br>**2.** In order to avoid getting duplicate updates, recalculate _offset_ after each server response.</p>
@@ -134,7 +134,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.</p>
+     * <p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes | HTTP status code} different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.</p>
      * <p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
      *
      * <blockquote>
@@ -268,7 +268,7 @@ export interface User {
      */
     username?: string;
     /**
-     * <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language
+     * {@link https://en.wikipedia.org/wiki/IETF_language_tag | IETF language tag} of the user&#39;s language
      */
     language_code?: string;
     /**
@@ -331,7 +331,7 @@ export interface Chat {
      */
     last_name?: string;
     /**
-     * _True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
+     * _True_, if the supergroup chat is a forum (has {@link https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups | topics} enabled)
      */
     is_forum?: true;
     /**
@@ -370,7 +370,7 @@ export interface ChatFullInfo {
      */
     last_name?: string;
     /**
-     * _True_, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
+     * _True_, if the supergroup chat is a forum (has {@link https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups | topics} enabled)
      */
     is_forum?: true;
     /**
@@ -390,7 +390,7 @@ export interface ChatFullInfo {
      */
     photo?: ChatPhoto;
     /**
-     * If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels
+     * If non-empty, the list of all {@link https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames | active chat usernames}; for private chats, supergroups and channels
      */
     active_usernames?: string[];
     /**
@@ -697,7 +697,7 @@ export interface Message {
      */
     video?: Video;
     /**
-     * Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message
+     * Message is a {@link https://telegram.org/blog/video-messages-and-telescope | video note}, information about the video message
      */
     video_note?: VideoNote;
     /**
@@ -996,7 +996,7 @@ export type MaybeInaccessibleMessage =
   */
 export interface MessageEntity {
     /**
-     * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers)
+     * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users {@link https://telegram.org/blog/edit#new-mentions | without usernames}), “custom_emoji” (for inline custom emoji stickers)
      */
     type: string;
     /**
@@ -1102,7 +1102,7 @@ export interface ExternalReplyInfo {
      */
     video?: Video;
     /**
-     * Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message
+     * Message is a {@link https://telegram.org/blog/video-messages-and-telescope | video note}, information about the video message
      */
     video_note?: VideoNote;
     /**
@@ -1506,7 +1506,7 @@ export interface Video {
     file_size?: number;
 }
 /**
- * <p>This object represents a <a href="https://telegram.org/blog/video-messages-and-telescope">video message</a> (available in Telegram apps as of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>).</p>
+ * <p>This object represents a {@link https://telegram.org/blog/video-messages-and-telescope | video message} (available in Telegram apps as of {@link https://telegram.org/blog/video-messages-and-telescope | v.4.0}).</p>
  *
  * @see {@link https://core.telegram.org/bots/api#videonote}
  */
@@ -1666,7 +1666,7 @@ export interface Contact {
      */
     user_id?: number;
     /**
-     * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>
+     * Additional data about the contact in the form of a {@link https://en.wikipedia.org/wiki/VCard | vCard}
      */
     vcard?: string;
 }
@@ -1878,7 +1878,7 @@ export interface InputChecklistTask {
      */
     text: string;
     /**
-     * Optional. Mode for parsing entities in the text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
+     * Optional. Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode: string;
     /**
@@ -2013,7 +2013,7 @@ export interface Venue {
      */
     google_place_id?: string;
     /**
-     * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+     * Google Places type of the venue. (See {@link https://developers.google.com/places/web-service/supported_types | supported types}.)
      */
     google_place_type?: string;
 }
@@ -2595,7 +2595,7 @@ export interface Giveaway {
      */
     prize_description?: string;
     /**
-     * A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.
+     * A list of two-letter {@link https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 | ISO 3166-1 alpha-2} country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.
      */
     country_codes?: string[];
     /**
@@ -3076,9 +3076,9 @@ export interface InlineKeyboardButton {
  *   <a href="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c" target="_blank"><img src="/file/811140909/1631/20k1Z53eiyY.23995/c541e89b74253623d9" title="TITLE" alt="TITLE" srcset="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c , 2x" /></a>
  * </div>
  *
- * <p>Telegram apps support these buttons as of <a href="https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots">version 5.7</a>.</p>
+ * <p>Telegram apps support these buttons as of {@link https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots | version 5.7}.</p>
  * <blockquote>
- * <p>Sample bot: <a href="https://t.me/discussbot">@discussbot</a></p>
+ * <p>Sample bot: {@link https://t.me/discussbot | @discussbot}</p>
  * </blockquote>
  *
  * @see {@link https://core.telegram.org/bots/api#loginurl}
@@ -3182,7 +3182,7 @@ export interface CallbackQuery {
  * <p>Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a Telegram Business account.</p>
  *
  * <blockquote>
- * <p>**Example:** A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:</p>
+ * <p>**Example:** A {@link https://t.me/PollBot | poll bot} for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:</p>
  * <ul>
  * <li>Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.</li>
  * <li>Guide the user through a step-by-step process. &#39;Please send me your question&#39;, &#39;Cool, now let&#39;s add the first answer option&#39;, &#39;Great. Keep adding answer options, then send /done when you&#39;re ready&#39;.</li>
@@ -5539,7 +5539,7 @@ export interface ApiMethods {
          */
         link_preview_options?: LinkPreviewOptions;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -5547,7 +5547,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -5581,7 +5581,7 @@ export interface ApiMethods {
  * <li>These links will work **only** if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.</li>
  * <li>Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.</li>
  * </ul>
- * <p>You can find the list of programming and markup languages for which syntax highlighting is supported at <a href="https://github.com/TelegramMessenger/libprisma#supported-languages">libprisma#supported-languages</a>.</p>
+ * <p>You can find the list of programming and markup languages for which syntax highlighting is supported at {@link https://github.com/TelegramMessenger/libprisma#supported-languages | libprisma#supported-languages}.</p>
  * <h6><a class="anchor" name="markdownv2-style" href="#markdownv2-style"><i class="anchor-icon"></i></a>MarkdownV2 style</h6>
  * <p>To use this mode, pass _MarkdownV2_ in the _parse_mode_ field. Use the following syntax in your message:</p>
  * <pre>`*bold \*text*
@@ -5619,7 +5619,7 @@ export interface ApiMethods {
  * <li>In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.</li>
  * <li>In case of ambiguity between `italic` and `underline` entities `__` is always greadily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.</li>
  * <li>A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.</li>
- * <li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
+ * <li>Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment}.</li>
  * </ul>
  * <h6><a class="anchor" name="html-style" href="#html-style"><i class="anchor-icon"></i></a>HTML style</h6>
  * <p>To use this mode, pass _HTML_ in the _parse_mode_ field. The following tags are currently supported:</p>
@@ -5646,7 +5646,7 @@ export interface ApiMethods {
  * <li>Use nested `pre` and `code` tags, to define programming language for `pre` entity.</li>
  * <li>Programming language can&#39;t be specified for standalone `code` tags.</li>
  * <li>A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.</li>
- * <li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a>.</li>
+ * <li>Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment}.</li>
  * </ul>
  * <h6><a class="anchor" name="markdown-style" href="#markdown-style"><i class="anchor-icon"></i></a>Markdown style</h6>
  * <p>This is a legacy mode, retained for backward compatibility. To use this mode, pass _Markdown_ in the _parse_mode_ field. Use the following syntax in your message:</p>
@@ -5700,7 +5700,7 @@ export interface ApiMethods {
          */
         video_start_timestamp?: number;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -5745,7 +5745,7 @@ export interface ApiMethods {
          */
         message_ids: number[];
         /**
-         * Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the messages {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -5802,7 +5802,7 @@ export interface ApiMethods {
          */
         show_caption_above_media?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -5810,7 +5810,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -5859,7 +5859,7 @@ export interface ApiMethods {
          */
         message_ids: number[];
         /**
-         * Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the messages {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -5920,7 +5920,7 @@ export interface ApiMethods {
          */
         has_spoiler?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -5928,7 +5928,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6010,7 +6010,7 @@ export interface ApiMethods {
          */
         thumbnail?: InputFile | string;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6018,7 +6018,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6091,7 +6091,7 @@ export interface ApiMethods {
          */
         disable_content_type_detection?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6099,7 +6099,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6200,7 +6200,7 @@ export interface ApiMethods {
          */
         supports_streaming?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6208,7 +6208,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6297,7 +6297,7 @@ export interface ApiMethods {
          */
         has_spoiler?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6305,7 +6305,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6374,7 +6374,7 @@ export interface ApiMethods {
          */
         duration?: number;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6382,7 +6382,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6409,7 +6409,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.</p>
+     * <p>As of {@link https://telegram.org/blog/video-messages-and-telescope | v.4.0}, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#sendvideonote}
      */
@@ -6447,7 +6447,7 @@ export interface ApiMethods {
          */
         thumbnail?: InputFile | string;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6455,7 +6455,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6532,7 +6532,7 @@ export interface ApiMethods {
          */
         show_caption_above_media?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6540,7 +6540,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6594,7 +6594,7 @@ export interface ApiMethods {
             | InputMediaVideo
         >;
         /**
-         * Sends messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends messages {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6602,7 +6602,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6651,7 +6651,7 @@ export interface ApiMethods {
          */
         horizontal_accuracy?: number;
         /**
-         * Period in seconds during which the location will be updated (see <a href="https://telegram.org/blog/live-locations">Live Locations</a>, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
+         * Period in seconds during which the location will be updated (see {@link https://telegram.org/blog/live-locations | Live Locations}, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
          */
         live_period?: number;
         /**
@@ -6663,7 +6663,7 @@ export interface ApiMethods {
          */
         proximity_alert_radius?: number;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6671,7 +6671,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6748,11 +6748,11 @@ export interface ApiMethods {
          */
         google_place_id?: string;
         /**
-         * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+         * Google Places type of the venue. (See {@link https://developers.google.com/places/web-service/supported_types | supported types}.)
          */
         google_place_type?: string;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6760,7 +6760,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6821,11 +6821,11 @@ export interface ApiMethods {
          */
         last_name?: string;
         /**
-         * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
+         * Additional data about the contact in the form of a {@link https://en.wikipedia.org/wiki/VCard | vCard}, 0-2048 bytes
          */
         vcard?: string;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6833,7 +6833,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -6934,7 +6934,7 @@ export interface ApiMethods {
          */
         is_closed?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -6942,7 +6942,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -7032,7 +7032,7 @@ export interface ApiMethods {
          */
         emoji?: string;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -7040,7 +7040,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -7069,7 +7069,7 @@ export interface ApiMethods {
     /**
      * <p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.</p>
      * <blockquote>
-     * <p>Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.</p>
+     * <p>Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.</p>
      * </blockquote>
      * <p>We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.</p>
      *
@@ -7489,7 +7489,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+     * <p>Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink}
      */
@@ -8018,7 +8018,7 @@ export interface ApiMethods {
     /**
     * <p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.</p>
 <blockquote>
-<p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.</p>
+<p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via {@link https://t.me/botfather | @BotFather} and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.</p>
 </blockquote>
     *
     * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
@@ -8037,7 +8037,7 @@ export interface ApiMethods {
          */
         show_alert?: boolean;
         /**
-         * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.<br><br>Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
+         * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via {@link https://t.me/botfather | @BotFather}, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.<br><br>Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
          */
         url?: string;
         /**
@@ -8361,7 +8361,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
+     * <p>Verifies a user {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} which is represented by the bot. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#verifyuser}
      */
@@ -8378,7 +8378,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns _True_ on success.</p>
+     * <p>Verifies a chat {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} which is represented by the bot. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#verifychat}
      */
@@ -8395,7 +8395,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
+     * <p>Removes verification from a user who is currently verified {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} represented by the bot. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#removeuserverification}
      */
@@ -8408,7 +8408,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns _True_ on success.</p>
+     * <p>Removes verification from a chat that is currently verified {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} represented by the bot. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#removechatverification}
      */
@@ -9207,11 +9207,11 @@ export interface Sticker {
      */
     height: number;
     /**
-     * _True_, if the sticker is <a href="https://telegram.org/blog/animated-stickers">animated</a>
+     * _True_, if the sticker is {@link https://telegram.org/blog/animated-stickers | animated}
      */
     is_animated: boolean;
     /**
-     * _True_, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a>
+     * _True_, if the sticker is a {@link https://telegram.org/blog/video-stickers-better-reactions | video sticker}
      */
     is_video: boolean;
     /**
@@ -9326,7 +9326,7 @@ export interface InputSticker {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.</p>
+     * <p>Use this method to send static .WEBP, {@link https://telegram.org/blog/animated-stickers | animated} .TGS, or {@link https://telegram.org/blog/video-stickers-better-reactions | video} .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#sendsticker}
      */
@@ -9356,7 +9356,7 @@ export interface ApiMethods {
          */
         emoji?: string;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -9364,7 +9364,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -9427,7 +9427,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers"><a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a></a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a>
+         * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers">{@link https://core.telegram.org/stickers | https://core.telegram.org/stickers}</a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a>
          */
         sticker: InputFile;
         /**
@@ -9629,7 +9629,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+         * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
          */
         thumbnail?: InputFile | string;
         /**
@@ -10386,7 +10386,7 @@ export interface InlineQueryResultVenue {
      */
     google_place_id?: string;
     /**
-     * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+     * Google Places type of the venue. (See {@link https://developers.google.com/places/web-service/supported_types | supported types}.)
      */
     google_place_type?: string;
     /**
@@ -10437,7 +10437,7 @@ export interface InlineQueryResultContact {
      */
     last_name?: string;
     /**
-     * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
+     * Additional data about the contact in the form of a {@link https://en.wikipedia.org/wiki/VCard | vCard}, 0-2048 bytes
      */
     vcard?: string;
     /**
@@ -10941,7 +10941,7 @@ export interface InputVenueMessageContent {
      */
     google_place_id?: string;
     /**
-     * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+     * Google Places type of the venue. (See {@link https://developers.google.com/places/web-service/supported_types | supported types}.)
      */
     google_place_type?: string;
 }
@@ -10964,7 +10964,7 @@ export interface InputContactMessageContent {
      */
     last_name?: string;
     /**
-     * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
+     * Additional data about the contact in the form of a {@link https://en.wikipedia.org/wiki/VCard | vCard}, 0-2048 bytes
      */
     vcard?: string;
 }
@@ -10987,19 +10987,19 @@ export interface InputInvoiceMessageContent {
      */
     payload: string;
     /**
-     * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Payment provider token, obtained via {@link https://t.me/botfather | @BotFather}. Pass an empty string for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     provider_token?: string;
     /**
-     * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     currency: string;
     /**
-     * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     prices: LabeledPrice[];
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     max_tip_amount?: number;
     /**
@@ -11027,38 +11027,38 @@ export interface InputInvoiceMessageContent {
      */
     photo_height?: number;
     /**
-     * Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_name?: boolean;
     /**
-     * Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_phone_number?: boolean;
     /**
-     * Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_email?: boolean;
     /**
-     * Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_shipping_address?: boolean;
     /**
-     * Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     send_phone_number_to_provider?: boolean;
     /**
-     * Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     send_email_to_provider?: boolean;
     /**
-     * Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass _True_ if the final price depends on the shipping method. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     is_flexible?: boolean;
 }
 /**
  * <p>Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.</p>
  *
- * <p>**Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.</p>
+ * <p>**Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via {@link https://t.me/botfather | @BotFather} in order to receive these objects in updates.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#choseninlineresult}
  */
@@ -11194,19 +11194,19 @@ export interface ApiMethods {
          */
         payload: string;
         /**
-         * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Payment provider token, obtained via {@link https://t.me/botfather | @BotFather}. Pass an empty string for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         provider_token?: string;
         /**
-         * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         currency: string;
         /**
-         * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         prices: LabeledPrice[];
         /**
-         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         max_tip_amount?: number;
         /**
@@ -11238,35 +11238,35 @@ export interface ApiMethods {
          */
         photo_height?: number;
         /**
-         * Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_name?: boolean;
         /**
-         * Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_phone_number?: boolean;
         /**
-         * Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_email?: boolean;
         /**
-         * Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_shipping_address?: boolean;
         /**
-         * Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         send_phone_number_to_provider?: boolean;
         /**
-         * Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         send_email_to_provider?: boolean;
         /**
-         * Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if the final price depends on the shipping method. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         is_flexible?: boolean;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -11274,7 +11274,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -11303,7 +11303,7 @@ export interface ApiMethods {
      */
     createInvoiceLink(args: {
         /**
-         * Unique identifier of the business connection on behalf of which the link will be created. For payments in <a href="https://t.me/BotNews/90">Telegram Stars</a> only.
+         * Unique identifier of the business connection on behalf of which the link will be created. For payments in {@link https://t.me/BotNews/90 | Telegram Stars} only.
          */
         business_connection_id?: string;
         /**
@@ -11319,15 +11319,15 @@ export interface ApiMethods {
          */
         payload: string;
         /**
-         * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Payment provider token, obtained via {@link https://t.me/botfather | @BotFather}. Pass an empty string for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         provider_token?: string;
         /**
-         * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         currency: string;
         /**
-         * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         prices: LabeledPrice[];
         /**
@@ -11335,7 +11335,7 @@ export interface ApiMethods {
          */
         subscription_period?: number;
         /**
-         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         max_tip_amount?: number;
         /**
@@ -11363,31 +11363,31 @@ export interface ApiMethods {
          */
         photo_height?: number;
         /**
-         * Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_name?: boolean;
         /**
-         * Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_phone_number?: boolean;
         /**
-         * Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_email?: boolean;
         /**
-         * Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if you require the user&#39;s shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         need_shipping_address?: boolean;
         /**
-         * Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if the user&#39;s phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         send_phone_number_to_provider?: boolean;
         /**
-         * Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if the user&#39;s email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         send_email_to_provider?: boolean;
         /**
-         * Pass _True_ if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+         * Pass _True_ if the final price depends on the shipping method. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         is_flexible?: boolean;
     }): string;
@@ -11465,7 +11465,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns _True_ on success.</p>
+     * <p>Refunds a successful payment in {@link https://t.me/BotNews/90 | Telegram Stars}. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#refundstarpayment}
      */
@@ -11535,7 +11535,7 @@ export interface Invoice {
      */
     start_parameter: string;
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
      */
     currency: string;
     /**
@@ -11550,7 +11550,7 @@ export interface Invoice {
  */
 export interface ShippingAddress {
     /**
-     * Two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country code
+     * Two-letter {@link https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 | ISO 3166-1 alpha-2} country code
      */
     country_code: string;
     /**
@@ -11623,7 +11623,7 @@ export interface ShippingOption {
  */
 export interface SuccessfulPayment {
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
      */
     currency: string;
     /**
@@ -11670,7 +11670,7 @@ export interface SuccessfulPayment {
  */
 export interface RefundedPayment {
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Currently, always “XTR”
+     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}. Currently, always “XTR”
      */
     currency: string;
     /**
@@ -11728,7 +11728,7 @@ export interface PreCheckoutQuery {
      */
     from: User;
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
      */
     currency: string;
     /**
@@ -12423,11 +12423,11 @@ export interface ApiMethods {
          */
         message_thread_id?: number;
         /**
-         * Short name of the game, serves as the unique identifier for the game. Set up your games via <a href="https://t.me/botfather">@BotFather</a>.
+         * Short name of the game, serves as the unique identifier for the game. Set up your games via {@link https://t.me/botfather | @BotFather}.
          */
         game_short_name: string;
         /**
-         * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
+         * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
         disable_notification?: boolean;
         /**
@@ -12435,7 +12435,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * Pass _True_ to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
+         * Pass _True_ to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance
          */
         allow_paid_broadcast?: boolean;
         /**
@@ -12479,12 +12479,12 @@ export interface Game {
      */
     text_entities?: MessageEntity[];
     /**
-     * Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a>
+     * Animation that will be displayed in the game message in chats. Upload via {@link https://t.me/botfather | BotFather}
      */
     animation?: Animation;
 }
 /**
- * <p>A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.</p>
+ * <p>A placeholder, currently holds no information. Use {@link https://t.me/botfather | BotFather} to set up your game.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#callbackgame}
  */
