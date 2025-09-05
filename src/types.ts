@@ -7257,8 +7257,12 @@ export type VideoChatStarted = Empty;
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputfile" href="#inputfile"><i class="anchor-icon"></i></a>InputFile</h4>
-<p>This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser.</p>
+/**
+ * <p>This object represents the contents of a file to be uploaded.</p>
+ * 
+ * @see {@link https://core.telegram.org/bots/api#inputfile}
+ */
+export class InputFile {}
 <h4><a class="anchor" name="inputpaidmedia" href="#inputpaidmedia"><i class="anchor-icon"></i></a>InputPaidMedia</h4>
 <p>This object describes the paid media to be sent. Currently, it can be one of</p>
 <ul>
