@@ -55,7 +55,7 @@ export interface Update {
      */
     inline_query?: InlineQuery;
     /**
-     * The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.
+     * The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the {@link https://core.telegram.org/bots/inline#collecting-feedback | feedback collecting} for details on how to enable these updates for your bot.
      */
     chosen_inline_result?: ChosenInlineResult;
     /**
@@ -138,8 +138,8 @@ export interface ApiMethods {
      * <p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
      *
      * <blockquote>
-     * <p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
-     * <p>If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.</p>
+     * <p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
+     * <p>If you&#39;re having any trouble setting up webhooks, please check out this {@link https://core.telegram.org/bots/webhooks | amazing guide to webhooks}.</p>
      * </blockquote>
      *
      * @see {@link https://core.telegram.org/bots/api#setwebhook}
@@ -150,7 +150,7 @@ export interface ApiMethods {
          */
         url: string;
         /**
-         * Upload your public key certificate so that the root certificate in use can be checked. See our <a href="/bots/self-signed">self-signed guide</a> for details.
+         * Upload your public key certificate so that the root certificate in use can be checked. See our {@link https://core.telegram.org/bots/self-signed | self-signed guide} for details.
          */
         certificate?: InputFile;
         /**
@@ -284,7 +284,7 @@ export interface User {
      */
     can_join_groups?: boolean;
     /**
-     * _True_, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
+     * _True_, if {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode} is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
      */
     can_read_all_group_messages?: boolean;
     /**
@@ -825,11 +825,11 @@ export interface Message {
      */
     unique_gift?: UniqueGiftInfo;
     /**
-     * The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a>
+     * The domain name of the website on which the user has logged in. {@link https://core.telegram.org/widgets/login | More about Telegram Login »}
      */
     connected_website?: string;
     /**
-     * Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
+     * Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | requestWriteAccess}
      */
     write_access_allowed?: WriteAccessAllowed;
     /**
@@ -1000,11 +1000,11 @@ export interface MessageEntity {
      */
     type: string;
     /**
-     * Offset in <a href="/api/entities#entity-length">UTF-16 code units</a> to the start of the entity
+     * Offset in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units} to the start of the entity
      */
     offset: number;
     /**
-     * Length of the entity in <a href="/api/entities#entity-length">UTF-16 code units</a>
+     * Length of the entity in {@link https://core.telegram.org/api/entities#entity-length | UTF-16 code units}
      */
     length: number;
     /**
@@ -2018,7 +2018,7 @@ export interface Venue {
     google_place_type?: string;
 }
 /**
- * <p>Describes data sent from a <a href="/bots/webapps">Web App</a> to the bot.</p>
+ * <p>Describes data sent from a {@link https://core.telegram.org/bots/webapps | Web App} to the bot.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#webappdata}
  */
@@ -2383,13 +2383,13 @@ export interface ChatShared {
     photo?: PhotoSize[];
 }
 /**
- * <p>This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>.</p>
+ * <p>This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | requestWriteAccess}.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#writeaccessallowed}
  */
 export interface WriteAccessAllowed {
     /**
-     * _True_, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
+     * _True_, if the access was granted after the user accepted an explicit request from a Web App sent by the method {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | requestWriteAccess}
      */
     from_request?: boolean;
     /**
@@ -2818,18 +2818,18 @@ export interface File {
     file_path?: string;
 }
 /**
- * <p>Describes a <a href="/bots/webapps">Web App</a>.</p>
+ * <p>Describes a {@link https://core.telegram.org/bots/webapps | Web App}.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#webappinfo}
  */
 export interface WebAppInfo {
     /**
-     * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
+     * An HTTPS URL of a Web App to be opened with additional data as specified in {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | Initializing Web Apps}
      */
     url: string;
 }
 /**
- * <p>This object represents a <a href="/bots/features#keyboards">custom keyboard</a> with reply options (see <a href="/bots/features#keyboards">Introduction to bots</a> for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account.</p>
+ * <p>This object represents a {@link https://core.telegram.org/bots/features#keyboards | custom keyboard} with reply options (see {@link https://core.telegram.org/bots/features#keyboards | Introduction to bots} for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#replykeyboardmarkup}
  */
@@ -2892,12 +2892,12 @@ export interface KeyboardButton {
      */
     request_poll?: KeyboardButtonPollType;
     /**
-     * If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
+     * If specified, the described {@link https://core.telegram.org/bots/webapps | Web App} will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
      */
     web_app?: WebAppInfo;
 }
 /**
- * <p>This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="/bots/features#chat-and-user-selection">More about requesting users »</a></p>
+ * <p>This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. {@link https://core.telegram.org/bots/features#chat-and-user-selection | More about requesting users »}</p>
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbuttonrequestusers}
  */
@@ -2932,7 +2932,7 @@ export interface KeyboardButtonRequestUsers {
     request_photo?: boolean;
 }
 /**
- * <p>This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. <a href="/bots/features#chat-and-user-selection">More about requesting chats »</a>.</p>
+ * <p>This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. {@link https://core.telegram.org/bots/features#chat-and-user-selection | More about requesting chats »}.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbuttonrequestchat}
  */
@@ -3009,7 +3009,7 @@ export interface ReplyKeyboardRemove {
     selective?: boolean;
 }
 /**
- * <p>This object represents an <a href="/bots/features#inline-keyboards">inline keyboard</a> that appears right next to the message it belongs to.</p>
+ * <p>This object represents an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard} that appears right next to the message it belongs to.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#inlinekeyboardmarkup}
  */
@@ -3038,11 +3038,11 @@ export interface InlineKeyboardButton {
      */
     callback_data?: string;
     /**
-     * Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.
+     * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.
      */
     web_app?: WebAppInfo;
     /**
-     * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.
+     * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget}.
      */
     login_url?: LoginUrl;
     /**
@@ -3071,7 +3071,7 @@ export interface InlineKeyboardButton {
     pay?: boolean;
 }
 /**
- * <p>This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the <a href="/widgets/login">Telegram Login Widget</a> when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:</p>
+ * <p>This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget} when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:</p>
  * <div class="blog_image_wrap">
  *   <a href="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c" target="_blank"><img src="/file/811140909/1631/20k1Z53eiyY.23995/c541e89b74253623d9" title="TITLE" alt="TITLE" srcset="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c , 2x" /></a>
  * </div>
@@ -3085,7 +3085,7 @@ export interface InlineKeyboardButton {
  */
 export interface LoginUrl {
     /**
-     * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.<br><br>**NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
+     * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in {@link https://core.telegram.org/widgets/login#receiving-authorization-data | Receiving authorization data}.<br><br>**NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in {@link https://core.telegram.org/widgets/login#checking-authorization | Checking authorization}.
      */
     url: string;
     /**
@@ -3093,7 +3093,7 @@ export interface LoginUrl {
      */
     forward_text?: string;
     /**
-     * Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.
+     * Username of a bot, which will be used for user authorization. See {@link https://core.telegram.org/widgets/login#setting-up-a-bot | Setting up a bot} for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See {@link https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot | Linking your domain to the bot} for more details.
      */
     bot_username?: string;
     /**
@@ -3140,7 +3140,7 @@ export interface CopyTextButton {
     text: string;
 }
 /**
- * <p>This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.</p>
+ * <p>This object represents an incoming callback query from a callback button in an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.</p>
  *
  * <blockquote>
  * <p>**NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).</p>
@@ -3179,7 +3179,7 @@ export interface CallbackQuery {
     game_short_name?: string;
 }
 /**
- * <p>Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a Telegram Business account.</p>
+ * <p>Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode}. Not supported in channels and for messages sent on behalf of a Telegram Business account.</p>
  *
  * <blockquote>
  * <p>**Example:** A {@link https://t.me/PollBot | poll bot} for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:</p>
@@ -4762,7 +4762,7 @@ export interface MenuButtonCommands {
     type: string;
 }
 /**
- * <p>Represents a menu button, which launches a <a href="/bots/webapps">Web App</a>.</p>
+ * <p>Represents a menu button, which launches a {@link https://core.telegram.org/bots/webapps | Web App}.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#menubuttonwebapp}
  */
@@ -5563,7 +5563,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -5822,7 +5822,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -5944,7 +5944,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6034,7 +6034,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6115,7 +6115,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6224,7 +6224,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6321,7 +6321,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6398,7 +6398,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6471,7 +6471,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6552,7 +6552,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6687,7 +6687,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6776,7 +6776,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6849,7 +6849,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6954,7 +6954,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7056,7 +7056,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7142,7 +7142,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns _True_ on success.</p>
+     * <p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | requestEmojiStatusAccess}. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#setuseremojistatus}
      */
@@ -8016,7 +8016,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-    * <p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.</p>
+    * <p>Use this method to send answers to callback queries sent from {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboards}. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.</p>
 <blockquote>
 <p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via {@link https://t.me/botfather | @BotFather} and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.</p>
 </blockquote>
@@ -8078,7 +8078,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns _True_ on success.</p>
+     * <p>Use this method to change the list of the bot&#39;s commands. See {@link https://core.telegram.org/bots/features#commands | this manual} for more details about bot commands. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#setmycommands}
      */
@@ -8854,7 +8854,7 @@ export interface ApiMethods {
          */
         link_preview_options?: LinkPreviewOptions;
         /**
-         * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -8899,7 +8899,7 @@ export interface ApiMethods {
          */
         show_caption_above_media?: boolean;
         /**
-         * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -8932,7 +8932,7 @@ export interface ApiMethods {
          */
         media: InputMedia;
         /**
-         * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+         * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -8985,7 +8985,7 @@ export interface ApiMethods {
          */
         proximity_alert_radius?: number;
         /**
-         * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+         * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9014,7 +9014,7 @@ export interface ApiMethods {
          */
         inline_message_id?: string;
         /**
-         * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+         * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9072,7 +9072,7 @@ export interface ApiMethods {
          */
         inline_message_id?: string;
         /**
-         * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9097,7 +9097,7 @@ export interface ApiMethods {
          */
         message_id: number;
         /**
-         * A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a>.
+         * A JSON-serialized object for a new message {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Poll;
@@ -9380,7 +9380,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -9427,7 +9427,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers">{@link https://core.telegram.org/stickers | https://core.telegram.org/stickers}</a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a>
+         * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See {@link https://core.telegram.org/stickers | {@link https://core.telegram.org/stickers | https://core.telegram.org/stickers}} for technical requirements. <a href="#sending-files">More information on Sending Files »</a>
          */
         sticker: InputFile;
         /**
@@ -9629,7 +9629,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+         * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see {@link https://core.telegram.org/stickers#animation-requirements | https://core.telegram.org/stickers#animation-requirements} for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see {@link https://core.telegram.org/stickers#video-requirements | https://core.telegram.org/stickers#video-requirements} for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
          */
         thumbnail?: InputFile | string;
         /**
@@ -9745,11 +9745,11 @@ export interface InlineQueryResultsButton {
      */
     text: string;
     /**
-     * Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.
+     * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | switchInlineQuery} inside the Web App.
      */
     web_app?: WebAppInfo;
     /**
-     * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
+     * {@link https://core.telegram.org/bots/features#deep-linking | Deep-linking} parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
      */
     start_parameter?: string;
 }
@@ -9824,7 +9824,7 @@ export interface InlineQueryResultArticle {
      */
     input_message_content: InputMessageContent;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -9903,7 +9903,7 @@ export interface InlineQueryResultPhoto {
      */
     show_caption_above_media?: boolean;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -9970,7 +9970,7 @@ export interface InlineQueryResultGif {
      */
     show_caption_above_media?: boolean;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10037,7 +10037,7 @@ export interface InlineQueryResultMpeg4Gif {
      */
     show_caption_above_media?: boolean;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10111,7 +10111,7 @@ export interface InlineQueryResultVideo {
      */
     description?: string;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10162,7 +10162,7 @@ export interface InlineQueryResultAudio {
      */
     audio_duration?: number;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10209,7 +10209,7 @@ export interface InlineQueryResultVoice {
      */
     voice_duration?: number;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10323,7 +10323,7 @@ export interface InlineQueryResultLocation {
      */
     proximity_alert_radius?: number;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10390,7 +10390,7 @@ export interface InlineQueryResultVenue {
      */
     google_place_type?: string;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10441,7 +10441,7 @@ export interface InlineQueryResultContact {
      */
     vcard?: string;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10480,7 +10480,7 @@ export interface InlineQueryResultGame {
      */
     game_short_name: string;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
 }
@@ -10527,7 +10527,7 @@ export interface InlineQueryResultCachedPhoto {
      */
     show_caption_above_media?: boolean;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10574,7 +10574,7 @@ export interface InlineQueryResultCachedGif {
      */
     show_caption_above_media?: boolean;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10621,7 +10621,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
      */
     show_caption_above_media?: boolean;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10648,7 +10648,7 @@ export interface InlineQueryResultCachedSticker {
      */
     sticker_file_id: string;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10695,7 +10695,7 @@ export interface InlineQueryResultCachedDocument {
      */
     caption_entities?: MessageEntity[];
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10746,7 +10746,7 @@ export interface InlineQueryResultCachedVideo {
      */
     show_caption_above_media?: boolean;
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10789,7 +10789,7 @@ export interface InlineQueryResultCachedVoice {
      */
     caption_entities?: MessageEntity[];
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10828,7 +10828,7 @@ export interface InlineQueryResultCachedAudio {
      */
     caption_entities?: MessageEntity[];
     /**
-     * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+     * {@link https://core.telegram.org/bots/features#inline-keyboards | Inline keyboard} attached to the message
      */
     reply_markup?: InlineKeyboardMarkup;
     /**
@@ -10991,7 +10991,7 @@ export interface InputInvoiceMessageContent {
      */
     provider_token?: string;
     /**
-     * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Three-letter ISO 4217 currency code, see {@link https://core.telegram.org/bots/payments#supported-currencies | more on currencies}. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     currency: string;
     /**
@@ -10999,7 +10999,7 @@ export interface InputInvoiceMessageContent {
      */
     prices: LabeledPrice[];
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     max_tip_amount?: number;
     /**
@@ -11058,7 +11058,7 @@ export interface InputInvoiceMessageContent {
 /**
  * <p>Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.</p>
  *
- * <p>**Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via {@link https://t.me/botfather | @BotFather} in order to receive these objects in updates.</p>
+ * <p>**Note:** It is necessary to enable {@link https://core.telegram.org/bots/inline#collecting-feedback | inline feedback} via {@link https://t.me/botfather | @BotFather} in order to receive these objects in updates.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#choseninlineresult}
  */
@@ -11086,7 +11086,7 @@ export interface ChosenInlineResult {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.</p>
+     * <p>Use this method to set the result of an interaction with a {@link https://core.telegram.org/bots/webapps | Web App} and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#answerwebappquery}
      */
@@ -11102,7 +11102,7 @@ export interface ApiMethods {
     }): SentWebAppMessage;
 }
 /**
- * <p>Describes an inline message sent by a <a href="/bots/webapps">Web App</a> on behalf of a user.</p>
+ * <p>Describes an inline message sent by a {@link https://core.telegram.org/bots/webapps | Web App} on behalf of a user.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#sentwebappmessage}
  */
@@ -11198,7 +11198,7 @@ export interface ApiMethods {
          */
         provider_token?: string;
         /**
-         * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+         * Three-letter ISO 4217 currency code, see {@link https://core.telegram.org/bots/payments#supported-currencies | more on currencies}. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         currency: string;
         /**
@@ -11206,7 +11206,7 @@ export interface ApiMethods {
          */
         prices: LabeledPrice[];
         /**
-         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         max_tip_amount?: number;
         /**
@@ -11290,7 +11290,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.
+         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Message;
@@ -11323,7 +11323,7 @@ export interface ApiMethods {
          */
         provider_token?: string;
         /**
-         * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+         * Three-letter ISO 4217 currency code, see {@link https://core.telegram.org/bots/payments#supported-currencies | more on currencies}. Pass “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         currency: string;
         /**
@@ -11335,7 +11335,7 @@ export interface ApiMethods {
          */
         subscription_period?: number;
         /**
-         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+         * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         max_tip_amount?: number;
         /**
@@ -11512,7 +11512,7 @@ export interface LabeledPrice {
      */
     label: string;
     /**
-     * Price of the product in the _smallest units_ of the <a href="/bots/payments#supported-currencies">currency</a> (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+     * Price of the product in the _smallest units_ of the {@link https://core.telegram.org/bots/payments#supported-currencies | currency} (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      */
     amount: number;
 }
@@ -11535,11 +11535,11 @@ export interface Invoice {
      */
     start_parameter: string;
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
+     * Three-letter ISO 4217 {@link https://core.telegram.org/bots/payments#supported-currencies | currency} code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
      */
     currency: string;
     /**
-     * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+     * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      */
     total_amount: number;
 }
@@ -11623,11 +11623,11 @@ export interface ShippingOption {
  */
 export interface SuccessfulPayment {
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
+     * Three-letter ISO 4217 {@link https://core.telegram.org/bots/payments#supported-currencies | currency} code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
      */
     currency: string;
     /**
-     * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+     * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      */
     total_amount: number;
     /**
@@ -11670,11 +11670,11 @@ export interface SuccessfulPayment {
  */
 export interface RefundedPayment {
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}. Currently, always “XTR”
+     * Three-letter ISO 4217 {@link https://core.telegram.org/bots/payments#supported-currencies | currency} code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}. Currently, always “XTR”
      */
     currency: string;
     /**
-     * Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+     * Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      */
     total_amount: number;
     /**
@@ -11728,11 +11728,11 @@ export interface PreCheckoutQuery {
      */
     from: User;
     /**
-     * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
+     * Three-letter ISO 4217 {@link https://core.telegram.org/bots/payments#supported-currencies | currency} code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}
      */
     currency: string;
     /**
-     * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+     * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      */
     total_amount: number;
     /**
@@ -12130,7 +12130,7 @@ export interface EncryptedPassportElement {
     hash: string;
 }
 /**
- * <p>Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the <a href="/passport#receiving-information">Telegram Passport Documentation</a> for a complete description of the data decryption and authentication processes.</p>
+ * <p>Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the {@link https://core.telegram.org/passport#receiving-information | Telegram Passport Documentation} for a complete description of the data decryption and authentication processes.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#encryptedcredentials}
  */
@@ -12447,7 +12447,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.
+         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Message;
