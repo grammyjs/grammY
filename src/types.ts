@@ -1,7 +1,7 @@
 type Empty = Record<never, never>;
 // === GETTING UPDATES ===
 /**
- * <p>This <a href="#available-types">object</a> represents an incoming update.<br>At most **one** of the optional parameters can be present in any given update.</p>
+ * <p>This {@link https://core.telegram.org/bots/api#available-types | object} represents an incoming update.<br>At most **one** of the optional parameters can be present in any given update.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#update}
  */
@@ -51,11 +51,11 @@ export interface Update {
      */
     message_reaction_count?: MessageReactionCountUpdated;
     /**
-     * New incoming <a href="#inline-mode">inline</a> query
+     * New incoming {@link https://core.telegram.org/bots/api#inline-mode | inline} query
      */
     inline_query?: InlineQuery;
     /**
-     * The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the {@link https://core.telegram.org/bots/inline#collecting-feedback | feedback collecting} for details on how to enable these updates for your bot.
+     * The result of an {@link https://core.telegram.org/bots/api#inline-mode | inline} query that was chosen by a user and sent to their chat partner. Please see our documentation on the {@link https://core.telegram.org/bots/inline#collecting-feedback | feedback collecting} for details on how to enable these updates for your bot.
      */
     chosen_inline_result?: ChosenInlineResult;
     /**
@@ -378,7 +378,7 @@ export interface ChatFullInfo {
      */
     is_direct_messages?: true;
     /**
-     * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See <a href="#accent-colors">accent colors</a> for more details.
+     * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See {@link https://core.telegram.org/bots/api#accent-colors | accent colors} for more details.
      */
     accent_color_id: number;
     /**
@@ -733,7 +733,7 @@ export interface Message {
      */
     dice?: Dice;
     /**
-     * Message is a game, information about the game. <a href="#games">More about games »</a>
+     * Message is a game, information about the game. {@link https://core.telegram.org/bots/api#games | More about games »}
      */
     game?: Game;
     /**
@@ -797,15 +797,15 @@ export interface Message {
      */
     pinned_message?: MaybeInaccessibleMessage;
     /**
-     * Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a>
+     * Message is an invoice for a {@link https://core.telegram.org/bots/api#payments | payment}, information about the invoice. {@link https://core.telegram.org/bots/api#payments | More about payments »}
      */
     invoice?: Invoice;
     /**
-     * Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a>
+     * Message is a service message about a successful payment, information about the payment. {@link https://core.telegram.org/bots/api#payments | More about payments »}
      */
     successful_payment?: SuccessfulPayment;
     /**
-     * Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a>
+     * Message is a service message about a refunded payment, information about the payment. {@link https://core.telegram.org/bots/api#payments | More about payments »}
      */
     refunded_payment?: RefundedPayment;
     /**
@@ -1126,7 +1126,7 @@ export interface ExternalReplyInfo {
      */
     dice?: Dice;
     /**
-     * Message is a game, information about the game. <a href="#games">More about games »</a>
+     * Message is a game, information about the game. {@link https://core.telegram.org/bots/api#games | More about games »}
      */
     game?: Game;
     /**
@@ -1138,7 +1138,7 @@ export interface ExternalReplyInfo {
      */
     giveaway_winners?: GiveawayWinners;
     /**
-     * Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a>
+     * Message is an invoice for a {@link https://core.telegram.org/bots/api#payments | payment}, information about the invoice. {@link https://core.telegram.org/bots/api#payments | More about payments »}
      */
     invoice?: Invoice;
     /**
@@ -1177,7 +1177,7 @@ export interface ReplyParameters {
      */
     quote?: string;
     /**
-     * Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the quote. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     quote_parse_mode?: string;
     /**
@@ -1715,7 +1715,7 @@ export interface InputPollOption {
      */
     text: string;
     /**
-     * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed
+     * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Currently, only custom emoji entities are allowed
      */
     text_parse_mode?: string;
     /**
@@ -1897,7 +1897,7 @@ export interface InputChecklist {
      */
     title: string;
     /**
-     * Optional. Mode for parsing entities in the title. See <a href="#formatting-options">formatting options</a> for more details.
+     * Optional. Mode for parsing entities in the title. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode: string;
     /**
@@ -3066,7 +3066,7 @@ export interface InlineKeyboardButton {
      */
     callback_game?: CallbackGame;
     /**
-     * Specify _True_, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br>**NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
+     * Specify _True_, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br>**NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
      */
     pay?: boolean;
 }
@@ -3140,7 +3140,7 @@ export interface CopyTextButton {
     text: string;
 }
 /**
- * <p>This object represents an incoming callback query from a callback button in an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.</p>
+ * <p>This object represents an incoming callback query from a callback button in an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in {@link https://core.telegram.org/bots/api#inline-mode | inline mode}), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.</p>
  *
  * <blockquote>
  * <p>**NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).</p>
@@ -3166,7 +3166,7 @@ export interface CallbackQuery {
      */
     inline_message_id?: string;
     /**
-     * Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in <a href="#games">games</a>.
+     * Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in {@link https://core.telegram.org/bots/api#games | games}.
      */
     chat_instance: string;
     /**
@@ -3174,7 +3174,7 @@ export interface CallbackQuery {
      */
     data?: string;
     /**
-     * Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game
+     * Short name of a {@link https://core.telegram.org/bots/api#games | Game} to be returned, serves as the unique identifier for the game
      */
     game_short_name?: string;
 }
@@ -5087,7 +5087,7 @@ export interface InputMediaPhoto {
      */
     type: string;
     /**
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     media: string;
     /**
@@ -5095,7 +5095,7 @@ export interface InputMediaPhoto {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -5122,15 +5122,15 @@ export interface InputMediaVideo {
      */
     type: string;
     /**
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     media: string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: string;
     /**
-     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     cover?: string;
     /**
@@ -5142,7 +5142,7 @@ export interface InputMediaVideo {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -5185,11 +5185,11 @@ export interface InputMediaAnimation {
      */
     type: string;
     /**
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     media: string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: string;
     /**
@@ -5197,7 +5197,7 @@ export interface InputMediaAnimation {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the animation caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -5236,11 +5236,11 @@ export interface InputMediaAudio {
      */
     type: string;
     /**
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     media: string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: string;
     /**
@@ -5248,7 +5248,7 @@ export interface InputMediaAudio {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -5279,11 +5279,11 @@ export interface InputMediaDocument {
      */
     type: string;
     /**
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     media: string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: string;
     /**
@@ -5291,7 +5291,7 @@ export interface InputMediaDocument {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -5330,7 +5330,7 @@ export interface InputPaidMediaPhoto {
      */
     type: string;
     /**
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     media: string;
 }
@@ -5345,15 +5345,15 @@ export interface InputPaidMediaVideo {
      */
     type: string;
     /**
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     media: string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: string;
     /**
-     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     cover?: string;
     /**
@@ -5398,7 +5398,7 @@ export interface InputProfilePhotoStatic {
      */
     type: string;
     /**
-     * The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     photo: string;
 }
@@ -5413,7 +5413,7 @@ export interface InputProfilePhotoAnimated {
      */
     type: string;
     /**
-     * The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     animation: string;
     /**
@@ -5442,7 +5442,7 @@ export interface InputStoryContentPhoto {
      */
     type: string;
     /**
-     * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     photo: string;
 }
@@ -5457,7 +5457,7 @@ export interface InputStoryContentVideo {
      */
     type: string;
     /**
-     * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     video: string;
     /**
@@ -5527,7 +5527,7 @@ export interface ApiMethods {
          */
         text: string;
         /**
-         * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -5790,7 +5790,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the new caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the new caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -5896,7 +5896,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a href="#sending-files">More information on Sending Files »</a>
+         * Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         photo: InputFile | string;
         /**
@@ -5904,7 +5904,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -5978,7 +5978,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+         * Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         audio: InputFile | string;
         /**
@@ -5986,7 +5986,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -6006,7 +6006,7 @@ export interface ApiMethods {
          */
         title?: string;
         /**
-         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         thumbnail?: InputFile | string;
         /**
@@ -6067,11 +6067,11 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+         * File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         document: InputFile | string;
         /**
-         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         thumbnail?: InputFile | string;
         /**
@@ -6079,7 +6079,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -6148,7 +6148,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+         * Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         video: InputFile | string;
         /**
@@ -6164,11 +6164,11 @@ export interface ApiMethods {
          */
         height?: number;
         /**
-         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         thumbnail?: InputFile | string;
         /**
-         * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+         * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         cover?: InputFile | string;
         /**
@@ -6180,7 +6180,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -6257,7 +6257,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+         * Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         animation: InputFile | string;
         /**
@@ -6273,7 +6273,7 @@ export interface ApiMethods {
          */
         height?: number;
         /**
-         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         thumbnail?: InputFile | string;
         /**
@@ -6281,7 +6281,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the animation caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -6354,7 +6354,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+         * Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         voice: InputFile | string;
         /**
@@ -6362,7 +6362,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -6431,7 +6431,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending video notes by a URL is currently unsupported
+         * Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending video notes by a URL is currently unsupported
          */
         video_note: InputFile | string;
         /**
@@ -6443,7 +6443,7 @@ export interface ApiMethods {
          */
         length?: number;
         /**
-         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+         * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         thumbnail?: InputFile | string;
         /**
@@ -6520,7 +6520,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the media caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the media caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -6882,7 +6882,7 @@ export interface ApiMethods {
          */
         question: string;
         /**
-         * Mode for parsing entities in the question. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed
+         * Mode for parsing entities in the question. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Currently, only custom emoji entities are allowed
          */
         question_parse_mode?: string;
         /**
@@ -6914,7 +6914,7 @@ export interface ApiMethods {
          */
         explanation?: string;
         /**
-         * Mode for parsing entities in the explanation. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the explanation. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         explanation_parse_mode?: string;
         /**
@@ -8317,7 +8317,7 @@ export interface ApiMethods {
          */
         text?: string;
         /**
-         * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
+         * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
         text_parse_mode?: string;
         /**
@@ -8350,7 +8350,7 @@ export interface ApiMethods {
          */
         text?: string;
         /**
-         * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
+         * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
         text_parse_mode?: string;
         /**
@@ -8737,7 +8737,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the story caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -8782,7 +8782,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the story caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -8816,7 +8816,7 @@ export interface ApiMethods {
 // === UPDATING MESSAGES ===
 export interface ApiMethods {
     /**
-     * <p>Use this method to edit text and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
+     * <p>Use this method to edit text and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagetext}
      */
@@ -8842,7 +8842,7 @@ export interface ApiMethods {
          */
         text: string;
         /**
-         * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -8887,7 +8887,7 @@ export interface ApiMethods {
          */
         caption?: string;
         /**
-         * Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.
+         * Mode for parsing entities in the message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
         parse_mode?: string;
         /**
@@ -9304,7 +9304,7 @@ export interface MaskPosition {
  */
 export interface InputSticker {
     /**
-     * The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="#sending-files">More information on Sending Files »</a>
+     * The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     sticker: string;
     /**
@@ -9348,7 +9348,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Video and animated stickers can&#39;t be sent via an HTTP URL.
+         * Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Video and animated stickers can&#39;t be sent via an HTTP URL.
          */
         sticker: InputFile | string;
         /**
@@ -9427,7 +9427,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See {@link https://core.telegram.org/stickers | {@link https://core.telegram.org/stickers | https://core.telegram.org/stickers}} for technical requirements. <a href="#sending-files">More information on Sending Files »</a>
+         * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See {@link https://core.telegram.org/stickers | {@link https://core.telegram.org/stickers | https://core.telegram.org/stickers}} for technical requirements. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
         sticker: InputFile;
         /**
@@ -9629,7 +9629,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see {@link https://core.telegram.org/stickers#animation-requirements | https://core.telegram.org/stickers#animation-requirements} for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see {@link https://core.telegram.org/stickers#video-requirements | https://core.telegram.org/stickers#video-requirements} for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+         * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see {@link https://core.telegram.org/stickers#animation-requirements | https://core.telegram.org/stickers#animation-requirements} for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see {@link https://core.telegram.org/stickers#video-requirements | https://core.telegram.org/stickers#video-requirements} for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
          */
         thumbnail?: InputFile | string;
         /**
@@ -9891,7 +9891,7 @@ export interface InlineQueryResultPhoto {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -9958,7 +9958,7 @@ export interface InlineQueryResultGif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10025,7 +10025,7 @@ export interface InlineQueryResultMpeg4Gif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10083,7 +10083,7 @@ export interface InlineQueryResultVideo {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10146,7 +10146,7 @@ export interface InlineQueryResultAudio {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10197,7 +10197,7 @@ export interface InlineQueryResultVoice {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10240,7 +10240,7 @@ export interface InlineQueryResultDocument {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10462,7 +10462,7 @@ export interface InlineQueryResultContact {
     thumbnail_height?: number;
 }
 /**
- * <p>Represents a <a href="#games">Game</a>.</p>
+ * <p>Represents a {@link https://core.telegram.org/bots/api#games | Game}.</p>
  *
  * @see {@link https://core.telegram.org/bots/api#inlinequeryresultgame}
  */
@@ -10515,7 +10515,7 @@ export interface InlineQueryResultCachedPhoto {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10562,7 +10562,7 @@ export interface InlineQueryResultCachedGif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10609,7 +10609,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10687,7 +10687,7 @@ export interface InlineQueryResultCachedDocument {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10734,7 +10734,7 @@ export interface InlineQueryResultCachedVideo {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10781,7 +10781,7 @@ export interface InlineQueryResultCachedVoice {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10820,7 +10820,7 @@ export interface InlineQueryResultCachedAudio {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
@@ -10863,7 +10863,7 @@ export interface InputTextMessageContent {
      */
     message_text: string;
     /**
-     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
     parse_mode?: string;
     /**
