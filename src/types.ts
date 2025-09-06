@@ -3,6 +3,7 @@
 // TODO: split up `Chat` into four types in namespace
 // TODO: convert `KeyboardButton` to a union type
 // TODO: convert `InlineKeyboardButton` to a union type
+// TODO: restore LanguageCode definition
 // TODO: decide whether or not to restore `Message.TextMessage` etc
 type Empty = Record<never, never>;
 // === GETTING UPDATES ===
