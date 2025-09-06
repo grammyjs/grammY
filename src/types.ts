@@ -1,7 +1,9 @@
 type Empty = Record<never, never>;
 // === GETTING UPDATES ===
 /**
- * This {@link https://core.telegram.org/bots/api#available-types | object} represents an incoming update.<br>At most **one** of the optional parameters can be present in any given update.
+ * This {@link https://core.telegram.org/bots/api#available-types | object} represents an incoming update.
+ *
+ * At most **one** of the optional parameters can be present in any given update.
  *
  * @see {@link https://core.telegram.org/bots/api#update}
  */
@@ -107,7 +109,11 @@ export interface ApiMethods {
     /**
      * Use this method to receive incoming updates using long polling ({@link https://en.wikipedia.org/wiki/Push_technology#Long_polling | wiki}). Returns an Array of {@link Update | Update} objects.
      *
-     * > **Notes**<br>**1.** This method will not work if an outgoing webhook is set up.<br>**2.** In order to avoid getting duplicate updates, recalculate _offset_ after each server response.
+     * > **Notes**
+     * >
+     * > **1.** This method will not work if an outgoing webhook is set up.
+     * >
+     * > **2.** In order to avoid getting duplicate updates, recalculate _offset_ after each server response.
      *
      * @see {@link https://core.telegram.org/bots/api#getupdates}
      */
@@ -125,7 +131,9 @@ export interface ApiMethods {
          */
         timeout?: number;
         /**
-         * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
+         * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+         *
+         * Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
          */
         allowed_updates?: string[];
     }): Update[];
@@ -135,7 +143,14 @@ export interface ApiMethods {
      * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized {@link Update | Update}. In case of an unsuccessful request (a request with response {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes | HTTP status code} different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.
      * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
      *
-     * > **Notes**<br>**1.** You will not be able to receive updates using {@link ApiMethods.getUpdates | getUpdates} for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.
+     * > **Notes**
+     * >
+     * > **1.** You will not be able to receive updates using {@link ApiMethods.getUpdates | getUpdates} for as long as an outgoing webhook is set up.
+     * >
+     * > **2.** To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
+     * >
+     * > **3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.
+     * >
      * > If you&#39;re having any trouble setting up webhooks, please check out this {@link https://core.telegram.org/bots/webhooks | amazing guide to webhooks}.
      *
      * @see {@link https://core.telegram.org/bots/api#setwebhook}
@@ -158,7 +173,9 @@ export interface ApiMethods {
          */
         max_connections?: number;
         /**
-         * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+         * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+         *
+         * Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
          */
         allowed_updates?: string[];
         /**
@@ -422,7 +439,7 @@ export interface ChatFullInfo {
      */
     background_custom_emoji_id?: string;
     /**
-     * Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.
+     * Identifier of the accent color for the chat&#39;s profile background. See {@link https://core.telegram.org/bots/api#profile-accent-colors | profile accent colors} for more details.
      */
     profile_accent_color_id?: number;
     /**
@@ -2850,7 +2867,9 @@ export interface ReplyKeyboardMarkup {
      */
     input_field_placeholder?: string;
     /**
-     * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message | Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
+     * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message | Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+     *
+     * _Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
      */
     selective?: boolean;
 }
@@ -2999,7 +3018,9 @@ export interface ReplyKeyboardRemove {
      */
     remove_keyboard: true;
     /**
-     * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message | Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
+     * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message | Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+     *
+     * _Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
      */
     selective?: boolean;
 }
@@ -3045,7 +3066,9 @@ export interface InlineKeyboardButton {
      */
     switch_inline_query?: string;
     /**
-     * If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
+     * If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.
+     *
+     * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
      */
     switch_inline_query_current_chat?: string;
     /**
@@ -3057,11 +3080,15 @@ export interface InlineKeyboardButton {
      */
     copy_text?: CopyTextButton;
     /**
-     * Description of the game that will be launched when the user presses the button.<br><br>**NOTE:** This type of button **must** always be the first button in the first row.
+     * Description of the game that will be launched when the user presses the button.
+     *
+     * **NOTE:** This type of button **must** always be the first button in the first row.
      */
     callback_game?: CallbackGame;
     /**
-     * Specify _True_, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br>**NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
+     * Specify _True_, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.
+     *
+     * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
      */
     pay?: boolean;
 }
@@ -3078,7 +3105,9 @@ export interface InlineKeyboardButton {
  */
 export interface LoginUrl {
     /**
-     * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in {@link https://core.telegram.org/widgets/login#receiving-authorization-data | Receiving authorization data}.<br><br>**NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in {@link https://core.telegram.org/widgets/login#checking-authorization | Checking authorization}.
+     * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in {@link https://core.telegram.org/widgets/login#receiving-authorization-data | Receiving authorization data}.
+     *
+     * **NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in {@link https://core.telegram.org/widgets/login#checking-authorization | Checking authorization}.
      */
     url: string;
     /**
@@ -4600,7 +4629,7 @@ export type BotCommandScope =
     | BotCommandScopeChatAdministrators
     | BotCommandScopeChatMember;
 /**
- * Represents the default {@link BotCommandScope | scope} of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.
+ * Represents the default {@link BotCommandScope | scope} of bot commands. Default commands are used if no commands with a {@link https://core.telegram.org/bots/api#determining-list-of-commands | narrower scope} are specified for the user.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopedefault}
  */
@@ -5564,7 +5593,13 @@ export interface ApiMethods {
 /**
  * The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
  * Note that Telegram clients will display an **alert** to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
- * Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.<br>- _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.
+ * Message entities can be nested, providing following restrictions are met:
+ *
+ * - If two entities have common characters, then one of them is fully contained inside another.
+ * - _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.
+ * - _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.
+ * - All other entities can&#39;t contain each other.
+ *
  * Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username. Please note:
  *
  * - These links will work **only** if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
@@ -5662,8 +5697,8 @@ export interface ApiMethods {
  * ````
  * Please note:
  *
- * - Entities must not be nested, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
- * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
+ * - Entities must not be nested, use parse mode {@link https://core.telegram.org/bots/api#markdownv2-style | MarkdownV2} instead.
+ * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode {@link https://core.telegram.org/bots/api#markdownv2-style | MarkdownV2} instead.
  * - To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the characters &#39;\&#39; before them.
  * - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.
  *
@@ -5831,7 +5866,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of {@link MessageId | MessageId} of the sent messages is returned.</p>
+     * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of {@link MessageId | MessageId} of the sent messages is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#copymessages}
      */
@@ -8012,13 +8047,12 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-    * Use this method to send answers to callback queries sent from {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboards}. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.
-<blockquote>
-<p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via {@link https://t.me/botfather | @BotFather} and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.</p>
-</blockquote>
-    *
-    * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
-    */
+     * Use this method to send answers to callback queries sent from {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboards}. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.
+     *
+     * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via {@link https://t.me/botfather | @BotFather} and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
+     *
+     * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
+     */
     answerCallbackQuery(args: {
         /**
          * Unique identifier for the query to be answered
@@ -8033,7 +8067,9 @@ export interface ApiMethods {
          */
         show_alert?: boolean;
         /**
-         * URL that will be opened by the user&#39;s client. If you have created a {@link Game | Game} and accepted the conditions via {@link https://t.me/botfather | @BotFather}, specify the URL that opens your game - note that this will only work if the query comes from a {@link InlineKeyboardButton | _callback_game_} button.<br><br>Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
+         * URL that will be opened by the user&#39;s client. If you have created a {@link Game | Game} and accepted the conditions via {@link https://t.me/botfather | @BotFather}, specify the URL that opens your game - note that this will only work if the query comes from a {@link InlineKeyboardButton | _callback_game_} button.
+         *
+         * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
          */
         url?: string;
         /**
@@ -8095,7 +8131,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns _True_ on success.
+     * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, {@link https://core.telegram.org/bots/api#determining-list-of-commands | higher level commands} will be shown to affected users. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deletemycommands}
      */
@@ -9142,7 +9178,19 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted _can_post_messages_ permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has _can_delete_messages_ administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has _can_manage_direct_messages_ administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns _True_ on success.
+     * Use this method to delete a message, including service messages, with the following limitations:
+     *
+     * - A message can only be deleted if it was sent less than 48 hours ago.
+     * - Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.
+     * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
+     * - Bots can delete outgoing messages in private chats, groups, and supergroups.
+     * - Bots can delete incoming messages in private chats.
+     * - Bots granted _can_post_messages_ permissions can delete outgoing messages in channels.
+     * - If the bot is an administrator of a group, it can delete any message there.
+     * - If the bot has _can_delete_messages_ administrator right in a supergroup or a channel, it can delete any message there.
+     * - If the bot has _can_manage_direct_messages_ administrator right in a channel, it can delete any message in the corresponding direct messages chat.
+     *
+     * Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deletemessage}
      */
@@ -9699,7 +9747,9 @@ export interface InlineQuery {
 }
 export interface ApiMethods {
     /**
-     * Use this method to send answers to an inline query. On success, _True_ is returned.<br>No more than **50** results per query are allowed.
+     * Use this method to send answers to an inline query. On success, _True_ is returned.
+     *
+     * No more than **50** results per query are allowed.
      *
      * @see {@link https://core.telegram.org/bots/api#answerinlinequery}
      */
@@ -9745,7 +9795,9 @@ export interface InlineQueryResultsButton {
      */
     web_app?: WebAppInfo;
     /**
-     * {@link https://core.telegram.org/bots/features#deep-linking | Deep-linking} parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a {@link InlineKeyboardMarkup | _switch_inline_} button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
+     * {@link https://core.telegram.org/bots/features#deep-linking | Deep-linking} parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
+     *
+     * _Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a {@link InlineKeyboardMarkup | _switch_inline_} button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
      */
     start_parameter?: string;
 }
@@ -11071,7 +11123,7 @@ export interface ChosenInlineResult {
      */
     location?: Location;
     /**
-     * Identifier of the sent inline message. Available only if there is an {@link InlineKeyboardMarkup | inline keyboard} attached to the message. Will be also received in {@link CallbackQuery | callback queries} and can be used to <a href="#updating-messages">edit</a> the message.
+     * Identifier of the sent inline message. Available only if there is an {@link InlineKeyboardMarkup | inline keyboard} attached to the message. Will be also received in {@link CallbackQuery | callback queries} and can be used to {@link https://core.telegram.org/bots/api#updating-messages | edit} the message.
      */
     inline_message_id?: string;
     /**
@@ -11970,7 +12022,7 @@ export interface TransactionPartnerTelegramAds {
     type: string;
 }
 /**
- * Describes a transaction with payment for <a href="#paid-broadcasts">paid broadcasting</a>.
+ * Describes a transaction with payment for {@link https://core.telegram.org/bots/api#paid-broadcasts | paid broadcasting}.
  *
  * @see {@link https://core.telegram.org/bots/api#transactionpartnertelegramapi}
  */
