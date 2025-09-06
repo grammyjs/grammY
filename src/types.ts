@@ -135,7 +135,7 @@ export interface ApiMethods {
          *
          * Please note that this parameter doesn't affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
          */
-        allowed_updates?: string[];
+        allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
     }): Update[];
 }
 export interface ApiMethods {
@@ -177,7 +177,7 @@ export interface ApiMethods {
          *
          * Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
          */
-        allowed_updates?: string[];
+        allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
         /**
          * Pass _True_ to drop all pending updates
          */
@@ -250,7 +250,7 @@ export interface WebhookInfo {
     /**
      * A list of update types the bot is subscribed to. Defaults to all update types except _chat_member_
      */
-    allowed_updates?: string[];
+    allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
 }
 
 // === AVAILABLE TYPES ===
@@ -326,7 +326,7 @@ export interface Chat {
     /**
      * Type of the chat, can be either “private”, “group”, “supergroup” or “channel”
      */
-    type: string;
+    type: "private" | "group" | "supergroup" | "channel";
     /**
      * Title, for supergroups, channels and group chats
      */
@@ -365,7 +365,7 @@ export interface ChatFullInfo {
     /**
      * Type of the chat, can be either “private”, “group”, “supergroup” or “channel”
      */
-    type: string;
+    type: "private" | "group" | "supergroup" | "channel";
     /**
      * Title, for supergroups, channels and group chats
      */
@@ -990,7 +990,7 @@ export interface InaccessibleMessage {
     /**
      * Always 0. The field can be used to differentiate regular and inaccessible messages.
      */
-    date: number;
+    date: 0;
 }
 /**
  * This object describes a message that can be inaccessible to the bot. It can be one of
@@ -1192,7 +1192,7 @@ export interface ReplyParameters {
     /**
      * Mode for parsing entities in the quote. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    quote_parse_mode?: string;
+    quote_parse_mode?: ParseMode;
     /**
      * A JSON-serialized list of special entities that appear in the quote. It can be specified instead of _quote_parse_mode_.
      */
@@ -1229,7 +1229,7 @@ export interface MessageOriginUser {
     /**
      * Type of the message origin, always “user”
      */
-    type: string;
+    type: "user";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -1248,7 +1248,7 @@ export interface MessageOriginHiddenUser {
     /**
      * Type of the message origin, always “hidden_user”
      */
-    type: string;
+    type: "hidden_user";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -1267,7 +1267,7 @@ export interface MessageOriginChat {
     /**
      * Type of the message origin, always “chat”
      */
-    type: string;
+    type: "chat";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -1290,7 +1290,7 @@ export interface MessageOriginChannel {
     /**
      * Type of the message origin, always “channel”
      */
-    type: string;
+    type: "channel";
     /**
      * Date the message was sent originally in Unix time
      */
@@ -1612,7 +1612,7 @@ export interface PaidMediaPreview {
     /**
      * Type of the paid media, always “preview”
      */
-    type: string;
+    type: "preview";
     /**
      * Media width as defined by the sender
      */
@@ -1635,7 +1635,7 @@ export interface PaidMediaPhoto {
     /**
      * Type of the paid media, always “photo”
      */
-    type: string;
+    type: "photo";
     /**
      * The photo
      */
@@ -1650,7 +1650,7 @@ export interface PaidMediaVideo {
     /**
      * Type of the paid media, always “video”
      */
-    type: string;
+    type: "video";
     /**
      * The video
      */
@@ -1730,7 +1730,7 @@ export interface InputPollOption {
     /**
      * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Currently, only custom emoji entities are allowed
      */
-    text_parse_mode?: string;
+    text_parse_mode?: ParseMode;
     /**
      * A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of _text_parse_mode_
      */
@@ -1796,7 +1796,7 @@ export interface Poll {
     /**
      * Poll type, currently can be “regular” or “quiz”
      */
-    type: string;
+    type: "regular" | "quiz";
     /**
      * _True_, if the poll allows multiple answers
      */
@@ -1893,7 +1893,7 @@ export interface InputChecklistTask {
     /**
      * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.
      */
@@ -1912,7 +1912,7 @@ export interface InputChecklist {
     /**
      * Mode for parsing entities in the title. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.
      */
@@ -2107,7 +2107,7 @@ export interface BackgroundFillSolid {
     /**
      * Type of the background fill, always “solid”
      */
-    type: string;
+    type: "solid";
     /**
      * The color of the background fill in the RGB24 format
      */
@@ -2122,7 +2122,7 @@ export interface BackgroundFillGradient {
     /**
      * Type of the background fill, always “gradient”
      */
-    type: string;
+    type: "gradient";
     /**
      * Top color of the gradient in the RGB24 format
      */
@@ -2145,7 +2145,7 @@ export interface BackgroundFillFreeformGradient {
     /**
      * Type of the background fill, always “freeform_gradient”
      */
-    type: string;
+    type: "freeform_gradient";
     /**
      * A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format
      */
@@ -2174,7 +2174,7 @@ export interface BackgroundTypeFill {
     /**
      * Type of the background, always “fill”
      */
-    type: string;
+    type: "fill";
     /**
      * The background fill
      */
@@ -2193,7 +2193,7 @@ export interface BackgroundTypeWallpaper {
     /**
      * Type of the background, always “wallpaper”
      */
-    type: string;
+    type: "wallpaper";
     /**
      * Document with the wallpaper
      */
@@ -2220,7 +2220,7 @@ export interface BackgroundTypePattern {
     /**
      * Type of the background, always “pattern”
      */
-    type: string;
+    type: "pattern";
     /**
      * Document with the pattern
      */
@@ -2251,7 +2251,7 @@ export interface BackgroundTypeChatTheme {
     /**
      * Type of the background, always “chat_theme”
      */
-    type: string;
+    type: "chat_theme";
     /**
      * Name of the chat theme, which is usually an emoji
      */
@@ -2541,7 +2541,7 @@ export interface SuggestedPostPaid {
     /**
      * Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins
      */
-    currency: string;
+    currency: "XTR" | "TON";
     /**
      * The amount of the currency that was received by the channel in nanotoncoins; for payments in toncoins only
      */
@@ -2564,7 +2564,7 @@ export interface SuggestedPostRefunded {
     /**
      * Reason for the refund. Currently, one of “post_deleted” if the post was deleted within 24 hours of being posted or removed from scheduled messages without being posted, or “payment_refunded” if the payer refunded their payment.
      */
-    reason: string;
+    reason: "post_deleted" | "payment_refunded";
 }
 /**
  * This object represents a service message about the creation of a scheduled giveaway.
@@ -2734,7 +2734,7 @@ export interface SuggestedPostPrice {
     /**
      * Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for toncoins
      */
-    currency: string;
+    currency: "XTR" | "TON";
     /**
      * The amount of the currency that will be paid for the post in the _smallest units_ of the currency, i.e. Telegram Stars or nanotoncoins. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanotoncoins must be between 10000000 and 10000000000000.
      */
@@ -2749,7 +2749,7 @@ export interface SuggestedPostInfo {
     /**
      * State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”.
      */
-    state: string;
+    state: "pending" | "approved" | "declined";
     /**
      * Proposed price of the post. If the field is omitted, then the post is unpaid.
      */
@@ -2886,13 +2886,13 @@ export interface KeyboardButton {
      */
     text: string;
     /**
-     * _Optional._ If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
+     * If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
      */
-    request_users: KeyboardButtonRequestUsers;
+    request_users?: KeyboardButtonRequestUsers;
     /**
-     * _Optional._ If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
+     * If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
      */
-    request_chat: KeyboardButtonRequestChat;
+    request_chat?: KeyboardButtonRequestChat;
     /**
      * If _True_, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
      */
@@ -3005,7 +3005,7 @@ export interface KeyboardButtonPollType {
     /**
      * If _quiz_ is passed, the user will be allowed to create only polls in the quiz mode. If _regular_ is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.
      */
-    type?: string;
+    type?: "quiz" | "regular";
 }
 /**
  * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see {@link ReplyKeyboardMarkup | ReplyKeyboardMarkup}). Not supported in channels and for messages sent on behalf of a Telegram Business account.
@@ -3435,7 +3435,7 @@ export interface ChatMemberOwner {
     /**
      * The member's status in the chat, always “creator”
      */
-    status: string;
+    status: "creator";
     /**
      * Information about the user
      */
@@ -3458,7 +3458,7 @@ export interface ChatMemberAdministrator {
     /**
      * The member's status in the chat, always “administrator”
      */
-    status: string;
+    status: "administrator";
     /**
      * Information about the user
      */
@@ -3545,7 +3545,7 @@ export interface ChatMemberMember {
     /**
      * The member's status in the chat, always “member”
      */
-    status: string;
+    status: "member";
     /**
      * Information about the user
      */
@@ -3564,7 +3564,7 @@ export interface ChatMemberRestricted {
     /**
      * The member's status in the chat, always “restricted”
      */
-    status: string;
+    status: "restricted";
     /**
      * Information about the user
      */
@@ -3643,7 +3643,7 @@ export interface ChatMemberLeft {
     /**
      * The member's status in the chat, always “left”
      */
-    status: string;
+    status: "left";
     /**
      * Information about the user
      */
@@ -3658,7 +3658,7 @@ export interface ChatMemberBanned {
     /**
      * The member's status in the chat, always “kicked”
      */
-    status: string;
+    status: "kicked";
     /**
      * Information about the user
      */
@@ -3924,7 +3924,7 @@ export interface StoryAreaTypeLocation {
     /**
      * Type of the area, always “location”
      */
-    type: string;
+    type: "location";
     /**
      * Location latitude in degrees
      */
@@ -3947,7 +3947,7 @@ export interface StoryAreaTypeSuggestedReaction {
     /**
      * Type of the area, always “suggested_reaction”
      */
-    type: string;
+    type: "suggested_reaction";
     /**
      * Type of the reaction
      */
@@ -3970,7 +3970,7 @@ export interface StoryAreaTypeLink {
     /**
      * Type of the area, always “link”
      */
-    type: string;
+    type: "link";
     /**
      * HTTP or tg:// URL to be opened when the area is clicked
      */
@@ -3985,7 +3985,7 @@ export interface StoryAreaTypeWeather {
     /**
      * Type of the area, always “weather”
      */
-    type: string;
+    type: "weather";
     /**
      * Temperature, in degree Celsius
      */
@@ -4008,7 +4008,7 @@ export interface StoryAreaTypeUniqueGift {
     /**
      * Type of the area, always “unique_gift”
      */
-    type: string;
+    type: "unique_gift";
     /**
      * Unique name of the gift
      */
@@ -4065,11 +4065,84 @@ export interface ReactionTypeEmoji {
     /**
      * Type of the reaction, always “emoji”
      */
-    type: string;
+    type: "emoji";
     /**
      * Reaction emoji. Currently, it can be one of "❤", "👍", "👎", "🔥", "🥰", "👏", "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏", "👌", "🕊", "🤡", "🥱", "🥴", "😍", "🐳", "❤‍🔥", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆", "💔", "🤨", "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨‍💻", "👀", "🎃", "🙈", "😇", "😨", "🤝", "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅", "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾", "🤷‍♂", "🤷", "🤷‍♀", "😡"
      */
-    emoji: string;
+    emoji:
+        | "❤"
+        | "👍"
+        | "👎"
+        | "🔥"
+        | "🥰"
+        | "👏"
+        | "😁"
+        | "🤔"
+        | "🤯"
+        | "😱"
+        | "🤬"
+        | "😢"
+        | "🎉"
+        | "🤩"
+        | "🤮"
+        | "💩"
+        | "🙏"
+        | "👌"
+        | "🕊"
+        | "🤡"
+        | "🥱"
+        | "🥴"
+        | "😍"
+        | "🐳"
+        | "❤‍🔥"
+        | "🌚"
+        | "🌭"
+        | "💯"
+        | "🤣"
+        | "⚡"
+        | "🍌"
+        | "🏆"
+        | "💔"
+        | "🤨"
+        | "😐"
+        | "🍓"
+        | "🍾"
+        | "💋"
+        | "🖕"
+        | "😈"
+        | "😴"
+        | "😭"
+        | "🤓"
+        | "👻"
+        | "👨‍💻"
+        | "👀"
+        | "🎃"
+        | "🙈"
+        | "😇"
+        | "😨"
+        | "🤝"
+        | "✍"
+        | "🤗"
+        | "🫡"
+        | "🎅"
+        | "🎄"
+        | "☃"
+        | "💅"
+        | "🤪"
+        | "🗿"
+        | "🆒"
+        | "💘"
+        | "🙉"
+        | "🦄"
+        | "😘"
+        | "💊"
+        | "🙊"
+        | "😎"
+        | "👾"
+        | "🤷‍♂"
+        | "🤷"
+        | "🤷‍♀"
+        | "😡";
 }
 /**
  * The reaction is based on a custom emoji.
@@ -4080,7 +4153,7 @@ export interface ReactionTypeCustomEmoji {
     /**
      * Type of the reaction, always “custom_emoji”
      */
-    type: string;
+    type: "custom_emoji";
     /**
      * Custom emoji identifier
      */
@@ -4095,7 +4168,7 @@ export interface ReactionTypePaid {
     /**
      * Type of the reaction, always “paid”
      */
-    type: string;
+    type: "paid";
 }
 /**
  * Represents a reaction added to a message along with the number of times it was added.
@@ -4406,7 +4479,7 @@ export interface UniqueGiftInfo {
     /**
      * Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, or “resale” for gifts bought from other users
      */
-    origin: string;
+    origin: "upgrade" | "transfer" | "resale";
     /**
      * For gifts bought from other users, the price paid for the gift
      */
@@ -4443,7 +4516,7 @@ export interface OwnedGiftRegular {
     /**
      * Type of the gift, always “regular”
      */
-    type: string;
+    type: "regular";
     /**
      * Information about the regular gift
      */
@@ -4502,7 +4575,7 @@ export interface OwnedGiftUnique {
     /**
      * Type of the gift, always “unique”
      */
-    type: string;
+    type: "unique";
     /**
      * Information about the unique gift
      */
@@ -4637,7 +4710,7 @@ export interface BotCommandScopeDefault {
     /**
      * Scope type, must be _default_
      */
-    type: string;
+    type: "default";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering all private chats.
@@ -4648,7 +4721,7 @@ export interface BotCommandScopeAllPrivateChats {
     /**
      * Scope type, must be _all_private_chats_
      */
-    type: string;
+    type: "all_private_chats";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering all group and supergroup chats.
@@ -4659,7 +4732,7 @@ export interface BotCommandScopeAllGroupChats {
     /**
      * Scope type, must be _all_group_chats_
      */
-    type: string;
+    type: "all_group_chats";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering all group and supergroup chat administrators.
@@ -4670,7 +4743,7 @@ export interface BotCommandScopeAllChatAdministrators {
     /**
      * Scope type, must be _all_chat_administrators_
      */
-    type: string;
+    type: "all_chat_administrators";
 }
 /**
  * Represents the {@link BotCommandScope | scope} of bot commands, covering a specific chat.
@@ -4681,7 +4754,7 @@ export interface BotCommandScopeChat {
     /**
      * Scope type, must be _chat_
      */
-    type: string;
+    type: "chat";
     /**
      * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`). Channel direct messages chats and channel chats aren't supported.
      */
@@ -4696,7 +4769,7 @@ export interface BotCommandScopeChatAdministrators {
     /**
      * Scope type, must be _chat_administrators_
      */
-    type: string;
+    type: "chat_administrators";
     /**
      * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`). Channel direct messages chats and channel chats aren't supported.
      */
@@ -4711,7 +4784,7 @@ export interface BotCommandScopeChatMember {
     /**
      * Scope type, must be _chat_member_
      */
-    type: string;
+    type: "chat_member";
     /**
      * Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`). Channel direct messages chats and channel chats aren't supported.
      */
@@ -4777,7 +4850,7 @@ export interface MenuButtonCommands {
     /**
      * Type of the button, must be _commands_
      */
-    type: string;
+    type: "commands";
 }
 /**
  * Represents a menu button, which launches a {@link https://core.telegram.org/bots/webapps | Web App}.
@@ -4788,7 +4861,7 @@ export interface MenuButtonWebApp {
     /**
      * Type of the button, must be _web_app_
      */
-    type: string;
+    type: "web_app";
     /**
      * Text on the button
      */
@@ -4807,7 +4880,7 @@ export interface MenuButtonDefault {
     /**
      * Type of the button, must be _default_
      */
-    type: string;
+    type: "default";
 }
 /**
  * This object describes the source of a chat boost. It can be one of
@@ -4830,7 +4903,7 @@ export interface ChatBoostSourcePremium {
     /**
      * Source of the boost, always “premium”
      */
-    source: string;
+    source: "premium";
     /**
      * User that boosted the chat
      */
@@ -4845,7 +4918,7 @@ export interface ChatBoostSourceGiftCode {
     /**
      * Source of the boost, always “gift_code”
      */
-    source: string;
+    source: "gift_code";
     /**
      * User for which the gift code was created
      */
@@ -4860,7 +4933,7 @@ export interface ChatBoostSourceGiveaway {
     /**
      * Source of the boost, always “giveaway”
      */
-    source: string;
+    source: "giveaway";
     /**
      * Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn't sent yet.
      */
@@ -5103,7 +5176,7 @@ export interface InputMediaPhoto {
     /**
      * Type of the result, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5115,7 +5188,7 @@ export interface InputMediaPhoto {
     /**
      * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -5138,7 +5211,7 @@ export interface InputMediaVideo {
     /**
      * Type of the result, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5162,7 +5235,7 @@ export interface InputMediaVideo {
     /**
      * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -5201,7 +5274,7 @@ export interface InputMediaAnimation {
     /**
      * Type of the result, must be _animation_
      */
-    type: string;
+    type: "animation";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5217,7 +5290,7 @@ export interface InputMediaAnimation {
     /**
      * Mode for parsing entities in the animation caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -5252,7 +5325,7 @@ export interface InputMediaAudio {
     /**
      * Type of the result, must be _audio_
      */
-    type: string;
+    type: "audio";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5268,7 +5341,7 @@ export interface InputMediaAudio {
     /**
      * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -5295,7 +5368,7 @@ export interface InputMediaDocument {
     /**
      * Type of the result, must be _document_
      */
-    type: string;
+    type: "document";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5311,7 +5384,7 @@ export interface InputMediaDocument {
     /**
      * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -5346,7 +5419,7 @@ export interface InputPaidMediaPhoto {
     /**
      * Type of the media, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5361,7 +5434,7 @@ export interface InputPaidMediaVideo {
     /**
      * Type of the media, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5414,7 +5487,7 @@ export interface InputProfilePhotoStatic {
     /**
      * Type of the profile photo, must be _static_
      */
-    type: string;
+    type: "static";
     /**
      * The static profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5429,7 +5502,7 @@ export interface InputProfilePhotoAnimated {
     /**
      * Type of the profile photo, must be _animated_
      */
-    type: string;
+    type: "animated";
     /**
      * The animated profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5458,7 +5531,7 @@ export interface InputStoryContentPhoto {
     /**
      * Type of the content, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5473,7 +5546,7 @@ export interface InputStoryContentVideo {
     /**
      * Type of the content, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the video was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
@@ -5547,7 +5620,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
@@ -5708,7 +5781,7 @@ export interface ApiMethods {
  *
  * @see {@link https://core.telegram.org/bots/api#formatting-options}
  */
-type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
+export type ParseMode = "MarkdownV2" | "HTML" | "Markdown";
 export interface ApiMethods {
     /**
      * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent {@link Message | Message} is returned.
@@ -5829,7 +5902,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the new caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of _parse_mode_
          */
@@ -5943,7 +6016,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -6025,7 +6098,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -6118,7 +6191,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -6219,7 +6292,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -6320,7 +6393,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the animation caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -6401,7 +6474,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -6559,7 +6632,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the media caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -6921,7 +6994,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the question. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Currently, only custom emoji entities are allowed
          */
-        question_parse_mode?: string;
+        question_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of _question_parse_mode_
          */
@@ -6953,7 +7026,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the explanation. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        explanation_parse_mode?: string;
+        explanation_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of _explanation_parse_mode_
          */
@@ -7067,7 +7140,7 @@ export interface ApiMethods {
         /**
          * Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
          */
-        emoji?: string;
+        emoji?: "🎲" | "🎯" | "🏀" | "⚽" | "🎳" | "🎰";
         /**
          * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
@@ -7128,7 +7201,18 @@ export interface ApiMethods {
         /**
          * Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link ApiMethods.sendMessage | text messages}, _upload_photo_ for {@link ApiMethods.sendPhoto | photos}, _record_video_ or _upload_video_ for {@link ApiMethods.sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link ApiMethods.sendVoice | voice notes}, _upload_document_ for {@link ApiMethods.sendDocument | general files}, _choose_sticker_ for {@link ApiMethods.sendSticker | stickers}, _find_location_ for {@link ApiMethods.sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link ApiMethods.sendVideoNote | video notes}.
          */
-        action: string;
+        action:
+            | "typing"
+            | "upload_photo"
+            | "record_video"
+            | "upload_video"
+            | "record_voice"
+            | "upload_voice"
+            | "upload_document"
+            | "choose_sticker"
+            | "find_location"
+            | "record_video_note"
+            | "upload_video_note";
     }): true;
 }
 export interface ApiMethods {
@@ -7540,7 +7624,7 @@ export interface ApiMethods {
         /**
          * The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
          */
-        subscription_period: number;
+        subscription_period: 2592000;
         /**
          * The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000
          */
@@ -7779,7 +7863,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)
          */
         chat_id: number | string;
-    }): ChatMember;
+    }): Array<ChatMemberOwner | ChatMemberAdministrator>;
 }
 export interface ApiMethods {
     /**
@@ -7867,7 +7951,13 @@ export interface ApiMethods {
         /**
          * Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F)
          */
-        icon_color?: number;
+        icon_color?:
+            | 0x6FB9F0
+            | 0xFFD67E
+            | 0xCB86DB
+            | 0x8EEE98
+            | 0xFF93B2
+            | 0xFB6F5F;
         /**
          * Unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers.
          */
@@ -8355,7 +8445,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
-        text_parse_mode?: string;
+        text_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
@@ -8376,11 +8466,11 @@ export interface ApiMethods {
         /**
          * Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
          */
-        month_count: number;
+        month_count: 3 | 6 | 12;
         /**
          * Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
          */
-        star_count: number;
+        star_count: 1000 | 1500 | 2500;
         /**
          * Text that will be shown along with the service message about the subscription; 0-128 characters
          */
@@ -8388,7 +8478,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
-        text_parse_mode?: string;
+        text_parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
@@ -8767,7 +8857,7 @@ export interface ApiMethods {
         /**
          * Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
          */
-        active_period: number;
+        active_period: 21600 | 43200 | 86400 | 172800;
         /**
          * Caption of the story, 0-2048 characters after entities parsing
          */
@@ -8775,7 +8865,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the story caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8820,7 +8910,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the story caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -8880,7 +8970,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
@@ -8925,7 +9015,7 @@ export interface ApiMethods {
         /**
          * Mode for parsing entities in the message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
          */
-        parse_mode?: string;
+        parse_mode?: ParseMode;
         /**
          * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
@@ -9245,7 +9335,7 @@ export interface Sticker {
     /**
      * Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields _is_animated_ and _is_video_.
      */
-    type: string;
+    type: "regular" | "mask" | "custom_emoji";
     /**
      * Sticker width
      */
@@ -9312,7 +9402,7 @@ export interface StickerSet {
     /**
      * Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”
      */
-    sticker_type: string;
+    sticker_type: "regular" | "mask" | "custom_emoji";
     /**
      * List of all set stickers
      */
@@ -9331,7 +9421,7 @@ export interface MaskPosition {
     /**
      * The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
      */
-    point: string;
+    point: "forehead" | "eyes" | "mouth" | "chin";
     /**
      * Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position.
      */
@@ -9358,7 +9448,7 @@ export interface InputSticker {
     /**
      * Format of the added sticker, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, “video” for a **.WEBM** video
      */
-    format: string;
+    format: "static" | "animated" | "video";
     /**
      * List of 1-20 emoji associated with the sticker
      */
@@ -9481,7 +9571,7 @@ export interface ApiMethods {
         /**
          * Format of the sticker, must be one of “static”, “animated”, “video”
          */
-        sticker_format: string;
+        sticker_format: "static" | "animated" | "video";
     }): File;
 }
 export interface ApiMethods {
@@ -9510,7 +9600,7 @@ export interface ApiMethods {
         /**
          * Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.
          */
-        sticker_type?: string;
+        sticker_type?: "regular" | "mask" | "custom_emoji";
         /**
          * Pass _True_ if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
          */
@@ -9683,7 +9773,7 @@ export interface ApiMethods {
         /**
          * Format of the thumbnail, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, or “video” for a **.WEBM** video
          */
-        format: string;
+        format: "static" | "animated" | "video";
     }): true;
 }
 export interface ApiMethods {
@@ -9743,7 +9833,7 @@ export interface InlineQuery {
     /**
      * Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat
      */
-    chat_type?: string;
+    chat_type?: "sender" | "private" | "group" | "supergroup" | "channel";
     /**
      * Sender location, only for bots that request user location
      */
@@ -9862,7 +9952,7 @@ export interface InlineQueryResultArticle {
     /**
      * Type of the result, must be _article_
      */
-    type: string;
+    type: "article";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -9909,7 +9999,7 @@ export interface InlineQueryResultPhoto {
     /**
      * Type of the result, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -9945,7 +10035,7 @@ export interface InlineQueryResultPhoto {
     /**
      * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -9972,7 +10062,7 @@ export interface InlineQueryResultGif {
     /**
      * Type of the result, must be _gif_
      */
-    type: string;
+    type: "gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10000,7 +10090,7 @@ export interface InlineQueryResultGif {
     /**
      * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
      */
-    thumbnail_mime_type?: string;
+    thumbnail_mime_type?: "image/jpeg" | "image/gif" | "video/mp4";
     /**
      * Title for the result
      */
@@ -10012,7 +10102,7 @@ export interface InlineQueryResultGif {
     /**
      * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10039,7 +10129,7 @@ export interface InlineQueryResultMpeg4Gif {
     /**
      * Type of the result, must be _mpeg4_gif_
      */
-    type: string;
+    type: "mpeg4_gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10067,7 +10157,7 @@ export interface InlineQueryResultMpeg4Gif {
     /**
      * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
      */
-    thumbnail_mime_type?: string;
+    thumbnail_mime_type?: "image/jpeg" | "image/gif" | "video/mp4";
     /**
      * Title for the result
      */
@@ -10079,7 +10169,7 @@ export interface InlineQueryResultMpeg4Gif {
     /**
      * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10108,7 +10198,7 @@ export interface InlineQueryResultVideo {
     /**
      * Type of the result, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10120,7 +10210,7 @@ export interface InlineQueryResultVideo {
     /**
      * MIME type of the content of the video URL, “text/html” or “video/mp4”
      */
-    mime_type: string;
+    mime_type: "text/html" | "video/mp4";
     /**
      * URL of the thumbnail (JPEG only) for the video
      */
@@ -10136,7 +10226,7 @@ export interface InlineQueryResultVideo {
     /**
      * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10179,7 +10269,7 @@ export interface InlineQueryResultAudio {
     /**
      * Type of the result, must be _audio_
      */
-    type: string;
+    type: "audio";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10199,7 +10289,7 @@ export interface InlineQueryResultAudio {
     /**
      * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10230,7 +10320,7 @@ export interface InlineQueryResultVoice {
     /**
      * Type of the result, must be _voice_
      */
-    type: string;
+    type: "voice";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10250,7 +10340,7 @@ export interface InlineQueryResultVoice {
     /**
      * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10277,7 +10367,7 @@ export interface InlineQueryResultDocument {
     /**
      * Type of the result, must be _document_
      */
-    type: string;
+    type: "document";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10293,7 +10383,7 @@ export interface InlineQueryResultDocument {
     /**
      * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10305,7 +10395,7 @@ export interface InlineQueryResultDocument {
     /**
      * MIME type of the content of the file, either “application/pdf” or “application/zip”
      */
-    mime_type: string;
+    mime_type: "application/pdf" | "application/zip";
     /**
      * Short description of the result
      */
@@ -10340,7 +10430,7 @@ export interface InlineQueryResultLocation {
     /**
      * Type of the result, must be _location_
      */
-    type: string;
+    type: "location";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -10403,7 +10493,7 @@ export interface InlineQueryResultVenue {
     /**
      * Type of the result, must be _venue_
      */
-    type: string;
+    type: "venue";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -10470,7 +10560,7 @@ export interface InlineQueryResultContact {
     /**
      * Type of the result, must be _contact_
      */
-    type: string;
+    type: "contact";
     /**
      * Unique identifier for this result, 1-64 Bytes
      */
@@ -10521,7 +10611,7 @@ export interface InlineQueryResultGame {
     /**
      * Type of the result, must be _game_
      */
-    type: string;
+    type: "game";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10544,7 +10634,7 @@ export interface InlineQueryResultCachedPhoto {
     /**
      * Type of the result, must be _photo_
      */
-    type: string;
+    type: "photo";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10568,7 +10658,7 @@ export interface InlineQueryResultCachedPhoto {
     /**
      * Mode for parsing entities in the photo caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10595,7 +10685,7 @@ export interface InlineQueryResultCachedGif {
     /**
      * Type of the result, must be _gif_
      */
-    type: string;
+    type: "gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10615,7 +10705,7 @@ export interface InlineQueryResultCachedGif {
     /**
      * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10642,7 +10732,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
     /**
      * Type of the result, must be _mpeg4_gif_
      */
-    type: string;
+    type: "mpeg4_gif";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10662,7 +10752,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
     /**
      * Mode for parsing entities in the caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10689,7 +10779,7 @@ export interface InlineQueryResultCachedSticker {
     /**
      * Type of the result, must be _sticker_
      */
-    type: string;
+    type: "sticker";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10716,7 +10806,7 @@ export interface InlineQueryResultCachedDocument {
     /**
      * Type of the result, must be _document_
      */
-    type: string;
+    type: "document";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10740,7 +10830,7 @@ export interface InlineQueryResultCachedDocument {
     /**
      * Mode for parsing entities in the document caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10763,7 +10853,7 @@ export interface InlineQueryResultCachedVideo {
     /**
      * Type of the result, must be _video_
      */
-    type: string;
+    type: "video";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10787,7 +10877,7 @@ export interface InlineQueryResultCachedVideo {
     /**
      * Mode for parsing entities in the video caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10814,7 +10904,7 @@ export interface InlineQueryResultCachedVoice {
     /**
      * Type of the result, must be _voice_
      */
-    type: string;
+    type: "voice";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10834,7 +10924,7 @@ export interface InlineQueryResultCachedVoice {
     /**
      * Mode for parsing entities in the voice message caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10857,7 +10947,7 @@ export interface InlineQueryResultCachedAudio {
     /**
      * Type of the result, must be _audio_
      */
-    type: string;
+    type: "audio";
     /**
      * Unique identifier for this result, 1-64 bytes
      */
@@ -10873,7 +10963,7 @@ export interface InlineQueryResultCachedAudio {
     /**
      * Mode for parsing entities in the audio caption. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in the caption, which can be specified instead of _parse_mode_
      */
@@ -10916,7 +11006,7 @@ export interface InputTextMessageContent {
     /**
      * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode?: string;
+    parse_mode?: ParseMode;
     /**
      * List of special entities that appear in message text, which can be specified instead of _parse_mode_
      */
@@ -11723,7 +11813,7 @@ export interface RefundedPayment {
     /**
      * Three-letter ISO 4217 {@link https://core.telegram.org/bots/payments#supported-currencies | currency} code, or “XTR” for payments in {@link https://t.me/BotNews/90 | Telegram Stars}. Currently, always “XTR”
      */
-    currency: string;
+    currency: "XTR";
     /**
      * Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in {@link https://core.telegram.org/bots/payments/currencies.json | currencies.json}, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
      */
@@ -11835,7 +11925,7 @@ export interface RevenueWithdrawalStatePending {
     /**
      * Type of the state, always “pending”
      */
-    type: string;
+    type: "pending";
 }
 /**
  * The withdrawal succeeded.
@@ -11846,7 +11936,7 @@ export interface RevenueWithdrawalStateSucceeded {
     /**
      * Type of the state, always “succeeded”
      */
-    type: string;
+    type: "succeeded";
     /**
      * Date the withdrawal was completed in Unix time
      */
@@ -11865,7 +11955,7 @@ export interface RevenueWithdrawalStateFailed {
     /**
      * Type of the state, always “failed”
      */
-    type: string;
+    type: "failed";
 }
 /**
  * Contains information about the affiliate that received a commission via this transaction.
@@ -11923,11 +12013,16 @@ export interface TransactionPartnerUser {
     /**
      * Type of the transaction partner, always “user”
      */
-    type: string;
+    type: "user";
     /**
      * Type of the transaction, currently one of “invoice_payment” for payments via invoices, “paid_media_payment” for payments for paid media, “gift_purchase” for gifts sent by the bot, “premium_purchase” for Telegram Premium subscriptions gifted by the bot, “business_account_transfer” for direct transfers from managed business accounts
      */
-    transaction_type: string;
+    transaction_type:
+        | "invoice_payment"
+        | "paid_media_payment"
+        | "gift_purchase"
+        | "premium_purchase"
+        | "business_account_transfer";
     /**
      * Information about the user
      */
@@ -11970,7 +12065,7 @@ export interface TransactionPartnerChat {
     /**
      * Type of the transaction partner, always “chat”
      */
-    type: string;
+    type: "chat";
     /**
      * Information about the chat
      */
@@ -11989,7 +12084,7 @@ export interface TransactionPartnerAffiliateProgram {
     /**
      * Type of the transaction partner, always “affiliate_program”
      */
-    type: string;
+    type: "affiliate_program";
     /**
      * Information about the bot that sponsored the affiliate program
      */
@@ -12008,7 +12103,7 @@ export interface TransactionPartnerFragment {
     /**
      * Type of the transaction partner, always “fragment”
      */
-    type: string;
+    type: "fragment";
     /**
      * State of the transaction if the transaction is outgoing
      */
@@ -12023,7 +12118,7 @@ export interface TransactionPartnerTelegramAds {
     /**
      * Type of the transaction partner, always “telegram_ads”
      */
-    type: string;
+    type: "telegram_ads";
 }
 /**
  * Describes a transaction with payment for {@link https://core.telegram.org/bots/api#paid-broadcasts | paid broadcasting}.
@@ -12034,7 +12129,7 @@ export interface TransactionPartnerTelegramApi {
     /**
      * Type of the transaction partner, always “telegram_api”
      */
-    type: string;
+    type: "telegram_api";
     /**
      * The number of successful requests that exceeded regular limits and were therefore billed
      */
@@ -12049,7 +12144,7 @@ export interface TransactionPartnerOther {
     /**
      * Type of the transaction partner, always “other”
      */
-    type: string;
+    type: "other";
 }
 /**
  * Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted from the bot's balance. This is outside of Telegram's control.
@@ -12142,7 +12237,20 @@ export interface EncryptedPassportElement {
     /**
      * Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.
      */
-    type: string;
+    type:
+        | "personal_details"
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "address"
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration"
+        | "phone_number"
+        | "email";
     /**
      * Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying {@link EncryptedCredentials | EncryptedCredentials}.
      */
@@ -12250,11 +12358,17 @@ export interface PassportElementErrorDataField {
     /**
      * Error source, must be _data_
      */
-    source: string;
+    source: "data";
     /**
      * The section of the user's Telegram Passport which has the error, one of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”
      */
-    type: string;
+    type:
+        | "personal_details"
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "address";
     /**
      * Name of the data field which has the error
      */
@@ -12277,11 +12391,11 @@ export interface PassportElementErrorFrontSide {
     /**
      * Error source, must be _front_side_
      */
-    source: string;
+    source: "front_side";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
      */
-    type: string;
+    type: "passport" | "driver_license" | "identity_card" | "internal_passport";
     /**
      * Base64-encoded hash of the file with the front side of the document
      */
@@ -12300,11 +12414,11 @@ export interface PassportElementErrorReverseSide {
     /**
      * Error source, must be _reverse_side_
      */
-    source: string;
+    source: "reverse_side";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “driver_license”, “identity_card”
      */
-    type: string;
+    type: "driver_license" | "identity_card";
     /**
      * Base64-encoded hash of the file with the reverse side of the document
      */
@@ -12323,11 +12437,11 @@ export interface PassportElementErrorSelfie {
     /**
      * Error source, must be _selfie_
      */
-    source: string;
+    source: "selfie";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
      */
-    type: string;
+    type: "passport" | "driver_license" | "identity_card" | "internal_passport";
     /**
      * Base64-encoded hash of the file with the selfie
      */
@@ -12346,11 +12460,16 @@ export interface PassportElementErrorFile {
     /**
      * Error source, must be _file_
      */
-    source: string;
+    source: "file";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * Base64-encoded file hash
      */
@@ -12369,11 +12488,16 @@ export interface PassportElementErrorFiles {
     /**
      * Error source, must be _files_
      */
-    source: string;
+    source: "files";
     /**
      * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * List of base64-encoded file hashes
      */
@@ -12392,11 +12516,20 @@ export interface PassportElementErrorTranslationFile {
     /**
      * Error source, must be _translation_file_
      */
-    source: string;
+    source: "translation_file";
     /**
      * Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * Base64-encoded file hash
      */
@@ -12415,11 +12548,20 @@ export interface PassportElementErrorTranslationFiles {
     /**
      * Error source, must be _translation_files_
      */
-    source: string;
+    source: "translation_files";
     /**
      * Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
      */
-    type: string;
+    type:
+        | "passport"
+        | "driver_license"
+        | "identity_card"
+        | "internal_passport"
+        | "utility_bill"
+        | "bank_statement"
+        | "rental_agreement"
+        | "passport_registration"
+        | "temporary_registration";
     /**
      * List of base64-encoded file hashes
      */
@@ -12438,7 +12580,7 @@ export interface PassportElementErrorUnspecified {
     /**
      * Error source, must be _unspecified_
      */
-    source: string;
+    source: "unspecified";
     /**
      * Type of element of the user's Telegram Passport which has the issue
      */
