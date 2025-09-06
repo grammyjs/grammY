@@ -1,3 +1,9 @@
+// TODO: inline `./core/input_file.ts` into here
+// TODO: restore `UserFromGetMe`
+// TODO: split up `Chat` into four types in namespace
+// TODO: convert `KeyboardButton` to a union type
+// TODO: convert `InlineKeyboardButton` to a union type
+// TODO: decide whether or not to restore `Message.TextMessage` etc
 type Empty = Record<never, never>;
 // === GETTING UPDATES ===
 /**
