@@ -1891,9 +1891,9 @@ export interface InputChecklistTask {
      */
     text: string;
     /**
-     * Optional. Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode: string;
+    parse_mode?: string;
     /**
      * List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.
      */
@@ -1910,9 +1910,9 @@ export interface InputChecklist {
      */
     title: string;
     /**
-     * Optional. Mode for parsing entities in the title. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+     * Mode for parsing entities in the title. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
      */
-    parse_mode: string;
+    parse_mode?: string;
     /**
      * List of special entities that appear in the title, which can be specified instead of parse_mode. Currently, only _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, and _custom_emoji_ entities are allowed.
      */
@@ -5592,7 +5592,9 @@ export interface ApiMethods {
 }
 /**
  * The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
+ *
  * Note that Telegram clients will display an **alert** to the user before opening an inline link ('Open this link?' together with the full URL).
+ *
  * Message entities can be nested, providing following restrictions are met:
  *
  * - If two entities have common characters, then one of them is fully contained inside another.
@@ -5607,11 +5609,12 @@ export interface ApiMethods {
  *
  * You can find the list of programming and markup languages for which syntax highlighting is supported at {@link https://github.com/TelegramMessenger/libprisma#supported-languages | libprisma#supported-languages}.
  *
- * ## MarkdownV2 style
+ * ### MarkdownV2 style
  *
  * To use this mode, pass _MarkdownV2_ in the _parse_mode_ field. Use the following syntax in your message:
- * ````
- * `*bold \*text*
+ *
+ * ````markdown
+ * *bold \*text*
  * _italic \*text_
  * __underline__
  * ~strikethrough~
@@ -5637,7 +5640,7 @@ export interface ApiMethods {
  * >Expandable block quotation continued
  * >Hidden by default part of the expandable block quotation started
  * >Expandable block quotation continued
- * >The last line of the expandable block quotation with the expandability mark||`
+ * >The last line of the expandable block quotation with the expandability mark||
  * ````
  * Please note:
  *
@@ -5649,11 +5652,11 @@ export interface ApiMethods {
  * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji {@link Sticker | sticker}.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment}.
  *
- * ## HTML style
+ * ### HTML style
  *
  * To use this mode, pass _HTML_ in the _parse_mode_ field. The following tags are currently supported:
- * ````
- * `<b>bold</b>, <strong>bold</strong>
+ * ````html
+ * <b>bold</b>, <strong>bold</strong>
  * <i>italic</i>, <em>italic</em>
  * <u>underline</u>, <ins>underline</ins>
  * <s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
@@ -5666,7 +5669,7 @@ export interface ApiMethods {
  * <pre>pre-formatted fixed-width code block</pre>
  * <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
  * <blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>
- * <blockquote expandable>Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation</blockquote>`
+ * <blockquote expandable>Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation</blockquote>
  * ````
  * Please note:
  *
@@ -5679,11 +5682,12 @@ export interface ApiMethods {
  * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji {@link Sticker | sticker}.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment}.
  *
- * ## Markdown style
+ * ### Markdown style
  *
  * This is a legacy mode, retained for backward compatibility. To use this mode, pass _Markdown_ in the _parse_mode_ field. Use the following syntax in your message:
- * ````
- * `*bold text*
+ *
+ * ````markdown
+ * *bold text*
  * _italic text_
  * [inline URL](http://www.example.com/)
  * [inline mention of a user](tg://user?id=123456789)
@@ -5693,13 +5697,13 @@ export interface ApiMethods {
  * ```
  * ```python
  * pre-formatted fixed-width code block written in the Python programming language
- * ````
+ * ```
  * ````
  * Please note:
  *
  * - Entities must not be nested, use parse mode {@link https://core.telegram.org/bots/api#markdownv2-style | MarkdownV2} instead.
  * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode {@link https://core.telegram.org/bots/api#markdownv2-style | MarkdownV2} instead.
- * - To escape characters '_', '*', '`', '[' outside of an entity, prepend the characters '\' before them.
+ * - To escape characters '_', '*', '`', '[' outside of an entity, prepend the characters '\\' before them.
  * - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.
  *
  * @see {@link https://core.telegram.org/bots/api#formatting-options}
@@ -5785,7 +5789,7 @@ export interface ApiMethods {
          * Protects the contents of the forwarded messages from forwarding and saving
          */
         protect_content?: boolean;
-    }): MessageId;
+    }): MessageId[];
 }
 export interface ApiMethods {
     /**
