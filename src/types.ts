@@ -7,7 +7,7 @@ type Empty = Record<never, never>;
  */
 export interface Update {
     /**
-     * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using <a href="#setwebhook">webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+     * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using {@link ApiMethods.setWebhook | webhooks}, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
      */
     update_id: number;
     /**
@@ -115,7 +115,7 @@ export interface ApiMethods {
      */
     getUpdates(args: {
         /**
-         * Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an _offset_ higher than its _update_id_. The negative offset can be specified to retrieve updates starting from _-offset_ update from the end of the updates queue. All previous updates will be forgotten.
+         * Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as {@link ApiMethods.getUpdates | getUpdates} is called with an _offset_ higher than its _update_id_. The negative offset can be specified to retrieve updates starting from _-offset_ update from the end of the updates queue. All previous updates will be forgotten.
          */
         offset?: number;
         /**
@@ -138,7 +138,7 @@ export interface ApiMethods {
      * <p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
      *
      * <blockquote>
-     * <p>**Notes**<br>**1.** You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
+     * <p>**Notes**<br>**1.** You will not be able to receive updates using {@link ApiMethods.getUpdates | getUpdates} for as long as an outgoing webhook is set up.<br>**2.** To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br>**3.** Ports currently supported _for webhooks_: **443, 80, 88, 8443**.</p>
      * <p>If you&#39;re having any trouble setting up webhooks, please check out this {@link https://core.telegram.org/bots/webhooks | amazing guide to webhooks}.</p>
      * </blockquote>
      *
@@ -177,7 +177,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns _True_ on success.</p>
+     * <p>Use this method to remove webhook integration if you decide to switch back to {@link ApiMethods.getUpdates | getUpdates}. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#deletewebhook}
      */
@@ -190,7 +190,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the _url_ field empty.</p>
+     * <p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using {@link ApiMethods.getUpdates | getUpdates}, will return an object with the _url_ field empty.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#getwebhookinfo}
      */
@@ -280,23 +280,23 @@ export interface User {
      */
     added_to_attachment_menu?: true;
     /**
-     * _True_, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.
+     * _True_, if the bot can be invited to groups. Returned only in {@link ApiMethods.getMe | getMe}.
      */
     can_join_groups?: boolean;
     /**
-     * _True_, if {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode} is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
+     * _True_, if {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode} is disabled for the bot. Returned only in {@link ApiMethods.getMe | getMe}.
      */
     can_read_all_group_messages?: boolean;
     /**
-     * _True_, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.
+     * _True_, if the bot supports inline queries. Returned only in {@link ApiMethods.getMe | getMe}.
      */
     supports_inline_queries?: boolean;
     /**
-     * _True_, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in <a href="#getme">getMe</a>.
+     * _True_, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in {@link ApiMethods.getMe | getMe}.
      */
     can_connect_to_business?: boolean;
     /**
-     * _True_, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.
+     * _True_, if the bot has a main Web App. Returned only in {@link ApiMethods.getMe | getMe}.
      */
     has_main_web_app?: boolean;
 }
@@ -1020,7 +1020,7 @@ export interface MessageEntity {
      */
     language?: string;
     /**
-     * For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker
+     * For “custom_emoji” only, unique identifier of the custom emoji. Use {@link ApiMethods.getCustomEmojiStickers | getCustomEmojiStickers} to get full information about the sticker
      */
     custom_emoji_id?: string;
 }
@@ -2792,7 +2792,7 @@ export interface UserProfilePhotos {
     photos: PhotoSize[][];
 }
 /**
- * <p>This object represents a file ready to be downloaded. The file can be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a>.</p>
+ * <p>This object represents a file ready to be downloaded. The file can be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile}.</p>
  * <blockquote>
  * <p>The maximum file size to download is 20 MB</p>
  * </blockquote>
@@ -3038,7 +3038,7 @@ export interface InlineKeyboardButton {
      */
     callback_data?: string;
     /**
-     * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.
+     * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.
      */
     web_app?: WebAppInfo;
     /**
@@ -3143,7 +3143,7 @@ export interface CopyTextButton {
  * <p>This object represents an incoming callback query from a callback button in an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in {@link https://core.telegram.org/bots/api#inline-mode | inline mode}), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.</p>
  *
  * <blockquote>
- * <p>**NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).</p>
+ * <p>**NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call {@link ApiMethods.answerCallbackQuery | answerCallbackQuery}. It is, therefore, necessary to react by calling {@link ApiMethods.answerCallbackQuery | answerCallbackQuery} even if no notification to the user is needed (e.g., without specifying any of the optional parameters).</p>
  * </blockquote>
  *
  * @see {@link https://core.telegram.org/bots/api#callbackquery}
@@ -4776,7 +4776,7 @@ export interface MenuButtonWebApp {
      */
     text: string;
     /**
-     * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Alternatively, a `t.me` link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
+     * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Alternatively, a `t.me` link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
      */
     web_app: WebAppInfo;
 }
@@ -5756,7 +5756,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
+     * <p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessage | forwardMessage}, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#copymessage}
      */
@@ -5833,7 +5833,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
+     * <p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#copymessages}
      */
@@ -5956,7 +5956,7 @@ export interface ApiMethods {
 export interface ApiMethods {
     /**
      * <p>Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.</p>
-     * <p>For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.</p>
+     * <p>For sending voice messages, use the {@link ApiMethods.sendVoice | sendVoice} method instead.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#sendaudio}
      */
@@ -7069,7 +7069,7 @@ export interface ApiMethods {
     /**
      * <p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.</p>
      * <blockquote>
-     * <p>Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.</p>
+     * <p>Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use {@link ApiMethods.sendChatAction | sendChatAction} with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.</p>
      * </blockquote>
      * <p>We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.</p>
      *
@@ -7089,7 +7089,7 @@ export interface ApiMethods {
          */
         message_thread_id?: number;
         /**
-         * Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for <a href="#sendmessage">text messages</a>, _upload_photo_ for <a href="#sendphoto">photos</a>, _record_video_ or _upload_video_ for <a href="#sendvideo">videos</a>, _record_voice_ or _upload_voice_ for <a href="#sendvoice">voice notes</a>, _upload_document_ for <a href="#senddocument">general files</a>, _choose_sticker_ for <a href="#sendsticker">stickers</a>, _find_location_ for <a href="#sendlocation">location data</a>, _record_video_note_ or _upload_video_note_ for <a href="#sendvideonote">video notes</a>.
+         * Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link ApiMethods.sendMessage | text messages}, _upload_photo_ for {@link ApiMethods.sendPhoto | photos}, _record_video_ or _upload_video_ for {@link ApiMethods.sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link ApiMethods.sendVoice | voice notes}, _upload_document_ for {@link ApiMethods.sendDocument | general files}, _choose_sticker_ for {@link ApiMethods.sendSticker | stickers}, _find_location_ for {@link ApiMethods.sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link ApiMethods.sendVideoNote | video notes}.
          */
         action: string;
     }): true;
@@ -7163,7 +7163,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.</p>
+     * <p>Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile} again.</p>
      *
      * <p>**Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.</p>
      *
@@ -7178,7 +7178,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+     * <p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link ApiMethods.unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#banchatmember}
      */
@@ -7355,7 +7355,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
+     * <p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
      */
@@ -7413,7 +7413,7 @@ export interface ApiMethods {
      * <p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as _String_ on success.</p>
      *
      * <blockquote>
-     * <p>Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.</p>
+     * <p>Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} or by calling the {@link ApiMethods.getChat | getChat} method. If your bot needs to generate a new primary invite link replacing its previous one, use {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} again.</p>
      * </blockquote>
      *
      * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
@@ -7427,7 +7427,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+     * <p>Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#createchatinvitelink}
      */
@@ -7489,7 +7489,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
+     * <p>Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method {@link ApiMethods.editChatSubscriptionInviteLink | editChatSubscriptionInviteLink} or revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink}
      */
@@ -7778,7 +7778,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
+     * <p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#setchatstickerset}
      */
@@ -7795,7 +7795,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns _True_ on success.</p>
+     * <p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#deletechatstickerset}
      */
@@ -7834,7 +7834,7 @@ export interface ApiMethods {
          */
         icon_color?: number;
         /**
-         * Unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers.
+         * Unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers.
          */
         icon_custom_emoji_id?: string;
     }): ForumTopic;
@@ -7859,7 +7859,7 @@ export interface ApiMethods {
          */
         name?: string;
         /**
-         * New unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept
+         * New unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept
          */
         icon_custom_emoji_id?: string;
     }): true;
@@ -8452,7 +8452,7 @@ export interface ApiMethods {
          */
         business_connection_id: string;
         /**
-         * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted
+         * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted
          */
         message_ids: number[];
     }): true;
@@ -8939,7 +8939,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
+     * <p>Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise _True_ is returned.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
      */
@@ -9173,7 +9173,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted
+         * A JSON-serialized list of 1-100 identifiers of messages to delete. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted
          */
         message_ids: number[];
     }): true;
@@ -9417,7 +9417,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.</p>
+     * <p>Use this method to upload a file with a sticker for later use in the {@link ApiMethods.createNewStickerSet | createNewStickerSet}, {@link ApiMethods.addStickerToSet | addStickerToSet}, or {@link ApiMethods.replaceStickerInSet | replaceStickerInSet} methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#uploadstickerfile}
      */
@@ -9522,7 +9522,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * <p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns _True_ on success.</p>
+     * <p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling {@link ApiMethods.deleteStickerFromSet | deleteStickerFromSet}, then {@link ApiMethods.addStickerToSet | addStickerToSet}, then {@link ApiMethods.setStickerPositionInSet | setStickerPositionInSet}. Returns _True_ on success.</p>
      *
      * @see {@link https://core.telegram.org/bots/api#replacestickerinset}
      */
@@ -12471,7 +12471,7 @@ export interface Game {
      */
     photo: PhotoSize[];
     /**
-     * Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.
+     * Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls {@link ApiMethods.setGameScore | setGameScore}, or manually edited using {@link ApiMethods.editMessageText | editMessageText}. 0-4096 characters.
      */
     text?: string;
     /**
