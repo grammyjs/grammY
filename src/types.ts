@@ -1,4 +1,3 @@
-// TODO: restore `UserFromGetMe`
 // TODO: split up `Chat` into four types in namespace
 // TODO: convert `KeyboardButton` to a union type
 // TODO: convert `InlineKeyboardButton` to a union type
@@ -364,6 +363,13 @@ export interface User {
      * _True_, if this user added the bot to the attachment menu
      */
     added_to_attachment_menu?: true;
+}
+/**
+ * This object represents a Telegram user or bot.
+ *
+ * @see {@link https://core.telegram.org/bots/api#user}
+ */
+export interface UserFromGetMe extends User {
     /**
      * _True_, if the bot can be invited to groups. Returned only in {@link ApiMethods.getMe | getMe}.
      */
@@ -5713,7 +5719,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#getme}
      */
-    getMe(args: Empty): User;
+    getMe(args: Empty): UserFromGetMe;
 }
 export interface ApiMethods {
     /**
