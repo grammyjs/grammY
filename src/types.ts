@@ -577,7 +577,7 @@ export interface ApiMethods {
          */
         timeout?: number;
         /**
-         * A JSON-serialized list of the update types you want your bot to receive. For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+         * A list of the update types you want your bot to receive. For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
          *
          * Please note that this parameter doesn't affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
          */
@@ -619,7 +619,7 @@ export interface ApiMethods {
          */
         max_connections?: number;
         /**
-         * A JSON-serialized list of the update types you want your bot to receive. For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+         * A list of the update types you want your bot to receive. For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive updates of these types. See {@link Update | Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
          *
          * Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
          */
@@ -1647,7 +1647,7 @@ export interface ReplyParameters {
      */
     quote_parse_mode?: ParseMode;
     /**
-     * A JSON-serialized list of special entities that appear in the quote. It can be specified instead of _quote_parse_mode_.
+     * A list of special entities that appear in the quote. It can be specified instead of _quote_parse_mode_.
      */
     quote_entities?: MessageEntity[];
     /**
@@ -2185,7 +2185,7 @@ export interface InputPollOption {
      */
     text_parse_mode?: ParseMode;
     /**
-     * A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of _text_parse_mode_
+     * A list of special entities that appear in the poll option text. It can be specified instead of _text_parse_mode_
      */
     text_entities?: MessageEntity[];
 }
@@ -3425,11 +3425,11 @@ export interface KeyboardButtonRequestChat {
      */
     chat_is_created?: boolean;
     /**
-     * A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of _bot_administrator_rights_. If not specified, no additional restrictions are applied.
+     * An object listing the required administrator rights of the user in the chat. The rights must be a superset of _bot_administrator_rights_. If not specified, no additional restrictions are applied.
      */
     user_administrator_rights?: ChatAdministratorRights;
     /**
-     * A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of _user_administrator_rights_. If not specified, no additional restrictions are applied.
+     * An object listing the required administrator rights of the bot in the chat. The rights must be a subset of _user_administrator_rights_. If not specified, no additional restrictions are applied.
      */
     bot_administrator_rights?: ChatAdministratorRights;
     /**
@@ -6144,7 +6144,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
         entities?: MessageEntity[];
         /**
@@ -6168,7 +6168,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6176,7 +6176,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6340,7 +6340,7 @@ export interface ApiMethods {
          */
         protect_content?: boolean;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only
+         * An object containing the parameters of the suggested post to send; for direct messages chats only
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6373,7 +6373,7 @@ export interface ApiMethods {
          */
         from_chat_id: number | string;
         /**
-         * A JSON-serialized list of 1-100 identifiers of messages in the chat _from_chat_id_ to forward. The identifiers must be specified in a strictly increasing order.
+         * A list of 1-100 identifiers of messages in the chat _from_chat_id_ to forward. The identifiers must be specified in a strictly increasing order.
          */
         message_ids: number[];
         /**
@@ -6426,7 +6426,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the new caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -6446,7 +6446,7 @@ export interface ApiMethods {
          */
         allow_paid_broadcast?: boolean;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6454,7 +6454,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6487,7 +6487,7 @@ export interface ApiMethods {
          */
         from_chat_id: number | string;
         /**
-         * A JSON-serialized list of 1-100 identifiers of messages in the chat _from_chat_id_ to copy. The identifiers must be specified in a strictly increasing order.
+         * A list of 1-100 identifiers of messages in the chat _from_chat_id_ to copy. The identifiers must be specified in a strictly increasing order.
          */
         message_ids: number[];
         /**
@@ -6540,7 +6540,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -6568,7 +6568,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6576,7 +6576,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6622,7 +6622,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -6658,7 +6658,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6666,7 +6666,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6715,7 +6715,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -6739,7 +6739,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6747,7 +6747,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6816,7 +6816,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -6848,7 +6848,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6856,7 +6856,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6917,7 +6917,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -6945,7 +6945,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -6953,7 +6953,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -6998,7 +6998,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -7022,7 +7022,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -7030,7 +7030,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7095,7 +7095,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -7103,7 +7103,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7140,7 +7140,7 @@ export interface ApiMethods {
          */
         star_count: number;
         /**
-         * A JSON-serialized array describing the media to be sent; up to 10 items
+         * An array describing the media to be sent; up to 10 items
          */
         media: InputPaidMedia[];
         /**
@@ -7156,7 +7156,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -7176,7 +7176,7 @@ export interface ApiMethods {
          */
         allow_paid_broadcast?: boolean;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -7184,7 +7184,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7217,7 +7217,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * A JSON-serialized array describing messages to be sent, must include 2-10 items
+         * An array describing messages to be sent, must include 2-10 items
          */
         media: Array<
             | InputMediaAudio
@@ -7311,7 +7311,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -7319,7 +7319,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7400,7 +7400,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -7408,7 +7408,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7473,7 +7473,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -7481,7 +7481,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7518,11 +7518,11 @@ export interface ApiMethods {
          */
         question_parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of _question_parse_mode_
+         * A list of special entities that appear in the poll question. It can be specified instead of _question_parse_mode_
          */
         question_entities?: MessageEntity[];
         /**
-         * A JSON-serialized list of 2-12 answer options
+         * A list of 2-12 answer options
          */
         options: InputPollOption[];
         /**
@@ -7550,7 +7550,7 @@ export interface ApiMethods {
          */
         explanation_parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of _explanation_parse_mode_
+         * A list of special entities that appear in the poll explanation. It can be specified instead of _explanation_parse_mode_
          */
         explanation_entities?: MessageEntity[];
         /**
@@ -7586,7 +7586,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7611,7 +7611,7 @@ export interface ApiMethods {
          */
         chat_id: number;
         /**
-         * A JSON-serialized object for the checklist to send
+         * An object for the checklist to send
          */
         checklist: InputChecklist;
         /**
@@ -7627,11 +7627,11 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object for description of the message to reply to
+         * An object for description of the message to reply to
          */
         reply_parameters?: ReplyParameters;
         /**
-         * A JSON-serialized object for an inline keyboard
+         * An object for an inline keyboard
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Message;
@@ -7680,7 +7680,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -7688,7 +7688,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -7753,7 +7753,7 @@ export interface ApiMethods {
          */
         message_id: number;
         /**
-         * A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
+         * A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
          */
         reaction?: ReactionType[];
         /**
@@ -7881,7 +7881,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A JSON-serialized object for new user permissions
+         * An object for new user permissions
          */
         permissions: ChatPermissions;
         /**
@@ -8042,7 +8042,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * A JSON-serialized object for new default chat permissions
+         * An object for new default chat permissions
          */
         permissions: ChatPermissions;
         /**
@@ -8732,11 +8732,11 @@ export interface ApiMethods {
      */
     setMyCommands(args: {
         /**
-         * A JSON-serialized list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
+         * A list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
          */
         commands: BotCommand[];
         /**
-         * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to {@link BotCommandScopeDefault | BotCommandScopeDefault}.
+         * An object, describing scope of users for which the commands are relevant. Defaults to {@link BotCommandScopeDefault | BotCommandScopeDefault}.
          */
         scope?: BotCommandScope;
         /**
@@ -8753,7 +8753,7 @@ export interface ApiMethods {
      */
     deleteMyCommands(args: {
         /**
-         * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to {@link BotCommandScopeDefault | BotCommandScopeDefault}.
+         * An object, describing scope of users for which the commands are relevant. Defaults to {@link BotCommandScopeDefault | BotCommandScopeDefault}.
          */
         scope?: BotCommandScope;
         /**
@@ -8770,7 +8770,7 @@ export interface ApiMethods {
      */
     getMyCommands(args: {
         /**
-         * A JSON-serialized object, describing scope of users. Defaults to {@link BotCommandScopeDefault | BotCommandScopeDefault}.
+         * An object, describing scope of users. Defaults to {@link BotCommandScopeDefault | BotCommandScopeDefault}.
          */
         scope?: BotCommandScope;
         /**
@@ -8881,7 +8881,7 @@ export interface ApiMethods {
          */
         chat_id?: number;
         /**
-         * A JSON-serialized object for the bot's new menu button. Defaults to {@link MenuButtonDefault | MenuButtonDefault}
+         * An object for the bot's new menu button. Defaults to {@link MenuButtonDefault | MenuButtonDefault}
          */
         menu_button?: MenuButton;
     }): true;
@@ -8907,7 +8907,7 @@ export interface ApiMethods {
      */
     setMyDefaultAdministratorRights(args: {
         /**
-         * A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared.
+         * An object describing new default administrator rights. If not specified, the default administrator rights will be cleared.
          */
         rights?: ChatAdministratorRights;
         /**
@@ -8969,7 +8969,7 @@ export interface ApiMethods {
          */
         text_parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
+         * A list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
         text_entities?: MessageEntity[];
     }): true;
@@ -9002,7 +9002,7 @@ export interface ApiMethods {
          */
         text_parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
+         * A list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, and “custom_emoji” are ignored.
          */
         text_entities?: MessageEntity[];
     }): true;
@@ -9100,7 +9100,7 @@ export interface ApiMethods {
          */
         business_connection_id: string;
         /**
-         * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted
+         * A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted
          */
         message_ids: number[];
     }): true;
@@ -9389,11 +9389,11 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
-         * A JSON-serialized list of clickable areas to be shown on the story
+         * A list of clickable areas to be shown on the story
          */
         areas?: StoryArea[];
         /**
@@ -9434,11 +9434,11 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
-         * A JSON-serialized list of clickable areas to be shown on the story
+         * A list of clickable areas to be shown on the story
          */
         areas?: StoryArea[];
     }): Story;
@@ -9494,7 +9494,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
         entities?: MessageEntity[];
         /**
@@ -9502,7 +9502,7 @@ export interface ApiMethods {
          */
         link_preview_options?: LinkPreviewOptions;
         /**
-         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
+         * An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9539,7 +9539,7 @@ export interface ApiMethods {
          */
         parse_mode?: ParseMode;
         /**
-         * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of _parse_mode_
+         * A list of special entities that appear in the caption, which can be specified instead of _parse_mode_
          */
         caption_entities?: MessageEntity[];
         /**
@@ -9547,7 +9547,7 @@ export interface ApiMethods {
          */
         show_caption_above_media?: boolean;
         /**
-         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
+         * An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9576,11 +9576,11 @@ export interface ApiMethods {
          */
         inline_message_id?: string;
         /**
-         * A JSON-serialized object for a new media content of the message
+         * An object for a new media content of the message
          */
         media: InputMedia;
         /**
-         * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
+         * An object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9633,7 +9633,7 @@ export interface ApiMethods {
          */
         proximity_alert_radius?: number;
         /**
-         * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
+         * An object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9662,7 +9662,7 @@ export interface ApiMethods {
          */
         inline_message_id?: string;
         /**
-         * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
+         * An object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9687,11 +9687,11 @@ export interface ApiMethods {
          */
         message_id: number;
         /**
-         * A JSON-serialized object for the new checklist
+         * An object for the new checklist
          */
         checklist: InputChecklist;
         /**
-         * A JSON-serialized object for the new inline keyboard for the message
+         * An object for the new inline keyboard for the message
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Message;
@@ -9720,7 +9720,7 @@ export interface ApiMethods {
          */
         inline_message_id?: string;
         /**
-         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
+         * An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): true | Message;
@@ -9745,7 +9745,7 @@ export interface ApiMethods {
          */
         message_id: number;
         /**
-         * A JSON-serialized object for a new message {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
+         * An object for a new message {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Poll;
@@ -9833,7 +9833,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * A JSON-serialized list of 1-100 identifiers of messages to delete. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted
+         * A list of 1-100 identifiers of messages to delete. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted
          */
         message_ids: number[];
     }): true;
@@ -10032,7 +10032,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -10040,7 +10040,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * Additional interface options. A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
+         * Additional interface options. An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}, {@link https://core.telegram.org/bots/features#keyboards | custom reply keyboard}, instructions to remove a reply keyboard or to force a reply from the user
          */
         reply_markup?:
             | InlineKeyboardMarkup
@@ -10070,7 +10070,7 @@ export interface ApiMethods {
      */
     getCustomEmojiStickers(args: {
         /**
-         * A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
+         * A list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
          */
         custom_emoji_ids: string[];
     }): Sticker[];
@@ -10116,7 +10116,7 @@ export interface ApiMethods {
          */
         title: string;
         /**
-         * A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
+         * A list of 1-50 initial stickers to be added to the sticker set
          */
         stickers: InputSticker[];
         /**
@@ -10145,7 +10145,7 @@ export interface ApiMethods {
          */
         name: string;
         /**
-         * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.
+         * An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.
          */
         sticker: InputSticker;
     }): true;
@@ -10200,7 +10200,7 @@ export interface ApiMethods {
          */
         old_sticker: string;
         /**
-         * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.
+         * An object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.
          */
         sticker: InputSticker;
     }): true;
@@ -10217,7 +10217,7 @@ export interface ApiMethods {
          */
         sticker: string;
         /**
-         * A JSON-serialized list of 1-20 emoji associated with the sticker
+         * A list of 1-20 emoji associated with the sticker
          */
         emoji_list: string[];
     }): true;
@@ -10234,7 +10234,7 @@ export interface ApiMethods {
          */
         sticker: string;
         /**
-         * A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters
+         * A list of 0-20 search keywords for the sticker with total length of up to 64 characters
          */
         keywords?: string[];
     }): true;
@@ -10251,7 +10251,7 @@ export interface ApiMethods {
          */
         sticker: string;
         /**
-         * A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
+         * An object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
          */
         mask_position?: MaskPosition;
     }): true;
@@ -10375,7 +10375,7 @@ export interface ApiMethods {
          */
         inline_query_id: string;
         /**
-         * A JSON-serialized array of results for the inline query
+         * An array of results for the inline query
          */
         results: InlineQueryResult[];
         /**
@@ -10391,7 +10391,7 @@ export interface ApiMethods {
          */
         next_offset?: string;
         /**
-         * A JSON-serialized object describing a button to be shown above inline query results
+         * An object describing a button to be shown above inline query results
          */
         button?: InlineQueryResultsButton;
     }): true;
@@ -11658,7 +11658,7 @@ export interface InputInvoiceMessageContent {
      */
     currency: string;
     /**
-     * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     prices: LabeledPrice[];
     /**
@@ -11666,11 +11666,11 @@ export interface InputInvoiceMessageContent {
      */
     max_tip_amount?: number;
     /**
-     * A JSON-serialized array of suggested amounts of tip in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
+     * An array of suggested amounts of tip in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
      */
     suggested_tip_amounts?: number[];
     /**
-     * A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.
+     * An object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.
      */
     provider_data?: string;
     /**
@@ -11759,7 +11759,7 @@ export interface ApiMethods {
          */
         web_app_query_id: string;
         /**
-         * A JSON-serialized object describing the message to be sent
+         * An object describing the message to be sent
          */
         result: InlineQueryResult;
     }): SentWebAppMessage;
@@ -11787,7 +11787,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A JSON-serialized object describing the message to be sent
+         * An object describing the message to be sent
          */
         result: InlineQueryResult;
         /**
@@ -11865,7 +11865,7 @@ export interface ApiMethods {
          */
         currency: string;
         /**
-         * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+         * Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         prices: LabeledPrice[];
         /**
@@ -11873,7 +11873,7 @@ export interface ApiMethods {
          */
         max_tip_amount?: number;
         /**
-         * A JSON-serialized array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
+         * An array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
          */
         suggested_tip_amounts?: number[];
         /**
@@ -11945,7 +11945,7 @@ export interface ApiMethods {
          */
         message_effect_id?: string;
         /**
-         * A JSON-serialized object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
+         * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
         /**
@@ -11953,7 +11953,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Pay `total price`' button will be shown. If not empty, the first button must be a Pay button.
+         * An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Pay `total price`' button will be shown. If not empty, the first button must be a Pay button.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Message;
@@ -11990,7 +11990,7 @@ export interface ApiMethods {
          */
         currency: string;
         /**
-         * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+         * Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         prices: LabeledPrice[];
         /**
@@ -12002,7 +12002,7 @@ export interface ApiMethods {
          */
         max_tip_amount?: number;
         /**
-         * A JSON-serialized array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
+         * An array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
          */
         suggested_tip_amounts?: number[];
         /**
@@ -12071,7 +12071,7 @@ export interface ApiMethods {
          */
         ok: boolean;
         /**
-         * Required if _ok_ is _True_. A JSON-serialized array of available shipping options.
+         * Required if _ok_ is _True_. An array of available shipping options.
          */
         shipping_options?: ShippingOption[];
         /**
@@ -12842,7 +12842,7 @@ export interface ApiMethods {
          */
         user_id: number;
         /**
-         * A JSON-serialized array describing the errors
+         * An array describing the errors
          */
         errors: PassportElementError[];
     }): true;
@@ -13162,7 +13162,7 @@ export interface ApiMethods {
          */
         reply_parameters?: ReplyParameters;
         /**
-         * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.
+         * An object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.
          */
         reply_markup?: InlineKeyboardMarkup;
     }): Message;
