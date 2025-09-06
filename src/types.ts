@@ -1,11 +1,75 @@
-// TODO: inline `./core/input_file.ts` into here
 // TODO: restore `UserFromGetMe`
 // TODO: split up `Chat` into four types in namespace
 // TODO: convert `KeyboardButton` to a union type
 // TODO: convert `InlineKeyboardButton` to a union type
 // TODO: restore LanguageCode definition
 // TODO: decide whether or not to restore `Message.TextMessage` etc
-type Empty = Record<never, never>;
+import { basename } from "node:path";
+
+// === HELPER TYPES ===
+/** Object with no keys */
+export type Empty = Record<never, never>;
+/**
+ * Utility type providing the argument type for the given method name or `{}` if
+ * the method does not take any parameters
+ */
+export type ApiParameters<M extends keyof ApiMethods> = Parameters<
+    ApiMethods[M]
+>[0];
+
+// === HELPER RUNTIME CODE ===
+const isDeno = typeof Deno !== "undefined";
+function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
+    if ("base64" in data) return new URL(`data:;base64,${data.base64}`);
+    if ("readable" in data) return data.readable;
+    if (data instanceof Response) return data;
+    if ("url" in data) return new URL(data.url);
+    return data;
+}
+function guessFilename(file: ReturnType<typeof preprocess>) {
+    if ("path" in file && typeof file.path === "string") {
+        return basename(file.path);
+    }
+    if ("url" in file && file.url) file = new URL(file.url);
+    if (file instanceof File) return file.name;
+    if (!(file instanceof URL)) return undefined;
+    if (file.pathname !== "/") {
+        const filename = basename(file.pathname);
+        if (filename) return filename;
+    }
+    return basename(file.hostname);
+}
+/** Error class for failed fetch requests during file uploads */
+export class ResponseError extends Error {
+    /** Status code of the failed fetch request */
+    readonly error_code: number;
+    /** Used to construct a new error when a fetch request fails */
+    constructor(readonly response: Response) {
+        let message = response.body ? response.statusText : "No response body";
+        if (response.url) message += ` from ${response.url}`;
+        super(message);
+        this.name = ResponseError.name;
+        this.error_code = response.status;
+    }
+}
+async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
+    if (isDeno) {
+        const file = await Deno.open(path);
+        return file.readable;
+    }
+    const fs = globalThis.process.getBuiltinModule("node:fs");
+    return fs.createReadStream(path);
+}
+async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
+    // https://github.com/nodejs/undici/issues/2751
+    if (url.protocol === "file") return await readFile(url.pathname);
+    const response = await fetch(url);
+    if (!response.ok || response.body === null) {
+        throw new ResponseError(response);
+    }
+    return response.body;
+}
+
 // === GETTING UPDATES ===
 /**
  * This {@link https://core.telegram.org/bots/api#available-types | object} represents an incoming update.
@@ -112,6 +176,7 @@ export interface Update {
      */
     removed_chat_boost?: ChatBoostRemoved;
 }
+/** Wrapper type to bundle all methods of the Telegram Bot API */
 export interface ApiMethods {
     /**
      * Use this method to receive incoming updates using long polling ({@link https://en.wikipedia.org/wiki/Push_technology#Long_polling | wiki}). Returns an Array of {@link Update | Update} objects.
@@ -5406,7 +5471,76 @@ export interface InputMediaDocument {
  *
  * @see {@link https://core.telegram.org/bots/api#inputfile}
  */
-export class InputFile {}
+export class InputFile {
+    private consumed = false;
+    private readonly fileData: ReturnType<typeof preprocess>;
+    /**
+     * Optional name of the constructed `InputFile` instance.
+     *
+     * Check out the
+     * [documentation](https://grammy.dev/guide/files#uploading-your-own-files)
+     * on sending files with `InputFile`.
+     */
+    public readonly name?: string;
+    /**
+     * Constructs an `InputFile` that can be used in the API to send files. An
+     * `InputFile` wraps a number of different sources for [sending
+     * files](https://grammy.dev/guide/files#uploading-your-own-files).
+     *
+     * @param file A path, URL, buffer, stream, or any file data source
+     * @param filename Optional name of the file
+     */
+    constructor(
+        file:
+            | { path: string }
+            | { url: string }
+            | URL
+            | Blob
+            | Response
+            | Uint8Array
+            | AsyncIterable<Uint8Array>
+            | { readable: AsyncIterable<Uint8Array> }
+            | { base64: string }
+            | (() =>
+                | AsyncIterable<Uint8Array>
+                | Promise<AsyncIterable<Uint8Array>>),
+        filename?: string,
+    ) {
+        this.fileData = preprocess(file);
+        this.name = filename ?? guessFilename(this.fileData);
+    }
+    /**
+     * Internal property to convert this instance into a binary representation
+     * that can be sent to the Bot API server in the request body. You should
+     * never have to call this manually.
+     */
+    async *[Symbol.asyncIterator](): AsyncIterator<Uint8Array, undefined> {
+        // prefer extending `preprocess` -- it's not re-ran on retry
+        const data = this.fileData;
+        if (this.consumed) {
+            throw new TypeError("Cannot reuse InputFile data source!");
+        } else if (typeof data === "function") {
+            yield* await data();
+        } else if (data instanceof Uint8Array) {
+            yield data;
+        } else if ("stream" in data) {
+            yield* data.stream();
+        } else if (Symbol.asyncIterator in data) {
+            this.consumed = true;
+            yield* data;
+        } else if ("path" in data) {
+            yield* await readFile(data.path);
+        } else if (data instanceof Response) {
+            if (data.body === null) throw new ResponseError(data);
+            this.consumed = true;
+            yield* data.body;
+        } else if (data instanceof URL) {
+            yield* await fetchFile(data);
+        } else {
+            data satisfies never;
+        }
+    }
+}
 /**
  * This object describes the paid media to be sent. Currently, it can be one of
  * - InputPaidMediaPhoto
