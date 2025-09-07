@@ -1,4 +1,3 @@
-// TODO: convert `KeyboardButton` to a union type
 // TODO: convert `InlineKeyboardButton` to a union type
 // === HELPER TYPES ===
 /** Object with no keys */
@@ -802,7 +801,7 @@ export type Chat =
     | Chat.SupergroupChat
     | Chat.ChannelChat;
 /**
- * Namespace that holds all types of cahts.
+ * Namespace that holds all types of chats.
  *
  * @see {@link https://core.telegram.org/bots/api#chat}
  */
@@ -4094,35 +4093,97 @@ export interface ReplyKeyboardMarkup {
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
  */
-export interface KeyboardButton {
+export type KeyboardButton =
+    | KeyboardButton.WithText
+    | KeyboardButton.WithRequestUsers
+    | KeyboardButton.WithRequestChat
+    | KeyboardButton.WithRequestContact
+    | KeyboardButton.WithRequestLocation
+    | KeyboardButton.WithRequestPoll
+    | KeyboardButton.WithWebApp;
+/**
+ * Namespace that holds all types of keyboard buttons.
+ *
+ * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
+ */
+export declare namespace KeyboardButton {
     /**
-     * Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed
+     * A keyboard button of type text.
+     *
+     * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
      */
-    text: string;
+    export interface WithText {
+        /**
+         * Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed
+         */
+        text: string;
+    }
     /**
-     * If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
+     * A keyboard button of type request_users.
+     *
+     * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
      */
-    request_users?: KeyboardButtonRequestUsers;
+    export interface WithRequestUsers extends WithText {
+        /**
+         * If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
+         */
+        request_users: KeyboardButtonRequestUsers;
+    }
     /**
-     * If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
+     * A keyboard button of type request_chat.
+     *
+     * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
      */
-    request_chat?: KeyboardButtonRequestChat;
+    export interface WithRequestChat extends WithText {
+        /**
+         * If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
+         */
+        request_chat: KeyboardButtonRequestChat;
+    }
     /**
-     * If _True_, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
+     * A keyboard button of type request_contact.
+     *
+     * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
      */
-    request_contact?: boolean;
+    export interface WithRequestContact extends WithText {
+        /**
+         * If _True_, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
+         */
+        request_contact: boolean;
+    }
     /**
-     * If _True_, the user's current location will be sent when the button is pressed. Available in private chats only.
+     * A keyboard button of type request_location.
+     *
+     * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
      */
-    request_location?: boolean;
+    export interface WithRequestLocation extends WithText {
+        /**
+         * If _True_, the user's current location will be sent when the button is pressed. Available in private chats only.
+         */
+        request_location: boolean;
+    }
     /**
-     * If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.
+     * A keyboard button of type request_poll.
+     *
+     * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
      */
-    request_poll?: KeyboardButtonPollType;
+    export interface WithRequestPoll extends WithText {
+        /**
+         * If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.
+         */
+        request_poll: KeyboardButtonPollType;
+    }
     /**
-     * If specified, the described {@link https://core.telegram.org/bots/webapps | Web App} will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
+     * A keyboard button of type web_app.
+     *
+     * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
      */
-    web_app?: WebAppInfo;
+    export interface WithWebApp extends WithText {
+        /**
+         * If specified, the described {@link https://core.telegram.org/bots/webapps | Web App} will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
+         */
+        web_app: WebAppInfo;
+    }
 }
 /**
  * This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. {@link https://core.telegram.org/bots/features#chat-and-user-selection | More about requesting users »}
