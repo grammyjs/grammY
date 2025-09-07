@@ -620,6 +620,7 @@ export class Context implements RenamedUpdate {
      * this.deletedBusinessMessages?.business_connection_id`.
      */
     get businessConnectionId(): string | undefined {
+        // Keep in sync with types in `filter.ts`.
         return this.msg?.business_connection_id ??
             this.businessConnection?.id ??
             this.deletedBusinessMessages?.business_connection_id;
