@@ -2,18 +2,10 @@
 // TODO: convert `KeyboardButton` to a union type
 // TODO: convert `InlineKeyboardButton` to a union type
 // TODO: decide whether or not to restore `Message.TextMessage` etc
-import { basename } from "node:path";
-
+// TODO: decide whether or not to restore `Update.Channel` etc
 // === HELPER TYPES ===
 /** Object with no keys */
 export type Empty = Record<never, never>;
-/**
- * A two-letter ISO 639-1 language code.
- *
- * @see {@link https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes}
- * @see {@link https://www.loc.gov/standards/iso639-2/php/code_list.php}
- */
-export type LanguageCode = typeof LanguageCodes[keyof typeof LanguageCodes];
 /**
  * Utility type providing the argument type for the given method name or `{}` if
  * the method does not take any parameters
@@ -21,6 +13,13 @@ export type LanguageCode = typeof LanguageCodes[keyof typeof LanguageCodes];
 export type ApiParameters<M extends keyof ApiMethods> = Parameters<
     ApiMethods[M]
 >[0];
+/**
+ * A two-letter ISO 639-1 language code.
+ *
+ * @see {@link https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes}
+ * @see {@link https://www.loc.gov/standards/iso639-2/php/code_list.php}
+ */
+export type LanguageCode = typeof LanguageCodes[keyof typeof LanguageCodes];
 
 // === HELPER RUNTIME CODE ===
 /** More readable aliases for {@link LanguageCode} values */
@@ -392,7 +391,6 @@ export const LanguageCodes = {
     /** ISO 639-1 language code for Zulu */
     Zulu: "zu",
 } as const;
-const isDeno = typeof Deno !== "undefined";
 function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
     if ("base64" in data) return new URL(`data:;base64,${data.base64}`);
     if ("readable" in data) return data.readable;
@@ -400,18 +398,31 @@ function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
     if ("url" in data) return new URL(data.url);
     return data;
 }
-function guessFilename(file: ReturnType<typeof preprocess>) {
-    if ("path" in file && typeof file.path === "string") {
-        return basename(file.path);
+const isDeno = typeof Deno !== "undefined";
+declare const Bun: { file(path: string): Blob } | undefined;
+const isBun = typeof Bun !== "undefined";
+let createReadStream: typeof import("node:fs")["createReadStream"] | undefined;
+async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
+    if (isDeno) {
+        const file = await Deno.open(path);
+        return file.readable;
     }
-    if ("url" in file && file.url) file = new URL(file.url);
-    if (file instanceof File) return file.name;
-    if (!(file instanceof URL)) return undefined;
-    if (file.pathname !== "/") {
-        const filename = basename(file.pathname);
-        if (filename) return filename;
+    if (isBun) {
+        const file = Bun.file(path);
+        return file.stream();
     }
-    return basename(file.hostname);
+    createReadStream ??=
+        globalThis.process.getBuiltinModule("node:fs").createReadStream;
+    return createReadStream(path);
+}
+async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
+    // https://github.com/nodejs/undici/issues/2751
+    if (url.protocol === "file") return await readFile(url.pathname);
+    const response = await fetch(url);
+    if (!response.ok || response.body === null) {
+        throw new ResponseError(response);
+    }
+    return response.body;
 }
 /** Error class for failed fetch requests during file uploads */
 export class ResponseError extends Error {
@@ -426,22 +437,20 @@ export class ResponseError extends Error {
         this.error_code = response.status;
     }
 }
-async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
-    if (isDeno) {
-        const file = await Deno.open(path);
-        return file.readable;
+let basename: (typeof import("node:path"))["basename"] | undefined;
+function guessFilename(file: ReturnType<typeof preprocess>) {
+    basename ??= globalThis.process.getBuiltinModule("node:path").basename;
+    if ("path" in file && typeof file.path === "string") {
+        return basename(file.path);
     }
-    const fs = globalThis.process.getBuiltinModule("node:fs");
-    return fs.createReadStream(path);
-}
-async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
-    // https://github.com/nodejs/undici/issues/2751
-    if (url.protocol === "file") return await readFile(url.pathname);
-    const response = await fetch(url);
-    if (!response.ok || response.body === null) {
-        throw new ResponseError(response);
+    if ("url" in file && file.url) file = new URL(file.url);
+    if (file instanceof File) return file.name;
+    if (!(file instanceof URL)) return undefined;
+    if (file.pathname !== "/") {
+        const filename = basename(file.pathname);
+        if (filename) return filename;
     }
-    return response.body;
+    return basename(file.hostname);
 }
 
 // === GETTING UPDATES ===
