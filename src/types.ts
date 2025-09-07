@@ -1,11 +1,11 @@
 // TODO: split up `Chat` into four types in namespace
 // TODO: convert `KeyboardButton` to a union type
 // TODO: convert `InlineKeyboardButton` to a union type
-// TODO: decide whether or not to restore `Message.TextMessage` etc
-// TODO: decide whether or not to restore `Update.Channel` etc
 // === HELPER TYPES ===
 /** Object with no keys */
 export type Empty = Record<never, never>;
+/** Anything except null or undefined */
+export type Present = NonNullable<unknown>;
 /**
  * Utility type providing the argument type for the given method name or `{}` if
  * the method does not take any parameters
@@ -469,19 +469,31 @@ export interface Update {
     /**
      * New incoming message of any kind - text, photo, sticker, etc.
      */
-    message?: Message;
+    message?: Message & {
+        chat: { type: "private" | "group" | "supergroup" };
+        from: Present;
+    };
     /**
      * New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
      */
-    edited_message?: Message;
+    edited_message?: Message & {
+        chat: { type: "private" | "group" | "supergroup" };
+        from: Present;
+        edit_date: Present;
+    };
     /**
      * New incoming channel post of any kind - text, photo, sticker, etc.
      */
-    channel_post?: Message;
+    channel_post?: Message & {
+        chat: { type: "channel" };
+    };
     /**
      * New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
      */
-    edited_channel_post?: Message;
+    edited_channel_post?: Message & {
+        chat: { type: "channel" };
+        edit_date: Present;
+    };
     /**
      * The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot
      */
@@ -489,11 +501,16 @@ export interface Update {
     /**
      * New message from a connected business account
      */
-    business_message?: Message;
+    business_message?: Message & {
+        chat: { type: "private" };
+    };
     /**
      * New version of a message from a connected business account
      */
-    edited_business_message?: Message;
+    edited_business_message?: Message & {
+        chat: { type: "private" };
+        edit_date: Present;
+    };
     /**
      * Messages were deleted from a connected business account
      */
