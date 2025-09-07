@@ -2206,8 +2206,9 @@ export interface InaccessibleMessage {
 }
 /**
  * This object describes a message that can be inaccessible to the bot. It can be one of
- * - Message
- * - InaccessibleMessage
+ *
+ * - {@link Message}
+ * - {@link InaccessibleMessage}
  *
  * @see {@link https://core.telegram.org/bots/api#maybeinaccessiblemessage}
  */
@@ -2420,10 +2421,11 @@ export interface ReplyParameters {
 }
 /**
  * This object describes the origin of a message. It can be one of
- * - MessageOriginUser
- * - MessageOriginHiddenUser
- * - MessageOriginChat
- * - MessageOriginChannel
+ *
+ * - {@link MessageOriginUser}
+ * - {@link MessageOriginHiddenUser}
+ * - {@link MessageOriginChat}
+ * - {@link MessageOriginChannel}
  *
  * @see {@link https://core.telegram.org/bots/api#messageorigin}
  */
@@ -2805,9 +2807,10 @@ export interface PaidMediaInfo {
 }
 /**
  * This object describes paid media. Currently, it can be one of
- * - PaidMediaPreview
- * - PaidMediaPhoto
- * - PaidMediaVideo
+ *
+ * - {@link PaidMediaPreview}
+ * - {@link PaidMediaPhoto}
+ * - {@link PaidMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#paidmedia}
  */
@@ -3300,9 +3303,10 @@ export interface ChatBoostAdded {
 }
 /**
  * This object describes the way a background is filled based on the selected colors. Currently, it can be one of
- * - BackgroundFillSolid
- * - BackgroundFillGradient
- * - BackgroundFillFreeformGradient
+ *
+ * - {@link BackgroundFillSolid}
+ * - {@link BackgroundFillGradient}
+ * - {@link BackgroundFillFreeformGradient}
  *
  * @see {@link https://core.telegram.org/bots/api#backgroundfill}
  */
@@ -3365,10 +3369,11 @@ export interface BackgroundFillFreeformGradient {
 }
 /**
  * This object describes the type of a background. Currently, it can be one of
- * - BackgroundTypeFill
- * - BackgroundTypeWallpaper
- * - BackgroundTypePattern
- * - BackgroundTypeChatTheme
+ *
+ * - {@link BackgroundTypeFill}
+ * - {@link BackgroundTypeWallpaper}
+ * - {@link BackgroundTypePattern}
+ * - {@link BackgroundTypeChatTheme}
  *
  * @see {@link https://core.telegram.org/bots/api#backgroundtype}
  */
@@ -4796,12 +4801,13 @@ export interface ChatMemberUpdated {
 }
 /**
  * This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
- * - ChatMemberOwner
- * - ChatMemberAdministrator
- * - ChatMemberMember
- * - ChatMemberRestricted
- * - ChatMemberLeft
- * - ChatMemberBanned
+ *
+ * - {@link ChatMemberOwner}
+ * - {@link ChatMemberAdministrator}
+ * - {@link ChatMemberMember}
+ * - {@link ChatMemberRestricted}
+ * - {@link ChatMemberLeft}
+ * - {@link ChatMemberBanned}
  *
  * @see {@link https://core.telegram.org/bots/api#chatmember}
  */
@@ -5287,11 +5293,12 @@ export interface LocationAddress {
 }
 /**
  * Describes the type of a clickable area on a story. Currently, it can be one of
- * - StoryAreaTypeLocation
- * - StoryAreaTypeSuggestedReaction
- * - StoryAreaTypeLink
- * - StoryAreaTypeWeather
- * - StoryAreaTypeUniqueGift
+ *
+ * - {@link StoryAreaTypeLocation}
+ * - {@link StoryAreaTypeSuggestedReaction}
+ * - {@link StoryAreaTypeLink}
+ * - {@link StoryAreaTypeWeather}
+ * - {@link StoryAreaTypeUniqueGift}
  *
  * @see {@link https://core.telegram.org/bots/api#storyareatype}
  */
@@ -5432,9 +5439,10 @@ export interface ChatLocation {
 }
 /**
  * This object describes the type of a reaction. Currently, it can be one of
- * - ReactionTypeEmoji
- * - ReactionTypeCustomEmoji
- * - ReactionTypePaid
+ *
+ * - {@link ReactionTypeEmoji}
+ * - {@link ReactionTypeCustomEmoji}
+ * - {@link ReactionTypePaid}
  *
  * @see {@link https://core.telegram.org/bots/api#reactiontype}
  */
@@ -5885,8 +5893,9 @@ export interface UniqueGiftInfo {
 }
 /**
  * This object describes a gift received and owned by a user or a chat. Currently, it can be one of
- * - OwnedGiftRegular
- * - OwnedGiftUnique
+ *
+ * - {@link OwnedGiftRegular}
+ * - {@link OwnedGiftUnique}
  *
  * @see {@link https://core.telegram.org/bots/api#ownedgift}
  */
@@ -6069,13 +6078,14 @@ export interface BotCommand {
 }
 /**
  * This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:
- * - BotCommandScopeDefault
- * - BotCommandScopeAllPrivateChats
- * - BotCommandScopeAllGroupChats
- * - BotCommandScopeAllChatAdministrators
- * - BotCommandScopeChat
- * - BotCommandScopeChatAdministrators
- * - BotCommandScopeChatMember
+ *
+ * - {@link BotCommandScopeDefault}
+ * - {@link BotCommandScopeAllPrivateChats}
+ * - {@link BotCommandScopeAllGroupChats}
+ * - {@link BotCommandScopeAllChatAdministrators}
+ * - {@link BotCommandScopeChat}
+ * - {@link BotCommandScopeChatAdministrators}
+ * - {@link BotCommandScopeChatMember}
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscope}
  */
@@ -6215,9 +6225,10 @@ export interface BotShortDescription {
 }
 /**
  * This object describes the bot's menu button in a private chat. It should be one of
- * - MenuButtonCommands
- * - MenuButtonWebApp
- * - MenuButtonDefault
+ *
+ * - {@link MenuButtonCommands}
+ * - {@link MenuButtonWebApp}
+ * - {@link MenuButtonDefault}
  *
  * If a menu button other than {@link MenuButtonDefault | MenuButtonDefault} is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.
  *
@@ -6270,9 +6281,10 @@ export interface MenuButtonDefault {
 }
 /**
  * This object describes the source of a chat boost. It can be one of
- * - ChatBoostSourcePremium
- * - ChatBoostSourceGiftCode
- * - ChatBoostSourceGiveaway
+ *
+ * - {@link ChatBoostSourcePremium}
+ * - {@link ChatBoostSourceGiftCode}
+ * - {@link ChatBoostSourceGiveaway}
  *
  * @see {@link https://core.telegram.org/bots/api#chatboostsource}
  */
@@ -6539,11 +6551,12 @@ export interface ResponseParameters {
 }
 /**
  * This object represents the content of a media message to be sent. It should be one of
- * - InputMediaAnimation
- * - InputMediaDocument
- * - InputMediaAudio
- * - InputMediaPhoto
- * - InputMediaVideo
+ *
+ * - {@link InputMediaAnimation}
+ * - {@link InputMediaDocument}
+ * - {@link InputMediaAudio}
+ * - {@link InputMediaPhoto}
+ * - {@link InputMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputmedia}
  */
@@ -6857,8 +6870,9 @@ export class InputFile {
 }
 /**
  * This object describes the paid media to be sent. Currently, it can be one of
- * - InputPaidMediaPhoto
- * - InputPaidMediaVideo
+ *
+ * - {@link InputPaidMediaPhoto}
+ * - {@link InputPaidMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputpaidmedia}
  */
@@ -6925,8 +6939,9 @@ export interface InputPaidMediaVideo {
 }
 /**
  * This object describes a profile photo to set. Currently, it can be one of
- * - InputProfilePhotoStatic
- * - InputProfilePhotoAnimated
+ *
+ * - {@link InputProfilePhotoStatic}
+ * - {@link InputProfilePhotoAnimated}
  *
  * @see {@link https://core.telegram.org/bots/api#inputprofilephoto}
  */
@@ -6969,8 +6984,9 @@ export interface InputProfilePhotoAnimated {
 }
 /**
  * This object describes the content of a story to post. Currently, it can be one of
- * - InputStoryContentPhoto
- * - InputStoryContentVideo
+ *
+ * - {@link InputStoryContentPhoto}
+ * - {@link InputStoryContentVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputstorycontent}
  */
@@ -11352,26 +11368,27 @@ export interface InlineQueryResultsButton {
 }
 /**
  * This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
- * - InlineQueryResultCachedAudio
- * - InlineQueryResultCachedDocument
- * - InlineQueryResultCachedGif
- * - InlineQueryResultCachedMpeg4Gif
- * - InlineQueryResultCachedPhoto
- * - InlineQueryResultCachedSticker
- * - InlineQueryResultCachedVideo
- * - InlineQueryResultCachedVoice
- * - InlineQueryResultArticle
- * - InlineQueryResultAudio
- * - InlineQueryResultContact
- * - InlineQueryResultGame
- * - InlineQueryResultDocument
- * - InlineQueryResultGif
- * - InlineQueryResultLocation
- * - InlineQueryResultMpeg4Gif
- * - InlineQueryResultPhoto
- * - InlineQueryResultVenue
- * - InlineQueryResultVideo
- * - InlineQueryResultVoice
+ *
+ * - {@link InlineQueryResultCachedAudio}
+ * - {@link InlineQueryResultCachedDocument}
+ * - {@link InlineQueryResultCachedGif}
+ * - {@link InlineQueryResultCachedMpeg4Gif}
+ * - {@link InlineQueryResultCachedPhoto}
+ * - {@link InlineQueryResultCachedSticker}
+ * - {@link InlineQueryResultCachedVideo}
+ * - {@link InlineQueryResultCachedVoice}
+ * - {@link InlineQueryResultArticle}
+ * - {@link InlineQueryResultAudio}
+ * - {@link InlineQueryResultContact}
+ * - {@link InlineQueryResultGame}
+ * - {@link InlineQueryResultDocument}
+ * - {@link InlineQueryResultGif}
+ * - {@link InlineQueryResultLocation}
+ * - {@link InlineQueryResultMpeg4Gif}
+ * - {@link InlineQueryResultPhoto}
+ * - {@link InlineQueryResultVenue}
+ * - {@link InlineQueryResultVideo}
+ * - {@link InlineQueryResultVoice}
  *
  * **Note:** All URLs passed in inline query results will be available to end users and therefore must be assumed to be **public**.
  *
@@ -12434,11 +12451,12 @@ export interface InlineQueryResultCachedAudio {
 }
 /**
  * This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
- * - InputTextMessageContent
- * - InputLocationMessageContent
- * - InputVenueMessageContent
- * - InputContactMessageContent
- * - InputInvoiceMessageContent
+ *
+ * - {@link InputTextMessageContent}
+ * - {@link InputLocationMessageContent}
+ * - {@link InputVenueMessageContent}
+ * - {@link InputContactMessageContent}
+ * - {@link InputInvoiceMessageContent}
  *
  * @see {@link https://core.telegram.org/bots/api#inputmessagecontent}
  */
@@ -13361,9 +13379,10 @@ export interface PaidMediaPurchased {
 }
 /**
  * This object describes the state of a revenue withdrawal operation. Currently, it can be one of
- * - RevenueWithdrawalStatePending
- * - RevenueWithdrawalStateSucceeded
- * - RevenueWithdrawalStateFailed
+ *
+ * - {@link RevenueWithdrawalStatePending}
+ * - {@link RevenueWithdrawalStateSucceeded}
+ * - {@link RevenueWithdrawalStateFailed}
  *
  * @see {@link https://core.telegram.org/bots/api#revenuewithdrawalstate}
  */
@@ -13441,13 +13460,14 @@ export interface AffiliateInfo {
 }
 /**
  * This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
- * - TransactionPartnerUser
- * - TransactionPartnerChat
- * - TransactionPartnerAffiliateProgram
- * - TransactionPartnerFragment
- * - TransactionPartnerTelegramAds
- * - TransactionPartnerTelegramApi
- * - TransactionPartnerOther
+ *
+ * - {@link TransactionPartnerUser}
+ * - {@link TransactionPartnerChat}
+ * - {@link TransactionPartnerAffiliateProgram}
+ * - {@link TransactionPartnerFragment}
+ * - {@link TransactionPartnerTelegramAds}
+ * - {@link TransactionPartnerTelegramApi}
+ * - {@link TransactionPartnerOther}
  *
  * @see {@link https://core.telegram.org/bots/api#transactionpartner}
  */
@@ -13782,15 +13802,16 @@ export interface ApiMethods {
 }
 /**
  * This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:
- * - PassportElementErrorDataField
- * - PassportElementErrorFrontSide
- * - PassportElementErrorReverseSide
- * - PassportElementErrorSelfie
- * - PassportElementErrorFile
- * - PassportElementErrorFiles
- * - PassportElementErrorTranslationFile
- * - PassportElementErrorTranslationFiles
- * - PassportElementErrorUnspecified
+ *
+ * - {@link PassportElementErrorDataField}
+ * - {@link PassportElementErrorFrontSide}
+ * - {@link PassportElementErrorReverseSide}
+ * - {@link PassportElementErrorSelfie}
+ * - {@link PassportElementErrorFile}
+ * - {@link PassportElementErrorFiles}
+ * - {@link PassportElementErrorTranslationFile}
+ * - {@link PassportElementErrorTranslationFiles}
+ * - {@link PassportElementErrorUnspecified}
  *
  * @see {@link https://core.telegram.org/bots/api#passportelementerror}
  */
