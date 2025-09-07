@@ -180,7 +180,7 @@ function webhookCallback<C extends Context = Context>(
             await handler.unauthorized();
             return handler.handlerReturn;
         }
-        const updateData = await handler.update;
+        const updateData = await handler.update();
         if (updateData?.update_id === undefined || updateData.update_id <= 0) {
             await handler.badRequest();
             return handler.handlerReturn;

@@ -11,7 +11,7 @@ export interface ReqResHandler<T = void> {
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
      */
-    update: MaybePromise<Update>;
+    update(): MaybePromise<Update>;
     /**
      * X-Telegram-Bot-Api-Secret-Token header of the request, or undefined if
      * not present
@@ -258,7 +258,7 @@ export function makeAdapters() {
         unauthorized = () => callback(WRONG_TOKEN_ERROR),
         badRequest = () => callback(BAD_REQUEST_ERROR),
     ) => ({
-        update: Promise.resolve(update),
+        update: () => update,
         respond: callback,
         header,
         unauthorized,
@@ -268,9 +268,7 @@ export function makeAdapters() {
     /** AWS lambda serverless functions */
     const awsLambda: LambdaAdapter = (event, _context, callback) => ({
         // TODO: add safe parse workaround
-        get update() {
-            return JSON.parse(event.body ?? "{}");
-        },
+        update: () => JSON.parse(event.body ?? "{}"),
         header: event.headers[SECRET_HEADER],
         end: () => callback(null, { statusCode: 200 }),
         respond: (json) =>
@@ -290,9 +288,7 @@ export function makeAdapters() {
 
         return {
             // TODO: add safe parse workaround
-            get update() {
-                return JSON.parse(event.body ?? "{}");
-            },
+            update: () => JSON.parse(event.body ?? "{}"),
             header: event.headers[SECRET_HEADER],
             end: () => resolveResponse({ statusCode: 200 }),
             respond: (json) =>
@@ -309,9 +305,7 @@ export function makeAdapters() {
 
     /** Azure Functions v3 and v4 */
     const azure: AzureAdapter = (context, request) => ({
-        get update() {
-            return request.body as Update;
-        },
+        update: () => request.body as Update,
         header: context.res?.headers?.[SECRET_HEADER],
         end: () => (context.res = {
             status: 200,
@@ -334,9 +328,7 @@ export function makeAdapters() {
         >;
         let resolveResponse: (response: Res) => void;
         return {
-            get update() {
-                return request.json() as Promise<Update>;
-            },
+            update: () => request.json() as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
             end: () => resolveResponse({ status: 204 }),
             respond: (json) => resolveResponse({ jsonBody: json }),
@@ -354,9 +346,7 @@ export function makeAdapters() {
     const bun: BunAdapter = (request) => {
         let resolveResponse: (response: Response) => void;
         return {
-            get update() {
-                return request.json().catch(empty) as Promise<Update>;
-            },
+            update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
             end: () => {
                 resolveResponse(ok());
@@ -385,9 +375,7 @@ export function makeAdapters() {
             }),
         );
         return {
-            get update() {
-                return event.request.json().catch(empty) as Promise<Update>;
-            },
+            update: () => event.request.json().catch(empty) as Promise<Update>,
             header: event.request.headers.get(SECRET_HEADER) || undefined,
             end: () => {
                 resolveResponse(ok());
@@ -408,9 +396,7 @@ export function makeAdapters() {
     const cloudflareModule: CloudflareModuleAdapter = (request) => {
         let resolveResponse: (res: Response) => void;
         return {
-            get update() {
-                return request.json().catch(empty) as Promise<Update>;
-            },
+            update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
             end: () => {
                 resolveResponse(ok());
@@ -432,9 +418,7 @@ export function makeAdapters() {
 
     /** express web framework */
     const express: ExpressAdapter = (req, res) => ({
-        get update() {
-            return req.body as Update;
-        },
+        update: () => req.body as Update,
         header: req.header(SECRET_HEADER),
         end: () => res.end(),
         respond: (json) => {
@@ -451,9 +435,7 @@ export function makeAdapters() {
 
     /** fastify web framework */
     const fastify: FastifyAdapter = (request, reply) => ({
-        get update() {
-            return request.body as Update;
-        },
+        update: () => request.body as Update,
         header: request.headers[SECRET_HEADER_LOWERCASE],
         end: () => reply.status(200).send(),
         respond: (json) =>
@@ -466,9 +448,7 @@ export function makeAdapters() {
     const hono: HonoAdapter = (c) => {
         let resolveResponse: (response: Response) => void;
         return {
-            get update() {
-                return c.req.json<Update>().catch(empty);
-            },
+            update: () => c.req.json<Update>().catch(empty),
             header: c.req.header(SECRET_HEADER),
             end: () => {
                 resolveResponse(c.body(""));
@@ -494,8 +474,8 @@ export function makeAdapters() {
     const http: HttpAdapter = (req, res) => {
         const secretHeaderFromRequest = req.headers[SECRET_HEADER_LOWERCASE];
         return {
-            get update() {
-                return new Promise((resolve, reject) => {
+            update: () =>
+                new Promise((resolve, reject) => {
                     // deno-lint-ignore no-explicit-any
                     type Chunk = any;
                     const chunks: Chunk[] = [];
@@ -507,8 +487,7 @@ export function makeAdapters() {
                             resolve(JSON.parse(raw));
                         })
                         .once("error", reject);
-                }).catch(empty) as Promise<Update>;
-            },
+                }).catch(empty) as Promise<Update>,
             header: Array.isArray(secretHeaderFromRequest)
                 ? secretHeaderFromRequest[0]
                 : secretHeaderFromRequest,
@@ -524,9 +503,7 @@ export function makeAdapters() {
 
     /** koa web framework */
     const koa: KoaAdapter = (ctx) => ({
-        get update() {
-            return ctx.request.body as Update;
-        },
+        update: () => ctx.request.body as Update,
         header: ctx.get(SECRET_HEADER) || undefined,
         end: () => {
             ctx.body = "";
@@ -545,9 +522,7 @@ export function makeAdapters() {
 
     /** Next.js Serverless Functions */
     const nextJs: NextAdapter = (request, response) => ({
-        get update() {
-            return request.body as Update;
-        },
+        update: () => request.body as Update,
         header: request.headers[SECRET_HEADER_LOWERCASE] as string,
         end: () => response.end(),
         respond: (json) => response.status(200).json(json),
@@ -557,9 +532,7 @@ export function makeAdapters() {
 
     /** nhttp web framework */
     const nhttp: NHttpAdapter = (rev) => ({
-        get update() {
-            return rev.body as Update;
-        },
+        update: () => rev.body as Update,
         header: rev.headers.get(SECRET_HEADER) || undefined,
         end: () => rev.response.sendStatus(200),
         respond: (json) => rev.response.status(200).send(json),
@@ -569,9 +542,7 @@ export function makeAdapters() {
 
     /** oak web framework */
     const oak: OakAdapter = (ctx) => ({
-        get update() {
-            return ctx.request.body.json().catch(empty) as Promise<Update>;
-        },
+        update: () => ctx.request.body.json().catch(empty) as Promise<Update>,
         header: ctx.request.headers.get(SECRET_HEADER) || undefined,
         end: () => {
             ctx.response.status = 200;
@@ -590,9 +561,8 @@ export function makeAdapters() {
 
     /** Deno.serve */
     const serveHttp: ServeHttpAdapter = (requestEvent) => ({
-        get update() {
-            return requestEvent.request.json().catch(empty) as Promise<Update>;
-        },
+        update: () =>
+            requestEvent.request.json().catch(empty) as Promise<Update>,
         header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
         end: () => requestEvent.respondWith(ok()),
         respond: (json) => requestEvent.respondWith(okJson(json)),
@@ -604,9 +574,7 @@ export function makeAdapters() {
     const stdHttp: StdHttpAdapter = (req) => {
         let resolveResponse: (response: Response) => void;
         return {
-            get update() {
-                return req.json().catch(empty) as Promise<Update>;
-            },
+            update: () => req.json().catch(empty) as Promise<Update>,
             header: req.headers.get(SECRET_HEADER) || undefined,
             end: () => {
                 if (resolveResponse) resolveResponse(ok());
@@ -630,9 +598,7 @@ export function makeAdapters() {
     const sveltekit: SveltekitAdapter = ({ request }) => {
         let resolveResponse: (res: Response) => void;
         return {
-            get update() {
-                return request.json().catch(empty) as Promise<Update>;
-            },
+            update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
             end: () => {
                 if (resolveResponse) resolveResponse(ok());
@@ -654,9 +620,7 @@ export function makeAdapters() {
 
     /** worktop Cloudflare workers framework */
     const worktop: WorktopAdapter = (req, res) => ({
-        get update() {
-            return req.json().catch(empty) as Promise<Update>;
-        },
+        update: () => req.json().catch(empty) as Promise<Update>,
         header: req.headers.get(SECRET_HEADER) ?? undefined,
         end: () => res.end(null),
         respond: (json) => res.send(200, json),
@@ -672,9 +636,7 @@ export function makeAdapters() {
 
         return {
             // @note technically the type shouldn't be limited to Promise, because it's fine to await plain values as well
-            get update() {
-                return ctx.body as Update;
-            },
+            update: () => ctx.body as Update,
             header: ctx.headers[SECRET_HEADER_LOWERCASE],
             end() {
                 resolveResponse("");
