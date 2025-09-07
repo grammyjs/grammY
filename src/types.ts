@@ -450,6 +450,49 @@ function guessFilename(file: ReturnType<typeof preprocess>) {
     return basename(file.hostname);
 }
 
+// === MAKING REQUESTS ===
+/**
+ * Structure of a response object for a failed request
+ */
+export interface ApiError {
+    /**
+     * Indicates that the request has failed
+     */
+    ok: false;
+    /**
+     * Error code of the failing request, subject to change
+     */
+    error_code: number;
+    /**
+     * A human-readable explanation of the error
+     */
+    description: string;
+    /**
+     * Parameters which can help to automatically handle the error
+     */
+    parameters?: ResponseParameters;
+}
+/**
+ * Structure of a response object for a successful request
+ */
+export interface ApiSuccess<T> {
+    /**
+     * Indicates that the request has succeeded
+     */
+    ok: true;
+    /**
+     * Result of the query
+     */
+    result: T;
+}
+/**
+ * The response contains an object, which always has a Boolean field 'ok' and may have an optional String field 'description' with a human-readable description of the result. If 'ok' equals _True_, the request was successful and the result of the query can be found in the 'result' field. In case of an unsuccessful request, 'ok' equals false and the error is explained in the 'description'. An Integer 'error_code' field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field 'parameters' of the type {@link ResponseParameters}, which can help to automatically handle the error.
+ *
+ * - All methods in the Bot API are case-insensitive.
+ * - All queries must be made using UTF-8.
+ */
+export type ApiResponse<T> = ApiError | ApiSuccess<T>;
+
 // === GETTING UPDATES ===
 /**
  * This {@link https://core.telegram.org/bots/api#available-types | object} represents an incoming update.
