@@ -2606,7 +2606,7 @@ export declare namespace MessageEntity {
         /**
          * For “pre” only, the programming language of the entity text
          */
-        language: string;
+        language?: string;
     }
     /**
      * A message entity of type text_link.
