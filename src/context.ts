@@ -8,9 +8,12 @@ import {
     matchFilter,
 } from "./filter.ts";
 import type {
+    AcceptedGiftTypes,
     Chat,
     ChatPermissions,
+    Empty,
     InlineQueryResult,
+    InputChecklist,
     InputFile,
     InputMedia,
     InputMediaAudio,
@@ -19,6 +22,8 @@ import type {
     InputMediaVideo,
     InputPaidMedia,
     InputPollOption,
+    InputProfilePhoto,
+    InputStoryContent,
     LabeledPrice,
     Message,
     MessageEntity,
@@ -34,7 +39,7 @@ import type {
 export type MaybeArray<T> = T | T[];
 /** permits `string` but gives hints */
 export type StringWithCommandSuggestions =
-    | (string & Record<never, never>)
+    | (string & Empty)
     | "start"
     | "help"
     | "settings"
@@ -630,7 +635,7 @@ export class Context implements RenamedUpdate {
      * ```ts
      * ctx.entities() // Returns all entity types
      * ctx.entities('url') // Returns only url entities
-     * ctx.enttities(['url', 'email']) // Returns url and email entities
+     * ctx.entities(['url', 'email']) // Returns url and email entities
      * ```
      *
      * @param types Types of entities to return. Omit to get all entities.
@@ -976,12 +981,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendMessage(
             orThrow(this.chatId, "sendMessage"),
             text,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1005,11 +1014,15 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.forwardMessage(
             chat_id,
             orThrow(this.chatId, "forwardMessage"),
             orThrow(this.msgId, "forwardMessage"),
-            other,
+            {
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1033,11 +1046,15 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.forwardMessages(
             chat_id,
             orThrow(this.chatId, "forwardMessages"),
             message_ids,
-            other,
+            {
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1056,11 +1073,15 @@ export class Context implements RenamedUpdate {
         other?: Other<"copyMessage", "chat_id" | "from_chat_id" | "message_id">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.copyMessage(
             chat_id,
             orThrow(this.chatId, "copyMessage"),
             orThrow(this.msgId, "copyMessage"),
-            other,
+            {
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1080,15 +1101,19 @@ export class Context implements RenamedUpdate {
         message_ids: number[],
         other?: Other<
             "copyMessages",
-            "chat_id" | "from_chat_id" | "message_id"
+            "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.copyMessages(
             chat_id,
             orThrow(this.chatId, "copyMessages"),
             message_ids,
-            other,
+            {
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -1107,12 +1132,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendPhoto(
             orThrow(this.chatId, "sendPhoto"),
             photo,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1135,12 +1164,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendAudio(
             orThrow(this.chatId, "sendAudio"),
             audio,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1161,12 +1194,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendDocument(
             orThrow(this.chatId, "sendDocument"),
             document,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1187,12 +1224,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVideo(
             orThrow(this.chatId, "sendVideo"),
             video,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1213,12 +1254,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendAnimation(
             orThrow(this.chatId, "sendAnimation"),
             animation,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1239,12 +1284,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVoice(
             orThrow(this.chatId, "sendVoice"),
             voice,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1266,39 +1315,18 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVideoNote(
             orThrow(this.chatId, "sendVideoNote"),
             video_note,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
-            signal,
-        );
-    }
-
-    /**
-     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
-     *
-     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
-     * @param media An array describing the media to be sent; up to 10 items
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
-     */
-    sendPaidMedia(
-        star_count: number,
-        media: InputPaidMedia[],
-        other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
-        signal?: AbortSignal,
-    ) {
-        return this.api.sendPaidMedia(
-            orThrow(this.chatId, "sendPaidMedia"),
-            star_count,
-            media,
-            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
@@ -1322,12 +1350,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendMediaGroup", "chat_id" | "media">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendMediaGroup(
             orThrow(this.chatId, "sendMediaGroup"),
             media,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1350,13 +1382,17 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendLocation", "chat_id" | "latitude" | "longitude">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendLocation(
             orThrow(this.chatId, "sendLocation"),
             latitude,
             longitude,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1393,6 +1429,7 @@ export class Context implements RenamedUpdate {
                 latitude,
                 longitude,
                 { business_connection_id: this.businessConnectionId, ...other },
+                signal,
             )
             : this.api.editMessageLiveLocation(
                 orThrow(this.chatId, "editMessageLiveLocation"),
@@ -1424,6 +1461,7 @@ export class Context implements RenamedUpdate {
             ? this.api.stopMessageLiveLocationInline(
                 inlineId,
                 { business_connection_id: this.businessConnectionId, ...other },
+                signal,
             )
             : this.api.stopMessageLiveLocation(
                 orThrow(this.chatId, "stopMessageLiveLocation"),
@@ -1431,6 +1469,36 @@ export class Context implements RenamedUpdate {
                 { business_connection_id: this.businessConnectionId, ...other },
                 signal,
             );
+    }
+
+    /**
+     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
+     *
+     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
+     * @param media An array describing the media to be sent; up to 10 items
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
+     */
+    sendPaidMedia(
+        star_count: number,
+        media: InputPaidMedia[],
+        other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.sendPaidMedia(
+            orThrow(this.chatId, "sendPaidMedia"),
+            star_count,
+            media,
+            {
+                business_connection_id: this.businessConnectionId,
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
+            signal,
+        );
     }
 
     /**
@@ -1456,6 +1524,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendVenue(
             orThrow(this.chatId, "sendVenue"),
             latitude,
@@ -1464,7 +1533,10 @@ export class Context implements RenamedUpdate {
             address,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1487,13 +1559,17 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendContact", "chat_id" | "phone_number" | "first_name">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendContact(
             orThrow(this.chatId, "sendContact"),
             phone_number,
             first_name,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1504,7 +1580,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.sendPoll`. Use this method to send a native poll. On success, the sent Message is returned.
      *
      * @param question Poll question, 1-300 characters
-     * @param options A list of answer options, 2-10 strings 1-100 characters each
+     * @param options A list of answer options, 2-12 strings 1-100 characters each
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1512,19 +1588,79 @@ export class Context implements RenamedUpdate {
      */
     sendPoll(
         question: string,
-        options: InputPollOption[],
+        options: (string | InputPollOption)[],
         other?: Other<"sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendPoll(
             orThrow(this.chatId, "sendPoll"),
             question,
             options,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
                 ...other,
             },
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.sendChecklist`. Use this method to send a checklist on behalf of a connected business account. On success, the sent Message is returned.
+     *
+     * @param checklist An object for the checklist to send
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendchecklist
+     */
+    replyWithChecklist(
+        checklist: InputChecklist,
+        other?: Other<
+            "sendChecklist",
+            "business_connection_id" | "chat_id" | "checklist"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.sendChecklist(
+            orThrow(this.businessConnectionId, "sendChecklist"),
+            orThrow(this.chatId, "sendChecklist"),
+            checklist,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editMessageChecklist`. Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned.
+     *
+     * @param checklist An object for the new checklist
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagechecklist
+     */
+    editMessageChecklist(
+        checklist: InputChecklist,
+        other?: Other<
+            "editMessageChecklist",
+            "business_connection_id" | "chat_id" | "messaage_id" | "checklist"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const msg = orThrow(this.msg, "editMessageChecklist");
+        const target = msg.checklist_tasks_done?.checklist_message ??
+            msg.checklist_tasks_added?.checklist_message ??
+            msg;
+        return this.api.editMessageChecklist(
+            orThrow(this.businessConnectionId, "editMessageChecklist"),
+            orThrow(target.chat.id, "editMessageChecklist"),
+            orThrow(target.message_id, "editMessageChecklist"),
+            checklist,
+            other,
             signal,
         );
     }
@@ -1549,12 +1685,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendDice", "chat_id" | "emoji">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendDice(
             orThrow(this.chatId, "sendDice"),
             emoji,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -1590,12 +1730,15 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendChatAction(
             orThrow(this.chatId, "sendChatAction"),
             action,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
                 ...other,
             },
             signal,
@@ -1623,7 +1766,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
+     * Context-aware alias for `api.setMessageReaction`. Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
      *
      * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      * @param other Optional remaining parameters, confer the official reference below
@@ -1676,7 +1819,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Contex-aware alias for `api.serUserEmojiStatus`. Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
+     * Context-aware alias for `api.serUserEmojiStatus`. Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2170,6 +2313,46 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.approveSuggestedPost`. Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat.  Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#approvesuggestedpost
+     */
+    approveSuggestedPost(
+        other?: Other<"approveSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.approveSuggestedPost(
+            orThrow(this.chatId, "approveSuggestedPost"),
+            orThrow(this.msgId, "approveSuggestedPost"),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.declineSuggestedPost`. Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#declinesuggestedpost
+     */
+    declineSuggestedPost(
+        other?: Other<"declineSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.declineSuggestedPost(
+            orThrow(this.chatId, "declineSuggestedPost"),
+            orThrow(this.msgId, "declineSuggestedPost"),
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.setChatPhoto`. Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param photo New chat photo, uploaded using multipart/form-data
@@ -2232,7 +2415,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.pinChatMessage`. Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Context-aware alias for `api.pinChatMessage`. Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns True on success.
      *
      * @param message_id Identifier of a message to pin
      * @param other Optional remaining parameters, confer the official reference below
@@ -2248,13 +2431,13 @@ export class Context implements RenamedUpdate {
         return this.api.pinChatMessage(
             orThrow(this.chatId, "pinChatMessage"),
             message_id,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
 
     /**
-     * Context-aware alias for `api.unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Context-aware alias for `api.unpinChatMessage`. Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns True on success.
      *
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
      * @param other Optional remaining parameters, confer the official reference below
@@ -2270,13 +2453,13 @@ export class Context implements RenamedUpdate {
         return this.api.unpinChatMessage(
             orThrow(this.chatId, "unpinChatMessage"),
             message_id,
-            other,
+            { business_connection_id: this.businessConnectionId, ...other },
             signal,
         );
     }
 
     /**
-     * Context-aware alias for `api.unpinAllChatMessages`. Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Context-aware alias for `api.unpinAllChatMessages`. Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2682,7 +2865,12 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageTextInline(inlineId, text, other)
+            ? this.api.editMessageTextInline(
+                inlineId,
+                text,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.editMessageText(
                 orThrow(this.chatId, "editMessageText"),
                 orThrow(
@@ -2713,7 +2901,11 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageCaptionInline(inlineId, other)
+            ? this.api.editMessageCaptionInline(
+                inlineId,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.editMessageCaption(
                 orThrow(this.chatId, "editMessageCaption"),
                 orThrow(
@@ -2745,7 +2937,12 @@ export class Context implements RenamedUpdate {
     ) {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
-            ? this.api.editMessageMediaInline(inlineId, media, other)
+            ? this.api.editMessageMediaInline(
+                inlineId,
+                media,
+                { business_connection_id: this.businessConnectionId, ...other },
+                signal,
+            )
             : this.api.editMessageMedia(
                 orThrow(this.chatId, "editMessageMedia"),
                 orThrow(
@@ -2779,6 +2976,7 @@ export class Context implements RenamedUpdate {
             ? this.api.editMessageReplyMarkupInline(
                 inlineId,
                 { business_connection_id: this.businessConnectionId, ...other },
+                signal,
             )
             : this.api.editMessageReplyMarkup(
                 orThrow(this.chatId, "editMessageReplyMarkup"),
@@ -2824,7 +3022,8 @@ export class Context implements RenamedUpdate {
      * - Bots can delete incoming messages in private chats.
      * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
      * - If the bot is an administrator of a group, it can delete any message there.
-     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_delete_messages administrator right in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_manage_direct_messages administrator right in a channel, it can delete any message in the corresponding direct messages chat.
      * Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2861,6 +3060,347 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.deleteBusinessMessages`. Delete messages on behalf of a business account. Requires the can_delete_outgoing_messages business bot right to delete messages sent by the bot itself, or the can_delete_all_messages business bot right to delete any message. Returns True on success.
+     *
+     * @param message_ids A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See deleteMessage for limitations on which messages can be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletebusinessmessages
+     */
+    deleteBusinessMessages(message_ids: number[], signal?: AbortSignal) {
+        return this.api.deleteBusinessMessages(
+            orThrow(this.businessConnectionId, "deleteBusinessMessages"),
+            message_ids,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountName`. Changes the first and last name of a managed business account. Requires the can_change_name business bot right. Returns True on success.
+     *
+     * @param first_name The new value of the first name for the business account; 1-64 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountname
+     */
+    setBusinessAccountName(
+        first_name: string,
+        other: Other<
+            "setBusinessAccountName",
+            "business_connection_id" | "first_name"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setBusinessAccountName(
+            orThrow(this.businessConnectionId, "setBusinessAccountName"),
+            first_name,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountUsername`. Changes the username of a managed business account. Requires the can_change_username business bot right. Returns True on success.
+     *
+     * @param username The new value of the username for the business account; 0-32 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountusername
+     */
+    setBusinessAccountUsername(username: string, signal?: AbortSignal) {
+        return this.api.setBusinessAccountUsername(
+            orThrow(this.businessConnectionId, "setBusinessAccountUsername"),
+            username,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountBio`. Changes the bio of a managed business account. Requires the can_change_bio business bot right. Returns True on success.
+     *
+     * @param bio The new value of the bio for the business account; 0-140 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountbio
+     */
+    setBusinessAccountBio(bio: string, signal?: AbortSignal) {
+        return this.api.setBusinessAccountBio(
+            orThrow(this.businessConnectionId, "setBusinessAccountBio"),
+            bio,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountProfilePhoto`. CsetBusinessAccountProfilePhotohanges the profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param photo The new profile photo to set
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
+     */
+    setBusinessAccountProfilePhoto(
+        photo: InputProfilePhoto,
+        other: Other<
+            "setBusinessAccountProfilePhoto",
+            "business_connection_id" | "photo"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setBusinessAccountProfilePhoto(
+            orThrow(
+                this.businessConnectionId,
+                "setBusinessAccountProfilePhoto",
+            ),
+            photo,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.removeBusinessAccountProfilePhoto`. Removes the current profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removebusinessaccountprofilephoto
+     */
+    removeBusinessAccountProfilePhoto(
+        other: Other<
+            "removeBusinessAccountProfilePhoto",
+            "business_connection_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.removeBusinessAccountProfilePhoto(
+            orThrow(
+                this.businessConnectionId,
+                "removeBusinessAccountProfilePhoto",
+            ),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setBusinessAccountGiftSettings`. Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the can_change_gift_settings business bot right. Returns True on success.
+     *
+     * @param show_gift_button Pass True, if a button for sending a gift to the user or by the business account must always be shown in the input field
+     * @param accepted_gift_types Types of gifts accepted by the business account
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+     */
+    setBusinessAccountGiftSettings(
+        show_gift_button: boolean,
+        accepted_gift_types: AcceptedGiftTypes,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setBusinessAccountGiftSettings(
+            orThrow(
+                this.businessConnectionId,
+                "setBusinessAccountGiftSettings",
+            ),
+            show_gift_button,
+            accepted_gift_types,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getBusinessAccountStarBalance`. Returns the amount of Telegram Stars owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns StarAmount on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountstarbalance
+     */
+    getBusinessAccountStarBalance(signal?: AbortSignal) {
+        return this.api.getBusinessAccountStarBalance(
+            orThrow(this.businessConnectionId, "getBusinessAccountStarBalance"),
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.transferBusinessAccountStars`. Transfers Telegram Stars from the business account balance to the bot's balance. Requires the can_transfer_stars business bot right. Returns True on success.
+     *
+     * @param star_count Number of Telegram Stars to transfer; 1-10000
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transferbusinessaccountstars
+     */
+    transferBusinessAccountStars(star_count: number, signal?: AbortSignal) {
+        return this.api.transferBusinessAccountStars(
+            orThrow(this.businessConnectionId, "transferBusinessAccountStars"),
+            star_count,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getBusinessAccountGifts`. Returns the gifts received and owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns OwnedGifts on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountgifts
+     */
+    getBusinessAccountGifts(
+        other: Other<"getBusinessAccountGifts", "business_connection_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.getBusinessAccountGifts(
+            orThrow(this.businessConnectionId, "getBusinessAccountGifts"),
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.convertGiftToStars`. Converts a given regular gift to Telegram Stars. Requires the can_convert_gifts_to_stars business bot right. Returns True on success.
+     *
+     * @param owned_gift_id Unique identifier of the regular gift that should be converted to Telegram Stars
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#convertgifttostars
+     */
+    convertGiftToStars(
+        owned_gift_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.api.convertGiftToStars(
+            orThrow(this.businessConnectionId, "convertGiftToStars"),
+            owned_gift_id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.upgradeGift`. Upgrades a given regular gift to a unique gift. Requires the can_transfer_and_upgrade_gifts business bot right. Additionally requires the can_transfer_stars business bot right if the upgrade is paid. Returns True on success.
+     *
+     * @param owned_gift_id Unique identifier of the regular gift that should be upgraded to a unique one
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#upgradegift
+     */
+    upgradeGift(
+        owned_gift_id: string,
+        other: Other<
+            "getBusinessAccountGifts",
+            "business_connection_id" | "owned_gift_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.upgradeGift(
+            orThrow(this.businessConnectionId, "upgradeGift"),
+            owned_gift_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.transferGift`. Transfers an owned unique gift to another user. Requires the can_transfer_and_upgrade_gifts business bot right. Requires can_transfer_stars business bot right if the transfer is paid. Returns True on success.
+     *
+     * @param owned_gift_id Unique identifier of the regular gift that should be transferred
+     * @param new_owner_chat_id Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.
+     * @param star_count The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the can_transfer_stars business bot right is required.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transfergift
+     */
+    transferGift(
+        owned_gift_id: string,
+        new_owner_chat_id: number,
+        star_count: number,
+        signal?: AbortSignal,
+    ) {
+        return this.api.transferGift(
+            orThrow(this.businessConnectionId, "transferGift"),
+            owned_gift_id,
+            new_owner_chat_id,
+            star_count,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.postStory`. Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param content Content of the story
+     * @param active_period Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#poststory
+     */
+    postStory(
+        content: InputStoryContent,
+        active_period: 21600 | 43200 | 86400 | 172800,
+        other: Other<
+            "postStory",
+            "business_connection_id" | "content" | "active_period"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.postStory(
+            orThrow(this.businessConnectionId, "postStory"),
+            content,
+            active_period,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.`. editStoryEdits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param story_id Unique identifier of the story to edit
+     * @param content Content of the story
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editstory
+     */
+    editStory(
+        story_id: number,
+        content: InputStoryContent,
+        other: Other<
+            "editStory",
+            "business_connection_id" | "story_id" | "content"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.editStory(
+            orThrow(this.businessConnectionId, "editStory"),
+            story_id,
+            content,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.deleteStory`. Deletes a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns True on success.
+     *
+     * @param story_id Unique identifier of the story to delete
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletestory
+     */
+    deleteStory(story_id: number, signal?: AbortSignal) {
+        return this.api.deleteStory(
+            orThrow(this.businessConnectionId, "deleteStory"),
+            story_id,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.sendSticker`. Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
      * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL.
@@ -2874,12 +3414,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendSticker(
             orThrow(this.chatId, "sendSticker"),
             sticker,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
                 ...other,
             },
             signal,
@@ -2904,7 +3448,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.sendGift`. Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success.
+     * Context-aware alias for `api.sendGift`. Sends a gift to the given user. The gift can't be converted to Telegram Stars by the receiver. Returns True on success.
      *
      * @param gift_id Identifier of the gift
      * @param other Optional remaining parameters, confer the official reference below
@@ -2914,11 +3458,61 @@ export class Context implements RenamedUpdate {
      */
     sendGift(
         gift_id: string,
-        other?: Other<"sendGift", "user_id" | "gift_id">,
+        other?: Other<"sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
     ) {
         return this.api.sendGift(
             orThrow(this.from, "sendGift").id,
+            gift_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.giftPremiumSubscription`. Gifts a Telegram Premium subscription to the given user. Returns True on success.
+     *
+     * @param month_count Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
+     * @param star_count Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#giftpremiumsubscription
+     */
+    giftPremiumSubscription(
+        month_count: 3 | 6 | 12,
+        star_count: 1000 | 1500 | 2500,
+        other?: Other<
+            "giftPremiumSubscription",
+            "user_id" | "month_count" | "star_count"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.giftPremiumSubscription(
+            orThrow(this.from, "giftPremiumSubscription").id,
+            month_count,
+            star_count,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.sendGift`. Sends a gift to the given channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns True on success.
+     *
+     * @param gift_id Identifier of the gift
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendgift
+     */
+    replyWithGiftToChannel(
+        gift_id: string,
+        other?: Other<"sendGift", "user_id" | "chat_id" | "gift_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.sendGiftToChannel(
+            orThrow(this.chat, "sendGift").id,
             gift_id,
             other,
             signal,
@@ -3002,6 +3596,7 @@ export class Context implements RenamedUpdate {
         >,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendInvoice(
             orThrow(this.chatId, "sendInvoice"),
             title,
@@ -3009,7 +3604,13 @@ export class Context implements RenamedUpdate {
             payload,
             currency,
             prices,
-            { message_thread_id: this.msg?.message_thread_id, ...other },
+            {
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
             signal,
         );
     }
@@ -3168,6 +3769,22 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.readBusinessMessage`. Marks incoming message as read on behalf of a business account. Requires the can_read_messages business bot right. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#readbusinessmessage
+     */
+    readBusinessMessage(signal?: AbortSignal) {
+        return this.api.readBusinessMessage(
+            orThrow(this.businessConnectionId, "readBusinessMessage"),
+            orThrow(this.chatId, "readBusinessMessage"),
+            orThrow(this.msgId, "readBusinessMessage"),
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.setPassportDataErrors`. Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
      *
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
@@ -3202,12 +3819,15 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendGame", "chat_id" | "game_short_name">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendGame(
             orThrow(this.chatId, "sendGame"),
             game_short_name,
             {
                 business_connection_id: this.businessConnectionId,
-                message_thread_id: this.msg?.message_thread_id,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
                 ...other,
             },
             signal,
@@ -3368,13 +3988,14 @@ export type ShippingQueryContext<C extends Context> = FilterQueryContext<
     "shipping_query"
 >;
 
-type ChatTypeContextCore<T extends Chat["type"]> =
-    & Record<"update", ChatTypeUpdate<T>> // ctx.update
-    & ChatType<T> // ctx.chat
-    & Record<"chatId", number> // ctx.chatId
-    & ChatFrom<T> // ctx.from
-    & ChatTypeRecord<"msg", T> // ctx.msg
-    & AliasProps<ChatTypeUpdate<T>>; // ctx.message etc
+type ChatTypeContextCore<T extends Chat["type"]> = T extends unknown ?
+        & Record<"update", ChatTypeUpdate<T>> // ctx.update
+        & ChatType<T> // ctx.chat
+        & Record<"chatId", number> // ctx.chatId
+        & ChatFrom<T> // ctx.from
+        & ChatTypeRecord<"msg", T> // ctx.msg
+        & AliasProps<ChatTypeUpdate<T>> // ctx.message etc
+    : never;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.chatType`.

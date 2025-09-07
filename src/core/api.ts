@@ -1,8 +1,10 @@
 // deno-lint-ignore-file camelcase
 import type {
+    AcceptedGiftTypes,
     BotCommand,
     ChatPermissions,
     InlineQueryResult,
+    InputChecklist,
     InputFile,
     InputMedia,
     InputMediaAudio,
@@ -11,7 +13,9 @@ import type {
     InputMediaVideo,
     InputPaidMedia,
     InputPollOption,
+    InputProfilePhoto,
     InputSticker,
+    InputStoryContent,
     LabeledPrice,
     MaskPosition,
     PassportElementError,
@@ -86,7 +90,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Constructs a new instance of `Api`. It is independent from all other
      * instances of this class. For example, this lets you install a custom set
-     * if transformers.
+     * of transformers.
      *
      * @param token Bot API token obtained from [@BotFather](https://t.me/BotFather)
      * @param options Optional API client options for the underlying client instance
@@ -327,7 +331,7 @@ export class Api<R extends RawApi = RawApi> {
         other?: Other<
             R,
             "copyMessages",
-            "chat_id" | "from_chat_id" | "message_id"
+            "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
     ) {
@@ -731,7 +735,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param question Poll question, 1-300 characters
-     * @param options A list of answer options, 2-10 strings 1-100 characters each
+     * @param options A list of answer options, 2-12 strings 1-100 characters each
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -740,14 +744,80 @@ export class Api<R extends RawApi = RawApi> {
     sendPoll(
         chat_id: number | string,
         question: string,
-        options: InputPollOption[],
+        options: (string | InputPollOption)[],
         other?: Other<R, "sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
     ) {
+        const opts = options.map((o) =>
+            typeof o === "string" ? { text: o } : o
+        );
         return this.raw.sendPoll(
-            { chat_id, question, options, ...other },
+            { chat_id, question, options: opts, ...other },
             signal,
         );
+    }
+
+    /**
+     * Use this method to send a checklist on behalf of a connected business account. On success, the sent Message is returned.
+     *
+     * @param business_connection_id Unique identifier of the business connection on behalf of which the message will be sent
+     * @param chat_id Unique identifier for the target chat
+     * @param checklist An object for the checklist to send
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendchecklist
+     */
+    sendChecklist(
+        business_connection_id: string,
+        chat_id: number,
+        checklist: InputChecklist,
+        other?: Other<
+            R,
+            "sendChecklist",
+            "business_connection_id" | "chat_id" | "checklist"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendChecklist({
+            business_connection_id,
+            chat_id,
+            checklist,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned.
+     *
+     * @param business_connection_id Unique identifier of the business connection on behalf of which the message will be sent
+     * @param chat_id Unique identifier for the target chat
+     * @param message_id Unique identifier for the target message
+     * @param checklist An object for the new checklist
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editmessagechecklist
+     */
+    editMessageChecklist(
+        business_connection_id: string,
+        chat_id: number,
+        message_id: number,
+        checklist: InputChecklist,
+        other?: Other<
+            R,
+            "editMessageChecklist",
+            "business_connection_id" | "chat_id" | "messaage_id" | "checklist"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editMessageChecklist({
+            business_connection_id,
+            chat_id,
+            message_id,
+            checklist,
+            ...other,
+        }, signal);
     }
 
     /**
@@ -776,7 +846,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
+     * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of the target message
@@ -812,7 +882,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername). Channel chats and channel direct messages chats aren't supported.
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1250,6 +1320,50 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat.  Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target direct messages chat
+     * @param message_id Identifier of a suggested post message to approve
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#approvesuggestedpost
+     */
+    approveSuggestedPost(
+        chat_id: number,
+        message_id: number,
+        other?: Other<R, "approveSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.approveSuggestedPost(
+            { chat_id, message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target direct messages chat
+     * @param message_id Identifier of a suggested post message to decline
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#declinesuggestedpost
+     */
+    declineSuggestedPost(
+        chat_id: number,
+        message_id: number,
+        other?: Other<R, "declineSuggestedPost", "chat_id" | "message_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.declineSuggestedPost(
+            { chat_id, message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -1313,7 +1427,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of a message to pin
@@ -1335,7 +1449,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
@@ -1357,7 +1471,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
+     * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1371,7 +1485,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername). Channel direct messages chats aren't supported; leave the corresponding channel instead.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#leavechat
@@ -1773,7 +1887,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success.
      *
      * @param description New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setmydescription
@@ -1789,7 +1903,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to get the current bot description for the given user language. Returns BotDescription on success.
      *
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmydescription
@@ -1805,7 +1919,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success.
      *
      * @param short_description New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setmyshortdescription
@@ -1824,7 +1938,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.
      *
-     * @param other Optional remaining paramters, confer the official reference below
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmyshortdescription
@@ -1894,6 +2008,17 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getMyDefaultAdministratorRights({ ...other }, signal);
+    }
+
+    /**
+     * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a StarAmount object.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmystarbalance
+     */
+    getMyStarBalance(signal?: AbortSignal) {
+        return this.raw.getMyStarBalance({}, signal);
     }
 
     /**
@@ -2130,7 +2255,8 @@ export class Api<R extends RawApi = RawApi> {
      * - Bots can delete incoming messages in private chats.
      * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
      * - If the bot is an administrator of a group, it can delete any message there.
-     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_delete_messages administrator right in a supergroup or a channel, it can delete any message there.
+     * - If the bot has can_manage_direct_messages administrator right in a channel, it can delete any message in the corresponding direct messages chat.
      * Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -2162,6 +2288,370 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.deleteMessages({ chat_id, message_ids }, signal);
+    }
+
+    /**
+     * Delete messages on behalf of a business account. Requires the can_delete_outgoing_messages business bot right to delete messages sent by the bot itself, or the can_delete_all_messages business bot right to delete any message. Returns True on success.
+     *
+     *     @param business_connection_id Unique identifier of the business connection on behalf of which to delete the messages
+     *     @param message_ids A list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See deleteMessage for limitations on which messages can be deleted
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletebusinessmessages
+     */
+    deleteBusinessMessages(
+        business_connection_id: string,
+        message_ids: number[],
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteBusinessMessages(
+            { business_connection_id, message_ids },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the first and last name of a managed business account. Requires the can_change_name business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param first_name The new value of the first name for the business account; 1-64 characters
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountname
+     */
+    setBusinessAccountName(
+        business_connection_id: string,
+        first_name: string,
+        other: Other<
+            R,
+            "setBusinessAccountName",
+            "business_connection_id" | "first_name"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountName(
+            { business_connection_id, first_name, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the username of a managed business account. Requires the can_change_username business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection *
+     * @param username The new value of the username for the business account; 0-32 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountusername
+     */
+    setBusinessAccountUsername(
+        business_connection_id: string,
+        username: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountUsername(
+            { business_connection_id, username },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the bio of a managed business account. Requires the can_change_bio business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param bio The new value of the bio for the business account; 0-140 characters
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountbio
+     */
+    setBusinessAccountBio(
+        business_connection_id: string,
+        bio: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountBio(
+            { business_connection_id, bio },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param photo The new profile photo to set
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
+     */
+    setBusinessAccountProfilePhoto(
+        business_connection_id: string,
+        photo: InputProfilePhoto,
+        other: Other<
+            R,
+            "setBusinessAccountProfilePhoto",
+            "business_connection_id" | "photo"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountProfilePhoto(
+            { business_connection_id, photo, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Removes the current profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removebusinessaccountprofilephoto
+     */
+    removeBusinessAccountProfilePhoto(
+        business_connection_id: string,
+        other: Other<
+            R,
+            "removeBusinessAccountProfilePhoto",
+            "business_connection_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.removeBusinessAccountProfilePhoto(
+            { business_connection_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the can_change_gift_settings business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param show_gift_button Pass True, if a button for sending a gift to the user or by the business account must always be shown in the input field
+     * @param accepted_gift_types Types of gifts accepted by the business account
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+     */
+    setBusinessAccountGiftSettings(
+        business_connection_id: string,
+        show_gift_button: boolean,
+        accepted_gift_types: AcceptedGiftTypes,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setBusinessAccountGiftSettings(
+            { business_connection_id, show_gift_button, accepted_gift_types },
+            signal,
+        );
+    }
+
+    /**
+     * Returns the amount of Telegram Stars owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns StarAmount on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountstarbalance
+     */
+    getBusinessAccountStarBalance(
+        business_connection_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getBusinessAccountStarBalance(
+            { business_connection_id },
+            signal,
+        );
+    }
+
+    /**
+     * Transfers Telegram Stars from the business account balance to the bot's balance. Requires the can_transfer_stars business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param star_count Number of Telegram Stars to transfer; 1-10000
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transferbusinessaccountstars
+     */
+    transferBusinessAccountStars(
+        business_connection_id: string,
+        star_count: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.transferBusinessAccountStars(
+            { business_connection_id, star_count },
+            signal,
+        );
+    }
+
+    /**
+     * Returns the gifts received and owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns OwnedGifts on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountgifts
+     */
+    getBusinessAccountGifts(
+        business_connection_id: string,
+        other: Other<R, "getBusinessAccountGifts", "business_connection_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getBusinessAccountGifts(
+            { business_connection_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Converts a given regular gift to Telegram Stars. Requires the can_convert_gifts_to_stars business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param owned_gift_id Unique identifier of the regular gift that should be converted to Telegram Stars
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#convertgifttostars
+     */
+    convertGiftToStars(
+        business_connection_id: string,
+        owned_gift_id: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.convertGiftToStars(
+            { business_connection_id, owned_gift_id },
+            signal,
+        );
+    }
+
+    /**
+     * Upgrades a given regular gift to a unique gift. Requires the can_transfer_and_upgrade_gifts business bot right. Additionally requires the can_transfer_stars business bot right if the upgrade is paid. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param owned_gift_id Unique identifier of the regular gift that should be upgraded to a unique one
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#upgradegift
+     */
+    upgradeGift(
+        business_connection_id: string,
+        owned_gift_id: string,
+        other: Other<
+            R,
+            "getBusinessAccountGifts",
+            "business_connection_id" | "owned_gift_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.upgradeGift(
+            { business_connection_id, owned_gift_id, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Transfers an owned unique gift to another user. Requires the can_transfer_and_upgrade_gifts business bot right. Requires can_transfer_stars business bot right if the transfer is paid. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param owned_gift_id Unique identifier of the regular gift that should be transferred
+     * @param new_owner_chat_id Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.
+     * @param star_count The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the can_transfer_stars business bot right is required.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#transfergift
+     */
+    transferGift(
+        business_connection_id: string,
+        owned_gift_id: string,
+        new_owner_chat_id: number,
+        star_count: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.transferGift({
+            business_connection_id,
+            owned_gift_id,
+            new_owner_chat_id,
+            star_count,
+        }, signal);
+    }
+
+    /**
+     * Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param content Content of the story
+     * @param active_period Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#poststory
+     */
+    postStory(
+        business_connection_id: string,
+        content: InputStoryContent,
+        active_period: 21600 | 43200 | 86400 | 172800,
+        other: Other<
+            R,
+            "postStory",
+            "business_connection_id" | "content" | "active_period"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.postStory(
+            { business_connection_id, content, active_period, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Edits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param story_id Unique identifier of the story to edit
+     * @param content Content of the story
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editstory
+     */
+    editStory(
+        business_connection_id: string,
+        story_id: number,
+        content: InputStoryContent,
+        other: Other<
+            R,
+            "editStory",
+            "business_connection_id" | "story_id" | "content"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editStory(
+            { business_connection_id, story_id, content, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param story_id Unique identifier of the story to delete
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletestory
+     */
+    deleteStory(
+        business_connection_id: string,
+        story_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteStory(
+            { business_connection_id, story_id },
+            signal,
+        );
     }
 
     /**
@@ -2462,7 +2952,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Returns the list of gifts that can be sent by the bot to users. Requires no parameters. Returns a Gifts object.
+     * Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a Gifts object.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2473,9 +2963,9 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Sends a gift to the given user. The gift can't be converted to Telegram Stars by the user. Returns True on success.
+     * Sends a gift to the given user. The gift can't be converted to Telegram Stars by the receiver. Returns True on success.
      *
-     * @param user_id Unique identifier of the target user that will receive the gift
+     * @param user_id Unique identifier of the target user who will receive the gift
      * @param gift_id Identifier of the gift
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2485,10 +2975,57 @@ export class Api<R extends RawApi = RawApi> {
     sendGift(
         user_id: number,
         gift_id: string,
-        other?: Other<R, "sendGift", "user_id" | "gift_id">,
+        other?: Other<R, "sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
     ) {
         return this.raw.sendGift({ user_id, gift_id, ...other }, signal);
+    }
+
+    /**
+     * Gifts a Telegram Premium subscription to the given user. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user who will receive a Telegram Premium subscription
+     * @param month_count Number of months the Telegram Premium subscription will be active for the user; must be one of 3, 6, or 12
+     * @param star_count Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#giftpremiumsubscription
+     */
+    giftPremiumSubscription(
+        user_id: number,
+        month_count: 3 | 6 | 12,
+        star_count: 1000 | 1500 | 2500,
+        other?: Other<
+            R,
+            "giftPremiumSubscription",
+            "user_id" | "month_count" | "star_count"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.giftPremiumSubscription(
+            { user_id, month_count, star_count, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Sends a gift to the given channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the chat or username of the channel (in the format @channelusername) that will receive the gift
+     * @param gift_id Identifier of the gift
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendgift
+     */
+    sendGiftToChannel(
+        chat_id: number | string,
+        gift_id: string,
+        other?: Other<R, "sendGift", "user_id" | "chat_id" | "gift_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendGift({ chat_id, gift_id, ...other }, signal);
     }
 
     /**
@@ -2768,7 +3305,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Verifies a chat on behalf of the organization which is represented by the bot. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername). Channel direct messages chats can't be verified.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2810,6 +3347,28 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Marks incoming message as read on behalf of a business account. Requires the can_read_messages business bot right. Returns True on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection on behalf of which to read the message
+     * @param chat_id Unique identifier of the chat in which the message was received. The chat must have been active in the last 24 hours.
+     * @param message_id Unique identifier of the message to mark as read
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#readbusinessmessage
+     */
+    readBusinessMessage(
+        business_connection_id: string,
+        chat_id: number,
+        message_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.readBusinessMessage(
+            { business_connection_id, chat_id, message_id },
+            signal,
+        );
+    }
+
+    /**
      * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.
      *
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
@@ -2831,7 +3390,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send a game. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat
+     * @param chat_id Unique identifier for the target chat. Games can't be sent to channel direct messages chats and channel chats.
      * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request

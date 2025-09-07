@@ -752,8 +752,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * Both the fork and the downstream middleware are awaited with
      * `Promise.allSettled`.
      *
-     * In opposite to the other middleware methods on composer, `fork` does not
-     * return simply return the composer connected to the main middleware stack.
+     * In contrast to the other middleware methods on composer, `fork` does not
+     * simply return the composer connected to the main middleware stack.
      * Instead, it returns the created composer _of the fork_ connected to the
      * middleware stack. This allows for the following pattern.
      * ```ts

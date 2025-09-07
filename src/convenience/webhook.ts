@@ -99,6 +99,9 @@ export const webhookAdapters = {
     get cloudflareModule() {
         return createWebhookAdapter(adapters.cloudflareModule);
     },
+    get elysia() {
+        return createWebhookAdapter(adapters.elysia);
+    },
     get express() {
         return createWebhookAdapter(adapters.express);
     },
@@ -187,34 +190,26 @@ function webhookCallback<C extends Context = Context>(
     let initialized = false;
 
     return async (...args: any[]) => {
-        const {
-            update,
-            respond,
-            unauthorized,
-            badRequest,
-            end,
-            handlerReturn,
-            header,
-        } = adapter(...args);
+        const handler = adapter(...args);
         if (!initialized) {
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
             initialized = true;
         }
-        if (header !== secretToken) {
-            await unauthorized();
-            return handlerReturn;
+        if (handler.header !== secretToken) {
+            await handler.unauthorized();
+            return handler.handlerReturn;
         }
-        const updateData = await update;
+        const updateData = await handler.update;
         if (updateData?.update_id === undefined || updateData.update_id <= 0) {
-            await badRequest();
-            return handlerReturn;
+            await handler.badRequest();
+            return handler.handlerReturn;
         }
         let usedWebhookReply = false;
         const webhookReplyEnvelope: WebhookReplyEnvelope = {
             async send(json) {
                 usedWebhookReply = true;
-                await respond(json);
+                await handler.respond(json);
             },
         };
         await timeoutIfNecessary(
@@ -224,8 +219,8 @@ function webhookCallback<C extends Context = Context>(
                 : onTimeout,
             timeoutMilliseconds,
         );
-        if (!usedWebhookReply) end?.();
-        return handlerReturn;
+        if (!usedWebhookReply) handler.end?.();
+        return handler.handlerReturn;
     };
 }
 

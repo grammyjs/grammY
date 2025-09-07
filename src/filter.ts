@@ -288,7 +288,14 @@ const COMMON_MESSAGE_KEYS = {
     caption_entities: ENTITY_KEYS,
     caption: {},
 
+    link_preview_options: {
+        url: {},
+        prefer_small_media: {},
+        prefer_large_media: {},
+        show_above_text: {},
+    },
     effect_id: {},
+    paid_star_count: {},
     has_media_spoiler: {},
 
     new_chat_title: {},
@@ -303,6 +310,9 @@ const COMMON_MESSAGE_KEYS = {
     giveaway: { only_new_members: {}, has_public_winners: {} },
     giveaway_winners: { only_new_members: {}, was_refunded: {} },
     giveaway_completed: {},
+    gift: {},
+    unique_gift: {},
+    paid_message_price_changed: {},
     video_chat_scheduled: {},
     video_chat_started: {},
     video_chat_ended: {},
@@ -311,6 +321,8 @@ const COMMON_MESSAGE_KEYS = {
 } as const;
 const MESSAGE_KEYS = {
     ...COMMON_MESSAGE_KEYS,
+
+    direct_messages_topic: {},
 
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
@@ -333,11 +345,24 @@ const MESSAGE_KEYS = {
     general_forum_topic_hidden: {},
     general_forum_topic_unhidden: {},
 
+    checklist: { others_can_add_tasks: {}, others_can_mark_tasks_as_done: {} },
+    checklist_tasks_done: {},
+    checklist_tasks_added: {},
+
+    suggested_post_info: {},
+    suggested_post_approved: {},
+    suggested_post_approval_failed: {},
+    suggested_post_declined: {},
+    suggested_post_paid: {},
+    suggested_post_refunded: {},
+
     sender_boost_count: {},
 } as const;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
+    direct_message_price_changed: {},
+    is_paid_post: {},
 } as const;
 const BUSINESS_CONNECTION_KEYS = {
     can_reply: {},
@@ -452,7 +477,8 @@ export type FilterQuery = ComputeFilterQueryList;
  * Any kind of value that appears in the Telegram Bot API. When intersected with
  * an optional field, it effectively removes `| undefined`.
  */
-type NotUndefined = string | number | boolean | object;
+// deno-lint-ignore ban-types
+type NotUndefined = {};
 
 /**
  * Given a FilterQuery, returns an object that, when intersected with an Update,

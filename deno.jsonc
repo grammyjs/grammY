@@ -1,8 +1,7 @@
 {
     "lock": false,
     "imports": {
-        "@grammyjs/debug": "jsr:@grammyjs/debug@^0.1.2",
-        "@std/path": "jsr:@std/path@^1.0.8"
+        "@grammyjs/debug": "jsr:@grammyjs/debug@^0.1.2"
     },
     "tasks": {
         "check": "deno check --all src/mod.ts",
@@ -10,17 +9,10 @@
         "ok": "deno fmt --check && deno lint && deno task test && deno task check",
         "fix": "deno fmt && deno lint --fix",
         // TODO: bring back coverage reports
-        "contribs": "deno run --allow-env --allow-read --allow-write=. --allow-net=api.github.com --allow-sys npm:all-contributors-cli"
+        "contribs": "deno -ERS --allow-write=. --allow-net=api.github.com npm:all-contributors-cli"
     },
     "fmt": {
         "indentWidth": 4,
         "proseWrap": "preserve"
-    },
-    "lint": {
-        "rules": {
-            "exclude": [
-                "no-slow-types"
-            ]
-        }
     }
 }

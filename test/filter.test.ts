@@ -101,14 +101,14 @@ describe("matchFilter", () => {
     });
 
     it("should match multiple filters", () => {
-        const entitiy = { type: "" };
+        const entity = { type: "" };
         const ctx = {
             update: {
-                message: { text: "", entities: [{ type: "italic" }, entitiy] },
+                message: { text: "", entities: [{ type: "italic" }, entity] },
             },
         } as Context;
         for (const t of ["url", "bold", "bot_command", "cashtag", "code"]) {
-            entitiy.type = t;
+            entity.type = t;
             assert(
                 matchFilter([
                     "::url",
