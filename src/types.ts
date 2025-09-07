@@ -1,4 +1,3 @@
-// TODO: convert `InlineKeyboardButton` to a union type
 // === HELPER TYPES ===
 /** Object with no keys */
 export type Empty = Record<never, never>;
@@ -4315,57 +4314,169 @@ export interface InlineKeyboardMarkup {
  *
  * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
  */
-export interface InlineKeyboardButton {
+export type InlineKeyboardButton = InlineKeyboardButton.Url;
+/**
+ * Namespace that holds all types of keyboard buttons.
+ *
+ * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+ */
+export declare namespace InlineKeyboardButton {
     /**
-     * Label text on the button
-     */
-    text: string;
-    /**
-     * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
-     */
-    url?: string;
-    /**
-     * Data to be sent in a {@link CallbackQuery | callback query} to the bot when the button is pressed, 1-64 bytes
-     */
-    callback_data?: string;
-    /**
-     * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.
-     */
-    web_app?: WebAppInfo;
-    /**
-     * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget}.
-     */
-    login_url?: LoginUrl;
-    /**
-     * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
-     */
-    switch_inline_query?: string;
-    /**
-     * If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
+     * An inline keyboard button of type url.
      *
-     * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
      */
-    switch_inline_query_current_chat?: string;
+    export interface WithUrl {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
+         */
+        url: string;
+    }
     /**
-     * If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
-     */
-    switch_inline_query_chosen_chat?: SwitchInlineQueryChosenChat;
-    /**
-     * Description of the button that copies the specified text to the clipboard.
-     */
-    copy_text?: CopyTextButton;
-    /**
-     * Description of the game that will be launched when the user presses the button.
+     * An inline keyboard button of type callback_data.
      *
-     * **NOTE:** This type of button **must** always be the first button in the first row.
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
      */
-    callback_game?: CallbackGame;
+    export interface WithCallbackData {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Data to be sent in a {@link CallbackQuery | callback query} to the bot when the button is pressed, 1-64 bytes
+         */
+        callback_data: string;
+    }
     /**
-     * Specify _True_, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
+     * An inline keyboard button of type web_app.
      *
-     * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
      */
-    pay?: boolean;
+    export interface WithWebApp {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.
+         */
+        web_app: WebAppInfo;
+    }
+    /**
+     * An inline keyboard button of type login_url.
+     *
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+     */
+    export interface WithLoginUrl {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget}.
+         */
+        login_url: LoginUrl;
+    }
+    /**
+     * An inline keyboard button of type switch_inline_query.
+     *
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+     */
+    export interface WithSwitchInlineQuery {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
+         */
+        switch_inline_query: string;
+    }
+    /**
+     * An inline keyboard button of type switch_inline_query_current_chat.
+     *
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+     */
+    export interface WithSwitchInlineQueryCurrentChat {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
+         *
+         * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
+         */
+        switch_inline_query_current_chat: string;
+    }
+    /**
+     * An inline keyboard button of type switch_inline_query_chosen_chat.
+     *
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+     */
+    export interface WithSwitchInlineQueryChosenChat {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a Telegram Business account.
+         */
+        switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat;
+    }
+    /**
+     * An inline keyboard button of type copy_text.
+     *
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+     */
+    export interface WithCopyText {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Description of the button that copies the specified text to the clipboard.
+         */
+        copy_text: CopyTextButton;
+    }
+    /**
+     * An inline keyboard button of type callback_game.
+     *
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+     */
+    export interface WithCallbackGame {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Description of the game that will be launched when the user presses the button.
+         *
+         * **NOTE:** This type of button **must** always be the first button in the first row.
+         */
+        callback_game: CallbackGame;
+    }
+    /**
+     * An inline keyboard button of type pay.
+     *
+     * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
+     */
+    export interface WithPay {
+        /**
+         * Label text on the button
+         */
+        text: string;
+        /**
+         * Specify _True_, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
+         *
+         * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
+         */
+        pay: boolean;
+    }
 }
 /**
  * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the {@link https://core.telegram.org/widgets/login | Telegram Login Widget} when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:
