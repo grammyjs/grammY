@@ -3,29 +3,8 @@ import { createDebug } from "@grammyjs/debug";
 import type { Bot } from "../bot.ts";
 import type { Context } from "../context.ts";
 import type { WebhookReplyEnvelope } from "../core/client.ts";
-import type { Update } from "../types.ts";
-import {
-    adapters as nativeAdapters,
-    BAD_REQUEST_ERROR,
-    type FrameworkAdapter,
-    WRONG_TOKEN_ERROR,
-} from "./frameworks.ts";
+import { type FrameworkAdapter, makeAdapters } from "./frameworks.ts";
 const debugErr = createDebug("grammy:error");
-
-const callbackAdapter: FrameworkAdapter = (
-    update: Update,
-    callback: (json: string) => unknown,
-    header: string,
-    unauthorized = () => callback(WRONG_TOKEN_ERROR),
-    badRequest = () => callback(BAD_REQUEST_ERROR),
-) => ({
-    update: Promise.resolve(update),
-    respond: callback,
-    header,
-    unauthorized,
-    badRequest,
-});
-const adapters = { ...nativeAdapters, callback: callbackAdapter };
 
 export interface WebhookOptions {
     /** An optional strategy to handle timeouts (default: 'throw') */
@@ -36,7 +15,7 @@ export interface WebhookOptions {
     secretToken?: string;
 }
 
-type Adapters = typeof adapters;
+type Adapters = ReturnType<typeof makeAdapters>;
 type AdapterNames = keyof Adapters;
 type Adapter<A extends Adapters[AdapterNames]> = (
     ...args: Parameters<A>
@@ -52,14 +31,15 @@ type WebhookAdapter<
     ): Adapter<A>;
 };
 
+let adapters: Adapters | undefined;
 function createWebhookAdapter<
     C extends Context = Context,
-    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
->(adapter: A): WebhookAdapter<C, A> {
-    return (
-        bot: Bot<C>,
-        options?: WebhookOptions,
-    ) => webhookCallback(bot, adapter, options);
+    A extends AdapterNames = AdapterNames,
+>(adapterName: A): WebhookAdapter<C, Adapters[A]> {
+    adapters ??= makeAdapters();
+    const adapter = adapters[adapterName];
+    return (bot: Bot<C>, options?: WebhookOptions) =>
+        webhookCallback(bot, adapter, options);
 }
 
 // TODO: add docs examples for each adapter?
@@ -81,68 +61,68 @@ function createWebhookAdapter<
  * @param webhookOptions Further options for the webhook setup
  */
 export const webhookAdapters = {
+    get callback() {
+        return createWebhookAdapter("callback");
+    },
     get awsLambda() {
-        return createWebhookAdapter(adapters.awsLambda);
+        return createWebhookAdapter("awsLambda");
     },
     get awsLambdaAsync() {
-        return createWebhookAdapter(adapters.awsLambdaAsync);
+        return createWebhookAdapter("awsLambdaAsync");
     },
     get azure() {
-        return createWebhookAdapter(adapters.azure);
+        return createWebhookAdapter("azure");
     },
     get bun() {
-        return createWebhookAdapter(adapters.bun);
+        return createWebhookAdapter("bun");
     },
     get cloudflare() {
-        return createWebhookAdapter(adapters.cloudflare);
+        return createWebhookAdapter("cloudflare");
     },
     get cloudflareModule() {
-        return createWebhookAdapter(adapters.cloudflareModule);
+        return createWebhookAdapter("cloudflareModule");
     },
     get elysia() {
-        return createWebhookAdapter(adapters.elysia);
+        return createWebhookAdapter("elysia");
     },
     get express() {
-        return createWebhookAdapter(adapters.express);
+        return createWebhookAdapter("express");
     },
     get fastify() {
-        return createWebhookAdapter(adapters.fastify);
+        return createWebhookAdapter("fastify");
     },
     get hono() {
-        return createWebhookAdapter(adapters.hono);
+        return createWebhookAdapter("hono");
     },
     get http() {
-        return createWebhookAdapter(adapters.http);
+        return createWebhookAdapter("http");
     },
     get https() {
-        return createWebhookAdapter(adapters.http);
+        return createWebhookAdapter("http");
     },
     get koa() {
-        return createWebhookAdapter(adapters.koa);
+        return createWebhookAdapter("koa");
     },
     get nextJs() {
-        return createWebhookAdapter(adapters.nextJs);
+        return createWebhookAdapter("nextJs");
     },
     get nhttp() {
-        return createWebhookAdapter(adapters.nhttp);
+        return createWebhookAdapter("nhttp");
     },
     get oak() {
-        return createWebhookAdapter(adapters.oak);
+        return createWebhookAdapter("oak");
     },
     get serveHttp() {
-        return createWebhookAdapter(adapters.serveHttp);
+        return createWebhookAdapter("serveHttp");
     },
     get stdHttp() {
-        return createWebhookAdapter(adapters.stdHttp);
+        return createWebhookAdapter("stdHttp");
     },
     get sveltekit() {
-        return createWebhookAdapter(adapters.sveltekit);
+        return createWebhookAdapter("sveltekit");
     },
     get worktop() {
-        return createWebhookAdapter(adapters.worktop);
-    },
-    get callback() {
-        return createWebhookAdapter(adapters.callback);
+        return createWebhookAdapter("worktop");
     },
 };
 
