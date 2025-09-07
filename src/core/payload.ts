@@ -1,4 +1,4 @@
-import { InputFile } from "./input_file.ts";
+import { InputFile } from "../types.ts";
 
 // === Payload types (JSON vs. form data)
 /**

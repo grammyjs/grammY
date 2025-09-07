@@ -75,7 +75,7 @@ export interface PollingOptions {
      * call to the getUpdates, so unwanted updates may be received for a short
      * period of time.
      */
-    allowed_updates?: ReadonlyArray<Exclude<keyof Update, "update_id">>;
+    allowed_updates?: Array<Exclude<keyof Update, "update_id">>;
     /**
      * Pass True to drop all pending updates before starting the long polling.
      */

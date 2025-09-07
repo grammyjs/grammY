@@ -1313,7 +1313,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#sendmediagroup
      */
     sendMediaGroup(
-        media: ReadonlyArray<
+        media: Array<
             | InputMediaAudio
             | InputMediaDocument
             | InputMediaPhoto
@@ -1540,7 +1540,6 @@ export class Context implements RenamedUpdate {
      */
     sendDice(
         emoji:
-            | (string & Record<never, never>)
             | "🎲"
             | "🎯"
             | "🏀"
@@ -2074,7 +2073,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
      */
     createChatSubscriptionInviteLink(
-        subscription_period: number,
+        subscription_period: 2592000,
         subscription_price: number,
         other?: Other<
             "createChatSubscriptionInviteLink",
@@ -2896,10 +2895,9 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
      */
     getCustomEmojiStickers(signal?: AbortSignal) {
-        type Emoji = MessageEntity.CustomEmojiMessageEntity;
         return this.api.getCustomEmojiStickers(
             (this.msg?.entities ?? [])
-                .filter((e): e is Emoji => e.type === "custom_emoji")
+                .filter((e) => e.type === "custom_emoji")
                 .map((e) => e.custom_emoji_id),
             signal,
         );
@@ -2940,7 +2938,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#answerinlinequery
      */
     answerInlineQuery(
-        results: readonly InlineQueryResult[],
+        results: InlineQueryResult[],
         other?: Other<"answerInlineQuery", "inline_query_id" | "results">,
         signal?: AbortSignal,
     ) {
@@ -2992,7 +2990,7 @@ export class Context implements RenamedUpdate {
         description: string,
         payload: string,
         currency: string,
-        prices: readonly LabeledPrice[],
+        prices: LabeledPrice[],
         other?: Other<
             "sendInvoice",
             | "chat_id"
@@ -3180,7 +3178,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#setpassportdataerrors
      */
     setPassportDataErrors(
-        errors: readonly PassportElementError[],
+        errors: PassportElementError[],
         signal?: AbortSignal,
     ) {
         return this.api.setPassportDataErrors(

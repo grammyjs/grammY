@@ -490,7 +490,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     sendMediaGroup(
         chat_id: number | string,
-        media: ReadonlyArray<
+        media: Array<
             | InputMediaAudio
             | InputMediaDocument
             | InputMediaPhoto
@@ -763,7 +763,6 @@ export class Api<R extends RawApi = RawApi> {
     sendDice(
         chat_id: number | string,
         emoji:
-            | (string & Record<never, never>)
             | "🎲"
             | "🎯"
             | "🏀"
@@ -1158,7 +1157,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     createChatSubscriptionInviteLink(
         chat_id: number | string,
-        subscription_period: number,
+        subscription_period: 2592000,
         subscription_price: number,
         other?: Other<
             R,
@@ -1736,7 +1735,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#setmycommands
      */
     setMyCommands(
-        commands: readonly BotCommand[],
+        commands: BotCommand[],
         other?: Other<R, "setMyCommands", "commands">,
         signal?: AbortSignal,
     ) {
@@ -2507,7 +2506,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     answerInlineQuery(
         inline_query_id: string,
-        results: readonly InlineQueryResult[],
+        results: InlineQueryResult[],
         other?: Other<R, "answerInlineQuery", "inline_query_id" | "results">,
         signal?: AbortSignal,
     ) {
@@ -2576,7 +2575,7 @@ export class Api<R extends RawApi = RawApi> {
         description: string,
         payload: string,
         currency: string,
-        prices: readonly LabeledPrice[],
+        prices: LabeledPrice[],
         other?: Other<
             R,
             "sendInvoice",
@@ -2823,7 +2822,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     setPassportDataErrors(
         user_id: number,
-        errors: readonly PassportElementError[],
+        errors: PassportElementError[],
         signal?: AbortSignal,
     ) {
         return this.raw.setPassportDataErrors({ user_id, errors }, signal);

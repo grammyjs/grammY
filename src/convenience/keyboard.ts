@@ -126,7 +126,7 @@ export class Keyboard {
      *
      * @param text The text to display
      */
-    static text(text: string): KeyboardButton.CommonButton {
+    static text(text: string): KeyboardButton.WithText {
         return { text };
     }
     /**
@@ -160,7 +160,7 @@ export class Keyboard {
         text: string,
         requestId: number,
         options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
-    ): KeyboardButton.RequestUsersButton {
+    ): KeyboardButton.WithRequestUsers {
         return { text, request_users: { request_id: requestId, ...options } };
     }
     /**
@@ -198,7 +198,7 @@ export class Keyboard {
         options: Omit<KeyboardButtonRequestChat, "request_id"> = {
             chat_is_channel: false,
         },
-    ): KeyboardButton.RequestChatButton {
+    ): KeyboardButton.WithRequestChat {
         return { text, request_chat: { request_id: requestId, ...options } };
     }
     /**
@@ -217,7 +217,7 @@ export class Keyboard {
      *
      * @param text The text to display
      */
-    static requestContact(text: string): KeyboardButton.RequestContactButton {
+    static requestContact(text: string): KeyboardButton.WithRequestContact {
         return { text, request_contact: true };
     }
     /**
@@ -235,7 +235,7 @@ export class Keyboard {
      *
      * @param text The text to display
      */
-    static requestLocation(text: string): KeyboardButton.RequestLocationButton {
+    static requestLocation(text: string): KeyboardButton.WithRequestLocation {
         return { text, request_location: true };
     }
     /**
@@ -262,7 +262,7 @@ export class Keyboard {
     static requestPoll(
         text: string,
         type?: KeyboardButtonPollType["type"],
-    ): KeyboardButton.RequestPollButton {
+    ): KeyboardButton.WithRequestPoll {
         return { text, request_poll: { type } };
     }
     /**
@@ -284,7 +284,7 @@ export class Keyboard {
      * @param text The text to display
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
-    static webApp(text: string, url: string): KeyboardButton.WebAppButton {
+    static webApp(text: string, url: string): KeyboardButton.WithWebApp {
         return { text, web_app: { url } };
     }
     /**
@@ -564,7 +564,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
      */
-    static url(text: string, url: string): InlineKeyboardButton.UrlButton {
+    static url(text: string, url: string): InlineKeyboardButton.WithUrl {
         return { text, url };
     }
     /**
@@ -607,7 +607,7 @@ export class InlineKeyboard {
     static text(
         text: string,
         data: string,
-    ): InlineKeyboardButton.CallbackButton {
+    ): InlineKeyboardButton.WithCallbackData {
         return { text, callback_data: data };
     }
     /**
@@ -628,7 +628,7 @@ export class InlineKeyboard {
     static webApp(
         text: string,
         url: string | WebAppInfo,
-    ): InlineKeyboardButton.WebAppButton {
+    ): InlineKeyboardButton.WithWebApp {
         return { text, web_app: typeof url === "string" ? { url } : url };
     }
     /**
@@ -653,7 +653,7 @@ export class InlineKeyboard {
     static login(
         text: string,
         loginUrl: string | LoginUrl,
-    ): InlineKeyboardButton.LoginButton {
+    ): InlineKeyboardButton.WithLoginUrl {
         return {
             text,
             login_url: typeof loginUrl === "string"
@@ -697,7 +697,7 @@ export class InlineKeyboard {
     static switchInline(
         text: string,
         query = "",
-    ): InlineKeyboardButton.SwitchInlineButton {
+    ): InlineKeyboardButton.WithSwitchInlineQuery {
         return { text, switch_inline_query: query };
     }
     /**
@@ -736,7 +736,7 @@ export class InlineKeyboard {
     static switchInlineCurrent(
         text: string,
         query = "",
-    ): InlineKeyboardButton.SwitchInlineCurrentChatButton {
+    ): InlineKeyboardButton.WithSwitchInlineQueryCurrentChat {
         return { text, switch_inline_query_current_chat: query };
     }
     /**
@@ -778,7 +778,7 @@ export class InlineKeyboard {
     static switchInlineChosen(
         text: string,
         query: SwitchInlineQueryChosenChat = {},
-    ): InlineKeyboardButton.SwitchInlineChosenChatButton {
+    ): InlineKeyboardButton.WithSwitchInlineQueryChosenChat {
         return { text, switch_inline_query_chosen_chat: query };
     }
     /**
@@ -801,7 +801,7 @@ export class InlineKeyboard {
     static copyText(
         text: string,
         copyText: string | CopyTextButton,
-    ): InlineKeyboardButton.CopyTextButtonButton {
+    ): InlineKeyboardButton.WithCopyText {
         return {
             text,
             copy_text: typeof copyText === "string"
@@ -828,7 +828,7 @@ export class InlineKeyboard {
      *
      * @param text The text to display
      */
-    static game(text: string): InlineKeyboardButton.GameButton {
+    static game(text: string): InlineKeyboardButton.WithCallbackGame {
         return { text, callback_game: {} };
     }
     /**
@@ -852,7 +852,7 @@ export class InlineKeyboard {
      *
      * @param text The text to display. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
      */
-    static pay(text: string): InlineKeyboardButton.PayButton {
+    static pay(text: string): InlineKeyboardButton.WithPay {
         return { text, pay: true };
     }
     /**

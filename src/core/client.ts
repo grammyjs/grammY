@@ -1,5 +1,5 @@
 import { createDebug } from "@grammyjs/debug";
-import type { ApiMethods, ApiResponse, Opts } from "../types.ts";
+import type { ApiMethods, ApiParameters, ApiResponse } from "../types.ts";
 import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
@@ -20,14 +20,10 @@ export type Methods<R extends RawApi> = string & keyof R;
  * API call if desired.
  */
 export type RawApi = {
-    [M in keyof ApiMethods]: undefined extends Opts<M> ? (
-            args?: Opts<M>,
-            signal?: AbortSignal,
-        ) => Promise<ReturnType<ApiMethods[M]>>
-        : (
-            args: Opts<M>,
-            signal?: AbortSignal,
-        ) => Promise<ReturnType<ApiMethods[M]>>;
+    [M in keyof ApiMethods]: (
+        args: ApiParameters<M>,
+        signal?: AbortSignal,
+    ) => Promise<ReturnType<ApiMethods[M]>>;
 };
 
 export type Payload<M extends Methods<R>, R extends RawApi> = M extends unknown

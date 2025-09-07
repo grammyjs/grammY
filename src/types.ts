@@ -811,6 +811,8 @@ export interface User {
  * @see {@link https://core.telegram.org/bots/api#user}
  */
 export interface UserFromGetMe extends User {
+    is_bot: true;
+    username: string;
     /**
      * _True_, if the bot can be invited to groups. Returned only in {@link ApiMethods.getMe | getMe}.
      */
@@ -2218,10 +2220,10 @@ export interface Message {
     reply_markup?: InlineKeyboardMarkup;
 }
 /**
-  * This object represents a unique message identifier.
-
-  * @see {@link https://core.telegram.org/bots/api#messageid}
-  */
+ * This object represents a unique message identifier.
+ *
+ * @see {@link https://core.telegram.org/bots/api#messageid}
+ */
 export interface MessageId {
     /**
      * Unique message identifier. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent
@@ -2229,11 +2231,20 @@ export interface MessageId {
     message_id: number;
 }
 /**
-  * This object describes a message that was deleted or is otherwise inaccessible to the bot.
-
-  * @see {@link https://core.telegram.org/bots/api#inaccessiblemessage}
-  */
-export interface InaccessibleMessage {
+ * This object describes a message that was deleted or is otherwise inaccessible to the bot.
+ *
+ * @see {@link https://core.telegram.org/bots/api#inaccessiblemessage}
+ */
+export interface InaccessibleMessage extends
+    Omit<
+        // TypeScript cannot discriminate union types based on `0` and `number` so
+        // we work around this by including all other properties here. This mostly
+        // negates the benefit of having this interface in the first place, but not
+        // extending Message is not very ergonomic to use. If you have a better idea
+        // how to model this, please let us know!
+        Message,
+        "chat" | "message_id" | "date"
+    > {
     /**
      * Chat the message belonged to
      */
@@ -4736,7 +4747,17 @@ export interface InlineKeyboardMarkup {
  *
  * @see {@link https://core.telegram.org/bots/api#inlinekeyboardbutton}
  */
-export type InlineKeyboardButton = InlineKeyboardButton.Url;
+export type InlineKeyboardButton =
+    | InlineKeyboardButton.WithUrl
+    | InlineKeyboardButton.WithCallbackData
+    | InlineKeyboardButton.WithWebApp
+    | InlineKeyboardButton.WithLoginUrl
+    | InlineKeyboardButton.WithSwitchInlineQuery
+    | InlineKeyboardButton.WithSwitchInlineQueryCurrentChat
+    | InlineKeyboardButton.WithSwitchInlineQueryChosenChat
+    | InlineKeyboardButton.WithCopyText
+    | InlineKeyboardButton.WithCallbackGame
+    | InlineKeyboardButton.WithPay;
 /**
  * Namespace that holds all types of keyboard buttons.
  *
