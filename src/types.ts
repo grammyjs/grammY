@@ -6566,7 +6566,7 @@ export interface InputMediaPhoto {
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    media: string;
+    media: InputFile | string;
     /**
      * Caption of the photo to be sent, 0-1024 characters after entities parsing
      */
@@ -6601,15 +6601,15 @@ export interface InputMediaVideo {
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    media: string;
+    media: InputFile | string;
     /**
      * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    thumbnail?: string;
+    thumbnail?: InputFile;
     /**
      * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    cover?: string;
+    cover?: InputFile | string;
     /**
      * Start timestamp for the video in the message
      */
@@ -6664,11 +6664,11 @@ export interface InputMediaAnimation {
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    media: string;
+    media: InputFile | string;
     /**
      * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    thumbnail?: string;
+    thumbnail?: InputFile;
     /**
      * Caption of the animation to be sent, 0-1024 characters after entities parsing
      */
@@ -6715,11 +6715,11 @@ export interface InputMediaAudio {
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    media: string;
+    media: InputFile | string;
     /**
      * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    thumbnail?: string;
+    thumbnail?: InputFile;
     /**
      * Caption of the audio to be sent, 0-1024 characters after entities parsing
      */
@@ -6758,11 +6758,11 @@ export interface InputMediaDocument {
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    media: string;
+    media: InputFile | string;
     /**
      * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    thumbnail?: string;
+    thumbnail?: InputFile;
     /**
      * Caption of the document to be sent, 0-1024 characters after entities parsing
      */
@@ -6878,7 +6878,7 @@ export interface InputPaidMediaPhoto {
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    media: string;
+    media: InputFile | string;
 }
 /**
  * The paid media to send is a video.
@@ -6893,15 +6893,15 @@ export interface InputPaidMediaVideo {
     /**
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    media: string;
+    media: InputFile | string;
     /**
      * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    thumbnail?: string;
+    thumbnail?: InputFile;
     /**
      * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    cover?: string;
+    cover?: InputFile | string;
     /**
      * Start timestamp for the video in the message
      */
@@ -6946,7 +6946,7 @@ export interface InputProfilePhotoStatic {
     /**
      * The static profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    photo: string;
+    photo: InputFile;
 }
 /**
  * An animated profile photo in the MPEG4 format.
@@ -6961,7 +6961,7 @@ export interface InputProfilePhotoAnimated {
     /**
      * The animated profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    animation: string;
+    animation: InputFile;
     /**
      * Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.
      */
@@ -6990,7 +6990,7 @@ export interface InputStoryContentPhoto {
     /**
      * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the photo was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    photo: string;
+    photo: InputFile;
 }
 /**
  * Describes a video to post as a story.
@@ -7005,7 +7005,7 @@ export interface InputStoryContentVideo {
     /**
      * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can't be reused and can only be uploaded as a new file, so you can pass “attach://<file_attach_name>” if the video was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    video: string;
+    video: InputFile;
     /**
      * Precise duration of the video in seconds; 0-60
      */
@@ -7573,7 +7573,7 @@ export interface ApiMethods {
         /**
          * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
-        thumbnail?: InputFile | string;
+        thumbnail?: InputFile;
         /**
          * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
@@ -7638,7 +7638,7 @@ export interface ApiMethods {
         /**
          * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
-        thumbnail?: InputFile | string;
+        thumbnail?: InputFile;
         /**
          * Document caption (may also be used when resending documents by _file_id_), 0-1024 characters after entities parsing
          */
@@ -7731,7 +7731,7 @@ export interface ApiMethods {
         /**
          * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
-        thumbnail?: InputFile | string;
+        thumbnail?: InputFile;
         /**
          * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
@@ -7840,7 +7840,7 @@ export interface ApiMethods {
         /**
          * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
-        thumbnail?: InputFile | string;
+        thumbnail?: InputFile;
         /**
          * Animation caption (may also be used when resending animation by _file_id_), 0-1024 characters after entities parsing
          */
@@ -8010,7 +8010,7 @@ export interface ApiMethods {
         /**
          * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
          */
-        thumbnail?: InputFile | string;
+        thumbnail?: InputFile;
         /**
          * Sends the message {@link https://telegram.org/blog/channels-2-0#silent-messages | silently}. Users will receive a notification with no sound.
          */
@@ -10899,7 +10899,7 @@ export interface InputSticker {
     /**
      * The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new file using multipart/form-data under <file_attach_name> name. Animated and video stickers can't be uploaded via HTTP URL. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
-    sticker: string;
+    sticker: InputFile | string;
     /**
      * Format of the added sticker, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, “video” for a **.WEBM** video
      */
