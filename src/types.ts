@@ -1,6 +1,6 @@
 // === HELPER TYPES ===
 /** Object with no keys */
-export type Empty = Record<never, never>;
+export type Empty = Record<string, never>;
 /** Anything except null or undefined */
 export type Present = NonNullable<unknown>;
 /**
