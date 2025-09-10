@@ -4,12 +4,26 @@ export type Empty = Record<string, never>;
 /** Anything except null or undefined */
 export type Present = NonNullable<unknown>;
 /**
- * Utility type providing the argument type for the given method name or `{}` if
- * the method does not take any parameters
+ * Utility type providing the parameter type for the given method name, or `{}`
+ * if the method does not take any paramters.
+ *
+ * Optionally, an extended `ApiMethods` type can be passed. This allows for the
+ * addition or modification of methods.
  */
-export type ApiParameters<M extends keyof ApiMethods> = Parameters<
-    ApiMethods[M]
->[0];
+export type ApiParameters<
+    M extends keyof A,
+    A extends ApiMethods = ApiMethods,
+> // deno-lint-ignore no-explicit-any
+ = A[M] extends (...args: any[]) => any ? Parameters<A[M]>[0] : never;
+/**
+ * Utility type providing the return type for the given method name.
+ *
+ * Optionally, an extended `ApiMethods` type can be passed. This allows for the
+ * addition or modification of methods.
+ */
+export type ApiResponse<M extends keyof A, A extends ApiMethods = ApiMethods> =
+    // deno-lint-ignore no-explicit-any
+    A[M] extends (...args: any[]) => any ? ReturnType<A[M]>[0] : never;
 /**
  * A two-letter ISO 639-1 language code.
  *
@@ -491,7 +505,7 @@ export interface ApiSuccess<T> {
  * - All methods in the Bot API are case-insensitive.
  * - All queries must be made using UTF-8.
  */
-export type ApiResponse<T> = ApiError | ApiSuccess<T>;
+export type ApiResult<T> = ApiError | ApiSuccess<T>;
 
 // === GETTING UPDATES ===
 /**

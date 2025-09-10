@@ -1,6 +1,6 @@
 import { createRawApi, type TransformableApi } from "../../src/core/client.ts";
 import { GrammyError } from "../../src/mod.ts";
-import type { ApiResponse } from "../../src/types.ts";
+import type { ApiResult } from "../../src/types.ts";
 import {
     afterEach,
     assertEquals,
@@ -18,7 +18,7 @@ const token = "secret-token";
 describe("API client", () => {
     let api: TransformableApi;
     let canUseWebhookReply: boolean;
-    let response: ApiResponse<{ testValue: number }>;
+    let response: ApiResult<{ testValue: number }>;
     let fetchStub: Stub<typeof globalThis>;
 
     beforeEach(() => {
