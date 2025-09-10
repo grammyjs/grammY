@@ -1,5 +1,5 @@
 import { InputFile } from "./core/input_file.ts";
-export { InputFile };
+export { InputFile, ResponseError } from "./core/input_file.ts";
 // === HELPER TYPES ===
 /** Object with no keys */
 export type Empty = Record<string, never>;
@@ -390,19 +390,6 @@ export const LanguageCodes = {
     /** ISO 639-1 language code for Zulu */
     Zulu: "zu",
 } as const;
-/** Error class for failed fetch requests during file uploads */
-export class ResponseError extends Error {
-    /** Status code of the failed fetch request */
-    readonly error_code: number;
-    /** Used to construct a new error when a fetch request fails */
-    constructor(readonly response: Response) {
-        let message = response.body ? response.statusText : "No response body";
-        if (response.url) message += ` from ${response.url}`;
-        super(message);
-        this.name = ResponseError.name;
-        this.error_code = response.status;
-    }
-}
 
 // === MAKING REQUESTS ===
 /**
