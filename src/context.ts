@@ -11,7 +11,6 @@ import type {
     AcceptedGiftTypes,
     Chat,
     ChatPermissions,
-    Empty,
     InlineQueryResult,
     InputChecklist,
     InputFile,
@@ -39,7 +38,7 @@ import type {
 export type MaybeArray<T> = T | T[];
 /** permits `string` but gives hints */
 export type StringWithCommandSuggestions =
-    | (string & Empty)
+    | (string & Record<never, never>)
     | "start"
     | "help"
     | "settings"
