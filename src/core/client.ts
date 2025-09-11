@@ -73,7 +73,7 @@ export type Transformer<A extends ApiMethods> = <D extends CallData<A>>(
 ) => Promise<ApiResult<ApiCallResult<D, A>>>;
 export type TransformerConsumer<A extends ApiMethods> = TransformableApi<
     A
->["use"];
+>["transform"];
 /**
  * A transformable API enhances the `RawApi` type by transformers.
  */
@@ -85,7 +85,7 @@ export interface TransformableApi<A extends ApiMethods = ApiMethods> {
     /**
      * Can be used to register any number of transformers on the API.
      */
-    use: (...transformers: Transformer<A>[]) => this;
+    transform: (...transformers: Transformer<A>[]) => this;
 }
 
 // Transformer base functions
@@ -342,7 +342,7 @@ export function createRawApi<A extends ApiMethods>(
     const raw = new Proxy({} as RawApi<A>, proxyHandler);
     const api: TransformableApi<A> = {
         raw,
-        use: (...t) => {
+        transform: (...t) => {
             client.use(...t);
             return api;
         },
