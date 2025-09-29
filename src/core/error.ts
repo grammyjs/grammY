@@ -1,5 +1,7 @@
 import { createDebug } from "@grammyjs/debug";
-import type { ApiError, ResponseParameters } from "../types.ts";
+import type { ApiError, Present, ResponseParameters } from "../types.ts";
+import { CallData } from "./client.ts";
+import { RawApi } from "../mod.ts";
 const debug = createDebug("grammy:warn");
 
 /**
@@ -37,10 +39,9 @@ export class GrammyError extends Error implements ApiError {
         this.parameters = err.parameters ?? {};
     }
 }
-export function toGrammyError(
+export function toGrammyError<R extends RawApi>(
     err: ApiError,
-    method: string,
-    payload: Record<string, unknown>,
+    { method, payload: p }: CallData<R>,
 ) {
     switch (err.error_code) {
         case 401:
@@ -54,6 +55,7 @@ export function toGrammyError(
             );
             break;
     }
+    const payload: Present = p ?? {};
     return new GrammyError(
         `Call to '${method}' failed!`,
         err,

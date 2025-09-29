@@ -1,10 +1,5 @@
 import { createDebug } from "@grammyjs/debug";
-import type {
-    ApiMethods,
-    ApiParameters,
-    ApiResponse,
-    ApiResult,
-} from "../types.ts";
+import type { ApiMethods, ApiResult, Present } from "../types.ts";
 import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
@@ -22,16 +17,16 @@ const debug = createDebug("grammy:core");
  * Every method takes an optional {@link AbortSignal} object that allows to
  * cancel the API call if desired.
  */
-export type RawApi<A extends ApiMethods = ApiMethods> = {
-    [M in keyof A]: (
-        args: ApiParameters<M, A>,
-        signal?: AbortSignal,
-    ) => Promise<ApiResponse<M, A>>;
+export type RawApi = {
+    [M in keyof ApiMethods]: ApiMethods[M] extends (args: infer A) => infer R
+        ? (args: A, signal?: AbortSignal) => Promise<R>
+        : never;
 };
-// TODO: investigate if we can merge `RawApi` and `CallData`
-export type CallData<A extends ApiMethods = ApiMethods> = {
-    [M in string & keyof A]: { method: M; payload: ApiParameters<M, A> };
-}[string & keyof A];
+export type CallData<R extends RawApi = RawApi> = {
+    [M in string & keyof R]: R[M] extends (args: infer P) => unknown
+        ? { method: M; payload: P }
+        : never;
+}[string & keyof R];
 
 /**
  * Small utility interface that abstracts from webhook reply calls of different
@@ -41,21 +36,38 @@ export interface WebhookReplyEnvelope {
     /**
      * Defines how to send a string to the webhook request.
      */
-    send?: (payload: string) => void | Promise<void>;
+    send?(payload: string): void | Promise<void>;
 }
 
 /**
+ * Utility type providing the parameter type for the given method name, or `{}`
+ * if the method does not take any paramters.
+ *
+ * Optionally, an extended `RawApi` type can be passed. This allows for the
+ * addition or modification of methods.
+ */
+export type ApiParameters<
+    M extends string & keyof R,
+    R extends RawApi = RawApi,
+> = Extract<CallData<R>, { method: M }>["payload"];
+/**
+ * Utility type providing the return type for the given method name.
+ *
+ * Optionally, an extended `RawApi` type can be passed. This allows for the
+ * addition or modification of methods.
+ */
+export type ApiCallResult<
+    M extends string & keyof R,
+    R extends RawApi = RawApi,
+> // deno-lint-ignore no-explicit-any
+ = R[M] extends (...args: any[]) => infer R ? R : never;
+/**
  * Type of a function that can perform an API call. Used for Transformers.
  */
-export type ApiCallFn<A extends ApiMethods> = <D extends CallData<A>>(
+export type ApiCallFn<R extends RawApi = RawApi> = <D extends CallData<R>>(
     data: D,
     signal?: AbortSignal,
-) => Promise<ApiResult<ApiCallResult<D, A>>>;
-
-type ApiCallResult<D extends CallData<A>, A extends ApiMethods> = ApiResponse<
-    D["method"],
-    A
->;
+) => Promise<ApiResult<ApiCallResult<D["method"], R>>>;
 
 /**
  * API call transformers are functions that can access and modify the method and
@@ -66,33 +78,33 @@ type ApiCallResult<D extends CallData<A>, A extends ApiMethods> = ApiResponse<
  * [documentation](https://grammy.dev/advanced/transformers) to read more
  * about how to use transformers.
  */
-export type Transformer<A extends ApiMethods> = <D extends CallData<A>>(
-    prev: ApiCallFn<A>,
+export type Transformer<R extends RawApi = RawApi> = <D extends CallData<R>>(
+    prev: ApiCallFn<R>,
     data: D,
     signal?: AbortSignal,
-) => Promise<ApiResult<ApiCallResult<D, A>>>;
-export type TransformerConsumer<A extends ApiMethods> = TransformableApi<
-    A
+) => Promise<ApiResult<ApiCallResult<D["method"], R>>>;
+export type TransformerConsumer<R extends RawApi> = TransformableApi<
+    R
 >["transform"];
 /**
  * A transformable API enhances the `RawApi` type by transformers.
  */
-export interface TransformableApi<A extends ApiMethods = ApiMethods> {
+export interface TransformableApi<R extends RawApi = RawApi> {
     /**
      * Access to the raw API that the transformers will be installed on.
      */
-    raw: RawApi<A>;
+    raw: R;
     /**
      * Can be used to register any number of transformers on the API.
      */
-    transform: (...transformers: Transformer<A>[]) => this;
+    transform: (...transformers: Transformer<R>[]) => this;
 }
 
 // Transformer base functions
-function concatTransformer<A extends ApiMethods>(
-    prev: ApiCallFn<A>,
-    trans: Transformer<A>,
-): ApiCallFn<A> {
+function concatTransformer<R extends RawApi>(
+    prev: ApiCallFn<R>,
+    trans: Transformer<R>,
+): ApiCallFn<R> {
     return (data, signal) => trans(prev, data, signal);
 }
 
@@ -215,7 +227,7 @@ export interface ApiClientOptions {
     sensitiveLogs?: boolean;
 }
 
-class ApiClient<A extends ApiMethods> {
+class ApiClient<R extends RawApi> {
     private readonly options: Required<ApiClientOptions>;
 
     private hasUsedWebhookReply = false;
@@ -243,12 +255,12 @@ class ApiClient<A extends ApiMethods> {
         };
     }
 
-    private call: ApiCallFn<A> = async <D extends CallData<A>>(
+    private call: ApiCallFn<R> = async <D extends CallData<R>>(
         { method, payload: p }: D,
         signal?: AbortSignal,
     ) => {
-        const payload = p ?? {};
         debug(`Calling ${method}`);
+        const payload: Present = p ?? {};
         if (signal !== undefined) validateSignal(method, payload, signal);
         // General config
         const opts = this.options;
@@ -263,7 +275,7 @@ class ApiClient<A extends ApiMethods> {
             this.hasUsedWebhookReply = true;
             const body = createJsonPayloadBody({ ...payload, method });
             await this.webhookReplyEnvelope.send(body);
-            return { ok: true, result: true as ApiCallResult<D, A> };
+            return { ok: true, result: true as ApiCallResult<D["method"], R> };
         }
         // Handle timeouts and errors in the underlying form-data stream
         const controller = createAbortControllerFromSignal(signal);
@@ -295,18 +307,18 @@ class ApiClient<A extends ApiMethods> {
         }
     };
 
-    use(...transformers: Transformer<A>[]) {
+    use(...transformers: Transformer<R>[]) {
         this.call = transformers.reduce(concatTransformer, this.call);
         return this;
     }
 
-    async callApi<D extends CallData<A>>(
+    async callApi<D extends CallData<R>>(
         callData: D,
         signal?: AbortSignal,
     ) {
         const data = await this.call(callData, signal);
         if (data.ok) return data.result;
-        else throw toGrammyError(data, callData.method, callData.payload);
+        else throw toGrammyError(data, callData);
     }
 }
 
@@ -323,24 +335,24 @@ class ApiClient<A extends ApiMethods> {
  * @param options A number of options to pass to the created API client
  * @param webhookReplyEnvelope The webhook reply envelope that will be used
  */
-export function createRawApi<A extends ApiMethods>(
+export function createRawApi<R extends RawApi>(
     token: string,
     options?: ApiClientOptions,
     webhookReplyEnvelope?: WebhookReplyEnvelope,
-): TransformableApi<A> {
-    const client = new ApiClient<A>(token, options, webhookReplyEnvelope);
+): TransformableApi<R> {
+    const client = new ApiClient<R>(token, options, webhookReplyEnvelope);
 
-    const proxyHandler: ProxyHandler<RawApi<A>> = {
-        get(_, method: string & keyof A | "toJSON") {
+    const proxyHandler: ProxyHandler<R> = {
+        get(_, method: string & keyof R | "toJSON") {
             return method === "toJSON" ? "__internal" : (
-                payload: ApiParameters<typeof method, A>,
+                payload: ApiParameters<typeof method, R>,
                 signal: AbortSignal,
-            ) => client.callApi({ method, payload }, signal);
+            ) => client.callApi({ method, payload } as CallData<R>, signal);
         },
         ...proxyMethods,
     };
-    const raw = new Proxy({} as RawApi<A>, proxyHandler);
-    const api: TransformableApi<A> = {
+    const raw = new Proxy<R>({} as R, proxyHandler);
+    const api: TransformableApi<R> = {
         raw,
         transform: (...t) => {
             client.use(...t);
@@ -435,7 +447,7 @@ function createAbortControllerFromSignal(signal?: AbortSignal) {
 
 function validateSignal(
     method: string,
-    payload: Record<string, unknown>,
+    payload: unknown,
     signal: AbortSignal,
 ) {
     // We use a very simple heuristic to check for AbortSignal instances

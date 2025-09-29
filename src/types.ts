@@ -4,27 +4,6 @@ export type Empty = Record<string, never>;
 /** Anything except null or undefined */
 export type Present = NonNullable<unknown>;
 /**
- * Utility type providing the parameter type for the given method name, or `{}`
- * if the method does not take any paramters.
- *
- * Optionally, an extended `ApiMethods` type can be passed. This allows for the
- * addition or modification of methods.
- */
-export type ApiParameters<
-    M extends keyof A,
-    A extends ApiMethods = ApiMethods,
-> // deno-lint-ignore no-explicit-any
- = A[M] extends (...args: any[]) => any ? Parameters<A[M]>[0] : never;
-/**
- * Utility type providing the return type for the given method name.
- *
- * Optionally, an extended `ApiMethods` type can be passed. This allows for the
- * addition or modification of methods.
- */
-export type ApiResponse<M extends keyof A, A extends ApiMethods = ApiMethods> =
-    // deno-lint-ignore no-explicit-any
-    A[M] extends (...args: any[]) => any ? ReturnType<A[M]>[0] : never;
-/**
  * A two-letter ISO 639-1 language code.
  *
  * @see {@link https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes}
