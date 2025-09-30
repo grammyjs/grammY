@@ -388,6 +388,9 @@ function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
     if ("base64url" in data) {
         return Uint8Array.fromBase64(data.base64url, { alphabet: "base64url" });
     }
+    if ("hex" in data) {
+        return Uint8Array.fromHex(data.hex);
+    }
     if ("readable" in data) return data.readable;
     if (data instanceof Response || data instanceof Blob) return data;
     if ("url" in data) return new URL(data.url);
@@ -7267,6 +7270,7 @@ export class InputFile {
             | { text: string }
             | { base64: string }
             | { base64url: string }
+            | { hex: string }
             | (() =>
                 | AsyncIterable<Uint8Array>
                 | Promise<AsyncIterable<Uint8Array>>),
