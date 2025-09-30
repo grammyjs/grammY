@@ -382,7 +382,12 @@ export const LanguageCodes = {
     Zulu: "zu",
 } as const;
 function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
-    if ("base64" in data) return new URL(`data:;base64,${data.base64}`);
+    if ("base64" in data) {
+        return Uint8Array.fromBase64(data.base64, { alphabet: "base64" });
+    }
+    if ("base64url" in data) {
+        return Uint8Array.fromBase64(data.base64url, { alphabet: "base64url" });
+    }
     if ("readable" in data) return data.readable;
     if (data instanceof Response || data instanceof Blob) return data;
     if ("url" in data) return new URL(data.url);
@@ -7261,6 +7266,7 @@ export class InputFile {
             | { readable: AsyncIterable<Uint8Array> }
             | { text: string }
             | { base64: string }
+            | { base64url: string }
             | (() =>
                 | AsyncIterable<Uint8Array>
                 | Promise<AsyncIterable<Uint8Array>>),
