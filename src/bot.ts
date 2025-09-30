@@ -290,7 +290,7 @@ export class Bot<
         if (!this.isInited()) {
             debug("Initializing bot");
             this.mePromise ??= withRetries(
-                () => this.api.getMe(signal),
+                () => this.api.getMe(undefined, signal),
                 signal,
             );
             let me: UserFromGetMe;

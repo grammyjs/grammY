@@ -1150,12 +1150,12 @@ interface ChatFrom<T extends Chat["type"]> {
 }
 
 // === Util functions
-function orThrow<T>(value: T | undefined, method: string): T {
-    if (value === undefined) {
-        throw new Error(`Missing information for API call to ${method}`);
-    }
-    return value;
-}
+// function orThrow<T>(value: T | undefined, method: string): T {
+//     if (value === undefined) {
+//         throw new Error(`Missing information for API call to ${method}`);
+//     }
+//     return value;
+// }
 
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map((t) =>
