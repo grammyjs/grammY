@@ -437,7 +437,7 @@ export function makeAdapters() {
     const fastify: FastifyAdapter = (request, reply) => ({
         update: () => request.body as Update,
         header: request.headers[SECRET_HEADER_LOWERCASE],
-        end: () => reply.status(200).send(),
+        end: () => reply.send(""),
         respond: (json) =>
             reply.headers({ "Content-Type": "application/json" }).send(json),
         unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
