@@ -384,8 +384,9 @@ export const LanguageCodes = {
 function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
     if ("base64" in data) return new URL(`data:;base64,${data.base64}`);
     if ("readable" in data) return data.readable;
-    if (data instanceof Response) return data;
+    if (data instanceof Response || data instanceof Blob) return data;
     if ("url" in data) return new URL(data.url);
+    if ("text" in data) return new TextEncoder().encode(data.text);
     return data;
 }
 const isDeno = typeof Deno !== "undefined";
@@ -7258,6 +7259,7 @@ export class InputFile {
             | Uint8Array
             | AsyncIterable<Uint8Array>
             | { readable: AsyncIterable<Uint8Array> }
+            | { text: string }
             | { base64: string }
             | (() =>
                 | AsyncIterable<Uint8Array>
