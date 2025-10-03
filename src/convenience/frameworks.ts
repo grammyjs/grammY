@@ -99,14 +99,125 @@ export type BunAdapter = (request: {
     headers: Headers;
     json: () => Promise<Update>;
 }) => ReqResHandler<Response>;
+// https://github.com/cloudflare/workerd/blob/07db06bfe7320b1c5393a3702a6902eea41eee9e/types/generated-snapshot/latest/index.d.ts#L1697
+interface CfPropertiesRequest extends Body {
+    /**
+     * Returns request's HTTP method, which is "GET" by default.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/method)
+     */
+    method: string;
+    /**
+     * Returns the URL of request as a string.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/url)
+     */
+    url: string;
+    /**
+     * Returns a Headers object consisting of the headers associated with request. Note that headers added in the network layer by the user agent will not be accounted for in this object, e.g., the "Host" header.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/headers)
+     */
+    headers: Headers;
+    /**
+     * Returns the redirect mode associated with request, which is a string indicating how redirects for the request will be handled during fetching. A request will follow redirects by default.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/redirect)
+     */
+    redirect: string;
+    cf?: {
+        cacheEverything?: boolean;
+        /**
+         * A request's cache key is what determines if two requests are
+         * "the same" for caching purposes. If a request has the same cache key
+         * as some previous request, then we can serve the same cached response for
+         * both. (e.g. 'some-key')
+         *
+         * Only available for Enterprise customers.
+         */
+        cacheKey?: string;
+        /**
+         * This allows you to append additional Cache-Tag response headers
+         * to the origin response without modifications to the origin server.
+         * This will allow for greater control over the Purge by Cache Tag feature
+         * utilizing changes only in the Workers process.
+         *
+         * Only available for Enterprise customers.
+         */
+        cacheTags?: string[];
+        /**
+         * Force response to be cached for a given number of seconds. (e.g. 300)
+         */
+        cacheTtl?: number;
+        /**
+         * Force response to be cached for a given number of seconds based on the Origin status code.
+         * (e.g. { '200-299': 86400, '404': 1, '500-599': 0 })
+         */
+        cacheTtlByStatus?: Record<string, number>;
+        scrapeShield?: boolean;
+        apps?: boolean;
+        image?: {
+            /**
+             * Absolute URL of the image file to use for the drawing. It can be any of
+             * the supported file formats. For drawing of watermarks or non-rectangular
+             * overlays we recommend using PNG or WebP images.
+             */
+            url: string;
+            /**
+             * Floating-point number between 0 (transparent) and 1 (opaque).
+             * For example, opacity: 0.5 makes overlay semitransparent.
+             */
+            opacity?: number;
+            /**
+             * - If set to true, the overlay image will be tiled to cover the entire
+             *   area. This is useful for stock-photo-like watermarks.
+             * - If set to "x", the overlay image will be tiled horizontally only
+             *   (form a line).
+             * - If set to "y", the overlay image will be tiled vertically only
+             *   (form a line).
+             */
+            repeat?: true | "x" | "y";
+            /**
+             * Position of the overlay image relative to a given edge. Each property is
+             * an offset in pixels. 0 aligns exactly to the edge. For example, left: 10
+             * positions left side of the overlay 10 pixels from the left edge of the
+             * image it's drawn over. bottom: 0 aligns bottom of the overlay with bottom
+             * of the background image.
+             *
+             * Setting both left & right, or both top & bottom is an error.
+             *
+             * If no position is specified, the image will be centered.
+             */
+            top?: number;
+            left?: number;
+            bottom?: number;
+            right?: number;
+        };
+        minify?: {
+            javascript?: boolean;
+            css?: boolean;
+            html?: boolean;
+        };
+        mirage?: boolean;
+        polish?: "lossy" | "lossless" | "off";
+    };
+    /**
+     * Returns request's subresource integrity metadata, which is a cryptographic hash of the resource being fetched. Its value consists of multiple hashes separated by whitespace. [SRI]
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Request/integrity)
+     */
+    integrity: string;
+    /* Returns a boolean indicating whether or not request can outlive the global in which it was created. */
+    keepalive: boolean;
+}
 
 export type CloudflareAdapter = (event: {
-    request: Request;
+    request: CfPropertiesRequest;
     respondWith: (response: Promise<Response>) => void;
 }) => ReqResHandler;
 
 export type CloudflareModuleAdapter = (
-    request: Request,
+    request: CfPropertiesRequest,
 ) => ReqResHandler<Response>;
 
 export type ElysiaAdapter = (ctx: {
