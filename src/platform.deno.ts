@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-import-prefix
+
 /** Are we running on Deno or in a web browser? */
 export const isDeno = typeof Deno !== "undefined";
 
