@@ -100,19 +100,21 @@ export type BunAdapter = (request: {
     json: () => Promise<Update>;
 }) => ReqResHandler<Response>;
 
-interface CfPropertiesRequest extends Body {
-    method: string;
-    url: string;
-    headers: Headers;
-}
-
 export type CloudflareAdapter = (event: {
-    request: CfPropertiesRequest;
+    request: Body & {
+        method: string;
+        url: string;
+        headers: Headers;
+    };
     respondWith: (response: Promise<Response>) => void;
 }) => ReqResHandler;
 
 export type CloudflareModuleAdapter = (
-    request: CfPropertiesRequest,
+    request: Body & {
+        method: string;
+        url: string;
+        headers: Headers;
+    },
 ) => ReqResHandler<Response>;
 
 export type ElysiaAdapter = (ctx: {
