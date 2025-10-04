@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-import-prefix
+
 import d from "https://cdn.skypack.dev/debug@4.3.4";
 export { d as debug };
 
