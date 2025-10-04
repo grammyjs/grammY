@@ -119,11 +119,11 @@ export type CloudflareModuleAdapter = (
 ) => ReqResHandler<Response>;
 
 export type ElysiaAdapter = (ctx: {
-    body: Update;
+    body: unknown;
     headers: Record<string, string | undefined>;
     set: {
-        headers: Record<string, string>;
-        status: number;
+        headers: Record<string, string | number>;
+        status?: string | number;
     };
 }) => ReqResHandler<string>;
 

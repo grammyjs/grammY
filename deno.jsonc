@@ -3,7 +3,7 @@
     "nodeModulesDir": "none",
     "tasks": {
         "check": "deno cache --allow-import src/mod.ts",
-        "backport": "deno --no-prompt --allow-read=. --allow-write=. https://deno.land/x/deno2node@v1.13.0/src/cli.ts tsconfig.json",
+        "backport": "deno --no-prompt --allow-read=. --allow-write=. https://deno.land/x/deno2node@v1.16.0/src/cli.ts tsconfig.json",
         "test": "deno test --seed=123456 --parallel --allow-import ./test/",
         "dev": "deno fmt && deno lint && deno task test && deno task check",
         "coverage": "rm -rf ./test/cov_profile && deno task test --coverage=./test/cov_profile && deno coverage --lcov --output=./coverage.lcov ./test/cov_profile",
