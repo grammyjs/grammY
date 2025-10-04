@@ -100,7 +100,6 @@ export type BunAdapter = (request: {
     json: () => Promise<Update>;
 }) => ReqResHandler<Response>;
 
-// https://github.com/cloudflare/workerd/blob/07db06bfe7320b1c5393a3702a6902eea41eee9e/types/generated-snapshot/latest/index.d.ts#L1697
 interface CfPropertiesRequest extends Body {
     method: string;
     url: string;
