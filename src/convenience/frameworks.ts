@@ -105,31 +105,6 @@ interface CfPropertiesRequest extends Body {
     url: string;
     headers: Headers;
     redirect: string;
-    cf?: {
-        cacheEverything?: boolean;
-        cacheKey?: string;
-        cacheTags?: string[];
-        cacheTtl?: number;
-        cacheTtlByStatus?: Record<string, number>;
-        scrapeShield?: boolean;
-        apps?: boolean;
-        image?: {
-            url: string;
-            opacity?: number;
-            repeat?: true | "x" | "y";
-            top?: number;
-            left?: number;
-            bottom?: number;
-            right?: number;
-        };
-        minify?: {
-            javascript?: boolean;
-            css?: boolean;
-            html?: boolean;
-        };
-        mirage?: boolean;
-        polish?: "lossy" | "lossless" | "off";
-    };
     integrity: string;
     keepalive: boolean;
 }
