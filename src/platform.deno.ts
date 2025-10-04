@@ -4,7 +4,7 @@
 export const isDeno = typeof Deno !== "undefined";
 
 // === Export debug
-import debug from "https://cdn.skypack.dev/debug@4.3.4";
+import debug from "https://cdn.skypack.dev/debug@4.4.3";
 export { debug };
 const DEBUG = "DEBUG";
 if (isDeno) {

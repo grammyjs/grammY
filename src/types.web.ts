@@ -1,7 +1,7 @@
 // deno-lint-ignore-file no-import-prefix
 
 // === Needed imports
-import { basename } from "jsr:@std/path@1.0.9/basename";
+import { basename } from "jsr:@std/path@1.1.2/basename";
 
 import {
     type ApiMethods as ApiMethodsF,
@@ -22,10 +22,10 @@ import {
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.22.1/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.22.2/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.22.1/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.22.2/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
