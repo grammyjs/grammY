@@ -1,4 +1,6 @@
-import { createCache } from "jsr:@deno/cache-dir@0.13.2";
+// deno-lint-ignore-file no-import-prefix
+
+import { createCache } from "jsr:@deno/cache-dir@0.25.0";
 import { bundle } from "jsr:@deno/emit@0.46.0";
 
 // Parse args
