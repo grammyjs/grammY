@@ -104,9 +104,6 @@ interface CfPropertiesRequest extends Body {
     method: string;
     url: string;
     headers: Headers;
-    redirect: string;
-    integrity: string;
-    keepalive: boolean;
 }
 
 export type CloudflareAdapter = (event: {
