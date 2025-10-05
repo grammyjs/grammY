@@ -4514,7 +4514,7 @@ export interface ReplyKeyboardMarkup {
      */
     input_field_placeholder?: string;
     /**
-     * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message | Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
+     * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are `@mentioned` in the _text_ of the {@link Message | Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
      *
      * _Example:_ A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
      */
@@ -4727,7 +4727,7 @@ export interface ReplyKeyboardRemove {
      */
     remove_keyboard: true;
     /**
-     * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message | Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
+     * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are `@mentioned` in the _text_ of the {@link Message | Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
      *
      * _Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven't voted yet.
      */
@@ -5051,7 +5051,7 @@ export interface ForceReply {
      */
     input_field_placeholder?: string;
     /**
-     * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message | Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
+     * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are `@mentioned` in the _text_ of the {@link Message | Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
      */
     selective?: boolean;
 }
