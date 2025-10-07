@@ -535,7 +535,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * out https://core.telegram.org/bots/inline to read more about inline bots.
      *
      * > Note that you have to enable inline mode for you bot by contacting
-     * > @BotFather first.
+     * > \@BotFather first.
      *
      * ```ts
      * // Listen for users typing “@your_bot_name query”
