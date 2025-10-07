@@ -131,7 +131,7 @@ export interface BotConfig<C extends Context> {
 /**
  * This is the single most important class of grammY. It represents your bot.
  *
- * First, you must create a bot by talking to @BotFather, check out
+ * First, you must create a bot by talking to \@BotFather, check out
  * https://t.me/BotFather. Once it is ready, you obtain a secret token for your
  * bot. grammY will use that token to identify as your bot when talking to the
  * Telegram servers. Got the token? You are now ready to write some code and run

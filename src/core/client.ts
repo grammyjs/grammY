@@ -131,7 +131,7 @@ export interface ApiClientOptions {
      * infrastructure. No chats, accounts, or other data is shared between them.
      * If you set this option to `"test"`, you will need to make your Telegram
      * client connect to the testing data centers of Telegram, register your
-     * phone number again, open a new chat with @BotFather, and create a
+     * phone number again, open a new chat with \@BotFather, and create a
      * separate bot.
      */
     environment?: "prod" | "test";
