@@ -101,12 +101,20 @@ export type BunAdapter = (request: {
 }) => ReqResHandler<Response>;
 
 export type CloudflareAdapter = (event: {
-    request: Request;
+    request: Body & {
+        method: string;
+        url: string;
+        headers: Headers;
+    };
     respondWith: (response: Promise<Response>) => void;
 }) => ReqResHandler;
 
 export type CloudflareModuleAdapter = (
-    request: Request,
+    request: Body & {
+        method: string;
+        url: string;
+        headers: Headers;
+    },
 ) => ReqResHandler<Response>;
 
 export type ElysiaAdapter = (ctx: {
