@@ -994,6 +994,35 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.sendMessageDraft`. Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns True on success.
+     *
+     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendmessagedraft
+     */
+    replyWithDraft(
+        text: string,
+        other?: Other<"sendMessageDraft", "chat_id" | "text">,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendMessageDraft(
+            orThrow(this.chatId, "sendMessageDraft"),
+            this.update.update_id,
+            text,
+            {
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                ...other,
+            },
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.forwardMessage`. Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -1483,12 +1512,16 @@ export class Context implements RenamedUpdate {
         other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
         signal?: AbortSignal,
     ) {
+        const msg = this.msg;
         return this.api.sendPaidMedia(
             orThrow(this.chatId, "sendPaidMedia"),
             star_count,
             media,
             {
                 business_connection_id: this.businessConnectionId,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg.message_thread_id }
+                    : {}),
                 direct_messages_topic_id: this.msg?.direct_messages_topic
                     ?.topic_id,
                 ...other,
@@ -1824,6 +1857,44 @@ export class Context implements RenamedUpdate {
         return this.api.getUserChatBoosts(
             chat_id ?? orThrow(this.chatId, "getUserChatBoosts"),
             orThrow(this.from, "getUserChatBoosts").id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getUserGifts`. Returns the gifts owned and hosted by a user. Returns OwnedGifts on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getusergifts
+     */
+    getUserGifts(
+        other?: Other<"getUserGifts", "user_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.getUserGifts(
+            orThrow(this.from, "getUserGifts").id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getChatGifts`. Returns the gifts owned by a chat. Returns OwnedGifts on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatgifts
+     */
+    getChatGifts(
+        other?: Other<"getChatGifts", "chat_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.getChatGifts(
+            orThrow(this.chatId, "getChatGifts"),
+            other,
             signal,
         );
     }
@@ -2596,7 +2667,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     * Context-aware alias for `api.editForumTopic`. Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2639,7 +2710,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.deleteForumTopic`. Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
+     * Context-aware alias for `api.deleteForumTopic`. Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2652,7 +2723,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.unpinAllForumTopicMessages`. Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+     * Context-aware alias for `api.unpinAllForumTopicMessages`. Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -3347,7 +3418,38 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.`. editStoryEdits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+     * Context-aware alias for `api.repostStory`. Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the can_manage_stories business bot right for both business accounts. Returns Story on success.
+     *
+     * @param active_period Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#repoststory
+     */
+    repostStory(
+        active_period: number,
+        other: Other<
+            "repostStory",
+            | "business_connection_id"
+            | "from_chat_id"
+            | "from_story_id"
+            | "active_period"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const story = orThrow(this.msg?.story, "repostStory");
+        return this.api.repostStory(
+            orThrow(this.businessConnectionId, "repostStory"),
+            story.chat.id,
+            story.id,
+            active_period,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editStory`. Edits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
      *
      * @param story_id Unique identifier of the story to edit
      * @param content Content of the story
