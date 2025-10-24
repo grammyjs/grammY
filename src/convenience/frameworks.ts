@@ -97,7 +97,7 @@ export type AzureAdapterV4 = (
 
 export type BunAdapter = (request: {
     headers: Headers;
-    json: () => Promise<Update>;
+    json: () => Promise<unknown>;
 }) => ReqResHandler<Response>;
 
 export type CloudflareAdapter = (event: {
