@@ -349,8 +349,7 @@ describe("webhook functionality", () => {
 
             // respond should be called when webhook reply is used
             assertEquals(respondSpy.calls.length, 1);
-            // @ts-ignore - accessing spy call args
-            assertEquals(respondSpy.calls[0].args[0], '{"ok": true}');
+            assertEquals((respondSpy.calls[0] as any).args[0], '{"ok": true}');
         });
 
         it("should not call respond when webhook reply is not used", async () => {
