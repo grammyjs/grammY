@@ -258,8 +258,9 @@ describe("webhook functionality", () => {
         it("should initialize bot on first request", async () => {
             const bot = createTestBot();
             let initCalled = false;
-            bot.init = spy(async () => {
+            bot.init = spy(() => {
                 initCalled = true;
+                return Promise.resolve();
             });
             bot.handleUpdate = spy(() => Promise.resolve());
 
@@ -362,7 +363,10 @@ describe("webhook functionality", () => {
 
             // respond should be called when webhook reply is used
             assertEquals(respondSpy.calls.length, 1);
-            assertEquals((respondSpy.calls[0] as any).args[0], '{"ok": true}');
+            assertEquals(
+                (respondSpy.calls[0] as { args: unknown[] }).args[0],
+                '{"ok": true}',
+            );
         });
 
         it("should not call respond when webhook reply is not used", async () => {
