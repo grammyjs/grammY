@@ -215,7 +215,10 @@ describe("webhook functionality", () => {
             // Verify unauthorized was called
             assertEquals(unauthorizedSpy.calls.length, 1);
             // Verify handleUpdate was NOT called
-            assertEquals((bot.handleUpdate as ReturnType<typeof spy>).calls.length, 0);
+            assertEquals(
+                (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
+                0,
+            );
         });
 
         it("should accept requests with correct secret token", async () => {
@@ -229,7 +232,10 @@ describe("webhook functionality", () => {
             await handler(testUpdate, () => {}, "correct-token");
 
             // Verify handleUpdate was called
-            assertEquals((bot.handleUpdate as ReturnType<typeof spy>).calls.length, 1);
+            assertEquals(
+                (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
+                1,
+            );
         });
 
         it("should accept requests when no secret token is configured", async () => {
@@ -241,7 +247,10 @@ describe("webhook functionality", () => {
             await handler(testUpdate, () => {}, undefined);
 
             // Verify handleUpdate was called
-            assertEquals((bot.handleUpdate as ReturnType<typeof spy>).calls.length, 1);
+            assertEquals(
+                (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
+                1,
+            );
         });
     });
 
@@ -278,7 +287,6 @@ describe("webhook functionality", () => {
             // Init should only be called once
             assertEquals((bot.init as ReturnType<typeof spy>).calls.length, 1);
         });
-
     });
 
     describe("basic functionality", () => {
@@ -289,7 +297,10 @@ describe("webhook functionality", () => {
             const handler = webhookCallback(bot, "callback");
             await handler(testUpdate, () => {}, undefined);
 
-            assertEquals((bot.handleUpdate as ReturnType<typeof spy>).calls.length, 1);
+            assertEquals(
+                (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
+                1,
+            );
         });
     });
 
@@ -313,7 +324,6 @@ describe("webhook functionality", () => {
             );
         });
 
-
         it("should call custom function on timeout", async () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(async () => {
@@ -330,7 +340,10 @@ describe("webhook functionality", () => {
 
             await handler(testUpdate, () => {}, undefined);
 
-            assert(customTimeoutCalled, "Custom timeout handler should be called");
+            assert(
+                customTimeoutCalled,
+                "Custom timeout handler should be called",
+            );
         });
     });
 
@@ -387,7 +400,10 @@ describe("webhook functionality", () => {
             // Wait for webhook reply to be sent in background
             await new Promise((resolve) => setTimeout(resolve, 200));
 
-            assert(webhookReplySent, "Webhook reply should be sent even after timeout");
+            assert(
+                webhookReplySent,
+                "Webhook reply should be sent even after timeout",
+            );
         });
 
         it("should handle update error before timeout", async () => {
@@ -449,7 +465,10 @@ describe("webhook functionality", () => {
             assertEquals(result2.status, "fulfilled");
             // Update 3 should fail
             assertEquals(result3.status, "rejected");
-            assertEquals((result3 as PromiseRejectedResult).reason.message, "Update 3 failed");
+            assertEquals(
+                (result3 as PromiseRejectedResult).reason.message,
+                "Update 3 failed",
+            );
 
             // Wait for background operations
             await new Promise((resolve) => setTimeout(resolve, 200));
