@@ -2493,7 +2493,7 @@ export class Context implements RenamedUpdate {
         );
     }
 
-    /** @deprecated Use `getChatMembersCount` instead. */
+    /** @deprecated Use `getChatMemberCount` instead. */
     getChatMembersCount(...args: Parameters<Context["getChatMemberCount"]>) {
         return this.getChatMemberCount(...args);
     }
