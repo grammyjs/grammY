@@ -2,7 +2,7 @@
 import { createDebug } from "@grammyjs/debug";
 import type { Bot } from "../bot.ts";
 import type { Context } from "../context.ts";
-import type { WebhookReplyEnvelope } from "../core/client.ts";
+import type { WebhookReplyEnvelope } from "../client.ts";
 import { type FrameworkAdapter, makeAdapters } from "./frameworks.ts";
 const debugErr = createDebug("grammy:error");
 
@@ -42,7 +42,7 @@ function createWebhookAdapter<
         webhookCallback(bot, adapter, options);
 }
 
-// TODO: add docs examples for each adapter?
+// TODO: add docs examples for each adapter
 /**
  * Contains factories of callback function that you can pass to a web framework
  * (such as express) if you want to run your bot via webhooks. Use it like this:

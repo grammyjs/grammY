@@ -1,5 +1,5 @@
-import { HttpError, toHttpError } from "../../src/core/error.ts";
-import { assertThrows, describe, it } from "../deps.test.ts";
+import { HttpError, toHttpError } from "../src/error.ts";
+import { assertThrows, describe, it } from "./deps.test.ts";
 
 describe("toHttpError", () => {
     it("should throw errors", () => {

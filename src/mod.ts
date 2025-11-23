@@ -51,7 +51,7 @@ export {
 } from "./filter.ts";
 
 // Internal stuff for expert users
-export { Api } from "./core/api.ts";
+export { Api } from "./api.ts";
 export {
     type ApiCallFn,
     type ApiClientOptions,
@@ -59,5 +59,5 @@ export {
     type TransformableApi,
     type Transformer,
     type WebhookReplyEnvelope,
-} from "./core/client.ts";
-export { GrammyError, HttpError } from "./core/error.ts";
+} from "./client.ts";
+export { GrammyError, HttpError } from "./error.ts";

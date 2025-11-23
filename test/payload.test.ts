@@ -1,8 +1,8 @@
 import {
     createFormDataPayload,
     requiresFormDataUpload,
-} from "../../src/core/payload.ts";
-import { InputFile } from "../../src/mod.ts";
+} from "../src/payload.ts";
+import { InputFile } from "../src/mod.ts";
 import {
     assert,
     assertEquals,
@@ -10,7 +10,7 @@ import {
     convertToUint8Array,
     describe,
     it,
-} from "../deps.test.ts";
+} from "./deps.test.ts";
 
 describe("requiresFormDataUpload", () => {
     it("should ignore primitives", () => {

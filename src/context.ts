@@ -1,5 +1,5 @@
 // deno-lint-ignore-file camelcase
-import type { Api } from "./core/api.ts";
+import type { Api } from "./api.ts";
 import {
     type FilterCore,
     type FilterQuery,

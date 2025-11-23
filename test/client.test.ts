@@ -1,6 +1,6 @@
-import { createRawApi, type TransformableApi } from "../../src/core/client.ts";
-import { GrammyError } from "../../src/mod.ts";
-import type { ApiResult } from "../../src/types.ts";
+import { createRawApi, type TransformableApi } from "../src/client.ts";
+import { GrammyError } from "../src/mod.ts";
+import type { ApiResult } from "../src/types.ts";
 import {
     afterEach,
     assertEquals,
@@ -11,7 +11,7 @@ import {
     spy,
     type Stub,
     stub,
-} from "../deps.test.ts";
+} from "./deps.test.ts";
 
 const token = "secret-token";
 

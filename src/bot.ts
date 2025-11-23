@@ -8,9 +8,9 @@ import {
     run,
 } from "./composer.ts";
 import { Context, type MaybeArray, type ReactionContext } from "./context.ts";
-import { Api } from "./core/api.ts";
-import type { ApiClientOptions, WebhookReplyEnvelope } from "./core/client.ts";
-import { GrammyError, HttpError } from "./core/error.ts";
+import { Api } from "./api.ts";
+import type { ApiClientOptions, WebhookReplyEnvelope } from "./client.ts";
+import { GrammyError, HttpError } from "./error.ts";
 import {
     type FilterQuery,
     type FilterQueryContext,

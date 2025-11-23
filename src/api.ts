@@ -49,7 +49,7 @@ import type {
     UserFromGetMe,
     UserProfilePhotos,
     WebhookInfo,
-} from "../types.ts";
+} from "./types.ts";
 import {
     type ApiClientOptions,
     type ApiParameters,
