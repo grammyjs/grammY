@@ -86,24 +86,32 @@ export type AzureAdapterV4 = (
 
 export type BunAdapter = (request: {
     headers: Headers;
-    json: () => Promise<Update>;
+    json: () => Promise<unknown>;
 }) => ReqResHandler<Response>;
 
 export type CloudflareAdapter = (event: {
-    request: Request;
+    request: Body & {
+        method: string;
+        url: string;
+        headers: Headers;
+    };
     respondWith: (response: Promise<Response>) => void;
 }) => ReqResHandler;
 
 export type CloudflareModuleAdapter = (
-    request: Request,
+    request: Body & {
+        method: string;
+        url: string;
+        headers: Headers;
+    },
 ) => ReqResHandler<Response>;
 
 export type ElysiaAdapter = (ctx: {
-    body: Update;
+    body: unknown;
     headers: Record<string, string | undefined>;
     set: {
-        headers: Record<string, string>;
-        status: number;
+        headers: Record<string, string | number>;
+        status?: string | number;
     };
 }) => ReqResHandler<string>;
 
