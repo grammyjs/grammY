@@ -617,6 +617,7 @@ interface Shortcuts<U extends Update> {
     purchasedPaidMedia: [U["purchased_paid_media"]] extends [object]
         ? U["purchased_paid_media"]
         : undefined;
+
     msg: [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]
         : [U["channel_post"]] extends [object] ? U["channel_post"]
@@ -630,6 +631,12 @@ interface Shortcuts<U extends Update> {
     txt: [Shortcuts<U>["msg"]] extends [{ text: string } | { caption: string }]
         ? string
         : undefined;
+    msgId: [U["callback_query"]] extends [object] ? number | undefined
+        : [Shortcuts<U>["msg"]] extends [object] ? number
+        : [U["message_reaction"]] extends [object] ? number
+        : [U["message_reaction_count"]] extends [object] ? number
+        : undefined;
+    // inlineMessageId: disregarded here because always optional on both types
     chat: [U["callback_query"]] extends [object]
         ? NonNullable<U["callback_query"]["message"]>["chat"] | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["chat"]
@@ -646,6 +653,11 @@ interface Shortcuts<U extends Update> {
         : [U["chat_boost"]] extends [object] ? U["chat_boost"]["chat"]
         : [U["removed_chat_boost"]] extends [object]
             ? U["removed_chat_boost"]["chat"]
+        : undefined;
+    chatId: [U["chat_join_request"]] extends [object] ? number
+        : [U["callback_query"]] extends [object] ? number | undefined
+        : [Shortcuts<U>["chat"]] extends [object] ? number
+        : [U["business_connection"]] extends [object] ? number
         : undefined;
     from: [U["business_connection"]] extends [object]
         ? U["business_connection"]["user"]
@@ -668,17 +680,7 @@ interface Shortcuts<U extends Update> {
         : [U["chat_join_request"]] extends [object]
             ? U["chat_join_request"]["from"]
         : undefined;
-    msgId: [U["callback_query"]] extends [object] ? number | undefined
-        : [Shortcuts<U>["msg"]] extends [object] ? number
-        : [U["message_reaction"]] extends [object] ? number
-        : [U["message_reaction_count"]] extends [object] ? number
-        : undefined;
-    chatId: [U["chat_join_request"]] extends [object] ? number
-        : [U["callback_query"]] extends [object] ? number | undefined
-        : [Shortcuts<U>["chat"]] extends [object] ? number
-        : [U["business_connection"]] extends [object] ? number
-        : undefined;
-    // inlineMessageId: disregarded here because always optional on both types
+    fromId: [Shortcuts<U>["from"]] extends [object] ? number : undefined;
     businessConnectionId: [U["callback_query"]] extends [object]
         ? string | undefined
         : [Shortcuts<U>["msg"]] extends [object] ? string | undefined

@@ -512,6 +512,26 @@ export class Context implements RenamedUpdate {
         return msg?.text ?? msg?.caption;
     }
     /**
+     * Get the message identifier from wherever possible. Alias for
+     * `this.msg?.message_id ?? this.messageReaction?.message_id ??
+     * this.messageReactionCount?.message_id`.
+     */
+    get msgId(): number | undefined {
+        // Keep in sync with types in `filter.ts`.
+        return this.msg?.message_id ?? this.messageReaction?.message_id ??
+            this.messageReactionCount?.message_id;
+    }
+    /**
+     * Get the inline message identifier from wherever possible. Alias for
+     * `(ctx.callbackQuery ?? ctx.chosenInlineResult)?.inline_message_id`.
+     */
+    get inlineMessageId(): string | undefined {
+        return (
+            this.callbackQuery?.inline_message_id ??
+                this.chosenInlineResult?.inline_message_id
+        );
+    }
+    /**
      * Get the chat object from wherever possible. Alias for `(this.msg ??
      * this.deletedBusinessMessages ?? this.messageReaction ??
      * this.messageReactionCount ?? this.myChatMember ??  this.chatMember ??
@@ -530,6 +550,16 @@ export class Context implements RenamedUpdate {
                 this.chatBoost ??
                 this.removedChatBoost
         )?.chat;
+    }
+    /**
+     * Gets the chat identifier from wherever possible. Alias for
+     * `this.chatJoinRequest?.user_chat_id ?? this.chat?.id ??
+     * this.businessConnection?.user_chat_id`.
+     */
+    get chatId(): number | undefined {
+        // Keep in sync with types in `filter.ts`.
+        return this.chatJoinRequest?.user_chat_id ?? this.chat?.id ??
+            this.businessConnection?.user_chat_id;
     }
     /**
      * Get the user object from wherever possible. Alias for
@@ -560,36 +590,12 @@ export class Context implements RenamedUpdate {
                     this.purchasedPaidMedia
             )?.from;
     }
-
     /**
-     * Get the message identifier from wherever possible. Alias for
-     * `this.msg?.message_id ?? this.messageReaction?.message_id ??
-     * this.messageReactionCount?.message_id`.
+     * Get the user identifier from wherever possible. Alias for
+     * `this.from?.id`.
      */
-    get msgId(): number | undefined {
-        // Keep in sync with types in `filter.ts`.
-        return this.msg?.message_id ?? this.messageReaction?.message_id ??
-            this.messageReactionCount?.message_id;
-    }
-    /**
-     * Gets the chat identifier from wherever possible. Alias for
-     * `this.chatJoinRequest?.user_chat_id ?? this.chat?.id ??
-     * this.businessConnection?.user_chat_id`.
-     */
-    get chatId(): number | undefined {
-        // Keep in sync with types in `filter.ts`.
-        return this.chatJoinRequest?.user_chat_id ?? this.chat?.id ??
-            this.businessConnection?.user_chat_id;
-    }
-    /**
-     * Get the inline message identifier from wherever possible. Alias for
-     * `(ctx.callbackQuery ?? ctx.chosenInlineResult)?.inline_message_id`.
-     */
-    get inlineMessageId(): string | undefined {
-        return (
-            this.callbackQuery?.inline_message_id ??
-                this.chosenInlineResult?.inline_message_id
-        );
+    get fromId(): number | undefined {
+        return this.from?.id;
     }
     /**
      * Get the business connection identifier from wherever possible. Alias for
