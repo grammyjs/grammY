@@ -18,8 +18,9 @@ import type {
 } from "./types.ts";
 
 // === Util types
+/** A value or an array of such values. */
 export type MaybeArray<T> = T | T[];
-/** permits `string` but gives hints */
+/** Permits `string` but gives hints. */
 export type StringWithCommandSuggestions =
     | (string & Record<never, never>)
     | "start"
@@ -28,16 +29,55 @@ export type StringWithCommandSuggestions =
     | "privacy"
     | "developer_info";
 
-type SnakeToCamelCase<S extends string> = S extends `${infer L}_${infer R}`
-    ? `${L}${Capitalize<SnakeToCamelCase<R>>}`
+/**
+ * Internal helper type to convert a string literal type from `snake_case` to
+ * `camelCase`.
+ *
+ * @internal
+ */
+export type SnakeToCamelCase<S extends string> = S extends
+    `${infer L}_${infer R}` ? `${L}${Capitalize<SnakeToCamelCase<R>>}`
     : S;
-type AliasProps<U> = {
+/**
+ * Internal helper type to rename all properties of an object from `snake_case`
+ * to `camelCase`.
+ *
+ * @internal
+ */
+export type AliasProps<U> = {
     [K in string & keyof U as SnakeToCamelCase<K>]: U[K];
 };
-type RenamedUpdate = AliasProps<Omit<Update, "update_id">>;
+/**
+ * An object that has all the same properties as {@link Update} (except
+ * {@link Update.update_id | update_id}) but with all top-level properties
+ * renamed from `snake_case` to `camelCase`. Note that any nested properties are
+ * not renamed.
+ *
+ * Most notably, instances of {@link Context} adhere to this structure.
+ */
+export type CamelCaseUpdate = AliasProps<Omit<Update, "update_id">>;
 
 // === Context probing logic
-interface StaticHas {
+/**
+ * Collection of helper methods that can create predicate functions. Each
+ * predicate function can be used to check context objects for having a
+ * different property, such as containing a command, matching a filter query,
+ * and so on.
+ *
+ * This is the type of the static `Context.has` property. It can be used as
+ * follows.
+ *
+ * ```ts
+ * const hasCommand = Context.has.command("start");
+ *
+ * // later:
+ * if (hasCommand(ctx)) {
+ *   // handle /start command
+ *   const args = ctx.match;
+ * }
+ * ```
+ */
+export interface StaticHas {
     /**
      * Generates a predicate function that can test context objects for matching
      * the given filter query. This uses the same logic as `bot.on`.
@@ -363,13 +403,27 @@ const checker: StaticHas = {
  * if you want to know more about the powerful opportunities that lie in context
  * objects, and about how grammY implements them.
  */
-export class Context implements RenamedUpdate {
+export class Context implements CamelCaseUpdate {
     /**
      * Used by some middleware to store information about how a certain string
      * or regular expression was matched.
      */
     public match: string | RegExpMatchArray | undefined;
 
+    /**
+     * Constructs a new context object for an incomding update. This constructor
+     * is invoked internally by grammY for every update object that is being
+     * handled.
+     *
+     * If you think that you must construct your own context objects, you are
+     * probably doing something wrong.
+     *
+     * @internal
+     *
+     * @param update The update that is being handled
+     * @param api An API instance to use when calling methods
+     * @param me A object containing bot information
+     */
     constructor(
         /**
          * The update object that is contained in the context.
