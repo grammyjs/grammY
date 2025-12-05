@@ -164,7 +164,7 @@ describe("webhook functionality", () => {
         update_id: 1,
         message: {
             message_id: 1,
-            date: Date.now(),
+            date: Math.floor(Date.now() / 1000),
             chat: { id: 1, type: "private", first_name: "Test" },
             from: { id: 1, is_bot: false, first_name: "Test" },
             text: "test",
