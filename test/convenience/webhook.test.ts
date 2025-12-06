@@ -24,6 +24,7 @@ import {
     describe,
     it,
     spy,
+    stub,
 } from "../deps.test.ts";
 
 describe("webhook", () => {
@@ -175,17 +176,17 @@ describe("webhook functionality", () => {
         it("should throw when bot is already running", () => {
             const bot = createTestBot();
             // Mock isRunning to return true
-            const originalIsRunning = bot.isRunning.bind(bot);
-            bot.isRunning = () => true;
-
-            assertThrows(
-                () => webhookCallback(bot, "callback"),
-                Error,
-                "Bot is already running via long polling",
-            );
-
-            // Restore original method
-            bot.isRunning = originalIsRunning;
+            const isRunningStub = stub(bot, "isRunning", () => true);
+            try {
+                assertThrows(
+                    () => webhookCallback(bot, "callback"),
+                    Error,
+                    "Bot is already running via long polling",
+                );
+            } finally {
+                // Restore original method even if test fails
+                isRunningStub.restore();
+            }
         });
 
         it("should prevent bot.start() after webhook setup", () => {
