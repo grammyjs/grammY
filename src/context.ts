@@ -1820,9 +1820,9 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getuserchatboosts
      */
-    getUserChatBoosts(chat_id: number | string, signal?: AbortSignal) {
+    getUserChatBoosts(chat_id?: number | string, signal?: AbortSignal) {
         return this.api.getUserChatBoosts(
-            chat_id,
+            chat_id ?? orThrow(this.chatId, "getUserChatBoosts"),
             orThrow(this.from, "getUserChatBoosts").id,
             signal,
         );
