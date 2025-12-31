@@ -240,6 +240,30 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target private chat
+     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated
+     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendmessagedraft
+     */
+    sendMessageDraft(
+        chat_id: number,
+        draft_id: number,
+        text: string,
+        other?: Other<R, "sendMessageDraft", "chat_id" | "draft_id" | "text">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendMessageDraft(
+            { chat_id, draft_id, text, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
@@ -974,6 +998,40 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Returns the gifts owned and hosted by a user. Returns OwnedGifts on success.
+     *
+     * @param user_id Unique identifier of the user
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getusergifts
+     */
+    getUserGifts(
+        user_id: number,
+        other?: Other<R, "getUserGifts", "user_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getUserGifts({ user_id, ...other }, signal);
+    }
+
+    /**
+     * Returns the gifts owned by a chat. Returns OwnedGifts on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getchatgifts
+     */
+    getChatGifts(
+        chat_id: number,
+        other?: Other<R, "getChatGifts", "chat_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getChatGifts({ chat_id, ...other }, signal);
+    }
+
+    /**
      * Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success.
      *
      * @param business_connection_id Unique identifier of the business connection
@@ -1633,7 +1691,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
@@ -1692,7 +1750,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
+     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
@@ -1712,7 +1770,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+     * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
@@ -2627,6 +2685,42 @@ export class Api<R extends RawApi = RawApi> {
             { business_connection_id, content, active_period, ...other },
             signal,
         );
+    }
+
+    /**
+     * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the can_manage_stories business bot right for both business accounts. Returns Story on success.
+     *
+     * @param business_connection_id Unique identifier of the business connection
+     * @param from_chat_id Unique identifier of the chat which posted the story that should be reposted
+     * @param from_story_id Unique identifier of the story that should be reposted
+     * @param active_period Period after which the story is moved to the archive, in seconds; must be one of 6 * 3600, 12 * 3600, 86400, or 2 * 86400
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#repoststory
+     */
+    repostStory(
+        business_connection_id: string,
+        from_chat_id: number,
+        from_story_id: number,
+        active_period: number,
+        other: Other<
+            R,
+            "repostStory",
+            | "business_connection_id"
+            | "from_chat_id"
+            | "from_story_id"
+            | "active_period"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.repostStory({
+            business_connection_id,
+            from_chat_id,
+            from_story_id,
+            active_period,
+            ...other,
+        }, signal);
     }
 
     /**
