@@ -14,12 +14,14 @@ import {
     assertRejects,
     assertThrows,
     describe,
+    FakeTime,
     it,
     spy,
 } from "../deps.test.ts";
 
 const TICK_MS = 50;
-const tick = (n = 1) => new Promise((r) => setTimeout(r, n * TICK_MS));
+const sleepTicks = (n: number) =>
+    new Promise((r) => setTimeout(r, n * TICK_MS));
 
 describe("session", () => {
     const next = () => Promise.resolve();
@@ -676,7 +678,7 @@ describe("lazy session", () => {
 
     let val: number | undefined;
     let storage = {
-        read: spy((_key: string) => tick(2).then(() => val)),
+        read: spy((_key: string) => sleepTicks(2).then(() => val)),
         write: spy((_key: string, value: number) => {
             val = value;
         }),
@@ -691,7 +693,7 @@ describe("lazy session", () => {
     function reset() {
         val = 0;
         storage = {
-            read: spy((_key: string) => tick(2).then(() => val)),
+            read: spy((_key: string) => sleepTicks(2).then(() => val)),
             write: spy((_key: string, value: number) => {
                 val = value;
             }),
@@ -724,33 +726,54 @@ describe("lazy session", () => {
     });
 
     it("should discard read if it completes after manual write", async () => {
-        await run(async (ctx) => {
-            const p = Promise.resolve(ctx.session)
+        using time = new FakeTime();
+        let set = false;
+        let ran = false;
+        let asserted = false;
+        const runPromise = run(async (ctx) => {
+            const p = Promise.resolve(ctx.session) // sleeps 2 ticks
                 .then(async () => {
                     assertEquals(await ctx.session, 42);
+                    asserted = true;
                 });
-            await tick();
+            await sleepTicks(1);
             ctx.session = 42;
+            set = true;
             await p;
+            ran = true;
         });
+        await time.nextAsync();
+        await time.runMicrotasks();
+        assert(set);
+        await time.nextAsync();
+        await time.runMicrotasks();
+        assert(ran);
+        assert(asserted);
+        await runPromise;
     });
 
     it("should await written promises", async () => {
-        await run((ctx) => {
-            ctx.session = tick().then(() => 42);
+        using time = new FakeTime();
+        const runPromise = run((ctx) => {
+            ctx.session = sleepTicks(1).then(() => 42);
         });
+        await time.tickAsync(TICK_MS);
+        await runPromise;
         assertEquals(storage.write.calls.length, 1);
         assertEquals(storage.write.calls[0].args, ["42", 42]);
     });
 
     it("should wait for read ops to complete", async () => {
+        using time = new FakeTime();
         let p: Promise<void> | undefined;
         let done = false;
-        await run((ctx) => {
-            p = Promise.resolve(ctx.session).then(() => {
+        const runPromise = run((ctx) => {
+            p = Promise.resolve(ctx.session).then(() => { // sleeps 2 ticks
                 done = true;
             });
         });
+        await time.tickAsync(2 * TICK_MS);
+        await runPromise;
         assertEquals(storage.read.calls.length, 1);
         assertEquals(storage.read.calls[0].args, ["42"]);
         assertEquals(storage.write.calls.length, 1);
@@ -780,6 +803,7 @@ describe("enhanceStorage", () => {
     });
 
     it("should support timeouts", async () => {
+        using time = new FakeTime();
         const store = enhanceStorage({
             storage: new MemorySessionStorage<Enhance<number>>(),
             millisecondsToLive: TICK_MS,
@@ -787,7 +811,7 @@ describe("enhanceStorage", () => {
         assertEquals(await store.read("k"), undefined);
         await store.write("k", 42);
         assertEquals(await store.read("k"), 42);
-        await tick(2);
+        await time.tickAsync(2 * TICK_MS);
         assertEquals(await store.read("k"), undefined);
         await store.write("k", 42);
         assertEquals(await store.read("k"), 42);
@@ -914,6 +938,7 @@ describe("enhanceStorage", () => {
     });
 
     it("should be able to combine timeouts and migrations", async () => {
+        using time = new FakeTime();
         const storage = new MemorySessionStorage<Enhance<number>>();
         const enhanced = enhanceStorage({
             storage,
@@ -926,10 +951,11 @@ describe("enhanceStorage", () => {
         });
         storage.write("k", 0 as unknown as Enhance<number>);
         assertEquals(await enhanced.read("k"), 400);
-        await tick(2);
+        await time.tickAsync(2 * TICK_MS);
         assertEquals(await enhanced.read("k"), undefined);
         await enhanced.write("k", 42);
         assertEquals(await enhanced.read("k"), 42);
+        await time.runAllAsync();
     });
 });
 
@@ -950,12 +976,14 @@ describe("MemorySessionStorage", () => {
         assertEquals(store.readAll(), [42, 43, 44]);
     });
     it("should support timeouts", async () => {
+        using time = new FakeTime();
         const store = new MemorySessionStorage<number>(TICK_MS);
         store.write("k", 42);
         assertEquals(store.read("k"), 42);
-        await tick(2);
+        await time.tickAsync(2 * TICK_MS);
         assertEquals(store.read("k"), undefined);
         store.write("k", 42);
         assertEquals(store.read("k"), 42);
+        await time.runAllAsync();
     });
 });
