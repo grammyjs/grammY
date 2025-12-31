@@ -10,7 +10,7 @@
     "homepage": "https://grammy.dev/",
     "repository": {
         "type": "git",
-        "url": "https://github.com/grammyjs/grammY"
+        "url": "git+https://github.com/grammyjs/grammY.git"
     },
     "scripts": {
         "prepare": "npm run backport",
