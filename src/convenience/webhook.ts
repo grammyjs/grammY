@@ -52,7 +52,7 @@ function compareSecretToken(
 
     // If lengths differ, reject
     if (headerBytes.length !== tokenBytes.length) {
-      return false;
+        return false;
     }
 
     let hasDifference = 0;
