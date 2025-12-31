@@ -22,6 +22,7 @@ import {
     assertRejects,
     assertThrows,
     describe,
+    FakeTime,
     it,
     spy,
     stub,
@@ -308,6 +309,7 @@ describe("webhook functionality", () => {
 
     describe("timeout handling", () => {
         it("should throw error on timeout with 'throw' strategy", async () => {
+            using time = new FakeTime();
             const bot = createTestBot();
             bot.handleUpdate = spy(async () => {
                 // Simulate slow update processing
@@ -319,14 +321,18 @@ describe("webhook functionality", () => {
                 timeoutMilliseconds: 50,
             });
 
+            const promise = handler(testUpdate, () => {}, undefined);
+            await time.nextAsync();
             await assertRejects(
-                () => handler(testUpdate, () => {}, undefined),
+                () => promise,
                 Error,
                 "Request timed out after 50 ms",
             );
+            await time.runAllAsync();
         });
 
         it("should call custom function on timeout", async () => {
+            using time = new FakeTime();
             const bot = createTestBot();
             bot.handleUpdate = spy(async () => {
                 await new Promise((resolve) => setTimeout(resolve, 200));
@@ -340,12 +346,14 @@ describe("webhook functionality", () => {
                 timeoutMilliseconds: 50,
             });
 
-            await handler(testUpdate, () => {}, undefined);
-
+            const promise = handler(testUpdate, () => {}, undefined);
+            await time.nextAsync();
+            await promise;
             assert(
                 customTimeoutCalled,
                 "Custom timeout handler should be called",
             );
+            await time.runAllAsync();
         });
     });
 
@@ -386,6 +394,7 @@ describe("webhook functionality", () => {
 
     describe("race conditions and ordering", () => {
         it("should handle webhook reply after timeout", async () => {
+            using time = new FakeTime();
             const bot = createTestBot();
             let webhookReplySent = false;
             bot.handleUpdate = spy(async (_update, envelope) => {
@@ -400,11 +409,14 @@ describe("webhook functionality", () => {
             });
 
             const respondSpy = spy(() => {});
-            await handler(testUpdate, respondSpy, undefined);
+            const promise = handler(testUpdate, respondSpy, undefined);
+
+            await time.nextAsync();
+            await promise;
 
             // Wait for webhook reply to be sent in background
-            await new Promise((resolve) => setTimeout(resolve, 200));
-
+            await time.nextAsync();
+            await time.runMicrotasks();
             assert(
                 webhookReplySent,
                 "Webhook reply should be sent even after timeout",
@@ -412,6 +424,7 @@ describe("webhook functionality", () => {
         });
 
         it("should handle update error before timeout", async () => {
+            using time = new FakeTime();
             const bot = createTestBot();
             bot.handleUpdate = spy(async () => {
                 await new Promise((resolve) => setTimeout(resolve, 20));
@@ -423,20 +436,25 @@ describe("webhook functionality", () => {
                 timeoutMilliseconds: 200,
             });
 
+            const promise = handler(testUpdate, () => {}, undefined);
+            await time.nextAsync();
+
             // Should propagate the error
             await assertRejects(
-                () => handler(testUpdate, () => {}, undefined),
+                () => promise,
                 Error,
                 "Update processing failed",
             );
+            await time.runAllAsync();
         });
 
         it("should handle multiple concurrent updates with different outcomes", async () => {
+            using time = new FakeTime(0);
             const bot = createTestBot();
             const results: string[] = [];
 
             bot.handleUpdate = spy(async (update) => {
-                const id = (update as Update).update_id;
+                const id = update.update_id;
                 if (id === 1) {
                     // Fast update
                     await new Promise((resolve) => setTimeout(resolve, 30));
@@ -458,25 +476,41 @@ describe("webhook functionality", () => {
             });
 
             // Send three concurrent updates with different behaviors
-            const [result1, result2, result3] = await Promise.allSettled([
-                handler({ ...testUpdate, update_id: 1 }, () => {}, undefined),
-                handler({ ...testUpdate, update_id: 2 }, () => {}, undefined),
-                handler({ ...testUpdate, update_id: 3 }, () => {}, undefined),
-            ]);
+            const p1 = handler(
+                { ...testUpdate, update_id: 1 },
+                () => {},
+                undefined,
+            );
+            const p2 = handler(
+                { ...testUpdate, update_id: 2 },
+                () => {},
+                undefined,
+            );
+            const p3 = handler(
+                { ...testUpdate, update_id: 3 },
+                () => {},
+                undefined,
+            );
+
+            const allSettledPromise = Promise.allSettled([p1, p2, p3]);
+
+            await time.tickAsync(20); // Update 3 fails
+            await time.tickAsync(10); // Update 1 completes (30 total)
+            await time.tickAsync(70); // Timeout for Update 2 (100 total)
+
+            const [result1, result2, result3] = await allSettledPromise;
 
             // Update 1 should succeed
             assertEquals(result1.status, "fulfilled");
             // Update 2 should succeed (timeout returns early)
             assertEquals(result2.status, "fulfilled");
             // Update 3 should fail
-            assertEquals(result3.status, "rejected");
-            assertEquals(
-                (result3 as PromiseRejectedResult).reason.message,
-                "Update 3 failed",
-            );
+            assert(result3.status === "rejected");
+            assertEquals(result3.reason.message, "Update 3 failed");
 
             // Wait for background operations
-            await new Promise((resolve) => setTimeout(resolve, 200));
+            await time.runAllAsync(); // Update 2 completes (150 total)
+            assertEquals(time.now, 150);
 
             // Verify all updates were processed
             assert(results.includes("update-1-completed"));
