@@ -50,9 +50,12 @@ function compareSecretToken(
     const headerBytes = encoder.encode(header);
     const tokenBytes = encoder.encode(token);
 
-    // Check if lengths differ (1 if different, 0 if same)
-    let hasDifference = headerBytes.length !== tokenBytes.length ? 1 : 0;
+    // If lengths differ, reject
+    if (headerBytes.length !== tokenBytes.length) {
+      return false;
+    }
 
+    let hasDifference = 0;
     // Always iterate exactly tokenBytes.length times to prevent timing attacks
     // that could reveal the secret token's length. The loop time is constant
     // relative to the secret token length, not the attacker's input length.
@@ -63,7 +66,7 @@ function compareSecretToken(
 
         // If bytes differ, mark that we found a difference
         // Using bitwise OR to maintain constant-time (no short-circuit evaluation)
-        hasDifference = hasDifference | (headerByte !== tokenByte ? 1 : 0);
+        hasDifference |= headerByte ^ tokenByte;
     }
 
     // Return true only if no differences were found
