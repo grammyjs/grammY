@@ -1616,6 +1616,17 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "arunr-inji",
+      "name": "ArunR",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5071242?v=4",
+      "profile": "https://github.com/arunr-inji",
+      "contributions": [
+        "ideas",
+        "code",
+        "test"
+      ]
     }
   ]
 }
