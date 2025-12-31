@@ -35,7 +35,7 @@ jobs:
 
             - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v2.x
+                  deno-version: v2.5.x
 
             - name: Check Format
               run: deno fmt --check
@@ -56,7 +56,7 @@ jobs:
 
             - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v2.x
+                  deno-version: v2.5.x
 
             - name: Cache Dependencies
               run: deno task check
@@ -74,7 +74,7 @@ jobs:
 
             - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v2.x
+                  deno-version: v2.5.x
 
             - name: Create coverage files
               run: deno task coverage
