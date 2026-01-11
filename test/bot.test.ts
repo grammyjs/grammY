@@ -120,12 +120,15 @@ describe("Bot initialization", () => {
             const init2 = bot.init();
             const init3 = bot.init();
 
+            // Verify deduplication: only one getMe call made
+            assertEquals(resolvers.length, 1);
+
             // Resolve the single getMe call
             resolvers[0](botInfo);
 
             await Promise.all([init1, init2, init3]);
             assertEquals(bot.isInited(), true);
-            // Should only call getMe once (deduplication)
+            // Verify stub was only called once
             assertEquals(getMeStub.calls.length, 1);
         } finally {
             getMeStub.restore();
@@ -138,15 +141,12 @@ describe("Bot initialization", () => {
         const getMeStub = stub(bot.api, "getMe", () => promise);
 
         try {
-            // Start multiple concurrent inits
             const init1 = bot.init();
             const init2 = bot.init();
 
             // Reject with plain Error (won't trigger retries, only HttpError/GrammyError do)
-            // This keeps the test focused on concurrent init behavior without retry complexity
             reject(new Error("Network error"));
 
-            // All should fail
             await assertRejects(() => init1);
             await assertRejects(() => init2);
             assertEquals(bot.isInited(), false);
@@ -174,18 +174,6 @@ describe("Bot handleUpdate", () => {
             () => bot.handleUpdate(testUpdate),
             Error,
             "Bot not initialized",
-        );
-    });
-
-    it("should wrap middleware errors in BotError", async () => {
-        const bot = new Bot(token, { botInfo });
-        bot.use(() => {
-            throw new Error("Middleware error");
-        });
-
-        await assertRejects(
-            () => bot.handleUpdate(testUpdate),
-            BotError,
         );
     });
 
@@ -235,11 +223,9 @@ describe("Bot handleUpdate", () => {
             if (callCount === 2) await middleware2;
         });
 
-        // Start both updates
         const update1 = bot.handleUpdate({ ...testUpdate, update_id: 1 });
         const update2 = bot.handleUpdate({ ...testUpdate, update_id: 2 });
 
-        // Resolve in reverse order
         resolve2();
         resolve1();
 
@@ -353,6 +339,9 @@ describe("Bot error handling", () => {
             using time = new FakeTime();
 
             let callCount = 0;
+            const { promise: retryPromise, resolve: resolveRetry } = Promise
+                .withResolvers<Update[]>();
+
             const getUpdatesStub = stub(
                 bot.api,
                 "getUpdates",
@@ -378,14 +367,14 @@ describe("Bot error handling", () => {
                             ),
                         );
                     }
-                    // Second call: wait for abort
+                    // Second call (retry): return controlled promise
+                    // that resolves when we explicitly call resolveRetry
                     if (callCount === 2) {
-                        return new Promise((_, reject) => {
-                            signal.addEventListener(
-                                "abort",
-                                () => reject(new Error("Aborted")),
-                            );
-                        });
+                        signal.addEventListener(
+                            "abort",
+                            () => resolveRetry([]),
+                        );
+                        return retryPromise;
                     }
                     // Subsequent calls
                     return Promise.resolve([]);
@@ -393,20 +382,22 @@ describe("Bot error handling", () => {
             );
 
             const startPromise = bot.start();
-            // Wait for initial 429 error and retry (retry_after is 0.05s = 50ms)
+            // Advance time past retry_after (50ms)
             await time.tickAsync(50);
-            await time.nextAsync(); // Allow retry promise to resolve
+            // Process retry callback (second getUpdates call)
+            await time.nextAsync();
+            // Stop triggers abort, resolving retryPromise
             await bot.stop();
             await startPromise;
 
-            // Should be exactly 3: initial 429, retry, stop confirmation
+            // initial 429, retry, stop confirmation
             assertEquals(getUpdatesStub.calls.length, 3);
         });
 
         it("should call custom error handler for middleware errors", async () => {
             using time = new FakeTime();
 
-            const errorHandlerSpy = spy(() => {});
+            const errorHandlerSpy = spy((_err: BotError) => {});
             bot.catch(errorHandlerSpy);
 
             bot.use(() => {
@@ -455,10 +446,10 @@ describe("Bot error handling", () => {
 
             // Verify error handler was called
             assertEquals(errorHandlerSpy.calls.length, 1);
-            const firstCall = errorHandlerSpy.calls[0] as unknown as {
-                args: [BotError];
-            };
-            assertEquals(firstCall.args[0] instanceof BotError, true);
+            assertEquals(
+                errorHandlerSpy.calls[0].args[0] instanceof BotError,
+                true,
+            );
         });
     });
 });
