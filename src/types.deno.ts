@@ -148,6 +148,9 @@ export class InputFile {
         this.consumed = true;
         return data;
     }
+    toJSON() {
+        throw new Error("InputFile instances must be sent via grammY");
+    }
 }
 
 async function fetchFile(
