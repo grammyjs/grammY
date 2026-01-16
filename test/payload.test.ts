@@ -123,7 +123,7 @@ content-disposition:form-data;name="document"\r
 \r
 attach://${attachId}\r
 --${boundary}\r
-content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
+content-disposition:form-data;name="${attachId}";filename=${document.name}\r
 content-type:application/octet-stream\r
 \r
 ${fileContent}\r
@@ -158,7 +158,7 @@ content-disposition:form-data;name="document"\r
 \r
 attach://${attachId}\r
 --${boundary}\r
-content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
+content-disposition:form-data;name="${attachId}";filename=${document.name}\r
 content-type:application/octet-stream\r
 \r
 ${fileContent}\r
@@ -193,7 +193,7 @@ content-disposition:form-data;name="document"\r
 \r
 attach://${attachId}\r
 --${boundary}\r
-content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
+content-disposition:form-data;name="${attachId}";filename=${document.name}\r
 content-type:application/octet-stream\r
 \r
 ${fileContent}\r
