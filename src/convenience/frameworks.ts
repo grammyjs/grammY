@@ -259,13 +259,14 @@ export function makeAdapters() {
     const badRequest = () => new Response(BAD_REQUEST_ERROR, { status: 400 });
     const empty = () => ({} as Update);
 
-    const callback: FrameworkAdapter = (
+    const callback = (
         update: Update,
         callback: (json: string) => unknown,
-        header: string,
+        header?: string,
         unauthorized = () => callback(WRONG_TOKEN_ERROR),
         badRequest = () => callback(BAD_REQUEST_ERROR),
-    ) => ({
+        // deno-lint-ignore no-explicit-any
+    ): ReqResHandler<any> => ({
         update: () => update,
         respond: callback,
         header,

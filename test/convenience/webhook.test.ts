@@ -199,7 +199,7 @@ describe("webhook", () => {
                 }),
             );
 
-            assert(res.status === 401);
+            assertEquals(res.status, 401);
         });
 
         it("should response with 400 bad request status", async () => {
@@ -211,7 +211,7 @@ describe("webhook", () => {
                 }),
             );
 
-            assert(res.status === 400);
+            assertEquals(res.status, 400);
         });
     });
 });
@@ -303,7 +303,7 @@ describe("webhook functionality", () => {
 
             const handler = webhookAdapters.callback(bot);
 
-            await handler(testUpdate, () => {}, undefined);
+            await handler(testUpdate, () => {});
 
             // Verify handleUpdate was called
             assertEquals(
@@ -324,7 +324,7 @@ describe("webhook functionality", () => {
             bot.handleUpdate = spy(() => Promise.resolve());
 
             const handler = webhookAdapters.callback(bot);
-            await handler(testUpdate, () => {}, undefined);
+            await handler(testUpdate, () => {});
 
             assert(initCalled, "Bot init should be called");
             assertEquals((bot.init as ReturnType<typeof spy>).calls.length, 1);
@@ -338,11 +338,11 @@ describe("webhook functionality", () => {
             const handler = webhookAdapters.callback(bot);
 
             // First request
-            await handler(testUpdate, () => {}, undefined);
+            await handler(testUpdate, () => {});
             // Second request
-            await handler(testUpdate, () => {}, undefined);
+            await handler(testUpdate, () => {});
             // Third request
-            await handler(testUpdate, () => {}, undefined);
+            await handler(testUpdate, () => {});
 
             // Init should only be called once
             assertEquals((bot.init as ReturnType<typeof spy>).calls.length, 1);
@@ -355,7 +355,7 @@ describe("webhook functionality", () => {
             bot.handleUpdate = spy(() => Promise.resolve());
 
             const handler = webhookAdapters.callback(bot);
-            await handler(testUpdate, () => {}, undefined);
+            await handler(testUpdate, () => {});
 
             assertEquals(
                 (bot.handleUpdate as ReturnType<typeof spy>).calls.length,
@@ -378,7 +378,7 @@ describe("webhook functionality", () => {
                 timeoutMilliseconds: 50,
             });
 
-            const promise = handler(testUpdate, () => {}, undefined);
+            const promise = handler(testUpdate, () => {});
             await time.nextAsync();
             await assertRejects(
                 () => promise,
@@ -403,7 +403,7 @@ describe("webhook functionality", () => {
                 timeoutMilliseconds: 50,
             });
 
-            const promise = handler(testUpdate, () => {}, undefined);
+            const promise = handler(testUpdate, () => {});
             await time.nextAsync();
             await promise;
             assert(
@@ -425,7 +425,7 @@ describe("webhook functionality", () => {
             const handler = webhookAdapters.callback(bot);
 
             const respondSpy = spy(() => {});
-            await handler(testUpdate, respondSpy, undefined);
+            await handler(testUpdate, respondSpy);
 
             // respond should be called when webhook reply is used
             assertEquals(respondSpy.calls.length, 1);
@@ -442,7 +442,7 @@ describe("webhook functionality", () => {
             const handler = webhookAdapters.callback(bot);
 
             const respondSpy = spy(() => {});
-            await handler(testUpdate, respondSpy, undefined);
+            await handler(testUpdate, respondSpy);
 
             // respond should NOT be called when webhook reply is not used
             assertEquals(respondSpy.calls.length, 0);
@@ -466,7 +466,7 @@ describe("webhook functionality", () => {
             });
 
             const respondSpy = spy(() => {});
-            const promise = handler(testUpdate, respondSpy, undefined);
+            const promise = handler(testUpdate, respondSpy);
 
             await time.nextAsync();
             await promise;
@@ -493,7 +493,7 @@ describe("webhook functionality", () => {
                 timeoutMilliseconds: 200,
             });
 
-            const promise = handler(testUpdate, () => {}, undefined);
+            const promise = handler(testUpdate, () => {});
             await time.nextAsync();
 
             // Should propagate the error
@@ -533,21 +533,9 @@ describe("webhook functionality", () => {
             });
 
             // Send three concurrent updates with different behaviors
-            const p1 = handler(
-                { ...testUpdate, update_id: 1 },
-                () => {},
-                undefined,
-            );
-            const p2 = handler(
-                { ...testUpdate, update_id: 2 },
-                () => {},
-                undefined,
-            );
-            const p3 = handler(
-                { ...testUpdate, update_id: 3 },
-                () => {},
-                undefined,
-            );
+            const p1 = handler({ ...testUpdate, update_id: 1 }, () => {});
+            const p2 = handler({ ...testUpdate, update_id: 2 }, () => {});
+            const p3 = handler({ ...testUpdate, update_id: 3 }, () => {});
 
             const allSettledPromise = Promise.allSettled([p1, p2, p3]);
 
