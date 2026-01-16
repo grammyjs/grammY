@@ -94,11 +94,7 @@ export function createFormDataPayload(
 
 // === Form data creation
 function createBoundary() {
-    // Taken from Deno std lib
-    return "----------" + randomId(32);
-}
-function randomId(length = 16) {
-    return Array.from(Array(length))
+    return "----------" + Array.from(Array(32))
         .map(() => Math.random().toString(36)[2] || 0)
         .join("");
 }
@@ -136,9 +132,9 @@ async function* payloadToMultipartItr(
         first = false;
     }
     // Send all files
-    for (const { id, origin, file } of files) {
+    for (const { origin, file } of files) {
         if (!first) yield separator;
-        yield* filePart(id, origin, file);
+        yield* filePart(origin, file);
         first = false;
     }
     // End multipart/form-data protocol
@@ -147,38 +143,28 @@ async function* payloadToMultipartItr(
 
 /** Information about a file extracted from a payload */
 type CollectedFile = {
-    /** To be used in the attach:// string */
-    id: string;
     /** Hints about where the file came from, useful for filename guessing */
     origin: string;
     /** The extracted file */
     file: InputFile;
 };
 /**
- * Installs a `toJSON` implementation on each instance of `InputFile` contained
- * in the payload. They return attach:// strings under which the respective
- * instances should be sent. The modified payload can now be serialized to JSON.
- *
- * Returns the list of discovered `InputFile` instances along with the random
- * identifiers that were used in the corresponding attach:// strings, as well as
- * the origin keys of the original payload object.
+ * Recursively finds all instances of {@link InputFile} in a given payload.
  *
  * @param value a payload object, or a part of it
- * @returns the discovered `InputFile` instances with identifiers and origins
+ *
+ * @returns the discovered `InputFile` instances alongside their origins
  */
 function collectFiles(value: unknown): CollectedFile[] {
     if (typeof value !== "object" || value === null) return [];
     return Object.entries(value).flatMap(([k, v]) => {
         if (Array.isArray(v)) return v.flatMap((p) => collectFiles(p));
         else if (v instanceof InputFile) {
-            const id = randomId();
-            // Serialize `InputFile` instance with attach:// string
-            Object.assign(v, { toJSON: () => `attach://${id}` });
             const origin = k === "media" &&
                     "type" in value && typeof value.type === "string"
                 ? value.type // use `type` for `InputMedia*`
                 : k; // use property key otherwise
-            return { id, origin, file: v };
+            return { origin, file: v };
         } else return collectFiles(v);
     });
 }
@@ -191,7 +177,6 @@ function valuePart(key: string, value: unknown): Uint8Array {
 }
 /** Turns an InputFile into a generator of `Uint8Array`s */
 async function* filePart(
-    id: string,
     origin: string,
     input: InputFile,
 ): AsyncIterableIterator<Uint8Array> {
@@ -206,7 +191,7 @@ ${filename}
         );
     }
     yield enc.encode(
-        `content-disposition:form-data;name="${id}";filename=${filename}\r\ncontent-type:application/octet-stream\r\n\r\n`,
+        `content-disposition:form-data;name="${input._id}";filename=${filename}\r\ncontent-type:application/octet-stream\r\n\r\n`,
     );
     yield* input;
 }

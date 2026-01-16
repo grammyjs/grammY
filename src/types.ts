@@ -7438,6 +7438,15 @@ export interface InputMediaDocument {
  * @see {@link https://core.telegram.org/bots/api#inputfile}
  */
 export class InputFile {
+    /**
+     * Internal random instance identifier. You never need to use this.
+     *
+     * Determines how this `InputFile` is stringified via
+     * {@link InputFile.toJSON}.
+     */
+    public readonly _id = Array.from(Array(16))
+        .map(() => Math.random().toString(36)[2] || 0)
+        .join("");
     private consumed = false;
     private readonly fileData: ReturnType<typeof preprocess>;
     /**
@@ -7508,6 +7517,14 @@ export class InputFile {
         } else {
             data satisfies never;
         }
+    }
+    /**
+     * Called by `JSON.stringify` when turning this instance into a JSON representation.
+     *
+     * @returns An `attach://` string with a long random identifier
+     */
+    toJSON() {
+        return `attach://${this._id}`;
     }
 }
 /**
