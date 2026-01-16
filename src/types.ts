@@ -835,6 +835,10 @@ export interface UserFromGetMe extends User {
      * _True_, if the bot has a main Web App. Returned only in {@link ApiMethods.getMe | getMe}.
      */
     has_main_web_app?: boolean;
+    /**
+     * _True_, if the bot has forum topic mode enabled in private chats. Returned only in {@link ApiMethods.getMe | getMe}.
+     */
+    has_topics_enabled?: boolean;
 }
 /**
  * This object represents a chat.
@@ -1219,6 +1223,18 @@ export declare namespace ChatFullInfo {
          * For supergroups, the location to which the supergroup is connected
          */
         location?: undefined;
+        /**
+         * For private chats, the rating of the user if any
+         */
+        rating?: UserRating;
+        /**
+         * The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
+         */
+        unique_gift_colors?: UniqueGiftColors;
+        /**
+         * The number of Telegram Stars a general user have to pay to send a message to the chat
+         */
+        paid_message_star_count?: number;
     }
     /**
      * This object contains full information about a group chat.
@@ -1414,6 +1430,18 @@ export declare namespace ChatFullInfo {
          * For supergroups, the location to which the supergroup is connected
          */
         location?: undefined;
+        /**
+         * For private chats, the rating of the user if any
+         */
+        rating?: undefined;
+        /**
+         * The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
+         */
+        unique_gift_colors?: UniqueGiftColors;
+        /**
+         * The number of Telegram Stars a general user have to pay to send a message to the chat
+         */
+        paid_message_star_count?: number;
     }
     /**
      * This object contains full information about a supergroup chat.
@@ -1609,6 +1637,18 @@ export declare namespace ChatFullInfo {
          * For supergroups, the location to which the supergroup is connected
          */
         location?: ChatLocation;
+        /**
+         * For private chats, the rating of the user if any
+         */
+        rating?: undefined;
+        /**
+         * The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
+         */
+        unique_gift_colors?: UniqueGiftColors;
+        /**
+         * The number of Telegram Stars a general user have to pay to send a message to the chat
+         */
+        paid_message_star_count?: number;
     }
     /**
      * This object contains full information about a channel chat.
@@ -1804,6 +1844,18 @@ export declare namespace ChatFullInfo {
          * For supergroups, the location to which the supergroup is connected
          */
         location?: undefined;
+        /**
+         * For private chats, the rating of the user if any
+         */
+        rating?: undefined;
+        /**
+         * The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
+         */
+        unique_gift_colors?: UniqueGiftColors;
+        /**
+         * The number of Telegram Stars a general user have to pay to send a message to the chat
+         */
+        paid_message_star_count?: number;
     }
 }
 /**
@@ -1817,7 +1869,7 @@ export interface Message {
      */
     message_id: number;
     /**
-     * Unique identifier of a message thread to which the message belongs; for supergroups only
+     * Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only
      */
     message_thread_id?: number;
     /**
@@ -1857,7 +1909,7 @@ export interface Message {
      */
     forward_origin?: MessageOrigin;
     /**
-     * _True_, if the message is sent to a forum topic
+     * _True_, if the message is sent to a topic in a forum supergroup or a private chat with the bot
      */
     is_topic_message?: true;
     /**
@@ -2096,6 +2148,10 @@ export interface Message {
      * Service message: a unique gift was sent or received
      */
     unique_gift?: UniqueGiftInfo;
+    /**
+     * Service message: upgrade of a gift was purchased after the gift was sent
+     */
+    gift_upgrade_sent?: GiftInfo;
     /**
      * The domain name of the website on which the user has logged in. {@link https://core.telegram.org/widgets/login | More about Telegram Login »}
      */
@@ -3486,9 +3542,13 @@ export interface ChecklistTask {
      */
     text_entities?: MessageEntity[];
     /**
-     * User that completed the task; omitted if the task wasn't completed
+     * User that completed the task; omitted if the task wasn't completed by a user
      */
     completed_by_user?: User;
+    /**
+     * Chat that completed the task; omitted if the task wasn't completed by a chat
+     */
+    completed_by_chat?: Chat;
     /**
      * Point in time (Unix timestamp) when the task was completed; 0 if the task wasn't completed
      */
@@ -3933,6 +3993,10 @@ export interface ForumTopicCreated {
      * Unique identifier of the custom emoji shown as the topic icon
      */
     icon_custom_emoji_id?: string;
+    /**
+     * _True_, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot
+     */
+    is_name_implicit?: true;
 }
 /**
  * This object represents a service message about a forum topic closed in the chat. Currently holds no information.
@@ -5678,6 +5742,27 @@ export interface BusinessOpeningHours {
     opening_hours: BusinessOpeningHoursInterval[];
 }
 /**
+ * This object describes the rating of a user based on their Telegram Star spendings.
+ */
+export interface UserRating {
+    /**
+     * Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern.
+     */
+    level: number;
+    /**
+     * Numerical value of the user's rating; the higher the rating, the better
+     */
+    rating: number;
+    /**
+     * The rating value required to get the current level
+     */
+    current_level_rating: number;
+    /**
+     * The rating value required to get to the next level; omitted if the maximum level was reached
+     */
+    next_level_rating?: number;
+}
+/**
  * Describes the position of a clickable area within a story.
  *
  * @see {@link https://core.telegram.org/bots/api#storyareaposition}
@@ -6099,6 +6184,27 @@ export interface ForumTopic {
      * Unique identifier of the custom emoji shown as the topic icon
      */
     icon_custom_emoji_id?: string;
+    /**
+     * _True_, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot
+     */
+    is_name_implicit?: true;
+}
+/**
+ * This object describes the background of a gift.
+ */
+export interface GiftBackground {
+    /**
+     * Center color of the background in RGB format
+     */
+    center_color: number;
+    /**
+     * Edge color of the background in RGB format
+     */
+    edge_color: number;
+    /**
+     * Text color of the background in RGB format
+     */
+    text_color: number;
 }
 /**
  * This object represents a gift that can be sent by the bot.
@@ -6123,13 +6229,37 @@ export interface Gift {
      */
     upgrade_star_count?: number;
     /**
-     * The total number of the gifts of this type that can be sent; for limited gifts only
+     * _True_, if the gift can only be purchased by Telegram Premium subscribers
+     */
+    is_premium?: true;
+    /**
+     * _True_, if the gift can be used (after being upgraded) to customize a user's appearance
+     */
+    has_colors?: number;
+    /**
+     * The total number of gifts of this type that can be sent by all users; for limited gifts only
      */
     total_count?: number;
     /**
-     * The number of remaining gifts of this type that can be sent; for limited gifts only
+     * The number of remaining gifts of this type that can be sent by all users; for limited gifts only
      */
     remaining_count?: number;
+    /**
+     * The total number of gifts of this type that can be sent by the bot; for limited gifts only
+     */
+    personal_total_count?: number;
+    /**
+     * The number of remaining gifts of this type that can be sent by the bot; for limited gifts only
+     */
+    personal_remaining_count?: number;
+    /**
+     * Background of the gift
+     */
+    background?: GiftBackground;
+    /**
+     * The total number of different unique gifts that can be obtained by upgrading the gift
+     */
+    unique_gift_variant_count?: number;
     /**
      * Information about the chat that published the gift
      */
@@ -6227,11 +6357,44 @@ export interface UniqueGiftBackdrop {
     rarity_per_mille: number;
 }
 /**
+ * This object contains information about the color scheme for a user's name, message replies and link previews based on a unique gift.
+ */
+export interface UniqueGiftColors {
+    /**
+     * Custom emoji identifier of the unique gift's model
+     */
+    model_custom_emoji_id: string;
+    /**
+     * Custom emoji identifier of the unique gift's symbol
+     */
+    symbol_custom_emoji_id: string;
+    /**
+     * Main color used in light themes; RGB format
+     */
+    light_theme_main_color: number;
+    /**
+     * List of 1-3 additional colors used in light themes; RGB format
+     */
+    light_theme_other_colors: number[];
+    /**
+     * Main color used in dark themes; RGB format
+     */
+    dark_theme_main_color: number;
+    /**
+     * List of 1-3 additional colors used in dark themes; RGB format
+     */
+    dark_theme_other_colors: number[];
+}
+/**
  * This object describes a unique gift that was upgraded from a regular gift.
  *
  * @see {@link https://core.telegram.org/bots/api#uniquegift}
  */
 export interface UniqueGift {
+    /**
+     * Identifier of the regular gift from which the gift was upgraded
+     */
+    gift_id: string;
     /**
      * Human-readable name of the regular gift from which this unique gift was upgraded
      */
@@ -6256,6 +6419,18 @@ export interface UniqueGift {
      * Backdrop of the gift
      */
     backdrop: UniqueGiftBackdrop;
+    /**
+     * _True_, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers
+     */
+    is_premium?: true;
+    /**
+     * _True_, if the gift is assigned from the TON blockchain and can't be resold or transferred in Telegram
+     */
+    is_from_blockchain?: true;
+    /**
+     * The color scheme that can be used by the gift's owner for the chat's name, replies to messages and link previews; for business account gifts and gifts that are currently on sale only
+     */
+    colors?: UniqueGiftColors;
     /**
      * Information about the chat that published the gift
      */
@@ -6284,6 +6459,10 @@ export interface GiftInfo {
      */
     prepaid_upgrade_star_count?: number;
     /**
+     * _True_, if the gift's upgrade was purchased after the gift was sent
+     */
+    is_upgrade_separate?: true;
+    /**
      * _True_, if the gift can be upgraded to a unique gift
      */
     can_be_upgraded?: true;
@@ -6299,6 +6478,10 @@ export interface GiftInfo {
      * _True_, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
      */
     is_private?: true;
+    /**
+     * Unique number reserved for this gift when upgraded. See the _number_ field in {@link UniqueGift.number | UniqueGift}
+     */
+    unique_gift_number?: number;
 }
 /**
  * Describes a service message about a unique gift that was sent or received.
@@ -6311,13 +6494,17 @@ export interface UniqueGiftInfo {
      */
     gift: UniqueGift;
     /**
-     * Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, or “resale” for gifts bought from other users
+     * Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers
      */
-    origin: "upgrade" | "transfer" | "resale";
+    origin: "upgrade" | "transfer" | "resale" | "gifted_upgrade" | "offer";
     /**
-     * For gifts bought from other users, the price paid for the gift
+     * For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for toncoins.
      */
-    last_resale_star_count?: number;
+    last_resale_currency?: "XTR" | "TON";
+    /**
+     * For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanotoncoins
+     */
+    last_resale_amount?: number;
     /**
      * Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts
      */
@@ -6393,13 +6580,21 @@ export interface OwnedGiftRegular {
      */
     was_refunded?: true;
     /**
-     * Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars
+     * Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars; for gifts received on behalf of business accounts only
      */
     convert_star_count?: number;
     /**
-     * Number of Telegram Stars that were paid by the sender for the ability to upgrade the gift
+     * Number of Telegram Stars that were paid for the ability to upgrade the gift
      */
     prepaid_upgrade_star_count?: number;
+    /**
+     * _True_, if the gift's upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only
+     */
+    is_upgrade_separate?: true;
+    /**
+     * Unique number reserved for this gift when upgraded. See the _number_ field in {@link UniqueGift.number | UniqueGift}
+     */
+    unique_gift_number?: number;
 }
 /**
  * Describes a unique gift received and owned by a user or a chat.
@@ -6485,6 +6680,10 @@ export interface AcceptedGiftTypes {
      * _True_, if a Telegram Premium subscription is accepted
      */
     premium_subscription: boolean;
+    /**
+     * _True_, if transfers of unique gifts from channels are accepted
+     */
+    gifts_from_channels: boolean;
 }
 /**
  * Describes an amount of Telegram Stars.
@@ -7520,7 +7719,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -7708,7 +7907,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -7731,6 +7930,10 @@ export interface ApiMethods {
          * Protects the contents of the forwarded message from forwarding and saving
          */
         protect_content?: boolean;
+        /**
+         * Unique identifier of the message effect to be added to the message; only available when forwarding to private chats
+         */
+        message_effect_id?: string;
         /**
          * An object containing the parameters of the suggested post to send; for direct messages chats only
          */
@@ -7790,7 +7993,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -7838,6 +8041,10 @@ export interface ApiMethods {
          */
         allow_paid_broadcast?: boolean;
         /**
+         * Unique identifier of the message effect to be added to the message; only available when copying to private chats
+         */
+        message_effect_id?: string;
+        /**
          * An object containing the parameters of the suggested post to send; for direct messages chats only. If the message is sent as a reply to another suggested post, then that suggested post is automatically declined.
          */
         suggested_post_parameters?: SuggestedPostParameters;
@@ -7867,7 +8074,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -7912,7 +8119,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -7994,7 +8201,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8083,7 +8290,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8164,7 +8371,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8273,7 +8480,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8370,7 +8577,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8447,7 +8654,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8520,7 +8727,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8528,7 +8735,7 @@ export interface ApiMethods {
          */
         direct_messages_topic_id?: number;
         /**
-         * The number of Telegram Stars that must be paid to buy access to the media; 1-10000
+         * The number of Telegram Stars that must be paid to buy access to the media; 1-25000
          */
         star_count: number;
         /**
@@ -8601,7 +8808,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8655,7 +8862,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8736,7 +8943,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8825,7 +9032,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -8898,7 +9105,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -9044,7 +9251,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -9091,6 +9298,39 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
+     * Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
+     */
+    sendMessageDraft(args: {
+        /**
+         * Unique identifier for the target private chat
+         */
+        chat_id: number;
+        /**
+         * Unique identifier for the target message thread
+         */
+        message_thread_id?: number;
+        /**
+         * Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated
+         */
+        draft_id: number;
+        /**
+         * Text of the message to be sent, 1-4096 characters after entities parsing
+         */
+        text: string;
+        /**
+         * Mode for parsing entities in the message text. See {@link https://core.telegram.org/bots/api#formatting-options | formatting options} for more details.
+         */
+        parse_mode?: ParseMode;
+        /**
+         * A list of special entities that appear in message text, which can be specified instead of _parse_mode_
+         */
+        entities?: MessageEntity[];
+    }): true;
+}
+export interface ApiMethods {
+    /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.
      *
      * > Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use {@link ApiMethods.sendChatAction | sendChatAction} with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.
@@ -9109,7 +9349,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread; for supergroups only
+         * Unique identifier for the target message thread or topic of a forum; for supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -9318,7 +9558,7 @@ export interface ApiMethods {
          */
         can_manage_video_chats?: boolean;
         /**
-         * Pass _True_ if the administrator can restrict, ban or unban chat members, or access supergroup statistics
+         * Pass _True_ if the administrator can restrict, ban or unban chat members, or access supergroup statistics. For backward compatibility, defaults to _True_ for promotions of channel administrators
          */
         can_restrict_members?: boolean;
         /**
@@ -9880,7 +10120,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
+     * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#editforumtopic}
      */
@@ -9939,7 +10179,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.
+     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deleteforumtopic}
      */
@@ -9956,7 +10196,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
     /**
-     * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
+     * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#unpinallforumtopicmessages}
      */
@@ -10345,7 +10585,7 @@ export interface ApiMethods {
          */
         chat_id?: number | string;
         /**
-         * Identifier of the gift
+         * Identifier of the gift; limited gifts can't be sent to channel chats
          */
         gift_id: string;
         /**
@@ -10665,9 +10905,62 @@ export interface ApiMethods {
          */
         exclude_unlimited?: boolean;
         /**
-         * Pass _True_ to exclude gifts that can be purchased a limited number of times
+         * Pass _True_ to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
          */
-        exclude_limited?: boolean;
+        exclude_limited_upgradable?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique
+         */
+        exclude_limited_non_upgradable?: boolean;
+        /**
+         * Pass _True_ to exclude unique gifts
+         */
+        exclude_unique?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram
+         */
+        exclude_from_blockchain?: boolean;
+        /**
+         * Pass _True_ to sort results by gift price instead of send date. Sorting is applied before pagination.
+         */
+        sort_by_price?: boolean;
+        /**
+         * Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results
+         */
+        offset?: string;
+        /**
+         * The maximum number of gifts to be returned; 1-100. Defaults to 100
+         */
+        limit?: number;
+    }): OwnedGifts;
+}
+export interface ApiMethods {
+    /**
+     * Returns the gifts owned and hosted by a user. Returns {@link OwnedGifts} on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#getusergifts}
+     */
+    getUserGifts(args: {
+        /**
+         * Unique identifier of the user
+         */
+        user_id: number;
+        /**
+         * Pass _True_ to exclude gifts that can be purchased an unlimited number of times
+         */
+        exclude_unlimited?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+         */
+        exclude_limited_upgradable?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique
+         */
+        exclude_limited_non_upgradable?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram
+         */
+        exclude_from_blockchain?: boolean;
         /**
          * Pass _True_ to exclude unique gifts
          */
@@ -10677,7 +10970,60 @@ export interface ApiMethods {
          */
         sort_by_price?: boolean;
         /**
-         * Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results
+         * Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results
+         */
+        offset?: string;
+        /**
+         * The maximum number of gifts to be returned; 1-100. Defaults to 100
+         */
+        limit?: number;
+    }): OwnedGifts;
+}
+export interface ApiMethods {
+    /**
+     * Returns the gifts owned by a chat. Returns {@link OwnedGifts} on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#getchatgifts}
+     */
+    getChatGifts(args: {
+        /**
+         * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+         */
+        chat_id: number | string;
+        /**
+         * Pass _True_ to exclude gifts that aren't saved to the chat's profile page. Always _True_, unless the bot has the _can_post_messages_ administrator right in the channel.
+         */
+        exclude_unsaved?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that are saved to the chat's profile page. Always _False_, unless the bot has the _can_post_messages_ administrator right in the channel.
+         */
+        exclude_saved?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that can be purchased an unlimited number of times
+         */
+        exclude_unlimited?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+         */
+        exclude_limited_upgradable?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique
+         */
+        exclude_limited_non_upgradable?: boolean;
+        /**
+         * Pass _True_ to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram
+         */
+        exclude_from_blockchain?: boolean;
+        /**
+         * Pass _True_ to exclude unique gifts
+         */
+        exclude_unique?: boolean;
+        /**
+         * Pass _True_ to sort results by gift price instead of send date. Sorting is applied before pagination.
+         */
+        sort_by_price?: boolean;
+        /**
+         * Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results
          */
         offset?: string;
         /**
@@ -10788,6 +11134,39 @@ export interface ApiMethods {
          * A list of clickable areas to be shown on the story
          */
         areas?: StoryArea[];
+        /**
+         * Pass _True_ to keep the story accessible after it expires
+         */
+        post_to_chat_page?: boolean;
+        /**
+         * Pass _True_ if the content of the story must be protected from forwarding and screenshotting
+         */
+        protect_content?: boolean;
+    }): Story;
+}
+export interface ApiMethods {
+    /**
+     * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the _can_manage_stories_ business bot right for both business accounts. Returns {@link Story} on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#repoststory}
+     */
+    repostStory(args: {
+        /**
+         * Unique identifier of the business connection
+         */
+        business_connection_id: string;
+        /**
+         * Unique identifier of the chat which posted the story that should be reposted
+         */
+        from_chat_id: number;
+        /**
+         * Unique identifier of the story that should be reposted
+         */
+        from_story_id: number;
+        /**
+         * Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
+         */
+        active_period: 21600 | 43200 | 86400 | 172800;
         /**
          * Pass _True_ to keep the story accessible after it expires
          */
@@ -11392,7 +11771,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -13231,7 +13610,7 @@ export interface ApiMethods {
          */
         chat_id: number | string;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
@@ -14531,7 +14910,7 @@ export interface ApiMethods {
          */
         chat_id: number;
         /**
-         * Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+         * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
          */
         message_thread_id?: number;
         /**
