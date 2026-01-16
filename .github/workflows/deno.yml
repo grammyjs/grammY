@@ -17,4 +17,5 @@ jobs:
             - uses: denoland/setup-deno@v2
               with:
                   deno-version: v2.5.x
+                  cache: true
             - run: deno task ok
