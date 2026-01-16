@@ -116,7 +116,14 @@ async function* payloadToMultipartItr(
     for (const [key, value] of Object.entries(payload)) {
         if (value == null) continue;
         if (!first) yield separator;
-        yield valuePart(key, typeof value === "object" ? str(value) : value);
+        yield valuePart(
+            key,
+            value instanceof InputFile
+                ? value.toJSON()
+                : typeof value === "object"
+                ? str(value)
+                : value,
+        );
         first = false;
     }
     // Send all files
