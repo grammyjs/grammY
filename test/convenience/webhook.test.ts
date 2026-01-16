@@ -1,21 +1,32 @@
 // deno-lint-ignore-file no-unversioned-import no-import-prefix
 import type { Hono } from "jsr:@hono/hono";
+import type { NHttp } from "jsr:@nhttp/nhttp";
+import type { Application } from "jsr:@oak/oak";
+import type { createServer } from "node:http";
 import type {
     APIGatewayProxyEventV2,
     Context as LambdaContext,
 } from "npm:@types/aws-lambda";
-import type { NHttp } from "jsr:@nhttp/nhttp";
-import type { Application } from "jsr:@oak/oak";
-import type { createServer } from "node:http";
-import type { Elysia } from "npm:elysia";
 import type { Express } from "npm:@types/express";
-import type bodyParser from "npm:@types/koa-bodyparser";
 import type Koa from "npm:@types/koa";
+import type bodyParser from "npm:@types/koa-bodyparser";
+import type { Elysia } from "npm:elysia";
 import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
 import { Bot, BotError, webhookAdapters } from "../../src/mod.ts";
-import type { UserFromGetMe } from "../../src/types.ts";
-import { assert, assertIsError, describe, it } from "../deps.test.ts";
+import type { Update, UserFromGetMe } from "../../src/types.ts";
+import {
+    assert,
+    assertEquals,
+    assertIsError,
+    assertRejects,
+    assertThrows,
+    describe,
+    FakeTime,
+    it,
+    spy,
+    stub,
+} from "../deps.test.ts";
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
@@ -207,7 +218,7 @@ describe("webhook", () => {
 
 describe("webhook functionality", () => {
     const createTestBot = () =>
-        new Bot("test-token", { botInfo: {} as unknown as UserFromGetMe });
+        new Bot("test-token", { me: {} as unknown as UserFromGetMe });
     const testUpdate: Update = {
         update_id: 1,
         message: {
@@ -226,7 +237,7 @@ describe("webhook functionality", () => {
             const isRunningStub = stub(bot, "isRunning", () => true);
             try {
                 assertThrows(
-                    () => webhookCallback(bot, "callback"),
+                    () => webhookAdapters.callback(bot),
                     Error,
                     "Bot is already running via long polling",
                 );
@@ -238,7 +249,7 @@ describe("webhook functionality", () => {
 
         it("should prevent bot.start() after webhook setup", () => {
             const bot = createTestBot();
-            webhookCallback(bot, "callback");
+            webhookAdapters.callback(bot);
 
             assertThrows(
                 () => bot.start(),
@@ -253,7 +264,7 @@ describe("webhook functionality", () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(() => Promise.resolve());
 
-            const handler = webhookCallback(bot, "callback", {
+            const handler = webhookAdapters.callback(bot, {
                 secretToken: "correct-token",
             });
 
@@ -273,7 +284,7 @@ describe("webhook functionality", () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(() => Promise.resolve());
 
-            const handler = webhookCallback(bot, "callback", {
+            const handler = webhookAdapters.callback(bot, {
                 secretToken: "correct-token",
             });
 
@@ -290,7 +301,7 @@ describe("webhook functionality", () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(() => Promise.resolve());
 
-            const handler = webhookCallback(bot, "callback");
+            const handler = webhookAdapters.callback(bot);
 
             await handler(testUpdate, () => {}, undefined);
 
@@ -312,7 +323,7 @@ describe("webhook functionality", () => {
             });
             bot.handleUpdate = spy(() => Promise.resolve());
 
-            const handler = webhookCallback(bot, "callback");
+            const handler = webhookAdapters.callback(bot);
             await handler(testUpdate, () => {}, undefined);
 
             assert(initCalled, "Bot init should be called");
@@ -324,7 +335,7 @@ describe("webhook functionality", () => {
             bot.init = spy(() => Promise.resolve());
             bot.handleUpdate = spy(() => Promise.resolve());
 
-            const handler = webhookCallback(bot, "callback");
+            const handler = webhookAdapters.callback(bot);
 
             // First request
             await handler(testUpdate, () => {}, undefined);
@@ -343,7 +354,7 @@ describe("webhook functionality", () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(() => Promise.resolve());
 
-            const handler = webhookCallback(bot, "callback");
+            const handler = webhookAdapters.callback(bot);
             await handler(testUpdate, () => {}, undefined);
 
             assertEquals(
@@ -362,7 +373,7 @@ describe("webhook functionality", () => {
                 await new Promise((resolve) => setTimeout(resolve, 200));
             });
 
-            const handler = webhookCallback(bot, "callback", {
+            const handler = webhookAdapters.callback(bot, {
                 onTimeout: "throw",
                 timeoutMilliseconds: 50,
             });
@@ -385,7 +396,7 @@ describe("webhook functionality", () => {
             });
 
             let customTimeoutCalled = false;
-            const handler = webhookCallback(bot, "callback", {
+            const handler = webhookAdapters.callback(bot, {
                 onTimeout: () => {
                     customTimeoutCalled = true;
                 },
@@ -411,7 +422,7 @@ describe("webhook functionality", () => {
                 await envelope?.send?.('{"ok": true}');
             });
 
-            const handler = webhookCallback(bot, "callback");
+            const handler = webhookAdapters.callback(bot);
 
             const respondSpy = spy(() => {});
             await handler(testUpdate, respondSpy, undefined);
@@ -428,7 +439,7 @@ describe("webhook functionality", () => {
             const bot = createTestBot();
             bot.handleUpdate = spy(() => Promise.resolve());
 
-            const handler = webhookCallback(bot, "callback");
+            const handler = webhookAdapters.callback(bot);
 
             const respondSpy = spy(() => {});
             await handler(testUpdate, respondSpy, undefined);
@@ -449,8 +460,8 @@ describe("webhook functionality", () => {
                 webhookReplySent = true;
             });
 
-            const handler = webhookCallback(bot, "callback", {
-                onTimeout: "return",
+            const handler = webhookAdapters.callback(bot, {
+                onTimeout: "ignore",
                 timeoutMilliseconds: 50,
             });
 
@@ -477,7 +488,7 @@ describe("webhook functionality", () => {
                 throw new Error("Update processing failed");
             });
 
-            const handler = webhookCallback(bot, "callback", {
+            const handler = webhookAdapters.callback(bot, {
                 onTimeout: "throw",
                 timeoutMilliseconds: 200,
             });
@@ -516,8 +527,8 @@ describe("webhook functionality", () => {
                 }
             });
 
-            const handler = webhookCallback(bot, "callback", {
-                onTimeout: "return",
+            const handler = webhookAdapters.callback(bot, {
+                onTimeout: "ignore",
                 timeoutMilliseconds: 100,
             });
 
