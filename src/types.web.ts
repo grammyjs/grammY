@@ -106,6 +106,9 @@ export class InputFile {
         // Return buffers and byte streams as-is
         return data;
     }
+    toJSON() {
+        throw new Error("InputFile instances must be sent via grammY");
+    }
 }
 
 async function* fetchFile(url: string | URL): AsyncIterable<Uint8Array> {
