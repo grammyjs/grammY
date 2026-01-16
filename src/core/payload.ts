@@ -107,7 +107,7 @@ async function* payloadToMultipartItr(
     payload: Record<string, unknown>,
     boundary: string,
 ): AsyncIterableIterator<Uint8Array> {
-    const files = collectFiles(payload);
+    const files = extractFiles(payload);
     // Start multipart/form-data protocol
     yield enc.encode(`--${boundary}\r\n`);
     // Send all payload fields
@@ -116,14 +116,7 @@ async function* payloadToMultipartItr(
     for (const [key, value] of Object.entries(payload)) {
         if (value == null) continue;
         if (!first) yield separator;
-        yield valuePart(
-            key,
-            value instanceof InputFile
-                ? value.toJSON()
-                : typeof value === "object"
-                ? str(value)
-                : value,
-        );
+        yield valuePart(key, typeof value === "object" ? str(value) : value);
         first = false;
     }
     // Send all files
@@ -137,7 +130,7 @@ async function* payloadToMultipartItr(
 }
 
 /** Information about a file extracted from a payload */
-type CollectedFile = {
+type ExtractedFile = {
     /** To be used in the attach:// string */
     id: string;
     /** Hints about where the file came from, useful for filename guessing */
@@ -146,31 +139,32 @@ type CollectedFile = {
     file: InputFile;
 };
 /**
- * Installs a `toJSON` implementation on each instance of `InputFile` contained
- * in the payload. They return attach:// strings under which the respective
- * instances should be sent. The modified payload can now be serialized to JSON.
+ * Replaces all instances of `InputFile` in a given payload by attach://
+ * strings. This alters the passed object. After calling this method, the
+ * payload object can be stringified.
  *
- * Returns the list of discovered `InputFile` instances along with the random
- * identifiers that were used in the corresponding attach:// strings, as well as
- * the origin keys of the original payload object.
+ * Returns a list of `InputFile` instances along with the random identifiers
+ * that were used in the corresponding attach:// strings, as well as the origin
+ * keys of the original payload object.
  *
  * @param value a payload object, or a part of it
- * @returns the discovered `InputFile` instances with identifiers and origins
+ * @param key the origin key of the payload object, if a part of it is passed
+ * @returns the cleaned payload object
  */
-function collectFiles(value: unknown): CollectedFile[] {
+function extractFiles(value: unknown): ExtractedFile[] {
     if (typeof value !== "object" || value === null) return [];
     return Object.entries(value).flatMap(([k, v]) => {
-        if (Array.isArray(v)) return v.flatMap((p) => collectFiles(p));
+        if (Array.isArray(v)) return v.flatMap((p) => extractFiles(p));
         else if (v instanceof InputFile) {
             const id = randomId();
-            // Serialize `InputFile` instance with attach:// string
-            Object.assign(v, { toJSON: () => `attach://${id}` });
+            // Overwrite `InputFile` instance with attach:// string
+            Object.assign(value, { [k]: `attach://${id}` });
             const origin = k === "media" &&
                     "type" in value && typeof value.type === "string"
                 ? value.type // use `type` for `InputMedia*`
                 : k; // use property key otherwise
             return { id, origin, file: v };
-        } else return collectFiles(v);
+        } else return extractFiles(v);
     });
 }
 
