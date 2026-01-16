@@ -157,8 +157,8 @@ function extractFiles(value: unknown): ExtractedFile[] {
         if (Array.isArray(v)) return v.flatMap((p) => extractFiles(p));
         else if (v instanceof InputFile) {
             const id = randomId();
-            // Overwrite `InputFile` instance with attach:// string
-            Object.assign(value, { [k]: `attach://${id}` });
+            // Serialize `InputFile` instance with attach:// string
+            Object.assign(v, { toJSON: () => `attach://${id}` });
             const origin = k === "media" &&
                     "type" in value && typeof value.type === "string"
                 ? value.type // use `type` for `InputMedia*`
