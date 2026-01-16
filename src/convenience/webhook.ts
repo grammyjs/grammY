@@ -226,7 +226,7 @@ function webhookCallback<C extends Context = Context>(
             await bot.init();
             initialized = true;
         }
-        if (handler.header !== secretToken) {
+        if (compareSecretToken(handler.header, secretToken)) {
             await handler.unauthorized();
             return handler.handlerReturn;
         }
