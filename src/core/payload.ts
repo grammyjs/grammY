@@ -107,7 +107,7 @@ async function* payloadToMultipartItr(
     payload: Record<string, unknown>,
     boundary: string,
 ): AsyncIterableIterator<Uint8Array> {
-    const files = extractFiles(payload);
+    const files = collectFiles(payload);
     // Start multipart/form-data protocol
     yield enc.encode(`--${boundary}\r\n`);
     // Send all payload fields
@@ -130,7 +130,7 @@ async function* payloadToMultipartItr(
 }
 
 /** Information about a file extracted from a payload */
-type ExtractedFile = {
+type CollectedFile = {
     /** To be used in the attach:// string */
     id: string;
     /** Hints about where the file came from, useful for filename guessing */
@@ -151,10 +151,10 @@ type ExtractedFile = {
  * @param key the origin key of the payload object, if a part of it is passed
  * @returns the cleaned payload object
  */
-function extractFiles(value: unknown): ExtractedFile[] {
+function collectFiles(value: unknown): CollectedFile[] {
     if (typeof value !== "object" || value === null) return [];
     return Object.entries(value).flatMap(([k, v]) => {
-        if (Array.isArray(v)) return v.flatMap((p) => extractFiles(p));
+        if (Array.isArray(v)) return v.flatMap((p) => collectFiles(p));
         else if (v instanceof InputFile) {
             const id = randomId();
             // Serialize `InputFile` instance with attach:// string
@@ -164,7 +164,7 @@ function extractFiles(value: unknown): ExtractedFile[] {
                 ? value.type // use `type` for `InputMedia*`
                 : k; // use property key otherwise
             return { id, origin, file: v };
-        } else return extractFiles(v);
+        } else return collectFiles(v);
     });
 }
 
