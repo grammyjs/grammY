@@ -10,7 +10,7 @@
 
 <!-- deno-fmt-ignore-start -->
 
-[![Bot API](https://img.shields.io/badge/Bot%20API-9.2-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
+[![Bot API](https://img.shields.io/badge/Bot%20API-9.3-blue?logo=telegram&style=flat&labelColor=000&color=3b82f6)](https://core.telegram.org/bots/api)
 [![Deno](https://shield.deno.dev/x/grammy)](https://deno.land/x/grammy)
 [![npm](https://img.shields.io/npm/v/grammy?logo=npm&style=flat&labelColor=000&color=3b82f6)](https://www.npmjs.org/package/grammy)
 [![All Contributors](https://img.shields.io/github/all-contributors/grammyjs/grammy?style=flat&labelColor=000&color=3b82f6)](#contributors-)
@@ -332,6 +332,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/OfficialCodinary"><img src="https://avatars.githubusercontent.com/u/133005277?v=4?s=100" width="100px;" alt="Codinary"/><br /><sub><b>Codinary</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3AOfficialCodinary" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://github.com/dotvhs"><img src="https://avatars.githubusercontent.com/u/681416?v=4?s=100" width="100px;" alt=".vhs"/><br /><sub><b>.vhs</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Adotvhs" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/pulls?q=is%3Apr+reviewed-by%3Adotvhs" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="11.11%"><a href="https://agou.im/"><img src="https://avatars.githubusercontent.com/u/55237525?v=4?s=100" width="100px;" alt="agoudbg"/><br /><sub><b>agoudbg</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Aagoudbg" title="Bug reports">🐛</a> <a href="https://github.com/grammyjs/grammY/commits?author=agoudbg" title="Code">💻</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/arunr-inji"><img src="https://avatars.githubusercontent.com/u/5071242?v=4?s=100" width="100px;" alt="ArunR"/><br /><sub><b>ArunR</b></sub></a><br /><a href="#ideas-arunr-inji" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/grammyjs/grammY/commits?author=arunr-inji" title="Code">💻</a> <a href="https://github.com/grammyjs/grammY/commits?author=arunr-inji" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="11.11%"><a href="https://github.com/crwnd"><img src="https://avatars.githubusercontent.com/u/97118277?v=4?s=100" width="100px;" alt="A"/><br /><sub><b>A</b></sub></a><br /><a href="https://github.com/grammyjs/grammY/issues?q=author%3Acrwnd" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>

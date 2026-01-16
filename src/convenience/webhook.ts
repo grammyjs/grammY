@@ -6,6 +6,56 @@ import type { WebhookReplyEnvelope } from "../client.ts";
 import { type FrameworkAdapter, makeAdapters } from "./frameworks.ts";
 const debugErr = createDebug("grammy:error");
 
+/**
+ * Performs a constant-time comparison of two strings to prevent timing attacks.
+ * This function always compares all bytes regardless of early differences,
+ * ensuring the comparison time does not leak information about the secret.
+ *
+ * @param header The header value from the request (X-Telegram-Bot-Api-Secret-Token)
+ * @param token The expected secret token configured for the webhook
+ * @returns true if strings are equal, false otherwise
+ */
+function compareSecretToken(
+    header: string | undefined,
+    token: string | undefined,
+): boolean {
+    // If no token is configured, accept all requests
+    if (token === undefined) {
+        return true;
+    }
+    // If token is configured but no header provided, reject
+    if (header === undefined) {
+        return false;
+    }
+
+    // Convert strings to Uint8Array for byte-by-byte comparison
+    const encoder = new TextEncoder();
+    const headerBytes = encoder.encode(header);
+    const tokenBytes = encoder.encode(token);
+
+    // If lengths differ, reject
+    if (headerBytes.length !== tokenBytes.length) {
+        return false;
+    }
+
+    let hasDifference = 0;
+    // Always iterate exactly tokenBytes.length times to prevent timing attacks
+    // that could reveal the secret token's length. The loop time is constant
+    // relative to the secret token length, not the attacker's input length.
+    for (let i = 0; i < tokenBytes.length; i++) {
+        // If header is shorter than token, pad with 0 for comparison
+        const headerByte = i < headerBytes.length ? headerBytes[i] : 0;
+        const tokenByte = tokenBytes[i];
+
+        // If bytes differ, mark that we found a difference
+        // Using bitwise OR to maintain constant-time (no short-circuit evaluation)
+        hasDifference |= headerByte ^ tokenByte;
+    }
+
+    // Return true only if no differences were found
+    return hasDifference === 0;
+}
+
 export interface WebhookOptions {
     /** An optional strategy to handle timeouts (default: 'throw') */
     onTimeout?: "throw" | "ignore" | ((...args: any[]) => unknown);
