@@ -139,17 +139,16 @@ type CollectedFile = {
     file: InputFile;
 };
 /**
- * Replaces all instances of `InputFile` in a given payload by attach://
- * strings. This alters the passed object. After calling this method, the
- * payload object can be stringified.
+ * Installs a `toJSON` implementation on each instance of `InputFile` contained
+ * in the payload. They return attach:// strings under which the respective
+ * instances should be sent. The modified payload can now be serialized to JSON.
  *
- * Returns a list of `InputFile` instances along with the random identifiers
- * that were used in the corresponding attach:// strings, as well as the origin
- * keys of the original payload object.
+ * Returns the list of discovered `InputFile` instances along with the random
+ * identifiers that were used in the corresponding attach:// strings, as well as
+ * the origin keys of the original payload object.
  *
  * @param value a payload object, or a part of it
- * @param key the origin key of the payload object, if a part of it is passed
- * @returns the cleaned payload object
+ * @returns the discovered `InputFile` instances with identifiers and origins
  */
 function collectFiles(value: unknown): CollectedFile[] {
     if (typeof value !== "object" || value === null) return [];
