@@ -54,13 +54,11 @@ describe("requiresFormDataUpload", () => {
         const fileContent = "abc";
         const buffer = new TextEncoder().encode(fileContent);
         const document = new InputFile(buffer, "my-file");
-        const payload = createFormDataPayload(
-            { chat_id: 42, document },
-            (err) => {
-                // cannot happen
-                throw err;
-            },
-        );
+        const parameters = { chat_id: 42, document };
+        const payload = createFormDataPayload(parameters, (err) => {
+            // cannot happen
+            throw err;
+        });
 
         // based on testing seed which generates stable randomness
         const boundary = "----------a7tvrr8hjhi2q5kkuoh9kabvsgsu6ywp";
@@ -84,6 +82,118 @@ content-disposition:form-data;name="document"\r
 attach://${attachId}\r
 --${boundary}\r
 content-disposition:form-data;name="${attachId}";filename=${document.name}\r
+content-type:application/octet-stream\r
+\r
+${fileContent}\r
+--${boundary}--\r
+`;
+        assertEquals(actual, expected);
+    });
+
+    it("builds multipart/form-data streams from the same payload repeatedly", async () => {
+        const fileContent = "abc";
+        const buffer = new TextEncoder().encode(fileContent);
+        const document = new InputFile(buffer, "my-file");
+        const parameters = { chat_id: 42, document };
+
+        // First run
+        let payload = createFormDataPayload(parameters, (err) => {
+            // cannot happen
+            throw err;
+        });
+
+        // based on testing seed which generates stable randomness
+        let boundary = "----------97do61cgtfggp89miu6z6vrpu9dn085p";
+        let attachId = "pb8p7s2d78g81xrm";
+
+        assertEquals(payload.method, "POST");
+        let headers = {
+            "content-type": `multipart/form-data; boundary=${boundary}`,
+            connection: "keep-alive",
+        };
+        assertEquals(payload.headers, headers);
+        let body = await convertToUint8Array(payload.body);
+        let actual = new TextDecoder().decode(body);
+        let expected = `--${boundary}\r
+content-disposition:form-data;name="chat_id"\r
+\r
+42\r
+--${boundary}\r
+content-disposition:form-data;name="document"\r
+\r
+attach://${attachId}\r
+--${boundary}\r
+content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
+content-type:application/octet-stream\r
+\r
+${fileContent}\r
+--${boundary}--\r
+`;
+        assertEquals(actual, expected);
+
+        // Second run
+        payload = createFormDataPayload(parameters, (err) => {
+            // cannot happen
+            throw err;
+        });
+
+        // based on testing seed which generates stable randomness
+        boundary = "----------d9hdz0kkzqimm8mzz26cray9ksyx4n9t";
+        attachId = "pu8bzs461456115g";
+
+        assertEquals(payload.method, "POST");
+        headers = {
+            "content-type": `multipart/form-data; boundary=${boundary}`,
+            connection: "keep-alive",
+        };
+        assertEquals(payload.headers, headers);
+        body = await convertToUint8Array(payload.body);
+        actual = new TextDecoder().decode(body);
+        expected = `--${boundary}\r
+content-disposition:form-data;name="chat_id"\r
+\r
+42\r
+--${boundary}\r
+content-disposition:form-data;name="document"\r
+\r
+attach://${attachId}\r
+--${boundary}\r
+content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
+content-type:application/octet-stream\r
+\r
+${fileContent}\r
+--${boundary}--\r
+`;
+        assertEquals(actual, expected);
+
+        // Third run
+        payload = createFormDataPayload(parameters, (err) => {
+            // cannot happen
+            throw err;
+        });
+
+        // based on testing seed which generates stable randomness
+        boundary = "----------h5cgiw66bjku2enr1cw4njckqghpfld9";
+        attachId = "3o1bz72rndh9xe2b";
+
+        assertEquals(payload.method, "POST");
+        headers = {
+            "content-type": `multipart/form-data; boundary=${boundary}`,
+            connection: "keep-alive",
+        };
+        assertEquals(payload.headers, headers);
+        body = await convertToUint8Array(payload.body);
+        actual = new TextDecoder().decode(body);
+        expected = `--${boundary}\r
+content-disposition:form-data;name="chat_id"\r
+\r
+42\r
+--${boundary}\r
+content-disposition:form-data;name="document"\r
+\r
+attach://${attachId}\r
+--${boundary}\r
+content-disposition:form-data;name="${attachId}";filename=${document.filename}\r
 content-type:application/octet-stream\r
 \r
 ${fileContent}\r
