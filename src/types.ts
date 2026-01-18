@@ -7444,9 +7444,7 @@ export class InputFile {
      * Determines how this `InputFile` is stringified via
      * {@link InputFile.toJSON}.
      */
-    public readonly _id = Array.from(Array(16))
-        .map(() => Math.random().toString(36)[2] || 0)
-        .join("");
+    public readonly _id = crypto.getRandomValues(new Uint8Array(8)).toHex();
     private consumed = false;
     private readonly fileData: ReturnType<typeof preprocess>;
     /**

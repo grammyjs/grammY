@@ -94,9 +94,7 @@ export function createFormDataPayload(
 
 // === Form data creation
 function createBoundary() {
-    return "----------" + Array.from(Array(32))
-        .map(() => Math.random().toString(36)[2] || 0)
-        .join("");
+    return "----------" + crypto.getRandomValues(new Uint8Array(16)).toHex();
 }
 
 const enc = new TextEncoder();
