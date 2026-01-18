@@ -277,15 +277,18 @@ describe("Bot handleUpdate", () => {
 describe("Bot error handling", () => {
     it("should wrap middleware errors in BotError", async () => {
         const bot = new Bot(token, { botInfo });
+        const originalError = new Error("Test error");
         bot.use(() => {
-            throw new Error("Test error");
+            throw originalError;
         });
 
-        await assertRejects(
+        const error = await assertRejects(
             () => bot.handleUpdate(testUpdate),
             BotError,
             "Test error",
         );
+
+        assertEquals(error.error, originalError);
     });
 
     describe("During polling", () => {
@@ -346,44 +349,40 @@ describe("Bot error handling", () => {
                 bot.api,
                 "getUpdates",
                 (_params, signal?: AbortSignal) => {
-                    // Check for confirmation call first (no signal)
-                    if (!signal) {
-                        return Promise.resolve([]);
-                    }
                     callCount++;
-                    if (callCount === 1) {
-                        // First call: return 429 error
-                        return Promise.reject(
-                            new GrammyError(
-                                "Too Many Requests",
-                                {
-                                    ok: false,
-                                    error_code: 429,
-                                    description: "Too Many Requests",
-                                    parameters: { retry_after: 0.05 },
-                                },
-                                "getUpdates",
-                                {},
-                            ),
-                        );
+                    switch (callCount) {
+                        case 1:
+                            // First call: return 429 error
+                            return Promise.reject(
+                                new GrammyError(
+                                    "Too Many Requests",
+                                    {
+                                        ok: false,
+                                        error_code: 429,
+                                        description: "Too Many Requests",
+                                        parameters: { retry_after: 30 },
+                                    },
+                                    "getUpdates",
+                                    {},
+                                ),
+                            );
+                        case 2:
+                            // Second call (retry): return controlled promise
+                            signal!.addEventListener(
+                                "abort",
+                                () => resolveRetry([]),
+                            );
+                            return retryPromise;
+                        default:
+                            // Confirmation call
+                            return Promise.resolve([]);
                     }
-                    // Second call (retry): return controlled promise
-                    // that resolves when we explicitly call resolveRetry
-                    if (callCount === 2) {
-                        signal.addEventListener(
-                            "abort",
-                            () => resolveRetry([]),
-                        );
-                        return retryPromise;
-                    }
-                    // Subsequent calls
-                    return Promise.resolve([]);
                 },
             );
 
             const startPromise = bot.start();
-            // Advance time past retry_after (50ms)
-            await time.tickAsync(50);
+            // Advance time past retry_after (30s)
+            await time.tickAsync(30000);
             // Process retry callback (second getUpdates call)
             await time.nextAsync();
             // Stop triggers abort, resolving retryPromise
@@ -413,22 +412,25 @@ describe("Bot error handling", () => {
 
             stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
                 callCount++;
-                // If no signal, this is the confirmation call - resolve immediately
-                if (!signal) {
-                    return Promise.resolve([]);
+                switch (callCount) {
+                    case 1:
+                        // First call: return the update with error
+                        signal!.addEventListener(
+                            "abort",
+                            () => resolveGetUpdates([]),
+                        );
+                        return getUpdatesPromise;
+                    case 2:
+                        // Second call: wait for manual resolution or abort
+                        signal!.addEventListener(
+                            "abort",
+                            () => resolveSecondCall([]),
+                        );
+                        return secondCall;
+                    default:
+                        // Confirmation call
+                        return Promise.resolve([]);
                 }
-                if (callCount === 1) {
-                    // First call: return the update with error
-                    const promise = getUpdatesPromise;
-                    signal.addEventListener(
-                        "abort",
-                        () => resolveGetUpdates([]),
-                    );
-                    return promise;
-                }
-                // Second call: wait for manual resolution or abort
-                signal.addEventListener("abort", () => resolveSecondCall([]));
-                return secondCall;
             });
 
             // Start polling
@@ -472,32 +474,36 @@ describe("Bot polling lifecycle", () => {
     });
 
     it("should report running state during start and stop", async () => {
-        let firstCall = true;
+        let callCount = 0;
+        const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
+            .withResolvers<void>();
+
         const getUpdatesStub = stub(
             bot.api,
             "getUpdates",
             (_params, signal?: AbortSignal) => {
-                // If no signal, this is the confirmation call - resolve immediately
-                if (!signal) {
-                    return Promise.resolve([]);
+                callCount++;
+                switch (callCount) {
+                    case 1:
+                        // First call: notify test and wait for abort
+                        notifyFirstCall();
+                        return new Promise((_, reject) => {
+                            signal!.addEventListener(
+                                "abort",
+                                () => reject(new Error("Aborted")),
+                            );
+                        });
+                    default:
+                        // Subsequent calls (including confirmation)
+                        return Promise.resolve([]);
                 }
-                if (firstCall) {
-                    firstCall = false;
-                    // First call: wait for abort
-                    return new Promise((_, reject) => {
-                        signal.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                }
-                // Subsequent calls with signal: resolve immediately
-                return Promise.resolve([]);
             },
         );
 
         try {
             const startPromise = bot.start();
+            // Wait for polling to actually start
+            await firstCallStarted;
             assertEquals(bot.isRunning(), true);
             await bot.stop();
             await startPromise;
@@ -508,32 +514,33 @@ describe("Bot polling lifecycle", () => {
     });
 
     it("should call onStart callback", async () => {
-        using time = new FakeTime();
-
         let callCount = 0;
+        const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
+            .withResolvers<void>();
+
         stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             callCount++;
-            // If no signal, this is the confirmation call - resolve immediately
-            if (!signal) {
-                return Promise.resolve([]);
+            switch (callCount) {
+                case 1:
+                    // First call: notify test and wait for abort
+                    notifyFirstCall();
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                default:
+                    // Subsequent calls
+                    return Promise.resolve([]);
             }
-            if (callCount === 1) {
-                // First call with signal: wait for abort
-                return new Promise((_, reject) => {
-                    signal.addEventListener(
-                        "abort",
-                        () => reject(new Error("Aborted")),
-                    );
-                });
-            }
-            // Subsequent calls with signal: resolve immediately
-            return Promise.resolve([]);
         });
 
         const onStartSpy = spy((_botInfo: UserFromGetMe) => {});
 
         const startPromise = bot.start({ onStart: onStartSpy });
-        await time.tickAsync(10);
+        // Wait for polling to actually start
+        await firstCallStarted;
         await bot.stop();
         await startPromise;
 
@@ -556,21 +563,19 @@ describe("Bot polling lifecycle", () => {
             "getUpdates",
             (_params, signal?: AbortSignal) => {
                 getUpdatesCount++;
-                // If no signal, this is the confirmation call - resolve immediately
-                if (!signal) {
-                    return Promise.resolve([]);
+                switch (getUpdatesCount) {
+                    case 1:
+                        // First call: wait for abort
+                        return new Promise((_, reject) => {
+                            signal!.addEventListener(
+                                "abort",
+                                () => reject(new Error("Aborted")),
+                            );
+                        });
+                    default:
+                        // Subsequent calls
+                        return Promise.resolve([]);
                 }
-                if (getUpdatesCount === 1) {
-                    // First call with signal: wait for abort
-                    return new Promise((_, reject) => {
-                        signal.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                }
-                // Subsequent calls with signal: resolve immediately
-                return Promise.resolve([]);
             },
         );
 
@@ -585,7 +590,7 @@ describe("Bot polling lifecycle", () => {
             // Second start should be a no-op
             await bot.start();
 
-            // Verify NO additional calls were made
+            // Verify no additional calls were made
             assertEquals(deleteWebhookStub.calls.length, 1);
             assertEquals(getUpdatesCount, 1);
 
@@ -599,18 +604,22 @@ describe("Bot polling lifecycle", () => {
     it("should delete webhook on start", async () => {
         using time = new FakeTime();
 
+        let callCount = 0;
         stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
-            // If no signal, this is the confirmation call - resolve immediately
-            if (!signal) {
-                return Promise.resolve([]);
+            callCount++;
+            switch (callCount) {
+                case 1:
+                    // First call: wait for abort
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                default:
+                    // Confirmation call
+                    return Promise.resolve([]);
             }
-            // With signal: wait for abort
-            return new Promise((_, reject) => {
-                signal.addEventListener(
-                    "abort",
-                    () => reject(new Error("Aborted")),
-                );
-            });
         });
 
         const startPromise = bot.start();
@@ -638,24 +647,22 @@ describe("Bot polling lifecycle", () => {
         let getUpdatesCallCount = 0;
         stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             getUpdatesCallCount++;
-            // If no signal, this is the confirmation call - resolve immediately
-            if (!signal) {
-                return Promise.resolve([]);
+            switch (getUpdatesCallCount) {
+                case 1:
+                    // First call: return updates
+                    return Promise.resolve(updates);
+                case 2:
+                    // Second call: wait for abort
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                default:
+                    // Confirmation call
+                    return Promise.resolve([]);
             }
-            if (getUpdatesCallCount === 1) {
-                return Promise.resolve(updates);
-            }
-            // Second call with signal - wait for abort
-            if (getUpdatesCallCount === 2) {
-                return new Promise((_, reject) => {
-                    signal.addEventListener(
-                        "abort",
-                        () => reject(new Error("Aborted")),
-                    );
-                });
-            }
-            // Subsequent calls with signal
-            return Promise.resolve([]);
         });
 
         const middlewareSpy = spy((_ctx: Context) => {});
@@ -678,15 +685,19 @@ describe("Bot polling lifecycle", () => {
         let callCount = 0;
         stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             callCount++;
-            if (callCount === 1) {
-                return new Promise((_, reject) => {
-                    signal?.addEventListener(
-                        "abort",
-                        () => reject(new Error("Aborted")),
-                    );
-                });
+            switch (callCount) {
+                case 1:
+                    // First call: wait for abort
+                    return new Promise((_, reject) => {
+                        signal!.addEventListener(
+                            "abort",
+                            () => reject(new Error("Aborted")),
+                        );
+                    });
+                default:
+                    // Subsequent calls
+                    return Promise.resolve([]);
             }
-            return Promise.resolve([]);
         });
 
         const startPromise = bot.start();
