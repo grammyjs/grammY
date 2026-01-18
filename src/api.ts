@@ -511,7 +511,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#sendpaidmedia}
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`). If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance.
-     * @param star_count The number of Telegram Stars that must be paid to buy access to the media; 1-10000
+     * @param star_count The number of Telegram Stars that must be paid to buy access to the media; 1-25000
      * @param media An array describing the media to be sent; up to 10 items
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
@@ -697,6 +697,30 @@ export class Api<R extends RawApi = RawApi> {
     ): Promise<Message> {
         return await this.raw.sendDice({
             chat_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
+     * @param chat_id Unique identifier for the target private chat
+     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated
+     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async sendMessageDraft(
+        chat_id: number,
+        draft_id: number,
+        text: string,
+        other?: Partial<ApiParameters<"sendMessageDraft", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.sendMessageDraft({
+            chat_id,
+            draft_id,
+            text,
             ...other,
         }, signal);
     }
@@ -1458,7 +1482,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
+     * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#editforumtopic}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
@@ -1521,7 +1545,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.
+     * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#deleteforumtopic}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
@@ -1542,7 +1566,7 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
-     * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
+     * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#unpinallforumtopicmessages}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
@@ -1949,7 +1973,7 @@ export class Api<R extends RawApi = RawApi> {
      * Sends a gift to the given user or channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#sendgift}
-     * @param gift_id Identifier of the gift
+     * @param gift_id Identifier of the gift; limited gifts can't be sent to channel chats
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
@@ -2282,6 +2306,42 @@ export class Api<R extends RawApi = RawApi> {
         }, signal);
     }
     /**
+     * Returns the gifts owned and hosted by a user. Returns {@link OwnedGifts} on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#getusergifts}
+     * @param user_id Unique identifier of the user
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async getUserGifts(
+        user_id: number,
+        other?: Partial<ApiParameters<"getUserGifts", R>>,
+        signal?: AbortSignal,
+    ): Promise<OwnedGifts> {
+        return await this.raw.getUserGifts({
+            user_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Returns the gifts owned by a chat. Returns {@link OwnedGifts} on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#getchatgifts}
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async getChatGifts(
+        chat_id: number | string,
+        other?: Partial<ApiParameters<"getChatGifts", R>>,
+        signal?: AbortSignal,
+    ): Promise<OwnedGifts> {
+        return await this.raw.getChatGifts({
+            chat_id,
+            ...other,
+        }, signal);
+    }
+    /**
      * Converts a given regular gift to Telegram Stars. Requires the _can_convert_gifts_to_stars_ business bot right. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#convertgifttostars}
@@ -2367,6 +2427,33 @@ export class Api<R extends RawApi = RawApi> {
         return await this.raw.postStory({
             business_connection_id,
             content,
+            active_period,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the _can_manage_stories_ business bot right for both business accounts. Returns {@link Story} on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#repoststory}
+     * @param business_connection_id Unique identifier of the business connection
+     * @param from_chat_id Unique identifier of the chat which posted the story that should be reposted
+     * @param from_story_id Unique identifier of the story that should be reposted
+     * @param active_period Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async repostStory(
+        business_connection_id: string,
+        from_chat_id: number,
+        from_story_id: number,
+        active_period: 21600 | 43200 | 86400 | 172800,
+        other?: Partial<ApiParameters<"repostStory", R>>,
+        signal?: AbortSignal,
+    ): Promise<Story> {
+        return await this.raw.repostStory({
+            business_connection_id,
+            from_chat_id,
+            from_story_id,
             active_period,
             ...other,
         }, signal);
