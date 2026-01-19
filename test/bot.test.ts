@@ -34,7 +34,7 @@ const testUpdate: Update = {
     update_id: 1,
     message: {
         message_id: 1,
-        date: Date.now(),
+        date: Date.now() / 1000,
         chat: { id: 1, type: "private", first_name: "Test" },
         from: { id: 1, is_bot: false, first_name: "Test" },
         text: "test",
@@ -61,38 +61,30 @@ describe("Bot constructor", () => {
 describe("Bot initialization", () => {
     it("should initialize bot with getMe call", async () => {
         const bot = new Bot(token);
-        const getMeStub = stub(
+        using getMeStub = stub(
             bot.api,
             "getMe",
             () => Promise.resolve(botInfo),
         );
 
-        try {
-            assertEquals(bot.isInited(), false);
-            await bot.init();
-            assertEquals(bot.isInited(), true);
-            assertEquals(bot.botInfo.username, "test_bot");
-            assertEquals(getMeStub.calls.length, 1);
-        } finally {
-            getMeStub.restore();
-        }
+        assertEquals(bot.isInited(), false);
+        await bot.init();
+        assertEquals(bot.isInited(), true);
+        assertEquals(bot.botInfo.username, "test_bot");
+        assertEquals(getMeStub.calls.length, 1);
     });
 
     it("should not call getMe if botInfo is provided", async () => {
         const bot = new Bot(token, { botInfo });
-        const getMeStub = stub(
+        using getMeStub = stub(
             bot.api,
             "getMe",
             () => Promise.resolve(botInfo),
         );
 
-        try {
-            assertEquals(bot.isInited(), true);
-            await bot.init();
-            assertEquals(getMeStub.calls.length, 0);
-        } finally {
-            getMeStub.restore();
-        }
+        assertEquals(bot.isInited(), true);
+        await bot.init();
+        assertEquals(getMeStub.calls.length, 0);
     });
 
     it("should throw error when accessing botInfo before init", () => {
@@ -108,59 +100,51 @@ describe("Bot initialization", () => {
         const bot = new Bot(token);
         const resolvers: Array<(value: UserFromGetMe) => void> = [];
 
-        const getMeStub = stub(bot.api, "getMe", () => {
+        using getMeStub = stub(bot.api, "getMe", () => {
             const { promise, resolve } = Promise.withResolvers<UserFromGetMe>();
             resolvers.push(resolve);
             return promise;
         });
 
-        try {
-            // Start three concurrent inits
-            const init1 = bot.init();
-            const init2 = bot.init();
-            const init3 = bot.init();
+        // Start three concurrent inits
+        const init1 = bot.init();
+        const init2 = bot.init();
+        const init3 = bot.init();
 
-            // Verify deduplication: only one getMe call made
-            assertEquals(resolvers.length, 1);
+        // Verify deduplication: only one getMe call made
+        assertEquals(resolvers.length, 1);
 
-            // Resolve the single getMe call
-            resolvers[0](botInfo);
+        // Resolve the single getMe call
+        resolvers[0](botInfo);
 
-            await Promise.all([init1, init2, init3]);
-            assertEquals(bot.isInited(), true);
-            // Verify stub was only called once
-            assertEquals(getMeStub.calls.length, 1);
-        } finally {
-            getMeStub.restore();
-        }
+        await Promise.all([init1, init2, init3]);
+        assertEquals(bot.isInited(), true);
+        // Verify stub was only called once
+        assertEquals(getMeStub.calls.length, 1);
     });
 
     it("should handle init error with pending concurrent calls", async () => {
         const bot = new Bot(token);
         const { promise, reject } = Promise.withResolvers<UserFromGetMe>();
-        const getMeStub = stub(bot.api, "getMe", () => promise);
+        using getMeStub = stub(bot.api, "getMe", () => promise);
 
-        try {
-            const init1 = bot.init();
-            const init2 = bot.init();
+        const init1 = bot.init();
+        const init2 = bot.init();
 
-            // Reject with plain Error (won't trigger retries, only HttpError/GrammyError do)
-            reject(new Error("Network error"));
+        // Reject with plain Error (won't trigger retries, only HttpError/GrammyError do)
+        reject(new Error("Network error"));
 
-            await assertRejects(() => init1);
-            await assertRejects(() => init2);
-            assertEquals(bot.isInited(), false);
-            // Should only call getMe once (deduplication even on error)
-            assertEquals(getMeStub.calls.length, 1);
-        } finally {
-            getMeStub.restore();
-        }
+        await assertRejects(() => init1);
+        await assertRejects(() => init2);
+        assertEquals(bot.isInited(), false);
+        // Should only call getMe once (deduplication even on error)
+        assertEquals(getMeStub.calls.length, 1);
     });
 
     it("should retry on HttpError during initialization", async () => {
         const bot = new Bot(token);
         let callCount = 0;
-        const getMeStub = stub(bot.api, "getMe", () => {
+        using getMeStub = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
                 throw new HttpError("Network error", { error: "ECONNREFUSED" });
@@ -168,20 +152,16 @@ describe("Bot initialization", () => {
             return Promise.resolve(botInfo);
         });
 
-        try {
-            await bot.init();
-            assertEquals(bot.isInited(), true);
-            // Initial attempt + 1 retry
-            assertEquals(callCount, 2);
-        } finally {
-            getMeStub.restore();
-        }
+        await bot.init();
+        assertEquals(bot.isInited(), true);
+        // Initial attempt + 1 retry
+        assertEquals(callCount, 2);
     });
 
     it("should retry on 5xx errors during initialization", async () => {
         const bot = new Bot(token);
         let callCount = 0;
-        const getMeStub = stub(bot.api, "getMe", () => {
+        using getMeStub = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
                 throw new GrammyError(
@@ -198,20 +178,16 @@ describe("Bot initialization", () => {
             return Promise.resolve(botInfo);
         });
 
-        try {
-            await bot.init();
-            assertEquals(bot.isInited(), true);
-            // Initial attempt + 1 retry
-            assertEquals(callCount, 2);
-        } finally {
-            getMeStub.restore();
-        }
+        await bot.init();
+        assertEquals(bot.isInited(), true);
+        // Initial attempt + 1 retry
+        assertEquals(callCount, 2);
     });
 
     it("should handle 429 without retry_after parameter", async () => {
         const bot = new Bot(token);
         let callCount = 0;
-        const getMeStub = stub(bot.api, "getMe", () => {
+        using getMeStub = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
                 throw new GrammyError(
@@ -229,15 +205,11 @@ describe("Bot initialization", () => {
             return Promise.resolve(botInfo);
         });
 
-        try {
-            const initPromise = bot.init();
-            await initPromise;
-            assertEquals(bot.isInited(), true);
-            // Initial attempt + 1 retry
-            assertEquals(callCount, 2);
-        } finally {
-            getMeStub.restore();
-        }
+        const initPromise = bot.init();
+        await initPromise;
+        assertEquals(bot.isInited(), true);
+        // Initial attempt + 1 retry
+        assertEquals(callCount, 2);
     });
 });
 
@@ -395,7 +367,7 @@ describe("Bot error handling", () => {
         });
 
         it("should handle 401 errors by stopping", async () => {
-            stub(bot.api, "getUpdates", () =>
+            using _ = stub(bot.api, "getUpdates", () =>
                 Promise.reject(
                     new GrammyError(
                         "Unauthorized",
@@ -414,7 +386,7 @@ describe("Bot error handling", () => {
         });
 
         it("should handle 409 conflict errors by stopping", async () => {
-            stub(bot.api, "getUpdates", () =>
+            using _ = stub(bot.api, "getUpdates", () =>
                 Promise.reject(
                     new GrammyError(
                         "Conflict",
@@ -439,7 +411,7 @@ describe("Bot error handling", () => {
             const { promise: retryPromise, resolve: resolveRetry } = Promise
                 .withResolvers<Update[]>();
 
-            const getUpdatesStub = stub(
+            using getUpdatesStub = stub(
                 bot.api,
                 "getUpdates",
                 (_params, signal?: AbortSignal) => {
@@ -509,7 +481,7 @@ describe("Bot error handling", () => {
             const { promise: secondCall, resolve: resolveSecondCall } = Promise
                 .withResolvers<Update[]>();
 
-            stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
+            using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
                 callCount++;
                 switch (callCount) {
                     case 1:
@@ -579,7 +551,7 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        const getUpdatesStub = stub(
+        using getUpdatesStub = stub(
             bot.api,
             "getUpdates",
             (_params, signal?: AbortSignal) => {
@@ -600,17 +572,13 @@ describe("Bot polling lifecycle", () => {
             },
         );
 
-        try {
-            const startPromise = bot.start();
-            // Wait for polling to actually start
-            await firstCallStarted;
-            assertEquals(bot.isRunning(), true);
-            await bot.stop();
-            await startPromise;
-            assertEquals(bot.isRunning(), false);
-        } finally {
-            getUpdatesStub.restore();
-        }
+        const startPromise = bot.start();
+        // Wait for polling to actually start
+        await firstCallStarted;
+        assertEquals(bot.isRunning(), true);
+        await bot.stop();
+        await startPromise;
+        assertEquals(bot.isRunning(), false);
     });
 
     it("should call onStart callback", async () => {
@@ -618,7 +586,7 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
+        using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             callCount++;
             switch (callCount) {
                 case 1:
@@ -658,7 +626,7 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        const getUpdatesStub = stub(
+        using getUpdatesStub = stub(
             bot.api,
             "getUpdates",
             (_params, signal?: AbortSignal) => {
@@ -679,27 +647,23 @@ describe("Bot polling lifecycle", () => {
             },
         );
 
-        try {
-            const startPromise1 = bot.start();
-            // Wait for polling to actually start
-            await firstCallStarted;
+        const startPromise1 = bot.start();
+        // Wait for polling to actually start
+        await firstCallStarted;
 
-            // Verify first start called setup methods
-            assertEquals(deleteWebhookStub.calls.length, 1);
-            assertEquals(getUpdatesCount, 1);
+        // Verify first start called setup methods
+        assertEquals(deleteWebhookStub.calls.length, 1);
+        assertEquals(getUpdatesCount, 1);
 
-            // Second start should be a no-op
-            await bot.start();
+        // Second start should be a no-op
+        await bot.start();
 
-            // Verify no additional calls were made
-            assertEquals(deleteWebhookStub.calls.length, 1);
-            assertEquals(getUpdatesCount, 1);
+        // Verify no additional calls were made
+        assertEquals(deleteWebhookStub.calls.length, 1);
+        assertEquals(getUpdatesCount, 1);
 
-            await bot.stop();
-            await startPromise1;
-        } finally {
-            getUpdatesStub.restore();
-        }
+        await bot.stop();
+        await startPromise1;
     });
 
     it("should delete webhook on start", async () => {
@@ -707,7 +671,7 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
+        using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             callCount++;
             switch (callCount) {
                 case 1:
@@ -742,14 +706,14 @@ describe("Bot polling lifecycle", () => {
 
         // Override bot for this test needing initialization
         bot = new Bot(token);
-        stub(bot.api, "getMe", () => Promise.resolve(botInfo));
-        stub(bot.api, "deleteWebhook", () => Promise.resolve(true));
+        using _getMe = stub(bot.api, "getMe", () => Promise.resolve(botInfo));
+        using _deleteWebhook = stub(bot.api, "deleteWebhook", () => Promise.resolve(true));
 
         let getUpdatesCallCount = 0;
         const { promise: secondCallStarted, resolve: notifySecondCall } =
             Promise.withResolvers<void>();
 
-        stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
+        using _getUpdates = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             getUpdatesCallCount++;
             switch (getUpdatesCallCount) {
                 case 1:
@@ -789,7 +753,7 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
+        using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             callCount++;
             switch (callCount) {
                 case 1:
