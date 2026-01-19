@@ -231,9 +231,7 @@ describe("Bot initialization", () => {
 
         try {
             const initPromise = bot.init();
-
             await initPromise;
-
             assertEquals(bot.isInited(), true);
             // Initial attempt + 1 retry
             assertEquals(callCount, 2);
@@ -490,9 +488,14 @@ describe("Bot error handling", () => {
         });
 
         it("should call custom error handler for middleware errors", async () => {
-            using time = new FakeTime();
+            const { promise: errorHandled, resolve: notifyErrorHandled } =
+                Promise.withResolvers<void>();
+            const { promise: secondCallStarted, resolve: notifySecondCall } =
+                Promise.withResolvers<void>();
 
-            const errorHandlerSpy = spy((_err: BotError) => {});
+            const errorHandlerSpy = spy((_err: BotError) => {
+                notifyErrorHandled();
+            });
             bot.catch(errorHandlerSpy);
 
             bot.use(() => {
@@ -510,14 +513,15 @@ describe("Bot error handling", () => {
                 callCount++;
                 switch (callCount) {
                     case 1:
-                        // First call: return the update with error
+                        // First call: return update that triggers middleware error
                         signal!.addEventListener(
                             "abort",
                             () => resolveGetUpdates([]),
                         );
                         return getUpdatesPromise;
                     case 2:
-                        // Second call: wait for manual resolution or abort
+                        // Second call: next polling iteration
+                        notifySecondCall();
                         signal!.addEventListener(
                             "abort",
                             () => resolveSecondCall([]),
@@ -535,8 +539,9 @@ describe("Bot error handling", () => {
             // Give one update that will cause middleware error
             resolveGetUpdates([testUpdate]);
 
-            // Wait for error to be processed
-            await time.tickAsync(50);
+            // Wait for error handler to be called and second polling loop to start
+            await errorHandled;
+            await secondCallStarted;
 
             // Stop polling
             await bot.stop();
