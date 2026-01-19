@@ -293,11 +293,22 @@ describe("Bot error handling", () => {
 
     describe("During polling", () => {
         let bot: Bot;
+        let getMeStub: Stub;
+        let deleteWebhookStub: Stub;
 
         beforeEach(() => {
             bot = new Bot(token);
-            stub(bot.api, "getMe", () => Promise.resolve(botInfo));
-            stub(bot.api, "deleteWebhook", () => Promise.resolve(true));
+            getMeStub = stub(bot.api, "getMe", () => Promise.resolve(botInfo));
+            deleteWebhookStub = stub(
+                bot.api,
+                "deleteWebhook",
+                () => Promise.resolve(true as const),
+            );
+        });
+
+        afterEach(() => {
+            getMeStub.restore();
+            deleteWebhookStub.restore();
         });
 
         it("should handle 401 errors by stopping", async () => {
