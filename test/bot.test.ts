@@ -1,7 +1,7 @@
 import { Bot } from "../src/bot.ts";
 import { BotError } from "../src/composer.ts";
 import { Context } from "../src/context.ts";
-import { GrammyError } from "../src/core/error.ts";
+import { GrammyError, HttpError } from "../src/core/error.ts";
 import type { Message, Update, UserFromGetMe } from "../src/types.ts";
 import {
     afterEach,
@@ -152,6 +152,91 @@ describe("Bot initialization", () => {
             assertEquals(bot.isInited(), false);
             // Should only call getMe once (deduplication even on error)
             assertEquals(getMeStub.calls.length, 1);
+        } finally {
+            getMeStub.restore();
+        }
+    });
+
+    it("should retry on HttpError during initialization", async () => {
+        const bot = new Bot(token);
+        let callCount = 0;
+        const getMeStub = stub(bot.api, "getMe", () => {
+            callCount++;
+            if (callCount === 1) {
+                throw new HttpError("Network error", { error: "ECONNREFUSED" });
+            }
+            return Promise.resolve(botInfo);
+        });
+
+        try {
+            await bot.init();
+            assertEquals(bot.isInited(), true);
+            // Initial attempt + 1 retry
+            assertEquals(callCount, 2);
+        } finally {
+            getMeStub.restore();
+        }
+    });
+
+    it("should retry on 5xx errors during initialization", async () => {
+        const bot = new Bot(token);
+        let callCount = 0;
+        const getMeStub = stub(bot.api, "getMe", () => {
+            callCount++;
+            if (callCount === 1) {
+                throw new GrammyError(
+                    "Bad Gateway",
+                    {
+                        ok: false,
+                        error_code: 502,
+                        description: "Bad Gateway",
+                    },
+                    "getMe",
+                    {},
+                );
+            }
+            return Promise.resolve(botInfo);
+        });
+
+        try {
+            await bot.init();
+            assertEquals(bot.isInited(), true);
+            // Initial attempt + 1 retry
+            assertEquals(callCount, 2);
+        } finally {
+            getMeStub.restore();
+        }
+    });
+
+    it("should handle 429 without retry_after parameter", async () => {
+        const bot = new Bot(token);
+        let callCount = 0;
+        const getMeStub = stub(bot.api, "getMe", () => {
+            callCount++;
+            if (callCount === 1) {
+                throw new GrammyError(
+                    "Too Many Requests",
+                    {
+                        ok: false,
+                        error_code: 429,
+                        description: "Too Many Requests",
+                        parameters: {},
+                    },
+                    "getMe",
+                    {},
+                );
+            }
+            return Promise.resolve(botInfo);
+        });
+
+        try {
+            const initPromise = bot.init();
+
+            await initPromise;
+
+            assertEquals(bot.isInited(), true);
+            // Initial attempt + 1 retry
+            assertEquals(callCount, 2);
         } finally {
             getMeStub.restore();
         }
