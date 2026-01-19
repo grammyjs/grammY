@@ -485,7 +485,6 @@ describe("Bot polling lifecycle", () => {
                 callCount++;
                 switch (callCount) {
                     case 1:
-                        // First call: notify test and wait for abort
                         notifyFirstCall();
                         return new Promise((_, reject) => {
                             signal!.addEventListener(
@@ -522,7 +521,6 @@ describe("Bot polling lifecycle", () => {
             callCount++;
             switch (callCount) {
                 case 1:
-                    // First call: notify test and wait for abort
                     notifyFirstCall();
                     return new Promise((_, reject) => {
                         signal!.addEventListener(
@@ -555,9 +553,10 @@ describe("Bot polling lifecycle", () => {
     });
 
     it("should not start twice concurrently", async () => {
-        using time = new FakeTime();
-
         let getUpdatesCount = 0;
+        const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
+            .withResolvers<void>();
+
         const getUpdatesStub = stub(
             bot.api,
             "getUpdates",
@@ -565,7 +564,7 @@ describe("Bot polling lifecycle", () => {
                 getUpdatesCount++;
                 switch (getUpdatesCount) {
                     case 1:
-                        // First call: wait for abort
+                        notifyFirstCall();
                         return new Promise((_, reject) => {
                             signal!.addEventListener(
                                 "abort",
@@ -581,7 +580,8 @@ describe("Bot polling lifecycle", () => {
 
         try {
             const startPromise1 = bot.start();
-            await time.tickAsync(10);
+            // Wait for polling to actually start
+            await firstCallStarted;
 
             // Verify first start called setup methods
             assertEquals(deleteWebhookStub.calls.length, 1);
@@ -602,14 +602,15 @@ describe("Bot polling lifecycle", () => {
     });
 
     it("should delete webhook on start", async () => {
-        using time = new FakeTime();
-
         let callCount = 0;
+        const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
+            .withResolvers<void>();
+
         stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             callCount++;
             switch (callCount) {
                 case 1:
-                    // First call: wait for abort
+                    notifyFirstCall();
                     return new Promise((_, reject) => {
                         signal!.addEventListener(
                             "abort",
@@ -623,8 +624,9 @@ describe("Bot polling lifecycle", () => {
         });
 
         const startPromise = bot.start();
+        // Wait for polling to actually start
+        await firstCallStarted;
 
-        await time.tickAsync(10);
         await bot.stop();
         await startPromise;
 
@@ -632,8 +634,6 @@ describe("Bot polling lifecycle", () => {
     });
 
     it("should process updates from polling", async () => {
-        using time = new FakeTime();
-
         const updates = [
             { ...testUpdate, update_id: 1 },
             { ...testUpdate, update_id: 2 },
@@ -645,6 +645,9 @@ describe("Bot polling lifecycle", () => {
         stub(bot.api, "deleteWebhook", () => Promise.resolve(true));
 
         let getUpdatesCallCount = 0;
+        const { promise: secondCallStarted, resolve: notifySecondCall } =
+            Promise.withResolvers<void>();
+
         stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             getUpdatesCallCount++;
             switch (getUpdatesCallCount) {
@@ -652,7 +655,7 @@ describe("Bot polling lifecycle", () => {
                     // First call: return updates
                     return Promise.resolve(updates);
                 case 2:
-                    // Second call: wait for abort
+                    notifySecondCall();
                     return new Promise((_, reject) => {
                         signal!.addEventListener(
                             "abort",
@@ -669,7 +672,8 @@ describe("Bot polling lifecycle", () => {
         bot.use(middlewareSpy);
 
         const startPromise = bot.start();
-        await time.tickAsync(50);
+        // Wait for updates to be processed and second polling call to start
+        await secondCallStarted;
         await bot.stop();
         await startPromise;
 
@@ -680,14 +684,15 @@ describe("Bot polling lifecycle", () => {
     });
 
     it("should prevent middleware registration after start", async () => {
-        using time = new FakeTime();
-
         let callCount = 0;
+        const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
+            .withResolvers<void>();
+
         stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
             callCount++;
             switch (callCount) {
                 case 1:
-                    // First call: wait for abort
+                    notifyFirstCall();
                     return new Promise((_, reject) => {
                         signal!.addEventListener(
                             "abort",
@@ -701,8 +706,8 @@ describe("Bot polling lifecycle", () => {
         });
 
         const startPromise = bot.start();
-
-        await time.tickAsync(10);
+        // Wait for polling to actually start
+        await firstCallStarted;
 
         // After start, bot.use is replaced with noUseFunction to prevent memory leaks
         assertEquals(bot.use.name, "noUseFunction");
