@@ -258,6 +258,11 @@ const REACTION_KEYS = {
     custom_emoji: {},
     paid: {},
 } as const;
+const GIFT_INFO_KEYS = {
+    can_be_upgraded: {},
+    is_upgrade_separate: {},
+    is_private: {},
+};
 
 // L2
 const COMMON_MESSAGE_KEYS = {
@@ -310,8 +315,9 @@ const COMMON_MESSAGE_KEYS = {
     giveaway: { only_new_members: {}, has_public_winners: {} },
     giveaway_winners: { only_new_members: {}, was_refunded: {} },
     giveaway_completed: {},
-    gift: {},
-    unique_gift: {},
+    gift: GIFT_INFO_KEYS,
+    gift_upgrade_sent: GIFT_INFO_KEYS,
+    unique_gift: { transfer_star_count: {} },
     paid_message_price_changed: {},
     video_chat_scheduled: {},
     video_chat_started: {},
@@ -338,7 +344,7 @@ const MESSAGE_KEYS = {
     write_access_allowed: {},
     passport_data: {},
     boost_added: {},
-    forum_topic_created: {},
+    forum_topic_created: { is_name_implicit: {} },
     forum_topic_edited: { name: {}, icon_custom_emoji_id: {} },
     forum_topic_closed: {},
     forum_topic_reopened: {},

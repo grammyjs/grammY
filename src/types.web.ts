@@ -22,10 +22,10 @@ import {
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.22.2/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.23.0/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.22.2/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.23.0/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
@@ -105,6 +105,9 @@ export class InputFile {
         if (!(data instanceof Uint8Array)) this.consumed = true;
         // Return buffers and byte streams as-is
         return data;
+    }
+    toJSON() {
+        throw new Error("InputFile instances must be sent via grammY");
     }
 }
 

@@ -1053,13 +1053,15 @@
       ]
     },
     {
-      "login": "inji-gg",
+      "login": "arunr-inji",
       "name": "ArunR",
       "avatar_url": "https://avatars.githubusercontent.com/u/5071242?v=4",
-      "profile": "https://github.com/inji-gg",
+      "profile": "https://github.com/arunr-inji",
       "contributions": [
         "bug",
-        "code"
+        "code",
+        "ideas",
+        "test"
       ]
     },
     {
@@ -1615,6 +1617,16 @@
       "contributions": [
         "bug",
         "code"
+      ]
+    },
+    {
+      "login": "crwnd",
+      "name": "A",
+      "avatar_url": "https://avatars.githubusercontent.com/u/97118277?v=4",
+      "profile": "https://github.com/crwnd",
+      "contributions": [
+        "bug",
+        "review"
       ]
     }
   ]

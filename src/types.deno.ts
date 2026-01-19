@@ -22,13 +22,13 @@ import {
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.22.2/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.23.0/mod.ts";
 import { debug as d, isDeno } from "./platform.deno.ts";
 
 const debug = d("grammy:warn");
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.22.2/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.23.0/mod.ts";
 
 /** A value, or a potentially async function supplying that value */
 type MaybeSupplier<T> = T | (() => T | Promise<T>);
@@ -147,6 +147,9 @@ export class InputFile {
         // Mark streams and iterators as consumed and return them as-is
         this.consumed = true;
         return data;
+    }
+    toJSON() {
+        throw new Error("InputFile instances must be sent via grammY");
     }
 }
 

@@ -9,9 +9,19 @@ jobs:
     build:
         if: github.event.base_ref == 'refs/heads/main'
         runs-on: ubuntu-latest
+
+        permissions:
+            contents: write # For creating the Release
+            id-token: write # For npm OIDC authentication
+
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  registry-url: https://registry.npmjs.org/
 
             # Setup deno so we can bundle for the web
 
@@ -23,11 +33,7 @@ jobs:
             - run: deno task bundle-web
 
             - name: Publish to npm
-              run: |
-                  npm config set //registry.npmjs.org/:_authToken '${NPM_TOKEN}'
-                  npm publish --ignore-scripts
-              env:
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: npm publish --provenance --ignore-scripts
 
             - name: Release
               uses: softprops/action-gh-release@v1
