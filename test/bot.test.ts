@@ -144,7 +144,7 @@ describe("Bot initialization", () => {
     it("should retry on HttpError during initialization", async () => {
         const bot = new Bot(token);
         let callCount = 0;
-        using getMeStub = stub(bot.api, "getMe", () => {
+        using _ = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
                 throw new HttpError("Network error", { error: "ECONNREFUSED" });
@@ -161,7 +161,7 @@ describe("Bot initialization", () => {
     it("should retry on 5xx errors during initialization", async () => {
         const bot = new Bot(token);
         let callCount = 0;
-        using getMeStub = stub(bot.api, "getMe", () => {
+        using _ = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
                 throw new GrammyError(
@@ -187,7 +187,7 @@ describe("Bot initialization", () => {
     it("should handle 429 without retry_after parameter", async () => {
         const bot = new Bot(token);
         let callCount = 0;
-        using getMeStub = stub(bot.api, "getMe", () => {
+        using _ = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
                 throw new GrammyError(
@@ -481,29 +481,33 @@ describe("Bot error handling", () => {
             const { promise: secondCall, resolve: resolveSecondCall } = Promise
                 .withResolvers<Update[]>();
 
-            using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
-                callCount++;
-                switch (callCount) {
-                    case 1:
-                        // First call: return update that triggers middleware error
-                        signal!.addEventListener(
-                            "abort",
-                            () => resolveGetUpdates([]),
-                        );
-                        return getUpdatesPromise;
-                    case 2:
-                        // Second call: next polling iteration
-                        notifySecondCall();
-                        signal!.addEventListener(
-                            "abort",
-                            () => resolveSecondCall([]),
-                        );
-                        return secondCall;
-                    default:
-                        // Confirmation call
-                        return Promise.resolve([]);
-                }
-            });
+            using _ = stub(
+                bot.api,
+                "getUpdates",
+                (_params, signal?: AbortSignal) => {
+                    callCount++;
+                    switch (callCount) {
+                        case 1:
+                            // First call: return update that triggers middleware error
+                            signal!.addEventListener(
+                                "abort",
+                                () => resolveGetUpdates([]),
+                            );
+                            return getUpdatesPromise;
+                        case 2:
+                            // Second call: next polling iteration
+                            notifySecondCall();
+                            signal!.addEventListener(
+                                "abort",
+                                () => resolveSecondCall([]),
+                            );
+                            return secondCall;
+                        default:
+                            // Confirmation call
+                            return Promise.resolve([]);
+                    }
+                },
+            );
 
             // Start polling
             const startPromise = bot.start();
@@ -551,7 +555,7 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        using getUpdatesStub = stub(
+        using _ = stub(
             bot.api,
             "getUpdates",
             (_params, signal?: AbortSignal) => {
@@ -586,22 +590,26 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
-            callCount++;
-            switch (callCount) {
-                case 1:
-                    notifyFirstCall();
-                    return new Promise((_, reject) => {
-                        signal!.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                default:
-                    // Subsequent calls
-                    return Promise.resolve([]);
-            }
-        });
+        using _ = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                callCount++;
+                switch (callCount) {
+                    case 1:
+                        notifyFirstCall();
+                        return new Promise((_, reject) => {
+                            signal!.addEventListener(
+                                "abort",
+                                () => reject(new Error("Aborted")),
+                            );
+                        });
+                    default:
+                        // Subsequent calls
+                        return Promise.resolve([]);
+                }
+            },
+        );
 
         const onStartSpy = spy((_botInfo: UserFromGetMe) => {});
 
@@ -626,7 +634,7 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        using getUpdatesStub = stub(
+        using _ = stub(
             bot.api,
             "getUpdates",
             (_params, signal?: AbortSignal) => {
@@ -671,22 +679,26 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
-            callCount++;
-            switch (callCount) {
-                case 1:
-                    notifyFirstCall();
-                    return new Promise((_, reject) => {
-                        signal!.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                default:
-                    // Confirmation call
-                    return Promise.resolve([]);
-            }
-        });
+        using _ = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                callCount++;
+                switch (callCount) {
+                    case 1:
+                        notifyFirstCall();
+                        return new Promise((_, reject) => {
+                            signal!.addEventListener(
+                                "abort",
+                                () => reject(new Error("Aborted")),
+                            );
+                        });
+                    default:
+                        // Confirmation call
+                        return Promise.resolve([]);
+                }
+            },
+        );
 
         const startPromise = bot.start();
         // Wait for polling to actually start
@@ -707,31 +719,39 @@ describe("Bot polling lifecycle", () => {
         // Override bot for this test needing initialization
         bot = new Bot(token);
         using _getMe = stub(bot.api, "getMe", () => Promise.resolve(botInfo));
-        using _deleteWebhook = stub(bot.api, "deleteWebhook", () => Promise.resolve(true));
+        using _deleteWebhook = stub(
+            bot.api,
+            "deleteWebhook",
+            () => Promise.resolve(true),
+        );
 
         let getUpdatesCallCount = 0;
         const { promise: secondCallStarted, resolve: notifySecondCall } =
             Promise.withResolvers<void>();
 
-        using _getUpdates = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
-            getUpdatesCallCount++;
-            switch (getUpdatesCallCount) {
-                case 1:
-                    // First call: return updates
-                    return Promise.resolve(updates);
-                case 2:
-                    notifySecondCall();
-                    return new Promise((_, reject) => {
-                        signal!.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                default:
-                    // Confirmation call
-                    return Promise.resolve([]);
-            }
-        });
+        using _getUpdates = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                getUpdatesCallCount++;
+                switch (getUpdatesCallCount) {
+                    case 1:
+                        // First call: return updates
+                        return Promise.resolve(updates);
+                    case 2:
+                        notifySecondCall();
+                        return new Promise((_, reject) => {
+                            signal!.addEventListener(
+                                "abort",
+                                () => reject(new Error("Aborted")),
+                            );
+                        });
+                    default:
+                        // Confirmation call
+                        return Promise.resolve([]);
+                }
+            },
+        );
 
         const middlewareSpy = spy((_ctx: Context) => {});
         bot.use(middlewareSpy);
@@ -753,22 +773,26 @@ describe("Bot polling lifecycle", () => {
         const { promise: firstCallStarted, resolve: notifyFirstCall } = Promise
             .withResolvers<void>();
 
-        using _ = stub(bot.api, "getUpdates", (_params, signal?: AbortSignal) => {
-            callCount++;
-            switch (callCount) {
-                case 1:
-                    notifyFirstCall();
-                    return new Promise((_, reject) => {
-                        signal!.addEventListener(
-                            "abort",
-                            () => reject(new Error("Aborted")),
-                        );
-                    });
-                default:
-                    // Subsequent calls
-                    return Promise.resolve([]);
-            }
-        });
+        using _ = stub(
+            bot.api,
+            "getUpdates",
+            (_params, signal?: AbortSignal) => {
+                callCount++;
+                switch (callCount) {
+                    case 1:
+                        notifyFirstCall();
+                        return new Promise((_, reject) => {
+                            signal!.addEventListener(
+                                "abort",
+                                () => reject(new Error("Aborted")),
+                            );
+                        });
+                    default:
+                        // Subsequent calls
+                        return Promise.resolve([]);
+                }
+            },
+        );
 
         const startPromise = bot.start();
         // Wait for polling to actually start
