@@ -1303,16 +1303,19 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#unpinchatmessage}
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param message_id Identifier of the message to unpin. Required if _business_connection_id_ is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async unpinChatMessage(
         chat_id: number | string,
+        message_id: number | undefined,
         other?: Partial<ApiParameters<"unpinChatMessage", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.unpinChatMessage({
             chat_id,
+            message_id,
             ...other,
         }, signal);
     }

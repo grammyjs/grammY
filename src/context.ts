@@ -2523,15 +2523,18 @@ export class Context implements CamelCaseUpdate {
      * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#unpinchatmessage}
+     * @param message_id Identifier of the message to unpin. Required if _business_connection_id_ is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async unpinChatMessage(
+        message_id: number | undefined,
         other?: Partial<ApiParameters<"unpinChatMessage">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.unpinChatMessage(
             ensureChatId("unpinChatMessage", this, other),
+            message_id,
             fillConnection(this, other),
             signal,
         );
