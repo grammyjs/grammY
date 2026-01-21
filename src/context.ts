@@ -4687,25 +4687,46 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
-     * Context-aware alias for {@link Api.answerPreCheckoutQuery | ctx.api.answerPreCheckoutQuery}. The following parameters are pre-supplied based on the current update:
+     * Context-aware alias for {@link Api.answerPreCheckoutQueryOk | ctx.api.answerPreCheckoutQueryOk}. The following parameters are pre-supplied based on the current update:
      *
      * - `pre_checkout_quey_id` from {@link Context.preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.id | .id}
      *
      * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update | Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
      *
      * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
-     * @param ok Specify _True_ if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use _False_ if there are any problems.
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async answerPreCheckoutQueryOk(
+        other?: Partial<ApiParameters<"answerPreCheckoutQuery">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.answerPreCheckoutQueryOk(
+            ensurePreCheckoutQueryId("answerPreCheckoutQuery", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.answerPreCheckoutQueryError | ctx.api.answerPreCheckoutQueryError}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `pre_checkout_quey_id` from {@link Context.preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.id | .id}
+     *
+     * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update | Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+     *
+     * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
+     * @param error_message Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async answerPreCheckoutQuery(
-        ok: boolean,
+        error_message: string,
         other?: Partial<ApiParameters<"answerPreCheckoutQuery">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.api.answerPreCheckoutQuery(
+        return await this.api.answerPreCheckoutQueryError(
             ensurePreCheckoutQueryId("answerPreCheckoutQuery", this, other),
-            ok,
+            error_message,
             other,
             signal,
         );

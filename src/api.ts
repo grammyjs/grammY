@@ -3452,19 +3452,39 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
      * @param pre_checkout_query_id Unique identifier for the query to be answered
-     * @param ok Specify _True_ if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use _False_ if there are any problems.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async answerPreCheckoutQuery(
+    async answerPreCheckoutQueryOk(
         pre_checkout_query_id: string,
-        ok: boolean,
         other?: Partial<ApiParameters<"answerPreCheckoutQuery", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.answerPreCheckoutQuery({
             pre_checkout_query_id,
-            ok,
+            ok: true,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update | Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+     *
+     * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
+     * @param pre_checkout_query_id Unique identifier for the query to be answered
+     * @param error_message Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async answerPreCheckoutQueryError(
+        pre_checkout_query_id: string,
+        error_message: string,
+        other?: Partial<ApiParameters<"answerPreCheckoutQuery", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.answerPreCheckoutQuery({
+            pre_checkout_query_id,
+            ok: false,
+            error_message,
             ...other,
         }, signal);
     }
