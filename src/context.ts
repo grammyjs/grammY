@@ -1995,13 +1995,37 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async promoteChatMember(
+    async promoteAuthor(
         other?: Partial<ApiParameters<"promoteChatMember">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.promoteChatMember(
             ensureChatId("promoteChatMember", this, other),
             ensureUserId("promoteChatMember", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.promoteChatMember | ctx.api.promoteChatMember}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass _False_ for all boolean parameters to demote a user. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#promotechatmember}
+     * @param user_id Unique identifier of the target user
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async promoteChatMember(
+        user_id: number,
+        other?: Partial<ApiParameters<"promoteChatMember">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.promoteChatMember(
+            ensureChatId("promoteChatMember", this, other),
+            user_id,
             other,
             signal,
         );
