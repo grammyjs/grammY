@@ -3385,17 +3385,16 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.setBusinessAccountGiftSettings | ctx.api.setBusinessAccountGiftSettings}. The following parameters are pre-supplied based on the current update:
      *
      * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `show_gift_button: false` (use {@link Context.setBusinessAccountGiftSettingsShowGiftButton} for `true`)
      *
      * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings}
-     * @param show_gift_button Pass _True_, if a button for sending a gift to the user or by the business account must always be shown in the input field
      * @param accepted_gift_types Types of gifts accepted by the business account
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async setBusinessAccountGiftSettings(
-        show_gift_button: boolean,
+    async setBusinessAccountGiftSettingsHideGiftButton(
         accepted_gift_types: AcceptedGiftTypes,
         other?: Partial<ApiParameters<"setBusinessAccountGiftSettings">>,
         signal?: AbortSignal,
@@ -3406,7 +3405,37 @@ export class Context implements CamelCaseUpdate {
                 this,
                 other,
             ),
-            show_gift_button,
+            false, // show_gift_button
+            accepted_gift_types,
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.setBusinessAccountGiftSettings | ctx.api.setBusinessAccountGiftSettings}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `show_gift_button: true` (use {@link Context.setBusinessAccountGiftSettingsHideGiftButton} for `false`)
+     *
+     * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings}
+     * @param accepted_gift_types Types of gifts accepted by the business account
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async setBusinessAccountGiftSettingsShowGiftButton(
+        accepted_gift_types: AcceptedGiftTypes,
+        other?: Partial<ApiParameters<"setBusinessAccountGiftSettings">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.setBusinessAccountGiftSettings(
+            ensureBusinessConnectionId(
+                "setBusinessAccountGiftSettings",
+                this,
+                other,
+            ),
+            true, // show_gift_button
             accepted_gift_types,
             other,
             signal,
