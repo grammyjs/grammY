@@ -1848,13 +1848,37 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async banChatMember(
+    async banAuthor(
         other?: Partial<ApiParameters<"banChatMember">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.banChatMember(
             ensureChatId("banChatMember", this, other),
             ensureUserId("banChatMember", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.banChatMember | ctx.api.banChatMember}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link ApiMethods.unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#banchatmember}
+     * @param user_id Unique identifier of the target user
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async banChatMember(
+        user_id: number,
+        other?: Partial<ApiParameters<"banChatMember">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.banChatMember(
+            ensureChatId("banChatMember", this, other),
+            user_id,
             other,
             signal,
         );
@@ -1871,13 +1895,37 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async unbanChatMember(
+    async unbanAuthor(
         other?: Partial<ApiParameters<"unbanChatMember">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.unbanChatMember(
             ensureChatId("unbanChatMember", this, other),
             ensureUserId("unbanChatMember", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.unbanChatMember | ctx.api.unbanChatMember}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don't want this, use the parameter _only_if_banned_. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
+     * @param user_id Unique identifier of the target user
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async unbanChatMember(
+        user_id: number,
+        other?: Partial<ApiParameters<"unbanChatMember">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.unbanChatMember(
+            ensureChatId("unbanChatMember", this, other),
+            user_id,
             other,
             signal,
         );
