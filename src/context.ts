@@ -2467,15 +2467,18 @@ export class Context implements CamelCaseUpdate {
      * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#setchatdescription}
+     * @param description New chat description, 0-255 characters
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setChatDescription(
+        description: string | undefined,
         other?: Partial<ApiParameters<"setChatDescription">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.setChatDescription(
             ensureChatId("setChatDescription", this, other),
+            description,
             other,
             signal,
         );

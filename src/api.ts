@@ -1261,16 +1261,19 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#setchatdescription}
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param description New chat description, 0-255 characters
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setChatDescription(
         chat_id: number | string,
+        description: string | undefined,
         other?: Partial<ApiParameters<"setChatDescription", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.setChatDescription({
             chat_id,
+            description,
             ...other,
         }, signal);
     }
