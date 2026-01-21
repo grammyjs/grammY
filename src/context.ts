@@ -3042,13 +3042,37 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async getUserChatBoosts(
+    async getAuthorChatBoosts(
         other?: Partial<ApiParameters<"getUserChatBoosts">>,
         signal?: AbortSignal,
     ): Promise<UserChatBoosts> {
         return await this.api.getUserChatBoosts(
             ensureChatId("getUserChatBoosts", this, other),
             ensureUserId("getUserChatBoosts", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.getUserChatBoosts | ctx.api.getUserChatBoosts}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a {@link UserChatBoosts | UserChatBoosts} object.
+     *
+     * @see {@link https://core.telegram.org/bots/api#getuserchatboosts}
+     * @param user_id Unique identifier of the target user
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async getUserChatBoosts(
+        user_id: number,
+        other?: Partial<ApiParameters<"getUserChatBoosts">>,
+        signal?: AbortSignal,
+    ): Promise<UserChatBoosts> {
+        return await this.api.getUserChatBoosts(
+            ensureChatId("getUserChatBoosts", this, other),
+            user_id,
             other,
             signal,
         );
