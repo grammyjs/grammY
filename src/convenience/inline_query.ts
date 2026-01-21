@@ -28,13 +28,49 @@ import type {
     LabeledPrice,
 } from "../types.ts";
 
-type InlineQueryResultOptions<T, K extends keyof T> = Omit<
+export type InlineQueryResultOptions<T, K extends keyof T> = Omit<
     T,
     "type" | "id" | "input_message_content" | K
 >;
 
-type OptionalKeys<T> = { [K in keyof T]-?: undefined extends T[K] ? K : never };
-type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
+export type OptionalKeys<T> = {
+    [K in keyof T]-?: undefined extends T[K] ? K : never;
+};
+export type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
+export type WithInputMessageMethods<R extends InlineQueryResult> =
+    & R
+    & InputMessageMethods<R>;
+export type InputMessageMethods<R extends InlineQueryResult> = {
+    text(
+        message_text: string,
+        options?: OptionalFields<InputTextMessageContent>,
+    ): R;
+    location(
+        latitude: number,
+        longitude: number,
+        options?: OptionalFields<InputLocationMessageContent>,
+    ): R;
+    venue(
+        title: string,
+        latitude: number,
+        longitude: number,
+        address: string,
+        options: OptionalFields<InputVenueMessageContent>,
+    ): R;
+    contact(
+        first_name: string,
+        phone_number: string,
+        options?: OptionalFields<InputContactMessageContent>,
+    ): R;
+    invoice(
+        title: string,
+        description: string,
+        payload: string,
+        currency: string,
+        prices: LabeledPrice[],
+        options?: OptionalFields<InputInvoiceMessageContent>,
+    ): R;
+};
 
 function inputMessage<R extends InlineQueryResult>(queryTemplate: R) {
     return {
@@ -44,23 +80,16 @@ function inputMessage<R extends InlineQueryResult>(queryTemplate: R) {
 }
 function inputMessageMethods<R extends InlineQueryResult>(
     queryTemplate: Omit<R, "input_message_content">,
-) {
+): InputMessageMethods<R> {
     return {
-        text(
-            message_text: string,
-            options: OptionalFields<InputTextMessageContent> = {},
-        ) {
+        text(message_text, options) {
             const content: InputTextMessageContent = {
                 message_text,
                 ...options,
             };
             return { ...queryTemplate, input_message_content: content } as R;
         },
-        location(
-            latitude: number,
-            longitude: number,
-            options: OptionalFields<InputLocationMessageContent> = {},
-        ) {
+        location(latitude, longitude, options) {
             const content: InputLocationMessageContent = {
                 latitude,
                 longitude,
@@ -68,13 +97,7 @@ function inputMessageMethods<R extends InlineQueryResult>(
             };
             return { ...queryTemplate, input_message_content: content } as R;
         },
-        venue(
-            title: string,
-            latitude: number,
-            longitude: number,
-            address: string,
-            options: OptionalFields<InputVenueMessageContent>,
-        ) {
+        venue(title, latitude, longitude, address, options) {
             const content: InputVenueMessageContent = {
                 title,
                 latitude,
@@ -84,11 +107,7 @@ function inputMessageMethods<R extends InlineQueryResult>(
             };
             return { ...queryTemplate, input_message_content: content } as R;
         },
-        contact(
-            first_name: string,
-            phone_number: string,
-            options: OptionalFields<InputContactMessageContent> = {},
-        ) {
+        contact(first_name, phone_number, options) {
             const content: InputContactMessageContent = {
                 first_name,
                 phone_number,
@@ -96,20 +115,11 @@ function inputMessageMethods<R extends InlineQueryResult>(
             };
             return { ...queryTemplate, input_message_content: content } as R;
         },
-        invoice(
-            title: string,
-            description: string,
-            payload: string,
-            provider_token: string,
-            currency: string,
-            prices: LabeledPrice[],
-            options: OptionalFields<InputInvoiceMessageContent> = {},
-        ) {
+        invoice(title, description, payload, currency, prices, options) {
             const content: InputInvoiceMessageContent = {
                 title,
                 description,
                 payload,
-                provider_token,
                 currency,
                 prices,
                 ...options,
@@ -154,7 +164,7 @@ function inputMessageMethods<R extends InlineQueryResult>(
  * [documentation](https://core.telegram.org/bots/api#inline-mode) on inline
  * mode.
  */
-export const InlineQueryResultBuilder = {
+export interface InlineQueryResultBuilder {
     /**
      * Builds an InlineQueryResultArticle object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultarticle. Requires you
@@ -168,15 +178,11 @@ export const InlineQueryResultBuilder = {
     article(
         id: string,
         title: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultArticle,
             "title"
-        > = {},
-    ) {
-        return inputMessageMethods<InlineQueryResultArticle>(
-            { type: "article", id, title, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultArticle>;
     /**
      * Builds an InlineQueryResultAudio object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultaudio.
@@ -190,21 +196,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         title: string,
         audio_url: string | URL,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultAudio,
             "title" | "audio_url"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultAudio>({
-            type: "audio",
-            id,
-            title,
-            audio_url: typeof audio_url === "string"
-                ? audio_url
-                : audio_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultAudio>;
     /**
      * Builds an InlineQueryResultCachedAudio object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedaudio.
@@ -216,15 +212,11 @@ export const InlineQueryResultBuilder = {
     audioCached(
         id: string,
         audio_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedAudio,
             "audio_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedAudio>(
-            { type: "audio", id, audio_file_id, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedAudio>;
     /**
      * Builds an InlineQueryResultContact object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcontact.
@@ -238,15 +230,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         phone_number: string,
         first_name: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultContact,
             "phone_number" | "first_name"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultContact>(
-            { type: "contact", id, phone_number, first_name, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultContact>;
     /**
      * Builds an InlineQueryResultDocument object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultdocument with
@@ -261,22 +249,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         title: string,
         document_url: string | URL,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultDocument>({
-            type: "document",
-            mime_type: "application/pdf",
-            id,
-            title,
-            document_url: typeof document_url === "string"
-                ? document_url
-                : document_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultDocument>;
     /**
      * Builds an InlineQueryResultDocument object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultdocument with
@@ -291,22 +268,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         title: string,
         document_url: string | URL,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultDocument>({
-            type: "document",
-            mime_type: "application/zip",
-            id,
-            title,
-            document_url: typeof document_url === "string"
-                ? document_url
-                : document_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultDocument>;
     /**
      * Builds an InlineQueryResultCachedDocument object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcacheddocument.
@@ -320,15 +286,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         title: string,
         document_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedDocument,
             "title" | "document_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedDocument>(
-            { type: "document", id, title, document_file_id, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedDocument>;
     /**
      * Builds an InlineQueryResultGame object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultgame.
@@ -340,13 +302,11 @@ export const InlineQueryResultBuilder = {
     game(
         id: string,
         game_short_name: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultGame,
             "game_short_name"
-        > = {},
-    ) {
-        return { type: "game", id, game_short_name, ...options };
-    },
+        >,
+    ): InlineQueryResultGame;
     /**
      * Builds an InlineQueryResultGif object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultgif.
@@ -360,21 +320,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         gif_url: string | URL,
         thumbnail_url: string | URL,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultGif,
             "gif_url" | "thumbnail_url"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultGif>({
-            type: "gif",
-            id,
-            gif_url: typeof gif_url === "string" ? gif_url : gif_url.href,
-            thumbnail_url: typeof thumbnail_url === "string"
-                ? thumbnail_url
-                : thumbnail_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultGif>;
     /**
      * Builds an InlineQueryResultCachedGif object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedgif.
@@ -386,15 +336,11 @@ export const InlineQueryResultBuilder = {
     gifCached(
         id: string,
         gif_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedGif,
             "gif_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedGif>(
-            { type: "gif", id, gif_file_id, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedGif>;
     /**
      * Builds an InlineQueryResultLocation object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultlocation.
@@ -410,15 +356,11 @@ export const InlineQueryResultBuilder = {
         title: string,
         latitude: number,
         longitude: number,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultLocation,
             "title" | "latitude" | "longitude"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultLocation>(
-            { type: "location", id, title, latitude, longitude, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultLocation>;
     /**
      * Builds an InlineQueryResultMpeg4Gif object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif.
@@ -432,23 +374,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         mpeg4_url: string | URL,
         thumbnail_url: string | URL,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultMpeg4Gif,
             "mpeg4_url" | "thumbnail_url"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultMpeg4Gif>({
-            type: "mpeg4_gif",
-            id,
-            mpeg4_url: typeof mpeg4_url === "string"
-                ? mpeg4_url
-                : mpeg4_url.href,
-            thumbnail_url: typeof thumbnail_url === "string"
-                ? thumbnail_url
-                : thumbnail_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultMpeg4Gif>;
     /**
      * Builds an InlineQueryResultCachedMpeg4Gif object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedmpeg4gif.
@@ -460,15 +390,11 @@ export const InlineQueryResultBuilder = {
     mpeg4gifCached(
         id: string,
         mpeg4_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedMpeg4Gif,
             "mpeg4_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedMpeg4Gif>(
-            { type: "mpeg4_gif", id, mpeg4_file_id, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedMpeg4Gif>;
     /**
      * Builds an InlineQueryResultPhoto object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultphoto with the
@@ -481,22 +407,8 @@ export const InlineQueryResultBuilder = {
     photo(
         id: string,
         photo_url: string | URL,
-        options: InlineQueryResultOptions<InlineQueryResultPhoto, "photo_url"> =
-            { // do not require thumbnail, default to the photo itself
-                thumbnail_url: typeof photo_url === "string"
-                    ? photo_url
-                    : photo_url.href,
-            },
-    ) {
-        return inputMessage<InlineQueryResultPhoto>({
-            type: "photo",
-            id,
-            photo_url: typeof photo_url === "string"
-                ? photo_url
-                : photo_url.href,
-            ...options,
-        });
-    },
+        options?: InlineQueryResultOptions<InlineQueryResultPhoto, "photo_url">,
+    ): InputMessageMethods<InlineQueryResultPhoto>;
     /**
      * Builds an InlineQueryResultCachedPhoto object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedphoto.
@@ -508,15 +420,11 @@ export const InlineQueryResultBuilder = {
     photoCached(
         id: string,
         photo_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedPhoto,
             "photo_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedPhoto>(
-            { type: "photo", id, photo_file_id, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedPhoto>;
     /**
      * Builds an InlineQueryResultCachedSticker object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedsticker.
@@ -528,15 +436,11 @@ export const InlineQueryResultBuilder = {
     stickerCached(
         id: string,
         sticker_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedSticker,
             "sticker_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedSticker>(
-            { type: "sticker", id, sticker_file_id, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedSticker>;
     /**
      * Builds an InlineQueryResultVenue object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvenue.
@@ -554,21 +458,11 @@ export const InlineQueryResultBuilder = {
         latitude: number,
         longitude: number,
         address: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultVenue,
             "title" | "latitude" | "longitude" | "address"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultVenue>({
-            type: "venue",
-            id,
-            title,
-            latitude,
-            longitude,
-            address,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultVenue>;
     /**
      * Builds an InlineQueryResultVideo object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvideo with mime_type
@@ -587,26 +481,11 @@ export const InlineQueryResultBuilder = {
         title: string,
         video_url: string | URL,
         thumbnail_url: string | URL,
-        options: InlineQueryResultOptions<
+        options_: InlineQueryResultOptions<
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
-        > = {},
-    ) {
-        // require input message content by only returning methods
-        return inputMessageMethods<InlineQueryResultVideo>({
-            type: "video",
-            mime_type: "text/html",
-            id,
-            title,
-            video_url: typeof video_url === "string"
-                ? video_url
-                : video_url.href,
-            thumbnail_url: typeof thumbnail_url === "string"
-                ? thumbnail_url
-                : thumbnail_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultVideo>;
     /**
      * Builds an InlineQueryResultVideo object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvideo with mime_type
@@ -623,25 +502,11 @@ export const InlineQueryResultBuilder = {
         title: string,
         video_url: string | URL,
         thumbnail_url: string | URL,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultVideo>({
-            type: "video",
-            mime_type: "video/mp4",
-            id,
-            title,
-            video_url: typeof video_url === "string"
-                ? video_url
-                : video_url.href,
-            thumbnail_url: typeof thumbnail_url === "string"
-                ? thumbnail_url
-                : thumbnail_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultVideo>;
     /**
      * Builds an InlineQueryResultCachedVideo object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedvideo.
@@ -655,15 +520,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         title: string,
         video_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedVideo,
             "title" | "video_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedVideo>(
-            { type: "video", id, title, video_file_id, ...options },
-        );
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedVideo>;
     /**
      * Builds an InlineQueryResultVoice object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvoice.
@@ -677,21 +538,11 @@ export const InlineQueryResultBuilder = {
         id: string,
         title: string,
         voice_url: string | URL,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultVoice,
             "title" | "voice_url"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultVoice>({
-            type: "voice",
-            id,
-            title,
-            voice_url: typeof voice_url === "string"
-                ? voice_url
-                : voice_url.href,
-            ...options,
-        });
-    },
+        >,
+    ): InputMessageMethods<InlineQueryResultVoice>;
     /**
      * Builds an InlineQueryResultCachedVoice object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedvoice.
@@ -705,12 +556,187 @@ export const InlineQueryResultBuilder = {
         id: string,
         title: string,
         voice_file_id: string,
-        options: InlineQueryResultOptions<
+        options?: InlineQueryResultOptions<
             InlineQueryResultCachedVoice,
             "title" | "voice_file_id"
-        > = {},
-    ) {
-        return inputMessage<InlineQueryResultCachedVoice>(
+        >,
+    ): InputMessageMethods<InlineQueryResultCachedVoice>;
+}
+export const InlineQueryResultBuilder: InlineQueryResultBuilder = {
+    article(id, title, options = {}) {
+        return inputMessageMethods({ type: "article", id, title, ...options });
+    },
+    audio(id, title, audio_url, options = {}) {
+        return inputMessage({
+            type: "audio",
+            id,
+            title,
+            audio_url: typeof audio_url === "string"
+                ? audio_url
+                : audio_url.href,
+            ...options,
+        });
+    },
+    audioCached(id, audio_file_id, options = {}) {
+        return inputMessage({ type: "audio", id, audio_file_id, ...options });
+    },
+    contact(id, phone_number, first_name, options = {}) {
+        return inputMessage(
+            { type: "contact", id, phone_number, first_name, ...options },
+        );
+    },
+    documentPdf(id, title, document_url, options = {}) {
+        return inputMessage({
+            type: "document",
+            mime_type: "application/pdf",
+            id,
+            title,
+            document_url: typeof document_url === "string"
+                ? document_url
+                : document_url.href,
+            ...options,
+        });
+    },
+    documentZip(id, title, document_url, options = {}) {
+        return inputMessage({
+            type: "document",
+            mime_type: "application/zip",
+            id,
+            title,
+            document_url: typeof document_url === "string"
+                ? document_url
+                : document_url.href,
+            ...options,
+        });
+    },
+    documentCached(id, title, document_file_id, options = {}) {
+        return inputMessage(
+            { type: "document", id, title, document_file_id, ...options },
+        );
+    },
+    game(id, game_short_name, options = {}) {
+        return { type: "game", id, game_short_name, ...options };
+    },
+    gif(id, gif_url, thumbnail_url, options = {}) {
+        return inputMessage({
+            type: "gif",
+            id,
+            gif_url: typeof gif_url === "string" ? gif_url : gif_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
+            ...options,
+        });
+    },
+    gifCached(id, gif_file_id, options = {}) {
+        return inputMessage({ type: "gif", id, gif_file_id, ...options });
+    },
+    location(id, title, latitude, longitude, options = {}) {
+        return inputMessage(
+            { type: "location", id, title, latitude, longitude, ...options },
+        );
+    },
+    mpeg4gif(id, mpeg4_url, thumbnail_url, options = {}) {
+        return inputMessage({
+            type: "mpeg4_gif",
+            id,
+            mpeg4_url: typeof mpeg4_url === "string"
+                ? mpeg4_url
+                : mpeg4_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
+            ...options,
+        });
+    },
+    mpeg4gifCached(id, mpeg4_file_id, options = {}) {
+        return inputMessage(
+            { type: "mpeg4_gif", id, mpeg4_file_id, ...options },
+        );
+    },
+    photo(id, photo_url, options = {
+        // do not require thumbnail, default to the photo itself
+        thumbnail_url: typeof photo_url === "string"
+            ? photo_url
+            : photo_url.href,
+    }) {
+        return inputMessage({
+            type: "photo",
+            id,
+            photo_url: typeof photo_url === "string"
+                ? photo_url
+                : photo_url.href,
+            ...options,
+        });
+    },
+    photoCached(id, photo_file_id, options = {}) {
+        return inputMessage({ type: "photo", id, photo_file_id, ...options });
+    },
+    stickerCached(id, sticker_file_id, options = {}) {
+        return inputMessage(
+            { type: "sticker", id, sticker_file_id, ...options },
+        );
+    },
+    venue(id, title, latitude, longitude, address, options = {}) {
+        return inputMessage({
+            type: "venue",
+            id,
+            title,
+            latitude,
+            longitude,
+            address,
+            ...options,
+        });
+    },
+    videoHtml(id, title, video_url, thumbnail_url, options = {}) {
+        // require input message content by only returning methods
+        return inputMessageMethods({
+            type: "video",
+            mime_type: "text/html",
+            id,
+            title,
+            video_url: typeof video_url === "string"
+                ? video_url
+                : video_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
+            ...options,
+        });
+    },
+    videoMp4(id, title, video_url, thumbnail_url, options = {}) {
+        return inputMessage({
+            type: "video",
+            mime_type: "video/mp4",
+            id,
+            title,
+            video_url: typeof video_url === "string"
+                ? video_url
+                : video_url.href,
+            thumbnail_url: typeof thumbnail_url === "string"
+                ? thumbnail_url
+                : thumbnail_url.href,
+            ...options,
+        });
+    },
+    videoCached(id, title, video_file_id, options = {}) {
+        return inputMessage(
+            { type: "video", id, title, video_file_id, ...options },
+        );
+    },
+    voice(id, title, voice_url, options = {}) {
+        return inputMessage({
+            type: "voice",
+            id,
+            title,
+            voice_url: typeof voice_url === "string"
+                ? voice_url
+                : voice_url.href,
+            ...options,
+        });
+    },
+    voiceCached(id, title, voice_file_id, options = {}) {
+        return inputMessage(
             { type: "voice", id, title, voice_file_id, ...options },
         );
     },
