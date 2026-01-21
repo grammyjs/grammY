@@ -1059,11 +1059,10 @@ export class Context implements CamelCaseUpdate {
         const { chat_id, ...rest } = typeof data === "string"
             ? { text: data }
             : data;
-        return await this.api.send({
-            chat_id: ensureChatId("send", this, { chat_id }),
-            ...fillConnectionThreadTopic(this),
-            ...rest,
-        });
+        return await this.api.send(
+            ensureChatId("send", this, { chat_id }),
+            { ...fillConnectionThreadTopic(this), ...rest },
+        );
     }
 
     // API

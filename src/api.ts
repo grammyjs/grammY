@@ -125,55 +125,55 @@ export class Api<R extends RawApi = RawApi> {
         this.transform = transform;
     }
 
-    async send(data: SendData<R>): Promise<Message> {
+    async send(chat_id: number | string, data: SendData<R>): Promise<Message> {
         const payload = data as SendData<RawApi>;
         if ("text" in payload) {
-            return await this.raw.sendMessage(payload);
+            return await this.raw.sendMessage({ chat_id, ...payload });
         }
         if ("photo" in payload) {
-            return await this.raw.sendPhoto(payload);
+            return await this.raw.sendPhoto({ chat_id, ...payload });
         }
         if ("audio" in payload) {
-            return await this.raw.sendAudio(payload);
+            return await this.raw.sendAudio({ chat_id, ...payload });
         }
         if ("document" in payload) {
-            return await this.raw.sendDocument(payload);
+            return await this.raw.sendDocument({ chat_id, ...payload });
         }
         if ("video" in payload) {
-            return await this.raw.sendVideo(payload);
+            return await this.raw.sendVideo({ chat_id, ...payload });
         }
         if ("animation" in payload) {
-            return await this.raw.sendAnimation(payload);
+            return await this.raw.sendAnimation({ chat_id, ...payload });
         }
         if ("voice" in payload) {
-            return await this.raw.sendVoice(payload);
+            return await this.raw.sendVoice({ chat_id, ...payload });
         }
         if ("video_note" in payload) {
-            return await this.raw.sendVideoNote(payload);
+            return await this.raw.sendVideoNote({ chat_id, ...payload });
         }
         if ("media" in payload) {
-            return await this.raw.sendPaidMedia(payload);
+            return await this.raw.sendPaidMedia({ chat_id, ...payload });
         }
         if ("address" in payload) {
-            return await this.raw.sendVenue(payload);
+            return await this.raw.sendVenue({ chat_id, ...payload });
         }
         if ("latitude" in payload) {
-            return await this.raw.sendLocation(payload);
+            return await this.raw.sendLocation({ chat_id, ...payload });
         }
         if ("phone_number" in payload) {
-            return await this.raw.sendContact(payload);
+            return await this.raw.sendContact({ chat_id, ...payload });
         }
         if ("question" in payload) {
-            return await this.raw.sendPoll(payload);
+            return await this.raw.sendPoll({ chat_id, ...payload });
         }
         if ("sticker" in payload) {
-            return await this.raw.sendSticker(payload);
+            return await this.raw.sendSticker({ chat_id, ...payload });
         }
         if ("emoji" in payload) {
-            return await this.raw.sendDice(payload);
+            return await this.raw.sendDice({ chat_id, ...payload });
         }
         if ("currency" in payload) {
-            return await this.raw.sendInvoice(payload);
+            return await this.raw.sendInvoice({ chat_id, ...payload });
         }
         payload satisfies never;
         throw new Error("Cannot send unknown data!");

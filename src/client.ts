@@ -29,22 +29,45 @@ export type CallData<R extends RawApi = RawApi> = {
 }[string & keyof R];
 
 export type SendData<R extends RawApi = RawApi> =
-    | ApiParameters<"sendMessage", R>
-    | ApiParameters<"sendPhoto", R>
-    | ApiParameters<"sendAudio", R>
-    | ApiParameters<"sendDocument", R>
-    | ApiParameters<"sendVideo", R>
-    | ApiParameters<"sendAnimation", R>
-    | ApiParameters<"sendVoice", R>
-    | ApiParameters<"sendVideoNote", R>
-    | ApiParameters<"sendPaidMedia", R>
-    | ApiParameters<"sendLocation", R>
-    | ApiParameters<"sendVenue", R>
-    | ApiParameters<"sendContact", R>
-    | ApiParameters<"sendPoll", R>
-    | (ApiParameters<"sendDice", R> & { emoji: Present })
-    | ApiParameters<"sendSticker", R>
-    | ApiParameters<"sendInvoice", R>;
+    | (Partial<ApiParameters<"sendMessage", R>> & { text: string })
+    | (Partial<ApiParameters<"sendPhoto", R>> & { photo: Present })
+    | (Partial<ApiParameters<"sendAudio", R>> & { audio: Present })
+    | (Partial<ApiParameters<"sendDocument", R>> & { document: Present })
+    | (Partial<ApiParameters<"sendVideo", R>> & { video: Present })
+    | (Partial<ApiParameters<"sendAnimation", R>> & { animation: Present })
+    | (Partial<ApiParameters<"sendVoice", R>> & { voice: Present })
+    | (Partial<ApiParameters<"sendVideoNote", R>> & { video_note: Present })
+    | (Partial<ApiParameters<"sendPaidMedia", R>> & {
+        media: Present;
+        star_count: Present;
+    })
+    | (Partial<ApiParameters<"sendLocation", R>> & {
+        latitude: Present;
+        longitude: Present;
+    })
+    | (Partial<ApiParameters<"sendVenue", R>> & {
+        latitude: Present;
+        longitude: Present;
+        title: Present;
+        address: Present;
+    })
+    | (Partial<ApiParameters<"sendContact", R>> & {
+        phone_number: Present;
+        first_name: Present;
+    })
+    | (Partial<ApiParameters<"sendPoll", R>> & {
+        question: Present;
+        options: Present;
+    })
+    | (Partial<ApiParameters<"sendDice", R>> & { emoji: Present })
+    | (Partial<ApiParameters<"sendSticker", R>> & { sticker: Present })
+    | (Partial<ApiParameters<"sendInvoice", R>> & {
+        title: Present;
+        description: Present;
+        payload: Present;
+        currency: Present;
+        prices: Present;
+    });
 
 /**
  * Small utility interface that abstracts from webhook reply calls of different
