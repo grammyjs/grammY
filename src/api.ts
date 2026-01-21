@@ -2531,16 +2531,43 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to edit text and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagetext}
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param message_id Identifier of the message to edit
      * @param text New text of the message, 1-4096 characters after entities parsing
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async editMessageText(
+        chat_id: number | string,
+        message_id: number,
         text: string,
         other?: Partial<ApiParameters<"editMessageText", R>>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.raw.editMessageText({
+            chat_id,
+            message_id,
+            text,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to edit text and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagetext}
+     * @param inline_message_id Identifier of the inline message
+     * @param text New text of the message, 1-4096 characters after entities parsing
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async editMessageTextInline(
+        inline_message_id: string,
+        text: string,
+        other?: Partial<ApiParameters<"editMessageText", R>>,
+        signal?: AbortSignal,
+    ): Promise<true | Message> {
+        return await this.raw.editMessageText({
+            inline_message_id,
             text,
             ...other,
         }, signal);

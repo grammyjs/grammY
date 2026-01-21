@@ -3755,11 +3755,27 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageText">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.api.editMessageText(
-            text,
-            fillConnection(this, other),
-            signal,
-        );
+        const inlineMessageId = other?.inline_message_id ??
+            this.inlineMessageId;
+        if (
+            inlineMessageId === undefined ||
+            (other?.chat_id !== undefined && other.message_id !== undefined)
+        ) {
+            return await this.api.editMessageText(
+                ensureChatId("editMessageText", this, other),
+                ensureMessageId("editMessageText", this, other),
+                text,
+                fillConnection(this, other),
+                signal,
+            );
+        } else {
+            return await this.api.editMessageTextInline(
+                inlineMessageId,
+                text,
+                fillConnection(this, other),
+                signal,
+            );
+        }
     }
     /**
      * Context-aware alias for {@link Api.editMessageCaption | ctx.api.editMessageCaption}. The following parameters are pre-supplied based on the current update:
