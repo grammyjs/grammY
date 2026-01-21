@@ -3837,11 +3837,27 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageMedia">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.api.editMessageMedia(
-            media,
-            fillConnection(this, other),
-            signal,
-        );
+        const inlineMessageId = other?.inline_message_id ??
+            this.inlineMessageId;
+        if (
+            inlineMessageId === undefined ||
+            (other?.chat_id !== undefined && other.message_id !== undefined)
+        ) {
+            return await this.api.editMessageMedia(
+                ensureChatId("editMessageMedia", this, other),
+                ensureMessageId("editMessageMedia", this, other),
+                media,
+                fillConnection(this, other),
+                signal,
+            );
+        } else {
+            return await this.api.editMessageMediaInline(
+                inlineMessageId,
+                media,
+                fillConnection(this, other),
+                signal,
+            );
+        }
     }
     /**
      * Context-aware alias for {@link Api.editMessageLiveLocation | ctx.api.editMessageLiveLocation}. The following parameters are pre-supplied based on the current update:

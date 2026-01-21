@@ -2621,16 +2621,43 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param message_id Identifier of the message to edit
      * @param media An object for a new media content of the message
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async editMessageMedia(
+        chat_id: number | string,
+        message_id: number,
         media: InputMedia,
         other?: Partial<ApiParameters<"editMessageMedia", R>>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.raw.editMessageMedia({
+            chat_id,
+            message_id,
+            media,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
+     * @param inline_message_id Identifier of the inline message
+     * @param media An object for a new media content of the message
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async editMessageMediaInline(
+        inline_message_id: string,
+        media: InputMedia,
+        other?: Partial<ApiParameters<"editMessageMedia", R>>,
+        signal?: AbortSignal,
+    ): Promise<true | Message> {
+        return await this.raw.editMessageMedia({
+            inline_message_id,
             media,
             ...other,
         }, signal);
