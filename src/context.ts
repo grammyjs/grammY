@@ -1055,16 +1055,17 @@ export class Context implements CamelCaseUpdate {
     }
 
     // SEND DATA/EDIT DATA
-    async send(data: SendData): Promise<Message> {
+    async send(data: SendData, signal?: AbortSignal): Promise<Message> {
         const { chat_id, ...rest } = typeof data === "string"
             ? { text: data }
             : data;
         return await this.api.send(
             ensureChatId("send", this, { chat_id }),
             { ...fillConnectionThreadTopic(this), ...rest },
+            signal,
         );
     }
-    async edit(data: EditData): Promise<true | Message> {
+    async edit(data: EditData, signal?: AbortSignal): Promise<true | Message> {
         const { chat_id, message_id, inline_message_id, ...rest } =
             typeof data === "string" ? { text: data } : data;
         const inlineMessageId = inline_message_id ?? this.inlineMessageId;
@@ -1076,11 +1077,13 @@ export class Context implements CamelCaseUpdate {
                 ensureChatId("editMessageText", this, { chat_id }),
                 ensureMessageId("editMessageText", this, { message_id }),
                 { ...fillConnection(this), ...rest },
+                signal,
             );
         } else {
             return await this.api.editInline(
                 inlineMessageId,
                 { ...fillConnection(this), ...rest },
+                signal,
             );
         }
     }

@@ -126,56 +126,69 @@ export class Api<R extends RawApi = RawApi> {
         this.transform = transform;
     }
 
-    async send(chat_id: number | string, data: SendData<R>): Promise<Message> {
+    async send(
+        chat_id: number | string,
+        data: SendData<R>,
+        signal?: AbortSignal,
+    ): Promise<Message> {
         const d = data as SendData<RawApi>;
         const payload = typeof d === "string" ? { text: d } : d;
         if ("text" in payload) {
-            return await this.raw.sendMessage({ chat_id, ...payload });
+            return await this.raw.sendMessage({ chat_id, ...payload }, signal);
         }
         if ("photo" in payload) {
-            return await this.raw.sendPhoto({ chat_id, ...payload });
+            return await this.raw.sendPhoto({ chat_id, ...payload }, signal);
         }
         if ("audio" in payload) {
-            return await this.raw.sendAudio({ chat_id, ...payload });
+            return await this.raw.sendAudio({ chat_id, ...payload }, signal);
         }
         if ("document" in payload) {
-            return await this.raw.sendDocument({ chat_id, ...payload });
+            return await this.raw.sendDocument({ chat_id, ...payload }, signal);
         }
         if ("video" in payload) {
-            return await this.raw.sendVideo({ chat_id, ...payload });
+            return await this.raw.sendVideo({ chat_id, ...payload }, signal);
         }
         if ("animation" in payload) {
-            return await this.raw.sendAnimation({ chat_id, ...payload });
+            return await this.raw.sendAnimation(
+                { chat_id, ...payload },
+                signal,
+            );
         }
         if ("voice" in payload) {
-            return await this.raw.sendVoice({ chat_id, ...payload });
+            return await this.raw.sendVoice({ chat_id, ...payload }, signal);
         }
         if ("video_note" in payload) {
-            return await this.raw.sendVideoNote({ chat_id, ...payload });
+            return await this.raw.sendVideoNote(
+                { chat_id, ...payload },
+                signal,
+            );
         }
         if ("media" in payload) {
-            return await this.raw.sendPaidMedia({ chat_id, ...payload });
+            return await this.raw.sendPaidMedia(
+                { chat_id, ...payload },
+                signal,
+            );
         }
         if ("address" in payload) {
-            return await this.raw.sendVenue({ chat_id, ...payload });
+            return await this.raw.sendVenue({ chat_id, ...payload }, signal);
         }
         if ("latitude" in payload) {
-            return await this.raw.sendLocation({ chat_id, ...payload });
+            return await this.raw.sendLocation({ chat_id, ...payload }, signal);
         }
         if ("phone_number" in payload) {
-            return await this.raw.sendContact({ chat_id, ...payload });
+            return await this.raw.sendContact({ chat_id, ...payload }, signal);
         }
         if ("question" in payload) {
-            return await this.raw.sendPoll({ chat_id, ...payload });
+            return await this.raw.sendPoll({ chat_id, ...payload }, signal);
         }
         if ("sticker" in payload) {
-            return await this.raw.sendSticker({ chat_id, ...payload });
+            return await this.raw.sendSticker({ chat_id, ...payload }, signal);
         }
         if ("emoji" in payload) {
-            return await this.raw.sendDice({ chat_id, ...payload });
+            return await this.raw.sendDice({ chat_id, ...payload }, signal);
         }
         if ("currency" in payload) {
-            return await this.raw.sendInvoice({ chat_id, ...payload });
+            return await this.raw.sendInvoice({ chat_id, ...payload }, signal);
         }
         payload satisfies never;
         throw new Error("Cannot send unknown data!");
@@ -185,32 +198,38 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_id: number,
         data: EditData<R>,
+        signal?: AbortSignal,
     ): Promise<Message> {
         const d = data as EditData<RawApi>;
         const payload = typeof d === "string" ? { text: d } : d;
         if ("text" in payload) {
             return (await this.raw.editMessageText(
                 { chat_id, message_id, ...payload },
+                signal,
             )) as Message;
         }
         if ("caption" in payload) {
             return (await this.raw.editMessageCaption(
                 { chat_id, message_id, ...payload },
+                signal,
             )) as Message;
         }
         if ("media" in payload) {
             return (await this.raw.editMessageMedia(
                 { chat_id, message_id, ...payload },
+                signal,
             )) as Message;
         }
         if ("latitude" in payload) {
             return (await this.raw.editMessageLiveLocation(
                 { chat_id, message_id, ...payload },
+                signal,
             )) as Message;
         }
         if ("reply_markup" in payload) {
             return (await this.raw.editMessageReplyMarkup(
                 { chat_id, message_id, ...payload },
+                signal,
             )) as Message;
         }
         payload satisfies never;
@@ -220,32 +239,38 @@ export class Api<R extends RawApi = RawApi> {
     async editInline(
         inline_message_id: string,
         data: EditData<R>,
+        signal?: AbortSignal,
     ): Promise<true> {
         const d = data as EditData<RawApi>;
         const payload = typeof d === "string" ? { text: d } : d;
         if ("text" in payload) {
             return (await this.raw.editMessageText(
                 { inline_message_id, ...payload },
+                signal,
             )) as true;
         }
         if ("caption" in payload) {
             return (await this.raw.editMessageCaption(
                 { inline_message_id, ...payload },
+                signal,
             )) as true;
         }
         if ("media" in payload) {
             return (await this.raw.editMessageMedia(
                 { inline_message_id, ...payload },
+                signal,
             )) as true;
         }
         if ("latitude" in payload) {
             return (await this.raw.editMessageLiveLocation(
                 { inline_message_id, ...payload },
+                signal,
             )) as true;
         }
         if ("reply_markup" in payload) {
             return (await this.raw.editMessageReplyMarkup(
                 { inline_message_id, ...payload },
+                signal,
             )) as true;
         }
         payload satisfies never;
