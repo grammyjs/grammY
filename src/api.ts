@@ -54,8 +54,10 @@ import type {
     WebhookInfo,
 } from "./types.ts";
 import {
+    type ApiCallResult,
     type ApiClientOptions,
     type ApiParameters,
+    type CallData,
     createRawApi,
     type RawApi,
     type TransformerConsumer,
@@ -121,6 +123,16 @@ export class Api<R extends RawApi = RawApi> {
         this.raw = raw;
         this.transform = transform;
     }
+
+    async call<D extends CallData<R>>(
+        data: D,
+    ): Promise<ApiCallResult<D["method"], R>> {
+        type Method = (
+            payload: D["payload"],
+        ) => Promise<ApiCallResult<D["method"], R>>;
+        return await (this.raw[data.method] as Method)(data.payload);
+    }
+
     /**
      * Use this method to receive incoming updates using long polling ({@link https://en.wikipedia.org/wiki/Push_technology#Long_polling | wiki}). Returns an Array of {@link Update | Update} objects.
      *
