@@ -1726,6 +1726,26 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
+     * Alias for {@link Context.setMessageReaction} which is a context-aware alias for {@link Api.setMessageReaction | ctx.api.setMessageReaction}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     * - `message_id` from `ctx.msgId`
+     *
+     * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async react(
+        reaction?: MaybeArray<ReactionType | ReactionTypeEmoji["emoji"]>,
+        other?: Partial<ApiParameters<"setMessageReaction">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.setMessageReaction(reaction, other, signal);
+    }
+    /**
      * Context-aware alias for {@link Api.setMessageReaction | ctx.api.setMessageReaction}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
@@ -1734,16 +1754,19 @@ export class Context implements CamelCaseUpdate {
      * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setMessageReaction(
+        reaction?: MaybeArray<ReactionType | ReactionTypeEmoji["emoji"]>,
         other?: Partial<ApiParameters<"setMessageReaction">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.setMessageReaction(
             ensureChatId("setMessageReaction", this, other),
             ensureMessageId("setMessageReaction", this, other),
+            reaction,
             other,
             signal,
         );

@@ -38,6 +38,8 @@ import type {
     PassportElementError,
     Poll,
     PreparedInlineMessage,
+    ReactionType,
+    ReactionTypeEmoji,
     SentWebAppMessage,
     StarAmount,
     StarTransactions,
@@ -769,18 +771,31 @@ export class Api<R extends RawApi = RawApi> {
      * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
      * @param message_id Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
+     * @param reaction A list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setMessageReaction(
         chat_id: number | string,
         message_id: number,
+        reaction?:
+            | ReactionType
+            | ReactionTypeEmoji["emoji"]
+            | Array<ReactionType | ReactionTypeEmoji["emoji"]>,
         other?: Partial<ApiParameters<"setMessageReaction", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.setMessageReaction({
             chat_id,
             message_id,
+            reaction: reaction === undefined
+                ? undefined
+                : (Array.isArray(reaction) ? reaction : [reaction])?.map((
+                    emoji,
+                ) => typeof emoji === "string"
+                    ? { type: "emoji", emoji }
+                    : emoji
+                ),
             ...other,
         }, signal);
     }
