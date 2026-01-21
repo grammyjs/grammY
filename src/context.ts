@@ -2095,13 +2095,37 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async banChatSenderChat(
+    async banChatAuthor(
         other?: Partial<ApiParameters<"banChatSenderChat">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.banChatSenderChat(
             ensureChatId("banChatSenderChat", this, other),
             ensureSenderChatId("banChatSenderChat", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.banChatSenderChat | ctx.api.banChatSenderChat}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won't be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async banChatSenderChat(
+        sender_chat_id: number,
+        other?: Partial<ApiParameters<"banChatSenderChat">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.banChatSenderChat(
+            ensureChatId("banChatSenderChat", this, other),
+            sender_chat_id,
             other,
             signal,
         );
