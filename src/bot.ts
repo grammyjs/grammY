@@ -416,9 +416,9 @@ a known bot info object.",
 
         // Start polling
         debug("Starting simple long polling");
-        this.loop(options)
+        void this.loop(options)
             .catch((err) => {
-                console.error("Simple long polling crashed unexpectedly", err);
+                console.error("Simple long polling crashed unexpectedly:", err);
             }).finally(() => options?.onStop?.());
     }
 
