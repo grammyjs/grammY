@@ -2142,13 +2142,37 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async unbanChatSenderChat(
+    async unbanChatAuthor(
         other?: Partial<ApiParameters<"unbanChatSenderChat">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.unbanChatSenderChat(
             ensureChatId("unbanChatSenderChat", this, other),
             ensureSenderChatId("unbanChatSenderChat", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.unbanChatSenderChat | ctx.api.unbanChatSenderChat}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#unbanchatsenderchat}
+     * @param sender_chat_id Unique identifier of the target sender chat
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async unbanChatSenderChat(
+        sender_chat_id: number,
+        other?: Partial<ApiParameters<"unbanChatSenderChat">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.unbanChatSenderChat(
+            ensureChatId("unbanChatSenderChat", this, other),
+            sender_chat_id,
             other,
             signal,
         );
