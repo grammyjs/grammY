@@ -1943,7 +1943,7 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async restrictChatMember(
+    async restrictAuthor(
         permissions: ChatPermissions,
         other?: Partial<ApiParameters<"restrictChatMember">>,
         signal?: AbortSignal,
@@ -1951,6 +1951,33 @@ export class Context implements CamelCaseUpdate {
         return await this.api.restrictChatMember(
             ensureChatId("restrictChatMember", this, other),
             ensureUserId("restrictChatMember", this, other),
+            permissions,
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.restrictChatMember | ctx.api.restrictChatMember}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#restrictchatmember}
+     * @param user_id Unique identifier of the target user
+     * @param permissions An object for new user permissions
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async restrictChatMember(
+        user_id: number,
+        permissions: ChatPermissions,
+        other?: Partial<ApiParameters<"restrictChatMember">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.restrictChatMember(
+            ensureChatId("restrictChatMember", this, other),
+            user_id,
             permissions,
             other,
             signal,
