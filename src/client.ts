@@ -49,7 +49,7 @@ export interface WebhookReplyEnvelope {
 export type ApiParameters<
     M extends string & keyof R,
     R extends RawApi = RawApi,
-> = Extract<CallData<R>, { method: M }>["payload"];
+> = object & Extract<CallData<R>, { method: M }>["payload"];
 /**
  * Utility type providing the return type for the given method name.
  *
