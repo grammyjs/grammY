@@ -3014,13 +3014,16 @@ export class Context implements CamelCaseUpdate {
      * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via {@link https://t.me/botfather | @BotFather} and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=* X` that open your bot with a parameter.
      *
      * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
-     * @param other Options object with all optional parameters
+     * @param textOrOther Text of the notification, or options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async answerCallbackQuery(
-        other?: Partial<ApiParameters<"answerCallbackQuery">>,
+        textOrOther?: string | Partial<ApiParameters<"answerCallbackQuery">>,
         signal?: AbortSignal,
     ): Promise<true> {
+        const other = typeof textOrOther === "string"
+            ? { text: textOrOther }
+            : textOrOther;
         return await this.api.answerCallbackQuery(
             ensureCallbackQueryId("answerCallbackQuery", this, other),
             other,
