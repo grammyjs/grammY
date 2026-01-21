@@ -1,5 +1,6 @@
 // deno-lint-ignore-file camelcase
 import type { Api } from "./api.ts";
+import type { ApiParameters } from "./client.ts";
 import {
     type FilterCore,
     type FilterQuery,
@@ -7,14 +8,60 @@ import {
     matchFilter,
 } from "./filter.ts";
 import type {
+    AcceptedGiftTypes,
+    BotCommand,
+    BotDescription,
+    BotName,
+    BotShortDescription,
+    BusinessConnection,
     Chat,
+    ChatAdministratorRights,
+    ChatFullInfo,
+    ChatInviteLink,
+    ChatMember,
+    ChatMemberAdministrator,
+    ChatMemberOwner,
+    ChatPermissions,
+    File,
+    ForumTopic,
+    GameHighScore,
+    Gifts,
+    InlineQueryResult,
+    InputChecklist,
+    InputFile,
+    InputMedia,
+    InputMediaAudio,
+    InputMediaDocument,
+    InputMediaPhoto,
+    InputMediaVideo,
+    InputPaidMedia,
+    InputPollOption,
+    InputProfilePhoto,
+    InputSticker,
+    InputStoryContent,
+    LabeledPrice,
+    MenuButton,
     Message,
     MessageEntity,
+    MessageId,
+    OwnedGifts,
+    PassportElementError,
+    Poll,
+    PreparedInlineMessage,
     ReactionType,
     ReactionTypeEmoji,
+    SentWebAppMessage,
+    StarAmount,
+    StarTransactions,
+    Sticker,
+    StickerSet,
+    Story,
     Update,
     User,
+    UserChatBoosts,
     UserFromGetMe,
+    UserProfilePhotos,
+    WebhookInfo,
 } from "./types.ts";
 
 // === Util types
@@ -1017,12 +1064,13 @@ export class Context implements CamelCaseUpdate {
      * @see {@link https://core.telegram.org/bots/api#getupdates}
      */
     async getUpdates(
-        other?: Partial<ApiParameters<"getUpdates", R>>,
+        other?: Partial<ApiParameters<"getUpdates">>,
         signal?: AbortSignal,
     ): Promise<Update[]> {
-        return await this.raw.getUpdates({
-            ...other,
-        }, signal);
+        return await this.api.getUpdates(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized {@link Update | Update}. In case of an unsuccessful request (a request with response {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes | HTTP status code} different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns _True_ on success.
@@ -1045,13 +1093,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setWebhook(
         url: string,
-        other?: Partial<ApiParameters<"setWebhook", R>>,
+        other?: Partial<ApiParameters<"setWebhook">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setWebhook({
+        return await this.api.setWebhook(
             url,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to remove webhook integration if you decide to switch back to {@link ApiMethods.getUpdates | getUpdates}. Returns _True_ on success.
@@ -1061,12 +1110,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async deleteWebhook(
-        other?: Partial<ApiParameters<"deleteWebhook", R>>,
+        other?: Partial<ApiParameters<"deleteWebhook">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteWebhook({
-            ...other,
-        }, signal);
+        return await this.api.deleteWebhook(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get current webhook status. Requires no parameters. On success, returns a {@link WebhookInfo | WebhookInfo} object. If the bot is using {@link ApiMethods.getUpdates | getUpdates}, will return an object with the _url_ field empty.
@@ -1076,12 +1126,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getWebhookInfo(
-        other?: Partial<ApiParameters<"getWebhookInfo", R>>,
+        other?: Partial<ApiParameters<"getWebhookInfo">>,
         signal?: AbortSignal,
     ): Promise<WebhookInfo> {
-        return await this.raw.getWebhookInfo({
-            ...other,
-        }, signal);
+        return await this.api.getWebhookInfo(
+            other,
+            signal,
+        );
     }
     /**
      * A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a {@link User | User} object.
@@ -1091,12 +1142,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getMe(
-        other?: Partial<ApiParameters<"getMe", R>>,
+        other?: Partial<ApiParameters<"getMe">>,
         signal?: AbortSignal,
     ): Promise<UserFromGetMe> {
-        return await this.raw.getMe({
-            ...other,
-        }, signal);
+        return await this.api.getMe(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to log out from the cloud Bot API server before launching the bot locally. You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns _True_ on success. Requires no parameters.
@@ -1106,12 +1158,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async logOut(
-        other?: Partial<ApiParameters<"logOut", R>>,
+        other?: Partial<ApiParameters<"logOut">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.logOut({
-            ...other,
-        }, signal);
+        return await this.api.logOut(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns _True_ on success. Requires no parameters.
@@ -1121,12 +1174,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async close(
-        other?: Partial<ApiParameters<"close", R>>,
+        other?: Partial<ApiParameters<"close">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.close({
-            ...other,
-        }, signal);
+        return await this.api.close(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send text messages. On success, the sent {@link Message | Message} is returned.
@@ -1140,14 +1194,15 @@ export class Context implements CamelCaseUpdate {
     async sendMessage(
         chat_id: number | string,
         text: string,
-        other?: Partial<ApiParameters<"sendMessage", R>>,
+        other?: Partial<ApiParameters<"sendMessage">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendMessage({
+        return await this.api.sendMessage(
             chat_id,
             text,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent {@link Message | Message} is returned.
@@ -1163,15 +1218,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         from_chat_id: number | string,
         message_id: number,
-        other?: Partial<ApiParameters<"forwardMessage", R>>,
+        other?: Partial<ApiParameters<"forwardMessage">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.forwardMessage({
+        return await this.api.forwardMessage(
             chat_id,
             from_chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of {@link MessageId | MessageId} of the sent messages is returned.
@@ -1187,15 +1243,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         from_chat_id: number | string,
         message_ids: number[],
-        other?: Partial<ApiParameters<"forwardMessages", R>>,
+        other?: Partial<ApiParameters<"forwardMessages">>,
         signal?: AbortSignal,
     ): Promise<MessageId[]> {
-        return await this.raw.forwardMessages({
+        return await this.api.forwardMessages(
             chat_id,
             from_chat_id,
             message_ids,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessage | forwardMessage}, but the copied message doesn't have a link to the original message. Returns the {@link MessageId | MessageId} of the sent message on success.
@@ -1211,15 +1268,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         from_chat_id: number | string,
         message_id: number,
-        other?: Partial<ApiParameters<"copyMessage", R>>,
+        other?: Partial<ApiParameters<"copyMessage">>,
         signal?: AbortSignal,
     ): Promise<MessageId> {
-        return await this.raw.copyMessage({
+        return await this.api.copyMessage(
             chat_id,
             from_chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of {@link MessageId | MessageId} of the sent messages is returned.
@@ -1235,15 +1293,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         from_chat_id: number | string,
         message_ids: number[],
-        other?: Partial<ApiParameters<"copyMessages", R>>,
+        other?: Partial<ApiParameters<"copyMessages">>,
         signal?: AbortSignal,
     ): Promise<MessageId[]> {
-        return await this.raw.copyMessages({
+        return await this.api.copyMessages(
             chat_id,
             from_chat_id,
             message_ids,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send photos. On success, the sent {@link Message | Message} is returned.
@@ -1257,14 +1316,15 @@ export class Context implements CamelCaseUpdate {
     async sendPhoto(
         chat_id: number | string,
         photo: InputFile | string,
-        other?: Partial<ApiParameters<"sendPhoto", R>>,
+        other?: Partial<ApiParameters<"sendPhoto">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendPhoto({
+        return await this.api.sendPhoto(
             chat_id,
             photo,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent {@link Message | Message} is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
@@ -1279,14 +1339,15 @@ export class Context implements CamelCaseUpdate {
     async sendAudio(
         chat_id: number | string,
         audio: InputFile | string,
-        other?: Partial<ApiParameters<"sendAudio", R>>,
+        other?: Partial<ApiParameters<"sendAudio">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendAudio({
+        return await this.api.sendAudio(
             chat_id,
             audio,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send general files. On success, the sent {@link Message | Message} is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
@@ -1300,14 +1361,15 @@ export class Context implements CamelCaseUpdate {
     async sendDocument(
         chat_id: number | string,
         document: InputFile | string,
-        other?: Partial<ApiParameters<"sendDocument", R>>,
+        other?: Partial<ApiParameters<"sendDocument">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendDocument({
+        return await this.api.sendDocument(
             chat_id,
             document,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as {@link Document | Document}). On success, the sent {@link Message | Message} is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
@@ -1321,14 +1383,15 @@ export class Context implements CamelCaseUpdate {
     async sendVideo(
         chat_id: number | string,
         video: InputFile | string,
-        other?: Partial<ApiParameters<"sendVideo", R>>,
+        other?: Partial<ApiParameters<"sendVideo">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendVideo({
+        return await this.api.sendVideo(
             chat_id,
             video,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent {@link Message | Message} is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
@@ -1342,14 +1405,15 @@ export class Context implements CamelCaseUpdate {
     async sendAnimation(
         chat_id: number | string,
         animation: InputFile | string,
-        other?: Partial<ApiParameters<"sendAnimation", R>>,
+        other?: Partial<ApiParameters<"sendAnimation">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendAnimation({
+        return await this.api.sendAnimation(
             chat_id,
             animation,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as {@link Audio | Audio} or {@link Document | Document}). On success, the sent {@link Message | Message} is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
@@ -1363,14 +1427,15 @@ export class Context implements CamelCaseUpdate {
     async sendVoice(
         chat_id: number | string,
         voice: InputFile | string,
-        other?: Partial<ApiParameters<"sendVoice", R>>,
+        other?: Partial<ApiParameters<"sendVoice">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendVoice({
+        return await this.api.sendVoice(
             chat_id,
             voice,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * As of {@link https://telegram.org/blog/video-messages-and-telescope | v.4.0}, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent {@link Message | Message} is returned.
@@ -1384,14 +1449,15 @@ export class Context implements CamelCaseUpdate {
     async sendVideoNote(
         chat_id: number | string,
         video_note: InputFile | string,
-        other?: Partial<ApiParameters<"sendVideoNote", R>>,
+        other?: Partial<ApiParameters<"sendVideoNote">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendVideoNote({
+        return await this.api.sendVideoNote(
             chat_id,
             video_note,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send paid media. On success, the sent {@link Message | Message} is returned.
@@ -1407,15 +1473,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         star_count: number,
         media: InputPaidMedia[],
-        other?: Partial<ApiParameters<"sendPaidMedia", R>>,
+        other?: Partial<ApiParameters<"sendPaidMedia">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendPaidMedia({
+        return await this.api.sendPaidMedia(
             chat_id,
             star_count,
             media,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of {@link Message | Message} objects that were sent is returned.
@@ -1434,14 +1501,15 @@ export class Context implements CamelCaseUpdate {
             | InputMediaPhoto
             | InputMediaVideo
         >,
-        other?: Partial<ApiParameters<"sendMediaGroup", R>>,
+        other?: Partial<ApiParameters<"sendMediaGroup">>,
         signal?: AbortSignal,
     ): Promise<Message[]> {
-        return await this.raw.sendMediaGroup({
+        return await this.api.sendMediaGroup(
             chat_id,
             media,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send point on the map. On success, the sent {@link Message | Message} is returned.
@@ -1457,15 +1525,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         latitude: number,
         longitude: number,
-        other?: Partial<ApiParameters<"sendLocation", R>>,
+        other?: Partial<ApiParameters<"sendLocation">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendLocation({
+        return await this.api.sendLocation(
             chat_id,
             latitude,
             longitude,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send information about a venue. On success, the sent {@link Message | Message} is returned.
@@ -1485,17 +1554,18 @@ export class Context implements CamelCaseUpdate {
         longitude: number,
         title: string,
         address: string,
-        other?: Partial<ApiParameters<"sendVenue", R>>,
+        other?: Partial<ApiParameters<"sendVenue">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendVenue({
+        return await this.api.sendVenue(
             chat_id,
             latitude,
             longitude,
             title,
             address,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send phone contacts. On success, the sent {@link Message | Message} is returned.
@@ -1511,15 +1581,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         phone_number: string,
         first_name: string,
-        other?: Partial<ApiParameters<"sendContact", R>>,
+        other?: Partial<ApiParameters<"sendContact">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendContact({
+        return await this.api.sendContact(
             chat_id,
             phone_number,
             first_name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send a native poll. On success, the sent {@link Message | Message} is returned.
@@ -1535,15 +1606,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         question: string,
         options: InputPollOption[],
-        other?: Partial<ApiParameters<"sendPoll", R>>,
+        other?: Partial<ApiParameters<"sendPoll">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendPoll({
+        return await this.api.sendPoll(
             chat_id,
             question,
             options,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send a checklist on behalf of a connected business account. On success, the sent {@link Message | Message} is returned.
@@ -1559,15 +1631,16 @@ export class Context implements CamelCaseUpdate {
         business_connection_id: string,
         chat_id: number,
         checklist: InputChecklist,
-        other?: Partial<ApiParameters<"sendChecklist", R>>,
+        other?: Partial<ApiParameters<"sendChecklist">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendChecklist({
+        return await this.api.sendChecklist(
             business_connection_id,
             chat_id,
             checklist,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send an animated emoji that will display a random value. On success, the sent {@link Message | Message} is returned.
@@ -1579,13 +1652,14 @@ export class Context implements CamelCaseUpdate {
      */
     async sendDice(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"sendDice", R>>,
+        other?: Partial<ApiParameters<"sendDice">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendDice({
+        return await this.api.sendDice(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns _True_ on success.
@@ -1601,15 +1675,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number,
         draft_id: number,
         text: string,
-        other?: Partial<ApiParameters<"sendMessageDraft", R>>,
+        other?: Partial<ApiParameters<"sendMessageDraft">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.sendMessageDraft({
+        return await this.api.sendMessageDraft(
             chat_id,
             draft_id,
             text,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.
@@ -1638,14 +1713,15 @@ export class Context implements CamelCaseUpdate {
             | "find_location"
             | "record_video_note"
             | "upload_video_note",
-        other?: Partial<ApiParameters<"sendChatAction", R>>,
+        other?: Partial<ApiParameters<"sendChatAction">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.sendChatAction({
+        return await this.api.sendChatAction(
             chat_id,
             action,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns _True_ on success.
@@ -1659,14 +1735,15 @@ export class Context implements CamelCaseUpdate {
     async setMessageReaction(
         chat_id: number | string,
         message_id: number,
-        other?: Partial<ApiParameters<"setMessageReaction", R>>,
+        other?: Partial<ApiParameters<"setMessageReaction">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setMessageReaction({
+        return await this.api.setMessageReaction(
             chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get a list of profile pictures for a user. Returns a {@link UserProfilePhotos | UserProfilePhotos} object.
@@ -1678,13 +1755,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getUserProfilePhotos(
         user_id: number,
-        other?: Partial<ApiParameters<"getUserProfilePhotos", R>>,
+        other?: Partial<ApiParameters<"getUserProfilePhotos">>,
         signal?: AbortSignal,
     ): Promise<UserProfilePhotos> {
-        return await this.raw.getUserProfilePhotos({
+        return await this.api.getUserProfilePhotos(
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | requestEmojiStatusAccess}. Returns _True_ on success.
@@ -1696,13 +1774,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setUserEmojiStatus(
         user_id: number,
-        other?: Partial<ApiParameters<"setUserEmojiStatus", R>>,
+        other?: Partial<ApiParameters<"setUserEmojiStatus">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setUserEmojiStatus({
+        return await this.api.setUserEmojiStatus(
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a {@link File | File} object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`, where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile} again.
@@ -1716,13 +1795,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getFile(
         file_id: string,
-        other?: Partial<ApiParameters<"getFile", R>>,
+        other?: Partial<ApiParameters<"getFile">>,
         signal?: AbortSignal,
     ): Promise<File> {
-        return await this.raw.getFile({
+        return await this.api.getFile(
             file_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link ApiMethods.unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
@@ -1736,14 +1816,15 @@ export class Context implements CamelCaseUpdate {
     async banChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Partial<ApiParameters<"banChatMember", R>>,
+        other?: Partial<ApiParameters<"banChatMember">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.banChatMember({
+        return await this.api.banChatMember(
             chat_id,
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don't want this, use the parameter _only_if_banned_. Returns _True_ on success.
@@ -1757,14 +1838,15 @@ export class Context implements CamelCaseUpdate {
     async unbanChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Partial<ApiParameters<"unbanChatMember", R>>,
+        other?: Partial<ApiParameters<"unbanChatMember">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.unbanChatMember({
+        return await this.api.unbanChatMember(
             chat_id,
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.
@@ -1780,15 +1862,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         user_id: number,
         permissions: ChatPermissions,
-        other?: Partial<ApiParameters<"restrictChatMember", R>>,
+        other?: Partial<ApiParameters<"restrictChatMember">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.restrictChatMember({
+        return await this.api.restrictChatMember(
             chat_id,
             user_id,
             permissions,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass _False_ for all boolean parameters to demote a user. Returns _True_ on success.
@@ -1802,14 +1885,15 @@ export class Context implements CamelCaseUpdate {
     async promoteChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Partial<ApiParameters<"promoteChatMember", R>>,
+        other?: Partial<ApiParameters<"promoteChatMember">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.promoteChatMember({
+        return await this.api.promoteChatMember(
             chat_id,
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns _True_ on success.
@@ -1825,15 +1909,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         user_id: number,
         custom_title: string,
-        other?: Partial<ApiParameters<"setChatAdministratorCustomTitle", R>>,
+        other?: Partial<ApiParameters<"setChatAdministratorCustomTitle">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setChatAdministratorCustomTitle({
+        return await this.api.setChatAdministratorCustomTitle(
             chat_id,
             user_id,
             custom_title,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won't be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.
@@ -1847,14 +1932,15 @@ export class Context implements CamelCaseUpdate {
     async banChatSenderChat(
         chat_id: number | string,
         sender_chat_id: number,
-        other?: Partial<ApiParameters<"banChatSenderChat", R>>,
+        other?: Partial<ApiParameters<"banChatSenderChat">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.banChatSenderChat({
+        return await this.api.banChatSenderChat(
             chat_id,
             sender_chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns _True_ on success.
@@ -1868,14 +1954,15 @@ export class Context implements CamelCaseUpdate {
     async unbanChatSenderChat(
         chat_id: number | string,
         sender_chat_id: number,
-        other?: Partial<ApiParameters<"unbanChatSenderChat", R>>,
+        other?: Partial<ApiParameters<"unbanChatSenderChat">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.unbanChatSenderChat({
+        return await this.api.unbanChatSenderChat(
             chat_id,
             sender_chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the _can_restrict_members_ administrator rights. Returns _True_ on success.
@@ -1889,14 +1976,15 @@ export class Context implements CamelCaseUpdate {
     async setChatPermissions(
         chat_id: number | string,
         permissions: ChatPermissions,
-        other?: Partial<ApiParameters<"setChatPermissions", R>>,
+        other?: Partial<ApiParameters<"setChatPermissions">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setChatPermissions({
+        return await this.api.setChatPermissions(
             chat_id,
             permissions,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as _String_ on success.
@@ -1910,13 +1998,14 @@ export class Context implements CamelCaseUpdate {
      */
     async exportChatInviteLink(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"exportChatInviteLink", R>>,
+        other?: Partial<ApiParameters<"exportChatInviteLink">>,
         signal?: AbortSignal,
     ): Promise<string> {
-        return await this.raw.exportChatInviteLink({
+        return await this.api.exportChatInviteLink(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as {@link ChatInviteLink | ChatInviteLink} object.
@@ -1928,13 +2017,14 @@ export class Context implements CamelCaseUpdate {
      */
     async createChatInviteLink(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"createChatInviteLink", R>>,
+        other?: Partial<ApiParameters<"createChatInviteLink">>,
         signal?: AbortSignal,
     ): Promise<ChatInviteLink> {
-        return await this.raw.createChatInviteLink({
+        return await this.api.createChatInviteLink(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a {@link ChatInviteLink | ChatInviteLink} object.
@@ -1948,14 +2038,15 @@ export class Context implements CamelCaseUpdate {
     async editChatInviteLink(
         chat_id: number | string,
         invite_link: string,
-        other?: Partial<ApiParameters<"editChatInviteLink", R>>,
+        other?: Partial<ApiParameters<"editChatInviteLink">>,
         signal?: AbortSignal,
     ): Promise<ChatInviteLink> {
-        return await this.raw.editChatInviteLink({
+        return await this.api.editChatInviteLink(
             chat_id,
             invite_link,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method {@link ApiMethods.editChatSubscriptionInviteLink | editChatSubscriptionInviteLink} or revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as a {@link ChatInviteLink | ChatInviteLink} object.
@@ -1971,15 +2062,16 @@ export class Context implements CamelCaseUpdate {
         chat_id: number | string,
         subscription_period: 2592000,
         subscription_price: number,
-        other?: Partial<ApiParameters<"createChatSubscriptionInviteLink", R>>,
+        other?: Partial<ApiParameters<"createChatSubscriptionInviteLink">>,
         signal?: AbortSignal,
     ): Promise<ChatInviteLink> {
-        return await this.raw.createChatSubscriptionInviteLink({
+        return await this.api.createChatSubscriptionInviteLink(
             chat_id,
             subscription_period,
             subscription_price,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit a subscription invite link created by the bot. The bot must have the _can_invite_users_ administrator rights. Returns the edited invite link as a {@link ChatInviteLink | ChatInviteLink} object.
@@ -1993,14 +2085,15 @@ export class Context implements CamelCaseUpdate {
     async editChatSubscriptionInviteLink(
         chat_id: number | string,
         invite_link: string,
-        other?: Partial<ApiParameters<"editChatSubscriptionInviteLink", R>>,
+        other?: Partial<ApiParameters<"editChatSubscriptionInviteLink">>,
         signal?: AbortSignal,
     ): Promise<ChatInviteLink> {
-        return await this.raw.editChatSubscriptionInviteLink({
+        return await this.api.editChatSubscriptionInviteLink(
             chat_id,
             invite_link,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as {@link ChatInviteLink | ChatInviteLink} object.
@@ -2014,14 +2107,15 @@ export class Context implements CamelCaseUpdate {
     async revokeChatInviteLink(
         chat_id: number | string,
         invite_link: string,
-        other?: Partial<ApiParameters<"revokeChatInviteLink", R>>,
+        other?: Partial<ApiParameters<"revokeChatInviteLink">>,
         signal?: AbortSignal,
     ): Promise<ChatInviteLink> {
-        return await this.raw.revokeChatInviteLink({
+        return await this.api.revokeChatInviteLink(
             chat_id,
             invite_link,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.
@@ -2035,14 +2129,15 @@ export class Context implements CamelCaseUpdate {
     async approveChatJoinRequest(
         chat_id: number | string,
         user_id: number,
-        other?: Partial<ApiParameters<"approveChatJoinRequest", R>>,
+        other?: Partial<ApiParameters<"approveChatJoinRequest">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.approveChatJoinRequest({
+        return await this.api.approveChatJoinRequest(
             chat_id,
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.
@@ -2056,14 +2151,15 @@ export class Context implements CamelCaseUpdate {
     async declineChatJoinRequest(
         chat_id: number | string,
         user_id: number,
-        other?: Partial<ApiParameters<"declineChatJoinRequest", R>>,
+        other?: Partial<ApiParameters<"declineChatJoinRequest">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.declineChatJoinRequest({
+        return await this.api.declineChatJoinRequest(
             chat_id,
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
@@ -2077,14 +2173,15 @@ export class Context implements CamelCaseUpdate {
     async setChatPhoto(
         chat_id: number | string,
         photo: InputFile,
-        other?: Partial<ApiParameters<"setChatPhoto", R>>,
+        other?: Partial<ApiParameters<"setChatPhoto">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setChatPhoto({
+        return await this.api.setChatPhoto(
             chat_id,
             photo,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
@@ -2096,13 +2193,14 @@ export class Context implements CamelCaseUpdate {
      */
     async deleteChatPhoto(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"deleteChatPhoto", R>>,
+        other?: Partial<ApiParameters<"deleteChatPhoto">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteChatPhoto({
+        return await this.api.deleteChatPhoto(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
@@ -2116,14 +2214,15 @@ export class Context implements CamelCaseUpdate {
     async setChatTitle(
         chat_id: number | string,
         title: string,
-        other?: Partial<ApiParameters<"setChatTitle", R>>,
+        other?: Partial<ApiParameters<"setChatTitle">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setChatTitle({
+        return await this.api.setChatTitle(
             chat_id,
             title,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
@@ -2135,13 +2234,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setChatDescription(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"setChatDescription", R>>,
+        other?: Partial<ApiParameters<"setChatDescription">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setChatDescription({
+        return await this.api.setChatDescription(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns _True_ on success.
@@ -2155,14 +2255,15 @@ export class Context implements CamelCaseUpdate {
     async pinChatMessage(
         chat_id: number | string,
         message_id: number,
-        other?: Partial<ApiParameters<"pinChatMessage", R>>,
+        other?: Partial<ApiParameters<"pinChatMessage">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.pinChatMessage({
+        return await this.api.pinChatMessage(
             chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns _True_ on success.
@@ -2174,13 +2275,14 @@ export class Context implements CamelCaseUpdate {
      */
     async unpinChatMessage(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"unpinChatMessage", R>>,
+        other?: Partial<ApiParameters<"unpinChatMessage">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.unpinChatMessage({
+        return await this.api.unpinChatMessage(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns _True_ on success.
@@ -2192,13 +2294,14 @@ export class Context implements CamelCaseUpdate {
      */
     async unpinAllChatMessages(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"unpinAllChatMessages", R>>,
+        other?: Partial<ApiParameters<"unpinAllChatMessages">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.unpinAllChatMessages({
+        return await this.api.unpinAllChatMessages(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method for your bot to leave a group, supergroup or channel. Returns _True_ on success.
@@ -2210,13 +2313,14 @@ export class Context implements CamelCaseUpdate {
      */
     async leaveChat(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"leaveChat", R>>,
+        other?: Partial<ApiParameters<"leaveChat">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.leaveChat({
+        return await this.api.leaveChat(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get up-to-date information about the chat. Returns a {@link ChatFullInfo | ChatFullInfo} object on success.
@@ -2228,13 +2332,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getChat(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"getChat", R>>,
+        other?: Partial<ApiParameters<"getChat">>,
         signal?: AbortSignal,
     ): Promise<ChatFullInfo> {
-        return await this.raw.getChat({
+        return await this.api.getChat(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of {@link ChatMember | ChatMember} objects.
@@ -2246,13 +2351,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getChatAdministrators(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"getChatAdministrators", R>>,
+        other?: Partial<ApiParameters<"getChatAdministrators">>,
         signal?: AbortSignal,
     ): Promise<Array<ChatMemberOwner | ChatMemberAdministrator>> {
-        return await this.raw.getChatAdministrators({
+        return await this.api.getChatAdministrators(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the number of members in a chat. Returns _Int_ on success.
@@ -2264,13 +2370,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getChatMemberCount(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"getChatMemberCount", R>>,
+        other?: Partial<ApiParameters<"getChatMemberCount">>,
         signal?: AbortSignal,
     ): Promise<number> {
-        return await this.raw.getChatMemberCount({
+        return await this.api.getChatMemberCount(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a {@link ChatMember | ChatMember} object on success.
@@ -2284,14 +2391,15 @@ export class Context implements CamelCaseUpdate {
     async getChatMember(
         chat_id: number | string,
         user_id: number,
-        other?: Partial<ApiParameters<"getChatMember", R>>,
+        other?: Partial<ApiParameters<"getChatMember">>,
         signal?: AbortSignal,
     ): Promise<ChatMember> {
-        return await this.raw.getChatMember({
+        return await this.api.getChatMember(
             chat_id,
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns _True_ on success.
@@ -2305,14 +2413,15 @@ export class Context implements CamelCaseUpdate {
     async setChatStickerSet(
         chat_id: number | string,
         sticker_set_name: string,
-        other?: Partial<ApiParameters<"setChatStickerSet", R>>,
+        other?: Partial<ApiParameters<"setChatStickerSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setChatStickerSet({
+        return await this.api.setChatStickerSet(
             chat_id,
             sticker_set_name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns _True_ on success.
@@ -2324,13 +2433,14 @@ export class Context implements CamelCaseUpdate {
      */
     async deleteChatStickerSet(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"deleteChatStickerSet", R>>,
+        other?: Partial<ApiParameters<"deleteChatStickerSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteChatStickerSet({
+        return await this.api.deleteChatStickerSet(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of {@link Sticker | Sticker} objects.
@@ -2340,12 +2450,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getForumTopicIconStickers(
-        other?: Partial<ApiParameters<"getForumTopicIconStickers", R>>,
+        other?: Partial<ApiParameters<"getForumTopicIconStickers">>,
         signal?: AbortSignal,
     ): Promise<Sticker[]> {
-        return await this.raw.getForumTopicIconStickers({
-            ...other,
-        }, signal);
+        return await this.api.getForumTopicIconStickers(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns information about the created topic as a {@link ForumTopic | ForumTopic} object.
@@ -2359,14 +2470,15 @@ export class Context implements CamelCaseUpdate {
     async createForumTopic(
         chat_id: number | string,
         name: string,
-        other?: Partial<ApiParameters<"createForumTopic", R>>,
+        other?: Partial<ApiParameters<"createForumTopic">>,
         signal?: AbortSignal,
     ): Promise<ForumTopic> {
-        return await this.raw.createForumTopic({
+        return await this.api.createForumTopic(
             chat_id,
             name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
@@ -2380,14 +2492,15 @@ export class Context implements CamelCaseUpdate {
     async editForumTopic(
         chat_id: number | string,
         message_thread_id: number,
-        other?: Partial<ApiParameters<"editForumTopic", R>>,
+        other?: Partial<ApiParameters<"editForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.editForumTopic({
+        return await this.api.editForumTopic(
             chat_id,
             message_thread_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
@@ -2401,14 +2514,15 @@ export class Context implements CamelCaseUpdate {
     async closeForumTopic(
         chat_id: number | string,
         message_thread_id: number,
-        other?: Partial<ApiParameters<"closeForumTopic", R>>,
+        other?: Partial<ApiParameters<"closeForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.closeForumTopic({
+        return await this.api.closeForumTopic(
             chat_id,
             message_thread_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
@@ -2422,14 +2536,15 @@ export class Context implements CamelCaseUpdate {
     async reopenForumTopic(
         chat_id: number | string,
         message_thread_id: number,
-        other?: Partial<ApiParameters<"reopenForumTopic", R>>,
+        other?: Partial<ApiParameters<"reopenForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.reopenForumTopic({
+        return await this.api.reopenForumTopic(
             chat_id,
             message_thread_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.
@@ -2443,14 +2558,15 @@ export class Context implements CamelCaseUpdate {
     async deleteForumTopic(
         chat_id: number | string,
         message_thread_id: number,
-        other?: Partial<ApiParameters<"deleteForumTopic", R>>,
+        other?: Partial<ApiParameters<"deleteForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteForumTopic({
+        return await this.api.deleteForumTopic(
             chat_id,
             message_thread_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
@@ -2464,14 +2580,15 @@ export class Context implements CamelCaseUpdate {
     async unpinAllForumTopicMessages(
         chat_id: number | string,
         message_thread_id: number,
-        other?: Partial<ApiParameters<"unpinAllForumTopicMessages", R>>,
+        other?: Partial<ApiParameters<"unpinAllForumTopicMessages">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.unpinAllForumTopicMessages({
+        return await this.api.unpinAllForumTopicMessages(
             chat_id,
             message_thread_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.
@@ -2485,14 +2602,15 @@ export class Context implements CamelCaseUpdate {
     async editGeneralForumTopic(
         chat_id: number | string,
         name: string,
-        other?: Partial<ApiParameters<"editGeneralForumTopic", R>>,
+        other?: Partial<ApiParameters<"editGeneralForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.editGeneralForumTopic({
+        return await this.api.editGeneralForumTopic(
             chat_id,
             name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.
@@ -2504,13 +2622,14 @@ export class Context implements CamelCaseUpdate {
      */
     async closeGeneralForumTopic(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"closeGeneralForumTopic", R>>,
+        other?: Partial<ApiParameters<"closeGeneralForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.closeGeneralForumTopic({
+        return await this.api.closeGeneralForumTopic(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically unhidden if it was hidden. Returns _True_ on success.
@@ -2522,13 +2641,14 @@ export class Context implements CamelCaseUpdate {
      */
     async reopenGeneralForumTopic(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"reopenGeneralForumTopic", R>>,
+        other?: Partial<ApiParameters<"reopenGeneralForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.reopenGeneralForumTopic({
+        return await this.api.reopenGeneralForumTopic(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically closed if it was open. Returns _True_ on success.
@@ -2540,13 +2660,14 @@ export class Context implements CamelCaseUpdate {
      */
     async hideGeneralForumTopic(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"hideGeneralForumTopic", R>>,
+        other?: Partial<ApiParameters<"hideGeneralForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.hideGeneralForumTopic({
+        return await this.api.hideGeneralForumTopic(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.
@@ -2558,13 +2679,14 @@ export class Context implements CamelCaseUpdate {
      */
     async unhideGeneralForumTopic(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"unhideGeneralForumTopic", R>>,
+        other?: Partial<ApiParameters<"unhideGeneralForumTopic">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.unhideGeneralForumTopic({
+        return await this.api.unhideGeneralForumTopic(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
@@ -2576,13 +2698,14 @@ export class Context implements CamelCaseUpdate {
      */
     async unpinAllGeneralForumTopicMessages(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"unpinAllGeneralForumTopicMessages", R>>,
+        other?: Partial<ApiParameters<"unpinAllGeneralForumTopicMessages">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.unpinAllGeneralForumTopicMessages({
+        return await this.api.unpinAllGeneralForumTopicMessages(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send answers to callback queries sent from {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboards}. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.
@@ -2596,13 +2719,14 @@ export class Context implements CamelCaseUpdate {
      */
     async answerCallbackQuery(
         callback_query_id: string,
-        other?: Partial<ApiParameters<"answerCallbackQuery", R>>,
+        other?: Partial<ApiParameters<"answerCallbackQuery">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.answerCallbackQuery({
+        return await this.api.answerCallbackQuery(
             callback_query_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a {@link UserChatBoosts | UserChatBoosts} object.
@@ -2616,14 +2740,15 @@ export class Context implements CamelCaseUpdate {
     async getUserChatBoosts(
         chat_id: number | string,
         user_id: number,
-        other?: Partial<ApiParameters<"getUserChatBoosts", R>>,
+        other?: Partial<ApiParameters<"getUserChatBoosts">>,
         signal?: AbortSignal,
     ): Promise<UserChatBoosts> {
-        return await this.raw.getUserChatBoosts({
+        return await this.api.getUserChatBoosts(
             chat_id,
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get information about the connection of the bot with a business account. Returns a {@link BusinessConnection | BusinessConnection} object on success.
@@ -2635,13 +2760,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getBusinessConnection(
         business_connection_id: string,
-        other?: Partial<ApiParameters<"getBusinessConnection", R>>,
+        other?: Partial<ApiParameters<"getBusinessConnection">>,
         signal?: AbortSignal,
     ): Promise<BusinessConnection> {
-        return await this.raw.getBusinessConnection({
+        return await this.api.getBusinessConnection(
             business_connection_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the list of the bot's commands. See {@link https://core.telegram.org/bots/features#commands | this manual} for more details about bot commands. Returns _True_ on success.
@@ -2653,13 +2779,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setMyCommands(
         commands: BotCommand[],
-        other?: Partial<ApiParameters<"setMyCommands", R>>,
+        other?: Partial<ApiParameters<"setMyCommands">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setMyCommands({
+        return await this.api.setMyCommands(
             commands,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, {@link https://core.telegram.org/bots/api#determining-list-of-commands | higher level commands} will be shown to affected users. Returns _True_ on success.
@@ -2669,12 +2796,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async deleteMyCommands(
-        other?: Partial<ApiParameters<"deleteMyCommands", R>>,
+        other?: Partial<ApiParameters<"deleteMyCommands">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteMyCommands({
-            ...other,
-        }, signal);
+        return await this.api.deleteMyCommands(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of {@link BotCommand | BotCommand} objects. If commands aren't set, an empty list is returned.
@@ -2684,12 +2812,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getMyCommands(
-        other?: Partial<ApiParameters<"getMyCommands", R>>,
+        other?: Partial<ApiParameters<"getMyCommands">>,
         signal?: AbortSignal,
     ): Promise<BotCommand[]> {
-        return await this.raw.getMyCommands({
-            ...other,
-        }, signal);
+        return await this.api.getMyCommands(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the bot's name. Returns _True_ on success.
@@ -2699,12 +2828,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setMyName(
-        other?: Partial<ApiParameters<"setMyName", R>>,
+        other?: Partial<ApiParameters<"setMyName">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setMyName({
-            ...other,
-        }, signal);
+        return await this.api.setMyName(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the current bot name for the given user language. Returns {@link BotName | BotName} on success.
@@ -2714,12 +2844,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getMyName(
-        other?: Partial<ApiParameters<"getMyName", R>>,
+        other?: Partial<ApiParameters<"getMyName">>,
         signal?: AbortSignal,
     ): Promise<BotName> {
-        return await this.raw.getMyName({
-            ...other,
-        }, signal);
+        return await this.api.getMyName(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns _True_ on success.
@@ -2729,12 +2860,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setMyDescription(
-        other?: Partial<ApiParameters<"setMyDescription", R>>,
+        other?: Partial<ApiParameters<"setMyDescription">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setMyDescription({
-            ...other,
-        }, signal);
+        return await this.api.setMyDescription(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the current bot description for the given user language. Returns {@link BotDescription | BotDescription} on success.
@@ -2744,12 +2876,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getMyDescription(
-        other?: Partial<ApiParameters<"getMyDescription", R>>,
+        other?: Partial<ApiParameters<"getMyDescription">>,
         signal?: AbortSignal,
     ): Promise<BotDescription> {
-        return await this.raw.getMyDescription({
-            ...other,
-        }, signal);
+        return await this.api.getMyDescription(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns _True_ on success.
@@ -2759,12 +2892,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setMyShortDescription(
-        other?: Partial<ApiParameters<"setMyShortDescription", R>>,
+        other?: Partial<ApiParameters<"setMyShortDescription">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setMyShortDescription({
-            ...other,
-        }, signal);
+        return await this.api.setMyShortDescription(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the current bot short description for the given user language. Returns {@link BotShortDescription | BotShortDescription} on success.
@@ -2774,12 +2908,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getMyShortDescription(
-        other?: Partial<ApiParameters<"getMyShortDescription", R>>,
+        other?: Partial<ApiParameters<"getMyShortDescription">>,
         signal?: AbortSignal,
     ): Promise<BotShortDescription> {
-        return await this.raw.getMyShortDescription({
-            ...other,
-        }, signal);
+        return await this.api.getMyShortDescription(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the bot's menu button in a private chat, or the default menu button. Returns _True_ on success.
@@ -2789,12 +2924,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setChatMenuButton(
-        other?: Partial<ApiParameters<"setChatMenuButton", R>>,
+        other?: Partial<ApiParameters<"setChatMenuButton">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setChatMenuButton({
-            ...other,
-        }, signal);
+        return await this.api.setChatMenuButton(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns {@link MenuButton | MenuButton} on success.
@@ -2804,12 +2940,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getChatMenuButton(
-        other?: Partial<ApiParameters<"getChatMenuButton", R>>,
+        other?: Partial<ApiParameters<"getChatMenuButton">>,
         signal?: AbortSignal,
     ): Promise<MenuButton> {
-        return await this.raw.getChatMenuButton({
-            ...other,
-        }, signal);
+        return await this.api.getChatMenuButton(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns _True_ on success.
@@ -2819,12 +2956,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setMyDefaultAdministratorRights(
-        other?: Partial<ApiParameters<"setMyDefaultAdministratorRights", R>>,
+        other?: Partial<ApiParameters<"setMyDefaultAdministratorRights">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setMyDefaultAdministratorRights({
-            ...other,
-        }, signal);
+        return await this.api.setMyDefaultAdministratorRights(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get the current default administrator rights of the bot. Returns {@link ChatAdministratorRights | ChatAdministratorRights} on success.
@@ -2834,12 +2972,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getMyDefaultAdministratorRights(
-        other?: Partial<ApiParameters<"getMyDefaultAdministratorRights", R>>,
+        other?: Partial<ApiParameters<"getMyDefaultAdministratorRights">>,
         signal?: AbortSignal,
     ): Promise<ChatAdministratorRights> {
-        return await this.raw.getMyDefaultAdministratorRights({
-            ...other,
-        }, signal);
+        return await this.api.getMyDefaultAdministratorRights(
+            other,
+            signal,
+        );
     }
     /**
      * Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a {@link Gifts | Gifts} object.
@@ -2849,12 +2988,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getAvailableGifts(
-        other?: Partial<ApiParameters<"getAvailableGifts", R>>,
+        other?: Partial<ApiParameters<"getAvailableGifts">>,
         signal?: AbortSignal,
     ): Promise<Gifts> {
-        return await this.raw.getAvailableGifts({
-            ...other,
-        }, signal);
+        return await this.api.getAvailableGifts(
+            other,
+            signal,
+        );
     }
     /**
      * Sends a gift to the given user or channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns _True_ on success.
@@ -2866,13 +3006,14 @@ export class Context implements CamelCaseUpdate {
      */
     async sendGift(
         gift_id: string,
-        other?: Partial<ApiParameters<"sendGift", R>>,
+        other?: Partial<ApiParameters<"sendGift">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.sendGift({
+        return await this.api.sendGift(
             gift_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Gifts a Telegram Premium subscription to the given user. Returns _True_ on success.
@@ -2888,15 +3029,16 @@ export class Context implements CamelCaseUpdate {
         user_id: number,
         month_count: 3 | 6 | 12,
         star_count: 1000 | 1500 | 2500,
-        other?: Partial<ApiParameters<"giftPremiumSubscription", R>>,
+        other?: Partial<ApiParameters<"giftPremiumSubscription">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.giftPremiumSubscription({
+        return await this.api.giftPremiumSubscription(
             user_id,
             month_count,
             star_count,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Verifies a user {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} which is represented by the bot. Returns _True_ on success.
@@ -2908,13 +3050,14 @@ export class Context implements CamelCaseUpdate {
      */
     async verifyUser(
         user_id: number,
-        other?: Partial<ApiParameters<"verifyUser", R>>,
+        other?: Partial<ApiParameters<"verifyUser">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.verifyUser({
+        return await this.api.verifyUser(
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Verifies a chat {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} which is represented by the bot. Returns _True_ on success.
@@ -2926,13 +3069,14 @@ export class Context implements CamelCaseUpdate {
      */
     async verifyChat(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"verifyChat", R>>,
+        other?: Partial<ApiParameters<"verifyChat">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.verifyChat({
+        return await this.api.verifyChat(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Removes verification from a user who is currently verified {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} represented by the bot. Returns _True_ on success.
@@ -2944,13 +3088,14 @@ export class Context implements CamelCaseUpdate {
      */
     async removeUserVerification(
         user_id: number,
-        other?: Partial<ApiParameters<"removeUserVerification", R>>,
+        other?: Partial<ApiParameters<"removeUserVerification">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.removeUserVerification({
+        return await this.api.removeUserVerification(
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Removes verification from a chat that is currently verified {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} represented by the bot. Returns _True_ on success.
@@ -2962,13 +3107,14 @@ export class Context implements CamelCaseUpdate {
      */
     async removeChatVerification(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"removeChatVerification", R>>,
+        other?: Partial<ApiParameters<"removeChatVerification">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.removeChatVerification({
+        return await this.api.removeChatVerification(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Marks incoming message as read on behalf of a business account. Requires the _can_read_messages_ business bot right. Returns _True_ on success.
@@ -2984,15 +3130,16 @@ export class Context implements CamelCaseUpdate {
         business_connection_id: string,
         chat_id: number,
         message_id: number,
-        other?: Partial<ApiParameters<"readBusinessMessage", R>>,
+        other?: Partial<ApiParameters<"readBusinessMessage">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.readBusinessMessage({
+        return await this.api.readBusinessMessage(
             business_connection_id,
             chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Delete messages on behalf of a business account. Requires the _can_delete_sent_messages_ business bot right to delete messages sent by the bot itself, or the _can_delete_all_messages_ business bot right to delete any message. Returns _True_ on success.
@@ -3006,14 +3153,15 @@ export class Context implements CamelCaseUpdate {
     async deleteBusinessMessages(
         business_connection_id: string,
         message_ids: number[],
-        other?: Partial<ApiParameters<"deleteBusinessMessages", R>>,
+        other?: Partial<ApiParameters<"deleteBusinessMessages">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteBusinessMessages({
+        return await this.api.deleteBusinessMessages(
             business_connection_id,
             message_ids,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Changes the first and last name of a managed business account. Requires the _can_change_name_ business bot right. Returns _True_ on success.
@@ -3027,14 +3175,15 @@ export class Context implements CamelCaseUpdate {
     async setBusinessAccountName(
         business_connection_id: string,
         first_name: string,
-        other?: Partial<ApiParameters<"setBusinessAccountName", R>>,
+        other?: Partial<ApiParameters<"setBusinessAccountName">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setBusinessAccountName({
+        return await this.api.setBusinessAccountName(
             business_connection_id,
             first_name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Changes the username of a managed business account. Requires the _can_change_username_ business bot right. Returns _True_ on success.
@@ -3046,13 +3195,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setBusinessAccountUsername(
         business_connection_id: string,
-        other?: Partial<ApiParameters<"setBusinessAccountUsername", R>>,
+        other?: Partial<ApiParameters<"setBusinessAccountUsername">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setBusinessAccountUsername({
+        return await this.api.setBusinessAccountUsername(
             business_connection_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Changes the bio of a managed business account. Requires the _can_change_bio_ business bot right. Returns _True_ on success.
@@ -3064,13 +3214,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setBusinessAccountBio(
         business_connection_id: string,
-        other?: Partial<ApiParameters<"setBusinessAccountBio", R>>,
+        other?: Partial<ApiParameters<"setBusinessAccountBio">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setBusinessAccountBio({
+        return await this.api.setBusinessAccountBio(
             business_connection_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Changes the profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.
@@ -3084,14 +3235,15 @@ export class Context implements CamelCaseUpdate {
     async setBusinessAccountProfilePhoto(
         business_connection_id: string,
         photo: InputProfilePhoto,
-        other?: Partial<ApiParameters<"setBusinessAccountProfilePhoto", R>>,
+        other?: Partial<ApiParameters<"setBusinessAccountProfilePhoto">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setBusinessAccountProfilePhoto({
+        return await this.api.setBusinessAccountProfilePhoto(
             business_connection_id,
             photo,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Removes the current profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.
@@ -3103,13 +3255,14 @@ export class Context implements CamelCaseUpdate {
      */
     async removeBusinessAccountProfilePhoto(
         business_connection_id: string,
-        other?: Partial<ApiParameters<"removeBusinessAccountProfilePhoto", R>>,
+        other?: Partial<ApiParameters<"removeBusinessAccountProfilePhoto">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.removeBusinessAccountProfilePhoto({
+        return await this.api.removeBusinessAccountProfilePhoto(
             business_connection_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.
@@ -3125,15 +3278,16 @@ export class Context implements CamelCaseUpdate {
         business_connection_id: string,
         show_gift_button: boolean,
         accepted_gift_types: AcceptedGiftTypes,
-        other?: Partial<ApiParameters<"setBusinessAccountGiftSettings", R>>,
+        other?: Partial<ApiParameters<"setBusinessAccountGiftSettings">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setBusinessAccountGiftSettings({
+        return await this.api.setBusinessAccountGiftSettings(
             business_connection_id,
             show_gift_button,
             accepted_gift_types,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Returns the amount of Telegram Stars owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns {@link StarAmount | StarAmount} on success.
@@ -3145,13 +3299,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getBusinessAccountStarBalance(
         business_connection_id: string,
-        other?: Partial<ApiParameters<"getBusinessAccountStarBalance", R>>,
+        other?: Partial<ApiParameters<"getBusinessAccountStarBalance">>,
         signal?: AbortSignal,
     ): Promise<StarAmount> {
-        return await this.raw.getBusinessAccountStarBalance({
+        return await this.api.getBusinessAccountStarBalance(
             business_connection_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Transfers Telegram Stars from the business account balance to the bot's balance. Requires the _can_transfer_stars_ business bot right. Returns _True_ on success.
@@ -3165,14 +3320,15 @@ export class Context implements CamelCaseUpdate {
     async transferBusinessAccountStars(
         business_connection_id: string,
         star_count: number,
-        other?: Partial<ApiParameters<"transferBusinessAccountStars", R>>,
+        other?: Partial<ApiParameters<"transferBusinessAccountStars">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.transferBusinessAccountStars({
+        return await this.api.transferBusinessAccountStars(
             business_connection_id,
             star_count,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Returns the gifts received and owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns {@link OwnedGifts | OwnedGifts} on success.
@@ -3184,13 +3340,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getBusinessAccountGifts(
         business_connection_id: string,
-        other?: Partial<ApiParameters<"getBusinessAccountGifts", R>>,
+        other?: Partial<ApiParameters<"getBusinessAccountGifts">>,
         signal?: AbortSignal,
     ): Promise<OwnedGifts> {
-        return await this.raw.getBusinessAccountGifts({
+        return await this.api.getBusinessAccountGifts(
             business_connection_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Returns the gifts owned and hosted by a user. Returns {@link OwnedGifts} on success.
@@ -3202,13 +3359,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getUserGifts(
         user_id: number,
-        other?: Partial<ApiParameters<"getUserGifts", R>>,
+        other?: Partial<ApiParameters<"getUserGifts">>,
         signal?: AbortSignal,
     ): Promise<OwnedGifts> {
-        return await this.raw.getUserGifts({
+        return await this.api.getUserGifts(
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Returns the gifts owned by a chat. Returns {@link OwnedGifts} on success.
@@ -3220,13 +3378,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getChatGifts(
         chat_id: number | string,
-        other?: Partial<ApiParameters<"getChatGifts", R>>,
+        other?: Partial<ApiParameters<"getChatGifts">>,
         signal?: AbortSignal,
     ): Promise<OwnedGifts> {
-        return await this.raw.getChatGifts({
+        return await this.api.getChatGifts(
             chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Converts a given regular gift to Telegram Stars. Requires the _can_convert_gifts_to_stars_ business bot right. Returns _True_ on success.
@@ -3240,14 +3399,15 @@ export class Context implements CamelCaseUpdate {
     async convertGiftToStars(
         business_connection_id: string,
         owned_gift_id: string,
-        other?: Partial<ApiParameters<"convertGiftToStars", R>>,
+        other?: Partial<ApiParameters<"convertGiftToStars">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.convertGiftToStars({
+        return await this.api.convertGiftToStars(
             business_connection_id,
             owned_gift_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Upgrades a given regular gift to a unique gift. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Additionally requires the _can_transfer_stars_ business bot right if the upgrade is paid. Returns _True_ on success.
@@ -3261,14 +3421,15 @@ export class Context implements CamelCaseUpdate {
     async upgradeGift(
         business_connection_id: string,
         owned_gift_id: string,
-        other?: Partial<ApiParameters<"upgradeGift", R>>,
+        other?: Partial<ApiParameters<"upgradeGift">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.upgradeGift({
+        return await this.api.upgradeGift(
             business_connection_id,
             owned_gift_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Transfers an owned unique gift to another user. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Requires _can_transfer_stars_ business bot right if the transfer is paid. Returns _True_ on success.
@@ -3284,15 +3445,16 @@ export class Context implements CamelCaseUpdate {
         business_connection_id: string,
         owned_gift_id: string,
         new_owner_chat_id: number,
-        other?: Partial<ApiParameters<"transferGift", R>>,
+        other?: Partial<ApiParameters<"transferGift">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.transferGift({
+        return await this.api.transferGift(
             business_connection_id,
             owned_gift_id,
             new_owner_chat_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Posts a story on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns {@link Story | Story} on success.
@@ -3308,15 +3470,16 @@ export class Context implements CamelCaseUpdate {
         business_connection_id: string,
         content: InputStoryContent,
         active_period: 21600 | 43200 | 86400 | 172800,
-        other?: Partial<ApiParameters<"postStory", R>>,
+        other?: Partial<ApiParameters<"postStory">>,
         signal?: AbortSignal,
     ): Promise<Story> {
-        return await this.raw.postStory({
+        return await this.api.postStory(
             business_connection_id,
             content,
             active_period,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the _can_manage_stories_ business bot right for both business accounts. Returns {@link Story} on success.
@@ -3334,16 +3497,17 @@ export class Context implements CamelCaseUpdate {
         from_chat_id: number,
         from_story_id: number,
         active_period: 21600 | 43200 | 86400 | 172800,
-        other?: Partial<ApiParameters<"repostStory", R>>,
+        other?: Partial<ApiParameters<"repostStory">>,
         signal?: AbortSignal,
     ): Promise<Story> {
-        return await this.raw.repostStory({
+        return await this.api.repostStory(
             business_connection_id,
             from_chat_id,
             from_story_id,
             active_period,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Edits a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns {@link Story | Story} on success.
@@ -3359,15 +3523,16 @@ export class Context implements CamelCaseUpdate {
         business_connection_id: string,
         story_id: number,
         content: InputStoryContent,
-        other?: Partial<ApiParameters<"editStory", R>>,
+        other?: Partial<ApiParameters<"editStory">>,
         signal?: AbortSignal,
     ): Promise<Story> {
-        return await this.raw.editStory({
+        return await this.api.editStory(
             business_connection_id,
             story_id,
             content,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns _True_ on success.
@@ -3381,14 +3546,15 @@ export class Context implements CamelCaseUpdate {
     async deleteStory(
         business_connection_id: string,
         story_id: number,
-        other?: Partial<ApiParameters<"deleteStory", R>>,
+        other?: Partial<ApiParameters<"deleteStory">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteStory({
+        return await this.api.deleteStory(
             business_connection_id,
             story_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit text and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
@@ -3400,13 +3566,14 @@ export class Context implements CamelCaseUpdate {
      */
     async editMessageText(
         text: string,
-        other?: Partial<ApiParameters<"editMessageText", R>>,
+        other?: Partial<ApiParameters<"editMessageText">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.raw.editMessageText({
+        return await this.api.editMessageText(
             text,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
@@ -3416,12 +3583,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async editMessageCaption(
-        other?: Partial<ApiParameters<"editMessageCaption", R>>,
+        other?: Partial<ApiParameters<"editMessageCaption">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.raw.editMessageCaption({
-            ...other,
-        }, signal);
+        return await this.api.editMessageCaption(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
@@ -3433,13 +3601,14 @@ export class Context implements CamelCaseUpdate {
      */
     async editMessageMedia(
         media: InputMedia,
-        other?: Partial<ApiParameters<"editMessageMedia", R>>,
+        other?: Partial<ApiParameters<"editMessageMedia">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.raw.editMessageMedia({
+        return await this.api.editMessageMedia(
             media,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
@@ -3453,14 +3622,15 @@ export class Context implements CamelCaseUpdate {
     async editMessageLiveLocation(
         latitude: number,
         longitude: number,
-        other?: Partial<ApiParameters<"editMessageLiveLocation", R>>,
+        other?: Partial<ApiParameters<"editMessageLiveLocation">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.raw.editMessageLiveLocation({
+        return await this.api.editMessageLiveLocation(
             latitude,
             longitude,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
@@ -3470,12 +3640,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async stopMessageLiveLocation(
-        other?: Partial<ApiParameters<"stopMessageLiveLocation", R>>,
+        other?: Partial<ApiParameters<"stopMessageLiveLocation">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.raw.stopMessageLiveLocation({
-            ...other,
-        }, signal);
+        return await this.api.stopMessageLiveLocation(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit a checklist on behalf of a connected business account. On success, the edited {@link Message | Message} is returned.
@@ -3493,16 +3664,17 @@ export class Context implements CamelCaseUpdate {
         chat_id: number,
         message_id: number,
         checklist: InputChecklist,
-        other?: Partial<ApiParameters<"editMessageChecklist", R>>,
+        other?: Partial<ApiParameters<"editMessageChecklist">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.editMessageChecklist({
+        return await this.api.editMessageChecklist(
             business_connection_id,
             chat_id,
             message_id,
             checklist,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
@@ -3512,12 +3684,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async editMessageReplyMarkup(
-        other?: Partial<ApiParameters<"editMessageReplyMarkup", R>>,
+        other?: Partial<ApiParameters<"editMessageReplyMarkup">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.raw.editMessageReplyMarkup({
-            ...other,
-        }, signal);
+        return await this.api.editMessageReplyMarkup(
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to stop a poll which was sent by the bot. On success, the stopped {@link Poll | Poll} is returned.
@@ -3531,14 +3704,15 @@ export class Context implements CamelCaseUpdate {
     async stopPoll(
         chat_id: number | string,
         message_id: number,
-        other?: Partial<ApiParameters<"stopPoll", R>>,
+        other?: Partial<ApiParameters<"stopPoll">>,
         signal?: AbortSignal,
     ): Promise<Poll> {
-        return await this.raw.stopPoll({
+        return await this.api.stopPoll(
             chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat. Returns _True_ on success.
@@ -3552,14 +3726,15 @@ export class Context implements CamelCaseUpdate {
     async approveSuggestedPost(
         chat_id: number,
         message_id: number,
-        other?: Partial<ApiParameters<"approveSuggestedPost", R>>,
+        other?: Partial<ApiParameters<"approveSuggestedPost">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.approveSuggestedPost({
+        return await this.api.approveSuggestedPost(
             chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns _True_ on success.
@@ -3573,14 +3748,15 @@ export class Context implements CamelCaseUpdate {
     async declineSuggestedPost(
         chat_id: number,
         message_id: number,
-        other?: Partial<ApiParameters<"declineSuggestedPost", R>>,
+        other?: Partial<ApiParameters<"declineSuggestedPost">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.declineSuggestedPost({
+        return await this.api.declineSuggestedPost(
             chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete a message, including service messages, with the following limitations:
@@ -3606,14 +3782,15 @@ export class Context implements CamelCaseUpdate {
     async deleteMessage(
         chat_id: number | string,
         message_id: number,
-        other?: Partial<ApiParameters<"deleteMessage", R>>,
+        other?: Partial<ApiParameters<"deleteMessage">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteMessage({
+        return await this.api.deleteMessage(
             chat_id,
             message_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete multiple messages simultaneously. If some of the specified messages can't be found, they are skipped. Returns _True_ on success.
@@ -3627,14 +3804,15 @@ export class Context implements CamelCaseUpdate {
     async deleteMessages(
         chat_id: number | string,
         message_ids: number[],
-        other?: Partial<ApiParameters<"deleteMessages", R>>,
+        other?: Partial<ApiParameters<"deleteMessages">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteMessages({
+        return await this.api.deleteMessages(
             chat_id,
             message_ids,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send static .WEBP, {@link https://telegram.org/blog/animated-stickers | animated} .TGS, or {@link https://telegram.org/blog/video-stickers-better-reactions | video} .WEBM stickers. On success, the sent {@link Message | Message} is returned.
@@ -3648,14 +3826,15 @@ export class Context implements CamelCaseUpdate {
     async sendSticker(
         chat_id: number | string,
         sticker: InputFile | string,
-        other?: Partial<ApiParameters<"sendSticker", R>>,
+        other?: Partial<ApiParameters<"sendSticker">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendSticker({
+        return await this.api.sendSticker(
             chat_id,
             sticker,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get a sticker set. On success, a {@link StickerSet | StickerSet} object is returned.
@@ -3667,13 +3846,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getStickerSet(
         name: string,
-        other?: Partial<ApiParameters<"getStickerSet", R>>,
+        other?: Partial<ApiParameters<"getStickerSet">>,
         signal?: AbortSignal,
     ): Promise<StickerSet> {
-        return await this.raw.getStickerSet({
+        return await this.api.getStickerSet(
             name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of {@link Sticker | Sticker} objects.
@@ -3685,13 +3865,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getCustomEmojiStickers(
         custom_emoji_ids: string[],
-        other?: Partial<ApiParameters<"getCustomEmojiStickers", R>>,
+        other?: Partial<ApiParameters<"getCustomEmojiStickers">>,
         signal?: AbortSignal,
     ): Promise<Sticker[]> {
-        return await this.raw.getCustomEmojiStickers({
+        return await this.api.getCustomEmojiStickers(
             custom_emoji_ids,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to upload a file with a sticker for later use in the {@link ApiMethods.createNewStickerSet | createNewStickerSet}, {@link ApiMethods.addStickerToSet | addStickerToSet}, or {@link ApiMethods.replaceStickerInSet | replaceStickerInSet} methods (the file can be used multiple times). Returns the uploaded {@link File | File} on success.
@@ -3707,15 +3888,16 @@ export class Context implements CamelCaseUpdate {
         user_id: number,
         sticker: InputFile,
         sticker_format: "static" | "animated" | "video",
-        other?: Partial<ApiParameters<"uploadStickerFile", R>>,
+        other?: Partial<ApiParameters<"uploadStickerFile">>,
         signal?: AbortSignal,
     ): Promise<File> {
-        return await this.raw.uploadStickerFile({
+        return await this.api.uploadStickerFile(
             user_id,
             sticker,
             sticker_format,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns _True_ on success.
@@ -3733,16 +3915,17 @@ export class Context implements CamelCaseUpdate {
         name: string,
         title: string,
         stickers: InputSticker[],
-        other?: Partial<ApiParameters<"createNewStickerSet", R>>,
+        other?: Partial<ApiParameters<"createNewStickerSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.createNewStickerSet({
+        return await this.api.createNewStickerSet(
             user_id,
             name,
             title,
             stickers,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns _True_ on success.
@@ -3758,15 +3941,16 @@ export class Context implements CamelCaseUpdate {
         user_id: number,
         name: string,
         sticker: InputSticker,
-        other?: Partial<ApiParameters<"addStickerToSet", R>>,
+        other?: Partial<ApiParameters<"addStickerToSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.addStickerToSet({
+        return await this.api.addStickerToSet(
             user_id,
             name,
             sticker,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to move a sticker in a set created by the bot to a specific position. Returns _True_ on success.
@@ -3780,14 +3964,15 @@ export class Context implements CamelCaseUpdate {
     async setStickerPositionInSet(
         sticker: string,
         position: number,
-        other?: Partial<ApiParameters<"setStickerPositionInSet", R>>,
+        other?: Partial<ApiParameters<"setStickerPositionInSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setStickerPositionInSet({
+        return await this.api.setStickerPositionInSet(
             sticker,
             position,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete a sticker from a set created by the bot. Returns _True_ on success.
@@ -3799,13 +3984,14 @@ export class Context implements CamelCaseUpdate {
      */
     async deleteStickerFromSet(
         sticker: string,
-        other?: Partial<ApiParameters<"deleteStickerFromSet", R>>,
+        other?: Partial<ApiParameters<"deleteStickerFromSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteStickerFromSet({
+        return await this.api.deleteStickerFromSet(
             sticker,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling {@link ApiMethods.deleteStickerFromSet | deleteStickerFromSet}, then {@link ApiMethods.addStickerToSet | addStickerToSet}, then {@link ApiMethods.setStickerPositionInSet | setStickerPositionInSet}. Returns _True_ on success.
@@ -3823,16 +4009,17 @@ export class Context implements CamelCaseUpdate {
         name: string,
         old_sticker: string,
         sticker: InputSticker,
-        other?: Partial<ApiParameters<"replaceStickerInSet", R>>,
+        other?: Partial<ApiParameters<"replaceStickerInSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.replaceStickerInSet({
+        return await this.api.replaceStickerInSet(
             user_id,
             name,
             old_sticker,
             sticker,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.
@@ -3846,14 +4033,15 @@ export class Context implements CamelCaseUpdate {
     async setStickerEmojiList(
         sticker: string,
         emoji_list: string[],
-        other?: Partial<ApiParameters<"setStickerEmojiList", R>>,
+        other?: Partial<ApiParameters<"setStickerEmojiList">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setStickerEmojiList({
+        return await this.api.setStickerEmojiList(
             sticker,
             emoji_list,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.
@@ -3865,13 +4053,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setStickerKeywords(
         sticker: string,
-        other?: Partial<ApiParameters<"setStickerKeywords", R>>,
+        other?: Partial<ApiParameters<"setStickerKeywords">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setStickerKeywords({
+        return await this.api.setStickerKeywords(
             sticker,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to change the {@link MaskPosition | mask position} of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns _True_ on success.
@@ -3883,13 +4072,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setStickerMaskPosition(
         sticker: string,
-        other?: Partial<ApiParameters<"setStickerMaskPosition", R>>,
+        other?: Partial<ApiParameters<"setStickerMaskPosition">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setStickerMaskPosition({
+        return await this.api.setStickerMaskPosition(
             sticker,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set the title of a created sticker set. Returns _True_ on success.
@@ -3903,14 +4093,15 @@ export class Context implements CamelCaseUpdate {
     async setStickerSetTitle(
         name: string,
         title: string,
-        other?: Partial<ApiParameters<"setStickerSetTitle", R>>,
+        other?: Partial<ApiParameters<"setStickerSetTitle">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setStickerSetTitle({
+        return await this.api.setStickerSetTitle(
             name,
             title,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns _True_ on success.
@@ -3926,15 +4117,16 @@ export class Context implements CamelCaseUpdate {
         name: string,
         user_id: number,
         format: "static" | "animated" | "video",
-        other?: Partial<ApiParameters<"setStickerSetThumbnail", R>>,
+        other?: Partial<ApiParameters<"setStickerSetThumbnail">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setStickerSetThumbnail({
+        return await this.api.setStickerSetThumbnail(
             name,
             user_id,
             format,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set the thumbnail of a custom emoji sticker set. Returns _True_ on success.
@@ -3946,13 +4138,14 @@ export class Context implements CamelCaseUpdate {
      */
     async setCustomEmojiStickerSetThumbnail(
         name: string,
-        other?: Partial<ApiParameters<"setCustomEmojiStickerSetThumbnail", R>>,
+        other?: Partial<ApiParameters<"setCustomEmojiStickerSetThumbnail">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setCustomEmojiStickerSetThumbnail({
+        return await this.api.setCustomEmojiStickerSetThumbnail(
             name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to delete a sticker set that was created by the bot. Returns _True_ on success.
@@ -3964,13 +4157,14 @@ export class Context implements CamelCaseUpdate {
      */
     async deleteStickerSet(
         name: string,
-        other?: Partial<ApiParameters<"deleteStickerSet", R>>,
+        other?: Partial<ApiParameters<"deleteStickerSet">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.deleteStickerSet({
+        return await this.api.deleteStickerSet(
             name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send answers to an inline query. On success, _True_ is returned.
@@ -3986,14 +4180,15 @@ export class Context implements CamelCaseUpdate {
     async answerInlineQuery(
         inline_query_id: string,
         results: InlineQueryResult[],
-        other?: Partial<ApiParameters<"answerInlineQuery", R>>,
+        other?: Partial<ApiParameters<"answerInlineQuery">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.answerInlineQuery({
+        return await this.api.answerInlineQuery(
             inline_query_id,
             results,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set the result of an interaction with a {@link https://core.telegram.org/bots/webapps | Web App} and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a {@link sentwebappMessage | SentWebAppMessage} object is returned.
@@ -4007,14 +4202,15 @@ export class Context implements CamelCaseUpdate {
     async answerWebAppQuery(
         web_app_query_id: string,
         result: InlineQueryResult,
-        other?: Partial<ApiParameters<"answerWebAppQuery", R>>,
+        other?: Partial<ApiParameters<"answerWebAppQuery">>,
         signal?: AbortSignal,
     ): Promise<SentWebAppMessage> {
-        return await this.raw.answerWebAppQuery({
+        return await this.api.answerWebAppQuery(
             web_app_query_id,
             result,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Stores a message that can be sent by a user of a Mini App. Returns a {@link preparedinlineMessage | PreparedInlineMessage} object.
@@ -4028,14 +4224,15 @@ export class Context implements CamelCaseUpdate {
     async savePreparedInlineMessage(
         user_id: number,
         result: InlineQueryResult,
-        other?: Partial<ApiParameters<"savePreparedInlineMessage", R>>,
+        other?: Partial<ApiParameters<"savePreparedInlineMessage">>,
         signal?: AbortSignal,
     ): Promise<PreparedInlineMessage> {
-        return await this.raw.savePreparedInlineMessage({
+        return await this.api.savePreparedInlineMessage(
             user_id,
             result,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send invoices. On success, the sent {@link Message | Message} is returned.
@@ -4057,18 +4254,19 @@ export class Context implements CamelCaseUpdate {
         payload: string,
         currency: string,
         prices: LabeledPrice[],
-        other?: Partial<ApiParameters<"sendInvoice", R>>,
+        other?: Partial<ApiParameters<"sendInvoice">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendInvoice({
+        return await this.api.sendInvoice(
             chat_id,
             title,
             description,
             payload,
             currency,
             prices,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to create a link for an invoice. Returns the created invoice link as _String_ on success.
@@ -4088,17 +4286,18 @@ export class Context implements CamelCaseUpdate {
         payload: string,
         currency: string,
         prices: LabeledPrice[],
-        other?: Partial<ApiParameters<"createInvoiceLink", R>>,
+        other?: Partial<ApiParameters<"createInvoiceLink">>,
         signal?: AbortSignal,
     ): Promise<string> {
-        return await this.raw.createInvoiceLink({
+        return await this.api.createInvoiceLink(
             title,
             description,
             payload,
             currency,
             prices,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update | Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.
@@ -4112,14 +4311,15 @@ export class Context implements CamelCaseUpdate {
     async answerShippingQuery(
         shipping_query_id: string,
         ok: boolean,
-        other?: Partial<ApiParameters<"answerShippingQuery", R>>,
+        other?: Partial<ApiParameters<"answerShippingQuery">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.answerShippingQuery({
+        return await this.api.answerShippingQuery(
             shipping_query_id,
             ok,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update | Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
@@ -4133,14 +4333,15 @@ export class Context implements CamelCaseUpdate {
     async answerPreCheckoutQuery(
         pre_checkout_query_id: string,
         ok: boolean,
-        other?: Partial<ApiParameters<"answerPreCheckoutQuery", R>>,
+        other?: Partial<ApiParameters<"answerPreCheckoutQuery">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.answerPreCheckoutQuery({
+        return await this.api.answerPreCheckoutQuery(
             pre_checkout_query_id,
             ok,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a {@link StarAmount | StarAmount} object.
@@ -4150,12 +4351,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getMyStarBalance(
-        other?: Partial<ApiParameters<"getMyStarBalance", R>>,
+        other?: Partial<ApiParameters<"getMyStarBalance">>,
         signal?: AbortSignal,
     ): Promise<StarAmount> {
-        return await this.raw.getMyStarBalance({
-            ...other,
-        }, signal);
+        return await this.api.getMyStarBalance(
+            other,
+            signal,
+        );
     }
     /**
      * Returns the bot's Telegram Star transactions in chronological order. On success, returns a {@link StarTransactions | StarTransactions} object.
@@ -4165,12 +4367,13 @@ export class Context implements CamelCaseUpdate {
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async getStarTransactions(
-        other?: Partial<ApiParameters<"getStarTransactions", R>>,
+        other?: Partial<ApiParameters<"getStarTransactions">>,
         signal?: AbortSignal,
     ): Promise<StarTransactions> {
-        return await this.raw.getStarTransactions({
-            ...other,
-        }, signal);
+        return await this.api.getStarTransactions(
+            other,
+            signal,
+        );
     }
     /**
      * Refunds a successful payment in {@link https://t.me/BotNews/90 | Telegram Stars}. Returns _True_ on success.
@@ -4184,14 +4387,15 @@ export class Context implements CamelCaseUpdate {
     async refundStarPayment(
         user_id: number,
         telegram_payment_charge_id: string,
-        other?: Partial<ApiParameters<"refundStarPayment", R>>,
+        other?: Partial<ApiParameters<"refundStarPayment">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.refundStarPayment({
+        return await this.api.refundStarPayment(
             user_id,
             telegram_payment_charge_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns _True_ on success.
@@ -4207,15 +4411,16 @@ export class Context implements CamelCaseUpdate {
         user_id: number,
         telegram_payment_charge_id: string,
         is_canceled: boolean,
-        other?: Partial<ApiParameters<"editUserStarSubscription", R>>,
+        other?: Partial<ApiParameters<"editUserStarSubscription">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.editUserStarSubscription({
+        return await this.api.editUserStarSubscription(
             user_id,
             telegram_payment_charge_id,
             is_canceled,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns _True_ on success.
@@ -4230,14 +4435,15 @@ export class Context implements CamelCaseUpdate {
     async setPassportDataErrors(
         user_id: number,
         errors: PassportElementError[],
-        other?: Partial<ApiParameters<"setPassportDataErrors", R>>,
+        other?: Partial<ApiParameters<"setPassportDataErrors">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.raw.setPassportDataErrors({
+        return await this.api.setPassportDataErrors(
             user_id,
             errors,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to send a game. On success, the sent {@link Message | Message} is returned.
@@ -4251,14 +4457,15 @@ export class Context implements CamelCaseUpdate {
     async sendGame(
         chat_id: number,
         game_short_name: string,
-        other?: Partial<ApiParameters<"sendGame", R>>,
+        other?: Partial<ApiParameters<"sendGame">>,
         signal?: AbortSignal,
     ): Promise<Message> {
-        return await this.raw.sendGame({
+        return await this.api.sendGame(
             chat_id,
             game_short_name,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the {@link Message | Message} is returned, otherwise _True_ is returned. Returns an error, if the new score is not greater than the user's current score in the chat and _force_ is _False_.
@@ -4272,14 +4479,15 @@ export class Context implements CamelCaseUpdate {
     async setGameScore(
         user_id: number,
         score: number,
-        other?: Partial<ApiParameters<"setGameScore", R>>,
+        other?: Partial<ApiParameters<"setGameScore">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.raw.setGameScore({
+        return await this.api.setGameScore(
             user_id,
             score,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
     /**
      * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of {@link GameHighScore | GameHighScore} objects.
@@ -4293,13 +4501,14 @@ export class Context implements CamelCaseUpdate {
      */
     async getGameHighScores(
         user_id: number,
-        other?: Partial<ApiParameters<"getGameHighScores", R>>,
+        other?: Partial<ApiParameters<"getGameHighScores">>,
         signal?: AbortSignal,
     ): Promise<GameHighScore[]> {
-        return await this.raw.getGameHighScores({
+        return await this.api.getGameHighScores(
             user_id,
-            ...other,
-        }, signal);
+            other,
+            signal,
+        );
     }
 }
 
