@@ -2656,13 +2656,37 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async getChatMember(
+    async getAuthor(
         other?: Partial<ApiParameters<"getChatMember">>,
         signal?: AbortSignal,
     ): Promise<ChatMember> {
         return await this.api.getChatMember(
             ensureChatId("getChatMember", this, other),
             ensureUserId("getChatMember", this, other),
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.getChatMember | ctx.api.getChatMember}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a {@link ChatMember | ChatMember} object on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#getchatmember}
+     * @param user_id Unique identifier of the target user
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async getChatMember(
+        user_id: number,
+        other?: Partial<ApiParameters<"getChatMember">>,
+        signal?: AbortSignal,
+    ): Promise<ChatMember> {
+        return await this.api.getChatMember(
+            ensureChatId("getChatMember", this, other),
+            user_id,
             other,
             signal,
         );
