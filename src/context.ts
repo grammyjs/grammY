@@ -494,95 +494,95 @@ export class Context implements CamelCaseUpdate {
 
     // Keep in sync with types in `filter.ts`.
     /** Alias for `ctx.update.message` */
-    get message() {
+    get message(): Update["message"] {
         return this.update.message;
     }
     /** Alias for `ctx.update.edited_message` */
-    get editedMessage() {
+    get editedMessage(): Update["edited_message"] {
         return this.update.edited_message;
     }
     /** Alias for `ctx.update.channel_post` */
-    get channelPost() {
+    get channelPost(): Update["channel_post"] {
         return this.update.channel_post;
     }
     /** Alias for `ctx.update.edited_channel_post` */
-    get editedChannelPost() {
+    get editedChannelPost(): Update["edited_channel_post"] {
         return this.update.edited_channel_post;
     }
     /** Alias for `ctx.update.business_connection` */
-    get businessConnection() {
+    get businessConnection(): Update["business_connection"] {
         return this.update.business_connection;
     }
     /** Alias for `ctx.update.business_message` */
-    get businessMessage() {
+    get businessMessage(): Update["business_message"] {
         return this.update.business_message;
     }
     /** Alias for `ctx.update.edited_business_message` */
-    get editedBusinessMessage() {
+    get editedBusinessMessage(): Update["edited_business_message"] {
         return this.update.edited_business_message;
     }
     /** Alias for `ctx.update.deleted_business_messages` */
-    get deletedBusinessMessages() {
+    get deletedBusinessMessages(): Update["deleted_business_messages"] {
         return this.update.deleted_business_messages;
     }
     /** Alias for `ctx.update.message_reaction` */
-    get messageReaction() {
+    get messageReaction(): Update["message_reaction"] {
         return this.update.message_reaction;
     }
     /** Alias for `ctx.update.message_reaction_count` */
-    get messageReactionCount() {
+    get messageReactionCount(): Update["message_reaction_count"] {
         return this.update.message_reaction_count;
     }
     /** Alias for `ctx.update.inline_query` */
-    get inlineQuery() {
+    get inlineQuery(): Update["inline_query"] {
         return this.update.inline_query;
     }
     /** Alias for `ctx.update.chosen_inline_result` */
-    get chosenInlineResult() {
+    get chosenInlineResult(): Update["chosen_inline_result"] {
         return this.update.chosen_inline_result;
     }
     /** Alias for `ctx.update.callback_query` */
-    get callbackQuery() {
+    get callbackQuery(): Update["callback_query"] {
         return this.update.callback_query;
     }
     /** Alias for `ctx.update.shipping_query` */
-    get shippingQuery() {
+    get shippingQuery(): Update["shipping_query"] {
         return this.update.shipping_query;
     }
     /** Alias for `ctx.update.pre_checkout_query` */
-    get preCheckoutQuery() {
+    get preCheckoutQuery(): Update["pre_checkout_query"] {
         return this.update.pre_checkout_query;
     }
     /** Alias for `ctx.update.poll` */
-    get poll() {
+    get poll(): Update["poll"] {
         return this.update.poll;
     }
     /** Alias for `ctx.update.poll_answer` */
-    get pollAnswer() {
+    get pollAnswer(): Update["poll_answer"] {
         return this.update.poll_answer;
     }
     /** Alias for `ctx.update.my_chat_member` */
-    get myChatMember() {
+    get myChatMember(): Update["my_chat_member"] {
         return this.update.my_chat_member;
     }
     /** Alias for `ctx.update.chat_member` */
-    get chatMember() {
+    get chatMember(): Update["chat_member"] {
         return this.update.chat_member;
     }
     /** Alias for `ctx.update.chat_join_request` */
-    get chatJoinRequest() {
+    get chatJoinRequest(): Update["chat_join_request"] {
         return this.update.chat_join_request;
     }
     /** Alias for `ctx.update.chat_boost` */
-    get chatBoost() {
+    get chatBoost(): Update["chat_boost"] {
         return this.update.chat_boost;
     }
     /** Alias for `ctx.update.removed_chat_boost` */
-    get removedChatBoost() {
+    get removedChatBoost(): Update["removed_chat_boost"] {
         return this.update.removed_chat_boost;
     }
     /** Alias for `ctx.update.purchased_paid_media` */
-    get purchasedPaidMedia() {
+    get purchasedPaidMedia(): Update["purchased_paid_media"] {
         return this.update.purchased_paid_media;
     }
 

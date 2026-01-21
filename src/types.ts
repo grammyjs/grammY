@@ -7444,7 +7444,8 @@ export class InputFile {
      * Determines how this `InputFile` is stringified via
      * {@link InputFile.toJSON}.
      */
-    public readonly _id = crypto.getRandomValues(new Uint8Array(8)).toHex();
+    public readonly _id: string = crypto.getRandomValues(new Uint8Array(8))
+        .toHex();
     private consumed = false;
     private readonly fileData: ReturnType<typeof preprocess>;
     /**
@@ -7521,7 +7522,7 @@ export class InputFile {
      *
      * @returns An `attach://` string with a long random identifier
      */
-    toJSON() {
+    toJSON(): string {
         return `attach://${this._id}`;
     }
 }

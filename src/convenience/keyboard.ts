@@ -93,7 +93,7 @@ export class Keyboard {
      *
      * @param buttons The buttons to add
      */
-    add(...buttons: KeyboardButton[]) {
+    add(...buttons: KeyboardButton[]): this {
         this.keyboard[this.keyboard.length - 1]?.push(...buttons);
         return this;
     }
@@ -107,7 +107,7 @@ export class Keyboard {
      *
      * @param buttons A number of buttons to add to the next row
      */
-    row(...buttons: KeyboardButton[]) {
+    row(...buttons: KeyboardButton[]): this {
         this.keyboard.push(buttons);
         return this;
     }
@@ -117,7 +117,7 @@ export class Keyboard {
      *
      * @param text The text to display
      */
-    text(text: string) {
+    text(text: string): this {
         return this.add(Keyboard.text(text));
     }
     /**
@@ -143,7 +143,7 @@ export class Keyboard {
         text: string,
         requestId: number,
         options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
-    ) {
+    ): this {
         return this.add(Keyboard.requestUsers(text, requestId, options));
     }
     /**
@@ -179,7 +179,7 @@ export class Keyboard {
         options: Omit<KeyboardButtonRequestChat, "request_id"> = {
             chat_is_channel: false,
         },
-    ) {
+    ): this {
         return this.add(Keyboard.requestChat(text, requestId, options));
     }
     /**
@@ -207,7 +207,7 @@ export class Keyboard {
      *
      * @param text The text to display
      */
-    requestContact(text: string) {
+    requestContact(text: string): this {
         return this.add(Keyboard.requestContact(text));
     }
     /**
@@ -226,7 +226,7 @@ export class Keyboard {
      *
      * @param text The text to display
      */
-    requestLocation(text: string) {
+    requestLocation(text: string): this {
         return this.add(Keyboard.requestLocation(text));
     }
     /**
@@ -247,7 +247,7 @@ export class Keyboard {
      * @param type The type of permitted polls to create, omit if the user may
      * send a poll of any type
      */
-    requestPoll(text: string, type?: KeyboardButtonPollType["type"]) {
+    requestPoll(text: string, type?: KeyboardButtonPollType["type"]): this {
         return this.add(Keyboard.requestPoll(text, type));
     }
     /**
@@ -273,7 +273,7 @@ export class Keyboard {
      * @param text The text to display
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
-    webApp(text: string, url: string) {
+    webApp(text: string, url: string): this {
         return this.add(Keyboard.webApp(text, url));
     }
     /**
@@ -298,7 +298,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should persist, and `false` otherwise
      */
-    persistent(isEnabled = true) {
+    persistent(isEnabled = true): this {
         this.is_persistent = isEnabled;
         return this;
     }
@@ -313,7 +313,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should be selective, and `false` otherwise
      */
-    selected(isEnabled = true) {
+    selected(isEnabled = true): this {
         this.selective = isEnabled;
         return this;
     }
@@ -328,7 +328,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should be one-time, and `false` otherwise
      */
-    oneTime(isEnabled = true) {
+    oneTime(isEnabled = true): this {
         this.one_time_keyboard = isEnabled;
         return this;
     }
@@ -343,7 +343,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should be resized, and `false` otherwise
      */
-    resized(isEnabled = true) {
+    resized(isEnabled = true): this {
         this.resize_keyboard = isEnabled;
         return this;
     }
@@ -354,7 +354,7 @@ export class Keyboard {
      *
      * @param value The placeholder text
      */
-    placeholder(value: string) {
+    placeholder(value: string): this {
         this.input_field_placeholder = value;
         return this;
     }
@@ -387,7 +387,7 @@ export class Keyboard {
      * [d e f]     [  f  ]
      * ```
      */
-    toTransposed() {
+    toTransposed(): Keyboard {
         const original = this.keyboard;
         const transposed = transpose(original);
         return this.clone(transposed);
@@ -427,7 +427,7 @@ export class Keyboard {
      * @param columns Maximum number of buttons per row
      * @param options Optional flowing behavior
      */
-    toFlowed(columns: number, options: FlowOptions = {}) {
+    toFlowed(columns: number, options: FlowOptions = {}): Keyboard {
         const original = this.keyboard;
         const flowed = reflow(original, columns, options);
         return this.clone(flowed);
@@ -439,7 +439,7 @@ export class Keyboard {
      * specified, only the options will be cloned, and the given buttons will be
      * used instead.
      */
-    clone(keyboard: KeyboardButton[][] = this.keyboard) {
+    clone(keyboard: KeyboardButton[][] = this.keyboard): Keyboard {
         const clone = new Keyboard(keyboard.map((row) => row.slice()));
         clone.is_persistent = this.is_persistent;
         clone.selective = this.selective;
@@ -454,7 +454,7 @@ export class Keyboard {
      *
      * @param sources A number of keyboards to append
      */
-    append(...sources: KeyboardSource[]) {
+    append(...sources: KeyboardSource[]): this {
         for (const source of sources) {
             const keyboard = Keyboard.from(source);
             this.keyboard.push(...keyboard.keyboard.map((row) => row.slice()));
@@ -529,7 +529,7 @@ export class InlineKeyboard {
      *
      * @param buttons The buttons to add
      */
-    add(...buttons: InlineKeyboardButton[]) {
+    add(...buttons: InlineKeyboardButton[]): this {
         this.inline_keyboard[this.inline_keyboard.length - 1]?.push(...buttons);
         return this;
     }
@@ -543,7 +543,7 @@ export class InlineKeyboard {
      *
      * @param buttons A number of buttons to add to the next row
      */
-    row(...buttons: InlineKeyboardButton[]) {
+    row(...buttons: InlineKeyboardButton[]): this {
         this.inline_keyboard.push(buttons);
         return this;
     }
@@ -554,7 +554,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
      */
-    url(text: string, url: string) {
+    url(text: string, url: string): this {
         return this.add(InlineKeyboard.url(text, url));
     }
     /**
@@ -584,7 +584,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param data The callback data to send back to your bot
      */
-    text(text: string, data: string) {
+    text(text: string, data: string): this {
         return this.add(InlineKeyboard.text(text, data));
     }
     /**
@@ -616,7 +616,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
-    webApp(text: string, url: string | WebAppInfo) {
+    webApp(text: string, url: string | WebAppInfo): this {
         return this.add(InlineKeyboard.webApp(text, url));
     }
     /**
@@ -639,7 +639,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param loginUrl The login URL as string or `LoginUrl` object
      */
-    login(text: string, loginUrl: string | LoginUrl) {
+    login(text: string, loginUrl: string | LoginUrl): this {
         return this.add(InlineKeyboard.login(text, loginUrl));
     }
     /**
@@ -676,7 +676,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param query The (optional) inline query string to prefill
      */
-    switchInline(text: string, query = "") {
+    switchInline(text: string, query = ""): this {
         return this.add(InlineKeyboard.switchInline(text, query));
     }
     /**
@@ -715,7 +715,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param query The (optional) inline query string to prefill
      */
-    switchInlineCurrent(text: string, query = "") {
+    switchInlineCurrent(text: string, query = ""): this {
         return this.add(InlineKeyboard.switchInlineCurrent(text, query));
     }
     /**
@@ -757,7 +757,7 @@ export class InlineKeyboard {
     switchInlineChosen(
         text: string,
         query: SwitchInlineQueryChosenChat = {},
-    ) {
+    ): this {
         return this.add(InlineKeyboard.switchInlineChosen(text, query));
     }
     /**
@@ -788,7 +788,7 @@ export class InlineKeyboard {
      * @param text The text to display
      * @param copyText The text to be copied to the clipboard
      */
-    copyText(text: string, copyText: string | CopyTextButton) {
+    copyText(text: string, copyText: string | CopyTextButton): this {
         return this.add(InlineKeyboard.copyText(text, copyText));
     }
     /**
@@ -817,7 +817,7 @@ export class InlineKeyboard {
      *
      * @param text The text to display
      */
-    game(text: string) {
+    game(text: string): this {
         return this.add(InlineKeyboard.game(text));
     }
     /**
@@ -840,7 +840,7 @@ export class InlineKeyboard {
      *
      * @param text The text to display. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
      */
-    pay(text: string) {
+    pay(text: string): this {
         return this.add(InlineKeyboard.pay(text));
     }
     /**
@@ -885,7 +885,7 @@ export class InlineKeyboard {
      * [d e f]     [  f  ]
      * ```
      */
-    toTransposed() {
+    toTransposed(): InlineKeyboard {
         const original = this.inline_keyboard;
         const transposed = transpose(original);
         return new InlineKeyboard(transposed);
@@ -925,7 +925,7 @@ export class InlineKeyboard {
      * @param columns Maximum number of buttons per row
      * @param options Optional flowing behavior
      */
-    toFlowed(columns: number, options: FlowOptions = {}) {
+    toFlowed(columns: number, options: FlowOptions = {}): InlineKeyboard {
         const original = this.inline_keyboard;
         const flowed = reflow(original, columns, options);
         return new InlineKeyboard(flowed);
@@ -933,7 +933,7 @@ export class InlineKeyboard {
     /**
      * Creates and returns a deep copy of this inline keyboard.
      */
-    clone() {
+    clone(): InlineKeyboard {
         return new InlineKeyboard(
             this.inline_keyboard.map((row) => row.slice()),
         );
@@ -943,7 +943,7 @@ export class InlineKeyboard {
      *
      * @param sources A number of inline keyboards to append
      */
-    append(...sources: InlineKeyboardSource[]) {
+    append(...sources: InlineKeyboardSource[]): this {
         for (const source of sources) {
             const keyboard = InlineKeyboard.from(source);
             this.inline_keyboard.push(
