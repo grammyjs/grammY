@@ -5,94 +5,35 @@ import type { Context } from "../context.ts";
 import type { WebhookReplyEnvelope } from "../client.ts";
 const debugErr = createDebug("grammy:error");
 
-/**
- * Performs a constant-time comparison of two strings to prevent timing attacks.
- * This function always compares all bytes regardless of early differences,
- * ensuring the comparison time does not leak information about the secret.
- *
- * @param header The header value from the request (X-Telegram-Bot-Api-Secret-Token)
- * @param token The expected secret token configured for the webhook
- * @returns true if strings are equal, false otherwise
- */
-function compareSecretToken(
-    header: string | undefined,
-    token: string | undefined,
-): boolean {
-    // If no token is configured, accept all requests
-    if (token === undefined) {
-        return true;
-    }
-    // If token is configured but no header provided, reject
-    if (header === undefined) {
-        return false;
-    }
-
-    // Convert strings to Uint8Array for byte-by-byte comparison
-    const encoder = new TextEncoder();
-    const headerBytes = encoder.encode(header);
-    const tokenBytes = encoder.encode(token);
-
-    // If lengths differ, reject
-    if (headerBytes.length !== tokenBytes.length) {
-        return false;
-    }
-
-    let hasDifference = 0;
-    // Always iterate exactly tokenBytes.length times to prevent timing attacks
-    // that could reveal the secret token's length. The loop time is constant
-    // relative to the secret token length, not the attacker's input length.
-    for (let i = 0; i < tokenBytes.length; i++) {
-        // If header is shorter than token, pad with 0 for comparison
-        const headerByte = i < headerBytes.length ? headerBytes[i] : 0;
-        const tokenByte = tokenBytes[i];
-
-        // If bytes differ, mark that we found a difference
-        // Using bitwise OR to maintain constant-time (no short-circuit evaluation)
-        hasDifference |= headerByte ^ tokenByte;
-    }
-
-    // Return true only if no differences were found
-    return hasDifference === 0;
+// TODO: add docs examples for each adapter
+export interface WebhookAdapterMap {
+    callback: CallbackAdapter;
+    awsLambda: LambdaAdapter;
+    awsLambdaAsync: LambdaAsyncAdapter;
+    azure: AzureAdapter;
+    azureV4: AzureAdapterV4;
+    bun: BunAdapter;
+    cloudflare: CloudflareAdapter;
+    cloudflareModule: CloudflareModuleAdapter;
+    elysia: ElysiaAdapter;
+    express: ExpressAdapter;
+    fastify: FastifyAdapter;
+    hono: HonoAdapter;
+    http: HttpAdapter;
+    https: HttpAdapter;
+    koa: KoaAdapter;
+    nextJs: NextAdapter;
+    nhttp: NHttpAdapter;
+    oak: OakAdapter;
+    serveHttp: ServeHttpAdapter;
+    stdHttp: StdHttpAdapter;
+    sveltekit: SveltekitAdapter;
+    worktop: WorktopAdapter;
 }
-
-export interface WebhookOptions {
-    /** An optional strategy to handle timeouts (default: 'throw') */
-    // deno-lint-ignore no-explicit-any
-    onTimeout?: "throw" | "ignore" | ((...args: any[]) => unknown);
-    /** An optional number of timeout milliseconds (default: 10_000) */
-    timeoutMilliseconds?: number;
-    /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
-    secretToken?: string;
-}
-
-type Adapters = ReturnType<typeof makeAdapters>;
-type AdapterNames = keyof Adapters;
-type Adapter<A extends Adapters[AdapterNames]> = (
-    ...args: Parameters<A>
-) => ReturnType<A>["handlerReturn"] extends undefined ? Promise<void>
-    : NonNullable<ReturnType<A>["handlerReturn"]>;
-type WebhookAdapter<
-    C extends Context = Context,
-    A extends Adapters[AdapterNames] = Adapters[AdapterNames],
-> = {
-    (
-        bot: Bot<C>,
-        webhookOptions?: WebhookOptions,
-    ): Adapter<A>;
+export type WebhookAdapters = {
+    readonly [A in keyof WebhookAdapterMap]: WebhookAdapter<A>;
 };
 
-let adapters: Adapters | undefined;
-function createWebhookAdapter<
-    C extends Context = Context,
-    A extends AdapterNames = AdapterNames,
->(adapterName: A): WebhookAdapter<C, Adapters[A]> {
-    adapters ??= makeAdapters();
-    const adapter = adapters[adapterName];
-    return (bot: Bot<C>, options?: WebhookOptions) =>
-        webhookCallback(bot, adapter, options);
-}
-
-// TODO: add docs examples for each adapter
 /**
  * Contains factories of callback function that you can pass to a web framework
  * (such as express) if you want to run your bot via webhooks. Use it like this:
@@ -110,7 +51,7 @@ function createWebhookAdapter<
  * @param bot The bot for which to create a callback
  * @param webhookOptions Further options for the webhook setup
  */
-export const webhookAdapters = {
+export const webhookAdapters: WebhookAdapters = {
     get callback() {
         return createWebhookAdapter("callback");
     },
@@ -179,27 +120,39 @@ export const webhookAdapters = {
     },
 };
 
-/**
- * Creates a callback function that you can pass to a web framework (such as
- * express) if you want to run your bot via webhooks. Use it like this:
- * ```ts
- * const app = express() // or whatever you're using
- * const bot = new Bot('<token>')
- *
- * app.use(webhookCallback(bot, 'express'))
- * ```
- *
- * Confer the grammY
- * [documentation](https://grammy.dev/guide/deployment-types) to read more
- * about how to run your bot with webhooks.
- *
- * @param bot The bot for which to create a callback
- * @param adapter An optional string identifying the framework (default: 'express')
- * @param webhookOptions Further options for the webhook setup
- */
-function webhookCallback<C extends Context = Context>(
+export interface WebhookOptions {
+    /** An optional strategy to handle timeouts (default: 'throw') */
+    // deno-lint-ignore no-explicit-any
+    onTimeout?: "throw" | "ignore" | ((...args: any[]) => unknown);
+    /** An optional number of timeout milliseconds (default: 10_000) */
+    timeoutMilliseconds?: number;
+    /** An optional string to compare to X-Telegram-Bot-Api-Secret-Token */
+    secretToken?: string;
+}
+export type WebhookAdapter<
+    A extends keyof WebhookAdapterMap,
+> = <C extends Context>(
     bot: Bot<C>,
-    adapter: FrameworkAdapter,
+    webhookOptions?: WebhookOptions,
+) => WebhookCallback<A>;
+export type WebhookCallback<A extends keyof WebhookAdapterMap> = (
+    ...args: Parameters<WebhookAdapterMap[A]>
+) => ReturnType<WebhookAdapterMap[A]>["handlerReturn"] extends undefined
+    ? Promise<void>
+    : NonNullable<ReturnType<WebhookAdapterMap[A]>["handlerReturn"]>;
+
+let adapterMap: WebhookAdapterMap | undefined;
+function createWebhookAdapter<A extends keyof WebhookAdapterMap>(
+    adapterName: A,
+): WebhookAdapter<A> {
+    adapterMap ??= makeAdapters();
+    const adapter = adapterMap[adapterName];
+    return (bot, options) => webhookCallback(bot, adapter, options);
+}
+function webhookCallback<C extends Context>(
+    bot: Bot<C>,
+    // deno-lint-ignore no-explicit-any
+    adapter: (...args: any[]) => ReqResHandler<any>,
     options?: WebhookOptions,
 ) {
     const {
@@ -258,35 +211,6 @@ function webhookCallback<C extends Context = Context>(
     };
 }
 
-function timeoutIfNecessary(
-    task: Promise<void>,
-    onTimeout: "throw" | "ignore" | (() => unknown),
-    timeout: number,
-): Promise<void> {
-    if (timeout === Infinity) return task;
-    return new Promise((resolve, reject) => {
-        const handle = setTimeout(() => {
-            debugErr(`Request timed out after ${timeout} ms`);
-            if (onTimeout === "throw") {
-                reject(new Error(`Request timed out after ${timeout} ms`));
-            } else {
-                if (typeof onTimeout === "function") onTimeout();
-                resolve();
-            }
-            const now = Date.now();
-            task.finally(() => {
-                const diff = Date.now() - now;
-                debugErr(`Request completed ${diff} ms after timeout!`);
-            });
-        }, timeout);
-        task.then(resolve)
-            .catch(reject)
-            .finally(() => clearTimeout(handle));
-    });
-}
-
-type MaybePromise<T> = T | Promise<T>;
-
 /**
  * Abstraction over a request-response cycle, providing access to the update, as
  * well as a mechanism for responding to the request and to end it.
@@ -296,7 +220,7 @@ export interface ReqResHandler<T = void> {
      * The update object sent from Telegram, usually resolves the request's JSON
      * body
      */
-    update(): MaybePromise<Update>;
+    update(): Update | Promise<Update>;
     /**
      * X-Telegram-Bot-Api-Secret-Token header of the request, or undefined if
      * not present
@@ -329,13 +253,13 @@ export interface ReqResHandler<T = void> {
     handlerReturn?: Promise<T>;
 }
 
-/**
- * Middleware for a web framework. Creates a request-response handler for a
- * request. The handler will be used to integrate with the compatible framework.
- */
-// deno-lint-ignore no-explicit-any
-export type FrameworkAdapter = (...args: any[]) => ReqResHandler<any>;
-
+export type CallbackAdapter = (
+    update: Update,
+    callback: (json: string) => unknown,
+    header?: string,
+    unauthorized?: () => unknown,
+    badRequest?: () => unknown,
+) => ReqResHandler;
 export type LambdaAdapter = (
     event: {
         body?: string;
@@ -528,7 +452,7 @@ export type WorktopAdapter = (req: {
     send: (status: number, json: string) => void;
 }) => ReqResHandler;
 
-export function makeAdapters() {
+export function makeAdapters(): WebhookAdapterMap {
     const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
     const SECRET_HEADER_LOWERCASE = SECRET_HEADER.toLowerCase();
     const WRONG_TOKEN_ERROR = "secret token is wrong";
@@ -978,4 +902,81 @@ export function makeAdapters() {
         sveltekit,
         worktop,
     };
+}
+
+/**
+ * Performs a constant-time comparison of two strings to prevent timing attacks.
+ * This function always compares all bytes regardless of early differences,
+ * ensuring the comparison time does not leak information about the secret.
+ *
+ * @param header The header value from the request (X-Telegram-Bot-Api-Secret-Token)
+ * @param token The expected secret token configured for the webhook
+ * @returns true if strings are equal, false otherwise
+ */
+function compareSecretToken(
+    header: string | undefined,
+    token: string | undefined,
+): boolean {
+    // If no token is configured, accept all requests
+    if (token === undefined) {
+        return true;
+    }
+    // If token is configured but no header provided, reject
+    if (header === undefined) {
+        return false;
+    }
+
+    // Convert strings to Uint8Array for byte-by-byte comparison
+    const encoder = new TextEncoder();
+    const headerBytes = encoder.encode(header);
+    const tokenBytes = encoder.encode(token);
+
+    // If lengths differ, reject
+    if (headerBytes.length !== tokenBytes.length) {
+        return false;
+    }
+
+    let hasDifference = 0;
+    // Always iterate exactly tokenBytes.length times to prevent timing attacks
+    // that could reveal the secret token's length. The loop time is constant
+    // relative to the secret token length, not the attacker's input length.
+    for (let i = 0; i < tokenBytes.length; i++) {
+        // If header is shorter than token, pad with 0 for comparison
+        const headerByte = i < headerBytes.length ? headerBytes[i] : 0;
+        const tokenByte = tokenBytes[i];
+
+        // If bytes differ, mark that we found a difference
+        // Using bitwise OR to maintain constant-time (no short-circuit evaluation)
+        hasDifference |= headerByte ^ tokenByte;
+    }
+
+    // Return true only if no differences were found
+    return hasDifference === 0;
+}
+
+function timeoutIfNecessary(
+    task: Promise<void>,
+    onTimeout: "throw" | "ignore" | (() => unknown),
+    timeout: number,
+): Promise<void> {
+    if (timeout === Infinity) return task;
+    return new Promise((resolve, reject) => {
+        const handle = setTimeout(() => {
+            debugErr(`Request timed out after ${timeout} ms`);
+            if (onTimeout === "throw") {
+                reject(new Error(`Request timed out after ${timeout} ms`));
+            } else {
+                if (typeof onTimeout === "function") onTimeout();
+                resolve();
+            }
+            const now = Date.now();
+            task.finally(() => {
+                const diff = Date.now() - now;
+                debugErr(`Request completed ${diff} ms after timeout!`);
+            });
+        }, timeout);
+        task.then(resolve)
+            .catch(reject)
+            .finally(() => clearTimeout(handle));
+    });
 }
