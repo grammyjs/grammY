@@ -47,6 +47,62 @@ export const DEFAULT_UPDATE_TYPES = [
     "chat_boost",
     "removed_chat_boost",
 ] as const;
+function monomorphize(update: Update): Update {
+    const {
+        update_id,
+        message,
+        edited_message,
+        channel_post,
+        edited_channel_post,
+        business_connection,
+        business_message,
+        edited_business_message,
+        deleted_business_messages,
+        message_reaction,
+        message_reaction_count,
+        inline_query,
+        chosen_inline_result,
+        callback_query,
+        shipping_query,
+        pre_checkout_query,
+        purchased_paid_media,
+        poll,
+        poll_answer,
+        my_chat_member,
+        chat_member,
+        chat_join_request,
+        chat_boost,
+        removed_chat_boost,
+        ...rest // collect unknown update types
+    } = update;
+    return {
+        update_id,
+        message,
+        edited_message,
+        channel_post,
+        edited_channel_post,
+        business_connection,
+        business_message,
+        edited_business_message,
+        deleted_business_messages,
+        message_reaction,
+        message_reaction_count,
+        inline_query,
+        chosen_inline_result,
+        callback_query,
+        shipping_query,
+        pre_checkout_query,
+        purchased_paid_media,
+        poll,
+        poll_answer,
+        my_chat_member,
+        chat_member,
+        chat_join_request,
+        chat_boost,
+        removed_chat_boost,
+        ...rest, // preserve unknown update types
+    };
+}
 
 /**
  * Options that can be specified when running the bot via simple long polling.
@@ -356,9 +412,10 @@ export class Bot<
      * @param webhookReplyEnvelope An optional webhook reply envelope
      */
     async handleUpdate(
-        update: Update,
+        up: Update,
         webhookReplyEnvelope?: WebhookReplyEnvelope,
     ) {
+        const update = monomorphize(up);
         if (this.me === undefined) {
             throw new Error(
                 "Bot not initialized! Either call `await bot.init()`, \
