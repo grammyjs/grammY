@@ -2666,18 +2666,48 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param message_id Identifier of the message to edit
      * @param latitude Latitude of new location
      * @param longitude Longitude of new location
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async editMessageLiveLocation(
+        chat_id: number | string,
+        message_id: number,
         latitude: number,
         longitude: number,
         other?: Partial<ApiParameters<"editMessageLiveLocation", R>>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.raw.editMessageLiveLocation({
+            chat_id,
+            message_id,
+            latitude,
+            longitude,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
+     * @param inline_message_id Identifier of the inline message
+     * @param latitude Latitude of new location
+     * @param longitude Longitude of new location
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async editMessageLiveLocationInline(
+        inline_message_id: string,
+        latitude: number,
+        longitude: number,
+        other?: Partial<ApiParameters<"editMessageLiveLocation", R>>,
+        signal?: AbortSignal,
+    ): Promise<true | Message> {
+        return await this.raw.editMessageLiveLocation({
+            inline_message_id,
             latitude,
             longitude,
             ...other,

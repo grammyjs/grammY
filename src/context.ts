@@ -3880,12 +3880,29 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"editMessageLiveLocation">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.api.editMessageLiveLocation(
-            latitude,
-            longitude,
-            fillConnection(this, other),
-            signal,
-        );
+        const inlineMessageId = other?.inline_message_id ??
+            this.inlineMessageId;
+        if (
+            inlineMessageId === undefined ||
+            (other?.chat_id !== undefined && other.message_id !== undefined)
+        ) {
+            return await this.api.editMessageLiveLocation(
+                ensureChatId("editMessageLiveLocation", this, other),
+                ensureMessageId("editMessageLiveLocation", this, other),
+                latitude,
+                longitude,
+                fillConnection(this, other),
+                signal,
+            );
+        } else {
+            return await this.api.editMessageLiveLocationInline(
+                inlineMessageId,
+                latitude,
+                longitude,
+                fillConnection(this, other),
+                signal,
+            );
+        }
     }
     /**
      * Context-aware alias for {@link Api.stopMessageLiveLocation | ctx.api.stopMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
