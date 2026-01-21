@@ -2717,14 +2717,38 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param message_id Identifier of the message with live location to stop
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async stopMessageLiveLocation(
+        chat_id: number | string,
+        message_id: number,
         other?: Partial<ApiParameters<"stopMessageLiveLocation", R>>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.raw.stopMessageLiveLocation({
+            chat_id,
+            message_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
+     * @param inline_message_id Identifier of the inline message
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async stopMessageLiveLocationInline(
+        inline_message_id: string,
+        other?: Partial<ApiParameters<"stopMessageLiveLocation", R>>,
+        signal?: AbortSignal,
+    ): Promise<true | Message> {
+        return await this.raw.stopMessageLiveLocation({
+            inline_message_id,
             ...other,
         }, signal);
     }

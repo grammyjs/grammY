@@ -3921,10 +3921,25 @@ export class Context implements CamelCaseUpdate {
         other?: Partial<ApiParameters<"stopMessageLiveLocation">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.api.stopMessageLiveLocation(
-            fillConnection(this, other),
-            signal,
-        );
+        const inlineMessageId = other?.inline_message_id ??
+            this.inlineMessageId;
+        if (
+            inlineMessageId === undefined ||
+            (other?.chat_id !== undefined && other.message_id !== undefined)
+        ) {
+            return await this.api.stopMessageLiveLocation(
+                ensureChatId("stopMessageLiveLocation", this, other),
+                ensureMessageId("stopMessageLiveLocation", this, other),
+                fillConnection(this, other),
+                signal,
+            );
+        } else {
+            return await this.api.stopMessageLiveLocationInline(
+                inlineMessageId,
+                fillConnection(this, other),
+                signal,
+            );
+        }
     }
     /**
      * Context-aware alias for {@link Api.editMessageChecklist | ctx.api.editMessageChecklist}. The following parameters are pre-supplied based on the current update:
