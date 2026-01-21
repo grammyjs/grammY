@@ -2783,14 +2783,38 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
+     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param message_id Identifier of the message to edit
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async editMessageReplyMarkup(
+        chat_id: number | string,
+        message_id: number,
         other?: Partial<ApiParameters<"editMessageReplyMarkup", R>>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.raw.editMessageReplyMarkup({
+            chat_id,
+            message_id,
+            ...other,
+        }, signal);
+    }
+    /**
+     * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+     *
+     * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
+     * @param inline_message_id Identifier of the inline message
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async editMessageReplyMarkupInline(
+        inline_message_id: string,
+        other?: Partial<ApiParameters<"editMessageReplyMarkup", R>>,
+        signal?: AbortSignal,
+    ): Promise<true | Message> {
+        return await this.raw.editMessageReplyMarkup({
+            inline_message_id,
             ...other,
         }, signal);
     }
