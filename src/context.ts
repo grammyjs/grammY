@@ -1047,6 +1047,12 @@ export class Context implements CamelCaseUpdate {
      *
      * - `chat_id` from `ctx.chatId`
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     *
      * Use this method to send text messages. On success, the sent {@link Message | Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#sendmessage}
@@ -1062,7 +1068,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendMessage(
             ensureChatId("sendMessage", this, other),
             text,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1177,6 +1183,12 @@ export class Context implements CamelCaseUpdate {
      *
      * - `chat_id` from `ctx.chatId`
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     *
      * Use this method to send photos. On success, the sent {@link Message | Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#sendphoto}
@@ -1192,7 +1204,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendPhoto(
             ensureChatId("sendPhoto", this, other),
             photo,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1200,6 +1212,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendAudio | ctx.api.sendAudio}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent {@link Message | Message} is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
      * For sending voice messages, use the {@link ApiMethods.sendVoice | sendVoice} method instead.
@@ -1217,7 +1235,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendAudio(
             ensureChatId("sendAudio", this, other),
             audio,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1225,6 +1243,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendDocument | ctx.api.sendDocument}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send general files. On success, the sent {@link Message | Message} is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1241,7 +1265,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendDocument(
             ensureChatId("sendDocument", this, other),
             document,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1249,6 +1273,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendVideo | ctx.api.sendVideo}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as {@link Document | Document}). On success, the sent {@link Message | Message} is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1265,7 +1295,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendVideo(
             ensureChatId("sendVideo", this, other),
             video,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1273,6 +1303,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendAnimation | ctx.api.sendAnimation}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent {@link Message | Message} is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1289,7 +1325,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendAnimation(
             ensureChatId("sendAnimation", this, other),
             animation,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1297,6 +1333,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendVoice | ctx.api.sendVoice}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as {@link Audio | Audio} or {@link Document | Document}). On success, the sent {@link Message | Message} is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1313,7 +1355,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendVoice(
             ensureChatId("sendVoice", this, other),
             voice,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1321,6 +1363,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendVideoNote | ctx.api.sendVideoNote}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * As of {@link https://telegram.org/blog/video-messages-and-telescope | v.4.0}, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent {@link Message | Message} is returned.
      *
@@ -1337,7 +1385,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendVideoNote(
             ensureChatId("sendVideoNote", this, other),
             video_note,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1345,6 +1393,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendPaidMedia | ctx.api.sendPaidMedia}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send paid media. On success, the sent {@link Message | Message} is returned.
      *
@@ -1364,7 +1418,7 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("sendPaidMedia", this, other),
             star_count,
             media,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1372,6 +1426,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendMediaGroup | ctx.api.sendMediaGroup}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of {@link Message | Message} objects that were sent is returned.
      *
@@ -1393,7 +1453,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendMediaGroup(
             ensureChatId("sendMediaGroup", this, other),
             media,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1401,6 +1461,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendLocation | ctx.api.sendLocation}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send point on the map. On success, the sent {@link Message | Message} is returned.
      *
@@ -1420,7 +1486,7 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("sendLocation", this, other),
             latitude,
             longitude,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1428,6 +1494,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendVenue | ctx.api.sendVenue}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send information about a venue. On success, the sent {@link Message | Message} is returned.
      *
@@ -1453,7 +1525,7 @@ export class Context implements CamelCaseUpdate {
             longitude,
             title,
             address,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1461,6 +1533,12 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendContact | ctx.api.sendContact}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
      *
      * Use this method to send phone contacts. On success, the sent {@link Message | Message} is returned.
      *
@@ -1480,7 +1558,7 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("sendContact", this, other),
             phone_number,
             first_name,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1488,6 +1566,11 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendPoll | ctx.api.sendPoll}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
      *
      * Use this method to send a native poll. On success, the sent {@link Message | Message} is returned.
      *
@@ -1507,7 +1590,7 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("sendPoll", this, other),
             question,
             options,
-            other,
+            fillConnectionThread(this, other),
             signal,
         );
     }
@@ -1542,6 +1625,12 @@ export class Context implements CamelCaseUpdate {
      *
      * - `chat_id` from `ctx.chatId`
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     *
      * Use this method to send an animated emoji that will display a random value. On success, the sent {@link Message | Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#senddice}
@@ -1554,7 +1643,7 @@ export class Context implements CamelCaseUpdate {
     ): Promise<Message> {
         return await this.api.sendDice(
             ensureChatId("sendDice", this, other),
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -1562,6 +1651,10 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendMessageDraft | ctx.api.sendMessageDraft}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
      *
      * Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns _True_ on success.
      *
@@ -1581,7 +1674,7 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("sendMessageDraft", this, other),
             draft_id,
             text,
-            other,
+            fillThread(this, other),
             signal,
         );
     }
@@ -1589,6 +1682,11 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.sendChatAction | ctx.api.sendChatAction}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
      *
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.
      *
@@ -1620,7 +1718,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendChatAction(
             ensureChatId("sendChatAction", this, other),
             action,
-            other,
+            fillConnectionThread(this, other),
             signal,
         );
     }
@@ -2188,6 +2286,10 @@ export class Context implements CamelCaseUpdate {
      * - `chat_id` from `ctx.chatId`
      * - `message_id` from `ctx.msgId`
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     *
      * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#pinchatmessage}
@@ -2201,7 +2303,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.pinChatMessage(
             ensureChatId("pinChatMessage", this, other),
             ensureMessageId("pinChatMessage", this, other),
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
@@ -2209,6 +2311,10 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.unpinChatMessage | ctx.api.unpinChatMessage}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
      *
      * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns _True_ on success.
      *
@@ -2222,7 +2328,7 @@ export class Context implements CamelCaseUpdate {
     ): Promise<true> {
         return await this.api.unpinChatMessage(
             ensureChatId("unpinChatMessage", this, other),
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
@@ -3346,6 +3452,10 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageText | ctx.api.editMessageText}. The following parameters are pre-supplied based on the current update:
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     *
      * Use this method to edit text and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagetext}
@@ -3360,12 +3470,16 @@ export class Context implements CamelCaseUpdate {
     ): Promise<true | Message> {
         return await this.api.editMessageText(
             text,
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
     /**
      * Context-aware alias for {@link Api.editMessageCaption | ctx.api.editMessageCaption}. The following parameters are pre-supplied based on the current update:
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
      *
      * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
@@ -3378,12 +3492,16 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.api.editMessageCaption(
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
     /**
      * Context-aware alias for {@link Api.editMessageMedia | ctx.api.editMessageMedia}. The following parameters are pre-supplied based on the current update:
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
      *
      * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
@@ -3399,12 +3517,16 @@ export class Context implements CamelCaseUpdate {
     ): Promise<true | Message> {
         return await this.api.editMessageMedia(
             media,
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
     /**
      * Context-aware alias for {@link Api.editMessageLiveLocation | ctx.api.editMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
      *
      * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
      *
@@ -3423,12 +3545,16 @@ export class Context implements CamelCaseUpdate {
         return await this.api.editMessageLiveLocation(
             latitude,
             longitude,
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
     /**
      * Context-aware alias for {@link Api.stopMessageLiveLocation | ctx.api.stopMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
      *
      * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
      *
@@ -3441,7 +3567,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.api.stopMessageLiveLocation(
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
@@ -3476,6 +3602,10 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageReplyMarkup | ctx.api.editMessageReplyMarkup}. The following parameters are pre-supplied based on the current update:
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     *
      * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
@@ -3487,7 +3617,7 @@ export class Context implements CamelCaseUpdate {
         signal?: AbortSignal,
     ): Promise<true | Message> {
         return await this.api.editMessageReplyMarkup(
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
@@ -3496,6 +3626,10 @@ export class Context implements CamelCaseUpdate {
      *
      * - `chat_id` from `ctx.chatId`
      * - `message_id` from `ctx.msgId`
+     *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
      *
      * Use this method to stop a poll which was sent by the bot. On success, the stopped {@link Poll | Poll} is returned.
      *
@@ -3510,7 +3644,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.stopPoll(
             ensureChatId("stopPoll", this, other),
             ensureMessageId("stopPoll", this, other),
-            other,
+            fillConnection(this, other),
             signal,
         );
     }
@@ -3624,6 +3758,12 @@ export class Context implements CamelCaseUpdate {
      *
      * - `chat_id` from `ctx.chatId`
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     *
      * Use this method to send static .WEBP, {@link https://telegram.org/blog/animated-stickers | animated} .TGS, or {@link https://telegram.org/blog/video-stickers-better-reactions | video} .WEBM stickers. On success, the sent {@link Message | Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#sendsticker}
@@ -3639,7 +3779,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendSticker(
             ensureChatId("sendSticker", this, other),
             sticker,
-            other,
+            fillConnectionThreadTopic(this, other),
             signal,
         );
     }
@@ -4037,6 +4177,11 @@ export class Context implements CamelCaseUpdate {
      *
      * - `chat_id` from `ctx.chatId`
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     *
      * Use this method to send invoices. On success, the sent {@link Message | Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#sendinvoice}
@@ -4064,7 +4209,7 @@ export class Context implements CamelCaseUpdate {
             payload,
             currency,
             prices,
-            other,
+            fillThreadTopic(this, other),
             signal,
         );
     }
@@ -4197,6 +4342,11 @@ export class Context implements CamelCaseUpdate {
      *
      * - `chat_id` from `ctx.chatId`
      *
+     * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
+     *
+     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     *
      * Use this method to send a game. On success, the sent {@link Message | Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#sendgame}
@@ -4212,7 +4362,7 @@ export class Context implements CamelCaseUpdate {
         return await this.api.sendGame(
             ensureChatId("sendGame", this, other),
             game_short_name,
-            other,
+            fillConnectionThread(this, other),
             signal,
         );
     }
@@ -4705,18 +4855,73 @@ function ensurePreCheckoutQueryId(
     }
     return preCheckoutQueryId;
 }
-// function ensurePresent<T>(
-//     value: T | undefined,
-//     method: keyof ApiMethods,
-//     parameter: string,
-// ): T {
-//     if (value === undefined) {
-//         throw new Error(
-//             `Cannot call '${method}' because this update does not contain a value for the parameter '${parameter}'`,
-//         );
-//     }
-//     return value;
-// }
+
+/** business_connection_id */
+function fillConnection<T extends Record<string, unknown>>(
+    ctx: Context,
+    other?: T,
+) {
+    return {
+        business_connection_id: ctx.businessConnectionId,
+        ...other,
+    };
+}
+/** message_thread_id */
+function fillThread<T extends Record<string, unknown>>(
+    ctx: Context,
+    other?: T,
+) {
+    const msg = ctx.msg;
+    return {
+        ...(msg?.is_topic_message
+            ? { message_thread_id: msg.message_thread_id }
+            : {}),
+        ...other,
+    };
+}
+/** business_connection_id, message_thread_id */
+function fillConnectionThread<T extends Record<string, unknown>>(
+    ctx: Context,
+    other?: T,
+) {
+    const msg = ctx.msg;
+    return {
+        business_connection_id: ctx.businessConnectionId,
+        ...(msg?.is_topic_message
+            ? { message_thread_id: msg.message_thread_id }
+            : {}),
+        ...other,
+    };
+}
+/** message_thread_id, direct_messages_topic_id */
+function fillThreadTopic<T extends Record<string, unknown>>(
+    ctx: Context,
+    other?: T,
+) {
+    const msg = ctx.msg;
+    return {
+        ...(msg?.is_topic_message
+            ? { message_thread_id: msg.message_thread_id }
+            : {}),
+        direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+        ...other,
+    };
+}
+/** business_connection_id, message_thread_id, direct_messages_topic_id */
+function fillConnectionThreadTopic<T extends Record<string, unknown>>(
+    ctx: Context,
+    other?: T,
+) {
+    const msg = ctx.msg;
+    return {
+        business_connection_id: ctx.businessConnectionId,
+        ...(msg?.is_topic_message
+            ? { message_thread_id: msg.message_thread_id }
+            : {}),
+        direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+        ...other,
+    };
+}
 
 function triggerFn(trigger: MaybeArray<string | RegExp>) {
     return toArray(trigger).map((t) =>
