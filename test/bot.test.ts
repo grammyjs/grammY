@@ -1,6 +1,6 @@
 import { Bot } from "../src/bot.ts";
 import { BotError } from "../src/composer.ts";
-import { Context } from "../src/context.ts";
+import type { Context } from "../src/context.ts";
 import { GrammyError, HttpError } from "../src/error.ts";
 import type { Update, UserFromGetMe } from "../src/types.ts";
 import {
