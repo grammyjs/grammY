@@ -4405,15 +4405,18 @@ export class Context implements CamelCaseUpdate {
      * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#setstickerkeywords}
+     * @param keywords A list of 0-20 search keywords for the sticker with total length of up to 64 characters
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setStickerKeywords(
+        keywords: string[] | undefined,
         other?: Partial<ApiParameters<"setStickerKeywords">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.setStickerKeywords(
             ensureSticker("setStickerKeywords", this, other),
+            keywords,
             other,
             signal,
         );

@@ -3159,16 +3159,19 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#setstickerkeywords}
      * @param sticker File identifier of the sticker
+     * @param keywords A list of 0-20 search keywords for the sticker with total length of up to 64 characters
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async setStickerKeywords(
         sticker: string,
+        keywords: string[] | undefined,
         other?: Partial<ApiParameters<"setStickerKeywords", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.setStickerKeywords({
             sticker,
+            keywords,
             ...other,
         }, signal);
     }
