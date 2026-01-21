@@ -3739,6 +3739,10 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageText | ctx.api.editMessageText}. The following parameters are pre-supplied based on the current update:
      *
+     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
      * - `business_connection_id` from `ctx.businessConnectionId`
@@ -3779,6 +3783,10 @@ export class Context implements CamelCaseUpdate {
     }
     /**
      * Context-aware alias for {@link Api.editMessageCaption | ctx.api.editMessageCaption}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
@@ -3821,6 +3829,10 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageMedia | ctx.api.editMessageMedia}. The following parameters are pre-supplied based on the current update:
      *
+     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
      * - `business_connection_id` from `ctx.businessConnectionId`
@@ -3861,6 +3873,10 @@ export class Context implements CamelCaseUpdate {
     }
     /**
      * Context-aware alias for {@link Api.editMessageLiveLocation | ctx.api.editMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
@@ -3906,6 +3922,10 @@ export class Context implements CamelCaseUpdate {
     }
     /**
      * Context-aware alias for {@link Api.stopMessageLiveLocation | ctx.api.stopMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
@@ -3971,6 +3991,10 @@ export class Context implements CamelCaseUpdate {
     }
     /**
      * Context-aware alias for {@link Api.editMessageReplyMarkup | ctx.api.editMessageReplyMarkup}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
