@@ -18,6 +18,8 @@ import type {
     ChatMemberAdministrator,
     ChatMemberOwner,
     ChatPermissions,
+    // deno-lint-ignore no-unused-vars
+    DirectMessagesTopic, // used in TSDoc strings
     File,
     ForumTopic,
     GameHighScore,
@@ -45,6 +47,8 @@ import type {
     ReactionType,
     ReactionTypeEmoji,
     StarAmount,
+    // deno-lint-ignore no-unused-vars
+    Sticker, // used in TSDOC strings
     StickerSet,
     Story,
     Update,
@@ -1045,13 +1049,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendMessage | ctx.api.sendMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send text messages. On success, the sent {@link Message | Message} is returned.
      *
@@ -1075,8 +1079,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendMessage | ctx.api.sendMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent {@link Message | Message} is returned.
      *
@@ -1101,7 +1105,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.forwardMessages | ctx.api.forwardMessages}. The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from `ctx.chatId`
+     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of {@link MessageId | MessageId} of the sent messages is returned.
      *
@@ -1128,8 +1132,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.copyMessage | ctx.api.copyMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessage | forwardMessage}, but the copied message doesn't have a link to the original message. Returns the {@link MessageId | MessageId} of the sent message on success.
      *
@@ -1154,7 +1158,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.copyMessages | ctx.api.copyMessages}. The following parameters are pre-supplied based on the current update:
      *
-     * - `from_chat_id` from `ctx.chatId`
+     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_id_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of {@link MessageId | MessageId} of the sent messages is returned.
      *
@@ -1181,13 +1185,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendPhoto | ctx.api.sendPhoto}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send photos. On success, the sent {@link Message | Message} is returned.
      *
@@ -1211,13 +1215,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendAudio | ctx.api.sendAudio}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent {@link Message | Message} is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
      * For sending voice messages, use the {@link ApiMethods.sendVoice | sendVoice} method instead.
@@ -1242,13 +1246,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendDocument | ctx.api.sendDocument}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send general files. On success, the sent {@link Message | Message} is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1272,13 +1276,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendVideo | ctx.api.sendVideo}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as {@link Document | Document}). On success, the sent {@link Message | Message} is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1302,13 +1306,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendAnimation | ctx.api.sendAnimation}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent {@link Message | Message} is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1332,13 +1336,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendVoice | ctx.api.sendVoice}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as {@link Audio | Audio} or {@link Document | Document}). On success, the sent {@link Message | Message} is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
      *
@@ -1362,13 +1366,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendVideoNote | ctx.api.sendVideoNote}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * As of {@link https://telegram.org/blog/video-messages-and-telescope | v.4.0}, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent {@link Message | Message} is returned.
      *
@@ -1392,13 +1396,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendPaidMedia | ctx.api.sendPaidMedia}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send paid media. On success, the sent {@link Message | Message} is returned.
      *
@@ -1425,13 +1429,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendMediaGroup | ctx.api.sendMediaGroup}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of {@link Message | Message} objects that were sent is returned.
      *
@@ -1460,13 +1464,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendLocation | ctx.api.sendLocation}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send point on the map. On success, the sent {@link Message | Message} is returned.
      *
@@ -1493,13 +1497,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendVenue | ctx.api.sendVenue}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send information about a venue. On success, the sent {@link Message | Message} is returned.
      *
@@ -1532,13 +1536,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendContact | ctx.api.sendContact}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send phone contacts. On success, the sent {@link Message | Message} is returned.
      *
@@ -1565,12 +1569,12 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendPoll | ctx.api.sendPoll}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * Use this method to send a native poll. On success, the sent {@link Message | Message} is returned.
      *
@@ -1597,8 +1601,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendChecklist | ctx.api.sendChecklist}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `chat_id` from `ctx.chatId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to send a checklist on behalf of a connected business account. On success, the sent {@link Message | Message} is returned.
      *
@@ -1623,13 +1627,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendDice | ctx.api.sendDice}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send an animated emoji that will display a random value. On success, the sent {@link Message | Message} is returned.
      *
@@ -1653,11 +1657,11 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendMessageDraft | ctx.api.sendMessageDraft}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns _True_ on success.
      *
@@ -1684,12 +1688,12 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendChatAction | ctx.api.sendChatAction}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns _True_ on success.
      *
@@ -1728,8 +1732,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Alias for {@link Context.setMessageReaction} which is a context-aware alias for {@link Api.setMessageReaction | ctx.api.setMessageReaction}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns _True_ on success.
      *
@@ -1748,8 +1752,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setMessageReaction | ctx.api.setMessageReaction}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns _True_ on success.
      *
@@ -1774,7 +1778,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getUserProfilePhotos | ctx.api.getUserProfilePhotos}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to get a list of profile pictures for a user. Returns a {@link UserProfilePhotos | UserProfilePhotos} object.
      *
@@ -1795,7 +1799,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setUserEmojiStatus | ctx.api.setUserEmojiStatus}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | requestEmojiStatusAccess}. Returns _True_ on success.
      *
@@ -1839,8 +1843,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.banChatMember | ctx.api.banChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link ApiMethods.unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -1862,7 +1866,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.banChatMember | ctx.api.banChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link ApiMethods.unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -1886,8 +1890,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unbanChatMember | ctx.api.unbanChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don't want this, use the parameter _only_if_banned_. Returns _True_ on success.
      *
@@ -1909,7 +1913,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unbanChatMember | ctx.api.unbanChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don't want this, use the parameter _only_if_banned_. Returns _True_ on success.
      *
@@ -1933,8 +1937,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.restrictChatMember | ctx.api.restrictChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.
      *
@@ -1959,7 +1963,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.restrictChatMember | ctx.api.restrictChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.
      *
@@ -1986,8 +1990,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.promoteChatMember | ctx.api.promoteChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass _False_ for all boolean parameters to demote a user. Returns _True_ on success.
      *
@@ -2009,7 +2013,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.promoteChatMember | ctx.api.promoteChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass _False_ for all boolean parameters to demote a user. Returns _True_ on success.
      *
@@ -2033,8 +2037,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setChatAdministratorCustomTitle | ctx.api.setChatAdministratorCustomTitle}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns _True_ on success.
      *
@@ -2059,7 +2063,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setChatAdministratorCustomTitle | ctx.api.setChatAdministratorCustomTitle}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns _True_ on success.
      *
@@ -2086,8 +2090,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.banChatSenderChat | ctx.api.banChatSenderChat}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `sender_chat_id` from `ctx.msg.sender_chat.id`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `sender_chat_id` from {@link Context.msg | ctx.msg}{@link Message.sender_chat | .sender_chat}{@link Chat.id | .id}
      *
      * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won't be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2109,7 +2113,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.banChatSenderChat | ctx.api.banChatSenderChat}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won't be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2133,8 +2137,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unbanChatSenderChat | ctx.api.unbanChatSenderChat}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `sender_chat_id` from `ctx.msg.sender_chat.id`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `sender_chat_id` from {@link Context.msg | ctx.msg}{@link Message.sender_chat | .sender_chat}{@link Chat.id | .id}
      *
      * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2156,7 +2160,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unbanChatSenderChat | ctx.api.unbanChatSenderChat}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2180,7 +2184,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setChatPermissions | ctx.api.setChatPermissions}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the _can_restrict_members_ administrator rights. Returns _True_ on success.
      *
@@ -2204,7 +2208,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.exportChatInviteLink | ctx.api.exportChatInviteLink}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as _String_ on success.
      *
@@ -2227,7 +2231,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.createChatInviteLink | ctx.api.createChatInviteLink}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as {@link ChatInviteLink | ChatInviteLink} object.
      *
@@ -2248,7 +2252,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editChatInviteLink | ctx.api.editChatInviteLink}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a {@link ChatInviteLink | ChatInviteLink} object.
      *
@@ -2272,7 +2276,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.createChatSubscriptionInviteLink | ctx.api.createChatSubscriptionInviteLink}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method {@link ApiMethods.editChatSubscriptionInviteLink | editChatSubscriptionInviteLink} or revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as a {@link ChatInviteLink | ChatInviteLink} object.
      *
@@ -2299,7 +2303,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editChatSubscriptionInviteLink | ctx.api.editChatSubscriptionInviteLink}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to edit a subscription invite link created by the bot. The bot must have the _can_invite_users_ administrator rights. Returns the edited invite link as a {@link ChatInviteLink | ChatInviteLink} object.
      *
@@ -2323,7 +2327,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.revokeChatInviteLink | ctx.api.revokeChatInviteLink}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as {@link ChatInviteLink | ChatInviteLink} object.
      *
@@ -2347,8 +2351,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.approveChatJoinRequest | ctx.api.approveChatJoinRequest}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.
      *
@@ -2370,8 +2374,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.declineChatJoinRequest | ctx.api.declineChatJoinRequest}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the _can_invite_users_ administrator right. Returns _True_ on success.
      *
@@ -2393,7 +2397,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setChatPhoto | ctx.api.setChatPhoto}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2417,7 +2421,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteChatPhoto | ctx.api.deleteChatPhoto}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2438,7 +2442,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setChatTitle | ctx.api.setChatTitle}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2462,7 +2466,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setChatDescription | ctx.api.setChatDescription}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns _True_ on success.
      *
@@ -2486,11 +2490,11 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.pinChatMessage | ctx.api.pinChatMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns _True_ on success.
      *
@@ -2514,11 +2518,11 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unpinChatMessage | ctx.api.unpinChatMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns _True_ on success.
      *
@@ -2542,7 +2546,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unpinAllChatMessages | ctx.api.unpinAllChatMessages}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns _True_ on success.
      *
@@ -2563,7 +2567,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.leaveChat | ctx.api.leaveChat}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method for your bot to leave a group, supergroup or channel. Returns _True_ on success.
      *
@@ -2584,7 +2588,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getChat | ctx.api.getChat}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to get up-to-date information about the chat. Returns a {@link ChatFullInfo | ChatFullInfo} object on success.
      *
@@ -2605,7 +2609,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getChatAdministrators | ctx.api.getChatAdministrators}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of {@link ChatMember | ChatMember} objects.
      *
@@ -2626,7 +2630,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getChatMemberCount | ctx.api.getChatMemberCount}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to get the number of members in a chat. Returns _Int_ on success.
      *
@@ -2647,8 +2651,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getChatMember | ctx.api.getChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a {@link ChatMember | ChatMember} object on success.
      *
@@ -2670,7 +2674,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getChatMember | ctx.api.getChatMember}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a {@link ChatMember | ChatMember} object on success.
      *
@@ -2694,7 +2698,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setChatStickerSet | ctx.api.setChatStickerSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns _True_ on success.
      *
@@ -2718,7 +2722,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteChatStickerSet | ctx.api.deleteChatStickerSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns _True_ on success.
      *
@@ -2739,7 +2743,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.createForumTopic | ctx.api.createForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns information about the created topic as a {@link ForumTopic | ForumTopic} object.
      *
@@ -2763,8 +2767,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editForumTopic | ctx.api.editForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
      *
@@ -2786,8 +2790,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.closeForumTopic | ctx.api.closeForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
      *
@@ -2809,8 +2813,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.reopenForumTopic | ctx.api.reopenForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights, unless it is the creator of the topic. Returns _True_ on success.
      *
@@ -2832,8 +2836,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteForumTopic | ctx.api.deleteForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_delete_messages_ administrator rights. Returns _True_ on success.
      *
@@ -2855,8 +2859,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unpinAllForumTopicMessages | ctx.api.unpinAllForumTopicMessages}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id}
      *
      * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
      *
@@ -2878,7 +2882,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editGeneralForumTopic | ctx.api.editGeneralForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.
      *
@@ -2902,7 +2906,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.closeGeneralForumTopic | ctx.api.closeGeneralForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.
      *
@@ -2923,7 +2927,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.reopenGeneralForumTopic | ctx.api.reopenGeneralForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically unhidden if it was hidden. Returns _True_ on success.
      *
@@ -2944,7 +2948,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.hideGeneralForumTopic | ctx.api.hideGeneralForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically closed if it was open. Returns _True_ on success.
      *
@@ -2965,7 +2969,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unhideGeneralForumTopic | ctx.api.unhideGeneralForumTopic}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns _True_ on success.
      *
@@ -2986,7 +2990,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.unpinAllGeneralForumTopicMessages | ctx.api.unpinAllGeneralForumTopicMessages}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the _can_pin_messages_ administrator right in the supergroup. Returns _True_ on success.
      *
@@ -3033,8 +3037,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getUserChatBoosts | ctx.api.getUserChatBoosts}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `user_id` from `ctx.fromId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a {@link UserChatBoosts | UserChatBoosts} object.
      *
@@ -3056,7 +3060,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getUserChatBoosts | ctx.api.getUserChatBoosts}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a {@link UserChatBoosts | UserChatBoosts} object.
      *
@@ -3080,7 +3084,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getBusinessConnection | ctx.api.getBusinessConnection}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to get information about the connection of the bot with a business account. Returns a {@link BusinessConnection | BusinessConnection} object on success.
      *
@@ -3101,7 +3105,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.giftPremiumSubscription | ctx.api.giftPremiumSubscription}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Gifts a Telegram Premium subscription to the given user. Returns _True_ on success.
      *
@@ -3128,7 +3132,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.verifyUser | ctx.api.verifyUser}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Verifies a user {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} which is represented by the bot. Returns _True_ on success.
      *
@@ -3149,7 +3153,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.verifyChat | ctx.api.verifyChat}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Verifies a chat {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} which is represented by the bot. Returns _True_ on success.
      *
@@ -3170,7 +3174,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.removeUserVerification | ctx.api.removeUserVerification}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Removes verification from a user who is currently verified {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} represented by the bot. Returns _True_ on success.
      *
@@ -3191,7 +3195,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.removeChatVerification | ctx.api.removeChatVerification}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Removes verification from a chat that is currently verified {@link https://telegram.org/verify#third-party-verification | on behalf of the organization} represented by the bot. Returns _True_ on success.
      *
@@ -3212,9 +3216,9 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.readBusinessMessage | ctx.api.readBusinessMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Marks incoming message as read on behalf of a business account. Requires the _can_read_messages_ business bot right. Returns _True_ on success.
      *
@@ -3237,7 +3241,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteBusinessMessages | ctx.api.deleteBusinessMessages}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Delete messages on behalf of a business account. Requires the _can_delete_sent_messages_ business bot right to delete messages sent by the bot itself, or the _can_delete_all_messages_ business bot right to delete any message. Returns _True_ on success.
      *
@@ -3261,7 +3265,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setBusinessAccountName | ctx.api.setBusinessAccountName}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Changes the first and last name of a managed business account. Requires the _can_change_name_ business bot right. Returns _True_ on success.
      *
@@ -3285,7 +3289,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setBusinessAccountUsername | ctx.api.setBusinessAccountUsername}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Changes the username of a managed business account. Requires the _can_change_username_ business bot right. Returns _True_ on success.
      *
@@ -3310,7 +3314,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setBusinessAccountBio | ctx.api.setBusinessAccountBio}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Changes the bio of a managed business account. Requires the _can_change_bio_ business bot right. Returns _True_ on success.
      *
@@ -3331,7 +3335,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setBusinessAccountProfilePhoto | ctx.api.setBusinessAccountProfilePhoto}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Changes the profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.
      *
@@ -3359,7 +3363,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.removeBusinessAccountProfilePhoto | ctx.api.removeBusinessAccountProfilePhoto}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Removes the current profile photo of a managed business account. Requires the _can_edit_profile_photo_ business bot right. Returns _True_ on success.
      *
@@ -3384,7 +3388,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setBusinessAccountGiftSettings | ctx.api.setBusinessAccountGiftSettings}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      * - `show_gift_button: false` (use {@link Context.setBusinessAccountGiftSettingsShowGiftButton} for `true`)
      *
      * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.
@@ -3414,7 +3418,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setBusinessAccountGiftSettings | ctx.api.setBusinessAccountGiftSettings}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      * - `show_gift_button: true` (use {@link Context.setBusinessAccountGiftSettingsHideGiftButton} for `false`)
      *
      * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the _can_change_gift_settings_ business bot right. Returns _True_ on success.
@@ -3444,7 +3448,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getBusinessAccountStarBalance | ctx.api.getBusinessAccountStarBalance}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Returns the amount of Telegram Stars owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns {@link StarAmount | StarAmount} on success.
      *
@@ -3469,7 +3473,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.transferBusinessAccountStars | ctx.api.transferBusinessAccountStars}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Transfers Telegram Stars from the business account balance to the bot's balance. Requires the _can_transfer_stars_ business bot right. Returns _True_ on success.
      *
@@ -3497,7 +3501,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getBusinessAccountGifts | ctx.api.getBusinessAccountGifts}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Returns the gifts received and owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns {@link OwnedGifts | OwnedGifts} on success.
      *
@@ -3518,7 +3522,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getUserGifts | ctx.api.getUserGifts}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Returns the gifts owned and hosted by a user. Returns {@link OwnedGifts} on success.
      *
@@ -3539,7 +3543,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getChatGifts | ctx.api.getChatGifts}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Returns the gifts owned by a chat. Returns {@link OwnedGifts} on success.
      *
@@ -3560,7 +3564,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.convertGiftToStars | ctx.api.convertGiftToStars}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Converts a given regular gift to Telegram Stars. Requires the _can_convert_gifts_to_stars_ business bot right. Returns _True_ on success.
      *
@@ -3584,7 +3588,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.upgradeGift | ctx.api.upgradeGift}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Upgrades a given regular gift to a unique gift. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Additionally requires the _can_transfer_stars_ business bot right if the upgrade is paid. Returns _True_ on success.
      *
@@ -3608,7 +3612,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.transferGift | ctx.api.transferGift}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Transfers an owned unique gift to another user. Requires the _can_transfer_and_upgrade_gifts_ business bot right. Requires _can_transfer_stars_ business bot right if the transfer is paid. Returns _True_ on success.
      *
@@ -3635,7 +3639,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.postStory | ctx.api.postStory}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Posts a story on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns {@link Story | Story} on success.
      *
@@ -3662,9 +3666,9 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.repostStory | ctx.api.repostStory}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `from_chat_id` from `ctx.chatId`
-     * - `from_story_id` from `ctx.msg.story.id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `from_chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `from_story_id` from {@link Context.msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
      *
      * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the _can_manage_stories_ business bot right for both business accounts. Returns {@link Story} on success.
      *
@@ -3690,8 +3694,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editStory | ctx.api.editStory}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `story_id` from `ctx.msg.story.id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `story_id` from {@link Context.msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
      *
      * Edits a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns {@link Story | Story} on success.
      *
@@ -3716,8 +3720,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteStory | ctx.api.deleteStory}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `story_id` from `ctx.msg.story.id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `story_id` from {@link Context.msg | ctx.msg}{@link Message.story | .story}{@link Story.id | .id}
      *
      * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns _True_ on success.
      *
@@ -3739,13 +3743,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageText | ctx.api.editMessageText}. The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
      * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
-     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to edit text and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
@@ -3784,13 +3788,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageCaption | ctx.api.editMessageCaption}. The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
      * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
-     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
@@ -3829,13 +3833,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageMedia | ctx.api.editMessageMedia}. The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
      * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
-     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
@@ -3874,13 +3878,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageLiveLocation | ctx.api.editMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
      * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
-     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
      *
@@ -3923,13 +3927,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.stopMessageLiveLocation | ctx.api.stopMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
      * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
-     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned.
      *
@@ -3964,9 +3968,9 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageChecklist | ctx.api.editMessageChecklist}. The following parameters are pre-supplied based on the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to edit a checklist on behalf of a connected business account. On success, the edited {@link Message | Message} is returned.
      *
@@ -3992,13 +3996,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editMessageReplyMarkup | ctx.api.editMessageReplyMarkup}. The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_message_id` from `ctx.inlineMessageId`
+     * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
      * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
-     * - `message_id` from `ctx.msgId` (if no value for `inline_message_id` exists)
+     * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
@@ -4033,12 +4037,12 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.stopPoll | ctx.api.stopPoll}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
      *
      * Use this method to stop a poll which was sent by the bot. On success, the stopped {@link Poll | Poll} is returned.
      *
@@ -4060,8 +4064,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.approveSuggestedPost | ctx.api.approveSuggestedPost}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat. Returns _True_ on success.
      *
@@ -4083,8 +4087,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.declineSuggestedPost | ctx.api.declineSuggestedPost}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns _True_ on success.
      *
@@ -4106,8 +4110,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteMessage | ctx.api.deleteMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     * - `message_id` from {@link Context.msgId | ctx.msgId}
      *
      * Use this method to delete a message, including service messages, with the following limitations:
      *
@@ -4141,7 +4145,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteMessages | ctx.api.deleteMessages}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * Use this method to delete multiple messages simultaneously. If some of the specified messages can't be found, they are skipped. Returns _True_ on success.
      *
@@ -4165,13 +4169,13 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendSticker | ctx.api.sendSticker}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send static .WEBP, {@link https://telegram.org/blog/animated-stickers | animated} .TGS, or {@link https://telegram.org/blog/video-stickers-better-reactions | video} .WEBM stickers. On success, the sent {@link Message | Message} is returned.
      *
@@ -4195,7 +4199,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getStickerSet | ctx.api.getStickerSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from `ctx.msg.sticker.set_name`
+     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * Use this method to get a sticker set. On success, a {@link StickerSet | StickerSet} object is returned.
      *
@@ -4216,7 +4220,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.uploadStickerFile | ctx.api.uploadStickerFile}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to upload a file with a sticker for later use in the {@link ApiMethods.createNewStickerSet | createNewStickerSet}, {@link ApiMethods.addStickerToSet | addStickerToSet}, or {@link ApiMethods.replaceStickerInSet | replaceStickerInSet} methods (the file can be used multiple times). Returns the uploaded {@link File | File} on success.
      *
@@ -4243,7 +4247,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.createNewStickerSet | ctx.api.createNewStickerSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns _True_ on success.
      *
@@ -4273,8 +4277,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.addStickerToSet | ctx.api.addStickerToSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
-     * - `name` from `ctx.msg.sticker.set_name`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns _True_ on success.
      *
@@ -4299,7 +4303,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setStickerPositionInSet | ctx.api.setStickerPositionInSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from `ctx.msg.sticker.file_id`
+     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * Use this method to move a sticker in a set created by the bot to a specific position. Returns _True_ on success.
      *
@@ -4323,7 +4327,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteStickerFromSet | ctx.api.deleteStickerFromSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from `ctx.msg.sticker.file_id`
+     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * Use this method to delete a sticker from a set created by the bot. Returns _True_ on success.
      *
@@ -4344,9 +4348,9 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.replaceStickerInSet | ctx.api.replaceStickerInSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
-     * - `name` from `ctx.msg.sticker.set_name`
-     * - `old_sticker` from `ctx.msg.sticker.file_id`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
+     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `old_sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling {@link ApiMethods.deleteStickerFromSet | deleteStickerFromSet}, then {@link ApiMethods.addStickerToSet | addStickerToSet}, then {@link ApiMethods.setStickerPositionInSet | setStickerPositionInSet}. Returns _True_ on success.
      *
@@ -4372,7 +4376,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setStickerEmojiList | ctx.api.setStickerEmojiList}. The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from `ctx.msg.sticker.file_id`
+     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.
      *
@@ -4396,7 +4400,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setStickerKeywords | ctx.api.setStickerKeywords}. The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from `ctx.msg.sticker.file_id`
+     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns _True_ on success.
      *
@@ -4417,7 +4421,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setStickerMaskPosition | ctx.api.setStickerMaskPosition}. The following parameters are pre-supplied based on the current update:
      *
-     * - `sticker` from `ctx.msg.sticker.file_id`
+     * - `sticker` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.file_id | .file_id}
      *
      * Use this method to change the {@link MaskPosition | mask position} of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns _True_ on success.
      *
@@ -4438,7 +4442,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setStickerSetTitle | ctx.api.setStickerSetTitle}. The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from `ctx.msg.sticker.set_name`
+     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * Use this method to set the title of a created sticker set. Returns _True_ on success.
      *
@@ -4462,8 +4466,8 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setStickerSetThumbnail | ctx.api.setStickerSetThumbnail}. The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from `ctx.msg.sticker.set_name`
-     * - `user_id` from `ctx.fromId`
+     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns _True_ on success.
      *
@@ -4488,7 +4492,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setCustomEmojiStickerSetThumbnail | ctx.api.setCustomEmojiStickerSetThumbnail}. The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from `ctx.msg.sticker.set_name`
+     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * Use this method to set the thumbnail of a custom emoji sticker set. Returns _True_ on success.
      *
@@ -4513,7 +4517,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.deleteStickerSet | ctx.api.deleteStickerSet}. The following parameters are pre-supplied based on the current update:
      *
-     * - `name` from `ctx.msg.sticker.set_name`
+     * - `name` from {@link Context.msg | ctx.msg}{@link Message.sticker | .sticker}{@link Sticker.set_name | .set_name}
      *
      * Use this method to delete a sticker set that was created by the bot. Returns _True_ on success.
      *
@@ -4560,7 +4564,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.savePreparedInlineMessage | ctx.api.savePreparedInlineMessage}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Stores a message that can be sent by a user of a Mini App. Returns a {@link preparedinlineMessage | PreparedInlineMessage} object.
      *
@@ -4584,12 +4588,12 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendInvoice | ctx.api.sendInvoice}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
-     * - `direct_messages_topic_id` from `ctx.msg.direct_messages_topic.topic_id`
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
+     * - `direct_messages_topic_id` from {@link Context.msg | ctx.msg}{@link Message.direct_messages_topic | .direct_messages_topic}{@link DirectMessagesTopic.topic_id | .topic_id}
      *
      * Use this method to send invoices. On success, the sent {@link Message | Message} is returned.
      *
@@ -4673,7 +4677,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.refundStarPayment | ctx.api.refundStarPayment}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Refunds a successful payment in {@link https://t.me/BotNews/90 | Telegram Stars}. Returns _True_ on success.
      *
@@ -4697,7 +4701,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.editUserStarSubscription | ctx.api.editUserStarSubscription}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns _True_ on success.
      *
@@ -4724,7 +4728,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setPassportDataErrors | ctx.api.setPassportDataErrors}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns _True_ on success.
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
@@ -4749,12 +4753,12 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.sendGame | ctx.api.sendGame}. The following parameters are pre-supplied based on the current update:
      *
-     * - `chat_id` from `ctx.chatId`
+     * - `chat_id` from {@link Context.chatId | ctx.chatId}
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
-     * - `business_connection_id` from `ctx.businessConnectionId`
-     * - `message_thread_id` from `ctx.msg.message_thread_id` (only if `ctx.msg.is_topic_message` is set)
+     * - `business_connection_id` from {@link Context.businessConnectionId | ctx.businessConnectionId}
+     * - `message_thread_id` from {@link Context.msg | ctx.msg}{@link Message.message_thread_id | .message_thread_id} (only if {@link Context.msg | ctx.msg}{@link Message.is_topic_message | .is_topic_message} is set)
      *
      * Use this method to send a game. On success, the sent {@link Message | Message} is returned.
      *
@@ -4778,7 +4782,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.setGameScore | ctx.api.setGameScore}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the {@link Message | Message} is returned, otherwise _True_ is returned. Returns an error, if the new score is not greater than the user's current score in the chat and _force_ is _False_.
      *
@@ -4802,7 +4806,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.getGameHighScores | ctx.api.getGameHighScores}. The following parameters are pre-supplied based on the current update:
      *
-     * - `user_id` from `ctx.fromId`
+     * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
      * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of {@link GameHighScore | GameHighScore} objects.
      *
