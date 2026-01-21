@@ -1,0 +1,19 @@
+name: Publish
+
+on:
+    push:
+        branches: [v2]
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+        steps:
+            - uses: denoland/setup-deno@v2
+              with:
+                  deno-version: v2.5.x
+                  cache: true
+            - uses: actions/checkout@v5
+            - run: deno publish
