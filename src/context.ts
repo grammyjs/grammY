@@ -2043,7 +2043,7 @@ export class Context implements CamelCaseUpdate {
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async setChatAdministratorCustomTitle(
+    async setAuthorCustomTitle(
         custom_title: string,
         other?: Partial<ApiParameters<"setChatAdministratorCustomTitle">>,
         signal?: AbortSignal,
@@ -2051,6 +2051,33 @@ export class Context implements CamelCaseUpdate {
         return await this.api.setChatAdministratorCustomTitle(
             ensureChatId("setChatAdministratorCustomTitle", this, other),
             ensureUserId("setChatAdministratorCustomTitle", this, other),
+            custom_title,
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.setChatAdministratorCustomTitle | ctx.api.setChatAdministratorCustomTitle}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `chat_id` from `ctx.chatId`
+     *
+     * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns _True_ on success.
+     *
+     * @see {@link https://core.telegram.org/bots/api#setchatadministratorcustomtitle}
+     * @param user_id Unique identifier of the target user
+     * @param custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async setChatAdministratorCustomTitle(
+        user_id: number,
+        custom_title: string,
+        other?: Partial<ApiParameters<"setChatAdministratorCustomTitle">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.setChatAdministratorCustomTitle(
+            ensureChatId("setChatAdministratorCustomTitle", this, other),
+            user_id,
             custom_title,
             other,
             signal,
