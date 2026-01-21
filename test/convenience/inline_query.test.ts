@@ -164,10 +164,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(audio, {
@@ -333,10 +332,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(contact, {
@@ -508,10 +506,9 @@ describe("InlineQueryResultBuilder", () => {
                         "Invoice",
                         "Invoice Description",
                         "Payload",
-                        "Token",
                         "Currency",
                         [{ amount: 10, label: "Item 0" }],
-                        { need_name: true },
+                        { provider_token: "Token", need_name: true },
                     );
 
                     assertObjectMatch(document, {
@@ -682,10 +679,9 @@ describe("InlineQueryResultBuilder", () => {
                         "Invoice",
                         "Invoice Description",
                         "Payload",
-                        "Token",
                         "Currency",
                         [{ amount: 10, label: "Item 0" }],
-                        { need_name: true },
+                        { provider_token: "Token", need_name: true },
                     );
 
                     assertObjectMatch(document, {
@@ -882,10 +878,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(gif, {
@@ -1060,10 +1055,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(location, {
@@ -1228,10 +1222,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(mpeg, {
@@ -1391,10 +1384,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(photo, {
@@ -1549,10 +1541,9 @@ describe("InlineQueryResultBuilder", () => {
                         "Invoice",
                         "Invoice Description",
                         "Payload",
-                        "Token",
                         "Currency",
                         [{ amount: 10, label: "Item 0" }],
-                        { need_name: true },
+                        { provider_token: "Token", need_name: true },
                     );
 
                     assertObjectMatch(sticker, {
@@ -1724,10 +1715,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(venue, {
@@ -1897,10 +1887,9 @@ describe("InlineQueryResultBuilder", () => {
                         "Invoice",
                         "Invoice Description",
                         "Payload",
-                        "Token",
                         "Currency",
                         [{ amount: 10, label: "Item 0" }],
-                        { need_name: true },
+                        { provider_token: "Token", need_name: true },
                     );
 
                     assertObjectMatch(video, {
@@ -2086,10 +2075,9 @@ describe("InlineQueryResultBuilder", () => {
                         "Invoice",
                         "Invoice Description",
                         "Payload",
-                        "Token",
                         "Currency",
                         [{ amount: 10, label: "Item 0" }],
-                        { need_name: true },
+                        { provider_token: "Token", need_name: true },
                     );
 
                     assertObjectMatch(video, {
@@ -2275,10 +2263,9 @@ describe("InlineQueryResultBuilder", () => {
                     "Invoice",
                     "Invoice Description",
                     "Payload",
-                    "Token",
                     "Currency",
                     [{ amount: 10, label: "Item 0" }],
-                    { need_name: true },
+                    { provider_token: "Token", need_name: true },
                 );
 
                 assertObjectMatch(voice, {

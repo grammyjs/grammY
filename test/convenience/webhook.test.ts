@@ -13,7 +13,7 @@ import type bodyParser from "npm:@types/koa-bodyparser";
 import type { Elysia } from "npm:elysia";
 import type { FastifyInstance } from "npm:fastify";
 import type { NextApiRequest, NextApiResponse } from "npm:next";
-import { Bot, BotError, webhookAdapters } from "../../src/mod.ts";
+import { webhookAdapters } from "../../src/convenience/webhook.ts";
 import type { Update, UserFromGetMe } from "../../src/types.ts";
 import {
     assert,
@@ -27,6 +27,7 @@ import {
     spy,
     stub,
 } from "../deps.test.ts";
+import { Bot, BotError } from "../../src/bot.ts";
 
 describe("webhook", () => {
     const bot = new Bot("dummy", { me: {} as unknown as UserFromGetMe });
