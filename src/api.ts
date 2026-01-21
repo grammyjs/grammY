@@ -687,16 +687,19 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#senddice}
      * @param chat_id Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
+     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async sendDice(
         chat_id: number | string,
+        emoji?: "🎲" | "🎯" | "🏀" | "⚽" | "🎳" | "🎰",
         other?: Partial<ApiParameters<"sendDice", R>>,
         signal?: AbortSignal,
     ): Promise<Message> {
         return await this.raw.sendDice({
             chat_id,
+            emoji,
             ...other,
         }, signal);
     }

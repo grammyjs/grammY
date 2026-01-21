@@ -1634,15 +1634,18 @@ export class Context implements CamelCaseUpdate {
      * Use this method to send an animated emoji that will display a random value. On success, the sent {@link Message | Message} is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#senddice}
+     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async sendDice(
+        emoji?: "🎲" | "🎯" | "🏀" | "⚽" | "🎳" | "🎰",
         other?: Partial<ApiParameters<"sendDice">>,
         signal?: AbortSignal,
     ): Promise<Message> {
         return await this.api.sendDice(
             ensureChatId("sendDice", this, other),
+            emoji,
             fillConnectionThreadTopic(this, other),
             signal,
         );
