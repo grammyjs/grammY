@@ -1055,7 +1055,7 @@ export class Context implements CamelCaseUpdate {
     }
 
     // SEND DATA
-    async send(data: string | SendData): Promise<Message> {
+    async send(data: SendData): Promise<Message> {
         const { chat_id, ...rest } = typeof data === "string"
             ? { text: data }
             : data;

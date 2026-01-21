@@ -29,6 +29,7 @@ export type CallData<R extends RawApi = RawApi> = {
 }[string & keyof R];
 
 export type SendData<R extends RawApi = RawApi> =
+    | string
     | (Partial<ApiParameters<"sendMessage", R>> & { text: string })
     | (Partial<ApiParameters<"sendPhoto", R>> & { photo: Present })
     | (Partial<ApiParameters<"sendAudio", R>> & { audio: Present })

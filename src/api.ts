@@ -126,7 +126,8 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     async send(chat_id: number | string, data: SendData<R>): Promise<Message> {
-        const payload = data as SendData<RawApi>;
+        const d = data as SendData<RawApi>;
+        const payload = typeof d === "string" ? { text: d } : d;
         if ("text" in payload) {
             return await this.raw.sendMessage({ chat_id, ...payload });
         }
