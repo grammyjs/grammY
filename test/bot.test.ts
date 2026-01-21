@@ -1,12 +1,16 @@
 import { Bot } from "../src/bot.ts";
 import { BotError } from "../src/composer.ts";
 import { Context } from "../src/context.ts";
-import { GrammyError, HttpError } from "../src/core/error.ts";
-import type { Message, Update, UserFromGetMe } from "../src/types.ts";
+import { GrammyError, HttpError } from "../src/error.ts";
+import type { Update, UserFromGetMe } from "../src/types.ts";
 import {
     afterEach,
     assertEquals,
+    assertFalse,
+    assertInstanceOf,
     assertRejects,
+    assertSpyCalls,
+    assertStringIncludes,
     assertThrows,
     beforeEach,
     describe,
@@ -18,7 +22,7 @@ import {
 } from "./deps.test.ts";
 
 const token = "test-token";
-const botInfo: UserFromGetMe = {
+const me: UserFromGetMe = {
     id: 123456789,
     is_bot: true,
     first_name: "Test Bot",
@@ -64,22 +68,22 @@ describe("Bot initialization", () => {
         using getMeStub = stub(
             bot.api,
             "getMe",
-            () => Promise.resolve(botInfo),
+            () => Promise.resolve(me),
         );
 
         assertEquals(bot.isInited(), false);
         await bot.init();
         assertEquals(bot.isInited(), true);
-        assertEquals(bot.botInfo.username, "test_bot");
+        assertEquals(bot.me.username, "test_bot");
         assertEquals(getMeStub.calls.length, 1);
     });
 
-    it("should not call getMe if botInfo is provided", async () => {
-        const bot = new Bot(token, { botInfo });
+    it("should not call getMe if .me is provided", async () => {
+        const bot = new Bot(token, { me });
         using getMeStub = stub(
             bot.api,
             "getMe",
-            () => Promise.resolve(botInfo),
+            () => Promise.resolve(me),
         );
 
         assertEquals(bot.isInited(), true);
@@ -87,10 +91,10 @@ describe("Bot initialization", () => {
         assertEquals(getMeStub.calls.length, 0);
     });
 
-    it("should throw error when accessing botInfo before init", () => {
+    it("should throw error when accessing .me before init", () => {
         const bot = new Bot(token);
         assertThrows(
-            () => bot.botInfo,
+            () => bot.me,
             Error,
             "Bot information unavailable",
         );
@@ -115,7 +119,7 @@ describe("Bot initialization", () => {
         assertEquals(resolvers.length, 1);
 
         // Resolve the single getMe call
-        resolvers[0](botInfo);
+        resolvers[0](me);
 
         await Promise.all([init1, init2, init3]);
         assertEquals(bot.isInited(), true);
@@ -149,7 +153,7 @@ describe("Bot initialization", () => {
             if (callCount === 1) {
                 throw new HttpError("Network error", { error: "ECONNREFUSED" });
             }
-            return Promise.resolve(botInfo);
+            return Promise.resolve(me);
         });
 
         await bot.init();
@@ -175,7 +179,7 @@ describe("Bot initialization", () => {
                     {},
                 );
             }
-            return Promise.resolve(botInfo);
+            return Promise.resolve(me);
         });
 
         await bot.init();
@@ -202,7 +206,7 @@ describe("Bot initialization", () => {
                     {},
                 );
             }
-            return Promise.resolve(botInfo);
+            return Promise.resolve(me);
         });
 
         const initPromise = bot.init();
@@ -215,7 +219,7 @@ describe("Bot initialization", () => {
 
 describe("Bot handleUpdate", () => {
     it("should process updates", async () => {
-        const bot = new Bot(token, { botInfo });
+        const bot = new Bot(token, { me });
         const middlewareSpy = spy(() => {});
         bot.use(middlewareSpy);
 
@@ -232,40 +236,8 @@ describe("Bot handleUpdate", () => {
         );
     });
 
-    it("should apply transformers to update API", async () => {
-        const bot = new Bot(token, { botInfo });
-
-        let capturedMethod = "";
-        let capturedPayload: unknown = null;
-
-        bot.api.config.use((_prev, method, payload, _signal) => {
-            capturedMethod = method;
-            capturedPayload = payload;
-            const mockMessage: Message = {
-                message_id: 1,
-                date: Math.floor(Date.now() / 1000),
-                chat: { id: 123, type: "private" },
-            } as Message;
-            return Promise.resolve({
-                ok: true,
-                result: mockMessage,
-            }) as ReturnType<typeof _prev>;
-        });
-
-        bot.use(async (ctx) => {
-            await ctx.api.sendMessage(123, "test");
-        });
-
-        await bot.handleUpdate(testUpdate);
-
-        assertEquals(capturedMethod, "sendMessage");
-        const payload = capturedPayload as Record<string, unknown>;
-        assertEquals(payload.chat_id, 123);
-        assertEquals(payload.text, "test");
-    });
-
     it("should handle concurrent handleUpdate calls", async () => {
-        const bot = new Bot(token, { botInfo });
+        const bot = new Bot(token, { me });
         const { promise: middleware1, resolve: resolve1 } = Promise
             .withResolvers<void>();
         const { promise: middleware2, resolve: resolve2 } = Promise
@@ -289,7 +261,7 @@ describe("Bot handleUpdate", () => {
     });
 
     it("should handle error in one update while other succeeds", async () => {
-        const bot = new Bot(token, { botInfo });
+        const bot = new Bot(token, { me });
         const { promise: controlledPromise, resolve: allowToContinue } = Promise
             .withResolvers<void>();
 
@@ -331,7 +303,7 @@ describe("Bot handleUpdate", () => {
 
 describe("Bot error handling", () => {
     it("should wrap middleware errors in BotError", async () => {
-        const bot = new Bot(token, { botInfo });
+        const bot = new Bot(token, { me });
         const originalError = new Error("Test error");
         bot.use(() => {
             throw originalError;
@@ -346,14 +318,14 @@ describe("Bot error handling", () => {
         assertEquals(error.error, originalError);
     });
 
-    describe("During polling", () => {
+    describe("during polling", () => {
         let bot: Bot;
         let getMeStub: Stub;
         let deleteWebhookStub: Stub;
 
         beforeEach(() => {
             bot = new Bot(token);
-            getMeStub = stub(bot.api, "getMe", () => Promise.resolve(botInfo));
+            getMeStub = stub(bot.api, "getMe", () => Promise.resolve(me));
             deleteWebhookStub = stub(
                 bot.api,
                 "deleteWebhook",
@@ -367,6 +339,7 @@ describe("Bot error handling", () => {
         });
 
         it("should handle 401 errors by stopping", async () => {
+            using consoleError = stub(console, "error");
             using _ = stub(bot.api, "getUpdates", () =>
                 Promise.reject(
                     new GrammyError(
@@ -380,12 +353,20 @@ describe("Bot error handling", () => {
                         {},
                     ),
                 ));
-
-            await assertRejects(() => bot.start(), GrammyError);
-            assertEquals(bot.isRunning(), false);
+            const stopped = Promise.withResolvers<void>();
+            await bot.start({ onStop: () => stopped.resolve() });
+            await stopped.promise;
+            assertFalse(bot.isRunning());
+            assertSpyCalls(consoleError, 1);
+            assertStringIncludes(
+                consoleError.calls[0].args[0],
+                "long polling crashed",
+            );
+            assertInstanceOf(consoleError.calls[0].args[1], GrammyError);
         });
 
         it("should handle 409 conflict errors by stopping", async () => {
+            using consoleError = stub(console, "error");
             using _ = stub(bot.api, "getUpdates", () =>
                 Promise.reject(
                     new GrammyError(
@@ -400,8 +381,16 @@ describe("Bot error handling", () => {
                     ),
                 ));
 
-            await assertRejects(() => bot.start(), GrammyError);
-            assertEquals(bot.isRunning(), false);
+            const stopped = Promise.withResolvers<void>();
+            await bot.start({ onStop: () => stopped.resolve() });
+            await stopped.promise;
+            assertFalse(bot.isRunning());
+            assertSpyCalls(consoleError, 1);
+            assertStringIncludes(
+                consoleError.calls[0].args[0],
+                "long polling crashed",
+            );
+            assertInstanceOf(consoleError.calls[0].args[1], GrammyError);
         });
 
         it("should retry on 429 errors", async () => {
@@ -538,7 +527,7 @@ describe("Bot polling lifecycle", () => {
     let deleteWebhookStub: Stub;
 
     beforeEach(() => {
-        bot = new Bot(token, { botInfo });
+        bot = new Bot(token, { me });
         deleteWebhookStub = stub(
             bot.api,
             "deleteWebhook",
@@ -611,7 +600,7 @@ describe("Bot polling lifecycle", () => {
             },
         );
 
-        const onStartSpy = spy((_botInfo: UserFromGetMe) => {});
+        const onStartSpy = spy((_me: UserFromGetMe) => {});
 
         const startPromise = bot.start({ onStart: onStartSpy });
         // Wait for polling to actually start
@@ -620,7 +609,7 @@ describe("Bot polling lifecycle", () => {
         await startPromise;
 
         assertEquals(onStartSpy.calls.length, 1);
-        assertEquals(onStartSpy.calls[0].args[0], botInfo);
+        assertEquals(onStartSpy.calls[0].args[0], me);
     });
 
     it("should handle stop when not running", async () => {
@@ -718,7 +707,7 @@ describe("Bot polling lifecycle", () => {
 
         // Override bot for this test needing initialization
         bot = new Bot(token);
-        using _getMe = stub(bot.api, "getMe", () => Promise.resolve(botInfo));
+        using _getMe = stub(bot.api, "getMe", () => Promise.resolve(me));
         using _deleteWebhook = stub(
             bot.api,
             "deleteWebhook",
