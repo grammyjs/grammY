@@ -11,6 +11,8 @@ import type {
     AcceptedGiftTypes,
     ApiMethods,
     BusinessConnection,
+    // deno-lint-ignore no-unused-vars
+    CallbackQuery, // used in TSDoc strings
     Chat,
     ChatFullInfo,
     ChatInviteLink,
@@ -23,6 +25,8 @@ import type {
     File,
     ForumTopic,
     GameHighScore,
+    // deno-lint-ignore no-unused-vars
+    InlineQuery, // used in TSDoc strings
     InlineQueryResult,
     InputChecklist,
     InputFile,
@@ -43,10 +47,14 @@ import type {
     OwnedGifts,
     PassportElementError,
     Poll,
+    // deno-lint-ignore no-unused-vars
+    PreCheckoutQuery, // used in TSDoc strings
     PreparedInlineMessage,
     ReactionType,
     ReactionTypeEmoji,
     ShippingOption,
+    // deno-lint-ignore no-unused-vars
+    ShippingQuery, // used in TSDoc strings
     StarAmount,
     // deno-lint-ignore no-unused-vars
     Sticker, // used in TSDOC strings
@@ -3012,7 +3020,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.answerCallbackQuery | ctx.api.answerCallbackQuery}. The following parameters are pre-supplied based on the current update:
      *
-     * - `callback_query_id` from `ctx.callbackQuery.id`
+     * - `callback_query_id` from {@link Context.callbackQuery | ctx.callbackQuery}{@link CallbackQuery.id | .id}
      *
      * Use this method to send answers to callback queries sent from {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboards}. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, _True_ is returned.
      *
@@ -3745,7 +3753,7 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.editMessageText | ctx.api.editMessageText}. The following parameters are pre-supplied based on the current update:
      *
      * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
      * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
@@ -3790,7 +3798,7 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.editMessageCaption | ctx.api.editMessageCaption}. The following parameters are pre-supplied based on the current update:
      *
      * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
      * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
@@ -3835,7 +3843,7 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.editMessageMedia | ctx.api.editMessageMedia}. The following parameters are pre-supplied based on the current update:
      *
      * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
      * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
@@ -3880,7 +3888,7 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.editMessageLiveLocation | ctx.api.editMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
      *
      * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
      * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
@@ -3929,7 +3937,7 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.stopMessageLiveLocation | ctx.api.stopMessageLiveLocation}. The following parameters are pre-supplied based on the current update:
      *
      * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
      * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
@@ -3998,7 +4006,7 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.editMessageReplyMarkup | ctx.api.editMessageReplyMarkup}. The following parameters are pre-supplied based on the current update:
      *
      * - `inline_message_id` from {@link Context.inlineMessageId | ctx.inlineMessageId}
-     * - `chat_id` from `ctx.chatId` (if no value for `inline_message_id` exists)
+     * - `chat_id` from {@link Context.chatId | ctx.chatId} (if no value for `inline_message_id` exists)
      * - `message_id` from {@link Context.msg | ctx.msg}Id` (if no value for `inline_message_id` exists)
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
@@ -4542,7 +4550,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.answerInlineQuery | ctx.api.answerInlineQuery}. The following parameters are pre-supplied based on the current update:
      *
-     * - `inline_query_id` from `ctx.inlineQuery.id`
+     * - `inline_query_id` from {@link Context.inlineQuery | ctx.inlineQuery}{@link InlineQuery.id | .id}
      *
      * Use this method to send answers to an inline query. On success, _True_ is returned.
      *
@@ -4633,7 +4641,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.answerShippingQueryOk | ctx.api.answerShippingQueryOk}. The following parameters are pre-supplied based on the current update:
      *
-     * - `shipping_query_id` from `ctx.shippingQuery.id`
+     * - `shipping_query_id` from {@link Context.shippingQuery | ctx.shippingQuery}{@link ShippingQuery.id | .id}
      *
      * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update | Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.
      *
@@ -4657,7 +4665,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.answerShippingQueryError | ctx.api.answerShippingQueryError}. The following parameters are pre-supplied based on the current update:
      *
-     * - `shipping_query_id` from `ctx.shippingQuery.id`
+     * - `shipping_query_id` from {@link Context.shippingQuery | ctx.shippingQuery}{@link ShippingQuery.id | .id}
      *
      * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update | Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.
      *
@@ -4681,7 +4689,7 @@ export class Context implements CamelCaseUpdate {
     /**
      * Context-aware alias for {@link Api.answerPreCheckoutQuery | ctx.api.answerPreCheckoutQuery}. The following parameters are pre-supplied based on the current update:
      *
-     * - `pre_checkout_quey_id` from `ctx.preCheckoutQuery.id`
+     * - `pre_checkout_quey_id` from {@link Context.preCheckoutQuery | ctx.preCheckoutQuery}{@link PreCheckoutQuery.id | .id}
      *
      * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update | Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, _True_ is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
      *
