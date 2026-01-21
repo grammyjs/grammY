@@ -7,7 +7,7 @@ import type {
     InputMediaVideo,
 } from "../types.ts";
 
-type InputMediaOptions<T> = Omit<T, "type" | "media">;
+export type InputMediaOptions<T> = Omit<T, "type" | "media">;
 
 /**
  * Holds a number of helper methods for building `InputMedia*` objects. They are
@@ -36,7 +36,7 @@ type InputMediaOptions<T> = Omit<T, "type" | "media">;
  * await bot.api.editMessageMedia(chatId, messageId, media)
  * ```
  */
-export const InputMediaBuilder = {
+export interface InputMediaBuilder {
     /**
      * Creates a new `InputMediaPhoto` object as specified by
      * https://core.telegram.org/bots/api#inputmediaphoto.
@@ -46,10 +46,8 @@ export const InputMediaBuilder = {
      */
     photo(
         media: string | InputFile,
-        options: InputMediaOptions<InputMediaPhoto> = {},
-    ): InputMediaPhoto {
-        return { type: "photo", media, ...options };
-    },
+        options?: InputMediaOptions<InputMediaPhoto>,
+    ): InputMediaPhoto;
     /**
      * Creates a new `InputMediaVideo` object as specified by
      * https://core.telegram.org/bots/api#inputmediavideo.
@@ -59,10 +57,8 @@ export const InputMediaBuilder = {
      */
     video(
         media: string | InputFile,
-        options: InputMediaOptions<InputMediaVideo> = {},
-    ): InputMediaVideo {
-        return { type: "video", media, ...options };
-    },
+        options?: InputMediaOptions<InputMediaVideo>,
+    ): InputMediaVideo;
     /**
      * Creates a new `InputMediaAnimation` object as specified by
      * https://core.telegram.org/bots/api#inputmediaanimation.
@@ -72,10 +68,8 @@ export const InputMediaBuilder = {
      */
     animation(
         media: string | InputFile,
-        options: InputMediaOptions<InputMediaAnimation> = {},
-    ): InputMediaAnimation {
-        return { type: "animation", media, ...options };
-    },
+        options?: InputMediaOptions<InputMediaAnimation>,
+    ): InputMediaAnimation;
     /**
      * Creates a new `InputMediaAudio` object as specified by
      * https://core.telegram.org/bots/api#inputmediaaudio.
@@ -85,10 +79,8 @@ export const InputMediaBuilder = {
      */
     audio(
         media: string | InputFile,
-        options: InputMediaOptions<InputMediaAudio> = {},
-    ): InputMediaAudio {
-        return { type: "audio", media, ...options };
-    },
+        options?: InputMediaOptions<InputMediaAudio>,
+    ): InputMediaAudio;
     /**
      * Creates a new `InputMediaDocument` object as specified by
      * https://core.telegram.org/bots/api#inputmediadocument.
@@ -98,8 +90,23 @@ export const InputMediaBuilder = {
      */
     document(
         media: string | InputFile,
-        options: InputMediaOptions<InputMediaDocument> = {},
-    ): InputMediaDocument {
+        options?: InputMediaOptions<InputMediaDocument>,
+    ): InputMediaDocument;
+}
+export const InputMediaBuilder: InputMediaBuilder = {
+    photo(media, options = {}) {
+        return { type: "photo", media, ...options };
+    },
+    video(media, options = {}) {
+        return { type: "video", media, ...options };
+    },
+    animation(media, options = {}) {
+        return { type: "animation", media, ...options };
+    },
+    audio(media, options = {}) {
+        return { type: "audio", media, ...options };
+    },
+    document(media, options = {}) {
         return { type: "document", media, ...options };
     },
 };
