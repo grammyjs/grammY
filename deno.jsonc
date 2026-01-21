@@ -1,7 +1,18 @@
 {
+    "name": "@grammyjs/grammy",
+    "version": "2.0.0-beta.0",
     "lock": false,
     "imports": {
         "@grammyjs/debug": "jsr:@grammyjs/debug@^0.1.2"
+    },
+    "exports": {
+        ".": "./src/mod.ts",
+        "./types": "./src/types.ts",
+        "./constants": "./src/convenience/constants.ts",
+        "./inline_query": "./src/convenience/inline_query.ts",
+        "./input_media": "./src/convenience/input_media.ts",
+        "./keyboard": "./src/convenience/keyboard.ts",
+        "./webhook": "./src/convenience/webhook.ts"
     },
     "tasks": {
         "check": "deno check ./src/",
