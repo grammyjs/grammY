@@ -901,6 +901,8 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass _True_ for all permissions to lift restrictions from a user. Returns _True_ on success.
      *
+     * > grammY sets `use_independent_chat_permissions: true` for this method, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
+     *
      * @see {@link https://core.telegram.org/bots/api#restrictchatmember}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
      * @param user_id Unique identifier of the target user
@@ -919,6 +921,7 @@ export class Api<R extends RawApi = RawApi> {
             chat_id,
             user_id,
             permissions,
+            use_independent_chat_permissions: true,
             ...other,
         }, signal);
     }
@@ -1012,6 +1015,8 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the _can_restrict_members_ administrator rights. Returns _True_ on success.
      *
+     * > grammY sets `use_independent_chat_permissions: true` for this method, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
+     *
      * @see {@link https://core.telegram.org/bots/api#setchatpermissions}
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)
      * @param permissions An object for new default chat permissions
@@ -1027,6 +1032,7 @@ export class Api<R extends RawApi = RawApi> {
         return await this.raw.setChatPermissions({
             chat_id,
             permissions,
+            use_independent_chat_permissions: true,
             ...other,
         }, signal);
     }

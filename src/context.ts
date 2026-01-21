@@ -2015,6 +2015,8 @@ export class Context implements CamelCaseUpdate {
      * - `chat_id` from {@link Context.chatId | ctx.chatId}
      * - `user_id` from {@link Context.fromId | ctx.fromId}
      *
+     * > grammY sets `use_independent_chat_permissions: true` for this method in {@link Api.restrictChatMember | ctx.api.restrictChatMember}, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
+     *
      * @see {@link https://core.telegram.org/bots/api#restrictchatmember}
      * @param permissions An object for new user permissions
      * @param other Options object with all optional parameters
@@ -2041,6 +2043,8 @@ export class Context implements CamelCaseUpdate {
      * The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     *
+     * > grammY sets `use_independent_chat_permissions: true` for this method in {@link Api.restrictChatMember | ctx.api.restrictChatMember}, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
      *
      * @see {@link https://core.telegram.org/bots/api#restrictchatmember}
      * @param user_id Unique identifier of the target user
@@ -2280,6 +2284,8 @@ export class Context implements CamelCaseUpdate {
      * The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from {@link Context.chatId | ctx.chatId}
+     *
+     * > grammY sets `use_independent_chat_permissions: true` for this method in {@link Api.setChatPermissions | ctx.api.setChatPermissions}, so you can specify all chat permissions in {@link ChatPermissions} independently by default.
      *
      * @see {@link https://core.telegram.org/bots/api#setchatpermissions}
      * @param permissions An object for new default chat permissions
