@@ -2487,7 +2487,6 @@ export class Context implements CamelCaseUpdate {
      * Context-aware alias for {@link Api.pinChatMessage | ctx.api.pinChatMessage}. The following parameters are pre-supplied based on the current update:
      *
      * - `chat_id` from `ctx.chatId`
-     * - `message_id` from `ctx.msgId`
      *
      * In addition, the following parameters are pre-supplied optionally if they exist in the current update:
      *
@@ -2496,16 +2495,18 @@ export class Context implements CamelCaseUpdate {
      * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns _True_ on success.
      *
      * @see {@link https://core.telegram.org/bots/api#pinchatmessage}
+     * @param message_id Identifier of a message to pin
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async pinChatMessage(
+        message_id: number,
         other?: Partial<ApiParameters<"pinChatMessage">>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.api.pinChatMessage(
             ensureChatId("pinChatMessage", this, other),
-            ensureMessageId("pinChatMessage", this, other),
+            message_id,
             fillConnection(this, other),
             signal,
         );
