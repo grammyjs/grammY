@@ -41,6 +41,7 @@ import type {
     ReactionType,
     ReactionTypeEmoji,
     SentWebAppMessage,
+    ShippingOption,
     StarAmount,
     StarTransactions,
     Sticker,
@@ -3407,19 +3408,42 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @see {@link https://core.telegram.org/bots/api#answershippingquery}
      * @param shipping_query_id Unique identifier for the query to be answered
-     * @param ok Pass _True_ if delivery to the specified address is possible and _False_ if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param shipping_options An array of available shipping options.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
-    async answerShippingQuery(
+    async answerShippingQueryOk(
         shipping_query_id: string,
-        ok: boolean,
+        shipping_options: ShippingOption[],
         other?: Partial<ApiParameters<"answerShippingQuery", R>>,
         signal?: AbortSignal,
     ): Promise<true> {
         return await this.raw.answerShippingQuery({
             shipping_query_id,
-            ok,
+            ok: true,
+            shipping_options,
+            ...other,
+        }, signal);
+    }
+    /**
+     * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update | Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#answershippingquery}
+     * @param shipping_query_id Unique identifier for the query to be answered
+     * @param error_message Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async answerShippingQueryError(
+        shipping_query_id: string,
+        error_message: string,
+        other?: Partial<ApiParameters<"answerShippingQuery", R>>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.raw.answerShippingQuery({
+            shipping_query_id,
+            ok: false,
+            error_message,
             ...other,
         }, signal);
     }

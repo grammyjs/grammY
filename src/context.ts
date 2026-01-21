@@ -46,6 +46,7 @@ import type {
     PreparedInlineMessage,
     ReactionType,
     ReactionTypeEmoji,
+    ShippingOption,
     StarAmount,
     // deno-lint-ignore no-unused-vars
     Sticker, // used in TSDOC strings
@@ -4630,25 +4631,49 @@ export class Context implements CamelCaseUpdate {
         );
     }
     /**
-     * Context-aware alias for {@link Api.answerShippingQuery | ctx.api.answerShippingQuery}. The following parameters are pre-supplied based on the current update:
+     * Context-aware alias for {@link Api.answerShippingQueryOk | ctx.api.answerShippingQueryOk}. The following parameters are pre-supplied based on the current update:
      *
      * - `shipping_query_id` from `ctx.shippingQuery.id`
      *
      * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update | Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.
      *
      * @see {@link https://core.telegram.org/bots/api#answershippingquery}
-     * @param ok Pass _True_ if delivery to the specified address is possible and _False_ if there are any problems (for example, if delivery to the specified address is not possible)
+     * @param shipping_options An array of available shipping options.
+     * @param other Options object with all optional parameters
+     * @param signal Optional `AbortSignal` to cancel the request
+     */
+    async answerShippingQueryOk(
+        shipping_options: ShippingOption[],
+        other?: Partial<ApiParameters<"answerShippingQuery">>,
+        signal?: AbortSignal,
+    ): Promise<true> {
+        return await this.api.answerShippingQueryOk(
+            ensureShippingQueryId("answerShippingQuery", this, other),
+            shipping_options,
+            other,
+            signal,
+        );
+    }
+    /**
+     * Context-aware alias for {@link Api.answerShippingQueryError | ctx.api.answerShippingQueryError}. The following parameters are pre-supplied based on the current update:
+     *
+     * - `shipping_query_id` from `ctx.shippingQuery.id`
+     *
+     * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update | Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, _True_ is returned.
+     *
+     * @see {@link https://core.telegram.org/bots/api#answershippingquery}
+     * @param error_message Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async answerShippingQuery(
-        ok: boolean,
+        error_message: string,
         other?: Partial<ApiParameters<"answerShippingQuery">>,
         signal?: AbortSignal,
     ): Promise<true> {
-        return await this.api.answerShippingQuery(
+        return await this.api.answerShippingQueryError(
             ensureShippingQueryId("answerShippingQuery", this, other),
-            ok,
+            error_message,
             other,
             signal,
         );
