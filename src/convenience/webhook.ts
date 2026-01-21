@@ -123,6 +123,9 @@ export const webhookAdapters = {
     get azure() {
         return createWebhookAdapter("azure");
     },
+    get azureV4() {
+        return createWebhookAdapter("azureV4");
+    },
     get bun() {
         return createWebhookAdapter("bun");
     },
