@@ -3787,17 +3787,36 @@ export class Context implements CamelCaseUpdate {
      * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited {@link Message | Message} is returned, otherwise _True_ is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
      *
      * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
+     * @param caption New caption of the message, 0-1024 characters after entities parsing
      * @param other Options object with all optional parameters
      * @param signal Optional `AbortSignal` to cancel the request
      */
     async editMessageCaption(
+        caption: string | undefined,
         other?: Partial<ApiParameters<"editMessageCaption">>,
         signal?: AbortSignal,
     ): Promise<true | Message> {
-        return await this.api.editMessageCaption(
-            fillConnection(this, other),
-            signal,
-        );
+        const inlineMessageId = other?.inline_message_id ??
+            this.inlineMessageId;
+        if (
+            inlineMessageId === undefined ||
+            (other?.chat_id !== undefined && other.message_id !== undefined)
+        ) {
+            return await this.api.editMessageCaption(
+                ensureChatId("editMessageCaption", this, other),
+                ensureMessageId("editMessageCaption", this, other),
+                caption,
+                fillConnection(this, other),
+                signal,
+            );
+        } else {
+            return await this.api.editMessageCaptionInline(
+                inlineMessageId,
+                caption,
+                fillConnection(this, other),
+                signal,
+            );
+        }
     }
     /**
      * Context-aware alias for {@link Api.editMessageMedia | ctx.api.editMessageMedia}. The following parameters are pre-supplied based on the current update:
