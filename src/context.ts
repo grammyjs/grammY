@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase
 import type { Api } from "./api.ts";
-import type { ApiParameters } from "./client.ts";
+import type { ApiParameters, SendData } from "./client.ts";
 import {
     type FilterCore,
     type FilterQuery,
@@ -1052,6 +1052,18 @@ export class Context implements CamelCaseUpdate {
         trigger: MaybeArray<string | RegExp>,
     ): this is ShippingQueryContextCore {
         return Context.has.shippingQuery(trigger)(this);
+    }
+
+    // SEND DATA
+    async send(data: string | SendData): Promise<Message> {
+        const { chat_id, ...rest } = typeof data === "string"
+            ? { text: data }
+            : data;
+        return await this.api.send({
+            chat_id: ensureChatId("send", this, { chat_id }),
+            ...fillConnectionThreadTopic(this),
+            ...rest,
+        });
     }
 
     // API
@@ -5390,7 +5402,7 @@ interface ChatFrom<T extends Chat["type"]> {
 
 // === Util functions
 function ensureChatId<T extends number | string>(
-    method: keyof ApiMethods,
+    method: "send" | keyof ApiMethods,
     ctx: { chatId?: number },
     other?: { chat_id?: T },
 ): T | number {

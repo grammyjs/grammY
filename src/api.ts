@@ -60,6 +60,7 @@ import {
     type CallData,
     createRawApi,
     type RawApi,
+    type SendData,
     type TransformerConsumer,
     type WebhookReplyEnvelope,
 } from "./client.ts";
@@ -122,6 +123,60 @@ export class Api<R extends RawApi = RawApi> {
         );
         this.raw = raw;
         this.transform = transform;
+    }
+
+    async send(data: SendData<R>): Promise<Message> {
+        const payload = data as SendData<RawApi>;
+        if ("text" in payload) {
+            return await this.raw.sendMessage(payload);
+        }
+        if ("photo" in payload) {
+            return await this.raw.sendPhoto(payload);
+        }
+        if ("audio" in payload) {
+            return await this.raw.sendAudio(payload);
+        }
+        if ("document" in payload) {
+            return await this.raw.sendDocument(payload);
+        }
+        if ("video" in payload) {
+            return await this.raw.sendVideo(payload);
+        }
+        if ("animation" in payload) {
+            return await this.raw.sendAnimation(payload);
+        }
+        if ("voice" in payload) {
+            return await this.raw.sendVoice(payload);
+        }
+        if ("video_note" in payload) {
+            return await this.raw.sendVideoNote(payload);
+        }
+        if ("media" in payload) {
+            return await this.raw.sendPaidMedia(payload);
+        }
+        if ("address" in payload) {
+            return await this.raw.sendVenue(payload);
+        }
+        if ("latitude" in payload) {
+            return await this.raw.sendLocation(payload);
+        }
+        if ("phone_number" in payload) {
+            return await this.raw.sendContact(payload);
+        }
+        if ("question" in payload) {
+            return await this.raw.sendPoll(payload);
+        }
+        if ("sticker" in payload) {
+            return await this.raw.sendSticker(payload);
+        }
+        if ("emoji" in payload) {
+            return await this.raw.sendDice(payload);
+        }
+        if ("currency" in payload) {
+            return await this.raw.sendInvoice(payload);
+        }
+        payload satisfies never;
+        throw new Error("Cannot send unknown data!");
     }
 
     async call<D extends CallData<R>>(

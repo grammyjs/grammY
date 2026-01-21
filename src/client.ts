@@ -28,6 +28,24 @@ export type CallData<R extends RawApi = RawApi> = {
         : never;
 }[string & keyof R];
 
+export type SendData<R extends RawApi = RawApi> =
+    | ApiParameters<"sendMessage", R>
+    | ApiParameters<"sendPhoto", R>
+    | ApiParameters<"sendAudio", R>
+    | ApiParameters<"sendDocument", R>
+    | ApiParameters<"sendVideo", R>
+    | ApiParameters<"sendAnimation", R>
+    | ApiParameters<"sendVoice", R>
+    | ApiParameters<"sendVideoNote", R>
+    | ApiParameters<"sendPaidMedia", R>
+    | ApiParameters<"sendLocation", R>
+    | ApiParameters<"sendVenue", R>
+    | ApiParameters<"sendContact", R>
+    | ApiParameters<"sendPoll", R>
+    | (ApiParameters<"sendDice", R> & { emoji: Present })
+    | ApiParameters<"sendSticker", R>
+    | ApiParameters<"sendInvoice", R>;
+
 /**
  * Small utility interface that abstracts from webhook reply calls of different
  * web frameworks.
