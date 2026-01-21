@@ -70,6 +70,19 @@ export type SendData<R extends RawApi = RawApi> =
         prices: Present;
     });
 
+export type EditData<R extends RawApi = RawApi> =
+    | string
+    | (Partial<ApiParameters<"editMessageText", R>> & { text: Present })
+    | (Partial<ApiParameters<"editMessageCaption", R>> & { caption: Present })
+    | (Partial<ApiParameters<"editMessageMedia", R>> & { media: Present })
+    | (Partial<ApiParameters<"editMessageLiveLocation", R>> & {
+        latitude: Present;
+        longitude: Present;
+    })
+    | (Partial<ApiParameters<"editMessageReplyMarkup", R>> & {
+        reply_markup: Present;
+    });
+
 /**
  * Small utility interface that abstracts from webhook reply calls of different
  * web frameworks.

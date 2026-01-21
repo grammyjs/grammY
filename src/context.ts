@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase
 import type { Api } from "./api.ts";
-import type { ApiParameters, SendData } from "./client.ts";
+import type { ApiParameters, EditData, SendData } from "./client.ts";
 import {
     type FilterCore,
     type FilterQuery,
@@ -1054,7 +1054,7 @@ export class Context implements CamelCaseUpdate {
         return Context.has.shippingQuery(trigger)(this);
     }
 
-    // SEND DATA
+    // SEND DATA/EDIT DATA
     async send(data: SendData): Promise<Message> {
         const { chat_id, ...rest } = typeof data === "string"
             ? { text: data }
@@ -1063,6 +1063,26 @@ export class Context implements CamelCaseUpdate {
             ensureChatId("send", this, { chat_id }),
             { ...fillConnectionThreadTopic(this), ...rest },
         );
+    }
+    async edit(data: EditData): Promise<true | Message> {
+        const { chat_id, message_id, inline_message_id, ...rest } =
+            typeof data === "string" ? { text: data } : data;
+        const inlineMessageId = inline_message_id ?? this.inlineMessageId;
+        if (
+            inlineMessageId === undefined ||
+            (chat_id !== undefined && message_id !== undefined)
+        ) {
+            return await this.api.edit(
+                ensureChatId("editMessageText", this, { chat_id }),
+                ensureMessageId("editMessageText", this, { message_id }),
+                { ...fillConnection(this), ...rest },
+            );
+        } else {
+            return await this.api.editInline(
+                inlineMessageId,
+                { ...fillConnection(this), ...rest },
+            );
+        }
     }
 
     // API

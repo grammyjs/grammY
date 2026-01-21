@@ -59,6 +59,7 @@ import {
     type ApiParameters,
     type CallData,
     createRawApi,
+    type EditData,
     type RawApi,
     type SendData,
     type TransformerConsumer,
@@ -175,6 +176,77 @@ export class Api<R extends RawApi = RawApi> {
         }
         if ("currency" in payload) {
             return await this.raw.sendInvoice({ chat_id, ...payload });
+        }
+        payload satisfies never;
+        throw new Error("Cannot send unknown data!");
+    }
+
+    async edit(
+        chat_id: number | string,
+        message_id: number,
+        data: EditData<R>,
+    ): Promise<Message> {
+        const d = data as EditData<RawApi>;
+        const payload = typeof d === "string" ? { text: d } : d;
+        if ("text" in payload) {
+            return (await this.raw.editMessageText(
+                { chat_id, message_id, ...payload },
+            )) as Message;
+        }
+        if ("caption" in payload) {
+            return (await this.raw.editMessageCaption(
+                { chat_id, message_id, ...payload },
+            )) as Message;
+        }
+        if ("media" in payload) {
+            return (await this.raw.editMessageMedia(
+                { chat_id, message_id, ...payload },
+            )) as Message;
+        }
+        if ("latitude" in payload) {
+            return (await this.raw.editMessageLiveLocation(
+                { chat_id, message_id, ...payload },
+            )) as Message;
+        }
+        if ("reply_markup" in payload) {
+            return (await this.raw.editMessageReplyMarkup(
+                { chat_id, message_id, ...payload },
+            )) as Message;
+        }
+        payload satisfies never;
+        throw new Error("Cannot send unknown data!");
+    }
+
+    async editInline(
+        inline_message_id: string,
+        data: EditData<R>,
+    ): Promise<true> {
+        const d = data as EditData<RawApi>;
+        const payload = typeof d === "string" ? { text: d } : d;
+        if ("text" in payload) {
+            return (await this.raw.editMessageText(
+                { inline_message_id, ...payload },
+            )) as true;
+        }
+        if ("caption" in payload) {
+            return (await this.raw.editMessageCaption(
+                { inline_message_id, ...payload },
+            )) as true;
+        }
+        if ("media" in payload) {
+            return (await this.raw.editMessageMedia(
+                { inline_message_id, ...payload },
+            )) as true;
+        }
+        if ("latitude" in payload) {
+            return (await this.raw.editMessageLiveLocation(
+                { inline_message_id, ...payload },
+            )) as true;
+        }
+        if ("reply_markup" in payload) {
+            return (await this.raw.editMessageReplyMarkup(
+                { inline_message_id, ...payload },
+            )) as true;
         }
         payload satisfies never;
         throw new Error("Cannot send unknown data!");
