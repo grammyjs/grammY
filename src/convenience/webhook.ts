@@ -586,93 +586,59 @@ export function makeAdapters(): WebhookAdapterMap {
         type Res = NonNullable<
             Awaited<ReturnType<AzureAdapterV4>["handlerReturn"]>
         >;
-        let resolveResponse: (response: Res) => void;
+        const ret = Promise.withResolvers<Res>();
         return {
             update: () => request.json() as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
-            end: () => resolveResponse({ status: 204 }),
-            respond: (json) => resolveResponse({ jsonBody: json }),
+            end: () => ret.resolve({ status: 204 }),
+            respond: (json) => ret.resolve({ jsonBody: json }),
             unauthorized: () =>
-                resolveResponse({ status: 401, body: WRONG_TOKEN_ERROR }),
+                ret.resolve({ status: 401, body: WRONG_TOKEN_ERROR }),
             badRequest: () =>
-                resolveResponse({ status: 400, body: BAD_REQUEST_ERROR }),
-            handlerReturn: new Promise<Res>((resolve) =>
-                resolveResponse = resolve
-            ),
+                ret.resolve({ status: 400, body: BAD_REQUEST_ERROR }),
+            handlerReturn: ret.promise,
         };
     };
 
     /** Bun.serve */
     const bun: BunAdapter = (request) => {
-        let resolveResponse: (response: Response) => void;
+        const ret = Promise.withResolvers<Response>();
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
-            end: () => {
-                resolveResponse(ok());
-            },
-            respond: (json) => {
-                resolveResponse(okJson(json));
-            },
-            unauthorized: () => {
-                resolveResponse(unauthorized());
-            },
-            badRequest: () => {
-                resolveResponse(badRequest());
-            },
-            handlerReturn: new Promise<Response>((res) =>
-                resolveResponse = res
-            ),
+            end: () => ret.resolve(ok()),
+            respond: (json) => ret.resolve(okJson(json)),
+            unauthorized: () => ret.resolve(unauthorized()),
+            badRequest: () => ret.resolve(badRequest()),
+            handlerReturn: ret.promise,
         };
     };
 
     /** Native CloudFlare workers (service worker) */
     const cloudflare: CloudflareAdapter = (event) => {
-        let resolveResponse: (response: Response) => void;
-        event.respondWith(
-            new Promise<Response>((resolve) => {
-                resolveResponse = resolve;
-            }),
-        );
+        const ret = Promise.withResolvers<Response>();
+        event.respondWith(ret.promise);
         return {
             update: () => event.request.json().catch(empty) as Promise<Update>,
             header: event.request.headers.get(SECRET_HEADER) || undefined,
-            end: () => {
-                resolveResponse(ok());
-            },
-            respond: (json) => {
-                resolveResponse(okJson(json));
-            },
-            unauthorized: () => {
-                resolveResponse(unauthorized());
-            },
-            badRequest: () => {
-                resolveResponse(badRequest());
-            },
+            end: () => ret.resolve(ok()),
+            respond: (json) => ret.resolve(okJson(json)),
+            unauthorized: () => ret.resolve(unauthorized()),
+            badRequest: () => ret.resolve(badRequest()),
         };
     };
 
     /** Native CloudFlare workers (module worker) */
     const cloudflareModule: CloudflareModuleAdapter = (request) => {
-        let resolveResponse: (res: Response) => void;
+        const ret = Promise.withResolvers<Response>();
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
-            end: () => {
-                resolveResponse(ok());
-            },
-            respond: (json) => {
-                resolveResponse(okJson(json));
-            },
-            unauthorized: () => {
-                resolveResponse(unauthorized());
-            },
-            badRequest: () => {
-                resolveResponse(badRequest());
-            },
-            handlerReturn: new Promise<Response>((res) =>
-                resolveResponse = res
-            ),
+            end: () => ret.resolve(ok()),
+            respond: (json) => ret.resolve(okJson(json)),
+            unauthorized: () => ret.resolve(unauthorized()),
+            badRequest: () => ret.resolve(badRequest()),
+            handlerReturn: ret.promise,
         };
     };
 
@@ -706,27 +672,21 @@ export function makeAdapters(): WebhookAdapterMap {
 
     /** hono web framework */
     const hono: HonoAdapter = (c) => {
-        let resolveResponse: (response: Response) => void;
+        const ret = Promise.withResolvers<Response>();
         return {
             update: () => c.req.json<Update>().catch(empty),
             header: c.req.header(SECRET_HEADER),
-            end: () => {
-                resolveResponse(c.body(""));
-            },
-            respond: (json) => {
-                resolveResponse(c.json(json));
-            },
+            end: () => ret.resolve(c.body("")),
+            respond: (json) => ret.resolve(c.json(json)),
             unauthorized: () => {
                 c.status(401);
-                resolveResponse(c.body(WRONG_TOKEN_ERROR));
+                ret.resolve(c.body(WRONG_TOKEN_ERROR));
             },
             badRequest: () => {
                 c.status(400);
-                resolveResponse(c.body(BAD_REQUEST_ERROR));
+                ret.resolve(c.body(BAD_REQUEST_ERROR));
             },
-            handlerReturn: new Promise<Response>((res) =>
-                resolveResponse = res
-            ),
+            handlerReturn: ret.promise,
         };
     };
 
@@ -741,9 +701,9 @@ export function makeAdapters(): WebhookAdapterMap {
                     const chunks: Chunk[] = [];
                     req.on("data", (chunk: Chunk) => chunks.push(chunk))
                         .once("end", () => {
-                            const raw = globalThis.process.getBuiltinModule(
-                                "node:buffer",
-                            ).Buffer.concat(chunks).toString("utf-8");
+                            const raw = globalThis.process
+                                .getBuiltinModule("node:buffer")
+                                .Buffer.concat(chunks).toString("utf-8");
                             resolve(JSON.parse(raw));
                         })
                         .once("error", reject);
@@ -753,8 +713,7 @@ export function makeAdapters(): WebhookAdapterMap {
                 : secretHeaderFromRequest,
             end: () => res.end(),
             respond: (json) =>
-                res
-                    .writeHead(200, { "Content-Type": "application/json" })
+                res.writeHead(200, { "Content-Type": "application/json" })
                     .end(json),
             unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
             badRequest: () => res.writeHead(400).end(BAD_REQUEST_ERROR),
@@ -832,49 +791,29 @@ export function makeAdapters(): WebhookAdapterMap {
 
     /** std/http web server */
     const stdHttp: StdHttpAdapter = (req) => {
-        let resolveResponse: (response: Response) => void;
+        const ret = Promise.withResolvers<Response>();
         return {
             update: () => req.json().catch(empty) as Promise<Update>,
             header: req.headers.get(SECRET_HEADER) || undefined,
-            end: () => {
-                if (resolveResponse) resolveResponse(ok());
-            },
-            respond: (json) => {
-                if (resolveResponse) resolveResponse(okJson(json));
-            },
-            unauthorized: () => {
-                if (resolveResponse) resolveResponse(unauthorized());
-            },
-            badRequest: () => {
-                if (resolveResponse) resolveResponse(badRequest());
-            },
-            handlerReturn: new Promise<Response>((res) =>
-                resolveResponse = res
-            ),
+            end: () => ret.resolve(ok()),
+            respond: (json) => ret.resolve(okJson(json)),
+            unauthorized: () => ret.resolve(unauthorized()),
+            badRequest: () => ret.resolve(badRequest()),
+            handlerReturn: ret.promise,
         };
     };
 
     /** Sveltekit Serverless Functions */
     const sveltekit: SveltekitAdapter = ({ request }) => {
-        let resolveResponse: (res: Response) => void;
+        const ret = Promise.withResolvers<Response>();
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
-            end: () => {
-                if (resolveResponse) resolveResponse(ok());
-            },
-            respond: (json) => {
-                if (resolveResponse) resolveResponse(okJson(json));
-            },
-            unauthorized: () => {
-                if (resolveResponse) resolveResponse(unauthorized());
-            },
-            badRequest: () => {
-                if (resolveResponse) resolveResponse(badRequest());
-            },
-            handlerReturn: new Promise<Response>((res) =>
-                resolveResponse = res
-            ),
+            end: () => ret.resolve(ok()),
+            respond: (json) => ret.resolve(okJson(json)),
+            unauthorized: () => ret.resolve(unauthorized()),
+            badRequest: () => ret.resolve(badRequest()),
+            handlerReturn: ret.promise,
         };
     };
 
@@ -889,32 +828,25 @@ export function makeAdapters(): WebhookAdapterMap {
     });
 
     const elysia: ElysiaAdapter = (ctx) => {
-        // @note upgrade target to use modern code?
-        // const { promise, resolve } = Promise.withResolvers<string>();
-
-        let resolveResponse: (result: string) => void;
-
+        const ret = Promise.withResolvers<string>();
         return {
-            // @note technically the type shouldn't be limited to Promise, because it's fine to await plain values as well
             update: () => ctx.body as Update,
             header: ctx.headers[SECRET_HEADER_LOWERCASE],
-            end() {
-                resolveResponse("");
-            },
-            respond(json) {
+            end: () => ret.resolve(""),
+            respond: (json) => {
                 // @note since json is passed as string here, we gotta define proper content-type
                 ctx.set.headers["content-type"] = "application/json";
-                resolveResponse(json);
+                ret.resolve(json);
             },
-            unauthorized() {
+            unauthorized: () => {
                 ctx.set.status = 401;
-                resolveResponse(WRONG_TOKEN_ERROR);
+                ret.resolve(WRONG_TOKEN_ERROR);
             },
-            badRequest() {
+            badRequest: () => {
                 ctx.set.status = 400;
-                resolveResponse(BAD_REQUEST_ERROR);
+                ret.resolve(BAD_REQUEST_ERROR);
             },
-            handlerReturn: new Promise<string>((res) => resolveResponse = res),
+            handlerReturn: ret.promise,
         };
     };
 
