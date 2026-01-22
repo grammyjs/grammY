@@ -104,9 +104,7 @@ export function preprocess(filter: string[]): string[][] {
 
 function check(original: string[], preprocessed: string[][]): string[][] {
     if (preprocessed.length === 0) throw new Error("Empty filter query given");
-    const errors = preprocessed
-        .map(checkOne)
-        .filter((r): r is string => r !== true);
+    const errors = preprocessed.map(checkOne).filter((r) => r !== true);
     if (errors.length === 0) return preprocessed;
     else if (errors.length === 1) throw new Error(errors[0]);
     else {
