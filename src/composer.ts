@@ -377,7 +377,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param middleware The middleware to register
      */
     command(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
         ...middleware: Array<CommandMiddleware<C>>
     ): Composer<CommandContext<C>> {
         return this.filter(Context.has.command(command), ...middleware);

@@ -154,7 +154,7 @@ export interface StaticHas {
      * @param command The command to match
      */
     command(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
     ): <C extends Context>(ctx: C) => ctx is CommandContext<C>;
     /**
      * Generates a predicate function that can test context objects for
@@ -257,44 +257,65 @@ const checker: StaticHas = {
         };
     },
     command(command) {
-        const hasEntities = checker.filterQuery(":entities:bot_command");
+        type Cmd = { bare: string; args: string };
+        function findCommand(ctx: Context): Cmd | undefined {
+            const msg = ctx.message ?? ctx.channelPost;
+            if (msg === undefined) return undefined;
+            const text = msg.text ?? msg.caption;
+            if (text === undefined) return undefined;
+            const entities = msg.entities ?? msg.caption_entities;
+            if (entities === undefined) return undefined;
+            for (const entity of entities) {
+                if (entity.type !== "bot_command") continue;
+                if (entity.offset !== 0) continue;
+                const bare = text.slice(1, entity.length); // strip leading slash
+                const args = text.substring(entity.length + 1).trimStart();
+                return { bare, args };
+            }
+            return undefined;
+        }
+        if (command === undefined) {
+            return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
+                const cmd = findCommand(ctx);
+                if (cmd === undefined) return false;
+                ctx.args = cmd.args;
+                return true;
+            };
+        }
         const atCommands = new Set<string>();
         const noAtCommands = new Set<string>();
-        toArray(command).forEach((cmd) => {
-            if (cmd.startsWith("/")) {
+        for (const c of toArray(command)) {
+            if (c.startsWith("/")) {
+                const better = c.substring(1);
                 throw new Error(
-                    `Do not include '/' when registering command handlers (use '${
-                        cmd.substring(1)
-                    }' not '${cmd}')`,
+                    `Do not include '/' when registering command handlers (use '${better}' not '${c}')`,
                 );
             }
-            const set = cmd.includes("@") ? atCommands : noAtCommands;
-            set.add(cmd);
-        });
+            if (c.includes("@")) {
+                atCommands.add(c);
+            } else {
+                noAtCommands.add(c);
+            }
+        }
         return <C extends Context>(ctx: C): ctx is CommandContext<C> => {
-            if (!hasEntities(ctx)) return false;
-            const msg = ctx.message ?? ctx.channelPost;
-            const txt = msg.text ?? msg.caption;
-            return msg.entities.some((e) => {
-                if (e.type !== "bot_command") return false;
-                if (e.offset !== 0) return false;
-                const cmd = txt.substring(1, e.length);
-                if (noAtCommands.has(cmd) || atCommands.has(cmd)) {
-                    ctx.match = txt.substring(cmd.length + 1).trimStart();
-                    return true;
-                }
-                const index = cmd.indexOf("@");
-                if (index === -1) return false;
-                const atTarget = cmd.substring(index + 1).toLowerCase();
-                const username = ctx.me.username.toLowerCase();
-                if (atTarget !== username) return false;
-                const atCommand = cmd.substring(0, index);
-                if (noAtCommands.has(atCommand)) {
-                    ctx.match = txt.substring(cmd.length + 1).trimStart();
-                    return true;
-                }
-                return false;
-            });
+            const cmd = findCommand(ctx);
+            if (cmd === undefined) return false;
+            const { bare, args } = cmd;
+            if (noAtCommands.has(bare) || atCommands.has(bare)) {
+                ctx.args = args;
+                return true;
+            }
+            const index = bare.indexOf("@");
+            if (index === -1) return false;
+            const atTarget = bare.substring(index + 1).toLowerCase();
+            const username = ctx.me.username.toLowerCase();
+            if (atTarget !== username) return false;
+            const atCommand = bare.substring(0, index);
+            if (noAtCommands.has(atCommand)) {
+                ctx.args = args;
+                return true;
+            }
+            return false;
         };
     },
     reaction(reaction) {
@@ -454,6 +475,10 @@ const checker: StaticHas = {
  * objects, and about how grammY implements them.
  */
 export class Context implements CamelCaseUpdate {
+    /**
+     * Used by command handlers to provide command arguments
+     */
+    public args: string | undefined;
     /**
      * Used by some middleware to store information about how a certain string
      * or regular expression was matched.
@@ -956,7 +981,7 @@ export class Context implements CamelCaseUpdate {
      * @param command The command to match
      */
     hasCommand(
-        command: MaybeArray<StringWithCommandSuggestions>,
+        command?: MaybeArray<StringWithCommandSuggestions>,
     ): this is CommandContextCore {
         return Context.has.command(command)(this);
     }
@@ -5239,8 +5264,8 @@ export type HearsContext<C extends Context> = FilterQueryContext<
 >;
 
 type CommandContextCore =
-    & FilterCore<":entities:bot_command">
-    & NarrowMatchCore<string>;
+    & { args: string }
+    & FilterCore<"::bot_command">;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.command`.
@@ -5252,8 +5277,8 @@ type CommandContextCore =
  * files and still have the correct types.
  */
 export type CommandContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string>,
-    ":entities:bot_command"
+    C & { args: string },
+    "::bot_command"
 >;
 type NarrowMatchCore<T extends Context["match"]> = { match: T };
 type NarrowMatch<C extends Context, T extends C["match"]> = {
