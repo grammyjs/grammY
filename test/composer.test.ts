@@ -45,11 +45,11 @@ describe("Composer", () => {
     );
     const next = () => Promise.resolve();
     let middleware: Spy<MiddlewareFn<Context>>;
-    const exec = (c = ctx) => composer.middleware()(c, next);
+    const exec = (c = ctx) => Promise.resolve(composer.middleware()(c, next));
 
     beforeEach(() => {
         composer = new Composer();
-        middleware = spy((_ctx) => {});
+        middleware = spy((_ctx, next) => next());
     });
 
     it("should call handlers", async () => {
@@ -160,10 +160,12 @@ describe("Composer", () => {
             0 as any,
         );
         it("should check for commands", async () => {
+            composer.command().use(middleware);
             composer.command("start", middleware);
             await exec(c);
-            assertEquals(middleware.calls.length, 1);
+            assertEquals(middleware.calls.length, 2);
             assertEquals(middleware.calls[0].args[0], c);
+            assertEquals(middleware.calls[1].args[0], c);
         });
         it("should allow chaining commands", async () => {
             composer.command(["help"])
@@ -540,9 +542,7 @@ describe("Composer", () => {
             composer.use(() => {
                 throw err;
             });
-            await assertRejects(async () => {
-                await exec();
-            }, "yay");
+            await assertRejects(exec, "yay");
             assertEquals(handler.calls.length, 0);
         });
         it("should support passing on the control flow via next", async () => {

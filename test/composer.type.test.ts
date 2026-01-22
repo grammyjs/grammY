@@ -6,6 +6,7 @@ import {
     describe,
     type IsExact,
     type IsMutuallyAssignable,
+    type IsNullable,
     it,
 } from "./deps.test.ts";
 
@@ -104,13 +105,15 @@ describe("Composer types", () => {
     describe(".command", () => {
         it("should have correct type for properties", () => {
             composer.command("test", (ctx) => {
-                const msgText = ctx.msg.text;
+                const msgText = ctx.txt;
+                const msg = ctx.msg;
                 const messageCaption = ctx.message?.caption;
                 const messageText = ctx.message?.text;
                 const channelPostCaption = ctx.channelPost?.caption;
                 const channelPostText = ctx.channelPost?.text;
-                const match = ctx.match;
+                const match = ctx.args;
                 assertType<IsExact<typeof msgText, string>>(true);
+                assertType<IsNullable<typeof msg>>(false);
                 assertType<IsExact<typeof messageCaption, string | undefined>>(
                     true,
                 );

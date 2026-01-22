@@ -415,7 +415,8 @@ describe("Context", () => {
         assert(ctx.hasCommand("start"));
         assert(Context.has.command(["help", "start"])(ctx));
         assert(ctx.hasCommand(["help", "start"]));
-        assertEquals(ctx.match, "args");
+        assertEquals(ctx.args, "args");
+        assertEquals(ctx.match, undefined);
         assertFalse(Context.has.command("help")(ctx));
         assertFalse(ctx.hasCommand("help"));
 

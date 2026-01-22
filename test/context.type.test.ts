@@ -27,9 +27,7 @@ describe("ctx.has* checks", () => {
                 >(true);
             }
             if (ctx.hasCommand("123")) {
-                assertType<IsMutuallyAssignable<typeof ctx.match, string>>(
-                    true,
-                );
+                assertType<IsExact<typeof ctx.args, string>>(true);
             }
             if (ctx.hasChatType("private")) {
                 assertType<IsExact<typeof ctx.chat.type, "private">>(true);
@@ -49,7 +47,7 @@ describe("ctx.has* checks", () => {
             }
         });
         c.command("c", (ctx) => {
-            assertType<IsMutuallyAssignable<typeof ctx.match, string>>(true);
+            assertType<IsExact<typeof ctx.args, string>>(true);
         });
     });
 });
