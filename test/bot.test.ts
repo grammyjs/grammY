@@ -261,6 +261,7 @@ describe("Bot handleUpdate", () => {
     });
 
     it("should handle error in one update while other succeeds", async () => {
+        using _ = stub(console, "error");
         const bot = new Bot(token, { me });
         const { promise: controlledPromise, resolve: allowToContinue } = Promise
             .withResolvers<void>();
@@ -303,6 +304,7 @@ describe("Bot handleUpdate", () => {
 
 describe("Bot error handling", () => {
     it("should wrap middleware errors in BotError", async () => {
+        using _ = stub(console, "error");
         const bot = new Bot(token, { me });
         const originalError = new Error("Test error");
         bot.use(() => {
