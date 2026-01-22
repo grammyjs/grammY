@@ -121,6 +121,8 @@ export const webhookAdapters: WebhookAdapters = {
 };
 
 export interface WebhookOptions {
+    /** An optional HTTP path to check, such as /bot/webhook/endpoint */
+    path?: string;
     /** An optional strategy to handle timeouts (default: 'throw') */
     // deno-lint-ignore no-explicit-any
     onTimeout?: "throw" | "ignore" | ((...args: any[]) => unknown);
@@ -159,6 +161,7 @@ function webhookCallback<C extends Context>(
         onTimeout = "throw",
         timeoutMilliseconds = 10_000,
         secretToken,
+        path,
     } = options ?? {};
 
     if (bot.isRunning()) {
@@ -182,6 +185,14 @@ function webhookCallback<C extends Context>(
             // Will dedupe concurrently incoming calls from several updates
             await bot.init();
             initialized = true;
+        }
+        if (handler.method !== "POST") {
+            await handler.badRequest();
+            return handler.handlerReturn;
+        }
+        if (!compareHttpPath(handler.path, path)) {
+            await handler.notFound();
+            return handler.handlerReturn;
         }
         if (!compareSecretToken(handler.header, secretToken)) {
             await handler.unauthorized();
@@ -227,25 +238,38 @@ export interface ReqResHandler<T = void> {
      */
     header?: string;
     /**
+     * HTTP method, Telegram only uses POST
+     */
+    method: string;
+    /**
+     * HTTP path
+     */
+    path: string;
+    /**
      * Ends the request immediately without body, called after every request
      * unless a webhook reply was performed
      */
-    end?: () => void;
+    end?(): void;
     /**
      * Sends the specified JSON as a payload in the body, used for webhook
      * replies
      */
-    respond: (json: string) => unknown | Promise<unknown>;
+    respond(json: string): unknown | Promise<unknown>;
     /**
      * Responds that the request is unauthorized due to mismatching
      * X-Telegram-Bot-Api-Secret-Token headers
      */
-    unauthorized: () => unknown | Promise<unknown>;
+    unauthorized(): unknown | Promise<unknown>;
     /**
      * Responds that the request is bad due to the body payload not being
      * parsable or valid Update object
      */
-    badRequest: () => unknown | Promise<unknown>;
+    badRequest(): unknown | Promise<unknown>;
+    /**
+     * Responds that the requested endpoint was not found because either the
+     * HTTP method or path were incorrect
+     */
+    notFound(): unknown | Promise<unknown>;
     /**
      * Some frameworks (e.g. Deno's std/http `listenAndServe`) assume that
      * handler returns something
@@ -256,9 +280,12 @@ export interface ReqResHandler<T = void> {
 export type CallbackAdapter = (
     update: Update,
     callback: (json: string) => unknown,
-    header?: string,
-    unauthorized?: () => unknown,
-    badRequest?: () => unknown,
+    request?: { header?: string; method?: string; path?: string },
+    errorResponse?: {
+        unauthorized?(): unknown;
+        badRequest?(): unknown;
+        notFound?(): unknown;
+    },
 ) => ReqResHandler;
 export type LambdaAdapter = (
     event: {
@@ -455,6 +482,7 @@ export type WorktopAdapter = (req: {
 export function makeAdapters(): WebhookAdapterMap {
     const SECRET_HEADER = "X-Telegram-Bot-Api-Secret-Token";
     const SECRET_HEADER_LOWERCASE = SECRET_HEADER.toLowerCase();
+    const NOT_FOUND_ERROR = "not found";
     const WRONG_TOKEN_ERROR = "secret token is wrong";
     const BAD_REQUEST_ERROR = "unable to parse request body";
 
@@ -471,17 +499,31 @@ export function makeAdapters(): WebhookAdapterMap {
     const callback = (
         update: Update,
         callback: (json: string) => unknown,
-        header?: string,
-        unauthorized = () => callback(WRONG_TOKEN_ERROR),
-        badRequest = () => callback(BAD_REQUEST_ERROR),
+        request?: { header?: string; method?: string; path?: string },
+        errorResponse?: {
+            unauthorized?(): unknown;
+            badRequest?(): unknown;
+            notFound?(): unknown;
+        },
         // deno-lint-ignore no-explicit-any
-    ): ReqResHandler<any> => ({
-        update: () => update,
-        respond: callback,
-        header,
-        unauthorized,
-        badRequest,
-    });
+    ): ReqResHandler<any> => {
+        const { header, method = "POST", path = "/" } = request ?? {};
+        const {
+            unauthorized = () => callback(WRONG_TOKEN_ERROR),
+            badRequest = () => callback(BAD_REQUEST_ERROR),
+            notFound = () => callback(NOT_FOUND_ERROR),
+        } = errorResponse ?? {};
+        return {
+            update: () => update,
+            respond: callback,
+            header,
+            method,
+            path,
+            unauthorized,
+            badRequest,
+            notFound,
+        };
+    };
 
     /** AWS lambda serverless functions */
     const awsLambda: LambdaAdapter = (event, _context, callback) => ({
@@ -904,6 +946,10 @@ export function makeAdapters(): WebhookAdapterMap {
     };
 }
 
+/** Compares an incoming HTTP path to an expected value */
+function compareHttpPath(path: string, expected: string | undefined) {
+    return expected === undefined || compareSecretToken(path, expected);
+}
 /**
  * Performs a constant-time comparison of two strings to prevent timing attacks.
  * This function always compares all bytes regardless of early differences,
