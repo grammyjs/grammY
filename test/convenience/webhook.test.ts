@@ -270,7 +270,9 @@ describe("webhook functionality", () => {
             });
 
             const unauthorizedSpy = spy(() => {});
-            await handler(testUpdate, () => {}, "wrong-token", unauthorizedSpy);
+            await handler(testUpdate, () => {}, { header: "wrong-token" }, {
+                unauthorized: unauthorizedSpy,
+            });
 
             // Verify unauthorized was called
             assertEquals(unauthorizedSpy.calls.length, 1);
@@ -289,7 +291,7 @@ describe("webhook functionality", () => {
                 secretToken: "correct-token",
             });
 
-            await handler(testUpdate, () => {}, "correct-token");
+            await handler(testUpdate, () => {}, { header: "correct-token" });
 
             // Verify handleUpdate was called
             assertEquals(
