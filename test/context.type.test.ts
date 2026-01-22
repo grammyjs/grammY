@@ -1,11 +1,5 @@
 import { Composer, type Context } from "../src/mod.ts";
-import {
-    assertType,
-    describe,
-    type IsExact,
-    type IsMutuallyAssignable,
-    it,
-} from "./deps.test.ts";
+import { assertType, describe, type IsExact, it } from "./deps.test.ts";
 
 describe("ctx.has* checks", () => {
     it("should narrow down types", () => {
@@ -19,12 +13,7 @@ describe("ctx.has* checks", () => {
                 assertType<IsExact<typeof ctx.state, 1>>(true);
             }
             if (ctx.hasText("123")) {
-                assertType<
-                    IsMutuallyAssignable<
-                        typeof ctx.match,
-                        string | RegExpMatchArray
-                    >
-                >(true);
+                assertType<IsExact<typeof ctx.payload, "123">>(true);
             }
             if (ctx.hasCommand("123")) {
                 assertType<IsExact<typeof ctx.args, string>>(true);

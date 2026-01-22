@@ -12,6 +12,7 @@ import {
     type ReactionContext,
     type ShippingQueryContext,
     type StringWithCommandSuggestions,
+    type Trigger,
 } from "./context.ts";
 import type { FilterQuery, FilterQueryContext } from "./filter.ts";
 import type { Chat, ReactionType, ReactionTypeEmoji } from "./types.ts";
@@ -314,10 +315,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The text to look for
      * @param middleware The middleware to register
      */
-    hears(
-        trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<HearsMiddleware<C>>
-    ): Composer<HearsContext<C>> {
+    hears<T extends Trigger>(
+        trigger: MaybeArray<T>,
+        ...middleware: Array<HearsMiddleware<C, T>>
+    ): Composer<HearsContext<C, T>> {
         return this.filter(Context.has.text(trigger), ...middleware);
     }
 
@@ -494,10 +495,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The string to look for in the payload
      * @param middleware The middleware to register
      */
-    callbackQuery(
-        trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<CallbackQueryMiddleware<C>>
-    ): Composer<CallbackQueryContext<C>> {
+    callbackQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+        ...middleware: Array<CallbackQueryMiddleware<C, T>>
+    ): Composer<CallbackQueryContext<C, T>> {
         return this.filter(Context.has.callbackQuery(trigger), ...middleware);
     }
 
@@ -519,10 +520,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The string to look for in the payload
      * @param middleware The middleware to register
      */
-    gameQuery(
-        trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<GameQueryMiddleware<C>>
-    ): Composer<GameQueryContext<C>> {
+    gameQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+        ...middleware: Array<GameQueryMiddleware<C, T>>
+    ): Composer<GameQueryContext<C, T>> {
         return this.filter(Context.has.gameQuery(trigger), ...middleware);
     }
 
@@ -548,10 +549,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The inline query text to match
      * @param middleware The middleware to register
      */
-    inlineQuery(
-        trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<InlineQueryMiddleware<C>>
-    ): Composer<InlineQueryContext<C>> {
+    inlineQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+        ...middleware: Array<InlineQueryMiddleware<C, T>>
+    ): Composer<InlineQueryContext<C, T>> {
         return this.filter(Context.has.inlineQuery(trigger), ...middleware);
     }
 
@@ -572,10 +573,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param resultId An id or array of ids
      * @param middleware The middleware to register
      */
-    chosenInlineResult(
-        resultId: MaybeArray<string | RegExp>,
-        ...middleware: Array<ChosenInlineResultMiddleware<C>>
-    ): Composer<ChosenInlineResultContext<C>> {
+    chosenInlineResult<T extends Trigger>(
+        resultId: MaybeArray<T>,
+        ...middleware: Array<ChosenInlineResultMiddleware<C, T>>
+    ): Composer<ChosenInlineResultContext<C, T>> {
         return this.filter(
             Context.has.chosenInlineResult(resultId),
             ...middleware,
@@ -602,10 +603,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The string to look for in the invoice payload
      * @param middleware The middleware to register
      */
-    preCheckoutQuery(
-        trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<PreCheckoutQueryMiddleware<C>>
-    ): Composer<PreCheckoutQueryContext<C>> {
+    preCheckoutQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+        ...middleware: Array<PreCheckoutQueryMiddleware<C, T>>
+    ): Composer<PreCheckoutQueryContext<C, T>> {
         return this.filter(
             Context.has.preCheckoutQuery(trigger),
             ...middleware,
@@ -632,10 +633,10 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      * @param trigger The string to look for in the invoice payload
      * @param middleware The middleware to register
      */
-    shippingQuery(
-        trigger: MaybeArray<string | RegExp>,
-        ...middleware: Array<ShippingQueryMiddleware<C>>
-    ): Composer<ShippingQueryContext<C>> {
+    shippingQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+        ...middleware: Array<ShippingQueryMiddleware<C, T>>
+    ): Composer<ShippingQueryContext<C, T>> {
         return this.filter(Context.has.shippingQuery(trigger), ...middleware);
     }
 
@@ -1012,8 +1013,8 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
  * `bot.hears` in a different place. For instance, this allows for more modular
  * code where handlers are defined in separate files.
  */
-export type HearsMiddleware<C extends Context> = Middleware<
-    HearsContext<C>
+export type HearsMiddleware<C extends Context, T extends Trigger> = Middleware<
+    HearsContext<C, T>
 >;
 /**
  * Type of the middleware that can be passed to `bot.command`.
@@ -1045,9 +1046,8 @@ export type ReactionMiddleware<C extends Context> = Middleware<
  * `bot.callbackQuery` in a different place. For instance, this allows for more
  * modular code where handlers are defined in separate files.
  */
-export type CallbackQueryMiddleware<C extends Context> = Middleware<
-    CallbackQueryContext<C>
->;
+export type CallbackQueryMiddleware<C extends Context, T extends Trigger> =
+    Middleware<CallbackQueryContext<C, T>>;
 /**
  * Type of the middleware that can be passed to `bot.gameQuery`.
  *
@@ -1056,9 +1056,8 @@ export type CallbackQueryMiddleware<C extends Context> = Middleware<
  * `bot.gameQuery` in a different place. For instance, this allows for more
  * modular code where handlers are defined in separate files.
  */
-export type GameQueryMiddleware<C extends Context> = Middleware<
-    GameQueryContext<C>
->;
+export type GameQueryMiddleware<C extends Context, T extends Trigger> =
+    Middleware<GameQueryContext<C, T>>;
 /**
  * Type of the middleware that can be passed to `bot.inlineQuery`.
  *
@@ -1067,9 +1066,8 @@ export type GameQueryMiddleware<C extends Context> = Middleware<
  * `bot.inlineQuery` in a different place. For instance, this allows for more
  * modular code where handlers are defined in separate files.
  */
-export type InlineQueryMiddleware<C extends Context> = Middleware<
-    InlineQueryContext<C>
->;
+export type InlineQueryMiddleware<C extends Context, T extends Trigger> =
+    Middleware<InlineQueryContext<C, T>>;
 /**
  * Type of the middleware that can be passed to `bot.chosenInlineResult`.
  *
@@ -1078,9 +1076,8 @@ export type InlineQueryMiddleware<C extends Context> = Middleware<
  * `bot.chosenInlineResult` in a different place. For instance, this allows for
  * more modular code where handlers are defined in separate files.
  */
-export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
-    ChosenInlineResultContext<C>
->;
+export type ChosenInlineResultMiddleware<C extends Context, T extends Trigger> =
+    Middleware<ChosenInlineResultContext<C, T>>;
 /**
  * Type of the middleware that can be passed to `bot.preCheckoutQuery`.
  *
@@ -1089,9 +1086,8 @@ export type ChosenInlineResultMiddleware<C extends Context> = Middleware<
  * `bot.preCheckoutQuery` in a different place. For instance, this allows for
  * more modular code where handlers are defined in separate files.
  */
-export type PreCheckoutQueryMiddleware<C extends Context> = Middleware<
-    PreCheckoutQueryContext<C>
->;
+export type PreCheckoutQueryMiddleware<C extends Context, T extends Trigger> =
+    Middleware<PreCheckoutQueryContext<C, T>>;
 /**
  * Type of the middleware that can be passed to `bot.shippingQuery`.
  *
@@ -1100,9 +1096,8 @@ export type PreCheckoutQueryMiddleware<C extends Context> = Middleware<
  * `bot.shippingQuery` in a different place. For instance, this allows for more
  * modular code where handlers are defined in separate files.
  */
-export type ShippingQueryMiddleware<C extends Context> = Middleware<
-    ShippingQueryContext<C>
->;
+export type ShippingQueryMiddleware<C extends Context, T extends Trigger> =
+    Middleware<ShippingQueryContext<C, T>>;
 /**
  * Type of the middleware that can be passed to `bot.chatType`.
  *

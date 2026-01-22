@@ -27,7 +27,7 @@ describe("Composer types", () => {
                 const messageText = ctx.message?.text;
                 const channelPostCaption = ctx.channelPost?.caption;
                 const channelPostText = ctx.channelPost?.text;
-                const match = ctx.match;
+                const payload = ctx.payload;
                 assertType<IsExact<typeof msgCaption, string | undefined>>(
                     true,
                 );
@@ -46,7 +46,17 @@ describe("Composer types", () => {
                 assertType<IsExact<typeof channelPostText, string | undefined>>(
                     true,
                 );
-                assertType<IsExact<typeof match, string | RegExpMatchArray>>(
+                assertType<IsExact<typeof payload, "test">>(true);
+            });
+            composer.hears(/regex/, (ctx) => {
+                const match = ctx.match;
+                assertType<IsExact<typeof match, RegExpMatchArray>>(true);
+            });
+            composer.hears(["exact", /regex/], (ctx) => {
+                const payload = ctx.payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof payload, string | undefined>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | undefined>>(
                     true,
                 );
             });
@@ -60,7 +70,7 @@ describe("Composer types", () => {
                 const message = ctx.message;
                 const callbackQueryMessage = ctx.callbackQuery.message;
                 const callbackQueryData = ctx.callbackQuery.data;
-                const match = ctx.match;
+                const payload = ctx.payload;
                 const chatId = ctx.chatId;
                 assertType<
                     IsMutuallyAssignable<
@@ -94,10 +104,20 @@ describe("Composer types", () => {
                 >(
                     true,
                 );
-                assertType<IsExact<typeof match, string | RegExpMatchArray>>(
+                assertType<IsExact<typeof payload, "test">>(true);
+                assertType<IsExact<typeof chatId, number | undefined>>(true);
+            });
+            composer.callbackQuery(/regex/, (ctx) => {
+                const match = ctx.match;
+                assertType<IsExact<typeof match, RegExpMatchArray>>(true);
+            });
+            composer.callbackQuery(["exact", /regex/], (ctx) => {
+                const payload = ctx.payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof payload, string | undefined>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | undefined>>(
                     true,
                 );
-                assertType<IsExact<typeof chatId, number | undefined>>(true);
             });
         });
     });
@@ -295,7 +315,7 @@ describe("Composer types", () => {
                 const message = ctx.message;
                 const callbackQueryMessage = ctx.callbackQuery.message;
                 const gameShortName = ctx.callbackQuery.game_short_name;
-                const match = ctx.match;
+                const payload = ctx.payload;
                 assertType<
                     IsMutuallyAssignable<
                         typeof msg,
@@ -317,18 +337,24 @@ describe("Composer types", () => {
                         typeof callbackQueryMessage,
                         MaybeInaccessibleMessage | undefined
                     >
-                >(
-                    true,
-                );
+                >(true);
                 assertType<
                     IsExact<
                         typeof gameShortName,
                         string
                     >
-                >(
-                    true,
-                );
-                assertType<IsExact<typeof match, string | RegExpMatchArray>>(
+                >(true);
+                assertType<IsExact<typeof payload, "test">>(true);
+            });
+            composer.gameQuery(/regex/, (ctx) => {
+                const match = ctx.match;
+                assertType<IsExact<typeof match, RegExpMatchArray>>(true);
+            });
+            composer.gameQuery(["exact", /regex/], (ctx) => {
+                const payload = ctx.payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof payload, string | undefined>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | undefined>>(
                     true,
                 );
             });
@@ -339,9 +365,19 @@ describe("Composer types", () => {
         it("should have correct type for properties", () => {
             composer.inlineQuery("test", (ctx) => {
                 const query = ctx.inlineQuery.query;
-                const match = ctx.match;
+                const payload = ctx.payload;
                 assertType<IsExact<typeof query, string>>(true);
-                assertType<IsExact<typeof match, RegExpMatchArray | string>>(
+                assertType<IsExact<typeof payload, "test">>(true);
+            });
+            composer.inlineQuery(/regex/, (ctx) => {
+                const match = ctx.match;
+                assertType<IsExact<typeof match, RegExpMatchArray>>(true);
+            });
+            composer.inlineQuery(["exact", /regex/], (ctx) => {
+                const payload = ctx.payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof payload, string | undefined>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | undefined>>(
                     true,
                 );
             });
@@ -352,9 +388,19 @@ describe("Composer types", () => {
         it("should have correct type for properties", () => {
             composer.preCheckoutQuery("test", (ctx) => {
                 const invoicePayload = ctx.preCheckoutQuery.invoice_payload;
-                const match = ctx.match;
+                const payload = ctx.payload;
                 assertType<IsExact<typeof invoicePayload, string>>(true);
-                assertType<IsExact<typeof match, RegExpMatchArray | string>>(
+                assertType<IsExact<typeof payload, "test">>(true);
+            });
+            composer.preCheckoutQuery(/regex/, (ctx) => {
+                const match = ctx.match;
+                assertType<IsExact<typeof match, RegExpMatchArray>>(true);
+            });
+            composer.preCheckoutQuery(["exact", /regex/], (ctx) => {
+                const payload = ctx.payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof payload, string | undefined>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | undefined>>(
                     true,
                 );
             });
@@ -365,9 +411,19 @@ describe("Composer types", () => {
         it("should have correct type for properties", () => {
             composer.shippingQuery("test", (ctx) => {
                 const invoicePayload = ctx.shippingQuery.invoice_payload;
-                const match = ctx.match;
+                const payload = ctx.payload;
                 assertType<IsExact<typeof invoicePayload, string>>(true);
-                assertType<IsExact<typeof match, RegExpMatchArray | string>>(
+                assertType<IsExact<typeof payload, "test">>(true);
+            });
+            composer.shippingQuery(/regex/, (ctx) => {
+                const match = ctx.match;
+                assertType<IsExact<typeof match, RegExpMatchArray>>(true);
+            });
+            composer.shippingQuery(["exact", /regex/], (ctx) => {
+                const payload = ctx.payload;
+                const match = ctx.match;
+                assertType<IsExact<typeof payload, string | undefined>>(true);
+                assertType<IsExact<typeof match, RegExpMatchArray | undefined>>(
                     true,
                 );
             });

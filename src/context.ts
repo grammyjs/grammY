@@ -70,6 +70,8 @@ import type {
 // === Util types
 /** A value or an array of such values. */
 export type MaybeArray<T> = T | T[];
+/** A string or a regular expression */
+export type Trigger = string | RegExp;
 /** Permits `string` but gives hints. */
 export type StringWithCommandSuggestions =
     | (string & Record<never, never>)
@@ -144,9 +146,9 @@ export interface StaticHas {
      *
      * @param trigger The string or regex to match
      */
-    text(
-        trigger: MaybeArray<string | RegExp>,
-    ): <C extends Context>(ctx: C) => ctx is HearsContext<C>;
+    text<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is HearsContext<C, T>;
     /**
      * Generates a predicate function that can test context objects for
      * containing a command. This uses the same logic as `bot.command`.
@@ -184,9 +186,9 @@ export interface StaticHas {
      *
      * @param trigger The string or regex to match
      */
-    callbackQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): <C extends Context>(ctx: C) => ctx is CallbackQueryContext<C>;
+    callbackQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is CallbackQueryContext<C, T>;
     /**
      * Generates a predicate function that can test context objects for
      * containing the given game query, or for the game name to match the given
@@ -194,9 +196,9 @@ export interface StaticHas {
      *
      * @param trigger The string or regex to match
      */
-    gameQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): <C extends Context>(ctx: C) => ctx is GameQueryContext<C>;
+    gameQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is GameQueryContext<C, T>;
     /**
      * Generates a predicate function that can test context objects for
      * containing the given inline query, or for the inline query to match the
@@ -204,9 +206,9 @@ export interface StaticHas {
      *
      * @param trigger The string or regex to match
      */
-    inlineQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C>;
+    inlineQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is InlineQueryContext<C, T>;
     /**
      * Generates a predicate function that can test context objects for
      * containing the chosen inline result, or for the chosen inline result to
@@ -214,9 +216,9 @@ export interface StaticHas {
      *
      * @param trigger The string or regex to match
      */
-    chosenInlineResult(
-        trigger: MaybeArray<string | RegExp>,
-    ): <C extends Context>(ctx: C) => ctx is ChosenInlineResultContext<C>;
+    chosenInlineResult<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is ChosenInlineResultContext<C, T>;
     /**
      * Generates a predicate function that can test context objects for
      * containing the given pre-checkout query, or for the pre-checkout query
@@ -225,9 +227,9 @@ export interface StaticHas {
      *
      * @param trigger The string or regex to match
      */
-    preCheckoutQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): <C extends Context>(ctx: C) => ctx is PreCheckoutQueryContext<C>;
+    preCheckoutQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is PreCheckoutQueryContext<C, T>;
     /**
      * Generates a predicate function that can test context objects for
      * containing the given shipping query, or for the shipping query to match
@@ -236,9 +238,9 @@ export interface StaticHas {
      *
      * @param trigger The string or regex to match
      */
-    shippingQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): <C extends Context>(ctx: C) => ctx is ShippingQueryContext<C>;
+    shippingQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): <C extends Context>(ctx: C) => ctx is ShippingQueryContext<C, T>;
 }
 const checker: StaticHas = {
     filterQuery<Q extends FilterQuery>(filter: Q | Q[]) {
@@ -246,10 +248,10 @@ const checker: StaticHas = {
         return <C extends Context>(ctx: C): ctx is FilterQueryContext<C, Q> =>
             pred(ctx);
     },
-    text(trigger) {
+    text<T extends Trigger>(trigger: MaybeArray<T>) {
         const hasText = checker.filterQuery([":text", ":caption"]);
         const trg = triggerFn(trigger);
-        return <C extends Context>(ctx: C): ctx is HearsContext<C> => {
+        return <C extends Context>(ctx: C): ctx is HearsContext<C, T> => {
             if (!hasText(ctx)) return false;
             const msg = ctx.message ?? ctx.channelPost;
             const txt = msg.text ?? msg.caption;
@@ -389,49 +391,51 @@ const checker: StaticHas = {
         return <C extends Context>(ctx: C): ctx is ChatTypeContext<C, T> =>
             ctx.chat?.type !== undefined && set.has(ctx.chat.type);
     },
-    callbackQuery(trigger) {
+    callbackQuery<T extends Trigger>(trigger: MaybeArray<T>) {
         const hasCallbackQuery = checker.filterQuery("callback_query:data");
         const trg = triggerFn(trigger);
-        return <C extends Context>(ctx: C): ctx is CallbackQueryContext<C> =>
+        return <C extends Context>(ctx: C): ctx is CallbackQueryContext<C, T> =>
             hasCallbackQuery(ctx) && match(ctx, ctx.callbackQuery.data, trg);
     },
-    gameQuery(trigger) {
+    gameQuery<T extends Trigger>(trigger: MaybeArray<T>) {
         const hasGameQuery = checker.filterQuery(
             "callback_query:game_short_name",
         );
         const trg = triggerFn(trigger);
-        return <C extends Context>(ctx: C): ctx is GameQueryContext<C> =>
+        return <C extends Context>(ctx: C): ctx is GameQueryContext<C, T> =>
             hasGameQuery(ctx) &&
             match(ctx, ctx.callbackQuery.game_short_name, trg);
     },
-    inlineQuery(trigger) {
+    inlineQuery<T extends Trigger>(trigger: MaybeArray<T>) {
         const hasInlineQuery = checker.filterQuery("inline_query");
         const trg = triggerFn(trigger);
-        return <C extends Context>(ctx: C): ctx is InlineQueryContext<C> =>
+        return <C extends Context>(ctx: C): ctx is InlineQueryContext<C, T> =>
             hasInlineQuery(ctx) && match(ctx, ctx.inlineQuery.query, trg);
     },
-    chosenInlineResult(trigger) {
+    chosenInlineResult<T extends Trigger>(trigger: MaybeArray<T>) {
         const hasChosenInlineResult = checker.filterQuery(
             "chosen_inline_result",
         );
         const trg = triggerFn(trigger);
         return <C extends Context>(
             ctx: C,
-        ): ctx is ChosenInlineResultContext<C> =>
+        ): ctx is ChosenInlineResultContext<C, T> =>
             hasChosenInlineResult(ctx) &&
             match(ctx, ctx.chosenInlineResult.result_id, trg);
     },
-    preCheckoutQuery(trigger) {
+    preCheckoutQuery<T extends Trigger>(trigger: MaybeArray<T>) {
         const hasPreCheckoutQuery = checker.filterQuery("pre_checkout_query");
         const trg = triggerFn(trigger);
-        return <C extends Context>(ctx: C): ctx is PreCheckoutQueryContext<C> =>
+        return <C extends Context>(
+            ctx: C,
+        ): ctx is PreCheckoutQueryContext<C, T> =>
             hasPreCheckoutQuery(ctx) &&
             match(ctx, ctx.preCheckoutQuery.invoice_payload, trg);
     },
-    shippingQuery(trigger) {
+    shippingQuery<T extends Trigger>(trigger: MaybeArray<T>) {
         const hasShippingQuery = checker.filterQuery("shipping_query");
         const trg = triggerFn(trigger);
-        return <C extends Context>(ctx: C): ctx is ShippingQueryContext<C> =>
+        return <C extends Context>(ctx: C): ctx is ShippingQueryContext<C, T> =>
             hasShippingQuery(ctx) &&
             match(ctx, ctx.shippingQuery.invoice_payload, trg);
     },
@@ -478,12 +482,17 @@ export class Context implements CamelCaseUpdate {
     /**
      * Used by command handlers to provide command arguments
      */
-    public args: string | undefined;
+    public args: string | undefined = undefined;
+    /**
+     * Used by some middleware to store information about how a certain regular
+     * expression was matched.
+     */
+    public match: RegExpMatchArray | undefined = undefined;
     /**
      * Used by some middleware to store information about how a certain string
-     * or regular expression was matched.
+     * was matched
      */
-    public match: string | RegExpMatchArray | undefined;
+    public payload: string | undefined = undefined;
 
     /**
      * Constructs a new context object for an incomding update. This constructor
@@ -971,7 +980,9 @@ export class Context implements CamelCaseUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasText(trigger: MaybeArray<string | RegExp>): this is HearsContextCore {
+    hasText<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): this is HearsContextCore<T> {
         return Context.has.text(trigger)(this);
     }
     /**
@@ -1010,9 +1021,9 @@ export class Context implements CamelCaseUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasCallbackQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): this is CallbackQueryContextCore {
+    hasCallbackQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): this is CallbackQueryContextCore<T> {
         return Context.has.callbackQuery(trigger)(this);
     }
     /**
@@ -1022,9 +1033,9 @@ export class Context implements CamelCaseUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasGameQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): this is GameQueryContextCore {
+    hasGameQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): this is GameQueryContextCore<T> {
         return Context.has.gameQuery(trigger)(this);
     }
     /**
@@ -1034,9 +1045,9 @@ export class Context implements CamelCaseUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasInlineQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): this is InlineQueryContextCore {
+    hasInlineQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): this is InlineQueryContextCore<T> {
         return Context.has.inlineQuery(trigger)(this);
     }
     /**
@@ -1047,9 +1058,9 @@ export class Context implements CamelCaseUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasChosenInlineResult(
-        trigger: MaybeArray<string | RegExp>,
-    ): this is ChosenInlineResultContextCore {
+    hasChosenInlineResult<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): this is ChosenInlineResultContextCore<T> {
         return Context.has.chosenInlineResult(trigger)(this);
     }
     /**
@@ -1060,9 +1071,9 @@ export class Context implements CamelCaseUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasPreCheckoutQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): this is PreCheckoutQueryContextCore {
+    hasPreCheckoutQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): this is PreCheckoutQueryContextCore<T> {
         return Context.has.preCheckoutQuery(trigger)(this);
     }
     /**
@@ -1073,9 +1084,9 @@ export class Context implements CamelCaseUpdate {
      *
      * @param trigger The string or regex to match
      */
-    hasShippingQuery(
-        trigger: MaybeArray<string | RegExp>,
-    ): this is ShippingQueryContextCore {
+    hasShippingQuery<T extends Trigger>(
+        trigger: MaybeArray<T>,
+    ): this is ShippingQueryContextCore<T> {
         return Context.has.shippingQuery(trigger)(this);
     }
 
@@ -5245,9 +5256,9 @@ export class Context implements CamelCaseUpdate {
 }
 
 // === Filtered context types
-type HearsContextCore =
+type HearsContextCore<T extends Trigger> =
     & FilterCore<":text" | ":caption">
-    & NarrowMatchCore<string | RegExpMatchArray>;
+    & NarrowMatchAndPayloadCore<T>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.hears`.
@@ -5258,14 +5269,10 @@ type HearsContextCore =
  * the correct type automatically. That way, handlers can be defined in separate
  * files and still have the correct types.
  */
-export type HearsContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string | RegExpMatchArray>,
-    ":text" | ":caption"
->;
+export type HearsContext<C extends Context, T extends Trigger> =
+    FilterQueryContext<NarrowMatchAndPayload<C, T>, ":text" | ":caption">;
 
-type CommandContextCore =
-    & { args: string }
-    & FilterCore<"::bot_command">;
+type CommandContextCore = FilterCore<"::bot_command"> & { args: string };
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.command`.
@@ -5280,12 +5287,19 @@ export type CommandContext<C extends Context> = FilterQueryContext<
     C & { args: string },
     "::bot_command"
 >;
-type NarrowMatchCore<T extends Context["match"]> = { match: T };
-type NarrowMatch<C extends Context, T extends C["match"]> = {
-    [K in keyof C]: K extends "match" ? (T extends C[K] ? T : never) : C[K];
-};
+type NarrowMatchAndPayloadCore<T extends Trigger> = T extends unknown ? {
+        match: T extends RegExp ? RegExpMatchArray : unknown;
+        payload: T extends string ? T : unknown;
+    }
+    : never;
 
-type CallbackQueryContextCore = FilterCore<"callback_query:data">;
+type NarrowMatchAndPayload<C extends Context, T extends Trigger> =
+    & C
+    & NarrowMatchAndPayloadCore<T>;
+
+type CallbackQueryContextCore<T extends Trigger> =
+    & FilterCore<"callback_query:data">
+    & NarrowMatchAndPayloadCore<T>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.callbackQuery`.
@@ -5296,12 +5310,12 @@ type CallbackQueryContextCore = FilterCore<"callback_query:data">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type CallbackQueryContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string | RegExpMatchArray>,
-    "callback_query:data"
->;
+export type CallbackQueryContext<C extends Context, T extends Trigger> =
+    FilterQueryContext<NarrowMatchAndPayload<C, T>, "callback_query:data">;
 
-type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
+type GameQueryContextCore<T extends Trigger> =
+    & FilterCore<"callback_query:game_short_name">
+    & NarrowMatchAndPayloadCore<T>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.gameQuery`.
@@ -5312,12 +5326,15 @@ type GameQueryContextCore = FilterCore<"callback_query:game_short_name">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type GameQueryContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string | RegExpMatchArray>,
-    "callback_query:game_short_name"
->;
+export type GameQueryContext<C extends Context, T extends Trigger> =
+    FilterQueryContext<
+        NarrowMatchAndPayload<C, T>,
+        "callback_query:game_short_name"
+    >;
 
-type InlineQueryContextCore = FilterCore<"inline_query">;
+type InlineQueryContextCore<T extends Trigger> =
+    & FilterCore<"inline_query">
+    & NarrowMatchAndPayloadCore<T>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.inlineQuery`.
@@ -5328,10 +5345,8 @@ type InlineQueryContextCore = FilterCore<"inline_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type InlineQueryContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string | RegExpMatchArray>,
-    "inline_query"
->;
+export type InlineQueryContext<C extends Context, T extends Trigger> =
+    FilterQueryContext<NarrowMatchAndPayload<C, T>, "inline_query">;
 
 type ReactionContextCore = FilterCore<"message_reaction">;
 /**
@@ -5349,7 +5364,9 @@ export type ReactionContext<C extends Context> = FilterQueryContext<
     "message_reaction"
 >;
 
-type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
+type ChosenInlineResultContextCore<T extends Trigger> =
+    & FilterCore<"chosen_inline_result">
+    & NarrowMatchAndPayloadCore<T>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.chosenInlineResult`.
@@ -5360,12 +5377,14 @@ type ChosenInlineResultContextCore = FilterCore<"chosen_inline_result">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type ChosenInlineResultContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string | RegExpMatchArray>,
-    "chosen_inline_result"
->;
+export type ChosenInlineResultContext<
+    C extends Context,
+    T extends Trigger,
+> = FilterQueryContext<NarrowMatchAndPayload<C, T>, "chosen_inline_result">;
 
-type PreCheckoutQueryContextCore = FilterCore<"pre_checkout_query">;
+type PreCheckoutQueryContextCore<T extends Trigger> =
+    & FilterCore<"pre_checkout_query">
+    & NarrowMatchAndPayloadCore<T>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.preCheckoutQuery`.
@@ -5376,12 +5395,14 @@ type PreCheckoutQueryContextCore = FilterCore<"pre_checkout_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type PreCheckoutQueryContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string | RegExpMatchArray>,
-    "pre_checkout_query"
->;
+export type PreCheckoutQueryContext<
+    C extends Context,
+    T extends Trigger,
+> = FilterQueryContext<NarrowMatchAndPayload<C, T>, "pre_checkout_query">;
 
-type ShippingQueryContextCore = FilterCore<"shipping_query">;
+type ShippingQueryContextCore<T extends Trigger> =
+    & FilterCore<"shipping_query">
+    & NarrowMatchAndPayloadCore<T>;
 /**
  * Type of the context object that is available inside the handlers for
  * `bot.shippingQuery`.
@@ -5392,10 +5413,8 @@ type ShippingQueryContextCore = FilterCore<"shipping_query">;
  * inferring the correct type automatically. That way, handlers can be defined
  * in separate files and still have the correct types.
  */
-export type ShippingQueryContext<C extends Context> = FilterQueryContext<
-    NarrowMatch<C, string | RegExpMatchArray>,
-    "shipping_query"
->;
+export type ShippingQueryContext<C extends Context, T extends Trigger> =
+    FilterQueryContext<NarrowMatchAndPayload<C, T>, "shipping_query">;
 
 type ChatTypeContextCore<T extends Chat["type"]> = T extends unknown ?
         & Record<"update", ChatTypeUpdate<T>> // ctx.update
@@ -5752,7 +5771,7 @@ function fillConnectionThreadTopic<T extends Record<string, unknown>>(
     };
 }
 
-function triggerFn(trigger: MaybeArray<string | RegExp>) {
+function triggerFn(trigger: MaybeArray<Trigger>) {
     return toArray(trigger).map((t) =>
         typeof t === "string"
             ? (txt: string) => (txt === t ? t : null)
@@ -5767,7 +5786,10 @@ function match<C extends Context>(
 ): boolean {
     for (const t of triggers) {
         const res = t(content);
-        if (res) {
+        if (typeof res === "string") {
+            ctx.payload = res;
+            return true;
+        } else if (res !== null) {
             ctx.match = res;
             return true;
         }
