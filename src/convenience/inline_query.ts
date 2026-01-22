@@ -37,10 +37,7 @@ export type OptionalKeys<T> = {
     [K in keyof T]-?: undefined extends T[K] ? K : never;
 };
 export type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
-export type WithInputMessageMethods<R extends InlineQueryResult> =
-    & R
-    & InputMessageMethods<R>;
-export type InputMessageMethods<R extends InlineQueryResult> = {
+export type WithInputMessageMethods<R extends InlineQueryResult> = {
     text(
         message_text: string,
         options?: OptionalFields<InputTextMessageContent>,
@@ -80,7 +77,7 @@ function inputMessage<R extends InlineQueryResult>(queryTemplate: R) {
 }
 function inputMessageMethods<R extends InlineQueryResult>(
     queryTemplate: Omit<R, "input_message_content">,
-): InputMessageMethods<R> {
+): WithInputMessageMethods<R> {
     return {
         text(message_text, options) {
             const content: InputTextMessageContent = {
@@ -182,7 +179,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultArticle,
             "title"
         >,
-    ): InputMessageMethods<InlineQueryResultArticle>;
+    ): WithInputMessageMethods<InlineQueryResultArticle>;
     /**
      * Builds an InlineQueryResultAudio object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultaudio.
@@ -200,7 +197,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultAudio,
             "title" | "audio_url"
         >,
-    ): InputMessageMethods<InlineQueryResultAudio>;
+    ): WithInputMessageMethods<InlineQueryResultAudio>;
     /**
      * Builds an InlineQueryResultCachedAudio object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedaudio.
@@ -216,7 +213,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedAudio,
             "audio_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedAudio>;
+    ): WithInputMessageMethods<InlineQueryResultCachedAudio>;
     /**
      * Builds an InlineQueryResultContact object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcontact.
@@ -234,7 +231,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultContact,
             "phone_number" | "first_name"
         >,
-    ): InputMessageMethods<InlineQueryResultContact>;
+    ): WithInputMessageMethods<InlineQueryResultContact>;
     /**
      * Builds an InlineQueryResultDocument object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultdocument with
@@ -253,7 +250,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
         >,
-    ): InputMessageMethods<InlineQueryResultDocument>;
+    ): WithInputMessageMethods<InlineQueryResultDocument>;
     /**
      * Builds an InlineQueryResultDocument object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultdocument with
@@ -272,7 +269,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultDocument,
             "mime_type" | "title" | "document_url"
         >,
-    ): InputMessageMethods<InlineQueryResultDocument>;
+    ): WithInputMessageMethods<InlineQueryResultDocument>;
     /**
      * Builds an InlineQueryResultCachedDocument object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcacheddocument.
@@ -290,7 +287,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedDocument,
             "title" | "document_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedDocument>;
+    ): WithInputMessageMethods<InlineQueryResultCachedDocument>;
     /**
      * Builds an InlineQueryResultGame object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultgame.
@@ -324,7 +321,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultGif,
             "gif_url" | "thumbnail_url"
         >,
-    ): InputMessageMethods<InlineQueryResultGif>;
+    ): WithInputMessageMethods<InlineQueryResultGif>;
     /**
      * Builds an InlineQueryResultCachedGif object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedgif.
@@ -340,7 +337,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedGif,
             "gif_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedGif>;
+    ): WithInputMessageMethods<InlineQueryResultCachedGif>;
     /**
      * Builds an InlineQueryResultLocation object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultlocation.
@@ -360,7 +357,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultLocation,
             "title" | "latitude" | "longitude"
         >,
-    ): InputMessageMethods<InlineQueryResultLocation>;
+    ): WithInputMessageMethods<InlineQueryResultLocation>;
     /**
      * Builds an InlineQueryResultMpeg4Gif object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif.
@@ -378,7 +375,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultMpeg4Gif,
             "mpeg4_url" | "thumbnail_url"
         >,
-    ): InputMessageMethods<InlineQueryResultMpeg4Gif>;
+    ): WithInputMessageMethods<InlineQueryResultMpeg4Gif>;
     /**
      * Builds an InlineQueryResultCachedMpeg4Gif object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedmpeg4gif.
@@ -394,7 +391,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedMpeg4Gif,
             "mpeg4_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedMpeg4Gif>;
+    ): WithInputMessageMethods<InlineQueryResultCachedMpeg4Gif>;
     /**
      * Builds an InlineQueryResultPhoto object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultphoto with the
@@ -408,7 +405,7 @@ export interface InlineQueryResultBuilder {
         id: string,
         photo_url: string | URL,
         options?: InlineQueryResultOptions<InlineQueryResultPhoto, "photo_url">,
-    ): InputMessageMethods<InlineQueryResultPhoto>;
+    ): WithInputMessageMethods<InlineQueryResultPhoto>;
     /**
      * Builds an InlineQueryResultCachedPhoto object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedphoto.
@@ -424,7 +421,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedPhoto,
             "photo_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedPhoto>;
+    ): WithInputMessageMethods<InlineQueryResultCachedPhoto>;
     /**
      * Builds an InlineQueryResultCachedSticker object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedsticker.
@@ -440,7 +437,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedSticker,
             "sticker_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedSticker>;
+    ): WithInputMessageMethods<InlineQueryResultCachedSticker>;
     /**
      * Builds an InlineQueryResultVenue object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvenue.
@@ -462,7 +459,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultVenue,
             "title" | "latitude" | "longitude" | "address"
         >,
-    ): InputMessageMethods<InlineQueryResultVenue>;
+    ): WithInputMessageMethods<InlineQueryResultVenue>;
     /**
      * Builds an InlineQueryResultVideo object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvideo with mime_type
@@ -485,7 +482,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
         >,
-    ): InputMessageMethods<InlineQueryResultVideo>;
+    ): WithInputMessageMethods<InlineQueryResultVideo>;
     /**
      * Builds an InlineQueryResultVideo object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvideo with mime_type
@@ -506,7 +503,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultVideo,
             "mime_type" | "title" | "video_url" | "thumbnail_url"
         >,
-    ): InputMessageMethods<InlineQueryResultVideo>;
+    ): WithInputMessageMethods<InlineQueryResultVideo>;
     /**
      * Builds an InlineQueryResultCachedVideo object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedvideo.
@@ -524,7 +521,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedVideo,
             "title" | "video_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedVideo>;
+    ): WithInputMessageMethods<InlineQueryResultCachedVideo>;
     /**
      * Builds an InlineQueryResultVoice object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultvoice.
@@ -542,7 +539,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultVoice,
             "title" | "voice_url"
         >,
-    ): InputMessageMethods<InlineQueryResultVoice>;
+    ): WithInputMessageMethods<InlineQueryResultVoice>;
     /**
      * Builds an InlineQueryResultCachedVoice object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultcachedvoice.
@@ -560,7 +557,7 @@ export interface InlineQueryResultBuilder {
             InlineQueryResultCachedVoice,
             "title" | "voice_file_id"
         >,
-    ): InputMessageMethods<InlineQueryResultCachedVoice>;
+    ): WithInputMessageMethods<InlineQueryResultCachedVoice>;
 }
 export const InlineQueryResultBuilder: InlineQueryResultBuilder = {
     article(id, title, options = {}) {
