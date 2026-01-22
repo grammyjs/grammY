@@ -1,4 +1,5 @@
 // deno-lint-ignore-file camelcase
+import { DEFAULT_UPDATE_TYPES } from "./convenience/constants.ts";
 import { createDebug } from "@grammyjs/debug";
 import {
     BotError,
@@ -26,29 +27,6 @@ import type {
 const debug = createDebug("grammy:bot");
 const debugWarn = createDebug("grammy:warn");
 const debugErr = createDebug("grammy:error");
-
-export const DEFAULT_UPDATE_TYPES = [
-    "message",
-    "edited_message",
-    "channel_post",
-    "edited_channel_post",
-    "business_connection",
-    "business_message",
-    "edited_business_message",
-    "deleted_business_messages",
-    "inline_query",
-    "chosen_inline_result",
-    "callback_query",
-    "shipping_query",
-    "pre_checkout_query",
-    "purchased_paid_media",
-    "poll",
-    "poll_answer",
-    "my_chat_member",
-    "chat_join_request",
-    "chat_boost",
-    "removed_chat_boost",
-] as const;
 
 /**
  * Options that can be specified when running the bot via simple long polling.
