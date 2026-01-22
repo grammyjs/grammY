@@ -287,10 +287,13 @@ export type CallbackAdapter = (
         notFound?(): unknown;
     },
 ) => ReqResHandler;
+
 export type LambdaAdapter = (
     event: {
         body?: string;
         headers: Record<string, string | undefined>;
+        httpMethod: string;
+        path: string;
     },
     _context: unknown,
     callback: (
@@ -303,6 +306,7 @@ export type LambdaAsyncAdapter = (
     event: {
         body?: string;
         headers: Record<string, string | undefined>;
+        requestContext: { http: { method: string; path: string } };
     },
     _context: unknown,
 ) => ReqResHandler;
@@ -312,17 +316,26 @@ export type AzureAdapter = (context: {
         // deno-lint-ignore no-explicit-any
         [key: string]: any;
     };
-}, request: { body?: unknown }) => ReqResHandler;
+}, request: {
+    body?: unknown;
+    method: string;
+    url: string;
+}) => ReqResHandler;
+
 export type AzureAdapterV4 = (
     request: {
         headers: { get(name: string): string | null };
         json(): Promise<unknown>;
+        method: string;
+        url: string;
     },
 ) => ReqResHandler<{ status: number; body?: string } | { jsonBody: string }>;
 
 export type BunAdapter = (request: {
     headers: Headers;
     json: () => Promise<unknown>;
+    method: string;
+    url: string;
 }) => ReqResHandler<Response>;
 
 export type CloudflareAdapter = (event: {
@@ -349,11 +362,14 @@ export type ElysiaAdapter = (ctx: {
         headers: Record<string, string | number>;
         status?: string | number;
     };
+    request: Request;
 }) => ReqResHandler<string>;
 
 export type ExpressAdapter = (req: {
     body: Update;
     header: (header: string) => string | undefined;
+    method: string;
+    path: string;
 }, res: {
     end: (cb?: () => void) => typeof res;
     set: (field: string, value?: string | string[]) => typeof res;
@@ -365,6 +381,8 @@ export type FastifyAdapter = (request: {
     body: unknown;
     // deno-lint-ignore no-explicit-any
     headers: any;
+    method: string;
+    url: string;
 }, reply: {
     status: (code: number) => typeof reply;
     headers: (headers: Record<string, string>) => typeof reply;
@@ -379,6 +397,8 @@ export type HonoAdapter = (c: {
     req: {
         json: <T>() => Promise<T>;
         header: (header: string) => string | undefined;
+        method: string;
+        path: string;
     };
     body(data: string): Response;
     body(data: null, status: 204): Response;
@@ -389,6 +409,8 @@ export type HonoAdapter = (c: {
 
 export type HttpAdapter = (req: {
     headers: Record<string, string | string[] | undefined>;
+    method?: string;
+    url?: string;
     on: (event: string, listener: (chunk: unknown) => void) => typeof req;
     once: (event: string, listener: () => void) => typeof req;
 }, res: {
@@ -411,11 +433,15 @@ export type KoaAdapter = (ctx: {
         body: unknown;
         status: number;
     };
+    method: string;
+    path: string;
 }) => ReqResHandler;
 
 export type NextAdapter = (req: {
     body: Update;
     headers: Record<string, string | string[] | undefined>;
+    method?: string;
+    url?: string;
 }, res: {
     end: (cb?: () => void) => typeof res;
     status: (code: number) => typeof res;
@@ -436,6 +462,8 @@ export type NHttpAdapter = (rev: {
             send: (json: string) => void;
         };
     };
+    method: string;
+    path: string;
 }) => ReqResHandler;
 
 export type OakAdapter = (ctx: {
@@ -446,6 +474,8 @@ export type OakAdapter = (ctx: {
         headers: {
             get: (header: string) => string | null;
         };
+        method: string;
+        url: URL;
     };
     response: {
         status: number;
@@ -474,6 +504,8 @@ export type WorktopAdapter = (req: {
     headers: {
         get: (header: string) => string | null;
     };
+    method: string;
+    path: string;
 }, res: {
     end: (data: BodyInit | null) => void;
     send: (status: number, json: string) => void;
@@ -494,6 +526,7 @@ export function makeAdapters(): WebhookAdapterMap {
         });
     const unauthorized = () => new Response(WRONG_TOKEN_ERROR, { status: 401 });
     const badRequest = () => new Response(BAD_REQUEST_ERROR, { status: 400 });
+    const notFound = () => new Response(NOT_FOUND_ERROR, { status: 404 });
     const empty = () => ({} as Update);
 
     const callback = (
@@ -530,6 +563,8 @@ export function makeAdapters(): WebhookAdapterMap {
         // TODO: add safe parse workaround
         update: () => JSON.parse(event.body ?? "{}"),
         header: event.headers[SECRET_HEADER],
+        method: event.httpMethod,
+        path: event.path,
         end: () => callback(null, { statusCode: 200 }),
         respond: (json) =>
             callback(null, {
@@ -539,27 +574,31 @@ export function makeAdapters(): WebhookAdapterMap {
             }),
         unauthorized: () => callback(null, { statusCode: 401 }),
         badRequest: () => callback(null, { statusCode: 400 }),
+        notFound: () => callback(null, { statusCode: 404 }),
     });
 
     /** AWS lambda async/await serverless functions */
     const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
         // deno-lint-ignore no-explicit-any
-        let resolveResponse: (response: any) => void;
+        const ret = Promise.withResolvers<any>();
 
         return {
             // TODO: add safe parse workaround
             update: () => JSON.parse(event.body ?? "{}"),
             header: event.headers[SECRET_HEADER],
-            end: () => resolveResponse({ statusCode: 200 }),
+            method: event.requestContext.http.method,
+            path: event.requestContext.http.path,
+            end: () => ret.resolve({ statusCode: 200 }),
             respond: (json) =>
-                resolveResponse({
+                ret.resolve({
                     statusCode: 200,
                     headers: { "Content-Type": "application/json" },
                     body: json,
                 }),
-            unauthorized: () => resolveResponse({ statusCode: 401 }),
-            badRequest: () => resolveResponse({ statusCode: 400 }),
-            handlerReturn: new Promise<void>((res) => resolveResponse = res),
+            unauthorized: () => ret.resolve({ statusCode: 401 }),
+            badRequest: () => ret.resolve({ statusCode: 400 }),
+            notFound: () => ret.resolve({ statusCode: 404 }),
+            handlerReturn: ret.promise,
         };
     };
 
@@ -567,6 +606,8 @@ export function makeAdapters(): WebhookAdapterMap {
     const azure: AzureAdapter = (context, request) => ({
         update: () => request.body as Update,
         header: context.res?.headers?.[SECRET_HEADER],
+        method: request.method,
+        path: new URL(request.url).pathname,
         end: () => (context.res = {
             status: 200,
             body: "",
@@ -581,6 +622,9 @@ export function makeAdapters(): WebhookAdapterMap {
         badRequest: () => {
             context.res?.send?.(400, BAD_REQUEST_ERROR);
         },
+        notFound: () => {
+            context.res?.send?.(404, NOT_FOUND_ERROR);
+        },
     });
     const azureV4: AzureAdapterV4 = (request) => {
         type Res = NonNullable<
@@ -590,12 +634,15 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => request.json() as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
+            method: request.method,
+            path: new URL(request.url).pathname,
             end: () => ret.resolve({ status: 204 }),
             respond: (json) => ret.resolve({ jsonBody: json }),
             unauthorized: () =>
                 ret.resolve({ status: 401, body: WRONG_TOKEN_ERROR }),
             badRequest: () =>
                 ret.resolve({ status: 400, body: BAD_REQUEST_ERROR }),
+            notFound: () => ret.resolve({ status: 404, body: NOT_FOUND_ERROR }),
             handlerReturn: ret.promise,
         };
     };
@@ -606,10 +653,13 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
+            method: request.method,
+            path: new URL(request.url).pathname,
             end: () => ret.resolve(ok()),
             respond: (json) => ret.resolve(okJson(json)),
             unauthorized: () => ret.resolve(unauthorized()),
             badRequest: () => ret.resolve(badRequest()),
+            notFound: () => ret.resolve(notFound()),
             handlerReturn: ret.promise,
         };
     };
@@ -621,10 +671,13 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => event.request.json().catch(empty) as Promise<Update>,
             header: event.request.headers.get(SECRET_HEADER) || undefined,
+            method: event.request.method,
+            path: new URL(event.request.url).pathname,
             end: () => ret.resolve(ok()),
             respond: (json) => ret.resolve(okJson(json)),
             unauthorized: () => ret.resolve(unauthorized()),
             badRequest: () => ret.resolve(badRequest()),
+            notFound: () => ret.resolve(notFound()),
         };
     };
 
@@ -634,10 +687,13 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
+            method: request.method,
+            path: new URL(request.url).pathname,
             end: () => ret.resolve(ok()),
             respond: (json) => ret.resolve(okJson(json)),
             unauthorized: () => ret.resolve(unauthorized()),
             badRequest: () => ret.resolve(badRequest()),
+            notFound: () => ret.resolve(notFound()),
             handlerReturn: ret.promise,
         };
     };
@@ -646,6 +702,8 @@ export function makeAdapters(): WebhookAdapterMap {
     const express: ExpressAdapter = (req, res) => ({
         update: () => req.body as Update,
         header: req.header(SECRET_HEADER),
+        method: req.method,
+        path: req.path,
         end: () => res.end(),
         respond: (json) => {
             res.set("Content-Type", "application/json");
@@ -657,17 +715,23 @@ export function makeAdapters(): WebhookAdapterMap {
         badRequest: () => {
             res.status(400).send(BAD_REQUEST_ERROR);
         },
+        notFound: () => {
+            res.status(404).send(NOT_FOUND_ERROR);
+        },
     });
 
     /** fastify web framework */
     const fastify: FastifyAdapter = (request, reply) => ({
         update: () => request.body as Update,
         header: request.headers[SECRET_HEADER_LOWERCASE],
+        method: request.method,
+        path: request.url.split("?")[0],
         end: () => reply.send(""),
         respond: (json) =>
             reply.headers({ "Content-Type": "application/json" }).send(json),
         unauthorized: () => reply.code(401).send(WRONG_TOKEN_ERROR),
         badRequest: () => reply.code(400).send(BAD_REQUEST_ERROR),
+        notFound: () => reply.code(404).send(NOT_FOUND_ERROR),
     });
 
     /** hono web framework */
@@ -676,6 +740,8 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => c.req.json<Update>().catch(empty),
             header: c.req.header(SECRET_HEADER),
+            method: c.req.method,
+            path: c.req.path,
             end: () => ret.resolve(c.body("")),
             respond: (json) => ret.resolve(c.json(json)),
             unauthorized: () => {
@@ -685,6 +751,10 @@ export function makeAdapters(): WebhookAdapterMap {
             badRequest: () => {
                 c.status(400);
                 ret.resolve(c.body(BAD_REQUEST_ERROR));
+            },
+            notFound: () => {
+                c.status(404);
+                ret.resolve(c.body(NOT_FOUND_ERROR));
             },
             handlerReturn: ret.promise,
         };
@@ -711,12 +781,15 @@ export function makeAdapters(): WebhookAdapterMap {
             header: Array.isArray(secretHeaderFromRequest)
                 ? secretHeaderFromRequest[0]
                 : secretHeaderFromRequest,
+            method: req.method ?? "POST",
+            path: req.url?.split("?")[0] ?? "/",
             end: () => res.end(),
             respond: (json) =>
                 res.writeHead(200, { "Content-Type": "application/json" })
                     .end(json),
             unauthorized: () => res.writeHead(401).end(WRONG_TOKEN_ERROR),
             badRequest: () => res.writeHead(400).end(BAD_REQUEST_ERROR),
+            notFound: () => res.writeHead(404).end(NOT_FOUND_ERROR),
         };
     };
 
@@ -724,6 +797,8 @@ export function makeAdapters(): WebhookAdapterMap {
     const koa: KoaAdapter = (ctx) => ({
         update: () => ctx.request.body as Update,
         header: ctx.get(SECRET_HEADER) || undefined,
+        method: ctx.method,
+        path: ctx.path,
         end: () => {
             ctx.body = "";
         },
@@ -737,32 +812,43 @@ export function makeAdapters(): WebhookAdapterMap {
         badRequest: () => {
             ctx.status = 400;
         },
+        notFound: () => {
+            ctx.status = 404;
+        },
     });
 
     /** Next.js Serverless Functions */
     const nextJs: NextAdapter = (request, response) => ({
         update: () => request.body as Update,
         header: request.headers[SECRET_HEADER_LOWERCASE] as string,
+        method: request.method ?? "POST",
+        path: request.url?.split("?")[0] ?? "/",
         end: () => response.end(),
         respond: (json) => response.status(200).json(json),
         unauthorized: () => response.status(401).send(WRONG_TOKEN_ERROR),
         badRequest: () => response.status(400).send(BAD_REQUEST_ERROR),
+        notFound: () => response.status(404).send(NOT_FOUND_ERROR),
     });
 
     /** nhttp web framework */
     const nhttp: NHttpAdapter = (rev) => ({
         update: () => rev.body as Update,
         header: rev.headers.get(SECRET_HEADER) || undefined,
+        method: rev.method,
+        path: rev.path,
         end: () => rev.response.sendStatus(200),
         respond: (json) => rev.response.status(200).send(json),
         unauthorized: () => rev.response.status(401).send(WRONG_TOKEN_ERROR),
         badRequest: () => rev.response.status(400).send(BAD_REQUEST_ERROR),
+        notFound: () => rev.response.status(404).send(NOT_FOUND_ERROR),
     });
 
     /** oak web framework */
     const oak: OakAdapter = (ctx) => ({
         update: () => ctx.request.body.json().catch(empty) as Promise<Update>,
         header: ctx.request.headers.get(SECRET_HEADER) || undefined,
+        method: ctx.request.method,
+        path: ctx.request.url.pathname,
         end: () => {
             ctx.response.status = 200;
         },
@@ -776,6 +862,9 @@ export function makeAdapters(): WebhookAdapterMap {
         badRequest: () => {
             ctx.response.status = 400;
         },
+        notFound: () => {
+            ctx.response.status = 404;
+        },
     });
 
     /** Deno.serve */
@@ -783,10 +872,13 @@ export function makeAdapters(): WebhookAdapterMap {
         update: () =>
             requestEvent.request.json().catch(empty) as Promise<Update>,
         header: requestEvent.request.headers.get(SECRET_HEADER) || undefined,
+        method: requestEvent.request.method,
+        path: new URL(requestEvent.request.url).pathname,
         end: () => requestEvent.respondWith(ok()),
         respond: (json) => requestEvent.respondWith(okJson(json)),
         unauthorized: () => requestEvent.respondWith(unauthorized()),
         badRequest: () => requestEvent.respondWith(badRequest()),
+        notFound: () => requestEvent.respondWith(notFound()),
     });
 
     /** std/http web server */
@@ -795,10 +887,13 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => req.json().catch(empty) as Promise<Update>,
             header: req.headers.get(SECRET_HEADER) || undefined,
+            method: req.method,
+            path: new URL(req.url).pathname,
             end: () => ret.resolve(ok()),
             respond: (json) => ret.resolve(okJson(json)),
             unauthorized: () => ret.resolve(unauthorized()),
             badRequest: () => ret.resolve(badRequest()),
+            notFound: () => ret.resolve(notFound()),
             handlerReturn: ret.promise,
         };
     };
@@ -809,10 +904,13 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => request.json().catch(empty) as Promise<Update>,
             header: request.headers.get(SECRET_HEADER) || undefined,
+            method: request.method,
+            path: new URL(request.url).pathname,
             end: () => ret.resolve(ok()),
             respond: (json) => ret.resolve(okJson(json)),
             unauthorized: () => ret.resolve(unauthorized()),
             badRequest: () => ret.resolve(badRequest()),
+            notFound: () => ret.resolve(notFound()),
             handlerReturn: ret.promise,
         };
     };
@@ -821,10 +919,13 @@ export function makeAdapters(): WebhookAdapterMap {
     const worktop: WorktopAdapter = (req, res) => ({
         update: () => req.json().catch(empty) as Promise<Update>,
         header: req.headers.get(SECRET_HEADER) ?? undefined,
+        method: req.method,
+        path: req.path,
         end: () => res.end(null),
         respond: (json) => res.send(200, json),
         unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
         badRequest: () => res.send(400, BAD_REQUEST_ERROR),
+        notFound: () => res.send(404, NOT_FOUND_ERROR),
     });
 
     const elysia: ElysiaAdapter = (ctx) => {
@@ -832,6 +933,8 @@ export function makeAdapters(): WebhookAdapterMap {
         return {
             update: () => ctx.body as Update,
             header: ctx.headers[SECRET_HEADER_LOWERCASE],
+            method: ctx.request.method,
+            path: new URL(ctx.request.url).pathname,
             end: () => ret.resolve(""),
             respond: (json) => {
                 // @note since json is passed as string here, we gotta define proper content-type
@@ -845,6 +948,10 @@ export function makeAdapters(): WebhookAdapterMap {
             badRequest: () => {
                 ctx.set.status = 400;
                 ret.resolve(BAD_REQUEST_ERROR);
+            },
+            notFound: () => {
+                ctx.set.status = 404;
+                ret.resolve(NOT_FOUND_ERROR);
             },
             handlerReturn: ret.promise,
         };
