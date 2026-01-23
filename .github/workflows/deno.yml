@@ -12,7 +12,7 @@ jobs:
         steps:
             - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v2.5.x
+                  deno-version: v2.x
                   cache: true
             - uses: actions/checkout@v5
             - run: deno fmt --check
@@ -27,7 +27,7 @@ jobs:
         steps:
             - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v2.5.x
+                  deno-version: v2.x
                   cache: true
             - uses: actions/checkout@v5
             - run: deno task test
