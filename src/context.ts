@@ -1809,7 +1809,6 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.getUserProfilePhotos`. Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
      *
-     * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1821,6 +1820,25 @@ export class Context implements RenamedUpdate {
     ) {
         return this.api.getUserProfilePhotos(
             orThrow(this.from, "getUserProfilePhotos").id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getUserProfileAudios`. Use this method to get a list of profile audios for a user. Returns a UserProfileAudios object.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuserprofileaudios
+     */
+    getUserProfileAudios(
+        other?: Other<"getUserProfileAudios", "user_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.api.getUserProfileAudios(
+            orThrow(this.from, "getUserProfileAudios").id,
             other,
             signal,
         );
@@ -2645,7 +2663,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.createForumTopic`. Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
+     * Context-aware alias for `api.createForumTopic`. Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator right. Returns information about the created topic as a ForumTopic object.
      *
      * @param name Topic name, 1-128 characters
      * @param other Optional remaining parameters, confer the official reference below

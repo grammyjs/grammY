@@ -964,6 +964,23 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to get a list of profile audios for a user. Returns a UserProfileAudios object.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuserprofileaudios
+     */
+    getUserProfileAudios(
+        user_id: number,
+        other?: Other<R, "getUserProfileAudios", "user_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getUserProfileAudios({ user_id, ...other }, signal);
+    }
+
+    /**
      * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method requestEmojiStatusAccess. Returns True on success.
      *
      * @param user_id Unique identifier of the target user
@@ -1672,7 +1689,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
+     * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator right. Returns information about the created topic as a ForumTopic object.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param name Topic name, 1-128 characters
@@ -2029,6 +2046,32 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.getMyShortDescription({ ...other }, signal);
+    }
+
+    /**
+     * Changes the profile photo of the bot. Returns True on success.
+     *
+     * @param photo The new profile photo to set
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmyprofilephoto
+     */
+    setMyProfilePhoto(
+        photo: InputProfilePhoto,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setMyProfilePhoto({ photo }, signal);
+    }
+
+    /**
+     * Removes the profile photo of the bot. Requires no parameters. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#removemyprofilephoto
+     */
+    removeMyProfilePhoto(signal?: AbortSignal) {
+        return this.raw.removeMyProfilePhoto(signal);
     }
 
     /**

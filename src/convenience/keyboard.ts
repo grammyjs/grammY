@@ -115,19 +115,33 @@ export class Keyboard {
      * Adds a new text button. This button will simply send the given text as a
      * text message back to your bot if a user clicks on it.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
+     * @param options Optional styling information
      */
-    text(text: string) {
-        return this.add(Keyboard.text(text));
+    text(
+        text: string,
+        options?:
+            | KeyboardButton.CommonButton["style"]
+            | Omit<KeyboardButton.CommonButton, "text">,
+    ) {
+        return this.add(Keyboard.text(text, options));
     }
     /**
      * Creates a new text button. This button will simply send the given text as
      * a text message back to your bot if a user clicks on it.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
+     * @param options Optional styling information
      */
-    static text(text: string): KeyboardButton.CommonButton {
-        return { text };
+    static text(
+        text: string,
+        options?:
+            | KeyboardButton.CommonButton["style"]
+            | Omit<KeyboardButton.CommonButton, "text">,
+    ): KeyboardButton.CommonButton {
+        return typeof options === "string"
+            ? { text, style: options }
+            : { text, ...options };
     }
     /**
      * Adds a new request users button. When the user presses the button, a list
@@ -135,12 +149,12 @@ export class Keyboard {
      * send their identifiers to the bot in a “users_shared” service message.
      * Available in private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param requestId A signed 32-bit identifier of the request
      * @param options Options object for further requirements
      */
     requestUsers(
-        text: string,
+        text: string | KeyboardButton.CommonButton,
         requestId: number,
         options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
     ) {
@@ -152,16 +166,18 @@ export class Keyboard {
      * will send their identifiers to the bot in a “users_shared” service
      * message. Available in private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param requestId A signed 32-bit identifier of the request
      * @param options Options object for further requirements
      */
     static requestUsers(
-        text: string,
+        text: string | KeyboardButton.CommonButton,
         requestId: number,
         options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
     ): KeyboardButton.RequestUsersButton {
-        return { text, request_users: { request_id: requestId, ...options } };
+        return typeof text === "string"
+            ? { text, request_users: { request_id: requestId, ...options } }
+            : { ...text, request_users: { request_id: requestId, ...options } };
     }
     /**
      * Adds a new request chat button. When the user presses the button, a list
@@ -169,12 +185,12 @@ export class Keyboard {
      * identifier to the bot in a “chat_shared” service message. Available in
      * private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param requestId A signed 32-bit identifier of the request
      * @param options Options object for further requirements
      */
     requestChat(
-        text: string,
+        text: string | KeyboardButton.CommonButton,
         requestId: number,
         options: Omit<KeyboardButtonRequestChat, "request_id"> = {
             chat_is_channel: false,
@@ -188,26 +204,29 @@ export class Keyboard {
      * identifier to the bot in a “chat_shared” service message. Available in
      * private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param requestId A signed 32-bit identifier of the request
      * @param options Options object for further requirements
      */
     static requestChat(
-        text: string,
+        text: string | KeyboardButton.CommonButton,
         requestId: number,
         options: Omit<KeyboardButtonRequestChat, "request_id"> = {
             chat_is_channel: false,
         },
     ): KeyboardButton.RequestChatButton {
-        return { text, request_chat: { request_id: requestId, ...options } };
+        const request_chat = { request_id: requestId, ...options };
+        return typeof text === "string"
+            ? { text, request_chat }
+            : { ...text, request_chat };
     }
     /**
      * Adds a new contact request button. The user's phone number will be sent
      * as a contact when the button is pressed. Available in private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      */
-    requestContact(text: string) {
+    requestContact(text: string | KeyboardButton.CommonButton) {
         return this.add(Keyboard.requestContact(text));
     }
     /**
@@ -215,39 +234,52 @@ export class Keyboard {
      * sent as a contact when the button is pressed. Available in private chats
      * only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      */
-    static requestContact(text: string): KeyboardButton.RequestContactButton {
-        return { text, request_contact: true };
+    static requestContact(
+        text: string | KeyboardButton.CommonButton,
+    ): KeyboardButton.RequestContactButton {
+        const request_contact = true;
+        return typeof text === "string"
+            ? { text, request_contact }
+            : { ...text, request_contact };
     }
     /**
      * Adds a new location request button. The user's current location will be
      * sent when the button is pressed. Available in private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      */
-    requestLocation(text: string) {
+    requestLocation(text: string | KeyboardButton.CommonButton) {
         return this.add(Keyboard.requestLocation(text));
     }
     /**
      * Creates a new location request button. The user's current location will
      * be sent when the button is pressed. Available in private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      */
-    static requestLocation(text: string): KeyboardButton.RequestLocationButton {
-        return { text, request_location: true };
+    static requestLocation(
+        text: string | KeyboardButton.CommonButton,
+    ): KeyboardButton.RequestLocationButton {
+        const request_location = true;
+        return typeof text === "string"
+            ? { text, request_location }
+            : { ...text, request_location };
     }
     /**
      * Adds a new poll request button. The user will be asked to create a poll
      * and send it to the bot when the button is pressed. Available in private
      * chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param type The type of permitted polls to create, omit if the user may
      * send a poll of any type
      */
-    requestPoll(text: string, type?: KeyboardButtonPollType["type"]) {
+    requestPoll(
+        text: string | KeyboardButton.CommonButton,
+        type?: KeyboardButtonPollType["type"],
+    ) {
         return this.add(Keyboard.requestPoll(text, type));
     }
     /**
@@ -255,25 +287,28 @@ export class Keyboard {
      * poll and send it to the bot when the button is pressed. Available in
      * private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param type The type of permitted polls to create, omit if the user may
      * send a poll of any type
      */
     static requestPoll(
-        text: string,
+        text: string | KeyboardButton.CommonButton,
         type?: KeyboardButtonPollType["type"],
     ): KeyboardButton.RequestPollButton {
-        return { text, request_poll: { type } };
+        const request_poll = { type };
+        return typeof text === "string"
+            ? { text, request_poll }
+            : { ...text, request_poll };
     }
     /**
      * Adds a new web app button. The Web App that will be launched when the
      * user presses the button. The Web App will be able to send a
      * “web_app_data” service message. Available in private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
-    webApp(text: string, url: string) {
+    webApp(text: string | KeyboardButton.CommonButton, url: string) {
         return this.add(Keyboard.webApp(text, url));
     }
     /**
@@ -281,11 +316,114 @@ export class Keyboard {
      * user presses the button. The Web App will be able to send a
      * “web_app_data” service message. Available in private chats only.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
-    static webApp(text: string, url: string): KeyboardButton.WebAppButton {
-        return { text, web_app: { url } };
+    static webApp(
+        text: string | KeyboardButton.CommonButton,
+        url: string,
+    ): KeyboardButton.WebAppButton {
+        const web_app = { url };
+        return typeof text === "string"
+            ? { text, web_app }
+            : { ...text, web_app };
+    }
+    /**
+     * Adds a style to the last added button of the keyboard.
+     *
+     * ```ts
+     * const keyboard = new Keyboard()
+     *   .text('blue button')
+     *   .style('primary')
+     * ```
+     *
+     * @param style Style of the button
+     */
+    style(style: KeyboardButton.CommonButton["style"]) {
+        const rows = this.keyboard.length;
+        if (rows === 0) {
+            throw new Error("Need to add a button before applying a style!");
+        }
+        const lastRow = this.keyboard[rows - 1];
+        const cols = lastRow.length;
+        if (cols === 0) {
+            throw new Error("Need to add a button before applying a style!");
+        }
+        let lastButton = lastRow[cols - 1];
+        if (typeof lastButton === "string") {
+            lastButton = { text: lastButton };
+            lastRow[cols - 1] = lastButton;
+        }
+        lastButton.style = style;
+        return this;
+    }
+    /**
+     * Adds a danger style to the last added button of the keyboard. Alias for
+     * `.style('danger')`.
+     *
+     * ```ts
+     * const keyboard = new Keyboard()
+     *   .text('red button')
+     *   .danger()
+     * ```
+     */
+    danger() {
+        return this.style("danger");
+    }
+    /**
+     * Adds a success style to the last added button of the keyboard. Alias for
+     * `.style('success')`.
+     *
+     * ```ts
+     * const keyboard = new Keyboard()
+     *   .text('green button')
+     *   .success()
+     * ```
+     */
+    success() {
+        return this.style("success");
+    }
+    /**
+     * Adds a primary style to the last added button of the keyboard. Alias for
+     * `.style('primary')`.
+     *
+     * ```ts
+     * const keyboard = new Keyboard()
+     *   .text('blue button')
+     *   .primary()
+     * ```
+     */
+    primary() {
+        return this.style("primary");
+    }
+    /**
+     * Adds a custom emoji icon to the last added button of the keyboard.
+     *
+     * ```ts
+     * const keyboard = new Keyboard()
+     *   .text('button with icon')
+     *   .icon(myCustomEmojiIconIdentifier)
+     * ```
+     *
+     * @param icon Unique identifier of the custom emoji shown before the text of the button
+     */
+    icon(icon: KeyboardButton.CommonButton["icon_custom_emoji_id"]) {
+        const rows = this.keyboard.length;
+        if (rows === 0) {
+            throw new Error("Need to add a button before adding an icon!");
+        }
+        const lastRow = this.keyboard[rows - 1];
+        const cols = lastRow.length;
+        if (cols === 0) {
+            throw new Error("Need to add a button before adding an icon!");
+        }
+        let lastButton = lastRow[cols - 1];
+        if (typeof lastButton === "string") {
+            lastButton = { text: lastButton };
+            lastRow[cols - 1] = lastButton;
+        }
+        lastButton.icon_custom_emoji_id = icon;
+        return this;
     }
     /**
      * Make the current keyboard persistent. See
@@ -559,21 +697,27 @@ export class InlineKeyboard {
      * Adds a new URL button. Telegram clients will open the provided URL when
      * the button is pressed.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
      */
-    url(text: string, url: string) {
+    url(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        url: string,
+    ) {
         return this.add(InlineKeyboard.url(text, url));
     }
     /**
      * Creates a new URL button. Telegram clients will open the provided URL
      * when the button is pressed.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param url HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
      */
-    static url(text: string, url: string): InlineKeyboardButton.UrlButton {
-        return { text, url };
+    static url(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        url: string,
+    ): InlineKeyboardButton.UrlButton {
+        return typeof text === "string" ? { text, url } : { ...text, url };
     }
     /**
      * Adds a new callback query button. The button contains a text and a custom
@@ -590,10 +734,13 @@ export class InlineKeyboard {
      * bot.on('callback_query:data',    ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param data The callback data to send back to your bot (default = text)
      */
-    text(text: string, data = text) {
+    text(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        data = typeof text === "string" ? text : text.text,
+    ) {
         return this.add(InlineKeyboard.text(text, data));
     }
     /**
@@ -611,45 +758,56 @@ export class InlineKeyboard {
      * bot.on('callback_query:data',    ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param data The callback data to send back to your bot (default = text)
      */
     static text(
-        text: string,
-        data = text,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        data = typeof text === "string" ? text : text.text,
     ): InlineKeyboardButton.CallbackButton {
-        return { text, callback_data: data };
+        return typeof text === "string"
+            ? { text, callback_data: data }
+            : { ...text, callback_data: data };
     }
     /**
      * Adds a new web app button, confer https://core.telegram.org/bots/webapps
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
-    webApp(text: string, url: string | WebAppInfo) {
+    webApp(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        url: string | WebAppInfo,
+    ) {
         return this.add(InlineKeyboard.webApp(text, url));
     }
     /**
      * Creates a new web app button, confer https://core.telegram.org/bots/webapps
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
     static webApp(
-        text: string,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         url: string | WebAppInfo,
     ): InlineKeyboardButton.WebAppButton {
-        return { text, web_app: typeof url === "string" ? { url } : url };
+        const web_app = typeof url === "string" ? { url } : url;
+        return typeof text === "string"
+            ? { text, web_app }
+            : { ...text, web_app };
     }
     /**
      * Adds a new login button. This can be used as a replacement for the
      * Telegram Login Widget. You must specify an HTTPS URL used to
      * automatically authorize the user.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param loginUrl The login URL as string or `LoginUrl` object
      */
-    login(text: string, loginUrl: string | LoginUrl) {
+    login(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        loginUrl: string | LoginUrl,
+    ) {
         return this.add(InlineKeyboard.login(text, loginUrl));
     }
     /**
@@ -657,19 +815,19 @@ export class InlineKeyboard {
      * Telegram Login Widget. You must specify an HTTPS URL used to
      * automatically authorize the user.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param loginUrl The login URL as string or `LoginUrl` object
      */
     static login(
-        text: string,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         loginUrl: string | LoginUrl,
     ): InlineKeyboardButton.LoginButton {
-        return {
-            text,
-            login_url: typeof loginUrl === "string"
-                ? { url: loginUrl }
-                : loginUrl,
-        };
+        const login_url = typeof loginUrl === "string"
+            ? { url: loginUrl }
+            : loginUrl;
+        return typeof text === "string"
+            ? { text, login_url }
+            : { ...text, login_url };
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -683,10 +841,13 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param query The (optional) inline query string to prefill
      */
-    switchInline(text: string, query = "") {
+    switchInline(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        query = "",
+    ) {
         return this.add(InlineKeyboard.switchInline(text, query));
     }
     /**
@@ -701,14 +862,16 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param query The (optional) inline query string to prefill
      */
     static switchInline(
-        text: string,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         query = "",
     ): InlineKeyboardButton.SwitchInlineButton {
-        return { text, switch_inline_query: query };
+        return typeof text === "string"
+            ? { text, switch_inline_query: query }
+            : { ...text, switch_inline_query: query };
     }
     /**
      * Adds a new inline query button that acts on the current chat. The
@@ -722,10 +885,13 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param query The (optional) inline query string to prefill
      */
-    switchInlineCurrent(text: string, query = "") {
+    switchInlineCurrent(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        query = "",
+    ) {
         return this.add(InlineKeyboard.switchInlineCurrent(text, query));
     }
     /**
@@ -740,14 +906,16 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param query The (optional) inline query string to prefill
      */
     static switchInlineCurrent(
-        text: string,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         query = "",
     ): InlineKeyboardButton.SwitchInlineCurrentChatButton {
-        return { text, switch_inline_query_current_chat: query };
+        return typeof text === "string"
+            ? { text, switch_inline_query_current_chat: query }
+            : { ...text, switch_inline_query_current_chat: query };
     }
     /**
      * Adds a new inline query button. Telegram clients will let the user pick a
@@ -761,11 +929,11 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param query The query object describing which chats can be picked
      */
     switchInlineChosen(
-        text: string,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         query: SwitchInlineQueryChosenChat = {},
     ) {
         return this.add(InlineKeyboard.switchInlineChosen(text, query));
@@ -782,42 +950,47 @@ export class InlineKeyboard {
      * bot.on('inline_query', ctx => { ... })
      * ```
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param query The query object describing which chats can be picked
      */
     static switchInlineChosen(
-        text: string,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         query: SwitchInlineQueryChosenChat = {},
     ): InlineKeyboardButton.SwitchInlineChosenChatButton {
-        return { text, switch_inline_query_chosen_chat: query };
+        return typeof text === "string"
+            ? { text, switch_inline_query_chosen_chat: query }
+            : { ...text, switch_inline_query_chosen_chat: query };
     }
     /**
      * Adds a new copy text button. When clicked, the specified text will be
      * copied to the clipboard.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param copyText The text to be copied to the clipboard
      */
-    copyText(text: string, copyText: string | CopyTextButton) {
+    copyText(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+        copyText: string | CopyTextButton,
+    ) {
         return this.add(InlineKeyboard.copyText(text, copyText));
     }
     /**
      * Creates a new copy text button. When clicked, the specified text will be
      * copied to the clipboard.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      * @param copyText The text to be copied to the clipboard
      */
     static copyText(
-        text: string,
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         copyText: string | CopyTextButton,
     ): InlineKeyboardButton.CopyTextButtonButton {
-        return {
-            text,
-            copy_text: typeof copyText === "string"
-                ? { text: copyText }
-                : copyText,
-        };
+        const copy_text = typeof copyText === "string"
+            ? { text: copyText }
+            : copyText;
+        return typeof text === "string"
+            ? { text, copy_text }
+            : { ...text, copy_text };
     }
     /**
      * Adds a new game query button, confer
@@ -825,9 +998,9 @@ export class InlineKeyboard {
      *
      * This type of button must always be the first button in the first row.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      */
-    game(text: string) {
+    game(text: string | InlineKeyboardButton.AbstractInlineKeyboardButton) {
         return this.add(InlineKeyboard.game(text));
     }
     /**
@@ -836,10 +1009,15 @@ export class InlineKeyboard {
      *
      * This type of button must always be the first button in the first row.
      *
-     * @param text The text to display
+     * @param text The text to display, and optional styling information
      */
-    static game(text: string): InlineKeyboardButton.GameButton {
-        return { text, callback_game: {} };
+    static game(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+    ): InlineKeyboardButton.GameButton {
+        const callback_game = {};
+        return typeof text === "string"
+            ? { text, callback_game }
+            : { ...text, callback_game };
     }
     /**
      * Adds a new payment button, confer
@@ -848,9 +1026,9 @@ export class InlineKeyboard {
      * This type of button must always be the first button in the first row and
      * can only be used in invoice messages.
      *
-     * @param text The text to display. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
+     * @param text The text to display, and optional styling information. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
      */
-    pay(text: string) {
+    pay(text: string | InlineKeyboardButton.AbstractInlineKeyboardButton) {
         return this.add(InlineKeyboard.pay(text));
     }
     /**
@@ -860,10 +1038,104 @@ export class InlineKeyboard {
      * This type of button must always be the first button in the first row and
      * can only be used in invoice messages.
      *
-     * @param text The text to display. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
+     * @param text The text to display, and optional styling information. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
      */
-    static pay(text: string): InlineKeyboardButton.PayButton {
-        return { text, pay: true };
+    static pay(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+    ): InlineKeyboardButton.PayButton {
+        const pay = true;
+        return typeof text === "string" ? { text, pay } : { ...text, pay };
+    }
+    /**
+     * Adds a style to the last added button of the inline keyboard.
+     *
+     * ```ts
+     * const keyboard = new InlineKeyboard()
+     *   .text('blue button')
+     *   .style('primary')
+     * ```
+     *
+     * @param style Style of the button
+     */
+    style(style: InlineKeyboardButton.AbstractInlineKeyboardButton["style"]) {
+        const rows = this.inline_keyboard.length;
+        if (rows === 0) {
+            throw new Error("Need to add a button before applying a style!");
+        }
+        const lastRow = this.inline_keyboard[rows - 1];
+        const cols = lastRow.length;
+        if (cols === 0) {
+            throw new Error("Need to add a button before applying a style!");
+        }
+        lastRow[cols - 1].style = style;
+        return this;
+    }
+    /**
+     * Adds a danger style to the last added button of the inline keyboard.
+     * Alias for `.style('danger')`.
+     *
+     * ```ts
+     * const keyboard = new InlineKeyboard()
+     *   .text('red button')
+     *   .danger()
+     * ```
+     */
+    danger() {
+        return this.style("danger");
+    }
+    /**
+     * Adds a success style to the last added button of the inline keyboard.
+     * Alias for `.style('success')`.
+     *
+     * ```ts
+     * const keyboard = new InlineKeyboard()
+     *   .text('green button')
+     *   .success()
+     * ```
+     */
+    success() {
+        return this.style("success");
+    }
+    /**
+     * Adds a primary style to the last added button of the inline keyboard.
+     * Alias for `.style('primary')`.
+     *
+     * ```ts
+     * const keyboard = new InlineKeyboard()
+     *   .text('blue button')
+     *   .primary()
+     * ```
+     */
+    primary() {
+        return this.style("primary");
+    }
+    /**
+     * Adds a custom emoji icon to the last added button of the inline keyboard.
+     *
+     * ```ts
+     * const keyboard = new InlineKeyboard()
+     *   .text('button with icon')
+     *   .icon(myCustomEmojiIconIdentifier)
+     * ```
+     *
+     * @param icon Unique identifier of the custom emoji shown before the text of the button
+     */
+    icon(
+        icon: InlineKeyboardButton.AbstractInlineKeyboardButton[
+            "icon_custom_emoji_id"
+        ],
+    ) {
+        const rows = this.inline_keyboard.length;
+        if (rows === 0) {
+            throw new Error("Need to add a button before adding an icon!");
+        }
+        const lastRow = this.inline_keyboard[rows - 1];
+        const cols = lastRow.length;
+        if (cols === 0) {
+            throw new Error("Need to add a button before adding an icon!");
+        }
+        lastRow[cols - 1].icon_custom_emoji_id = icon;
+        return this;
     }
     /**
      * Creates a new inline keyboard that contains the transposed grid of

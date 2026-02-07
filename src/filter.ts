@@ -330,6 +330,8 @@ const MESSAGE_KEYS = {
 
     direct_messages_topic: {},
 
+    chat_owner_left: { new_owner: {} },
+    chat_owner_changd: {},
     new_chat_members: USER_KEYS,
     left_chat_member: USER_KEYS,
     group_chat_created: {},
