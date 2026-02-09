@@ -55,8 +55,8 @@ describe("requiresFormDataUpload", () => {
         });
 
         // based on testing seed which generates stable randomness
-        const boundary = "----------a7tvrr8hjhi2q5kkuoh9kabvsgsu6ywp";
-        const attachId = "dam8u60sbhdqvv6m";
+        const boundary = "----------4i0pnj0q100lsvq4ei5ruul6n88m05vm";
+        const attachId = "2nxu206s4tu3lq1s";
 
         assertEquals(payload.method, "POST");
         const headers = {
@@ -97,8 +97,8 @@ ${fileContent}\r
         });
 
         // based on testing seed which generates stable randomness
-        let boundary = "----------97do61cgtfggp89miu6z6vrpu9dn085p";
-        let attachId = "pb8p7s2d78g81xrm";
+        let boundary = "----------whl2u7es98vw5xhvtc1662mgj3m1o8dv";
+        let attachId = "f1jxwzuglgppazoe";
 
         assertEquals(payload.method, "POST");
         let headers = {
@@ -132,8 +132,8 @@ ${fileContent}\r
         });
 
         // based on testing seed which generates stable randomness
-        boundary = "----------d9hdz0kkzqimm8mzz26cray9ksyx4n9t";
-        attachId = "pu8bzs461456115g";
+        boundary = "----------0mrvd0l5jp948uvly28j4287udrw1rw3";
+        attachId = "jk2kbsxa76ab737l";
 
         assertEquals(payload.method, "POST");
         headers = {
@@ -167,8 +167,8 @@ ${fileContent}\r
         });
 
         // based on testing seed which generates stable randomness
-        boundary = "----------h5cgiw66bjku2enr1cw4njckqghpfld9";
-        attachId = "3o1bz72rndh9xe2b";
+        boundary = "----------xmitze3chu4fxg1esd81r6vwa6x740yn";
+        attachId = "drpdb69tf1vr6bhe";
 
         assertEquals(payload.method, "POST");
         headers = {
