@@ -1628,6 +1628,17 @@
         "bug",
         "review"
       ]
+    },
+    {
+      "login": "huntharo",
+      "name": "Harold Hunt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5617868?v=4",
+      "profile": "http://www.linkedin.com/in/huntharo/",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ]
 }
