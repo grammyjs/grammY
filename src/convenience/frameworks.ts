@@ -459,7 +459,11 @@ const http: HttpAdapter = (req, res) => {
                         // @ts-ignore `Buffer` is Node-only
                         // deno-lint-ignore no-node-globals
                         const raw = Buffer.concat(chunks).toString("utf-8");
-                        resolve(JSON.parse(raw));
+                        try {
+                            resolve(JSON.parse(raw));
+                        } catch (err) {
+                            reject(err);
+                        }
                     })
                     .once("error", reject);
             }) as Promise<Update>;
