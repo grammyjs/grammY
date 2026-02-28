@@ -1,4 +1,5 @@
 import { DEFAULT_UPDATE_TYPES } from "../bot.ts";
+import { ChatPermissions } from "../types.ts";
 
 const ALL_UPDATE_TYPES = [
     ...DEFAULT_UPDATE_TYPES,
@@ -7,22 +8,21 @@ const ALL_UPDATE_TYPES = [
     "message_reaction_count",
 ] as const;
 const ALL_CHAT_PERMISSIONS = {
-    is_anonymous: true,
-    can_manage_chat: true,
-    can_delete_messages: true,
-    can_manage_video_chats: true,
-    can_restrict_members: true,
-    can_promote_members: true,
+    can_send_messages: true,
+    can_send_audios: true,
+    can_send_documents: true,
+    can_send_photos: true,
+    can_send_videos: true,
+    can_send_video_notes: true,
+    can_send_voice_notes: true,
+    can_send_polls: true,
+    can_send_other_messages: true,
+    can_add_web_page_previews: true,
     can_change_info: true,
     can_invite_users: true,
-    can_post_stories: true,
-    can_edit_stories: true,
-    can_delete_stories: true,
-    can_post_messages: true,
-    can_edit_messages: true,
     can_pin_messages: true,
     can_manage_topics: true,
-} as const;
+} as const satisfies ChatPermissions;
 
 /**
  * Types of the constants used in the Telegram Bot API. Currently holds all
