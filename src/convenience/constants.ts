@@ -1,5 +1,5 @@
 import { DEFAULT_UPDATE_TYPES } from "../bot.ts";
-import { ChatPermissions } from "../types.ts";
+import type { ChatPermissions } from "../types.ts";
 
 const ALL_UPDATE_TYPES = [
     ...DEFAULT_UPDATE_TYPES,
