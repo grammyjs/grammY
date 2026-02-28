@@ -86,7 +86,7 @@ export interface ApiConstants {
      * await ctx.restrictAuthor(ALL_CHAT_PERMISSIONS);
      * ```
      *
-     * See the [Bot API reference](https://core.telegram.org/bots/api#update)
+     * See the [Bot API reference](https://core.telegram.org/bots/api#chatpermissions)
      * for more information.
      */
     ALL_CHAT_PERMISSIONS: keyof typeof ALL_CHAT_PERMISSIONS;
