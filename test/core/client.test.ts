@@ -58,7 +58,7 @@ describe("API client", () => {
         );
     });
 
-    it("should throw HttpError when response.json() fails", async () => {
+    it("should throw HttpError when response body reading fails", async () => {
         const networkError = new TypeError("terminated");
         fetchStub.restore();
         fetchStub = stub(
@@ -66,7 +66,7 @@ describe("API client", () => {
             "fetch",
             () =>
                 Promise.resolve({
-                    json: () => Promise.reject(networkError),
+                    text: () => Promise.reject(networkError),
                 } as unknown as Response),
         );
         const err = await assertRejects(
