@@ -317,13 +317,13 @@ class ApiClient<R extends RawApi> {
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call
         const successPromise = this
-            .fetch(url instanceof URL ? url.href : url, options);
+            .fetch(url instanceof URL ? url.href : url, options)
+            .then((res) => res.json());
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
         // Wait for result
         try {
-            const res = await Promise.race(operations);
-            return await res.json();
+            return await Promise.race(operations);
         } catch (error) {
             throw toHttpError(method, opts.sensitiveLogs, error);
         } finally {
