@@ -240,7 +240,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns True on success.
+     * Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
      *
      * @param chat_id Unique identifier for the target private chat
      * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated
@@ -1193,6 +1193,25 @@ export class Api<R extends RawApi = RawApi> {
             { chat_id, user_id, custom_title },
             signal,
         );
+    }
+
+    /**
+     * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param user_id Unique identifier of the target user
+     * @param tag New tag for the member; 0-16 characters, emoji are not allowed
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setChatMemberTag
+     */
+    setChatMemberTag(
+        chat_id: number | string,
+        user_id: number,
+        tag: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setChatMemberTag({ chat_id, user_id, tag }, signal);
     }
 
     /**
