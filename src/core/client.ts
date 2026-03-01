@@ -321,6 +321,10 @@ class ApiClient<R extends RawApi> {
             .then((res) => res.json());
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
+        // Suppress any errors (not part of the operations)
+        successPromise.catch(suppress);
+        streamErr.promise.catch(suppress);
+        timeout.promise.catch(suppress);
         // Wait for result
         try {
             return await Promise.race(operations);
@@ -328,11 +332,6 @@ class ApiClient<R extends RawApi> {
             throw toHttpError(method, opts.sensitiveLogs, error);
         } finally {
             if (timeout.handle !== undefined) clearTimeout(timeout.handle);
-            for (const op of operations) {
-                op.catch(() => {
-                    // suppress late rejections
-                });
-            }
         }
     };
 
@@ -474,6 +473,10 @@ function createStreamError(abortController: AbortController): StreamError {
         };
     });
     return { promise, catch: onError };
+}
+
+function suppress(_error: unknown) {
+    // do nothing
 }
 
 function createAbortControllerFromSignal(signal?: AbortSignal) {
