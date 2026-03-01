@@ -2168,7 +2168,6 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.setChatMemberTag`. Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success.
      *
-     * @param user_id Unique identifier of the target user
      * @param tag New tag for the member; 0-16 characters, emoji are not allowed
      * @param signal Optional `AbortSignal` to cancel the request
      *
