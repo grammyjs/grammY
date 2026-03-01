@@ -320,8 +320,8 @@ class ApiClient<R extends RawApi> {
             .fetch(url instanceof URL ? url.href : url, options);
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
+        // Wait for result
         try {
-            // Wait for result
             const res = await Promise.race(operations);
             return await res.json();
         } catch (error) {
