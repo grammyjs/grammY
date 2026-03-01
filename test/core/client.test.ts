@@ -4,9 +4,8 @@ import { GrammyError } from "../../src/mod.ts";
 import { type ApiResponse } from "../../src/types.ts";
 import {
     afterEach,
-    assertInstanceOf,
-    assertRejects,
     assertEquals,
+    assertRejects,
     beforeEach,
     describe,
     it,
@@ -75,7 +74,6 @@ describe("API client", () => {
             HttpError,
             "Network request for 'getMe' failed!",
         );
-        assertInstanceOf(err, HttpError);
         assertEquals(err.error, networkError);
     });
 });
