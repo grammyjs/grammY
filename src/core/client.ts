@@ -318,9 +318,9 @@ class ApiClient<R extends RawApi> {
         // Perform fetch call, and handle networking errors
         const successPromise = this
             .fetch(url instanceof URL ? url.href : url, options);
+        // Those are the three possible outcomes of the fetch call:
+        const ops = [successPromise, streamErr.promise, timeout.promise];
         try {
-            // Those are the three possible outcomes of the fetch call:
-            const ops = [successPromise, streamErr.promise, timeout.promise];
             // Wait for result
             const res = await Promise.race(ops);
             return await res.json();
