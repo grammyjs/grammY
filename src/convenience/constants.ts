@@ -20,6 +20,7 @@ const ALL_CHAT_PERMISSIONS = {
     can_add_web_page_previews: true,
     can_change_info: true,
     can_invite_users: true,
+    can_edit_tag: true,
     can_pin_messages: true,
     can_manage_topics: true,
 } as const satisfies ChatPermissions;

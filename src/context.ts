@@ -994,7 +994,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.sendMessageDraft`. Use this method to stream a partial message to a user while the message is being generated; supported only for bots with forum topic mode enabled. Returns True on success.
+     * Context-aware alias for `api.sendMessageDraft`. Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
      *
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
      * @param other Optional remaining parameters, confer the official reference below
@@ -2161,6 +2161,45 @@ export class Context implements RenamedUpdate {
             orThrow(this.chatId, "setChatAdministratorCustomTitle"),
             user_id,
             custom_title,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setChatMemberTag`. Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success.
+     *
+     * @param tag New tag for the member; 0-16 characters, emoji are not allowed
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setChatMemberTag
+     */
+    setAuthorTag(tag: string, signal?: AbortSignal) {
+        return this.api.setChatMemberTag(
+            orThrow(this.chatId, "setChatMemberTag"),
+            orThrow(this.from, "setChatMemberTag").id,
+            tag,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setChatMemberTag`. Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success.
+     *
+     * @param user_id Unique identifier of the target user
+     * @param tag New tag for the member; 0-16 characters, emoji are not allowed
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setChatMemberTag
+     */
+    setChatMemberTag(
+        user_id: number,
+        tag: string,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setChatMemberTag(
+            orThrow(this.chatId, "setChatMemberTag"),
+            user_id,
+            tag,
             signal,
         );
     }
