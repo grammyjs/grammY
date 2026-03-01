@@ -315,7 +315,7 @@ class ApiClient<R extends RawApi> {
             : createJsonPayload(payload);
         const sig = controller.signal;
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
-        // Perform fetch call, and handle networking errors
+        // Perform fetch call
         const successPromise = this
             .fetch(url instanceof URL ? url.href : url, options);
         // Those are the three possible outcomes of the fetch call:
