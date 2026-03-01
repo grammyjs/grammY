@@ -316,16 +316,16 @@ class ApiClient<R extends RawApi> {
         const sig = controller.signal;
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call, and handle networking errors
-        const successPromise = this.fetch(
-            url instanceof URL ? url.href : url,
-            options,
-        ).catch(toHttpError(method, opts.sensitiveLogs));
-        // Those are the three possible outcomes of the fetch call:
-        const operations = [successPromise, streamErr.promise, timeout.promise];
-        // Wait for result
+        const successPromise = this
+            .fetch(url instanceof URL ? url.href : url, options);
         try {
-            const res = await Promise.race(operations);
+            // Those are the three possible outcomes of the fetch call:
+            const ops = [successPromise, streamErr.promise, timeout.promise];
+            // Wait for result
+            const res = await Promise.race(ops);
             return await res.json();
+        } catch (error) {
+            throw toHttpError(method, opts.sensitiveLogs, error);
         } finally {
             if (timeout.handle !== undefined) clearTimeout(timeout.handle);
         }
