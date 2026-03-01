@@ -319,10 +319,10 @@ class ApiClient<R extends RawApi> {
         const successPromise = this
             .fetch(url instanceof URL ? url.href : url, options);
         // Those are the three possible outcomes of the fetch call:
-        const ops = [successPromise, streamErr.promise, timeout.promise];
+        const operations = [successPromise, streamErr.promise, timeout.promise];
         try {
             // Wait for result
-            const res = await Promise.race(ops);
+            const res = await Promise.race(operations);
             return await res.json();
         } catch (error) {
             throw toHttpError(method, opts.sensitiveLogs, error);
