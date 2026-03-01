@@ -328,6 +328,11 @@ class ApiClient<R extends RawApi> {
             throw toHttpError(method, opts.sensitiveLogs, error);
         } finally {
             if (timeout.handle !== undefined) clearTimeout(timeout.handle);
+            for (const op of operations) {
+                op.catch(() => {
+                    // suppress late rejections
+                });
+            }
         }
     };
 
