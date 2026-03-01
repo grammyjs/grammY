@@ -1,12 +1,12 @@
 import { DEFAULT_UPDATE_TYPES } from "../bot.ts";
-import type { ChatPermissions } from "../types.ts";
+import type { ChatPermissions, Update } from "../types.ts";
 
 const ALL_UPDATE_TYPES = [
     ...DEFAULT_UPDATE_TYPES,
     "chat_member",
     "message_reaction",
     "message_reaction_count",
-] as const;
+] as const satisfies ReadonlyArray<Exclude<keyof Update, "update_id">>;
 const ALL_CHAT_PERMISSIONS = {
     can_send_messages: true,
     can_send_audios: true,

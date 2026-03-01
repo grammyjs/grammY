@@ -46,7 +46,7 @@ export const DEFAULT_UPDATE_TYPES = [
     "chat_join_request",
     "chat_boost",
     "removed_chat_boost",
-] as const;
+] as const satisfies ReadonlyArray<Exclude<keyof Update, "update_id">>;
 
 /**
  * Options that can be specified when running the bot via simple long polling.
