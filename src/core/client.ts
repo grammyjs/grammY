@@ -325,9 +325,10 @@ class ApiClient<R extends RawApi> {
         // Wait for result
         try {
             const res = await Promise.race(operations);
-            const text = await res.text()
-                .catch(toHttpError(method, opts.sensitiveLogs));
-            return JSON.parse(text);
+            return await res.json().catch((err: unknown) => {
+                if (err instanceof SyntaxError) throw err;
+                toHttpError(method, opts.sensitiveLogs)(err);
+            });
         } finally {
             if (timeout.handle !== undefined) clearTimeout(timeout.handle);
         }

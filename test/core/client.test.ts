@@ -66,7 +66,7 @@ describe("API client", () => {
             "fetch",
             () =>
                 Promise.resolve({
-                    text: () => Promise.reject(networkError),
+                    json: () => Promise.reject(networkError),
                 } as unknown as Response),
         );
         // Recreate api so it captures the new fetch stub
