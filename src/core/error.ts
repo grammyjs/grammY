@@ -96,11 +96,13 @@ function isTelegramError(
         "statusText" in err
     );
 }
-export function toHttpError(method: string, sensitiveLogs: boolean) {
-    return (err: unknown) => {
-        let msg = `Network request for '${method}' failed!`;
-        if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
-        if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
-        throw new HttpError(msg, err);
-    };
+export function toHttpError(
+    method: string,
+    sensitiveLogs: boolean,
+    err: unknown,
+) {
+    let msg = `Network request for '${method}' failed!`;
+    if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
+    if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
+    return new HttpError(msg, err);
 }

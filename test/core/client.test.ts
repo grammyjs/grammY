@@ -25,7 +25,7 @@ describe("API client", () => {
         fetchStub = stub(
             globalThis,
             "fetch",
-            () => Promise.resolve(new Response(JSON.stringify(response))),
+            () => Promise.resolve(Response.json(response)),
         );
         canUseWebhookReply = false;
         api = createRawApi(token, {
