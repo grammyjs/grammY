@@ -88,12 +88,10 @@ export class HttpError extends Error {
 
 function isTelegramError(
     err: unknown,
-): err is { status: string; statusText: string } {
+): err is { status: number; statusText: string } {
     return (
-        typeof err === "object" &&
-        err !== null &&
-        "status" in err &&
-        "statusText" in err
+        typeof err === "object" && err !== null &&
+        "status" in err && "statusText" in err
     );
 }
 export function toHttpError(
