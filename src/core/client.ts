@@ -430,7 +430,7 @@ async function parseApiResponseBody<R extends RawApi, M extends Methods<R>>(
         & Pick<Response, "status" | "statusText" | "json">
         & { headers: Pick<Response["headers"], "get"> },
 ) {
-    if (res.headers.get("content-type") !== "application/json") {
+    if (!res.headers.get("content-type")?.includes("application/json")) {
         throw new Error(
             `Response did not contain a JSON body (${res.status}: ${res.statusText})`,
         );
