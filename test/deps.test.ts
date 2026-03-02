@@ -3,6 +3,7 @@ export {
     assertEquals,
     assertFalse,
     assertInstanceOf,
+    assertIsError,
     assertNotStrictEquals,
     assertObjectMatch,
     assertRejects,

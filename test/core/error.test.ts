@@ -1,12 +1,11 @@
 import { HttpError, toHttpError } from "../../src/core/error.ts";
-import { assertThrows, describe, it } from "../deps.test.ts";
+import { assertIsError, describe, it } from "../deps.test.ts";
 
 describe("toHttpError", () => {
-    it("should throw errors", () => {
+    it("should wrap errors", () => {
         const sensitiveLogs = false;
-        const handler = () => toHttpError("method", sensitiveLogs)(0);
-        assertThrows(
-            handler,
+        assertIsError(
+            toHttpError("method", sensitiveLogs, 0),
             HttpError,
             "Network request for 'method' failed!",
         );
@@ -14,13 +13,12 @@ describe("toHttpError", () => {
 
     it("should include Telegram info", () => {
         const sensitiveLogs = false;
-        const handler = () =>
-            toHttpError("method", sensitiveLogs)({
-                status: "STAT",
-                statusText: "status text",
-            });
-        assertThrows(
-            handler,
+        assertIsError(
+            toHttpError(
+                "method",
+                sensitiveLogs,
+                { status: "STAT", statusText: "status text" },
+            ),
             HttpError,
             "Network request for 'method' failed! (STAT: status text)",
         );
@@ -28,10 +26,8 @@ describe("toHttpError", () => {
 
     it("should include sensitive info", () => {
         const sensitiveLogs = true;
-        const handler = () =>
-            toHttpError("method", sensitiveLogs)(new Error("info"));
-        assertThrows(
-            handler,
+        assertIsError(
+            toHttpError("method", sensitiveLogs, new Error("info")),
             HttpError,
             "Network request for 'method' failed! info",
         );
@@ -39,15 +35,15 @@ describe("toHttpError", () => {
 
     it("should include Telegram info and sensitive info", () => {
         const sensitiveLogs = true;
-        const handler = () =>
-            toHttpError("method", sensitiveLogs)(
-                Object.assign(new Error("info"), {
-                    status: "STAT",
-                    statusText: "status text",
-                }),
-            );
-        assertThrows(
-            handler,
+        assertIsError(
+            toHttpError(
+                "method",
+                sensitiveLogs,
+                Object.assign(
+                    new Error("info"),
+                    { status: "STAT", statusText: "status text" },
+                ),
+            ),
             HttpError,
             "Network request for 'method' failed! (STAT: status text) info",
         );
