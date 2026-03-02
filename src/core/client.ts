@@ -428,9 +428,15 @@ const proxyMethods = {
 async function parseApiResponseBody<R extends RawApi, M extends Methods<R>>(
     res:
         & Pick<Response, "status" | "statusText" | "json">
-        & { headers: Pick<Response["headers"], "get"> },
+        & { headers: Pick<Response["headers"], "get">; body: null | object },
 ) {
     if (!res.headers.get("content-type")?.includes("application/json")) {
+        if (
+            res.body !== null &&
+            "cancel" in res.body && typeof res.body.cancel === "function"
+        ) {
+            await res.body.cancel();
+        }
         throw new Error(
             `Response did not contain a JSON body (${res.status}: ${res.statusText})`,
         );
