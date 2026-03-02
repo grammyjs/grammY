@@ -4,7 +4,7 @@ import {
     type ApiResponse,
     type Opts,
 } from "../types.ts";
-import { JsonParseError, toGrammyError, toHttpError } from "./error.ts";
+import { toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
@@ -317,7 +317,7 @@ class ApiClient<R extends RawApi> {
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call
         const successPromise = this.fetch(url, options)
-            .then(parseApiResponseBody<R, M>);
+            .then((res) => res.json());
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
         // Wait for result
@@ -424,21 +424,6 @@ const proxyMethods = {
         return [];
     },
 };
-
-async function parseApiResponseBody<R extends RawApi, M extends Methods<R>>(
-    res: Pick<Response, "status" | "statusText" | "json">,
-) {
-    try {
-        const apiResponse: ApiResponse<ApiCallResult<M, R>> = await res.json();
-        return apiResponse;
-    } catch (err) {
-        if (err instanceof Error) {
-            throw new JsonParseError(res.status, res.statusText, err);
-        } else {
-            throw err;
-        }
-    }
-}
 
 /** A container for a rejecting promise */
 interface AsyncError {
