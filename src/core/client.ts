@@ -431,10 +431,14 @@ async function parseApiResponseBody<R extends RawApi, M extends Methods<R>>(
     try {
         const apiResponse: ApiResponse<ApiCallResult<M, R>> = await res.json();
         return apiResponse;
-    } catch {
-        throw new Error(
-            `Response did not contain a valid JSON body (${res.status}: ${res.statusText})`,
-        );
+    } catch (err) {
+        if (typeof err === "object" && err !== null) {
+            Object.assign(err, {
+                status: res.status,
+                statusText: res.statusText,
+            });
+        }
+        throw err;
     }
 }
 

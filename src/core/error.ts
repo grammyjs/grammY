@@ -86,23 +86,19 @@ export class HttpError extends Error {
     }
 }
 
-function isTelegramError(
-    err: unknown,
-): err is { status: string; statusText: string } {
-    return (
-        typeof err === "object" &&
-        err !== null &&
-        "status" in err &&
-        "statusText" in err
-    );
-}
 export function toHttpError(
     method: string,
     sensitiveLogs: boolean,
     err: unknown,
 ) {
     let msg = `Network request for '${method}' failed!`;
-    if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
+    if (
+        typeof err === "object" && err !== null &&
+        "status" in err && typeof err.status === "string" &&
+        "statusText" in err && typeof err.statusText === "string"
+    ) {
+        msg += ` (${err.status}: ${err.statusText})`;
+    }
     if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
     return new HttpError(msg, err);
 }
