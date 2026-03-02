@@ -1,6 +1,7 @@
-// deno-lint-ignore-file camelcase
 import { type Api, type Other as OtherApi } from "./core/api.ts";
 import { type Methods, type RawApi } from "./core/client.ts";
+
+// deno-lint-ignore-file camelcase
 import {
     type Filter,
     type FilterCore,
@@ -2168,12 +2169,12 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.setChatMemberTag`. Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success.
      *
-     * @param tag New tag for the member; 0-16 characters, emoji are not allowed
+     * @param tag Optional New tag for the member; 0-16 characters, emoji are not allowed
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setChatMemberTag
      */
-    setAuthorTag(tag: string, signal?: AbortSignal) {
+    setAuthorTag(tag?: string, signal?: AbortSignal) {
         return this.api.setChatMemberTag(
             orThrow(this.chatId, "setChatMemberTag"),
             orThrow(this.from, "setChatMemberTag").id,
@@ -2186,14 +2187,14 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.setChatMemberTag`. Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success.
      *
      * @param user_id Unique identifier of the target user
-     * @param tag New tag for the member; 0-16 characters, emoji are not allowed
+     * @param tag Optional New tag for the member; 0-16 characters, emoji are not allowed
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setChatMemberTag
      */
     setChatMemberTag(
         user_id: number,
-        tag: string,
+        tag?: string,
         signal?: AbortSignal,
     ) {
         return this.api.setChatMemberTag(

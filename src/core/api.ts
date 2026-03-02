@@ -1200,7 +1200,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param user_id Unique identifier of the target user
-     * @param tag New tag for the member; 0-16 characters, emoji are not allowed
+     * @param tag Optional. New tag for the member; 0-16 characters, emoji are not allowed
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setChatMemberTag
@@ -1208,7 +1208,7 @@ export class Api<R extends RawApi = RawApi> {
     setChatMemberTag(
         chat_id: number | string,
         user_id: number,
-        tag: string,
+        tag?: string,
         signal?: AbortSignal,
     ) {
         return this.raw.setChatMemberTag({ chat_id, user_id, tag }, signal);
