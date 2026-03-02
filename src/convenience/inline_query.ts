@@ -35,6 +35,9 @@ type InlineQueryResultOptions<T, K extends keyof T> = Omit<
 
 type OptionalKeys<T> = { [K in keyof T]-?: undefined extends T[K] ? K : never };
 type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
+type MakeFieldsOptional<T, K extends keyof T> =
+    & Omit<T, K>
+    & Partial<Pick<T, K>>;
 
 function inputMessage<R extends InlineQueryResult>(queryTemplate: R) {
     return {
@@ -481,19 +484,20 @@ export const InlineQueryResultBuilder = {
     photo(
         id: string,
         photo_url: string | URL,
-        options: InlineQueryResultOptions<InlineQueryResultPhoto, "photo_url"> =
-            { // do not require thumbnail, default to the photo itself
-                thumbnail_url: typeof photo_url === "string"
-                    ? photo_url
-                    : photo_url.href,
-            },
+        options: InlineQueryResultOptions<
+            // do not require thumbnail, default to the photo itself
+            MakeFieldsOptional<InlineQueryResultPhoto, "thumbnail_url">,
+            "photo_url"
+        > = {},
     ) {
+        const photoUrl = typeof photo_url === "string"
+            ? photo_url
+            : photo_url.href;
         return inputMessage<InlineQueryResultPhoto>({
             type: "photo",
             id,
-            photo_url: typeof photo_url === "string"
-                ? photo_url
-                : photo_url.href,
+            photo_url: photoUrl,
+            thumbnail_url: photoUrl,
             ...options,
         });
     },
