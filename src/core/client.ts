@@ -316,9 +316,7 @@ class ApiClient<R extends RawApi> {
         const sig = controller.signal;
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call
-        const successPromise = this
-            .fetch(url, options)
-            .then((res) => res.json());
+        const successPromise = this.fetch(url, options).then((res) => res.json());
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
         // Wait for result
