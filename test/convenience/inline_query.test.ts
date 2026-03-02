@@ -1294,6 +1294,33 @@ describe("InlineQueryResultBuilder", () => {
                 thumbnail_url: "https://grammy.dev/",
             });
         });
+        it("should build an InlineQueryResultPhoto with photo url as a thumbnail when not provided", () => {
+            const photo = InlineQueryResultBuilder.photo(
+                "id",
+                "https://grammy.dev/",
+                { caption: "cap" },
+            );
+            assertObjectMatch(photo, {
+                type: "photo",
+                id: "id",
+                photo_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/",
+                caption: "cap",
+            });
+        });
+        it("should build an InlineQueryResultPhoto with explicitly provided thumbnail", () => {
+            const photo = InlineQueryResultBuilder.photo(
+                "id",
+                "https://grammy.dev/",
+                { thumbnail_url: "https://grammy.dev/thumb" },
+            );
+            assertObjectMatch(photo, {
+                type: "photo",
+                id: "id",
+                photo_url: "https://grammy.dev/",
+                thumbnail_url: "https://grammy.dev/thumb",
+            });
+        });
 
         describe("with text", () => {
             it("should build an InlineQueryResultPhoto with location in message content", () => {
