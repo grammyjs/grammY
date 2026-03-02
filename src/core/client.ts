@@ -426,7 +426,7 @@ const proxyMethods = {
 };
 
 async function parseApiResponseBody<R extends RawApi, M extends Methods<R>>(
-    res: Response,
+    res: Pick<Response, "headers" | "json">,
 ) {
     if (res.headers.get("content-type") !== "application/json") {
         throw new Error(
