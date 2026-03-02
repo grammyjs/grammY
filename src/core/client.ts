@@ -317,7 +317,7 @@ class ApiClient<R extends RawApi> {
         const options = { ...opts.baseFetchConfig, signal: sig, ...config };
         // Perform fetch call
         const successPromise = this.fetch(url, options)
-            .then(parseApiResponseBody<R, M>);
+            .then((res) => res.json());
         // Those are the three possible outcomes of the fetch call:
         const operations = [successPromise, streamErr.promise, timeout.promise];
         // Wait for result
@@ -424,20 +424,6 @@ const proxyMethods = {
         return [];
     },
 };
-
-async function parseApiResponseBody<R extends RawApi, M extends Methods<R>>(
-    res:
-        & Pick<Response, "status" | "statusText" | "json">
-        & { headers: Pick<Response["headers"], "get"> },
-) {
-    if (res.headers.get("content-type") !== "application/json") {
-        throw new Error(
-            `Response did not contain a JSON body (${res.status}: ${res.statusText})`,
-        );
-    }
-    const apiResponse: ApiResponse<ApiCallResult<M, R>> = await res.json();
-    return apiResponse;
-}
 
 /** A container for a rejecting promise */
 interface AsyncError {

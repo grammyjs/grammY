@@ -35,7 +35,7 @@ type InlineQueryResultOptions<T, K extends keyof T> = Omit<
 
 type OptionalKeys<T> = { [K in keyof T]-?: undefined extends T[K] ? K : never };
 type OptionalFields<T> = Pick<T, OptionalKeys<T>[keyof T]>;
-type MakeFieldsOptional<T, K extends keyof T> =
+type PartialKeys<T, K extends keyof T> =
     & Omit<T, K>
     & Partial<Pick<T, K>>;
 
@@ -486,7 +486,7 @@ export const InlineQueryResultBuilder = {
         photo_url: string | URL,
         options: InlineQueryResultOptions<
             // do not require thumbnail, default to the photo itself
-            MakeFieldsOptional<InlineQueryResultPhoto, "thumbnail_url">,
+            PartialKeys<InlineQueryResultPhoto, "thumbnail_url">,
             "photo_url"
         > = {},
     ) {
