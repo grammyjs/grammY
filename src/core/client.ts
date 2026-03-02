@@ -4,7 +4,7 @@ import {
     type ApiResponse,
     type Opts,
 } from "../types.ts";
-import { toGrammyError, toHttpError } from "./error.ts";
+import { JsonParseError, toGrammyError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
@@ -432,13 +432,11 @@ async function parseApiResponseBody<R extends RawApi, M extends Methods<R>>(
         const apiResponse: ApiResponse<ApiCallResult<M, R>> = await res.json();
         return apiResponse;
     } catch (err) {
-        if (typeof err === "object" && err !== null) {
-            Object.assign(err, {
-                status: res.status,
-                statusText: res.statusText,
-            });
+        if (err instanceof Error) {
+            throw new JsonParseError(res.status, res.statusText, err);
+        } else {
+            throw err;
         }
-        throw err;
     }
 }
 

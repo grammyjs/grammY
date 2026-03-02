@@ -86,19 +86,34 @@ export class HttpError extends Error {
     }
 }
 
+export class JsonParseError extends Error {
+    constructor(
+        public readonly status: number,
+        public readonly statusText: string,
+        public readonly error: Error,
+    ) {
+        super();
+    }
+}
+function isTelegramError(
+    err: unknown,
+): err is { status: number; statusText: string } {
+    return typeof err === "object" && err !== null &&
+        "status" in err && typeof err.status === "number" &&
+        "statusText" in err && typeof err.statusText === "string";
+}
 export function toHttpError(
     method: string,
     sensitiveLogs: boolean,
     err: unknown,
 ) {
     let msg = `Network request for '${method}' failed!`;
-    if (
-        typeof err === "object" && err !== null &&
-        "status" in err && typeof err.status === "string" &&
-        "statusText" in err && typeof err.statusText === "string"
-    ) {
-        msg += ` (${err.status}: ${err.statusText})`;
+    if (err instanceof JsonParseError) {
+        const { status, statusText, error } = err;
+        msg += ` (${status}: ${statusText}) ${error.name}: ${error.message}`;
+    } else {
+        if (isTelegramError(err)) msg += ` (${err.status}: ${err.statusText})`;
+        if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
     }
-    if (sensitiveLogs && err instanceof Error) msg += ` ${err.message}`;
     return new HttpError(msg, err);
 }
