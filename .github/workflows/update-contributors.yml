@@ -33,7 +33,7 @@ jobs:
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git checkout -b auto/update-contributors
                   git add .all-contributorsrc
-                  git commit -m "chore: update contributor information"
+                  git commit -m "docs: update contributor information"
                   git push -f origin auto/update-contributors
                   gh pr create \
                     --title "chore: update contributor information" \
