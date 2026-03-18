@@ -39,8 +39,8 @@ jobs:
                   git push -f origin auto/update-contributors
                   gh pr create \
                     --title "docs: update contributor information" \
-                    --body "This PR updates contributor information in \`.all-contributorsrc\`.${{ steps.check.outputs.details }}" \
+                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}" \
                     --label "dependencies" || \
                   gh pr edit auto/update-contributors \
-                    --title "chore: update contributor information" \
-                    --body "This PR updates contributor information in \`.all-contributorsrc\`.${{ steps.check.outputs.details }}"
+                    --title "docs: update contributor information" \
+                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}"
