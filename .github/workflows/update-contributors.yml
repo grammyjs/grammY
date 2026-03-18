@@ -33,6 +33,8 @@ jobs:
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git checkout -b auto/update-contributors
                   git add .all-contributorsrc
+                  deno task contribs generate
+                  git add README.md
                   git commit -m "docs: update contributor information"
                   git push -f origin auto/update-contributors
                   gh pr create \
