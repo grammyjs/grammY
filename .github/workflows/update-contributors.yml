@@ -36,7 +36,7 @@ jobs:
                   git commit -m "docs: update contributor information"
                   git push -f origin auto/update-contributors
                   gh pr create \
-                    --title "chore: update contributor information" \
+                    --title "docs: update contributor information" \
                     --body "This PR updates contributor information in \`.all-contributorsrc\`.${{ steps.check.outputs.details }}" \
                     --label "dependencies" || \
                   gh pr edit auto/update-contributors \
