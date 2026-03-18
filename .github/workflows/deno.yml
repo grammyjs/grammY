@@ -80,6 +80,6 @@ jobs:
               run: deno task coverage
 
             - name: Collect coverage
-              uses: codecov/codecov-action@v1.0.10 # upload the report on Codecov
+              uses: codecov/codecov-action@v5
               with:
-                  file: ./coverage.lcov
+                  files: ./coverage.lcov
