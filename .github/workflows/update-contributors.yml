@@ -31,7 +31,7 @@ jobs:
               run: |
                   git config --global user.name "github-actions[bot]"
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
-                  git checkout -b auto/update-contributors
+                  git switch -c auto/update-contributors
                   git add .all-contributorsrc
                   deno task contribs generate
                   git add README.md
