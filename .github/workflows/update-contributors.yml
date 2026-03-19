@@ -1,0 +1,48 @@
+name: Update Contributors
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "0 0 1 1,4,7,10 *" # Quarterly: Jan, Apr, Jul, Oct
+
+jobs:
+    update-contributors:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - uses: denoland/setup-deno@v2
+              with:
+                  deno-version: v2.x
+
+            - name: Check for contributor changes
+              id: check
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: deno task update-contribs
+
+            - name: Create Pull Request
+              if: steps.check.outputs.changes == 'true'
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git switch -c auto/update-contributors
+                  git add .all-contributorsrc
+                  deno task contribs generate
+                  git add README.md
+                  git commit -m "docs: update contributor information"
+                  git push -f origin auto/update-contributors
+                  gh pr create \
+                    --title "docs: update contributor information" \
+                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}" \
+                    --label "dependencies" || \
+                  gh pr edit auto/update-contributors \
+                    --title "docs: update contributor information" \
+                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}"
