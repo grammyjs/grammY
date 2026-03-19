@@ -1,7 +1,9 @@
 name: Update Contributors
 
 on:
-    workflow_dispatch: # Manual trigger only
+    workflow_dispatch:
+    schedule:
+        - cron: "0 0 1 1,4,7,10 *" # Quarterly: Jan, Apr, Jul, Oct
 
 jobs:
     update-contributors:
