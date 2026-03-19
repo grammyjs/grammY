@@ -10,7 +10,7 @@
         "report": "genhtml ./coverage.lcov --output-directory ./test/coverage/ && echo 'Point your browser to test/coverage/index.html to see the test coverage report.'",
         "bundle-web": "mkdir -p out deno_cache && cd bundling && deno -ENRW bundle-web.ts dev ../src/mod.ts",
         "contribs": "deno -ERS --allow-write=. --allow-net=api.github.com npm:all-contributors-cli",
-        "update-contribs": "deno run --allow-net=api.github.com --allow-read=. --allow-write=.all-contributorsrc --allow-env=GITHUB_TOKEN,GITHUB_OUTPUT .github/scripts/update-contributors.ts"
+        "update-contribs": "deno run --allow-net=api.github.com --allow-read=. --allow-write --allow-env=GITHUB_TOKEN,GITHUB_OUTPUT .github/scripts/update-contributors.ts"
     },
     "exclude": [
         "./bundling/bundles",

@@ -20,6 +20,10 @@ jobs:
               with:
                   deno-version: v2.x
 
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
             - name: Check for contributor changes
               id: check
               env:
@@ -35,14 +39,14 @@ jobs:
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
                   git switch -c auto/update-contributors
                   git add .all-contributorsrc
-                  deno task contribs generate
+                  npx all-contributors-cli generate
                   git add README.md
                   git commit -m "docs: update contributor information"
                   git push -f origin auto/update-contributors
+                  printf 'This PR updates contributor information in `.all-contributorsrc` and regenerates the README file.%s' "${{ steps.check.outputs.details }}" > /tmp/pr-body.txt
                   gh pr create \
                     --title "docs: update contributor information" \
-                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}" \
-                    --label "dependencies" || \
+                    --body-file /tmp/pr-body.txt || \
                   gh pr edit auto/update-contributors \
                     --title "docs: update contributor information" \
-                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}"
+                    --body-file /tmp/pr-body.txt
