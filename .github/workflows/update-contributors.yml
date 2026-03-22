@@ -18,7 +18,7 @@ jobs:
 
             - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v2.x
+                  deno-version: ac659a17c799c0e03530acd73524596f62f108fd
 
             - name: Check for contributor changes
               id: check
@@ -39,10 +39,7 @@ jobs:
                   git add README.md
                   git commit -m "docs: update contributor information"
                   git push -f origin auto/update-contributors
-                  gh pr create \
-                    --title "docs: update contributor information" \
-                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}" \
-                    --label "dependencies" || \
-                  gh pr edit auto/update-contributors \
-                    --title "docs: update contributor information" \
-                    --body "This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}"
+                  TITLE="docs: update contributor information"
+                  BODY="This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}"
+                  gh pr create --title "$TITLE" --body "$BODY" --label "dependencies" || \
+                    gh pr edit auto/update-contributors --title "$TITLE" --body "$BODY"
