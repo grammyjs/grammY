@@ -30,6 +30,7 @@ jobs:
               if: steps.check.outputs.changes == 'true'
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  DETAILS: ${{ steps.check.outputs.details }} 
               run: |
                   git config --global user.name "github-actions[bot]"
                   git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -40,6 +41,8 @@ jobs:
                   git commit -m "docs: update contributor information"
                   git push -f origin auto/update-contributors
                   TITLE="docs: update contributor information"
-                  BODY="This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.${{ steps.check.outputs.details }}"
+                  BODY="This PR updates contributor information in \`.all-contributorsrc\` and regenerates the README file.
+                  
+                  $DETAILS"
                   gh pr create --title "$TITLE" --body "$BODY" --label "dependencies" || \
                     gh pr edit auto/update-contributors --title "$TITLE" --body "$BODY"
