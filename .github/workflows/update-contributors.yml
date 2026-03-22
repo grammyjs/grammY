@@ -18,7 +18,7 @@ jobs:
 
             - uses: denoland/setup-deno@v2
               with:
-                  deno-version: v2.x
+                  deno-version: ac659a17c799c0e03530acd73524596f62f108fd
 
             - name: Check for contributor changes
               id: check
