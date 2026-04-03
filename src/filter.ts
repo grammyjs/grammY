@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase no-explicit-any
 import { type Context } from "./context.ts";
-import { type Update } from "./types.ts";
+import { type Message, type MessageEntity, type Update } from "./types.ts";
 
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
@@ -214,6 +214,7 @@ function testMaybeArray<T>(t: T | T[], pred: (t: T) => boolean): boolean {
 }
 
 // === Define a structure to validate the queries
+type NestedObj = Record<string, Record<string, Record<string, never>>>; // for validation only
 // L3
 const ENTITY_KEYS = {
     mention: {},
@@ -235,7 +236,8 @@ const ENTITY_KEYS = {
     text_link: {},
     text_mention: {},
     custom_emoji: {},
-} as const;
+    date_time: {},
+} as const satisfies Record<MessageEntity["type"], NestedObj>;
 const USER_KEYS = {
     me: {},
     is_bot: {},
@@ -343,6 +345,7 @@ const MESSAGE_KEYS = {
     users_shared: {},
     chat_shared: {},
     connected_website: {},
+    managed_bot_created: {},
     write_access_allowed: {},
     passport_data: {},
     boost_added: {},
@@ -356,6 +359,8 @@ const MESSAGE_KEYS = {
     checklist: { others_can_add_tasks: {}, others_can_mark_tasks_as_done: {} },
     checklist_tasks_done: {},
     checklist_tasks_added: {},
+    poll_option_added: {},
+    poll_option_deleted: {},
 
     suggested_post_info: {},
     suggested_post_approved: {},
@@ -365,13 +370,13 @@ const MESSAGE_KEYS = {
     suggested_post_refunded: {},
 
     sender_boost_count: {},
-} as const;
+} as const satisfies Partial<Record<keyof Message, NestedObj>>;
 const CHANNEL_POST_KEYS = {
     ...COMMON_MESSAGE_KEYS,
     channel_chat_created: {},
     direct_message_price_changed: {},
     is_paid_post: {},
-} as const;
+} as const satisfies Partial<Record<keyof Message, NestedObj>>;
 const BUSINESS_CONNECTION_KEYS = {
     can_reply: {},
     is_enabled: {},
@@ -405,13 +410,14 @@ const UPDATE_KEYS = {
     poll_answer: {},
     my_chat_member: CHAT_MEMBER_UPDATED_KEYS,
     chat_member: CHAT_MEMBER_UPDATED_KEYS,
+    managed_bot: {},
     chat_join_request: {},
     message_reaction: MESSAGE_REACTION_KEYS,
     message_reaction_count: MESSAGE_REACTION_COUNT_UPDATED_KEYS,
     chat_boost: {},
     removed_chat_boost: {},
     purchased_paid_media: {},
-} as const;
+} as const satisfies Record<Exclude<keyof Update, "update_id">, NestedObj>;
 
 // === Build up all possible filter queries from the above validation structure
 type KeyOf<T> = string & keyof T; // Emulate `keyofStringsOnly`
@@ -616,6 +622,8 @@ interface Shortcuts<U extends Update> {
     myChatMember: [U["my_chat_member"]] extends [object] ? U["my_chat_member"]
         : undefined;
     chatMember: [U["chat_member"]] extends [object] ? U["chat_member"]
+        : undefined;
+    managedBot: [U["managed_bot"]] extends [object] ? U["managed_bot"]
         : undefined;
     chatJoinRequest: [U["chat_join_request"]] extends [object]
         ? U["chat_join_request"]
