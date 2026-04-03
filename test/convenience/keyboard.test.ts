@@ -31,7 +31,8 @@ describe("Keyboard", () => {
             .requestPoll("poll", "quiz")
             .webApp("web app", "https://grammy.dev")
             .requestUsers("user", 12, { user_is_bot: true })
-            .requestChat("chat", 42);
+            .requestChat("chat", 42)
+            .requestManagedBot("bot", 96);
         assertEquals(keyboard.build(), [[
             { text: "button" },
             { text: "contact", request_contact: true },
@@ -46,6 +47,7 @@ describe("Keyboard", () => {
                 text: "chat",
                 request_chat: { request_id: 42, chat_is_channel: false },
             },
+            { text: "bot", request_managed_bot: { request_id: 96 } },
         ]]);
     });
 

@@ -79,6 +79,7 @@ describe("Context", () => {
         poll_answer: { poll_id: "g" },
         my_chat_member: { date: 1, from: u, chat: c },
         chat_member: { date: 2, from: u, chat: c },
+        managed_bot: { bot: { id: 3 }, user: u },
         chat_join_request: { date: 3, from: u, chat: c },
         chat_boost: { chat: c, boost: { boost_id: 3, source: { user: u } } },
         removed_chat_boost: { chat: c, boost_id: 3, source: { user: u } },
@@ -117,6 +118,7 @@ describe("Context", () => {
         assertEquals(ctx.pollAnswer, update.poll_answer);
         assertEquals(ctx.myChatMember, update.my_chat_member);
         assertEquals(ctx.chatMember, update.chat_member);
+        assertEquals(ctx.managedBot, update.managed_bot);
         assertEquals(ctx.chatJoinRequest, update.chat_join_request);
         assertEquals(ctx.chatBoost, update.chat_boost);
         assertEquals(ctx.removedChatBoost, update.removed_chat_boost);
