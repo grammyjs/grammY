@@ -43,6 +43,7 @@ export const DEFAULT_UPDATE_TYPES = [
     "poll",
     "poll_answer",
     "my_chat_member",
+    "managed_bot",
     "chat_join_request",
     "chat_boost",
     "removed_chat_boost",

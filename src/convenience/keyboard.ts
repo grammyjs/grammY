@@ -4,6 +4,7 @@ import {
     type KeyboardButton,
     type KeyboardButtonPollType,
     type KeyboardButtonRequestChat,
+    type KeyboardButtonRequestManagedBot,
     type KeyboardButtonRequestUsers,
     type LoginUrl,
     type SwitchInlineQueryChosenChat,
@@ -175,9 +176,10 @@ export class Keyboard {
         requestId: number,
         options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
     ): KeyboardButton.RequestUsersButton {
+        const request_users = { request_id: requestId, ...options };
         return typeof text === "string"
-            ? { text, request_users: { request_id: requestId, ...options } }
-            : { ...text, request_users: { request_id: requestId, ...options } };
+            ? { text, request_users }
+            : { ...text, request_users };
     }
     /**
      * Adds a new request chat button. When the user presses the button, a list
@@ -299,6 +301,41 @@ export class Keyboard {
         return typeof text === "string"
             ? { text, request_poll }
             : { ...text, request_poll };
+    }
+    /**
+     * Adds a new managed bot request button. The user will be asked to create
+     * and share a bot that will be managed by the current bot when the button
+     * is pressed. Available in private chats only.
+     *
+     * @param text The text to display, and optional styling information
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    requestManagedBot(
+        text: string | KeyboardButton.CommonButton,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestManagedBot, "request_id"> = {},
+    ) {
+        return this.add(Keyboard.requestManagedBot(text, requestId, options));
+    }
+    /**
+     * Creates a new managed bot request button. The user will be asked to
+     * create and share a bot that will be managed by the current bot when the
+     * button is pressed. Available in private chats only.
+     *
+     * @param text The text to display, and optional styling information
+     * @param requestId A signed 32-bit identifier of the request
+     * @param options Options object for further requirements
+     */
+    static requestManagedBot(
+        text: string | KeyboardButton.CommonButton,
+        requestId: number,
+        options: Omit<KeyboardButtonRequestManagedBot, "request_id"> = {},
+    ): KeyboardButton.RequestManagedBotButton {
+        const request_managed_bot = { request_id: requestId, ...options };
+        return typeof text === "string"
+            ? { text, request_managed_bot }
+            : { ...text, request_managed_bot };
     }
     /**
      * Adds a new web app button. The Web App that will be launched when the

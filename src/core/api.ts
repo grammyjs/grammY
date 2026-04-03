@@ -16,6 +16,7 @@ import {
     type InputProfilePhoto,
     type InputSticker,
     type InputStoryContent,
+    type KeyboardButton,
     type LabeledPrice,
     type MaskPosition,
     type PassportElementError,
@@ -1395,6 +1396,30 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.revokeChatInviteLink({ chat_id, invite_link }, signal);
+    }
+
+    /**
+     * Use this method to get the token of a managed bot. Returns the token as String on success.
+     *
+     * @param user_id User identifier of the managed bot whose token will be returned
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
+     */
+    getManagedBotToken(user_id: number, signal?: AbortSignal) {
+        return this.raw.getManagedBotToken({ user_id }, signal);
+    }
+
+    /**
+     * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
+     *
+     * @param user_id User identifier of the managed bot whose token will be replaced
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
+     */
+    replaceManagedBotToken(user_id: number, signal?: AbortSignal) {
+        return this.raw.replaceManagedBotToken({ user_id }, signal);
     }
 
     /**
@@ -3269,6 +3294,26 @@ export class Api<R extends RawApi = RawApi> {
             { user_id, result, ...other },
             signal,
         );
+    }
+
+    /**
+     * Stores a keyboard button that can be used by a user within a Mini App. Returns a PreparedKeyboardButton object.
+     *
+     * @param user_id Unique identifier of the target user that can use the button
+     * @param button An object describing the button to be saved. The button must be of the type request_users, request_chat, or request_managed_bot
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#savepreparedkeyboardbutton
+     */
+    savePreparedKeyboardButton(
+        user_id: number,
+        button:
+            | KeyboardButton.RequestUsersButton
+            | KeyboardButton.RequestChatButton
+            | KeyboardButton.RequestManagedBotButton,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.savePreparedKeyboardButton({ user_id, button }, signal);
     }
 
     /**

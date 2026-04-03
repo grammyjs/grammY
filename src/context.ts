@@ -23,6 +23,7 @@ import {
     type InputPollOption,
     type InputProfilePhoto,
     type InputStoryContent,
+    type KeyboardButton,
     type LabeledPrice,
     type Message,
     type MessageEntity,
@@ -486,6 +487,10 @@ export class Context implements RenamedUpdate {
     /** Alias for `ctx.update.chat_member` */
     get chatMember() {
         return this.update.chat_member;
+    }
+    /** Alias for `ctx.update.managed_bot` */
+    get managedBot() {
+        return this.update.managed_bot;
     }
     /** Alias for `ctx.update.chat_join_request` */
     get chatJoinRequest() {
@@ -2388,6 +2393,34 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.getManagedBotToken`. Use this method to get the token of a managed bot. Returns the token as String on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
+     */
+    getManagedBotToken(signal?: AbortSignal) {
+        return this.api.getManagedBotToken(
+            orThrow(this.managedBot, "getManagedBotToken").bot.id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.replaceManagedBotToken`. Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
+     */
+    replaceManagedBotToken(signal?: AbortSignal) {
+        return this.api.replaceManagedBotToken(
+            orThrow(this.managedBot, "getManagedBotToken").bot.id,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.approveChatJoinRequest`. Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
      *
      * @param user_id Unique identifier of the target user
@@ -3712,6 +3745,28 @@ export class Context implements RenamedUpdate {
             orThrow(this.from, "savePreparedInlineMessage").id,
             result,
             other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.savePreparedKeyboardButton`. Stores a keyboard button that can be used by a user within a Mini App. Returns a PreparedKeyboardButton object.
+     *
+     * @param button An object describing the button to be saved. The button must be of the type request_users, request_chat, or request_managed_bot
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#savepreparedkeyboardbutton
+     */
+    savePreparedKeyboardButton(
+        button:
+            | KeyboardButton.RequestUsersButton
+            | KeyboardButton.RequestChatButton
+            | KeyboardButton.RequestManagedBotButton,
+        signal?: AbortSignal,
+    ) {
+        return this.api.savePreparedKeyboardButton(
+            orThrow(this.from, "savePreparedKeyboardButton").id,
+            button,
             signal,
         );
     }
