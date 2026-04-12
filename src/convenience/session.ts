@@ -1,9 +1,12 @@
+import { gunzip, gzip } from "../compression.deno.ts";
 import { type MiddlewareFn } from "../composer.ts";
 import { type Context } from "../context.ts";
 import { debug as d } from "../platform.deno.ts";
 const debug = d("grammy:session");
 
 type MaybePromise<T> = Promise<T> | T;
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
 
 // === Main session plugin
 /**
@@ -472,6 +475,125 @@ function undef(
         ? "the custom `getSessionKey` function returned undefined for this update"
         : "this update does not belong to a chat, so the session key is undefined";
     return `Cannot ${op} ${lazy ? "lazy " : ""}session data because ${reason}!`;
+}
+
+// === Compressed storage
+/**
+ * Options for {@link gzipStorage}.
+ */
+export interface GzipStorageOptions<T> {
+    /**
+     * The byte-oriented storage adapter that should store compressed session
+     * payloads.
+     */
+    storage: StorageAdapter<Uint8Array>;
+    /**
+     * Optional codec that turns values into bytes before they are compressed.
+     * Defaults to UTF-8 encoded JSON.
+     */
+    encode?: (value: T) => MaybePromise<Uint8Array>;
+    /**
+     * Optional codec that turns decompressed bytes back into session values.
+     * Defaults to UTF-8 decoded JSON.
+     */
+    decode?: (value: Uint8Array) => MaybePromise<T>;
+}
+
+/**
+ * Wraps a byte-oriented storage adapter and stores session data in gzip format.
+ *
+ * This is useful for large JSON-like session payloads, for example when
+ * storing conversational state in `ctx.session`.
+ *
+ * ```ts
+ * const storage = gzipStorage<MySession>({
+ *   storage: new MemorySessionStorage<Uint8Array>(),
+ * })
+ *
+ * bot.use(session({ storage }))
+ * ```
+ *
+ * This helper composes with {@link enhanceStorage}. Wrap a
+ * `StorageAdapter<Enhance<T>>` with `gzipStorage`, then pass it to
+ * `enhanceStorage`.
+ *
+ * @param options Compression options
+ * @returns A storage adapter for regular session values
+ */
+export function gzipStorage<T>(
+    options: GzipStorageOptions<T>,
+): StorageAdapter<T> {
+    const {
+        storage,
+        encode = encodeSessionData as (value: T) => MaybePromise<Uint8Array>,
+        decode = decodeSessionData as (value: Uint8Array) => MaybePromise<T>,
+    } = options;
+    const compressed: StorageAdapter<T> = {
+        read: async (key) => {
+            const value = await storage.read(key);
+            if (value === undefined) return undefined;
+            return await decodeCompressed(value, decode);
+        },
+        write: async (key, value) => {
+            const bytes = await encode(value);
+            await storage.write(key, await gzip(bytes));
+        },
+        delete: (key) => storage.delete(key),
+    };
+    if (storage.has !== undefined) {
+        compressed.has = (key) => storage.has!(key);
+    }
+    if (storage.readAllKeys !== undefined) {
+        compressed.readAllKeys = () => storage.readAllKeys!();
+    }
+    if (storage.readAllValues !== undefined) {
+        compressed.readAllValues = () =>
+            decodeCompressedValues(storage.readAllValues!(), decode);
+    }
+    if (storage.readAllEntries !== undefined) {
+        compressed.readAllEntries = () =>
+            decodeCompressedEntries(storage.readAllEntries!(), decode);
+    }
+    return compressed;
+}
+
+function encodeSessionData(value: unknown): Uint8Array {
+    const json = JSON.stringify(value);
+    if (json === undefined) {
+        throw new Error("Could not serialize session data to JSON!");
+    }
+    return encoder.encode(json);
+}
+
+function decodeSessionData<T>(value: Uint8Array): T {
+    return JSON.parse(decoder.decode(value));
+}
+
+async function decodeCompressed<T>(
+    value: Uint8Array,
+    decode: (value: Uint8Array) => MaybePromise<T>,
+) {
+    return await decode(await gunzip(value));
+}
+
+async function* decodeCompressedValues<T>(
+    values: Iterable<Uint8Array> | AsyncIterable<Uint8Array>,
+    decode: (value: Uint8Array) => MaybePromise<T>,
+): AsyncIterable<T> {
+    for await (const value of values) {
+        yield await decodeCompressed(value, decode);
+    }
+}
+
+async function* decodeCompressedEntries<T>(
+    entries:
+        | Iterable<[key: string, value: Uint8Array]>
+        | AsyncIterable<[key: string, value: Uint8Array]>,
+    decode: (value: Uint8Array) => MaybePromise<T>,
+): AsyncIterable<[key: string, value: T]> {
+    for await (const [key, value] of entries) {
+        yield [key, await decodeCompressed(value, decode)];
+    }
 }
 
 // === Session migrations

@@ -1,6 +1,7 @@
 import {
     type Enhance,
     enhanceStorage,
+    gzipStorage,
     lazySession,
     type LazySessionFlavor,
     MemorySessionStorage,
@@ -22,6 +23,17 @@ import {
 const TICK_MS = 50;
 const sleepTicks = (n: number) =>
     new Promise((r) => setTimeout(r, n * TICK_MS));
+const collect = async <T>(values: Iterable<T> | AsyncIterable<T>) => {
+    const collected: T[] = [];
+    for await (const value of values) collected.push(value);
+    return collected;
+};
+const gunzipText = async (data: Uint8Array) =>
+    await new Response(
+        new Blob([Uint8Array.from(data).buffer]).stream().pipeThrough(
+            new DecompressionStream("gzip"),
+        ),
+    ).text();
 
 describe("session", () => {
     const next = () => Promise.resolve();
@@ -956,6 +968,73 @@ describe("enhanceStorage", () => {
         await enhanced.write("k", 42);
         assertEquals(await enhanced.read("k"), 42);
         await time.runAllAsync();
+    });
+});
+
+describe("gzipStorage", () => {
+    it("should round-trip JSON data and write gzip bytes", async () => {
+        const bytes = new MemorySessionStorage<Uint8Array>();
+        const storage = gzipStorage<{ foo: number; bar: string }>({
+            storage: bytes,
+        });
+
+        assertEquals(await storage.read("k"), undefined);
+        await storage.write("k", { foo: 42, bar: "baz" });
+
+        const raw = bytes.read("k");
+        assert(raw !== undefined);
+        assertEquals(raw[0], 0x1f);
+        assertEquals(raw[1], 0x8b);
+        assertEquals(await gunzipText(raw), '{"foo":42,"bar":"baz"}');
+        assertEquals(await storage.read("k"), { foo: 42, bar: "baz" });
+
+        await storage.delete("k");
+        assertEquals(bytes.read("k"), undefined);
+    });
+
+    it("should support custom codecs and adapter capabilities", async () => {
+        const bytes = new MemorySessionStorage<Uint8Array>();
+        const storage = gzipStorage<number>({
+            storage: bytes,
+            encode: (value) => new Uint8Array([value]),
+            decode: ([value]) => value,
+        });
+
+        await storage.write("k0", 42);
+        await storage.write("k1", 43);
+
+        assert(storage.has !== undefined);
+        assert(storage.readAllKeys !== undefined);
+        assert(storage.readAllValues !== undefined);
+        assert(storage.readAllEntries !== undefined);
+        assertEquals(await storage.has("k0"), true);
+        assertEquals(await collect(storage.readAllKeys()), ["k0", "k1"]);
+        assertEquals(await collect(storage.readAllValues()), [42, 43]);
+        assertEquals(await collect(storage.readAllEntries()), [
+            ["k0", 42],
+            ["k1", 43],
+        ]);
+    });
+
+    it("should compose with enhanceStorage", async () => {
+        const bytes = new MemorySessionStorage<Uint8Array>();
+        const compressed = gzipStorage<Enhance<number>>({ storage: bytes });
+        const enhanced = enhanceStorage({
+            storage: compressed,
+            migrations: {
+                1: (old: number) => old + 1,
+            },
+        });
+
+        await compressed.write("k", { __d: 41 });
+        assertEquals(await enhanced.read("k"), 42);
+
+        await enhanced.write("k", 10);
+        assertEquals(await enhanced.read("k"), 10);
+
+        const raw = bytes.read("k");
+        assert(raw !== undefined);
+        assertEquals(await gunzipText(raw), '{"v":1,"__d":10}');
     });
 });
 
