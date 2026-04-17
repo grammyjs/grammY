@@ -203,6 +203,9 @@ describe("Context", () => {
         up = { message_reaction: update.message_reaction } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.message_reaction?.user);
+        up = { managed_bot: update.managed_bot } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.managed_bot?.user);
         up = { chat_boost: update.chat_boost } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.chat_boost?.boost.source.user);

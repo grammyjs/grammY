@@ -669,6 +669,7 @@ interface Shortcuts<U extends Update> {
         ? U["business_connection"]["user"]
         : [U["message_reaction"]] extends [object]
             ? U["message_reaction"]["user"]
+        : [U["managed_bot"]] extends [object] ? U["managed_bot"]["user"]
         : [U["chat_boost"]] extends [object]
             ? U["chat_boost"]["boost"]["source"]["user"]
         : [U["removed_chat_boost"]] extends [object]
