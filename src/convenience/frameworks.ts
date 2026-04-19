@@ -87,7 +87,10 @@ export type AzureAdapter = (context: {
         // deno-lint-ignore no-explicit-any
         [key: string]: any;
     };
-}, request: { body?: unknown }) => ReqResHandler;
+}, request: {
+    body?: unknown;
+    headers?: Record<string, string | undefined>;
+}) => ReqResHandler;
 export type AzureAdapterV4 = (
     request: {
         headers: { get(name: string): string | null };
@@ -297,7 +300,7 @@ const azure: AzureAdapter = (context, request) => ({
     get update() {
         return request.body as Update;
     },
-    header: context.res?.headers?.[SECRET_HEADER],
+    header: request.headers?.[SECRET_HEADER_LOWERCASE],
     end: () => (context.res = {
         status: 200,
         body: "",
