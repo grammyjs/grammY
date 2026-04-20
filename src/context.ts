@@ -559,7 +559,7 @@ export class Context implements RenamedUpdate {
     }
     /**
      * Get the user object from wherever possible. Alias for
-     * `(this.businessConnection ?? this.messageReaction ??
+     * `(this.businessConnection ?? this.messageReaction ?? this.managedBot ??
      * (this.chatBoost?.boost ?? this.removedChatBoost)?.source)?.user ??
      * (this.callbackQuery ?? this.msg ?? this.inlineQuery ??
      * this.chosenInlineResult ?? this.shippingQuery ?? this.preCheckoutQuery ??
@@ -571,6 +571,7 @@ export class Context implements RenamedUpdate {
         return (
             this.businessConnection ??
                 this.messageReaction ??
+                this.managedBot ??
                 (this.chatBoost?.boost ?? this.removedChatBoost)?.source
         )?.user ??
             (
