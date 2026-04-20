@@ -262,7 +262,8 @@ const awsLambda: LambdaAdapter = (event, _context, callback) => ({
     get update() {
         return JSON.parse(event.body ?? "{}");
     },
-    header: event.headers[SECRET_HEADER],
+    header: event.headers[SECRET_HEADER] ??
+        event.headers[SECRET_HEADER_LOWERCASE],
     end: () => callback(null, { statusCode: 200 }),
     respond: (json) =>
         callback(null, {
@@ -282,7 +283,8 @@ const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
         get update() {
             return JSON.parse(event.body ?? "{}");
         },
-        header: event.headers[SECRET_HEADER],
+        header: event.headers[SECRET_HEADER] ??
+            event.headers[SECRET_HEADER_LOWERCASE],
         end: () => resolveResponse({ statusCode: 200 }),
         respond: (json) =>
             resolveResponse({
