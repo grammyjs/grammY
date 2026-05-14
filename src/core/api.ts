@@ -919,7 +919,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
      *
      * @param chat_id Unique identifier for the target private chat
-     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated
+     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated.
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
