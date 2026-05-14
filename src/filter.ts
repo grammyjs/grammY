@@ -271,12 +271,14 @@ const COMMON_MESSAGE_KEYS = {
     forward_origin: FORWARD_ORIGIN_KEYS,
     is_topic_message: {},
     is_automatic_forward: {},
+    guest_query_id: {},
     business_connection_id: {},
 
     text: {},
     animation: {},
     audio: {},
     document: {},
+    live_photo: {},
     paid_media: {},
     photo: {},
     sticker: STICKER_KEYS,
@@ -401,6 +403,7 @@ const UPDATE_KEYS = {
     business_message: MESSAGE_KEYS,
     edited_business_message: MESSAGE_KEYS,
     deleted_business_messages: {},
+    guest_message: MESSAGE_KEYS,
     inline_query: {},
     chosen_inline_result: {},
     callback_query: CALLBACK_QUERY_KEYS,
@@ -598,6 +601,8 @@ interface Shortcuts<U extends Update> {
     deletedBusinessMessages: [U["deleted_business_messages"]] extends [object]
         ? U["deleted_business_messages"]
         : undefined;
+    guestMessage: [U["guest_message"]] extends [object] ? U["guest_message"]
+        : undefined;
     messageReaction: [U["message_reaction"]] extends [object]
         ? U["message_reaction"]
         : undefined;
@@ -642,6 +647,7 @@ interface Shortcuts<U extends Update> {
         : [U["business_message"]] extends [object] ? U["business_message"]
         : [U["edited_business_message"]] extends [object]
             ? U["edited_business_message"]
+        : [U["guest_message"]] extends [object] ? U["guest_message"]
         : [U["callback_query"]] extends [object]
             ? U["callback_query"]["message"]
         : undefined;
@@ -713,9 +719,10 @@ const L1_SHORTCUTS = {
 } as const;
 const L2_SHORTCUTS = {
     "": ["entities", "caption_entities"],
-    media: ["photo", "video"],
+    media: ["photo", "live_photo", "video"],
     file: [
         "photo",
+        "live_photo",
         "animation",
         "audio",
         "document",
@@ -772,8 +779,10 @@ type L2Equivalents = {
     edited_channel_post: MessageEquivalents;
     business_message: MessageEquivalents;
     edited_business_message: MessageEquivalents;
+    guest_message: MessageEquivalents;
 };
 type MessageEquivalents = {
+    live_photo: "photo";
     animation: "document";
     entities: "text";
     caption_entities: "caption";

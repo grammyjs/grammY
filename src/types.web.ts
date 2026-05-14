@@ -9,11 +9,17 @@ import {
     type InputMediaAnimation as InputMediaAnimationF,
     type InputMediaAudio as InputMediaAudioF,
     type InputMediaDocument as InputMediaDocumentF,
+    type InputMediaLivePhoto as InputMediaLivePhotoF,
     type InputMediaPhoto as InputMediaPhotoF,
+    type InputMediaSticker as InputMediaStickerF,
     type InputMediaVideo as InputMediaVideoF,
     type InputPaidMedia as InputPaidMediaF,
+    type InputPaidMediaLivePhoto as InputPaidMediaLivePhotoF,
     type InputPaidMediaPhoto as InputPaidMediaPhotoF,
     type InputPaidMediaVideo as InputPaidMediaVideoF,
+    type InputPollMedia as InputPollMediaF,
+    type InputPollOption as InputPollOptionF,
+    type InputPollOptionMedia as InputPollOptionMediaF,
     type InputProfilePhoto as InputProfilePhotoAnimatedF,
     type InputProfilePhoto as InputProfilePhotoF,
     type InputProfilePhoto as InputProfilePhotoStaticF,
@@ -130,31 +136,64 @@ export type Opts<M extends keyof ApiMethods> = OptsF<InputFile>[M];
 export type InputSticker = InputStickerF<InputFile>;
 
 /** This object represents the content of a media message to be sent. It should be one of
-- InputMediaAnimation
-- InputMediaDocument
-- InputMediaAudio
-- InputMediaPhoto
-- InputMediaVideo */
+
+  - InputMediaAnimation
+  - InputMediaAudio
+  - InputMediaDocument
+  - InputMediaLivePhoto
+  - InputMediaPhoto
+  - InputMediaVideo */
 export type InputMedia = InputMediaF<InputFile>;
-/** Represents a photo to be sent. */
-export type InputMediaPhoto = InputMediaPhotoF<InputFile>;
-/** Represents a video to be sent. */
-export type InputMediaVideo = InputMediaVideoF<InputFile>;
 /** Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent. */
 export type InputMediaAnimation = InputMediaAnimationF<InputFile>;
 /** Represents an audio file to be treated as music to be sent. */
 export type InputMediaAudio = InputMediaAudioF<InputFile>;
 /** Represents a general file to be sent. */
 export type InputMediaDocument = InputMediaDocumentF<InputFile>;
+/** Represents a live photo to be sent. */
+export type InputMediaLivePhoto = InputMediaLivePhotoF<InputFile>;
+/** Represents a photo to be sent. */
+export type InputMediaPhoto = InputMediaPhotoF<InputFile>;
+/** Represents a sticket file to be sent. */
+export type InputMediaSticker = InputMediaStickerF<InputFile>;
+/** Represents a video to be sent. */
+export type InputMediaVideo = InputMediaVideoF<InputFile>;
+/** This object contains information about one answer option in a poll to send. */
+export type InputPollOption = InputPollOptionF<InputFile>;
+/** This object represents the content of a poll description or a quiz explanation to be sent. It should be one of
+
+- InputMediaAnimation
+- InputMediaAudio
+- InputMediaDocument
+- InputMediaLivePhoto
+- InputMediaLocation
+- InputMediaPhoto
+- InputMediaVenue
+- InputMediaVideo */
+export type InputPollMedia = InputPollMediaF<InputFile>;
+/** This object represents the content of a poll option to be sent. It should be one of
+
+ - InputMediaAnimation
+ - InputMediaLivePhoto
+ - InputMediaLocation
+ - InputMediaPhoto
+ - InputMediaSticker
+ - InputMediaVenue
+ - InputMediaVideo */
+export type InputPollOptionMedia = InputPollOptionMediaF<InputFile>;
 /** This object describes the paid media to be sent. Currently, it can be one of
+
 - InputPaidMediaPhoto
 - InputPaidMediaVideo */
 export type InputPaidMedia = InputPaidMediaF<InputFile>;
+/** The paid media to send is a live photo. */
+export type InputPaidMediaLivePhoto = InputPaidMediaLivePhotoF<InputFile>;
 /** The paid media to send is a photo. */
 export type InputPaidMediaPhoto = InputPaidMediaPhotoF<InputFile>;
 /** The paid media to send is a video. */
 export type InputPaidMediaVideo = InputPaidMediaVideoF<InputFile>;
 /** This object describes a profile photo to set. Currently, it can be one of
+
 - InputProfilePhotoStatic
 - InputProfilePhotoAnimated */
 export type InputProfilePhoto = InputProfilePhotoF<InputFile>;
@@ -163,6 +202,7 @@ export type InputProfilePhotoStatic = InputProfilePhotoStaticF<InputFile>;
 /** An animated profile photo in the MPEG4 format. */
 export type InputProfilePhotoAnimated = InputProfilePhotoAnimatedF<InputFile>;
 /** This object describes the content of a story to post. Currently, it can be one of
+
 - InputStoryContentPhoto
 - InputStoryContentVideo */
 export type InputStoryContent = InputStoryContentF<InputFile>;
