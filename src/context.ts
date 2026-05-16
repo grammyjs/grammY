@@ -1166,7 +1166,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendlivephoto
      */
-    sendLivePhoto(
+    replyWithLivePhoto(
         live_photo: InputFile | string,
         photo: InputFile | string,
         other?: Other<"sendLivePhoto", "chat_id" | "live_photo" | "photo">,
