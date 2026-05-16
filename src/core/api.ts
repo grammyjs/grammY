@@ -9,6 +9,7 @@ import {
     type InputMedia,
     type InputMediaAudio,
     type InputMediaDocument,
+    type InputMediaLivePhoto,
     type InputMediaPhoto,
     type InputMediaVideo,
     type InputPaidMedia,
@@ -151,7 +152,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * If you're having any trouble setting up webhooks, please check out this amazing guide to webhooks.
      *
-     * @param url HTTPS url to send updates to. Use an empty string to remove webhook integration
+     * @param url HTTPS url to send updates to. Use an empty string to remove webhook integration.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -224,7 +225,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send text messages. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -241,34 +242,10 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
-     *
-     * @param chat_id Unique identifier for the target private chat
-     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated
-     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#sendmessagedraft
-     */
-    sendMessageDraft(
-        chat_id: number,
-        draft_id: number,
-        text: string,
-        other?: Other<R, "sendMessageDraft", "chat_id" | "draft_id" | "text">,
-        signal?: AbortSignal,
-    ) {
-        return this.raw.sendMessageDraft(
-            { chat_id, draft_id, text, ...other },
-            signal,
-        );
-    }
-
-    /**
      * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param from_chat_id Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format `@username`)
      * @param message_id Message identifier in the chat specified in from_chat_id
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -295,8 +272,8 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param from_chat_id Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param from_chat_id Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format `@username`)
      * @param message_ids A list of 1-100 identifiers of messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -325,8 +302,8 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param from_chat_id Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param from_chat_id Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format `@username`)
      * @param message_id Message identifier in the chat specified in from_chat_id
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -353,8 +330,8 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param from_chat_id Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param from_chat_id Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format `@username`)
      * @param message_ids A list of 1-100 identifiers of messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -383,7 +360,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send photos. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -400,11 +377,35 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to send live photos. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param live_photo Live photo video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+     * @param photo The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendlivephoto
+     */
+    sendLivePhoto(
+        chat_id: number | string,
+        live_photo: InputFile | string,
+        photo: InputFile | string,
+        other?: Other<R, "sendLivePhoto", "chat_id" | "live_photo" | "photo">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendLivePhoto(
+            { chat_id, live_photo, photo, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
      *
      * For sending voice messages, use the sendVoice method instead.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param audio Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -423,7 +424,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param document File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -442,7 +443,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param video Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -461,7 +462,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param animation Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -480,7 +481,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param voice Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -500,7 +501,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to send video messages. On success, the sent Message is returned.
      * As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param video_note Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data.. Sending video notes by a URL is currently unsupported
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -520,9 +521,33 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to send paid media. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
+     * @param media An array describing the media to be sent; up to 10 items
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
+     */
+    sendPaidMedia(
+        chat_id: number | string,
+        star_count: number,
+        media: InputPaidMedia[],
+        other?: Other<R, "sendPaidMedia", "chat_id" | "star_count" | "media">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendPaidMedia(
+            { chat_id, star_count, media, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param media An array describing messages to be sent, must include 2-10 items
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -534,6 +559,7 @@ export class Api<R extends RawApi = RawApi> {
         media: ReadonlyArray<
             | InputMediaAudio
             | InputMediaDocument
+            | InputMediaLivePhoto
             | InputMediaPhoto
             | InputMediaVideo
         >,
@@ -546,7 +572,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send point on the map. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param latitude Latitude of the location
      * @param longitude Longitude of the location
      * @param other Optional remaining parameters, confer the official reference below
@@ -570,7 +596,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to edit
      * @param latitude Latitude of new location
      * @param longitude Longitude of new location
@@ -636,7 +662,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message with live location to stop
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -684,33 +710,9 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to send paid media. On success, the sent Message is returned.
-     *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
-     * @param media An array describing the media to be sent; up to 10 items
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
-     */
-    sendPaidMedia(
-        chat_id: number | string,
-        star_count: number,
-        media: InputPaidMedia[],
-        other?: Other<R, "sendPaidMedia", "chat_id" | "star_count" | "media">,
-        signal?: AbortSignal,
-    ) {
-        return this.raw.sendPaidMedia(
-            { chat_id, star_count, media, ...other },
-            signal,
-        );
-    }
-
-    /**
      * Use this method to send information about a venue. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param latitude Latitude of the venue
      * @param longitude Longitude of the venue
      * @param title Name of the venue
@@ -742,7 +744,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send phone contacts. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param phone_number Contact's phone number
      * @param first_name Contact's first name
      * @param other Optional remaining parameters, confer the official reference below
@@ -770,9 +772,9 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send a native poll. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param question Poll question, 1-300 characters
-     * @param options A list of answer options, 2-12 strings 1-100 characters each
+     * @param options A list of answer options, 1-12 strings 1-100 characters each
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -798,7 +800,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to send a checklist on behalf of a connected business account. On success, the sent Message is returned.
      *
      * @param business_connection_id Unique identifier of the business connection on behalf of which the message will be sent
-     * @param chat_id Unique identifier for the target chat
+     * @param chat_id Unique identifier for the target chat or username of the target bot in the format `@username`
      * @param checklist An object for the checklist to send
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -807,7 +809,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     sendChecklist(
         business_connection_id: string,
-        chat_id: number,
+        chat_id: number | string,
         checklist: InputChecklist,
         other?: Other<
             R,
@@ -828,7 +830,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned.
      *
      * @param business_connection_id Unique identifier of the business connection on behalf of which the message will be sent
-     * @param chat_id Unique identifier for the target chat
+     * @param chat_id Unique identifier for the target chat or username of the target bot in the format `@username`
      * @param message_id Unique identifier for the target message
      * @param checklist An object for the new checklist
      * @param other Optional remaining parameters, confer the official reference below
@@ -838,7 +840,7 @@ export class Api<R extends RawApi = RawApi> {
      */
     editMessageChecklist(
         business_connection_id: string,
-        chat_id: number,
+        chat_id: number | string,
         message_id: number,
         checklist: InputChecklist,
         other?: Other<
@@ -860,8 +862,8 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
+     * @param emoji Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -914,13 +916,37 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target private chat
+     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated.
+     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendmessagedraft
+     */
+    sendMessageDraft(
+        chat_id: number,
+        draft_id: number,
+        text: string,
+        other?: Other<R, "sendMessageDraft", "chat_id" | "draft_id" | "text">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendMessageDraft(
+            { chat_id, draft_id, text, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.
      *
      * Example: The ImageBot needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use sendChatAction with action = upload_photo. The user will see a “sending photo” status for the bot.
      *
      * We only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername). Channel chats and channel direct messages chats aren't supported.
+     * @param chat_id Unique identifier for the target chat or username of the target bot or supergroup in the format `@username`
      * @param action Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1035,7 +1061,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Returns the gifts owned by a chat. Returns OwnedGifts on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1068,6 +1094,69 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to get the token of a managed bot. Returns the token as String on success.
+     *
+     * @param user_id User identifier of the managed bot whose token will be returned
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
+     */
+    getManagedBotToken(user_id: number, signal?: AbortSignal) {
+        return this.raw.getManagedBotToken({ user_id }, signal);
+    }
+
+    /**
+     * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
+     *
+     * @param user_id User identifier of the managed bot whose token will be replaced
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
+     */
+    replaceManagedBotToken(user_id: number, signal?: AbortSignal) {
+        return this.raw.replaceManagedBotToken({ user_id }, signal);
+    }
+
+    /**
+     * Use this method to get the access settings of a managed bot. Returns a BotAccessSettings object on success.
+     *
+     * @param user_id User identifier of the managed bot whose access settings will be returned
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbotaccesssettings
+     */
+    getManagedBotAccessSettings(user_id: number, signal?: AbortSignal) {
+        return this.raw.getManagedBotAccessSettings({ user_id }, signal);
+    }
+
+    /**
+     * Use this method to change the access settings of a managed bot. Returns True on success.
+     *
+     * @param user_id User identifier of the managed bot whose access settings will be changed
+     * @param is_access_restricted Pass True, if only selected users can access the bot
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmanagedbotaccesssettingsrestricted
+     */
+    setManagedBotAccessSettings(
+        user_id: number,
+        is_access_restricted: boolean,
+        other?: Other<
+            R,
+            "setManagedBotAccessSettings",
+            "user_id" | "is_access_restricted"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.setManagedBotAccessSettings({
+            user_id,
+            is_access_restricted,
+            ...other,
+        }, signal);
+    }
+
+    /**
      * Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`, where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
      *
      * Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
@@ -1089,7 +1178,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target group or username of the target supergroup or channel in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1108,7 +1197,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to unban a previously banned user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be removed from the chat. If you don't want this, use the parameter only_if_banned. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target group or username of the target supergroup or channel (in the format @username)
+     * @param chat_id Unique identifier for the target group or username of the target supergroup or channel in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1127,7 +1216,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param permissions An object for new user permissions
      * @param other Optional remaining parameters, confer the official reference below
@@ -1155,7 +1244,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass False for all boolean parameters to demote a user. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1177,7 +1266,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param custom_title New custom title for the administrator; 0-16 characters, emoji are not allowed
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1199,7 +1288,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the “can_manage_tags” administrator right. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param tag New tag for the member; 0-16 characters, emoji are not allowed
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1218,7 +1307,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is unbanned, the owner of the banned chat won't be able to send messages on behalf of any of their channels. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param sender_chat_id Unique identifier of the target sender chat
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1235,7 +1324,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param sender_chat_id Unique identifier of the target sender chat
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1255,7 +1344,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param permissions New default chat permissions
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1279,7 +1368,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * Note: Each administrator in a chat generates their own invite links. Bots can't use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using exportChatInviteLink or by calling the getChat method. If your bot needs to generate a new primary invite link replacing its previous one, use exportChatInviteLink again.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#exportchatinvitelink
@@ -1291,7 +1380,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1308,7 +1397,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param invite_link The invite link to edit
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1330,7 +1419,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.
      *
-     * @param chat_id Unique identifier for the target channel chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target channel chat or username of the target channel in the format `@username`
      * @param subscription_period The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
      * @param subscription_price The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-2500
      * @param other Optional remaining parameters, confer the official reference below
@@ -1358,7 +1447,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param invite_link The invite link to edit
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1384,7 +1473,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
      *
-     * @param chat_id Unique identifier of the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier of the target chat or username of the target channel in the format `@username`
      * @param invite_link The invite link to revoke
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1399,33 +1488,9 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get the token of a managed bot. Returns the token as String on success.
-     *
-     * @param user_id User identifier of the managed bot whose token will be returned
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
-     */
-    getManagedBotToken(user_id: number, signal?: AbortSignal) {
-        return this.raw.getManagedBotToken({ user_id }, signal);
-    }
-
-    /**
-     * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
-     *
-     * @param user_id User identifier of the managed bot whose token will be replaced
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
-     */
-    replaceManagedBotToken(user_id: number, signal?: AbortSignal) {
-        return this.raw.replaceManagedBotToken({ user_id }, signal);
-    }
-
-    /**
      * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1442,7 +1507,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param user_id Unique identifier of the target user
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1503,7 +1568,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param photo New chat photo, uploaded using multipart/form-data
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1520,7 +1585,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatphoto
@@ -1532,7 +1597,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param title New chat title, 1-255 characters
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1549,7 +1614,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param description New chat description, 0-255 characters
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1566,7 +1631,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param message_id Identifier of a message to pin
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1588,7 +1653,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param message_id Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1610,7 +1675,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target channel in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinallchatmessages
@@ -1622,7 +1687,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method for your bot to leave a group, supergroup or channel. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername). Channel direct messages chats aren't supported; leave the corresponding channel instead.
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`. Channel direct messages chats aren't supported; leave the corresponding channel instead.
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#leavechat
@@ -1634,7 +1699,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchat
@@ -1644,15 +1709,20 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
+     * Use this method to get a list of administrators in a chat. Returns an Array of ChatMember objects.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatadministrators
      */
-    getChatAdministrators(chat_id: number | string, signal?: AbortSignal) {
-        return this.raw.getChatAdministrators({ chat_id }, signal);
+    getChatAdministrators(
+        chat_id: number | string,
+        other?: Other<R, "getChatAdministrators", "chat_id">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getChatAdministrators({ chat_id, ...other }, signal);
     }
 
     /** @deprecated Use `getChatMemberCount` instead. */
@@ -1663,7 +1733,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to get the number of members in a chat. Returns Int on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmembercount
@@ -1690,9 +1760,26 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an array of Message objects is returned.
+     *
+     * @param user_id Unique identifier for the target user
+     * @param limit The maximum number of messages to return; 1-20
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuserpersonalchatmessages
+     */
+    getUserPersonalChatMessages(
+        user_id: number,
+        limit: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.getUserPersonalChatMessages({ user_id, limit }, signal);
+    }
+
+    /**
      * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param sticker_set_name Name of the sticker set to be set as the group sticker set
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1712,7 +1799,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set ly returned in getChat requests to check if the bot can use this method. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatstickerset
@@ -1735,7 +1822,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator right. Returns information about the created topic as a ForumTopic object.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param name Topic name, 1-128 characters
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1754,7 +1841,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1776,7 +1863,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1793,7 +1880,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1813,7 +1900,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1833,7 +1920,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_thread_id Unique identifier for the target message thread of the forum topic
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1853,7 +1940,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param name New topic name, 1-128 characters
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1870,7 +1957,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
@@ -1882,7 +1969,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success.     *
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
@@ -1894,7 +1981,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
@@ -1906,7 +1993,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
@@ -1918,7 +2005,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
@@ -1950,6 +2037,23 @@ export class Api<R extends RawApi = RawApi> {
             { callback_query_id, ...other },
             signal,
         );
+    }
+
+    /**
+     * Use this method to reply to a received guest message. On success, a SentGuestMessage object is returned.
+     *
+     * @param guest_query_id Unique identifier for the query to be answered
+     * @param result An object describing the message to be sent
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerguestquery
+     */
+    answerGuestQuery(
+        guest_query_id: string,
+        result: InlineQueryResult,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.answerGuestQuery({ guest_query_id, result }, signal);
     }
 
     /**
@@ -2192,7 +2296,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to edit
      * @param text New text of the message, 1-4096 characters after entities parsing
      * @param other Optional remaining parameters, confer the official reference below
@@ -2245,7 +2349,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to edit
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2293,9 +2397,9 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to edit
      * @param media An object for a new media content of the message
      * @param other Optional remaining parameters, confer the official reference below
@@ -2321,7 +2425,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video inline messages, or to add media to text inline messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video inline messages, or to add media to text inline messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
      * @param inline_message_id Identifier of the inline message
      * @param media An object for a new media content of the message
@@ -2349,7 +2453,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to edit
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2399,7 +2503,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to stop a poll which was sent by the bot. On success, the stopped Poll is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the original message with the poll
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2427,7 +2531,7 @@ export class Api<R extends RawApi = RawApi> {
      * - If the bot has can_manage_direct_messages administrator right in a channel, it can delete any message in the corresponding direct messages chat.
      * Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to delete
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2444,7 +2548,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to delete multiple messages simultaneously. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_ids A list of 1-100 identifiers of messages to delete. See deleteMessage for limitations on which messages can be deleted
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2456,6 +2560,120 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.deleteMessages({ chat_id, message_ids }, signal);
+    }
+
+    /**
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param message_id Identifier of the target message
+     * @param user_id Identifier of the user whose reaction will be removed
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessagereaction
+     */
+    deleteMessageReactionUser(
+        chat_id: number | string,
+        message_id: number,
+        user_id: number,
+        other?: Other<
+            R,
+            "deleteMessageReaction",
+            "chat_id" | "message_id" | "user_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteMessageReaction({
+            chat_id,
+            message_id,
+            user_id,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param message_id Identifier of the target message
+     * @param actor_chat_id Identifier of the chat whose reaction will be removed
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessagereaction
+     */
+    deleteMessageReactionChat(
+        chat_id: number | string,
+        message_id: number,
+        actor_chat_id: number,
+        other?: Other<
+            R,
+            "deleteMessageReaction",
+            "chat_id" | "message_id" | "actor_chat_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteMessageReaction({
+            chat_id,
+            message_id,
+            actor_chat_id,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param user_id Identifier of the user whose reactions will be removed, if the reactions were added by a user
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteallmessagereactions
+     */
+    deleteAllMessageReactionsUser(
+        chat_id: number | string,
+        user_id: number,
+        other?: Other<
+            R,
+            "deleteAllMessageReactions",
+            "chat_id" | "message_id" | "user_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteAllMessageReactions({
+            chat_id,
+            user_id,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param actor_chat_id Identifier of the chat whose reactions will be removed, if the reactions were added by a chat
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteallmessagereactions
+     */
+    deleteAllMessageReactionsChat(
+        chat_id: number | string,
+        actor_chat_id: number,
+        other?: Other<
+            R,
+            "deleteAllMessageReactions",
+            "chat_id" | "message_id" | "actor_chat_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteAllMessageReactions({
+            chat_id,
+            actor_chat_id,
+            ...other,
+        }, signal);
     }
 
     /**
@@ -2861,7 +3079,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param sticker Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. Video and animated stickers can't be sent via an HTTP URL.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -3169,7 +3387,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Sends a gift to the given user. The gift can't be converted to Telegram Stars by the receiver. Returns True on success.
      *
-     * @param user_id Unique identifier of the target user who will receive the gift
+     * @param user_id Unique identifier for the chat or username of the channel (in the format `@username`) that will receive the gift.
      * @param gift_id Identifier of the gift
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -3319,7 +3537,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send invoices. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param title Product name, 1-32 characters
      * @param description Product description, 1-255 characters
      * @param payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
@@ -3529,7 +3747,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Verifies a chat on behalf of the organization which is represented by the bot. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername). Channel direct messages chats can't be verified.
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -3558,7 +3776,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Removes verification from a chat that is currently verified on behalf of the organization represented by the bot. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot or channel in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#removechatverification
@@ -3614,7 +3832,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to send a game. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat. Games can't be sent to channel direct messages chats and channel chats.
+     * @param chat_id Unique identifier for the target chat or username of the target bot in the format `@username`. Games can't be sent to channel direct messages chats and channel chats.
      * @param game_short_name Short name of the game, serves as the unique identifier for the game. Set up your games via BotFather.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -3622,7 +3840,7 @@ export class Api<R extends RawApi = RawApi> {
      * **Official reference:** https://core.telegram.org/bots/api#sendgame
      */
     sendGame(
-        chat_id: number,
+        chat_id: number | string,
         game_short_name: string,
         other?: Other<R, "sendGame", "chat_id" | "game_short_name">,
         signal?: AbortSignal,

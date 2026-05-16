@@ -17,6 +17,7 @@ import {
     type InputMedia,
     type InputMediaAudio,
     type InputMediaDocument,
+    type InputMediaLivePhoto,
     type InputMediaPhoto,
     type InputMediaVideo,
     type InputPaidMedia,
@@ -444,6 +445,10 @@ export class Context implements RenamedUpdate {
     get deletedBusinessMessages() {
         return this.update.deleted_business_messages;
     }
+    /** Alias for `ctx.update.guest_message` */
+    get guestMessage() {
+        return this.update.guest_message;
+    }
     /** Alias for `ctx.update.message_reaction` */
     get messageReaction() {
         return this.update.message_reaction;
@@ -526,6 +531,7 @@ export class Context implements RenamedUpdate {
                 this.editedChannelPost ??
                 this.businessMessage ??
                 this.editedBusinessMessage ??
+                this.guestMessage ??
                 this.callbackQuery?.message
         );
     }
@@ -1000,38 +1006,9 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.sendMessageDraft`. Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
-     *
-     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#sendmessagedraft
-     */
-    replyWithDraft(
-        text: string,
-        other?: Other<"sendMessageDraft", "chat_id" | "text">,
-        signal?: AbortSignal,
-    ) {
-        const msg = this.msg;
-        return this.api.sendMessageDraft(
-            orThrow(this.chatId, "sendMessageDraft"),
-            this.update.update_id,
-            text,
-            {
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg?.message_thread_id }
-                    : {}),
-                ...other,
-            },
-            signal,
-        );
-    }
-
-    /**
      * Context-aware alias for `api.forwardMessage`. Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1061,7 +1038,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.forwardMessages`. Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_ids A list of 1-100 identifiers of messages in the current chat to forward. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1093,7 +1070,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.copyMessage`. Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1120,7 +1097,7 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.copyMessages`. Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_ids A list of 1-100 identifiers of messages in the current chat to copy. The identifiers must be specified in a strictly increasing order.
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1166,6 +1143,39 @@ export class Context implements RenamedUpdate {
         const msg = this.msg;
         return this.api.sendPhoto(
             orThrow(this.chatId, "sendPhoto"),
+            photo,
+            {
+                business_connection_id: this.businessConnectionId,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.sendLivePhoto`. Use this method to send live photos. On success, the sent Message is returned.
+     *
+     * @param live_photo Live photo video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+     * @param photo The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. Sending live photos by a URL is currently unsupported.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendlivephoto
+     */
+    replyWithLivePhoto(
+        live_photo: InputFile | string,
+        photo: InputFile | string,
+        other?: Other<"sendLivePhoto", "chat_id" | "live_photo" | "photo">,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendLivePhoto(
+            orThrow(this.chatId, "sendLivePhoto"),
+            live_photo,
             photo,
             {
                 business_connection_id: this.businessConnectionId,
@@ -1362,6 +1372,45 @@ export class Context implements RenamedUpdate {
         );
     }
 
+    /** @deprecated Use `replyWithPaidMedia` instead. */
+    sendPaidMedia(...args: Parameters<Context["replyWithPaidMedia"]>) {
+        return this.replyWithPaidMedia(...args);
+    }
+
+    /**
+     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
+     *
+     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
+     * @param media An array describing the media to be sent; up to 10 items
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
+     */
+    replyWithPaidMedia(
+        star_count: number,
+        media: InputPaidMedia[],
+        other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendPaidMedia(
+            orThrow(this.chatId, "sendPaidMedia"),
+            star_count,
+            media,
+            {
+                business_connection_id: this.businessConnectionId,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: this.msg?.direct_messages_topic
+                    ?.topic_id,
+                ...other,
+            },
+            signal,
+        );
+    }
+
     /**
      * Context-aware alias for `api.sendMediaGroup`. Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
      *
@@ -1375,6 +1424,7 @@ export class Context implements RenamedUpdate {
         media: ReadonlyArray<
             | InputMediaAudio
             | InputMediaDocument
+            | InputMediaLivePhoto
             | InputMediaPhoto
             | InputMediaVideo
         >,
@@ -1503,40 +1553,6 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
-     *
-     * @param star_count The number of Telegram Stars that must be paid to buy access to the media
-     * @param media An array describing the media to be sent; up to 10 items
-     * @param other Optional remaining parameters, confer the official reference below
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#sendpaidmedia
-     */
-    sendPaidMedia(
-        star_count: number,
-        media: InputPaidMedia[],
-        other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
-        signal?: AbortSignal,
-    ) {
-        const msg = this.msg;
-        return this.api.sendPaidMedia(
-            orThrow(this.chatId, "sendPaidMedia"),
-            star_count,
-            media,
-            {
-                business_connection_id: this.businessConnectionId,
-                ...(msg?.is_topic_message
-                    ? { message_thread_id: msg.message_thread_id }
-                    : {}),
-                direct_messages_topic_id: this.msg?.direct_messages_topic
-                    ?.topic_id,
-                ...other,
-            },
-            signal,
-        );
-    }
-
-    /**
      * Context-aware alias for `api.sendVenue`. Use this method to send information about a venue. On success, the sent Message is returned.
      *
      * @param latitude Latitude of the venue
@@ -1615,7 +1631,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.sendPoll`. Use this method to send a native poll. On success, the sent Message is returned.
      *
      * @param question Poll question, 1-300 characters
-     * @param options A list of answer options, 2-12 strings 1-100 characters each
+     * @param options A list of answer options, 1-12 strings 1-100 characters each
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1813,6 +1829,35 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.sendMessageDraft`. Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
+     *
+     * @param text Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendmessagedraft
+     */
+    replyWithDraft(
+        text: string,
+        other?: Other<"sendMessageDraft", "chat_id" | "text">,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendMessageDraft(
+            orThrow(this.chatId, "sendMessageDraft"),
+            this.update.update_id,
+            text,
+            {
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                ...other,
+            },
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.getUserProfilePhotos`. Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
      *
      * @param other Optional remaining parameters, confer the official reference below
@@ -1937,6 +1982,73 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.getManagedBotToken`. Use this method to get the token of a managed bot. Returns the token as String on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
+     */
+    getManagedBotToken(signal?: AbortSignal) {
+        return this.api.getManagedBotToken(
+            orThrow(this.managedBot, "getManagedBotToken").bot.id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.replaceManagedBotToken`. Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
+     */
+    replaceManagedBotToken(signal?: AbortSignal) {
+        return this.api.replaceManagedBotToken(
+            orThrow(this.managedBot, "getManagedBotToken").bot.id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getManagedBotAccessSettings`. Use this method to get the access settings of a managed bot. Returns a BotAccessSettings object on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbotaccesssettings
+     */
+    getManagedBotAccessSettings(signal?: AbortSignal) {
+        return this.api.getManagedBotAccessSettings(
+            orThrow(this.managedBot, "getManagedBotAccessSettings").bot.id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.setManagedBotAccessSettings`. Use this method to change the access settings of a managed bot. Returns True on success.
+     *
+     * @param is_access_restricted Pass True, if only selected users can access the bot
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#setmanagedbotaccesssettingsrestricted
+     */
+    setManagedBotAccessSettings(
+        is_access_restricted: boolean,
+        other?: Other<
+            "setManagedBotAccessSettings",
+            "user_id" | "is_access_restricted"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.setManagedBotAccessSettings(
+            orThrow(this.managedBot, "setManagedBotAccessSettings").bot.id,
+            is_access_restricted,
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.getFile`. Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
      *
      * Note: This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
@@ -1947,7 +2059,7 @@ export class Context implements RenamedUpdate {
      */
     getFile(signal?: AbortSignal) {
         const m = orThrow(this.msg, "getFile");
-        const file = m.photo !== undefined
+        const file = m.photo !== undefined // handles both photos and live photos
             ? m.photo[m.photo.length - 1]
             : m.animation ??
                 m.audio ??
@@ -2394,34 +2506,6 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getManagedBotToken`. Use this method to get the token of a managed bot. Returns the token as String on success.
-     *
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
-     */
-    getManagedBotToken(signal?: AbortSignal) {
-        return this.api.getManagedBotToken(
-            orThrow(this.managedBot, "getManagedBotToken").bot.id,
-            signal,
-        );
-    }
-
-    /**
-     * Context-aware alias for `api.replaceManagedBotToken`. Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
-     *
-     * @param signal Optional `AbortSignal` to cancel the request
-     *
-     * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
-     */
-    replaceManagedBotToken(signal?: AbortSignal) {
-        return this.api.replaceManagedBotToken(
-            orThrow(this.managedBot, "getManagedBotToken").bot.id,
-            signal,
-        );
-    }
-
-    /**
      * Context-aware alias for `api.approveChatJoinRequest`. Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
      *
      * @param user_id Unique identifier of the target user
@@ -2644,13 +2728,18 @@ export class Context implements RenamedUpdate {
     /**
      * Context-aware alias for `api.getChatAdministrators`. Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.
      *
+     * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatadministrators
      */
-    getChatAdministrators(signal?: AbortSignal) {
+    getChatAdministrators(
+        other?: Other<"getChatAdministrators", "chat_id">,
+        signal?: AbortSignal,
+    ) {
         return this.api.getChatAdministrators(
             orThrow(this.chatId, "getChatAdministrators"),
+            other,
             signal,
         );
     }
@@ -2701,6 +2790,25 @@ export class Context implements RenamedUpdate {
         return this.api.getChatMember(
             orThrow(this.chatId, "getChatMember"),
             user_id,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.getUserPersonalChatMessages`. Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an array of Message objects is returned.
+     *
+     * @param limit The maximum number of messages to return; 1-20
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#getuserpersonalchatmessages
+     */
+    getUserPersonalChatMessages(
+        limit: number,
+        signal?: AbortSignal,
+    ) {
+        return this.api.getUserPersonalChatMessages(
+            orThrow(this.from, "getUserPersonalChatMessages").id,
+            limit,
             signal,
         );
     }
@@ -2941,6 +3049,25 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `ctx.answerGuestQuery`. Use this method to reply to a received guest message. On success, a SentGuestMessage object is returned.
+     *
+     * @param result An object describing the message to be sent
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerguestquery
+     */
+    answerGuestQuery(
+        result: InlineQueryResult,
+        signal?: AbortSignal,
+    ) {
+        return this.api.answerGuestQuery(
+            orThrow(this.guestMessage?.guest_query_id, "answerGuestQuery"),
+            result,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.setChatMenuButton`. Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
@@ -3071,7 +3198,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editMessageMedia`. Use this method to edit animation, audio, document, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Context-aware alias for `api.editMessageMedia`. Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
      * @param media An object for a new media content of the message
      * @param other Optional remaining parameters, confer the official reference below
@@ -3207,6 +3334,178 @@ export class Context implements RenamedUpdate {
         return this.api.deleteMessages(
             orThrow(this.chatId, "deleteMessages"),
             message_ids,
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessagereaction
+     */
+    deleteMessageReaction(
+        other?: Other<
+            "deleteMessageReaction",
+            "chat_id" | "message_id" | "user_id" | "actor_chat_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const reaction = orThrow(this.messageReaction, "deleteMessageReaction");
+        if (reaction.user !== undefined) {
+            return this.deleteMessageReactionUser(
+                reaction.user.id,
+                other,
+                signal,
+            );
+        } else if (reaction.actor_chat !== undefined) {
+            return this.deleteMessageReactionChat(
+                reaction.actor_chat.id,
+                other,
+                signal,
+            );
+        } else {
+            throw new Error(
+                "Missing information from message_reaction update for API call to deleteMessageReaction",
+            );
+        }
+    }
+
+    /**
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param user_id Identifier of the user whose reaction will be removed
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessagereaction
+     */
+    deleteMessageReactionUser(
+        user_id: number,
+        other?: Other<
+            "deleteMessageReaction",
+            "chat_id" | "message_id" | "user_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.deleteMessageReactionUser(
+            orThrow(this.chatId, "deleteMessageReactionUser"),
+            orThrow(this.msgId, "deleteMessageReactionUser"),
+            user_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param actor_chat_id Identifier of the chat whose reaction will be removed
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deletemessagereaction
+     */
+    deleteMessageReactionChat(
+        actor_chat_id: number,
+        other?: Other<
+            "deleteMessageReaction",
+            "chat_id" | "message_id" | "actor_chat_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.deleteMessageReactionChat(
+            orThrow(this.chatId, "deleteMessageReactionChat"),
+            orThrow(this.msgId, "deleteMessageReactionChat"),
+            actor_chat_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteallmessagereactions
+     */
+    deleteAllMessageReactions(
+        other?: Other<
+            "deleteAllMessageReactions",
+            "chat_id" | "message_id" | "user_id" | "actor_chat_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const chatId = orThrow(this.chatId, "deleteAllMessageReactions");
+        const actor = this.messageReaction?.actor_chat ?? this.senderChat ??
+            this.pollAnswer?.voter_chat;
+        if (actor !== undefined) {
+            return this.api.deleteAllMessageReactionsChat(
+                chatId,
+                actor.id,
+                other,
+                signal,
+            );
+        }
+        const userId = orThrow(this.from, "deleteAllMessageReactions").id;
+        return this.api.deleteAllMessageReactionsUser(
+            chatId,
+            userId,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param user_id Identifier of the user whose reactions will be removed, if the reactions were added by a user
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteallmessagereactions
+     */
+    deleteAllMessageReactionsUser(
+        user_id: number,
+        other?: Other<
+            "deleteAllMessageReactions",
+            "chat_id" | "message_id" | "user_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.deleteAllMessageReactionsUser(
+            orThrow(this.chatId, "deleteAllMessageReactionsUser"),
+            user_id,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
+     *
+     * @param actor_chat_id Identifier of the chat whose reactions will be removed, if the reactions were added by a chat
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteallmessagereactions
+     */
+    deleteAllMessageReactionsChat(
+        actor_chat_id: number,
+        other?: Other<
+            "deleteAllMessageReactions",
+            "chat_id" | "message_id" | "actor_chat_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.api.deleteAllMessageReactionsChat(
+            orThrow(this.chatId, "deleteAllMessageReactionsChat"),
+            actor_chat_id,
+            other,
             signal,
         );
     }
