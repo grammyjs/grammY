@@ -704,7 +704,7 @@ async function withRetries<T>(
  * rejects as soon as the given signal is aborted.
  */
 async function sleep(seconds: number, signal?: AbortSignal) {
-    let handle: number | undefined;
+    let handle: ReturnType<typeof setTimeout> | undefined;
     let reject: ((err: Error) => void) | undefined;
     function abort() {
         reject?.(new Error("Aborted delay"));
