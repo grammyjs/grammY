@@ -718,7 +718,7 @@ async function sleep(seconds: number, signal?: AbortSignal) {
                 return;
             }
             signal?.addEventListener("abort", abort);
-            handle = setTimeout(res, 1000 * seconds);
+            handle = setTimeout(() => res(), 1000 * seconds);
         });
     } finally {
         signal?.removeEventListener("abort", abort);
