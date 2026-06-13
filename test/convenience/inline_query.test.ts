@@ -1,12 +1,11 @@
 import {
     InlineQueryResultBuilder,
 } from "../../src/convenience/inline_query.ts";
-
 import { assertEquals, assertObjectMatch, describe, it } from "../deps.test.ts";
 
 describe("InlineQueryResultBuilder", () => {
     describe("article", () => {
-        it("should build an InlineQueryResultArticle from string", () => {
+        it("should build an InlineQueryResultArticle from string with text", () => {
             const article = InlineQueryResultBuilder.article(
                 "id",
                 "title",
@@ -17,6 +16,94 @@ describe("InlineQueryResultBuilder", () => {
                 id: "id",
                 title: "title",
                 input_message_content: { message_text: "text" },
+                description: "description",
+            });
+        });
+        it("should build an InlineQueryResultArticle from string with location", () => {
+            const article = InlineQueryResultBuilder.article(
+                "id",
+                "title",
+                { description: "description" },
+            ).location(83, 136, { heading: 1 });
+            assertObjectMatch(article, {
+                type: "article",
+                id: "id",
+                title: "title",
+                input_message_content: {
+                    latitude: 83,
+                    longitude: 136,
+                    heading: 1,
+                },
+                description: "description",
+            });
+        });
+        it("should build an InlineQueryResultArticle from string with venue", () => {
+            const article = InlineQueryResultBuilder.article(
+                "id",
+                "title",
+                { description: "description" },
+            ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
+                foursquare_id: "grammy-foursquare-id",
+            });
+            assertObjectMatch(article, {
+                type: "article",
+                id: "id",
+                title: "title",
+                input_message_content: {
+                    title: "grammY Venue",
+                    latitude: 83,
+                    longitude: 136,
+                    address: "1 grammY Venue",
+                    foursquare_id: "grammy-foursquare-id",
+                },
+                description: "description",
+            });
+        });
+        it("should build an InlineQueryResultArticle from string with contact", () => {
+            const article = InlineQueryResultBuilder.article(
+                "id",
+                "title",
+                { description: "description" },
+            ).contact("John", "498963648018", { last_name: "Doe" });
+            assertObjectMatch(article, {
+                type: "article",
+                id: "id",
+                title: "title",
+                input_message_content: {
+                    first_name: "John",
+                    last_name: "Doe",
+                    phone_number: "498963648018",
+                },
+                description: "description",
+            });
+        });
+        it("should build an InlineQueryResultArticle from string with invoice", () => {
+            const article = InlineQueryResultBuilder.article(
+                "id",
+                "title",
+                { description: "description" },
+            ).invoice(
+                "Invoice",
+                "Invoice Description",
+                "Payload",
+                "Token",
+                "Currency",
+                [{ amount: 10, label: "Item 0" }],
+                { need_name: true },
+            );
+            assertObjectMatch(article, {
+                type: "article",
+                id: "id",
+                title: "title",
+                input_message_content: {
+                    title: "Invoice",
+                    description: "Invoice Description",
+                    payload: "Payload",
+                    provider_token: "Token",
+                    currency: "Currency",
+                    prices: [{ amount: 10, label: "Item 0" }],
+                    need_name: true,
+                },
                 description: "description",
             });
         });
@@ -62,7 +149,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     { caption: "cap" },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(audio, {
                     type: "audio",
                     id: "id",
@@ -85,7 +171,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     { caption: "cap" },
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(audio, {
                     type: "audio",
                     id: "id",
@@ -111,7 +196,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(audio, {
                     type: "audio",
                     id: "id",
@@ -137,7 +221,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     { caption: "cap" },
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(audio, {
                     type: "audio",
                     id: "id",
@@ -169,7 +252,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(audio, {
                     type: "audio",
                     id: "id",
@@ -231,7 +313,6 @@ describe("InlineQueryResultBuilder", () => {
                     "first",
                     { last_name: "last" },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(contact, {
                     type: "contact",
                     id: "id",
@@ -254,7 +335,6 @@ describe("InlineQueryResultBuilder", () => {
                     "first",
                     { last_name: "last" },
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(contact, {
                     type: "contact",
                     id: "id",
@@ -280,7 +360,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(contact, {
                     type: "contact",
                     id: "id",
@@ -306,7 +385,6 @@ describe("InlineQueryResultBuilder", () => {
                     "first",
                     { last_name: "last" },
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(contact, {
                     type: "contact",
                     id: "id",
@@ -338,7 +416,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(contact, {
                     type: "contact",
                     id: "id",
@@ -402,7 +479,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         { caption: "captain" },
                     ).text("#Text", { parse_mode: "Markdown" });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/pdf",
@@ -426,7 +502,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         { caption: "captain" },
                     ).location(83, 136, { heading: 1 });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/pdf",
@@ -453,7 +528,6 @@ describe("InlineQueryResultBuilder", () => {
                     ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/pdf",
@@ -480,7 +554,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         { caption: "captain" },
                     ).contact("John", "498963648018", { last_name: "Doe" });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/pdf",
@@ -513,7 +586,6 @@ describe("InlineQueryResultBuilder", () => {
                         [{ amount: 10, label: "Item 0" }],
                         { need_name: true },
                     );
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/pdf",
@@ -534,6 +606,7 @@ describe("InlineQueryResultBuilder", () => {
                 });
             });
         });
+
         describe("zip", () => {
             it("should build a ZIP InlineQueryResultDocument from a string", () => {
                 const document = InlineQueryResultBuilder.documentZip(
@@ -576,7 +649,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         { caption: "captain" },
                     ).text("#Text", { parse_mode: "Markdown" });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/zip",
@@ -600,7 +672,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         { caption: "captain" },
                     ).location(83, 136, { heading: 1 });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/zip",
@@ -627,7 +698,6 @@ describe("InlineQueryResultBuilder", () => {
                     ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/zip",
@@ -654,7 +724,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/",
                         { caption: "captain" },
                     ).contact("John", "498963648018", { last_name: "Doe" });
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/zip",
@@ -687,7 +756,6 @@ describe("InlineQueryResultBuilder", () => {
                         [{ amount: 10, label: "Item 0" }],
                         { need_name: true },
                     );
-
                     assertObjectMatch(document, {
                         type: "document",
                         mime_type: "application/zip",
@@ -708,6 +776,7 @@ describe("InlineQueryResultBuilder", () => {
                 });
             });
         });
+
         describe("cached", () => {
             it("should build an InlineQueryResultCachedDocument", () => {
                 const document = InlineQueryResultBuilder.documentCached(
@@ -772,6 +841,7 @@ describe("InlineQueryResultBuilder", () => {
                 caption: "It's pronounced GIF.",
             });
         });
+
         describe("with text", () => {
             it("should build an InlineQueryResultGif with location in message content", () => {
                 const gif = InlineQueryResultBuilder.gif(
@@ -780,7 +850,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/thumb",
                     { caption: "It's pronounced GIF." },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(gif, {
                     type: "gif",
                     id: "id",
@@ -803,7 +872,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/thumb",
                     { caption: "It's pronounced GIF." },
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(gif, {
                     type: "gif",
                     id: "id",
@@ -829,7 +897,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(gif, {
                     type: "gif",
                     id: "id",
@@ -855,7 +922,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/thumb",
                     { caption: "It's pronounced GIF." },
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(gif, {
                     type: "gif",
                     id: "id",
@@ -887,7 +953,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(gif, {
                     type: "gif",
                     id: "id",
@@ -906,6 +971,7 @@ describe("InlineQueryResultBuilder", () => {
                 });
             });
         });
+
         describe("cached", () => {
             it("should build an InlineQueryResultCachedGif", () => {
                 const gif = InlineQueryResultBuilder.gifCached(
@@ -941,6 +1007,7 @@ describe("InlineQueryResultBuilder", () => {
                 horizontal_accuracy: 3,
             });
         });
+
         describe("with text", () => {
             it("should build an InlineQueryResultLocation with location in message content", () => {
                 const location = InlineQueryResultBuilder.location(
@@ -950,7 +1017,6 @@ describe("InlineQueryResultBuilder", () => {
                     10,
                     { horizontal_accuracy: 3 },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(location, {
                     type: "location",
                     id: "id",
@@ -975,7 +1041,6 @@ describe("InlineQueryResultBuilder", () => {
                     10,
                     { horizontal_accuracy: 3 },
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(location, {
                     type: "location",
                     id: "id",
@@ -1003,7 +1068,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(location, {
                     type: "location",
                     id: "id",
@@ -1031,7 +1095,6 @@ describe("InlineQueryResultBuilder", () => {
                     10,
                     { horizontal_accuracy: 3 },
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(location, {
                     type: "location",
                     id: "id",
@@ -1065,7 +1128,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(location, {
                     type: "location",
                     id: "id",
@@ -1118,6 +1180,7 @@ describe("InlineQueryResultBuilder", () => {
                 caption: "cap",
             });
         });
+
         describe("with text", () => {
             it("should build an InlineQueryResultMpeg4Gif with location in message content", () => {
                 const mpeg = InlineQueryResultBuilder.mpeg4gif(
@@ -1126,7 +1189,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/thumb",
                     { caption: "cap" },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(mpeg, {
                     type: "mpeg4_gif",
                     id: "id",
@@ -1149,7 +1211,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/thumb",
                     { caption: "cap" },
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(mpeg, {
                     type: "mpeg4_gif",
                     id: "id",
@@ -1175,7 +1236,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(mpeg, {
                     type: "mpeg4_gif",
                     id: "id",
@@ -1201,7 +1261,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/thumb",
                     { caption: "cap" },
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(mpeg, {
                     type: "mpeg4_gif",
                     id: "id",
@@ -1233,7 +1292,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(mpeg, {
                     type: "mpeg4_gif",
                     id: "id",
@@ -1252,6 +1310,7 @@ describe("InlineQueryResultBuilder", () => {
                 });
             });
         });
+
         describe("cached", () => {
             it("should build an InlineQueryResultCachedMpeg4Gif", () => {
                 const mpeg = InlineQueryResultBuilder.mpeg4gifCached(
@@ -1328,7 +1387,6 @@ describe("InlineQueryResultBuilder", () => {
                     "id",
                     "https://grammy.dev/",
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(photo, {
                     type: "photo",
                     id: "id",
@@ -1348,7 +1406,6 @@ describe("InlineQueryResultBuilder", () => {
                     "id",
                     "https://grammy.dev/",
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(photo, {
                     type: "photo",
                     id: "id",
@@ -1371,7 +1428,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(photo, {
                     type: "photo",
                     id: "id",
@@ -1394,7 +1450,6 @@ describe("InlineQueryResultBuilder", () => {
                     "id",
                     "https://grammy.dev/",
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(photo, {
                     type: "photo",
                     id: "id",
@@ -1423,7 +1478,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(photo, {
                     type: "photo",
                     id: "id",
@@ -1482,7 +1536,6 @@ describe("InlineQueryResultBuilder", () => {
                         "file_id",
                         { reply_markup: { inline_keyboard: [] } },
                     ).text("#Text", { parse_mode: "Markdown" });
-
                     assertObjectMatch(sticker, {
                         type: "sticker",
                         id: "id",
@@ -1503,7 +1556,6 @@ describe("InlineQueryResultBuilder", () => {
                         "file_id",
                         { reply_markup: { inline_keyboard: [] } },
                     ).location(83, 136, { heading: 1 });
-
                     assertObjectMatch(sticker, {
                         type: "sticker",
                         id: "id",
@@ -1527,7 +1579,6 @@ describe("InlineQueryResultBuilder", () => {
                     ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
-
                     assertObjectMatch(sticker, {
                         type: "sticker",
                         id: "id",
@@ -1551,7 +1602,6 @@ describe("InlineQueryResultBuilder", () => {
                         "file_id",
                         { reply_markup: { inline_keyboard: [] } },
                     ).contact("John", "498963648018", { last_name: "Doe" });
-
                     assertObjectMatch(sticker, {
                         type: "sticker",
                         id: "id",
@@ -1581,7 +1631,6 @@ describe("InlineQueryResultBuilder", () => {
                         [{ amount: 10, label: "Item 0" }],
                         { need_name: true },
                     );
-
                     assertObjectMatch(sticker, {
                         type: "sticker",
                         id: "id",
@@ -1633,7 +1682,6 @@ describe("InlineQueryResultBuilder", () => {
                     "grammY Street 1",
                     { reply_markup: { inline_keyboard: [] } },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(venue, {
                     type: "venue",
                     id: "id",
@@ -1660,7 +1708,6 @@ describe("InlineQueryResultBuilder", () => {
                     "grammY Street 1",
                     { reply_markup: { inline_keyboard: [] } },
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(venue, {
                     type: "venue",
                     id: "id",
@@ -1690,7 +1737,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(venue, {
                     type: "venue",
                     id: "id",
@@ -1720,7 +1766,6 @@ describe("InlineQueryResultBuilder", () => {
                     "grammY Street 1",
                     { reply_markup: { inline_keyboard: [] } },
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(venue, {
                     type: "venue",
                     id: "id",
@@ -1756,7 +1801,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(venue, {
                     type: "venue",
                     id: "id",
@@ -1789,7 +1833,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/thumb",
                     { caption: "cap" },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(video, {
                     type: "video",
                     mime_type: "text/html",
@@ -1836,7 +1879,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/thumb",
                         { caption: "cap" },
                     ).location(83, 136, { heading: 1 });
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "text/html",
@@ -1865,7 +1907,6 @@ describe("InlineQueryResultBuilder", () => {
                     ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "text/html",
@@ -1894,7 +1935,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/thumb",
                         { caption: "cap" },
                     ).contact("John", "498963648018", { last_name: "Doe" });
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "text/html",
@@ -1929,7 +1969,6 @@ describe("InlineQueryResultBuilder", () => {
                         [{ amount: 10, label: "Item 0" }],
                         { need_name: true },
                     );
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "text/html",
@@ -1999,7 +2038,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/thumb",
                         { caption: "cap" },
                     ).text("#Text", { parse_mode: "Markdown" });
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "video/mp4",
@@ -2025,7 +2063,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/thumb",
                         { caption: "cap" },
                     ).location(83, 136, { heading: 1 });
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "video/mp4",
@@ -2054,7 +2091,6 @@ describe("InlineQueryResultBuilder", () => {
                     ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                         foursquare_id: "grammy-foursquare-id",
                     });
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "video/mp4",
@@ -2083,7 +2119,6 @@ describe("InlineQueryResultBuilder", () => {
                         "https://grammy.dev/thumb",
                         { caption: "cap" },
                     ).contact("John", "498963648018", { last_name: "Doe" });
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "video/mp4",
@@ -2118,7 +2153,6 @@ describe("InlineQueryResultBuilder", () => {
                         [{ amount: 10, label: "Item 0" }],
                         { need_name: true },
                     );
-
                     assertObjectMatch(video, {
                         type: "video",
                         mime_type: "video/mp4",
@@ -2200,7 +2234,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     { caption: "voice caption? wtf" },
                 ).text("#Text", { parse_mode: "Markdown" });
-
                 assertObjectMatch(voice, {
                     type: "voice",
                     id: "id",
@@ -2223,7 +2256,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     { caption: "voice caption? wtf" },
                 ).location(83, 136, { heading: 1 });
-
                 assertObjectMatch(voice, {
                     type: "voice",
                     id: "id",
@@ -2249,7 +2281,6 @@ describe("InlineQueryResultBuilder", () => {
                 ).venue("grammY Venue", 83, 136, "1 grammY Venue", {
                     foursquare_id: "grammy-foursquare-id",
                 });
-
                 assertObjectMatch(voice, {
                     type: "voice",
                     id: "id",
@@ -2275,7 +2306,6 @@ describe("InlineQueryResultBuilder", () => {
                     "https://grammy.dev/",
                     { caption: "voice caption? wtf" },
                 ).contact("John", "498963648018", { last_name: "Doe" });
-
                 assertObjectMatch(voice, {
                     type: "voice",
                     id: "id",
@@ -2307,7 +2337,6 @@ describe("InlineQueryResultBuilder", () => {
                     [{ amount: 10, label: "Item 0" }],
                     { need_name: true },
                 );
-
                 assertObjectMatch(voice, {
                     type: "voice",
                     id: "id",
