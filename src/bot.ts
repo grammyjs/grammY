@@ -704,7 +704,7 @@ async function withRetries<T>(
  * rejects as soon as the given signal is aborted.
  */
 async function sleep(seconds: number, signal?: AbortSignal) {
-    let handle: ReturnType<typeof setTimeout> | undefined;
+    let handle: Parameters<typeof clearTimeout>[0];
     let reject: ((err: Error) => void) | undefined;
     function abort() {
         reject?.(new Error("Aborted delay"));
@@ -718,7 +718,7 @@ async function sleep(seconds: number, signal?: AbortSignal) {
                 return;
             }
             signal?.addEventListener("abort", abort);
-            handle = setTimeout(() => res(), 1000 * seconds);
+            handle = setTimeout(res, 1000 * seconds);
         });
     } finally {
         signal?.removeEventListener("abort", abort);

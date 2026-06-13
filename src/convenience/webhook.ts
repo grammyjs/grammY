@@ -56,12 +56,10 @@ function compareSecretToken(
     }
 
     let hasDifference = 0;
-    // Always iterate exactly tokenBytes.length times to prevent timing attacks
-    // that could reveal the secret token's length. The loop time is constant
-    // relative to the secret token length, not the attacker's input length.
+    // Constant-time byte comparison to prevent timing attacks that could
+    // reveal where bytes first differ.
     for (let i = 0; i < tokenBytes.length; i++) {
-        // If header is shorter than token, pad with 0 for comparison
-        const headerByte = i < headerBytes.length ? headerBytes[i] : 0;
+        const headerByte = headerBytes[i];
         const tokenByte = tokenBytes[i];
 
         // If bytes differ, mark that we found a difference
