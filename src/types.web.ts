@@ -28,10 +28,10 @@ import {
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.27.3/mod.ts";
+} from "https://deno.land/x/grammy_types@v3.28.0/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.27.3/mod.ts";
+export * from "https://deno.land/x/grammy_types@v3.28.0/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {

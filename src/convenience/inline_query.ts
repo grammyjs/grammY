@@ -23,6 +23,8 @@ import {
     type InputContactMessageContent,
     type InputInvoiceMessageContent,
     type InputLocationMessageContent,
+    type InputRichMessage,
+    type InputRichMessageContent,
     type InputTextMessageContent,
     type InputVenueMessageContent,
     type LabeledPrice,
@@ -55,6 +57,16 @@ function inputMessageMethods<R extends InlineQueryResult>(
         ) {
             const content: InputTextMessageContent = {
                 message_text,
+                ...options,
+            };
+            return { ...queryTemplate, input_message_content: content } as R;
+        },
+        rich(
+            rich_message: InputRichMessage,
+            options: OptionalFields<InputRichMessageContent> = {},
+        ) {
+            const content: InputRichMessageContent = {
+                rich_message,
                 ...options,
             };
             return { ...queryTemplate, input_message_content: content } as R;

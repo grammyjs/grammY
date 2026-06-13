@@ -23,6 +23,7 @@ import {
     type InputPaidMedia,
     type InputPollOption,
     type InputProfilePhoto,
+    type InputRichMessage,
     type InputStoryContent,
     type KeyboardButton,
     type LabeledPrice,
@@ -1006,6 +1007,36 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.sendRichMessage`. Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent Message is returned.
+     *
+     * @param rich_message The message to be sent
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendrichmessage
+     */
+    replyWithRichMessage(
+        rich_message: InputRichMessage,
+        other?: Other<"sendRichMessage", "chat_id" | "rich_message">,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendRichMessage(
+            orThrow(this.chatId, "sendRichMessage"),
+            rich_message,
+            {
+                business_connection_id: this.businessConnectionId,
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg.message_thread_id }
+                    : {}),
+                direct_messages_topic_id: msg?.direct_messages_topic?.topic_id,
+                ...other,
+            },
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.forwardMessage`. Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
@@ -1858,6 +1889,38 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `sendRichMessageDraft`. Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you must call sendRichMessage with the complete message to persist it in the user's chat. Returns True on success.
+     *
+     * @param rich_message The partial message to be streamed
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendrichmessagedraft
+     */
+    replyWithRichMessageDraft(
+        rich_message: InputRichMessage,
+        other?: Other<
+            "sendRichMessageDraft",
+            "chat_id" | "rich_message"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const msg = this.msg;
+        return this.api.sendRichMessageDraft(
+            orThrow(this.chatId, "sendMessageDraft"),
+            this.update.update_id,
+            rich_message,
+            {
+                ...(msg?.is_topic_message
+                    ? { message_thread_id: msg?.message_thread_id }
+                    : {}),
+                ...other,
+            },
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.getUserProfilePhotos`. Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
      *
      * @param other Optional remaining parameters, confer the official reference below
@@ -2544,6 +2607,47 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `answerChatJoinRequestQuery`. Use this method to process a received chat join request query. Returns True on success.
+     *
+     * @param result Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerchatjoinrequestquery
+     */
+    answerChatJoinRequestQuery(
+        result: "approve" | "decline" | "queue",
+        signal?: AbortSignal,
+    ) {
+        return this.api.answerChatJoinRequestQuery(
+            orThrow(
+                this.chatJoinRequest?.query_id,
+                "answerChatJoinRequestQuery",
+            ),
+            result,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `sendChatJoinRequestWebApp`. Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Returns True on success.
+     *
+     * @param web_app_url The URL of the Mini App to be opened
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendchatjoinrequestwebapp
+     */
+    replyWithChatJoinRequestWebApp(web_app_url: string, signal?: AbortSignal) {
+        return this.api.sendChatJoinRequestWebApp(
+            orThrow(
+                this.chatJoinRequest?.query_id,
+                "answerChatJoinRequestQuery",
+            ),
+            web_app_url,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.approveSuggestedPost`. Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat.  Returns True on success.
      *
      * @param other Optional remaining parameters, confer the official reference below
@@ -3126,19 +3230,23 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editMessageText`. Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Context-aware alias for `api.editMessageText`. Use this method to edit text, rich and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param text New text of the message, 1-4096 characters after entities parsing
+     * @param text_or_rich_message New text or rich content of the message, a string maps to the `text` parameter and an object maps to the `rich_message` parameter
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#editmessagetext
      */
     editMessageText(
-        text: string,
+        text: string | InputRichMessage,
         other?: Other<
             "editMessageText",
-            "chat_id" | "message_id" | "inline_message_id" | "text"
+            | "chat_id"
+            | "message_id"
+            | "inline_message_id"
+            | "text"
+            | "rich_message"
         >,
         signal?: AbortSignal,
     ) {
@@ -3198,7 +3306,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.editMessageMedia`. Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Context-aware alias for `api.editMessageMedia`. Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
      * @param media An object for a new media content of the message
      * @param other Optional remaining parameters, confer the official reference below

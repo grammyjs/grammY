@@ -15,6 +15,7 @@ import {
     type InputPaidMedia,
     type InputPollOption,
     type InputProfilePhoto,
+    type InputRichMessage,
     type InputSticker,
     type InputStoryContent,
     type KeyboardButton,
@@ -239,6 +240,28 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.sendMessage({ chat_id, text, ...other }, signal);
+    }
+
+    /**
+     * Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent Message is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format \@username
+     * @param rich_message The message to be sent
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendrichmessage
+     */
+    sendRichMessage(
+        chat_id: number | string,
+        rich_message: InputRichMessage,
+        other?: Other<R, "sendRichMessage", "chat_id" | "rich_message">,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendRichMessage(
+            { chat_id, rich_message, ...other },
+            signal,
+        );
     }
 
     /**
@@ -919,7 +942,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
      *
      * @param chat_id Unique identifier for the target private chat
-     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes of drafts with the same identifier are animated.
+     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
      * @param text Text of the message to be sent, 1-4096 characters after entities parsing
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -935,6 +958,34 @@ export class Api<R extends RawApi = RawApi> {
     ) {
         return this.raw.sendMessageDraft(
             { chat_id, draft_id, text, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you must call sendRichMessage with the complete message to persist it in the user's chat. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target private chat
+     * @param draft_id Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
+     * @param rich_message The partial message to be streamed
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendrichmessagedraft
+     */
+    sendRichMessageDraft(
+        chat_id: number,
+        draft_id: number,
+        rich_message: InputRichMessage,
+        other?: Other<
+            R,
+            "sendRichMessageDraft",
+            "chat_id" | "draft_id" | "rich_message"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendRichMessageDraft(
+            { chat_id, draft_id, rich_message, ...other },
             signal,
         );
     }
@@ -1519,6 +1570,46 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.declineChatJoinRequest({ chat_id, user_id }, signal);
+    }
+
+    /**
+     * Use this method to process a received chat join request query. Returns True on success.
+     *
+     * @param chat_join_request_query_id Unique identifier of the join request query
+     * @param result Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#answerchatjoinrequestquery
+     */
+    answerChatJoinRequestQuery(
+        chat_join_request_query_id: string,
+        result: "approve" | "decline" | "queue",
+        signal?: AbortSignal,
+    ) {
+        return this.raw.answerChatJoinRequestQuery(
+            { chat_join_request_query_id, result },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Returns True on success.
+     *
+     * @param chat_join_request_query_id Unique identifier of the join request query
+     * @param web_app_url The URL of the Mini App to be opened
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#sendchatjoinrequestwebapp
+     */
+    sendChatJoinRequestWebApp(
+        chat_join_request_query_id: string,
+        web_app_url: string,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.sendChatJoinRequestWebApp(
+            { chat_join_request_query_id, web_app_url },
+            signal,
+        );
     }
 
     /**
@@ -2294,11 +2385,11 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Use this method to edit text, rich and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to edit
-     * @param text New text of the message, 1-4096 characters after entities parsing
+     * @param text_or_rich_message New text or rich content of the message, a string maps to the `text` parameter and an object maps to the `rich_message` parameter
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2307,24 +2398,36 @@ export class Api<R extends RawApi = RawApi> {
     editMessageText(
         chat_id: number | string,
         message_id: number,
-        text: string,
+        text_or_rich_message: string | InputRichMessage,
         other?: Other<
             R,
             "editMessageText",
-            "chat_id" | "message_id" | "inline_message_id" | "text"
+            | "chat_id"
+            | "message_id"
+            | "inline_message_id"
+            | "text"
+            | "rich_message"
         >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageText(
-            { chat_id, message_id, text, ...other },
+            typeof text_or_rich_message === "string"
+                ? { chat_id, message_id, text: text_or_rich_message, ...other }
+                : {
+                    chat_id,
+                    message_id,
+                    rich_message: text_or_rich_message,
+                    ...other,
+                },
             signal,
         );
     }
 
     /**
-     * Use this method to edit text and game inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Use this method to edit text, rich and game inline messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
      * @param inline_message_id Identifier of the inline message
+     * @param text_or_rich_message New text or rich content of the message, a string maps to the `text` parameter and an object maps to the `rich_message` parameter
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2332,16 +2435,22 @@ export class Api<R extends RawApi = RawApi> {
      */
     editMessageTextInline(
         inline_message_id: string,
-        text: string,
+        text_or_rich_message: string | InputRichMessage,
         other?: Other<
             R,
             "editMessageText",
-            "chat_id" | "message_id" | "inline_message_id" | "text"
+            | "chat_id"
+            | "message_id"
+            | "inline_message_id"
+            | "text"
+            | "rich_message"
         >,
         signal?: AbortSignal,
     ) {
         return this.raw.editMessageText(
-            { inline_message_id, text, ...other },
+            typeof text_or_rich_message === "string"
+                ? { inline_message_id, text: text_or_rich_message, ...other }
+                : { inline_message_id, rich_message: text_or_rich_message },
             signal,
         );
     }
@@ -2397,7 +2506,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to add media to text messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_id Identifier of the message to edit
@@ -2425,7 +2534,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to edit animation, audio, document, live photo, photo, or video inline messages, or to add media to text inline messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
+     * Use this method to edit animation, audio, document, live photo, photo, or video inline messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
      * @param inline_message_id Identifier of the inline message
      * @param media An object for a new media content of the message
@@ -2565,7 +2674,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_id Identifier of the target message
      * @param user_id Identifier of the user whose reaction will be removed
      * @param other Optional remaining parameters, confer the official reference below
@@ -2595,7 +2704,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param message_id Identifier of the target message
      * @param actor_chat_id Identifier of the chat whose reaction will be removed
      * @param other Optional remaining parameters, confer the official reference below
@@ -2625,7 +2734,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param user_id Identifier of the user whose reactions will be removed, if the reactions were added by a user
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
@@ -2652,7 +2761,7 @@ export class Api<R extends RawApi = RawApi> {
     /**
      * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns True on success.
      *
-     * @param chat_id Unique identifier for the target chat or username of the target supergroup (in the format `@username`)
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
      * @param actor_chat_id Identifier of the chat whose reactions will be removed, if the reactions were added by a chat
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
