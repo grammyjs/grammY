@@ -275,6 +275,7 @@ const COMMON_MESSAGE_KEYS = {
     business_connection_id: {},
 
     text: {},
+    rich_message: {},
     animation: {},
     audio: {},
     document: {},
