@@ -1880,7 +1880,7 @@ export class Context implements RenamedUpdate {
             text,
             {
                 ...(msg?.is_topic_message
-                    ? { message_thread_id: msg?.message_thread_id }
+                    ? { message_thread_id: msg.message_thread_id }
                     : {}),
                 ...other,
             },
@@ -1912,7 +1912,7 @@ export class Context implements RenamedUpdate {
             rich_message,
             {
                 ...(msg?.is_topic_message
-                    ? { message_thread_id: msg?.message_thread_id }
+                    ? { message_thread_id: msg.message_thread_id }
                     : {}),
                 ...other,
             },
