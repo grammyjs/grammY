@@ -2450,7 +2450,11 @@ export class Api<R extends RawApi = RawApi> {
         return this.raw.editMessageText(
             typeof text_or_rich_message === "string"
                 ? { inline_message_id, text: text_or_rich_message, ...other }
-                : { inline_message_id, rich_message: text_or_rich_message },
+                : {
+                    inline_message_id,
+                    rich_message: text_or_rich_message,
+                    ...other,
+                },
             signal,
         );
     }
