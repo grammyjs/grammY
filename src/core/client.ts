@@ -199,7 +199,7 @@ export interface ApiClientOptions {
     /**
      * Base configuration for `fetch` calls. Specify any additional parameters
      * to use when fetching a method of the Telegram Bot API. Default: `{
-     * compress: true }` (Node), `{}` (Deno)
+     * compress: true, duplex: "half" }` (Node), `{ duplex: "half" }` (Deno, Web)
      */
     baseFetchConfig?: Omit<
         NonNullable<Parameters<typeof fetch>[1]>,
