@@ -18,6 +18,6 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) => {
 };
 
 // === Base configuration for `fetch` calls
-export const baseFetchConfig = (_apiRoot: string) => ({});
+export const baseFetchConfig = (_apiRoot: string) => ({ duplex: "half" });
 
 export const defaultAdapter = "cloudflare";
