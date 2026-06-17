@@ -31,6 +31,7 @@ export function baseFetchConfig(apiRoot: string) {
                 apiRoot,
                 () => new HttpsAgent({ keepAlive: true }),
             ),
+            duplex: "half",
         };
     } else if (apiRoot.startsWith("http:")) {
         return {
@@ -39,8 +40,9 @@ export function baseFetchConfig(apiRoot: string) {
                 apiRoot,
                 () => new HttpAgent({ keepAlive: true }),
             ),
+            duplex: "half",
         };
-    } else return {};
+    } else return { duplex: "half" };
 }
 
 // === Default webhook adapter

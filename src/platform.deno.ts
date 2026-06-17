@@ -23,7 +23,7 @@ export const itrToStream = (itr: AsyncIterable<Uint8Array>) =>
     ReadableStream.from(itr);
 
 // === Base configuration for `fetch` calls
-export const baseFetchConfig = (_apiRoot: string) => ({});
+export const baseFetchConfig = (_apiRoot: string) => ({ duplex: "half" });
 
 // === Default webhook adapter
 export const defaultAdapter = "oak";
