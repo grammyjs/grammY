@@ -257,6 +257,33 @@ export type WorktopAdapter = (req: {
     send: (status: number, json: string) => void;
 }) => ReqResHandler;
 
+// ── Helper: Webhook handler with a Promise-based response lifecycle ──
+/**
+ * Creates a ReqResHandler for frameworks where the response must be delivered
+ * via a Promise (e.g. Bun, Cloudflare, Hono). The returned handler uses a
+ * deferred promise (`handlerReturn`) that resolves when `end`, `respond`, or
+ * `unauthorized` is called.
+ */
+function promiseHandler<R>(
+    getUpdate: () => Update | Promise<Update>,
+    header: string | undefined,
+    toOk: () => R,
+    toJson: (json: string) => R,
+    toUnauthorized: () => R,
+): ReqResHandler<R> {
+    let resolve: (value: R) => void;
+    return {
+        get update() { return getUpdate(); },
+        header,
+        end() { resolve(toOk()); },
+        respond(json: string) { resolve(toJson(json)); },
+        unauthorized() { resolve(toUnauthorized()); },
+        handlerReturn: new Promise<R>((r) => resolve = r),
+    };
+}
+
+// ── Adapters ──
+
 /** AWS lambda serverless functions */
 const awsLambda: LambdaAdapter = (event, _context, callback) => ({
     get update() {
@@ -275,27 +302,18 @@ const awsLambda: LambdaAdapter = (event, _context, callback) => ({
 });
 
 /** AWS lambda async/await serverless functions */
-const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) => {
-    // deno-lint-ignore no-explicit-any
-    let resolveResponse: (response: any) => void;
-
-    return {
-        get update() {
-            return JSON.parse(event.body ?? "{}");
-        },
-        header: event.headers[SECRET_HEADER] ??
-            event.headers[SECRET_HEADER_LOWERCASE],
-        end: () => resolveResponse({ statusCode: 200 }),
-        respond: (json) =>
-            resolveResponse({
-                statusCode: 200,
-                headers: { "Content-Type": "application/json" },
-                body: json,
-            }),
-        unauthorized: () => resolveResponse({ statusCode: 401 }),
-        handlerReturn: new Promise<void>((res) => resolveResponse = res),
-    };
-};
+const awsLambdaAsync: LambdaAsyncAdapter = (event, _context) =>
+    promiseHandler(
+        () => JSON.parse(event.body ?? "{}"),
+        event.headers[SECRET_HEADER] ?? event.headers[SECRET_HEADER_LOWERCASE],
+        () => ({ statusCode: 200 }),
+        (json) => ({
+            statusCode: 200,
+            headers: { "Content-Type": "application/json" },
+            body: json,
+        }),
+        () => ({ statusCode: 401 }),
+    );
 
 /** Azure Functions v3 and v4 */
 const azure: AzureAdapter = (context, request) => ({
@@ -319,44 +337,29 @@ const azureV4: AzureAdapterV4 = (request) => {
     type Res = NonNullable<
         Awaited<ReturnType<AzureAdapterV4>["handlerReturn"]>
     >;
-    let resolveResponse: (response: Res) => void;
-    return {
-        get update() {
-            return request.json() as Promise<Update>;
-        },
-        header: request.headers.get(SECRET_HEADER) || undefined,
-        end: () => resolveResponse({ status: 204 }),
-        respond: (json) => resolveResponse({ jsonBody: json }),
-        unauthorized: () =>
-            resolveResponse({ status: 401, body: WRONG_TOKEN_ERROR }),
-        handlerReturn: new Promise<Res>((resolve) => resolveResponse = resolve),
-    };
+    return promiseHandler<Res>(
+        () => request.json() as Promise<Update>,
+        request.headers.get(SECRET_HEADER) || undefined,
+        () => ({ status: 204 } as Res),
+        (json) => ({ jsonBody: json } as Res),
+        () => ({ status: 401, body: WRONG_TOKEN_ERROR } as Res),
+    );
 };
 
 /** Bun.serve */
-const bun: BunAdapter = (request) => {
-    let resolveResponse: (response: Response) => void;
-    return {
-        get update() {
-            return request.json() as Promise<Update>;
-        },
-        header: request.headers.get(SECRET_HEADER) || undefined,
-        end: () => {
-            resolveResponse(ok());
-        },
-        respond: (json) => {
-            resolveResponse(okJson(json));
-        },
-        unauthorized: () => {
-            resolveResponse(unauthorized());
-        },
-        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
-    };
-};
+const bun: BunAdapter = (request) =>
+    promiseHandler(
+        () => request.json() as Promise<Update>,
+        request.headers.get(SECRET_HEADER) || undefined,
+        () => ok(),
+        (json) => okJson(json),
+        () => unauthorized(),
+    );
 
 /** Native CloudFlare workers (service worker) */
 const cloudflare: CloudflareAdapter = (event) => {
-    let resolveResponse: (response: Response) => void;
+    // deno-lint-ignore no-explicit-any
+    let resolveResponse: (response: any) => void;
     event.respondWith(
         new Promise<Response>((resolve) => {
             resolveResponse = resolve;
@@ -380,25 +383,14 @@ const cloudflare: CloudflareAdapter = (event) => {
 };
 
 /** Native CloudFlare workers (module worker) */
-const cloudflareModule: CloudflareModuleAdapter = (request) => {
-    let resolveResponse: (res: Response) => void;
-    return {
-        get update() {
-            return request.json() as Promise<Update>;
-        },
-        header: request.headers.get(SECRET_HEADER) || undefined,
-        end: () => {
-            resolveResponse(ok());
-        },
-        respond: (json) => {
-            resolveResponse(okJson(json));
-        },
-        unauthorized: () => {
-            resolveResponse(unauthorized());
-        },
-        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
-    };
-};
+const cloudflareModule: CloudflareModuleAdapter = (request) =>
+    promiseHandler(
+        () => request.json() as Promise<Update>,
+        request.headers.get(SECRET_HEADER) || undefined,
+        () => ok(),
+        (json) => okJson(json),
+        () => unauthorized(),
+    );
 
 /** express web framework */
 const express: ExpressAdapter = (req, res) => ({
@@ -429,26 +421,17 @@ const fastify: FastifyAdapter = (request, reply) => ({
 });
 
 /** hono web framework */
-const hono: HonoAdapter = (c) => {
-    let resolveResponse: (response: Response) => void;
-    return {
-        get update() {
-            return c.req.json() as Promise<Update>;
-        },
-        header: c.req.header(SECRET_HEADER),
-        end: () => {
-            resolveResponse(c.body(""));
-        },
-        respond: (json) => {
-            resolveResponse(c.json(json));
-        },
-        unauthorized: () => {
+const hono: HonoAdapter = (c) =>
+    promiseHandler(
+        () => c.req.json() as Promise<Update>,
+        c.req.header(SECRET_HEADER),
+        () => c.body(""),
+        (json) => c.json(json),
+        () => {
             c.status(401);
-            resolveResponse(c.body(""));
+            return c.body("");
         },
-        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
-    };
-};
+    );
 
 /** Node.js native 'http' and 'https' modules */
 const http: HttpAdapter = (req, res) => {
@@ -555,46 +538,25 @@ const serveHttp: ServeHttpAdapter = (requestEvent) => ({
 });
 
 /** std/http web server */
-const stdHttp: StdHttpAdapter = (req) => {
-    let resolveResponse: (response: Response) => void;
-    return {
-        get update() {
-            return req.json() as Promise<Update>;
-        },
-        header: req.headers.get(SECRET_HEADER) || undefined,
-        end: () => {
-            if (resolveResponse) resolveResponse(ok());
-        },
-        respond: (json) => {
-            if (resolveResponse) resolveResponse(okJson(json));
-        },
-        unauthorized: () => {
-            if (resolveResponse) resolveResponse(unauthorized());
-        },
-        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
-    };
-};
+const stdHttp: StdHttpAdapter = (req) =>
+    promiseHandler(
+        () => req.json() as Promise<Update>,
+        req.headers.get(SECRET_HEADER) || undefined,
+        () => ok(),
+        (json) => okJson(json),
+        () => unauthorized(),
+    );
 
 /** Sveltekit Serverless Functions */
-const sveltekit: SveltekitAdapter = ({ request }) => {
-    let resolveResponse: (res: Response) => void;
-    return {
-        get update() {
-            return request.json() as Promise<Update>;
-        },
-        header: request.headers.get(SECRET_HEADER) || undefined,
-        end: () => {
-            if (resolveResponse) resolveResponse(ok());
-        },
-        respond: (json) => {
-            if (resolveResponse) resolveResponse(okJson(json));
-        },
-        unauthorized: () => {
-            if (resolveResponse) resolveResponse(unauthorized());
-        },
-        handlerReturn: new Promise<Response>((res) => resolveResponse = res),
-    };
-};
+const sveltekit: SveltekitAdapter = ({ request }) =>
+    promiseHandler(
+        () => request.json() as Promise<Update>,
+        request.headers.get(SECRET_HEADER) || undefined,
+        () => ok(),
+        (json) => okJson(json),
+        () => unauthorized(),
+    );
+
 /** worktop Cloudflare workers framework */
 const worktop: WorktopAdapter = (req, res) => ({
     get update() {
@@ -606,33 +568,23 @@ const worktop: WorktopAdapter = (req, res) => ({
     unauthorized: () => res.send(401, WRONG_TOKEN_ERROR),
 });
 
-const elysia: ElysiaAdapter = (ctx) => {
-    // @note upgrade target to use modern code?
-    // const { promise, resolve } = Promise.withResolvers<string>();
-
-    let resolveResponse: (result: string) => void;
-
-    return {
-        // @note technically the type shouldn't be limited to Promise, because it's fine to await plain values as well
-        get update() {
-            return ctx.body as Update;
+const elysia: ElysiaAdapter = (ctx) =>
+    promiseHandler(
+        () => ctx.body as Update,
+        ctx.headers[SECRET_HEADER_LOWERCASE],
+        () => {
+            ctx.set.status = 200;
+            return "";
         },
-        header: ctx.headers[SECRET_HEADER_LOWERCASE],
-        end() {
-            resolveResponse("");
-        },
-        respond(json) {
-            // @note since json is passed as string here, we gotta define proper content-type
+        (json) => {
             ctx.set.headers["content-type"] = "application/json";
-            resolveResponse(json);
+            return json;
         },
-        unauthorized() {
+        () => {
             ctx.set.status = 401;
-            resolveResponse("");
+            return "";
         },
-        handlerReturn: new Promise<string>((res) => resolveResponse = res),
-    };
-};
+    );
 
 // Please open a pull request if you want to add another adapter
 export const adapters = {
