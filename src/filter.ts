@@ -5,6 +5,19 @@ import { type Message, type MessageEntity, type Update } from "./types.ts";
 type FilterFunction<C extends Context, D extends C> = (ctx: C) => ctx is D;
 
 const filterQueryCache = new Map<string, (ctx: Context) => boolean>();
+const FILTER_CACHE_MAX = 500;
+function getCachedFilter(query: string, create: () => (ctx: Context) => boolean): (ctx: Context) => boolean {
+    let cached = filterQueryCache.get(query);
+    if (cached === undefined) {
+        cached = create();
+        if (filterQueryCache.size >= FILTER_CACHE_MAX) {
+            const firstKey = filterQueryCache.keys().next().value;
+            if (firstKey !== undefined) filterQueryCache.delete(firstKey);
+        }
+        filterQueryCache.set(query, cached);
+    }
+    return cached;
+}
 
 // === Obtain O(1) filter function from query
 /**
@@ -35,12 +48,11 @@ export function matchFilter<C extends Context, Q extends FilterQuery>(
 ): FilterFunction<C, Filter<C, Q>> {
     const queries = Array.isArray(filter) ? filter : [filter];
     const key = queries.join(",");
-    const predicate = filterQueryCache.get(key) ?? (() => {
+    const predicate = getCachedFilter(key, () => {
         const parsed = parse(queries);
         const pred = compile(parsed);
-        filterQueryCache.set(key, pred);
         return pred;
-    })();
+    });
     return (ctx: C): ctx is Filter<C, Q> => predicate(ctx);
 }
 
