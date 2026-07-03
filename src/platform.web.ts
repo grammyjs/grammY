@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-import-prefix
 
-import d from "https://cdn.skypack.dev/obug@2.1.3";
+import d from "https://esm.sh/obug@2.1.3";
 export { d as debug };
 
 // === Export system-specific operations
