@@ -9,14 +9,15 @@ import { InputFile } from "../types.ts";
  *
  * @param payload The payload to analyze
  */
-export function requiresFormDataUpload(payload: unknown): boolean {
+export function requiresFormDataUpload(payload: unknown, depth = 0): boolean {
+    if (depth > 10) return false; // safety guard against deep recursion
     return payload instanceof InputFile || (
         typeof payload === "object" &&
         payload !== null &&
         Object.values(payload).some((v) =>
             Array.isArray(v)
-                ? v.some(requiresFormDataUpload)
-                : v instanceof InputFile || requiresFormDataUpload(v)
+                ? v.some((item: unknown) => requiresFormDataUpload(item, depth + 1))
+                : v instanceof InputFile || requiresFormDataUpload(v, depth + 1)
         )
     );
 }
