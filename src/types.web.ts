@@ -154,7 +154,7 @@ export type InputMediaDocument = InputMediaDocumentF<InputFile>;
 export type InputMediaLivePhoto = InputMediaLivePhotoF<InputFile>;
 /** Represents a photo to be sent. */
 export type InputMediaPhoto = InputMediaPhotoF<InputFile>;
-/** Represents a sticket file to be sent. */
+/** Represents a sticker file to be sent. */
 export type InputMediaSticker = InputMediaStickerF<InputFile>;
 /** Represents a video to be sent. */
 export type InputMediaVideo = InputMediaVideoF<InputFile>;
