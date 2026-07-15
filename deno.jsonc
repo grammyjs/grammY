@@ -1,5 +1,6 @@
 {
     "lock": false,
+    "minimumDependencyAge": 0,
     "nodeModulesDir": "none",
     "tasks": {
         "check": "deno check --allow-import src/mod.ts",
