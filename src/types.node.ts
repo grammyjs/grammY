@@ -211,6 +211,15 @@ export type InputSticker = InputStickerF<InputFile>;
   - InputMediaPhoto
   - InputMediaVideo */
 export type InputMedia = InputMediaF<InputFile>;
+/** This object represents the content of a media message to be sent. It should be one of
+
+  - InputMediaAnimation
+  - InputMediaAudio
+  - InputMediaDocument
+  - InputMediaLivePhoto
+  - InputMediaPhoto
+  - InputMediaVideo */
+export type InputMediaWithoutUpload = InputMediaF<never>;
 /** Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent. */
 export type InputMediaAnimation = InputMediaAnimationF<InputFile>;
 /** Represents an audio file to be treated as music to be sent. */
