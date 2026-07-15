@@ -362,6 +362,8 @@ const MESSAGE_KEYS = {
     checklist: { others_can_add_tasks: {}, others_can_mark_tasks_as_done: {} },
     checklist_tasks_done: {},
     checklist_tasks_added: {},
+    community_chat_added: {},
+    community_chat_removed: {},
     poll_option_added: {},
     poll_option_deleted: {},
 
@@ -421,6 +423,7 @@ const UPDATE_KEYS = {
     chat_boost: {},
     removed_chat_boost: {},
     purchased_paid_media: {},
+    subscription: { state: { canceled: {}, active: {}, failed: {} } },
 } as const satisfies Record<Exclude<keyof Update, "update_id">, NestedObj>;
 
 // === Build up all possible filter queries from the above validation structure
@@ -681,6 +684,7 @@ interface Shortcuts<U extends Update> {
             ? U["chat_boost"]["boost"]["source"]["user"]
         : [U["removed_chat_boost"]] extends [object]
             ? U["removed_chat_boost"]["source"]["user"]
+        : [U["subscription"]] extends [object] ? U["subscription"]["user"]
         : [U["callback_query"]] extends [object] ? U["callback_query"]["from"]
         : [Shortcuts<U>["msg"]] extends [object] ? Shortcuts<U>["msg"]["from"]
         : [U["inline_query"]] extends [object] ? U["inline_query"]["from"]

@@ -12,10 +12,12 @@ import {
     type InputMediaLivePhoto,
     type InputMediaPhoto,
     type InputMediaVideo,
+    type InputMediaWithoutUpload,
     type InputPaidMedia,
     type InputPollOption,
     type InputProfilePhoto,
     type InputRichMessage,
+    type InputRichMessageWithoutUpload,
     type InputSticker,
     type InputStoryContent,
     type KeyboardButton,
@@ -293,7 +295,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
+     * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an Array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param from_chat_id Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format `@username`)
@@ -351,7 +353,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param from_chat_id Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format `@username`)
@@ -548,7 +550,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param star_count The number of Telegram Stars that must be paid to buy access to the media
-     * @param media An array describing the media to be sent; up to 10 items
+     * @param media An Array describing the media to be sent; up to 10 items
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -568,10 +570,10 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
+     * Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of Message objects that were sent is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
-     * @param media An array describing messages to be sent, must include 2-10 items
+     * @param media An Array describing messages to be sent, must include 2-10 items
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -579,13 +581,14 @@ export class Api<R extends RawApi = RawApi> {
      */
     sendMediaGroup(
         chat_id: number | string,
-        media: ReadonlyArray<
-            | InputMediaAudio
-            | InputMediaDocument
-            | InputMediaLivePhoto
-            | InputMediaPhoto
-            | InputMediaVideo
-        >,
+        media:
+            | ReadonlyArray<InputMediaAudio>
+            | ReadonlyArray<InputMediaDocument>
+            | ReadonlyArray<
+                | InputMediaLivePhoto
+                | InputMediaPhoto
+                | InputMediaVideo
+            >,
         other?: Other<R, "sendMediaGroup", "chat_id" | "media">,
         signal?: AbortSignal,
     ) {
@@ -976,7 +979,7 @@ export class Api<R extends RawApi = RawApi> {
     sendRichMessageDraft(
         chat_id: number,
         draft_id: number,
-        rich_message: InputRichMessage,
+        rich_message: InputRichMessageWithoutUpload,
         other?: Other<
             R,
             "sendRichMessageDraft",
@@ -1822,7 +1825,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get the number of members in a chat. Returns Int on success.
+     * Use this method to get the number of members in a chat. Returns Integer on success.
      *
      * @param chat_id Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
      * @param signal Optional `AbortSignal` to cancel the request
@@ -1851,7 +1854,7 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
-     * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an array of Message objects is returned.
+     * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of Message objects is returned.
      *
      * @param user_id Unique identifier for the target user
      * @param limit The maximum number of messages to return; 1-20
@@ -2633,6 +2636,130 @@ export class Api<R extends RawApi = RawApi> {
     }
 
     /**
+     * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param receiver_user_id Identifier of the user who received the message
+     * @param ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param text New text of the message, 1-4096 characters after entity parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagetext
+     */
+    editEphemeralMessageText(
+        chat_id: number | string,
+        receiver_user_id: number,
+        ephemeral_message_id: number,
+        text: string,
+        other?: Other<
+            R,
+            "editEphemeralMessageText",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "text"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editEphemeralMessageText(
+            { chat_id, receiver_user_id, ephemeral_message_id, text, ...other },
+            signal,
+        );
+    }
+
+    /**
+     * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param receiver_user_id Identifier of the user who received the message
+     * @param ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param media An object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagemedia
+     */
+    editEphemeralMessageMedia(
+        chat_id: number | string,
+        receiver_user_id: number,
+        ephemeral_message_id: number,
+        media: InputMediaWithoutUpload,
+        other?: Other<
+            R,
+            "editEphemeralMessageMedia",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "media"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editEphemeralMessageMedia({
+            chat_id,
+            receiver_user_id,
+            ephemeral_message_id,
+            media,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param receiver_user_id Identifier of the user who received the message
+     * @param ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param caption New caption of the message, 0-1024 characters after entities parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagecaption
+     */
+    editEphemeralMessageCaption(
+        chat_id: number | string,
+        receiver_user_id: number,
+        ephemeral_message_id: number,
+        caption: string,
+        other?: Other<
+            R,
+            "editEphemeralMessageCaption",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "caption"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editEphemeralMessageCaption({
+            chat_id,
+            receiver_user_id,
+            ephemeral_message_id,
+            caption,
+            ...other,
+        }, signal);
+    }
+
+    /**
+     * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param receiver_user_id Identifier of the user who received the message
+     * @param ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagecaption
+     */
+    editEphemeralMessageReplyMarkup(
+        chat_id: number | string,
+        receiver_user_id: number,
+        ephemeral_message_id: number,
+        other?: Other<
+            R,
+            "editEphemeralMessageReplyMarkup",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.editEphemeralMessageReplyMarkup(
+            { chat_id, receiver_user_id, ephemeral_message_id, ...other },
+            signal,
+        );
+    }
+
+    /**
      * Use this method to delete a message, including service messages, with the following limitations:
      * - A message can only be deleted if it was sent less than 48 hours ago.
      * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
@@ -2673,6 +2800,28 @@ export class Api<R extends RawApi = RawApi> {
         signal?: AbortSignal,
     ) {
         return this.raw.deleteMessages({ chat_id, message_ids }, signal);
+    }
+
+    /**
+     * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns True on success.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param receiver_user_id Identifier of the user who received the message
+     * @param ephemeral_message_id Identifier of the ephemeral message to delete
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteephemeralmessage
+     */
+    deleteEphemeralMessage(
+        chat_id: number | string,
+        receiver_user_id: number,
+        ephemeral_message_id: number,
+        signal?: AbortSignal,
+    ) {
+        return this.raw.deleteEphemeralMessage(
+            { chat_id, receiver_user_id, ephemeral_message_id },
+            signal,
+        );
     }
 
     /**
@@ -3570,7 +3719,7 @@ export class Api<R extends RawApi = RawApi> {
      * Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
      *
      * @param inline_query_id Unique identifier for the answered query
-     * @param results An array of results for the inline query
+     * @param results An Array of results for the inline query
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -3929,7 +4078,7 @@ export class Api<R extends RawApi = RawApi> {
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
      *
      * @param user_id User identifier
-     * @param errors An array describing the errors
+     * @param errors An Array describing the errors
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setpassportdataerrors

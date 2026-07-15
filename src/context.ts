@@ -20,10 +20,12 @@ import {
     type InputMediaLivePhoto,
     type InputMediaPhoto,
     type InputMediaVideo,
+    type InputMediaWithoutUpload,
     type InputPaidMedia,
     type InputPollOption,
     type InputProfilePhoto,
     type InputRichMessage,
+    type InputRichMessageWithoutUpload,
     type InputStoryContent,
     type KeyboardButton,
     type LabeledPrice,
@@ -514,6 +516,10 @@ export class Context implements RenamedUpdate {
     get purchasedPaidMedia() {
         return this.update.purchased_paid_media;
     }
+    /** Alias for `ctx.update.subscription` */
+    get subscription() {
+        return this.update.subscription;
+    }
 
     // AGGREGATION SHORTCUTS
 
@@ -579,7 +585,8 @@ export class Context implements RenamedUpdate {
             this.businessConnection ??
                 this.messageReaction ??
                 this.managedBot ??
-                (this.chatBoost?.boost ?? this.removedChatBoost)?.source
+                (this.chatBoost?.boost ?? this.removedChatBoost)?.source ??
+                this.subscription
         )?.user ??
             (
                 this.callbackQuery ??
@@ -1067,7 +1074,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.forwardMessages`. Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
+     * Context-aware alias for `api.forwardMessages`. Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an Array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_ids A list of 1-100 identifiers of messages in the current chat to forward. The identifiers must be specified in a strictly increasing order.
@@ -1126,7 +1133,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.copyMessages`. Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
+     * Context-aware alias for `api.copyMessages`. Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of MessageId of the sent messages is returned.
      *
      * @param chat_id Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      * @param message_ids A list of 1-100 identifiers of messages in the current chat to copy. The identifiers must be specified in a strictly increasing order.
@@ -1412,7 +1419,7 @@ export class Context implements RenamedUpdate {
      * Context-aware alias for `api.sendPaidMedia`. Use this method to send paid media. On success, the sent Message is returned.
      *
      * @param star_count The number of Telegram Stars that must be paid to buy access to the media
-     * @param media An array describing the media to be sent; up to 10 items
+     * @param media An Array describing the media to be sent; up to 10 items
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -1443,22 +1450,23 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.sendMediaGroup`. Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
+     * Context-aware alias for `api.sendMediaGroup`. Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of Message objects that were sent is returned.
      *
-     * @param media An array describing messages to be sent, must include 2-10 items
+     * @param media An Array describing messages to be sent, must include 2-10 items
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendmediagroup
      */
     replyWithMediaGroup(
-        media: ReadonlyArray<
-            | InputMediaAudio
-            | InputMediaDocument
-            | InputMediaLivePhoto
-            | InputMediaPhoto
-            | InputMediaVideo
-        >,
+        media:
+            | ReadonlyArray<InputMediaAudio>
+            | ReadonlyArray<InputMediaDocument>
+            | ReadonlyArray<
+                | InputMediaLivePhoto
+                | InputMediaPhoto
+                | InputMediaVideo
+            >,
         other?: Other<"sendMediaGroup", "chat_id" | "media">,
         signal?: AbortSignal,
     ) {
@@ -1898,7 +1906,7 @@ export class Context implements RenamedUpdate {
      * **Official reference:** https://core.telegram.org/bots/api#sendrichmessagedraft
      */
     replyWithRichMessageDraft(
-        rich_message: InputRichMessage,
+        rich_message: InputRichMessageWithoutUpload,
         other?: Other<
             "sendRichMessageDraft",
             "chat_id" | "rich_message"
@@ -2854,7 +2862,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getChatMemberCount`. Use this method to get the number of members in a chat. Returns Int on success.
+     * Context-aware alias for `api.getChatMemberCount`. Use this method to get the number of members in a chat. Returns Integer on success.
      *
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -2899,7 +2907,7 @@ export class Context implements RenamedUpdate {
     }
 
     /**
-     * Context-aware alias for `api.getUserPersonalChatMessages`. Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an array of Message objects is returned.
+     * Context-aware alias for `api.getUserPersonalChatMessages`. Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of Message objects is returned.
      *
      * @param limit The maximum number of messages to return; 1-20
      * @param signal Optional `AbortSignal` to cancel the request
@@ -3402,6 +3410,121 @@ export class Context implements RenamedUpdate {
     }
 
     /**
+     * Context-aware alias for `api.editEphemeralMessageText`. Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param text New text of the message, 1-4096 characters after entity parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagetext
+     */
+    editEphemeralMessageText(
+        text: string,
+        other?: Other<
+            "editEphemeralMessageText",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "text"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const msg = orThrow(this.msg, "editEphemeralMessageText");
+        return this.api.editEphemeralMessageText(
+            msg.chat.id,
+            orThrow(msg.receiver_user, "editEphemeralMessageText").id,
+            orThrow(msg.ephemeral_message_id, "editEphemeralMessageText"),
+            text,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editEphemeralMessageMedia`. Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param media An object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL.
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagemedia
+     */
+    editEphemeralMessageMedia(
+        media: InputMediaWithoutUpload,
+        other?: Other<
+            "editEphemeralMessageMedia",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "media"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const msg = orThrow(this.msg, "editEphemeralMessageMedia");
+        return this.api.editEphemeralMessageMedia(
+            msg.chat.id,
+            orThrow(msg.receiver_user, "editEphemeralMessageMedia").id,
+            orThrow(msg.ephemeral_message_id, "editEphemeralMessageMedia"),
+            media,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editEphemeralMessageCaption`. Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param caption New caption of the message, 0-1024 characters after entities parsing
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagecaption
+     */
+    editEphemeralMessageCaption(
+        caption: string,
+        other?: Other<
+            "editEphemeralMessageCaption",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "caption"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const msg = orThrow(this.msg, "editEphemeralMessageCaption");
+        return this.api.editEphemeralMessageCaption(
+            msg.chat.id,
+            orThrow(msg.receiver_user, "editEphemeralMessageCaption").id,
+            orThrow(msg.ephemeral_message_id, "editEphemeralMessageCaption"),
+            caption,
+            other,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.editEphemeralMessageReplyMarkup`. Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     *
+     * @param chat_id Unique identifier for the target chat or username of the target supergroup in the format `@username`
+     * @param receiver_user_id Identifier of the user who received the message
+     * @param ephemeral_message_id Identifier of the ephemeral message to edit
+     * @param other Optional remaining parameters, confer the official reference below
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#editephemeralmessagecaption
+     */
+    editEphemeralMessageReplyMarkup(
+        other?: Other<
+            "editEphemeralMessageReplyMarkup",
+            "chat_id" | "receiver_user_id" | "ephemeral_message_id"
+        >,
+        signal?: AbortSignal,
+    ) {
+        const msg = orThrow(this.msg, "editEphemeralMessageReplyMarkup");
+        return this.api.editEphemeralMessageReplyMarkup(
+            msg.chat.id,
+            orThrow(msg.receiver_user, "editEphemeralMessageReplyMarkup").id,
+            orThrow(
+                msg.ephemeral_message_id,
+                "editEphemeralMessageReplyMarkup",
+            ),
+            other,
+            signal,
+        );
+    }
+
+    /**
      * Context-aware alias for `api.deleteMessage`. Use this method to delete a message, including service messages, with the following limitations:
      * - A message can only be deleted if it was sent less than 48 hours ago.
      * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
@@ -3442,6 +3565,25 @@ export class Context implements RenamedUpdate {
         return this.api.deleteMessages(
             orThrow(this.chatId, "deleteMessages"),
             message_ids,
+            signal,
+        );
+    }
+
+    /**
+     * Context-aware alias for `api.deleteEphemeralMessage`. Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns True on success.
+     *
+     * @param signal Optional `AbortSignal` to cancel the request
+     *
+     * **Official reference:** https://core.telegram.org/bots/api#deleteephemeralmessage
+     */
+    deleteEphemeralMessage(
+        signal?: AbortSignal,
+    ) {
+        const msg = orThrow(this.msg, "deleteEphemeralMessage");
+        return this.api.deleteEphemeralMessage(
+            msg.chat.id,
+            orThrow(msg.receiver_user, "deleteEphemeralMessage").id,
+            orThrow(msg.ephemeral_message_id, "deleteEphemeralMessage"),
             signal,
         );
     }
@@ -4116,7 +4258,7 @@ export class Context implements RenamedUpdate {
      *
      * Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
      *
-     * @param results An array of results for the inline query
+     * @param results An Array of results for the inline query
      * @param other Optional remaining parameters, confer the official reference below
      * @param signal Optional `AbortSignal` to cancel the request
      *
@@ -4402,7 +4544,7 @@ export class Context implements RenamedUpdate {
      *
      * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
      *
-     * @param errors An array describing the errors
+     * @param errors An Array describing the errors
      * @param signal Optional `AbortSignal` to cancel the request
      *
      * **Official reference:** https://core.telegram.org/bots/api#setpassportdataerrors

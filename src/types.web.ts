@@ -5,6 +5,27 @@ import { basename } from "jsr:@std/path@1.1.2/basename";
 
 import {
     type ApiMethods as ApiMethodsF,
+    type InlineQueryResult as InlineQueryResultF,
+    type InlineQueryResultArticle as InlineQueryResultArticleF,
+    type InlineQueryResultAudio as InlineQueryResultAudioF,
+    type InlineQueryResultCachedAudio as InlineQueryResultCachedAudioF,
+    type InlineQueryResultCachedDocument as InlineQueryResultCachedDocumentF,
+    type InlineQueryResultCachedGif as InlineQueryResultCachedGifF,
+    type InlineQueryResultCachedMpeg4Gif as InlineQueryResultCachedMpeg4GifF,
+    type InlineQueryResultCachedPhoto as InlineQueryResultCachedPhotoF,
+    type InlineQueryResultCachedSticker as InlineQueryResultCachedStickerF,
+    type InlineQueryResultCachedVideo as InlineQueryResultCachedVideoF,
+    type InlineQueryResultCachedVoice as InlineQueryResultCachedVoiceF,
+    type InlineQueryResultContact as InlineQueryResultContactF,
+    type InlineQueryResultDocument as InlineQueryResultDocumentF,
+    type InlineQueryResultGame as InlineQueryResultGameF,
+    type InlineQueryResultGif as InlineQueryResultGifF,
+    type InlineQueryResultLocation as InlineQueryResultLocationF,
+    type InlineQueryResultMpeg4Gif as InlineQueryResultMpeg4GifF,
+    type InlineQueryResultPhoto as InlineQueryResultPhotoF,
+    type InlineQueryResultVenue as InlineQueryResultVenueF,
+    type InlineQueryResultVideo as InlineQueryResultVideoF,
+    type InlineQueryResultVoice as InlineQueryResultVoiceF,
     type InputMedia as InputMediaF,
     type InputMediaAnimation as InputMediaAnimationF,
     type InputMediaAudio as InputMediaAudioF,
@@ -23,15 +44,30 @@ import {
     type InputProfilePhoto as InputProfilePhotoAnimatedF,
     type InputProfilePhoto as InputProfilePhotoF,
     type InputProfilePhoto as InputProfilePhotoStaticF,
+    type InputRichBlock as InputRichBlockF,
+    type InputRichBlockAnimation as InputRichBlockAnimationF,
+    type InputRichBlockAudio as InputRichBlockAudioF,
+    type InputRichBlockBlockQuotation as InputRichBlockBlockQuotationF,
+    type InputRichBlockCollage as InputRichBlockCollageF,
+    type InputRichBlockDetails as InputRichBlockDetailsF,
+    type InputRichBlockList as InputRichBlockListF,
+    type InputRichBlockListItem as InputRichBlockListItemF,
+    type InputRichBlockPhoto as InputRichBlockPhotoF,
+    type InputRichBlockSlideshow as InputRichBlockSlideshowF,
+    type InputRichBlockVideo as InputRichBlockVideoF,
+    type InputRichBlockVoiceNote as InputRichBlockVoiceNoteF,
+    type InputRichMessage as InputRichMessageF,
+    type InputRichMessageContent as InputRichMessageContentF,
+    type InputRichMessageMedia as InputRichMessageMediaF,
     type InputSticker as InputStickerF,
     type InputStoryContent as InputStoryContentF,
     type InputStoryContentPhoto as InputStoryContentPhotoF,
     type InputStoryContentVideo as InputStoryContentVideoF,
     type Opts as OptsF,
-} from "https://deno.land/x/grammy_types@v3.28.0/mod.ts";
+} from "https://deno.land/x/grammy_types@v4.0.0/mod.ts";
 
 // === Export all API types
-export * from "https://deno.land/x/grammy_types@v3.28.0/mod.ts";
+export * from "https://deno.land/x/grammy_types@v4.0.0/mod.ts";
 
 /** Something that looks like a URL. */
 interface URLLike {
@@ -210,3 +246,142 @@ export type InputStoryContent = InputStoryContentF<InputFile>;
 export type InputStoryContentPhoto = InputStoryContentPhotoF<InputFile>;
 /** Describes a video to post as a story. */
 export type InputStoryContentVideo = InputStoryContentVideoF<InputFile>;
+
+/** This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
+
+- InlineQueryResultCachedAudio
+- InlineQueryResultCachedDocument
+- InlineQueryResultCachedGif
+- InlineQueryResultCachedMpeg4Gif
+- InlineQueryResultCachedPhoto
+- InlineQueryResultCachedSticker
+- InlineQueryResultCachedVideo
+- InlineQueryResultCachedVoice
+- InlineQueryResultArticle
+- InlineQueryResultAudio
+- InlineQueryResultContact
+- InlineQueryResultGame
+- InlineQueryResultDocument
+- InlineQueryResultGif
+- InlineQueryResultLocation
+- InlineQueryResultMpeg4Gif
+- InlineQueryResultPhoto
+- InlineQueryResultVenue
+- InlineQueryResultVideo
+- InlineQueryResultVoice
+
+Note: All URLs passed in inline query results will be available to end users and therefore must be assumed to be public. */
+export type InlineQueryResult = InlineQueryResultF<InputFile>;
+/** Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio. */
+export type InlineQueryResultCachedAudio = InlineQueryResultCachedAudioF<
+    InputFile
+>;
+/** Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. */
+export type InlineQueryResultCachedDocument = InlineQueryResultCachedDocumentF<
+    InputFile
+>;
+/** Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with specified content instead of the animation. */
+export type InlineQueryResultCachedGif = InlineQueryResultCachedGifF<InputFile>;
+/** Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation. */
+export type InlineQueryResultCachedMpeg4Gif = InlineQueryResultCachedMpeg4GifF<
+    InputFile
+>;
+/** Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo. */
+export type InlineQueryResultCachedPhoto = InlineQueryResultCachedPhotoF<
+    InputFile
+>;
+/** Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the sticker. */
+export type InlineQueryResultCachedSticker = InlineQueryResultCachedStickerF<
+    InputFile
+>;
+/** Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video. */
+export type InlineQueryResultCachedVideo = InlineQueryResultCachedVideoF<
+    InputFile
+>;
+/** Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the voice message. */
+export type InlineQueryResultCachedVoice = InlineQueryResultCachedVoiceF<
+    InputFile
+>;
+/** Represents a link to an article or web page. */
+export type InlineQueryResultArticle = InlineQueryResultArticleF<InputFile>;
+/** Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the audio. */
+export type InlineQueryResultAudio = InlineQueryResultAudioF<InputFile>;
+/** Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the contact. */
+export type InlineQueryResultContact = InlineQueryResultContactF<InputFile>;
+/** Represents a Game. */
+export type InlineQueryResultGame = InlineQueryResultGameF;
+/** Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the file. Currently, only .PDF and .ZIP files can be sent using this method. */
+export type InlineQueryResultDocument = InlineQueryResultDocumentF<InputFile>;
+/** Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation. */
+export type InlineQueryResultGif = InlineQueryResultGifF<InputFile>;
+/** Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the location. */
+export type InlineQueryResultLocation = InlineQueryResultLocationF<InputFile>;
+/** Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the animation. */
+export type InlineQueryResultMpeg4Gif = InlineQueryResultMpeg4GifF<InputFile>;
+/** Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the photo. */
+export type InlineQueryResultPhoto = InlineQueryResultPhotoF<InputFile>;
+/** Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the venue. */
+export type InlineQueryResultVenue = InlineQueryResultVenueF<InputFile>;
+/** Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use input_message_content to send a message with the specified content instead of the video.
+
+> If an InlineQueryResultVideo<F> message contains an embedded video (e.g., YouTube), you must replace its content using input_message_content. */
+export type InlineQueryResultVideo = InlineQueryResultVideoF<InputFile>;
+/** Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message. */
+export type InlineQueryResultVoice = InlineQueryResultVoiceF<InputFile>;
+
+/** Describes a rich message to be sent. Exactly one of the fields html, markdown, or blocks must be used. */
+export type InputRichMessage = InputRichMessageF<InputFile>;
+/** Describes a rich message to be sent. Exactly one of the fields html, markdown, or blocks must be used. */
+export type InputRichMessageWithoutUpload = InputRichMessageF<never>;
+/** Represents the content of a rich message to be sent as the result of an inline query. */
+export type InputRichMessageContent = InputRichMessageContentF<InputFile>;
+/** Describes a media element embedded in an outgoing rich message. */
+export type InputRichMessageMedia = InputRichMessageMediaF<InputFile>;
+/** An item of a list to be sent. */
+export type InputRichBlockListItem = InputRichBlockListItemF<InputFile>;
+/** This object represents a block in a rich formatted message to be sent. Currently, it can be any of the following types:
+
+- InputRichBlockParagraph
+- InputRichBlockSectionHeading
+- InputRichBlockPreformatted
+- InputRichBlockFooter
+- InputRichBlockDivider
+- InputRichBlockMathematicalExpression
+- InputRichBlockAnchor
+- InputRichBlockList
+- InputRichBlockBlockQuotation
+- InputRichBlockPullQuotation
+- InputRichBlockCollage
+- InputRichBlockSlideshow
+- InputRichBlockTable
+- InputRichBlockDetails
+- InputRichBlockMap
+- InputRichBlockAnimation
+- InputRichBlockAudio
+- InputRichBlockPhoto
+- InputRichBlockVideo
+- InputRichBlockVoiceNote
+- InputRichBlockThinking */
+export type InputRichBlock = InputRichBlockF<InputFile>;
+/** A list of blocks, corresponding to the HTML tag \<ul> or \<ol> with multiple nested tags \<li>. */
+export type InputRichBlockList = InputRichBlockListF<InputFile>;
+/** A block quotation, corresponding to the HTML tag \<blockquote>. */
+export type InputRichBlockBlockQuotation = InputRichBlockBlockQuotationF<
+    InputFile
+>;
+/** A collage, corresponding to the custom HTML tag \<tg-collage>. */
+export type InputRichBlockCollage = InputRichBlockCollageF<InputFile>;
+/** A slideshow, corresponding to the custom HTML tag \<tg-slideshow>. */
+export type InputRichBlockSlideshow = InputRichBlockSlideshowF<InputFile>;
+/** An expandable block for details disclosure, corresponding to the HTML tag \<details>. */
+export type InputRichBlockDetails = InputRichBlockDetailsF<InputFile>;
+/** A block with an animation, corresponding to the HTML tag \<video>. */
+export type InputRichBlockAnimation = InputRichBlockAnimationF<InputFile>;
+/** A block with a music file, corresponding to the HTML tag \<audio>. */
+export type InputRichBlockAudio = InputRichBlockAudioF<InputFile>;
+/** A block with a photo, corresponding to the HTML tag \<img>. */
+export type InputRichBlockPhoto = InputRichBlockPhotoF<InputFile>;
+/** A block with a video, corresponding to the HTML tag \<video>. */
+export type InputRichBlockVideo = InputRichBlockVideoF<InputFile>;
+/** A block with a voice note, corresponding to the HTML tag \<audio>. */
+export type InputRichBlockVoiceNote = InputRichBlockVoiceNoteF<InputFile>;

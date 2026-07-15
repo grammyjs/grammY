@@ -48,6 +48,7 @@ export const DEFAULT_UPDATE_TYPES = [
     "chat_join_request",
     "chat_boost",
     "removed_chat_boost",
+    "subscription",
 ] as const satisfies ReadonlyArray<Exclude<keyof Update, "update_id">>;
 
 /**
