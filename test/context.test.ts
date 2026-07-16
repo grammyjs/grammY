@@ -1,6 +1,7 @@
 import { Context } from "../src/context.ts";
 import { Api } from "../src/mod.ts";
 import {
+    type BotSubscriptionUpdated,
     type BusinessConnection,
     type BusinessMessagesDeleted,
     type Chat,
@@ -35,6 +36,11 @@ describe("Context", () => {
         message_ids: [0, 1, 2],
         business_connection_id: "conn",
     } as BusinessMessagesDeleted;
+    const s = {
+        user: u,
+        invoice_payload: "payload",
+        state: "active",
+    } as BotSubscriptionUpdated;
     const update = {
         message: m,
         edited_message: m,
@@ -83,6 +89,7 @@ describe("Context", () => {
         chat_join_request: { date: 3, from: u, chat: c },
         chat_boost: { chat: c, boost: { boost_id: 3, source: { user: u } } },
         removed_chat_boost: { chat: c, boost_id: 3, source: { user: u } },
+        subscription: s,
     } as unknown as Update;
     const api = new Api("dummy-token");
     const me = { id: 42, username: "bot" } as UserFromGetMe;
@@ -122,6 +129,7 @@ describe("Context", () => {
         assertEquals(ctx.chatJoinRequest, update.chat_join_request);
         assertEquals(ctx.chatBoost, update.chat_boost);
         assertEquals(ctx.removedChatBoost, update.removed_chat_boost);
+        assertEquals(ctx.subscription, update.subscription);
     });
 
     it(".msg should aggregate messages", () => {
@@ -212,6 +220,9 @@ describe("Context", () => {
         up = { removed_chat_boost: update.removed_chat_boost } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.removed_chat_boost?.source?.user);
+        up = { subscription: update.subscription } as Update;
+        ctx = new Context(up, api, me);
+        assertEquals(ctx.from, up.subscription?.user);
         up = { callback_query: update.callback_query } as Update;
         ctx = new Context(up, api, me);
         assertEquals(ctx.from, up.callback_query?.from);
