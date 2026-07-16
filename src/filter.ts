@@ -644,7 +644,7 @@ interface Shortcuts<U extends Update> {
     purchasedPaidMedia: [U["purchased_paid_media"]] extends [object]
         ? U["purchased_paid_media"]
         : undefined;
-    subscription: [U["subscription"]] extends [object] ? [U["subscription"]]
+    subscription: [U["subscription"]] extends [object] ? U["subscription"]
         : undefined;
     msg: [U["message"]] extends [object] ? U["message"]
         : [U["edited_message"]] extends [object] ? U["edited_message"]
