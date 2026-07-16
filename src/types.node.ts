@@ -30,6 +30,8 @@ import {
     type InputMediaPhoto as InputMediaPhotoF,
     type InputMediaSticker as InputMediaStickerF,
     type InputMediaVideo as InputMediaVideoF,
+    type InputMediaVoiceNote as InputMediaVoiceNoteF,
+    type InputMessageContent as InputMessageContentF,
     type InputPaidMedia as InputPaidMediaF,
     type InputPaidMediaLivePhoto as InputPaidMediaLivePhotoF,
     type InputPaidMediaPhoto as InputPaidMediaPhotoF,
@@ -234,6 +236,8 @@ export type InputMediaPhoto = InputMediaPhotoF<InputFile>;
 export type InputMediaSticker = InputMediaStickerF<InputFile>;
 /** Represents a video to be sent. */
 export type InputMediaVideo = InputMediaVideoF<InputFile>;
+/** Represents a voice message file to be sent. */
+export type InputMediaVoiceNote = InputMediaVoiceNoteF<InputFile>;
 /** This object contains information about one answer option in a poll to send. */
 export type InputPollOption = InputPollOptionF<InputFile>;
 /** This object represents the content of a poll description or a quiz explanation to be sent. It should be one of
@@ -369,6 +373,15 @@ export type InlineQueryResultVideo = InlineQueryResultVideoF<InputFile>;
 /** Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use input_message_content to send a message with the specified content instead of the the voice message. */
 export type InlineQueryResultVoice = InlineQueryResultVoiceF<InputFile>;
 
+/** This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following types:
+
+- InputTextMessageContent
+- InputRichMessageContent
+- InputLocationMessageContent
+- InputVenueMessageContent
+- InputContactMessageContent
+- InputInvoiceMessageContent */
+export type InputMessageContent = InputMessageContentF<InputFile>;
 /** Describes a rich message to be sent. Exactly one of the fields html, markdown, or blocks must be used. */
 export type InputRichMessage = InputRichMessageF<InputFile>;
 /** Describes a rich message to be sent. Exactly one of the fields html, markdown, or blocks must be used. */
