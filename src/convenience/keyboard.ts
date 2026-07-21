@@ -94,7 +94,7 @@ export class Keyboard {
      *
      * @param buttons The buttons to add
      */
-    add(...buttons: KeyboardButton[]) {
+    add(...buttons: KeyboardButton[]): this {
         this.keyboard[this.keyboard.length - 1]?.push(...buttons);
         return this;
     }
@@ -108,7 +108,7 @@ export class Keyboard {
      *
      * @param buttons A number of buttons to add to the next row
      */
-    row(...buttons: KeyboardButton[]) {
+    row(...buttons: KeyboardButton[]): this {
         this.keyboard.push(buttons);
         return this;
     }
@@ -124,7 +124,7 @@ export class Keyboard {
         options?:
             | KeyboardButton.CommonButton["style"]
             | Omit<KeyboardButton.CommonButton, "text">,
-    ) {
+    ): this {
         return this.add(Keyboard.text(text, options));
     }
     /**
@@ -158,7 +158,7 @@ export class Keyboard {
         text: string | KeyboardButton.CommonButton,
         requestId: number,
         options: Omit<KeyboardButtonRequestUsers, "request_id"> = {},
-    ) {
+    ): this {
         return this.add(Keyboard.requestUsers(text, requestId, options));
     }
     /**
@@ -197,7 +197,7 @@ export class Keyboard {
         options: Omit<KeyboardButtonRequestChat, "request_id"> = {
             chat_is_channel: false,
         },
-    ) {
+    ): this {
         return this.add(Keyboard.requestChat(text, requestId, options));
     }
     /**
@@ -228,7 +228,7 @@ export class Keyboard {
      *
      * @param text The text to display, and optional styling information
      */
-    requestContact(text: string | KeyboardButton.CommonButton) {
+    requestContact(text: string | KeyboardButton.CommonButton): this {
         return this.add(Keyboard.requestContact(text));
     }
     /**
@@ -252,7 +252,7 @@ export class Keyboard {
      *
      * @param text The text to display, and optional styling information
      */
-    requestLocation(text: string | KeyboardButton.CommonButton) {
+    requestLocation(text: string | KeyboardButton.CommonButton): this {
         return this.add(Keyboard.requestLocation(text));
     }
     /**
@@ -281,7 +281,7 @@ export class Keyboard {
     requestPoll(
         text: string | KeyboardButton.CommonButton,
         type?: KeyboardButtonPollType["type"],
-    ) {
+    ): this {
         return this.add(Keyboard.requestPoll(text, type));
     }
     /**
@@ -315,7 +315,7 @@ export class Keyboard {
         text: string | KeyboardButton.CommonButton,
         requestId: number,
         options: Omit<KeyboardButtonRequestManagedBot, "request_id"> = {},
-    ) {
+    ): this {
         return this.add(Keyboard.requestManagedBot(text, requestId, options));
     }
     /**
@@ -345,7 +345,7 @@ export class Keyboard {
      * @param text The text to display, and optional styling information
      * @param url An HTTPS URL of a Web App to be opened with additional data
      */
-    webApp(text: string | KeyboardButton.CommonButton, url: string) {
+    webApp(text: string | KeyboardButton.CommonButton, url: string): this {
         return this.add(Keyboard.webApp(text, url));
     }
     /**
@@ -376,7 +376,7 @@ export class Keyboard {
      *
      * @param style Style of the button
      */
-    style(style: KeyboardButton.CommonButton["style"]) {
+    style(style: KeyboardButton.CommonButton["style"]): this {
         const rows = this.keyboard.length;
         if (rows === 0) {
             throw new Error("Need to add a button before applying a style!");
@@ -404,7 +404,7 @@ export class Keyboard {
      *   .danger()
      * ```
      */
-    danger() {
+    danger(): this {
         return this.style("danger");
     }
     /**
@@ -417,7 +417,7 @@ export class Keyboard {
      *   .success()
      * ```
      */
-    success() {
+    success(): this {
         return this.style("success");
     }
     /**
@@ -430,7 +430,7 @@ export class Keyboard {
      *   .primary()
      * ```
      */
-    primary() {
+    primary(): this {
         return this.style("primary");
     }
     /**
@@ -444,7 +444,7 @@ export class Keyboard {
      *
      * @param icon Unique identifier of the custom emoji shown before the text of the button
      */
-    icon(icon: KeyboardButton.CommonButton["icon_custom_emoji_id"]) {
+    icon(icon: KeyboardButton.CommonButton["icon_custom_emoji_id"]): this {
         const rows = this.keyboard.length;
         if (rows === 0) {
             throw new Error("Need to add a button before adding an icon!");
@@ -473,7 +473,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should persist, and `false` otherwise
      */
-    persistent(isEnabled = true) {
+    persistent(isEnabled = true): this {
         this.is_persistent = isEnabled;
         return this;
     }
@@ -488,7 +488,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should be selective, and `false` otherwise
      */
-    selected(isEnabled = true) {
+    selected(isEnabled = true): this {
         this.selective = isEnabled;
         return this;
     }
@@ -503,7 +503,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should be one-time, and `false` otherwise
      */
-    oneTime(isEnabled = true) {
+    oneTime(isEnabled = true): this {
         this.one_time_keyboard = isEnabled;
         return this;
     }
@@ -518,7 +518,7 @@ export class Keyboard {
      *
      * @param isEnabled `true` if the keyboard should be resized, and `false` otherwise
      */
-    resized(isEnabled = true) {
+    resized(isEnabled = true): this {
         this.resize_keyboard = isEnabled;
         return this;
     }
@@ -529,7 +529,7 @@ export class Keyboard {
      *
      * @param value The placeholder text
      */
-    placeholder(value: string) {
+    placeholder(value: string): this {
         this.input_field_placeholder = value;
         return this;
     }
@@ -562,7 +562,7 @@ export class Keyboard {
      * [d e f]     [  f  ]
      * ```
      */
-    toTransposed() {
+    toTransposed(): Keyboard {
         const original = this.keyboard;
         const transposed = transpose(original);
         return this.clone(transposed);
@@ -602,7 +602,7 @@ export class Keyboard {
      * @param columns Maximum number of buttons per row
      * @param options Optional flowing behavior
      */
-    toFlowed(columns: number, options: FlowOptions = {}) {
+    toFlowed(columns: number, options: FlowOptions = {}): Keyboard {
         const original = this.keyboard;
         const flowed = reflow(original, columns, options);
         return this.clone(flowed);
@@ -614,7 +614,7 @@ export class Keyboard {
      * specified, only the options will be cloned, and the given buttons will be
      * used instead.
      */
-    clone(keyboard: KeyboardButton[][] = this.keyboard) {
+    clone(keyboard: KeyboardButton[][] = this.keyboard): Keyboard {
         const clone = new Keyboard(keyboard.map((row) => row.slice()));
         clone.is_persistent = this.is_persistent;
         clone.selective = this.selective;
@@ -629,7 +629,7 @@ export class Keyboard {
      *
      * @param sources A number of keyboards to append
      */
-    append(...sources: KeyboardSource[]) {
+    append(...sources: KeyboardSource[]): this {
         for (const source of sources) {
             const keyboard = Keyboard.from(source);
             this.keyboard.push(...keyboard.keyboard.map((row) => row.slice()));
@@ -641,7 +641,7 @@ export class Keyboard {
      * `resize_keyboard` or other options that may be set. You don't usually
      * need to call this method. It is no longer useful.
      */
-    build() {
+    build(): KeyboardButton[][] {
         return this.keyboard;
     }
     /**
@@ -712,7 +712,7 @@ export class InlineKeyboard {
      *
      * @param buttons The buttons to add
      */
-    add(...buttons: InlineKeyboardButton[]) {
+    add(...buttons: InlineKeyboardButton[]): this {
         this.inline_keyboard[this.inline_keyboard.length - 1]?.push(...buttons);
         return this;
     }
@@ -726,7 +726,7 @@ export class InlineKeyboard {
      *
      * @param buttons A number of buttons to add to the next row
      */
-    row(...buttons: InlineKeyboardButton[]) {
+    row(...buttons: InlineKeyboardButton[]): this {
         this.inline_keyboard.push(buttons);
         return this;
     }
@@ -740,7 +740,7 @@ export class InlineKeyboard {
     url(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         url: string,
-    ) {
+    ): this {
         return this.add(InlineKeyboard.url(text, url));
     }
     /**
@@ -777,7 +777,7 @@ export class InlineKeyboard {
     text(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         data = typeof text === "string" ? text : text.text,
-    ) {
+    ): this {
         return this.add(InlineKeyboard.text(text, data));
     }
     /**
@@ -815,7 +815,7 @@ export class InlineKeyboard {
     webApp(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         url: string | WebAppInfo,
-    ) {
+    ): this {
         return this.add(InlineKeyboard.webApp(text, url));
     }
     /**
@@ -844,7 +844,7 @@ export class InlineKeyboard {
     login(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         loginUrl: string | LoginUrl,
-    ) {
+    ): this {
         return this.add(InlineKeyboard.login(text, loginUrl));
     }
     /**
@@ -884,7 +884,7 @@ export class InlineKeyboard {
     switchInline(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         query = "",
-    ) {
+    ): this {
         return this.add(InlineKeyboard.switchInline(text, query));
     }
     /**
@@ -928,7 +928,7 @@ export class InlineKeyboard {
     switchInlineCurrent(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         query = "",
-    ) {
+    ): this {
         return this.add(InlineKeyboard.switchInlineCurrent(text, query));
     }
     /**
@@ -972,7 +972,7 @@ export class InlineKeyboard {
     switchInlineChosen(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         query: SwitchInlineQueryChosenChat = {},
-    ) {
+    ): this {
         return this.add(InlineKeyboard.switchInlineChosen(text, query));
     }
     /**
@@ -1008,7 +1008,7 @@ export class InlineKeyboard {
     copyText(
         text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
         copyText: string | CopyTextButton,
-    ) {
+    ): this {
         return this.add(InlineKeyboard.copyText(text, copyText));
     }
     /**
@@ -1037,7 +1037,9 @@ export class InlineKeyboard {
      *
      * @param text The text to display, and optional styling information
      */
-    game(text: string | InlineKeyboardButton.AbstractInlineKeyboardButton) {
+    game(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+    ): this {
         return this.add(InlineKeyboard.game(text));
     }
     /**
@@ -1065,7 +1067,9 @@ export class InlineKeyboard {
      *
      * @param text The text to display, and optional styling information. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
      */
-    pay(text: string | InlineKeyboardButton.AbstractInlineKeyboardButton) {
+    pay(
+        text: string | InlineKeyboardButton.AbstractInlineKeyboardButton,
+    ): this {
         return this.add(InlineKeyboard.pay(text));
     }
     /**
@@ -1094,7 +1098,9 @@ export class InlineKeyboard {
      *
      * @param style Style of the button
      */
-    style(style: InlineKeyboardButton.AbstractInlineKeyboardButton["style"]) {
+    style(
+        style: InlineKeyboardButton.AbstractInlineKeyboardButton["style"],
+    ): this {
         const rows = this.inline_keyboard.length;
         if (rows === 0) {
             throw new Error("Need to add a button before applying a style!");
@@ -1117,7 +1123,7 @@ export class InlineKeyboard {
      *   .danger()
      * ```
      */
-    danger() {
+    danger(): this {
         return this.style("danger");
     }
     /**
@@ -1130,7 +1136,7 @@ export class InlineKeyboard {
      *   .success()
      * ```
      */
-    success() {
+    success(): this {
         return this.style("success");
     }
     /**
@@ -1143,7 +1149,7 @@ export class InlineKeyboard {
      *   .primary()
      * ```
      */
-    primary() {
+    primary(): this {
         return this.style("primary");
     }
     /**
@@ -1161,7 +1167,7 @@ export class InlineKeyboard {
         icon: InlineKeyboardButton.AbstractInlineKeyboardButton[
             "icon_custom_emoji_id"
         ],
-    ) {
+    ): this {
         const rows = this.inline_keyboard.length;
         if (rows === 0) {
             throw new Error("Need to add a button before adding an icon!");
@@ -1204,7 +1210,7 @@ export class InlineKeyboard {
      * [d e f]     [  f  ]
      * ```
      */
-    toTransposed() {
+    toTransposed(): InlineKeyboard {
         const original = this.inline_keyboard;
         const transposed = transpose(original);
         return new InlineKeyboard(transposed);
@@ -1244,7 +1250,7 @@ export class InlineKeyboard {
      * @param columns Maximum number of buttons per row
      * @param options Optional flowing behavior
      */
-    toFlowed(columns: number, options: FlowOptions = {}) {
+    toFlowed(columns: number, options: FlowOptions = {}): InlineKeyboard {
         const original = this.inline_keyboard;
         const flowed = reflow(original, columns, options);
         return new InlineKeyboard(flowed);
@@ -1252,7 +1258,7 @@ export class InlineKeyboard {
     /**
      * Creates and returns a deep copy of this inline keyboard.
      */
-    clone() {
+    clone(): InlineKeyboard {
         return new InlineKeyboard(
             this.inline_keyboard.map((row) => row.slice()),
         );
@@ -1262,7 +1268,7 @@ export class InlineKeyboard {
      *
      * @param sources A number of inline keyboards to append
      */
-    append(...sources: InlineKeyboardSource[]) {
+    append(...sources: InlineKeyboardSource[]): this {
         for (const source of sources) {
             const keyboard = InlineKeyboard.from(source);
             this.inline_keyboard.push(

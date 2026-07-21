@@ -36,7 +36,28 @@ type InputMediaOptions<T> = Omit<T, "type" | "media">;
  * await bot.api.editMessageMedia(chatId, messageId, media)
  * ```
  */
-export const InputMediaBuilder = {
+export const InputMediaBuilder: {
+    photo(
+        media: string | InputFile,
+        options?: InputMediaOptions<InputMediaPhoto>,
+    ): InputMediaPhoto;
+    video(
+        media: string | InputFile,
+        options?: InputMediaOptions<InputMediaVideo>,
+    ): InputMediaVideo;
+    animation(
+        media: string | InputFile,
+        options?: InputMediaOptions<InputMediaAnimation>,
+    ): InputMediaAnimation;
+    audio(
+        media: string | InputFile,
+        options?: InputMediaOptions<InputMediaAudio>,
+    ): InputMediaAudio;
+    document(
+        media: string | InputFile,
+        options?: InputMediaOptions<InputMediaDocument>,
+    ): InputMediaDocument;
+} = {
     /**
      * Creates a new `InputMediaPhoto` object as specified by
      * https://core.telegram.org/bots/api#inputmediaphoto.

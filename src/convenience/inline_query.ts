@@ -1,4 +1,5 @@
 import {
+    type InlineKeyboardMarkup,
     type InlineQueryResult,
     type InlineQueryResultArticle,
     type InlineQueryResultAudio,
@@ -41,7 +42,49 @@ type PartialKeys<T, K extends keyof T> =
     & Omit<T, K>
     & Partial<Pick<T, K>>;
 
-function inputMessage<R extends InlineQueryResult>(queryTemplate: R) {
+/**
+ * Collection of methods that attach a custom `input_message_content` to an
+ * inline query result, each returning the completed result `R`.
+ */
+type InputMessageMethods<R extends InlineQueryResult> = {
+    text(
+        message_text: string,
+        options?: OptionalFields<InputTextMessageContent>,
+    ): R;
+    rich(
+        rich_message: InputRichMessage,
+        options?: OptionalFields<InputRichMessageContent>,
+    ): R;
+    location(
+        latitude: number,
+        longitude: number,
+        options?: OptionalFields<InputLocationMessageContent>,
+    ): R;
+    venue(
+        title: string,
+        latitude: number,
+        longitude: number,
+        address: string,
+        options: OptionalFields<InputVenueMessageContent>,
+    ): R;
+    contact(
+        first_name: string,
+        phone_number: string,
+        options?: OptionalFields<InputContactMessageContent>,
+    ): R;
+    invoice(
+        title: string,
+        description: string,
+        payload: string,
+        provider_token: string,
+        currency: string,
+        prices: LabeledPrice[],
+        options?: OptionalFields<InputInvoiceMessageContent>,
+    ): R;
+};
+function inputMessage<R extends InlineQueryResult>(
+    queryTemplate: R,
+): R & InputMessageMethods<R> {
     return {
         ...queryTemplate,
         ...inputMessageMethods<R>(queryTemplate),
@@ -49,7 +92,7 @@ function inputMessage<R extends InlineQueryResult>(queryTemplate: R) {
 }
 function inputMessageMethods<R extends InlineQueryResult>(
     queryTemplate: Omit<R, "input_message_content">,
-) {
+): InputMessageMethods<R> {
     return {
         text(
             message_text: string,
@@ -169,7 +212,229 @@ function inputMessageMethods<R extends InlineQueryResult>(
  * [documentation](https://core.telegram.org/bots/api#inline-mode) on inline
  * mode.
  */
-export const InlineQueryResultBuilder = {
+export const InlineQueryResultBuilder: {
+    article(
+        id: string,
+        title: string,
+        options?: InlineQueryResultOptions<InlineQueryResultArticle, "title">,
+    ): InputMessageMethods<InlineQueryResultArticle>;
+    audio(
+        id: string,
+        title: string,
+        audio_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultAudio,
+            "title" | "audio_url"
+        >,
+    ): InlineQueryResultAudio & InputMessageMethods<InlineQueryResultAudio>;
+    audioCached(
+        id: string,
+        audio_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedAudio,
+            "audio_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedAudio
+        & InputMessageMethods<InlineQueryResultCachedAudio>;
+    contact(
+        id: string,
+        phone_number: string,
+        first_name: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultContact,
+            "phone_number" | "first_name"
+        >,
+    ): InlineQueryResultContact & InputMessageMethods<InlineQueryResultContact>;
+    documentPdf(
+        id: string,
+        title: string,
+        document_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultDocument,
+            "mime_type" | "title" | "document_url"
+        >,
+    ):
+        & InlineQueryResultDocument
+        & InputMessageMethods<InlineQueryResultDocument>;
+    documentZip(
+        id: string,
+        title: string,
+        document_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultDocument,
+            "mime_type" | "title" | "document_url"
+        >,
+    ):
+        & InlineQueryResultDocument
+        & InputMessageMethods<InlineQueryResultDocument>;
+    documentCached(
+        id: string,
+        title: string,
+        document_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedDocument,
+            "title" | "document_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedDocument
+        & InputMessageMethods<InlineQueryResultCachedDocument>;
+    game(
+        id: string,
+        game_short_name: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultGame,
+            "game_short_name"
+        >,
+    ): {
+        reply_markup?: InlineKeyboardMarkup | undefined;
+        type: string;
+        id: string;
+        game_short_name: string;
+    };
+    gif(
+        id: string,
+        gif_url: string | URL,
+        thumbnail_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultGif,
+            "gif_url" | "thumbnail_url"
+        >,
+    ): InlineQueryResultGif & InputMessageMethods<InlineQueryResultGif>;
+    gifCached(
+        id: string,
+        gif_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedGif,
+            "gif_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedGif
+        & InputMessageMethods<InlineQueryResultCachedGif>;
+    location(
+        id: string,
+        title: string,
+        latitude: number,
+        longitude: number,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultLocation,
+            "title" | "latitude" | "longitude"
+        >,
+    ):
+        & InlineQueryResultLocation
+        & InputMessageMethods<InlineQueryResultLocation>;
+    mpeg4gif(
+        id: string,
+        mpeg4_url: string | URL,
+        thumbnail_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultMpeg4Gif,
+            "mpeg4_url" | "thumbnail_url"
+        >,
+    ):
+        & InlineQueryResultMpeg4Gif
+        & InputMessageMethods<InlineQueryResultMpeg4Gif>;
+    mpeg4gifCached(
+        id: string,
+        mpeg4_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedMpeg4Gif,
+            "mpeg4_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedMpeg4Gif
+        & InputMessageMethods<InlineQueryResultCachedMpeg4Gif>;
+    photo(
+        id: string,
+        photo_url: string | URL,
+        options?: InlineQueryResultOptions<
+            PartialKeys<InlineQueryResultPhoto, "thumbnail_url">,
+            "photo_url"
+        >,
+    ): InlineQueryResultPhoto & InputMessageMethods<InlineQueryResultPhoto>;
+    photoCached(
+        id: string,
+        photo_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedPhoto,
+            "photo_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedPhoto
+        & InputMessageMethods<InlineQueryResultCachedPhoto>;
+    stickerCached(
+        id: string,
+        sticker_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedSticker,
+            "sticker_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedSticker
+        & InputMessageMethods<InlineQueryResultCachedSticker>;
+    venue(
+        id: string,
+        title: string,
+        latitude: number,
+        longitude: number,
+        address: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultVenue,
+            "title" | "latitude" | "longitude" | "address"
+        >,
+    ): InlineQueryResultVenue & InputMessageMethods<InlineQueryResultVenue>;
+    videoHtml(
+        id: string,
+        title: string,
+        video_url: string | URL,
+        thumbnail_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultVideo,
+            "mime_type" | "title" | "video_url" | "thumbnail_url"
+        >,
+    ): InputMessageMethods<InlineQueryResultVideo>;
+    videoMp4(
+        id: string,
+        title: string,
+        video_url: string | URL,
+        thumbnail_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultVideo,
+            "mime_type" | "title" | "video_url" | "thumbnail_url"
+        >,
+    ): InlineQueryResultVideo & InputMessageMethods<InlineQueryResultVideo>;
+    videoCached(
+        id: string,
+        title: string,
+        video_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedVideo,
+            "title" | "video_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedVideo
+        & InputMessageMethods<InlineQueryResultCachedVideo>;
+    voice(
+        id: string,
+        title: string,
+        voice_url: string | URL,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultVoice,
+            "title" | "voice_url"
+        >,
+    ): InlineQueryResultVoice & InputMessageMethods<InlineQueryResultVoice>;
+    voiceCached(
+        id: string,
+        title: string,
+        voice_file_id: string,
+        options?: InlineQueryResultOptions<
+            InlineQueryResultCachedVoice,
+            "title" | "voice_file_id"
+        >,
+    ):
+        & InlineQueryResultCachedVoice
+        & InputMessageMethods<InlineQueryResultCachedVoice>;
+} = {
     /**
      * Builds an InlineQueryResultArticle object as specified by
      * https://core.telegram.org/bots/api#inlinequeryresultarticle. Requires you

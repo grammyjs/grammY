@@ -1,8 +1,23 @@
 // deno-lint-ignore-file camelcase
 import {
     type AcceptedGiftTypes,
+    type BotAccessSettings,
     type BotCommand,
+    type BotDescription,
+    type BotName,
+    type BotShortDescription,
+    type BusinessConnection,
+    type ChatAdministratorRights,
+    type ChatFullInfo,
+    type ChatInviteLink,
+    type ChatMember,
+    type ChatMemberAdministrator,
+    type ChatMemberOwner,
     type ChatPermissions,
+    type File,
+    type ForumTopic,
+    type GameHighScore,
+    type Gifts,
     type InlineQueryResult,
     type InputChecklist,
     type InputFile,
@@ -23,8 +38,28 @@ import {
     type KeyboardButton,
     type LabeledPrice,
     type MaskPosition,
+    type MenuButton,
+    type Message,
+    type MessageId,
+    type OwnedGifts,
     type PassportElementError,
+    type Poll,
+    type PreparedInlineMessage,
+    type PreparedKeyboardButton,
     type ReactionType,
+    type SentGuestMessage,
+    type SentWebAppMessage,
+    type StarAmount,
+    type StarTransactions,
+    type Sticker,
+    type StickerSet,
+    type Story,
+    type Update,
+    type UserChatBoosts,
+    type UserFromGetMe,
+    type UserProfileAudios,
+    type UserProfilePhotos,
+    type WebhookInfo,
 } from "../types.ts";
 import {
     type ApiClientOptions,
@@ -139,7 +174,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getupdates
      */
-    getUpdates(other?: Other<R, "getUpdates">, signal?: AbortSignal) {
+    getUpdates(
+        other?: Other<R, "getUpdates">,
+        signal?: AbortSignal,
+    ): Promise<Update[]> {
         return this.raw.getUpdates({ ...other }, signal);
     }
 
@@ -165,7 +203,7 @@ export class Api<R extends RawApi = RawApi> {
         url: string,
         other?: Other<R, "setWebhook", "url">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setWebhook({ url, ...other }, signal);
     }
 
@@ -177,7 +215,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletewebhook
      */
-    deleteWebhook(other?: Other<R, "deleteWebhook">, signal?: AbortSignal) {
+    deleteWebhook(
+        other?: Other<R, "deleteWebhook">,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.deleteWebhook({ ...other }, signal);
     }
 
@@ -188,7 +229,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getwebhookinfo
      */
-    getWebhookInfo(signal?: AbortSignal) {
+    getWebhookInfo(signal?: AbortSignal): Promise<WebhookInfo> {
         return this.raw.getWebhookInfo(signal);
     }
 
@@ -199,7 +240,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getme
      */
-    getMe(signal?: AbortSignal) {
+    getMe(signal?: AbortSignal): Promise<UserFromGetMe> {
         return this.raw.getMe(signal);
     }
 
@@ -210,7 +251,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#logout
      */
-    logOut(signal?: AbortSignal) {
+    logOut(signal?: AbortSignal): Promise<true> {
         return this.raw.logOut(signal);
     }
 
@@ -221,7 +262,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#close
      */
-    close(signal?: AbortSignal) {
+    close(signal?: AbortSignal): Promise<true> {
         return this.raw.close(signal);
     }
 
@@ -240,7 +281,7 @@ export class Api<R extends RawApi = RawApi> {
         text: string,
         other?: Other<R, "sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.TextMessage> {
         return this.raw.sendMessage({ chat_id, text, ...other }, signal);
     }
 
@@ -259,7 +300,7 @@ export class Api<R extends RawApi = RawApi> {
         rich_message: InputRichMessage,
         other?: Other<R, "sendRichMessage", "chat_id" | "rich_message">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.RichMessageMessage> {
         return this.raw.sendRichMessage(
             { chat_id, rich_message, ...other },
             signal,
@@ -287,7 +328,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "from_chat_id" | "message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message> {
         return this.raw.forwardMessage(
             { chat_id, from_chat_id, message_id, ...other },
             signal,
@@ -315,7 +356,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MessageId[]> {
         return this.raw.forwardMessages({
             chat_id,
             from_chat_id,
@@ -345,7 +386,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "from_chat_id" | "message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MessageId> {
         return this.raw.copyMessage(
             { chat_id, from_chat_id, message_id, ...other },
             signal,
@@ -373,7 +414,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MessageId[]> {
         return this.raw.copyMessages({
             chat_id,
             from_chat_id,
@@ -397,7 +438,7 @@ export class Api<R extends RawApi = RawApi> {
         photo: InputFile | string,
         other?: Other<R, "sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.PhotoMessage> {
         return this.raw.sendPhoto({ chat_id, photo, ...other }, signal);
     }
 
@@ -418,7 +459,7 @@ export class Api<R extends RawApi = RawApi> {
         photo: InputFile | string,
         other?: Other<R, "sendLivePhoto", "chat_id" | "live_photo" | "photo">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.LivePhotoMessage> {
         return this.raw.sendLivePhoto(
             { chat_id, live_photo, photo, ...other },
             signal,
@@ -442,7 +483,7 @@ export class Api<R extends RawApi = RawApi> {
         audio: InputFile | string,
         other?: Other<R, "sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.AudioMessage> {
         return this.raw.sendAudio({ chat_id, audio, ...other }, signal);
     }
 
@@ -461,7 +502,7 @@ export class Api<R extends RawApi = RawApi> {
         document: InputFile | string,
         other?: Other<R, "sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.DocumentMessage> {
         return this.raw.sendDocument({ chat_id, document, ...other }, signal);
     }
 
@@ -480,7 +521,7 @@ export class Api<R extends RawApi = RawApi> {
         video: InputFile | string,
         other?: Other<R, "sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VideoMessage> {
         return this.raw.sendVideo({ chat_id, video, ...other }, signal);
     }
 
@@ -499,7 +540,7 @@ export class Api<R extends RawApi = RawApi> {
         animation: InputFile | string,
         other?: Other<R, "sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.AnimationMessage> {
         return this.raw.sendAnimation({ chat_id, animation, ...other }, signal);
     }
 
@@ -518,7 +559,7 @@ export class Api<R extends RawApi = RawApi> {
         voice: InputFile | string,
         other?: Other<R, "sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VoiceMessage> {
         return this.raw.sendVoice({ chat_id, voice, ...other }, signal);
     }
 
@@ -538,7 +579,7 @@ export class Api<R extends RawApi = RawApi> {
         video_note: InputFile | string,
         other?: Other<R, "sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VideoNoteMessage> {
         return this.raw.sendVideoNote(
             { chat_id, video_note, ...other },
             signal,
@@ -562,7 +603,7 @@ export class Api<R extends RawApi = RawApi> {
         media: InputPaidMedia[],
         other?: Other<R, "sendPaidMedia", "chat_id" | "star_count" | "media">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.PaidMediaMessage> {
         return this.raw.sendPaidMedia(
             { chat_id, star_count, media, ...other },
             signal,
@@ -591,7 +632,15 @@ export class Api<R extends RawApi = RawApi> {
             >,
         other?: Other<R, "sendMediaGroup", "chat_id" | "media">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        (
+            | Message.AudioMessage
+            | Message.DocumentMessage
+            | Message.LivePhotoMessage
+            | Message.PhotoMessage
+            | Message.VideoMessage
+        )[]
+    > {
         return this.raw.sendMediaGroup({ chat_id, media, ...other }, signal);
     }
 
@@ -612,7 +661,7 @@ export class Api<R extends RawApi = RawApi> {
         longitude: number,
         other?: Other<R, "sendLocation", "chat_id" | "latitude" | "longitude">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.LocationMessage> {
         return this.raw.sendLocation(
             { chat_id, latitude, longitude, ...other },
             signal,
@@ -646,7 +695,9 @@ export class Api<R extends RawApi = RawApi> {
             | "longitude"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.LocationMessage)
+    > {
         return this.raw.editMessageLiveLocation(
             { chat_id, message_id, latitude, longitude, ...other },
             signal,
@@ -678,7 +729,9 @@ export class Api<R extends RawApi = RawApi> {
             | "longitude"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.LocationMessage)
+    > {
         return this.raw.editMessageLiveLocation(
             { inline_message_id, latitude, longitude, ...other },
             signal,
@@ -704,7 +757,9 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.LocationMessage)
+    > {
         return this.raw.stopMessageLiveLocation(
             { chat_id, message_id, ...other },
             signal,
@@ -728,7 +783,9 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.LocationMessage)
+    > {
         return this.raw.stopMessageLiveLocation(
             { inline_message_id, ...other },
             signal,
@@ -760,7 +817,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "latitude" | "longitude" | "title" | "address"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VenueMessage> {
         return this.raw.sendVenue(
             { chat_id, latitude, longitude, title, address, ...other },
             signal,
@@ -788,7 +845,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "phone_number" | "first_name"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.ContactMessage> {
         return this.raw.sendContact(
             { chat_id, phone_number, first_name, ...other },
             signal,
@@ -812,7 +869,7 @@ export class Api<R extends RawApi = RawApi> {
         options: (string | InputPollOption)[],
         other?: Other<R, "sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.PollMessage> {
         const opts = options.map((o) =>
             typeof o === "string" ? { text: o } : o
         );
@@ -843,7 +900,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id" | "chat_id" | "checklist"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.ChecklistMessage> {
         return this.raw.sendChecklist({
             business_connection_id,
             chat_id,
@@ -875,7 +932,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id" | "chat_id" | "messaage_id" | "checklist"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.ChecklistMessage> {
         return this.raw.editMessageChecklist({
             business_connection_id,
             chat_id,
@@ -907,7 +964,7 @@ export class Api<R extends RawApi = RawApi> {
             | "🎰",
         other?: Other<R, "sendDice", "chat_id" | "emoji">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.DiceMessage> {
         return this.raw.sendDice({ chat_id, emoji, ...other }, signal);
     }
 
@@ -932,7 +989,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "reaction"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setMessageReaction({
             chat_id,
             message_id,
@@ -958,7 +1015,7 @@ export class Api<R extends RawApi = RawApi> {
         text: string,
         other?: Other<R, "sendMessageDraft", "chat_id" | "draft_id" | "text">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.sendMessageDraft(
             { chat_id, draft_id, text, ...other },
             signal,
@@ -986,7 +1043,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "draft_id" | "rich_message"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.sendRichMessageDraft(
             { chat_id, draft_id, rich_message, ...other },
             signal,
@@ -1023,7 +1080,7 @@ export class Api<R extends RawApi = RawApi> {
             | "upload_video_note",
         other?: Other<R, "sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.sendChatAction({ chat_id, action, ...other }, signal);
     }
 
@@ -1040,7 +1097,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "getUserProfilePhotos", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<UserProfilePhotos> {
         return this.raw.getUserProfilePhotos({ user_id, ...other }, signal);
     }
 
@@ -1057,7 +1114,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "getUserProfileAudios", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<UserProfileAudios> {
         return this.raw.getUserProfileAudios({ user_id, ...other }, signal);
     }
 
@@ -1074,7 +1131,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "setUserEmojiStatus", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setUserEmojiStatus({ user_id, ...other }, signal);
     }
 
@@ -1091,7 +1148,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<UserChatBoosts> {
         return this.raw.getUserChatBoosts({ chat_id, user_id }, signal);
     }
 
@@ -1108,7 +1165,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "getUserGifts", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<OwnedGifts> {
         return this.raw.getUserGifts({ user_id, ...other }, signal);
     }
 
@@ -1125,7 +1182,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number,
         other?: Other<R, "getChatGifts", "chat_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<OwnedGifts> {
         return this.raw.getChatGifts({ chat_id, ...other }, signal);
     }
 
@@ -1140,7 +1197,7 @@ export class Api<R extends RawApi = RawApi> {
     getBusinessConnection(
         business_connection_id: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<BusinessConnection> {
         return this.raw.getBusinessConnection(
             { business_connection_id },
             signal,
@@ -1155,7 +1212,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
      */
-    getManagedBotToken(user_id: number, signal?: AbortSignal) {
+    getManagedBotToken(user_id: number, signal?: AbortSignal): Promise<string> {
         return this.raw.getManagedBotToken({ user_id }, signal);
     }
 
@@ -1167,7 +1224,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
      */
-    replaceManagedBotToken(user_id: number, signal?: AbortSignal) {
+    replaceManagedBotToken(
+        user_id: number,
+        signal?: AbortSignal,
+    ): Promise<string> {
         return this.raw.replaceManagedBotToken({ user_id }, signal);
     }
 
@@ -1179,7 +1239,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmanagedbotaccesssettings
      */
-    getManagedBotAccessSettings(user_id: number, signal?: AbortSignal) {
+    getManagedBotAccessSettings(
+        user_id: number,
+        signal?: AbortSignal,
+    ): Promise<BotAccessSettings> {
         return this.raw.getManagedBotAccessSettings({ user_id }, signal);
     }
 
@@ -1202,7 +1265,7 @@ export class Api<R extends RawApi = RawApi> {
             "user_id" | "is_access_restricted"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setManagedBotAccessSettings({
             user_id,
             is_access_restricted,
@@ -1220,12 +1283,12 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getfile
      */
-    getFile(file_id: string, signal?: AbortSignal) {
+    getFile(file_id: string, signal?: AbortSignal): Promise<File> {
         return this.raw.getFile({ file_id }, signal);
     }
 
     /** @deprecated Use `banChatMember` instead. */
-    kickChatMember(...args: Parameters<Api["banChatMember"]>) {
+    kickChatMember(...args: Parameters<Api["banChatMember"]>): Promise<true> {
         return this.banChatMember(...args);
     }
 
@@ -1244,7 +1307,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "banChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.banChatMember({ chat_id, user_id, ...other }, signal);
     }
 
@@ -1263,7 +1326,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "unbanChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.unbanChatMember({ chat_id, user_id, ...other }, signal);
     }
 
@@ -1288,7 +1351,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "user_id" | "permissions"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.restrictChatMember(
             { chat_id, user_id, permissions, ...other },
             signal,
@@ -1310,7 +1373,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "promoteChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.promoteChatMember(
             { chat_id, user_id, ...other },
             signal,
@@ -1332,7 +1395,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         custom_title: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatAdministratorCustomTitle(
             { chat_id, user_id, custom_title },
             signal,
@@ -1354,7 +1417,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         tag: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatMemberTag({ chat_id, user_id, tag }, signal);
     }
 
@@ -1371,7 +1434,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         sender_chat_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.banChatSenderChat({ chat_id, sender_chat_id }, signal);
     }
 
@@ -1388,7 +1451,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         sender_chat_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.unbanChatSenderChat(
             { chat_id, sender_chat_id },
             signal,
@@ -1410,7 +1473,7 @@ export class Api<R extends RawApi = RawApi> {
         permissions: ChatPermissions,
         other?: Other<R, "setChatPermissions", "chat_id" | "permissions">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatPermissions(
             { chat_id, permissions, ...other },
             signal,
@@ -1427,7 +1490,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#exportchatinvitelink
      */
-    exportChatInviteLink(chat_id: number | string, signal?: AbortSignal) {
+    exportChatInviteLink(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<string> {
         return this.raw.exportChatInviteLink({ chat_id }, signal);
     }
 
@@ -1444,7 +1510,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         other?: Other<R, "createChatInviteLink", "chat_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.raw.createChatInviteLink({ chat_id, ...other }, signal);
     }
 
@@ -1463,7 +1529,7 @@ export class Api<R extends RawApi = RawApi> {
         invite_link: string,
         other?: Other<R, "editChatInviteLink", "chat_id" | "invite_link">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.raw.editChatInviteLink(
             { chat_id, invite_link, ...other },
             signal,
@@ -1491,7 +1557,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "subscription_period" | "subscription_price"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.raw.createChatSubscriptionInviteLink(
             { chat_id, subscription_period, subscription_price, ...other },
             signal,
@@ -1517,7 +1583,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "invite_link"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.raw.editChatSubscriptionInviteLink(
             { chat_id, invite_link, ...other },
             signal,
@@ -1537,7 +1603,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         invite_link: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.raw.revokeChatInviteLink({ chat_id, invite_link }, signal);
     }
 
@@ -1554,7 +1620,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.approveChatJoinRequest({ chat_id, user_id }, signal);
     }
 
@@ -1571,7 +1637,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.declineChatJoinRequest({ chat_id, user_id }, signal);
     }
 
@@ -1588,7 +1654,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_join_request_query_id: string,
         result: "approve" | "decline" | "queue",
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.answerChatJoinRequestQuery(
             { chat_join_request_query_id, result },
             signal,
@@ -1608,7 +1674,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_join_request_query_id: string,
         web_app_url: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.sendChatJoinRequestWebApp(
             { chat_join_request_query_id, web_app_url },
             signal,
@@ -1630,7 +1696,7 @@ export class Api<R extends RawApi = RawApi> {
         message_id: number,
         other?: Other<R, "approveSuggestedPost", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.approveSuggestedPost(
             { chat_id, message_id, ...other },
             signal,
@@ -1652,7 +1718,7 @@ export class Api<R extends RawApi = RawApi> {
         message_id: number,
         other?: Other<R, "declineSuggestedPost", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.declineSuggestedPost(
             { chat_id, message_id, ...other },
             signal,
@@ -1672,7 +1738,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         photo: InputFile,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatPhoto({ chat_id, photo }, signal);
     }
 
@@ -1684,7 +1750,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatphoto
      */
-    deleteChatPhoto(chat_id: number | string, signal?: AbortSignal) {
+    deleteChatPhoto(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.deleteChatPhoto({ chat_id }, signal);
     }
 
@@ -1701,7 +1770,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         title: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatTitle({ chat_id, title }, signal);
     }
 
@@ -1718,7 +1787,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         description?: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatDescription({ chat_id, description }, signal);
     }
 
@@ -1737,7 +1806,7 @@ export class Api<R extends RawApi = RawApi> {
         message_id: number,
         other?: Other<R, "pinChatMessage", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.pinChatMessage(
             { chat_id, message_id, ...other },
             signal,
@@ -1759,7 +1828,7 @@ export class Api<R extends RawApi = RawApi> {
         message_id?: number,
         other?: Other<R, "unpinChatMessage", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.unpinChatMessage(
             { chat_id, message_id, ...other },
             signal,
@@ -1774,7 +1843,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinallchatmessages
      */
-    unpinAllChatMessages(chat_id: number | string, signal?: AbortSignal) {
+    unpinAllChatMessages(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.unpinAllChatMessages({ chat_id }, signal);
     }
 
@@ -1786,7 +1858,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#leavechat
      */
-    leaveChat(chat_id: number | string, signal?: AbortSignal) {
+    leaveChat(chat_id: number | string, signal?: AbortSignal): Promise<true> {
         return this.raw.leaveChat({ chat_id }, signal);
     }
 
@@ -1798,7 +1870,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchat
      */
-    getChat(chat_id: number | string, signal?: AbortSignal) {
+    getChat(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<ChatFullInfo> {
         return this.raw.getChat({ chat_id }, signal);
     }
 
@@ -1815,12 +1890,14 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         other?: Other<R, "getChatAdministrators", "chat_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<(ChatMemberOwner | ChatMemberAdministrator)[]> {
         return this.raw.getChatAdministrators({ chat_id, ...other }, signal);
     }
 
     /** @deprecated Use `getChatMemberCount` instead. */
-    getChatMembersCount(...args: Parameters<Api["getChatMemberCount"]>) {
+    getChatMembersCount(
+        ...args: Parameters<Api["getChatMemberCount"]>
+    ): Promise<number> {
         return this.getChatMemberCount(...args);
     }
 
@@ -1832,7 +1909,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmembercount
      */
-    getChatMemberCount(chat_id: number | string, signal?: AbortSignal) {
+    getChatMemberCount(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<number> {
         return this.raw.getChatMemberCount({ chat_id }, signal);
     }
 
@@ -1849,7 +1929,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatMember> {
         return this.raw.getChatMember({ chat_id, user_id }, signal);
     }
 
@@ -1866,7 +1946,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         limit: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message[]> {
         return this.raw.getUserPersonalChatMessages({ user_id, limit }, signal);
     }
 
@@ -1883,7 +1963,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         sticker_set_name: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatStickerSet(
             { chat_id, sticker_set_name },
             signal,
@@ -1898,7 +1978,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatstickerset
      */
-    deleteChatStickerSet(chat_id: number | string, signal?: AbortSignal) {
+    deleteChatStickerSet(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.deleteChatStickerSet({ chat_id }, signal);
     }
 
@@ -1909,7 +1992,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getforumtopiciconstickers
      */
-    getForumTopicIconStickers(signal?: AbortSignal) {
+    getForumTopicIconStickers(signal?: AbortSignal): Promise<Sticker[]> {
         return this.raw.getForumTopicIconStickers(signal);
     }
 
@@ -1928,7 +2011,7 @@ export class Api<R extends RawApi = RawApi> {
         name: string,
         other?: Other<R, "createForumTopic", "chat_id" | "name">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ForumTopic> {
         return this.raw.createForumTopic({ chat_id, name, ...other }, signal);
     }
 
@@ -1947,7 +2030,7 @@ export class Api<R extends RawApi = RawApi> {
         message_thread_id: number,
         other?: Other<R, "editForumTopic", "chat_id" | "message_thread_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.editForumTopic(
             { chat_id, message_thread_id, ...other },
             signal,
@@ -1967,7 +2050,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_thread_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.closeForumTopic({ chat_id, message_thread_id }, signal);
     }
 
@@ -1984,7 +2067,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_thread_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.reopenForumTopic(
             { chat_id, message_thread_id },
             signal,
@@ -2004,7 +2087,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_thread_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteForumTopic(
             { chat_id, message_thread_id },
             signal,
@@ -2024,7 +2107,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_thread_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.unpinAllForumTopicMessages(
             { chat_id, message_thread_id },
             signal,
@@ -2044,7 +2127,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         name: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.editGeneralForumTopic({ chat_id, name }, signal);
     }
 
@@ -2056,7 +2139,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
      */
-    closeGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+    closeGeneralForumTopic(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.closeGeneralForumTopic({ chat_id }, signal);
     }
 
@@ -2068,7 +2154,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
      */
-    reopenGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+    reopenGeneralForumTopic(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.reopenGeneralForumTopic({ chat_id }, signal);
     }
 
@@ -2080,7 +2169,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
      */
-    hideGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+    hideGeneralForumTopic(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.hideGeneralForumTopic({ chat_id }, signal);
     }
 
@@ -2092,7 +2184,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
      */
-    unhideGeneralForumTopic(chat_id: number | string, signal?: AbortSignal) {
+    unhideGeneralForumTopic(
+        chat_id: number | string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.unhideGeneralForumTopic({ chat_id }, signal);
     }
 
@@ -2107,7 +2202,7 @@ export class Api<R extends RawApi = RawApi> {
     unpinAllGeneralForumTopicMessages(
         chat_id: number | string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.unpinAllGeneralForumTopicMessages({ chat_id }, signal);
     }
 
@@ -2126,7 +2221,7 @@ export class Api<R extends RawApi = RawApi> {
         callback_query_id: string,
         other?: Other<R, "answerCallbackQuery", "callback_query_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.answerCallbackQuery(
             { callback_query_id, ...other },
             signal,
@@ -2146,7 +2241,7 @@ export class Api<R extends RawApi = RawApi> {
         guest_query_id: string,
         result: InlineQueryResult,
         signal?: AbortSignal,
-    ) {
+    ): Promise<SentGuestMessage> {
         return this.raw.answerGuestQuery({ guest_query_id, result }, signal);
     }
 
@@ -2163,7 +2258,7 @@ export class Api<R extends RawApi = RawApi> {
         name: string,
         other?: Other<R, "setMyName", "name">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setMyName({ name, ...other }, signal);
     }
 
@@ -2175,7 +2270,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmyname
      */
-    getMyName(other?: Other<R, "getMyName">, signal?: AbortSignal) {
+    getMyName(
+        other?: Other<R, "getMyName">,
+        signal?: AbortSignal,
+    ): Promise<BotName> {
         return this.raw.getMyName(other ?? {}, signal);
     }
 
@@ -2192,7 +2290,7 @@ export class Api<R extends RawApi = RawApi> {
         commands: readonly BotCommand[],
         other?: Other<R, "setMyCommands", "commands">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setMyCommands({ commands, ...other }, signal);
     }
 
@@ -2207,7 +2305,7 @@ export class Api<R extends RawApi = RawApi> {
     deleteMyCommands(
         other?: Other<R, "deleteMyCommands">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteMyCommands({ ...other }, signal);
     }
 
@@ -2219,7 +2317,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmycommands
      */
-    getMyCommands(other?: Other<R, "getMyCommands">, signal?: AbortSignal) {
+    getMyCommands(
+        other?: Other<R, "getMyCommands">,
+        signal?: AbortSignal,
+    ): Promise<BotCommand[]> {
         return this.raw.getMyCommands({ ...other }, signal);
     }
 
@@ -2236,7 +2337,7 @@ export class Api<R extends RawApi = RawApi> {
         description: string,
         other?: Other<R, "setMyDescription", "description">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setMyDescription({ description, ...other }, signal);
     }
 
@@ -2251,7 +2352,7 @@ export class Api<R extends RawApi = RawApi> {
     getMyDescription(
         other?: Other<R, "getMyDescription">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<BotDescription> {
         return this.raw.getMyDescription({ ...other }, signal);
     }
 
@@ -2268,7 +2369,7 @@ export class Api<R extends RawApi = RawApi> {
         short_description: string,
         other?: Other<R, "setMyShortDescription", "short_description">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setMyShortDescription(
             { short_description, ...other },
             signal,
@@ -2286,7 +2387,7 @@ export class Api<R extends RawApi = RawApi> {
     getMyShortDescription(
         other?: Other<R, "getMyShortDescription">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<BotShortDescription> {
         return this.raw.getMyShortDescription({ ...other }, signal);
     }
 
@@ -2301,7 +2402,7 @@ export class Api<R extends RawApi = RawApi> {
     setMyProfilePhoto(
         photo: InputProfilePhoto,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setMyProfilePhoto({ photo }, signal);
     }
 
@@ -2312,7 +2413,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#removemyprofilephoto
      */
-    removeMyProfilePhoto(signal?: AbortSignal) {
+    removeMyProfilePhoto(signal?: AbortSignal): Promise<true> {
         return this.raw.removeMyProfilePhoto(signal);
     }
 
@@ -2327,7 +2428,7 @@ export class Api<R extends RawApi = RawApi> {
     setChatMenuButton(
         other?: Other<R, "setChatMenuButton">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setChatMenuButton({ ...other }, signal);
     }
 
@@ -2342,7 +2443,7 @@ export class Api<R extends RawApi = RawApi> {
     getChatMenuButton(
         other?: Other<R, "getChatMenuButton">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MenuButton> {
         return this.raw.getChatMenuButton({ ...other }, signal);
     }
 
@@ -2357,7 +2458,7 @@ export class Api<R extends RawApi = RawApi> {
     setMyDefaultAdministratorRights(
         other?: Other<R, "setMyDefaultAdministratorRights">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setMyDefaultAdministratorRights({ ...other }, signal);
     }
 
@@ -2372,7 +2473,7 @@ export class Api<R extends RawApi = RawApi> {
     getMyDefaultAdministratorRights(
         other?: Other<R, "getMyDefaultAdministratorRights">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatAdministratorRights> {
         return this.raw.getMyDefaultAdministratorRights({ ...other }, signal);
     }
 
@@ -2383,7 +2484,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmystarbalance
      */
-    getMyStarBalance(signal?: AbortSignal) {
+    getMyStarBalance(signal?: AbortSignal): Promise<StarAmount> {
         return this.raw.getMyStarBalance(signal);
     }
 
@@ -2412,7 +2513,14 @@ export class Api<R extends RawApi = RawApi> {
             | "rich_message"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        | true
+        | (
+            & Update.Edited
+            & Message.TextMessage
+        )
+        | (Update.Edited & Message.RichMessageMessage)
+    > {
         return this.raw.editMessageText(
             typeof text_or_rich_message === "string"
                 ? { chat_id, message_id, text: text_or_rich_message, ...other }
@@ -2449,7 +2557,14 @@ export class Api<R extends RawApi = RawApi> {
             | "rich_message"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        | true
+        | (
+            & Update.Edited
+            & Message.TextMessage
+        )
+        | (Update.Edited & Message.RichMessageMessage)
+    > {
         return this.raw.editMessageText(
             typeof text_or_rich_message === "string"
                 ? { inline_message_id, text: text_or_rich_message, ...other }
@@ -2481,7 +2596,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message.CaptionableMessage)> {
         return this.raw.editMessageCaption(
             { chat_id, message_id, ...other },
             signal,
@@ -2505,7 +2620,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message.CaptionableMessage)> {
         return this.raw.editMessageCaption(
             { inline_message_id, ...other },
             signal,
@@ -2533,7 +2648,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id" | "media"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message)> {
         return this.raw.editMessageMedia(
             { chat_id, message_id, media, ...other },
             signal,
@@ -2559,7 +2674,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id" | "media"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message)> {
         return this.raw.editMessageMedia(
             { inline_message_id, media, ...other },
             signal,
@@ -2585,7 +2700,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message)> {
         return this.raw.editMessageReplyMarkup(
             { chat_id, message_id, ...other },
             signal,
@@ -2609,7 +2724,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message)> {
         return this.raw.editMessageReplyMarkup(
             { inline_message_id, ...other },
             signal,
@@ -2631,7 +2746,7 @@ export class Api<R extends RawApi = RawApi> {
         message_id: number,
         other?: Other<R, "stopPoll", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Poll> {
         return this.raw.stopPoll({ chat_id, message_id, ...other }, signal);
     }
 
@@ -2658,7 +2773,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "text"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.editEphemeralMessageText(
             { chat_id, receiver_user_id, ephemeral_message_id, text, ...other },
             signal,
@@ -2688,7 +2803,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "media"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.editEphemeralMessageMedia({
             chat_id,
             receiver_user_id,
@@ -2721,7 +2836,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "caption"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.editEphemeralMessageCaption({
             chat_id,
             receiver_user_id,
@@ -2752,7 +2867,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.editEphemeralMessageReplyMarkup(
             { chat_id, receiver_user_id, ephemeral_message_id, ...other },
             signal,
@@ -2781,7 +2896,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteMessage({ chat_id, message_id }, signal);
     }
 
@@ -2798,7 +2913,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         message_ids: number[],
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteMessages({ chat_id, message_ids }, signal);
     }
 
@@ -2817,7 +2932,7 @@ export class Api<R extends RawApi = RawApi> {
         receiver_user_id: number,
         ephemeral_message_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteEphemeralMessage(
             { chat_id, receiver_user_id, ephemeral_message_id },
             signal,
@@ -2845,7 +2960,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "user_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteMessageReaction({
             chat_id,
             message_id,
@@ -2875,7 +2990,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "actor_chat_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteMessageReaction({
             chat_id,
             message_id,
@@ -2903,7 +3018,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "user_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteAllMessageReactions({
             chat_id,
             user_id,
@@ -2930,7 +3045,7 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "actor_chat_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteAllMessageReactions({
             chat_id,
             actor_chat_id,
@@ -2951,7 +3066,7 @@ export class Api<R extends RawApi = RawApi> {
         business_connection_id: string,
         message_ids: number[],
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteBusinessMessages(
             { business_connection_id, message_ids },
             signal,
@@ -2977,7 +3092,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id" | "first_name"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setBusinessAccountName(
             { business_connection_id, first_name, ...other },
             signal,
@@ -2997,7 +3112,7 @@ export class Api<R extends RawApi = RawApi> {
         business_connection_id: string,
         username: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setBusinessAccountUsername(
             { business_connection_id, username },
             signal,
@@ -3017,7 +3132,7 @@ export class Api<R extends RawApi = RawApi> {
         business_connection_id: string,
         bio: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setBusinessAccountBio(
             { business_connection_id, bio },
             signal,
@@ -3043,7 +3158,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id" | "photo"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setBusinessAccountProfilePhoto(
             { business_connection_id, photo, ...other },
             signal,
@@ -3067,7 +3182,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.removeBusinessAccountProfilePhoto(
             { business_connection_id, ...other },
             signal,
@@ -3089,7 +3204,7 @@ export class Api<R extends RawApi = RawApi> {
         show_gift_button: boolean,
         accepted_gift_types: AcceptedGiftTypes,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setBusinessAccountGiftSettings(
             { business_connection_id, show_gift_button, accepted_gift_types },
             signal,
@@ -3107,7 +3222,7 @@ export class Api<R extends RawApi = RawApi> {
     getBusinessAccountStarBalance(
         business_connection_id: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<StarAmount> {
         return this.raw.getBusinessAccountStarBalance(
             { business_connection_id },
             signal,
@@ -3127,7 +3242,7 @@ export class Api<R extends RawApi = RawApi> {
         business_connection_id: string,
         star_count: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.transferBusinessAccountStars(
             { business_connection_id, star_count },
             signal,
@@ -3147,7 +3262,7 @@ export class Api<R extends RawApi = RawApi> {
         business_connection_id: string,
         other: Other<R, "getBusinessAccountGifts", "business_connection_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<OwnedGifts> {
         return this.raw.getBusinessAccountGifts(
             { business_connection_id, ...other },
             signal,
@@ -3167,7 +3282,7 @@ export class Api<R extends RawApi = RawApi> {
         business_connection_id: string,
         owned_gift_id: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.convertGiftToStars(
             { business_connection_id, owned_gift_id },
             signal,
@@ -3193,7 +3308,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id" | "owned_gift_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.upgradeGift(
             { business_connection_id, owned_gift_id, ...other },
             signal,
@@ -3217,7 +3332,7 @@ export class Api<R extends RawApi = RawApi> {
         new_owner_chat_id: number,
         star_count: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.transferGift({
             business_connection_id,
             owned_gift_id,
@@ -3247,7 +3362,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id" | "content" | "active_period"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Story> {
         return this.raw.postStory(
             { business_connection_id, content, active_period, ...other },
             signal,
@@ -3280,7 +3395,7 @@ export class Api<R extends RawApi = RawApi> {
             | "active_period"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Story> {
         return this.raw.repostStory({
             business_connection_id,
             from_chat_id,
@@ -3311,7 +3426,7 @@ export class Api<R extends RawApi = RawApi> {
             "business_connection_id" | "story_id" | "content"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Story> {
         return this.raw.editStory(
             { business_connection_id, story_id, content, ...other },
             signal,
@@ -3331,7 +3446,7 @@ export class Api<R extends RawApi = RawApi> {
         business_connection_id: string,
         story_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.deleteStory(
             { business_connection_id, story_id },
             signal,
@@ -3353,7 +3468,7 @@ export class Api<R extends RawApi = RawApi> {
         sticker: InputFile | string,
         other?: Other<R, "sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.StickerMessage> {
         return this.raw.sendSticker({ chat_id, sticker, ...other }, signal);
     }
 
@@ -3365,7 +3480,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getstickerset
      */
-    getStickerSet(name: string, signal?: AbortSignal) {
+    getStickerSet(name: string, signal?: AbortSignal): Promise<StickerSet> {
         return this.raw.getStickerSet({ name }, signal);
     }
 
@@ -3377,7 +3492,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
      */
-    getCustomEmojiStickers(custom_emoji_ids: string[], signal?: AbortSignal) {
+    getCustomEmojiStickers(
+        custom_emoji_ids: string[],
+        signal?: AbortSignal,
+    ): Promise<Sticker[]> {
         return this.raw.getCustomEmojiStickers({ custom_emoji_ids }, signal);
     }
 
@@ -3396,7 +3514,7 @@ export class Api<R extends RawApi = RawApi> {
         sticker_format: "static" | "animated" | "video",
         sticker: InputFile,
         signal?: AbortSignal,
-    ) {
+    ): Promise<File> {
         return this.raw.uploadStickerFile(
             { user_id, sticker_format, sticker },
             signal,
@@ -3430,7 +3548,7 @@ export class Api<R extends RawApi = RawApi> {
             | "stickers"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.createNewStickerSet(
             { user_id, name, title, stickers, ...other },
             signal,
@@ -3452,7 +3570,7 @@ export class Api<R extends RawApi = RawApi> {
         name: string,
         sticker: InputSticker,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.addStickerToSet(
             { user_id, name, sticker },
             signal,
@@ -3472,7 +3590,7 @@ export class Api<R extends RawApi = RawApi> {
         sticker: string,
         position: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setStickerPositionInSet({ sticker, position }, signal);
     }
 
@@ -3484,7 +3602,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletestickerfromset
      */
-    deleteStickerFromSet(sticker: string, signal?: AbortSignal) {
+    deleteStickerFromSet(sticker: string, signal?: AbortSignal): Promise<true> {
         return this.raw.deleteStickerFromSet({ sticker }, signal);
     }
 
@@ -3505,7 +3623,7 @@ export class Api<R extends RawApi = RawApi> {
         old_sticker: string,
         sticker: InputSticker,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.replaceStickerInSet(
             { user_id, name, old_sticker, sticker },
             signal,
@@ -3525,7 +3643,7 @@ export class Api<R extends RawApi = RawApi> {
         sticker: string,
         emoji_list: string[],
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setStickerEmojiList({ sticker, emoji_list }, signal);
     }
 
@@ -3542,7 +3660,7 @@ export class Api<R extends RawApi = RawApi> {
         sticker: string,
         keywords: string[],
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setStickerKeywords({ sticker, keywords }, signal);
     }
 
@@ -3559,7 +3677,7 @@ export class Api<R extends RawApi = RawApi> {
         sticker: string,
         mask_position?: MaskPosition,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setStickerMaskPosition(
             { sticker, mask_position },
             signal,
@@ -3575,7 +3693,11 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setstickersettitle
      */
-    setStickerSetTitle(name: string, title: string, signal?: AbortSignal) {
+    setStickerSetTitle(
+        name: string,
+        title: string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.setStickerSetTitle({ name, title }, signal);
     }
 
@@ -3587,7 +3709,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletestickerset
      */
-    deleteStickerSet(name: string, signal?: AbortSignal) {
+    deleteStickerSet(name: string, signal?: AbortSignal): Promise<true> {
         return this.raw.deleteStickerSet({ name }, signal);
     }
 
@@ -3608,7 +3730,7 @@ export class Api<R extends RawApi = RawApi> {
         thumbnail: InputFile | string | undefined,
         format: "static" | "animated" | "video",
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setStickerSetThumbnail(
             { name, user_id, thumbnail, format },
             signal,
@@ -3628,7 +3750,7 @@ export class Api<R extends RawApi = RawApi> {
         name: string,
         custom_emoji_id: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setCustomEmojiStickerSetThumbnail({
             name,
             custom_emoji_id,
@@ -3642,7 +3764,7 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getavailablegifts
      */
-    getAvailableGifts(signal?: AbortSignal) {
+    getAvailableGifts(signal?: AbortSignal): Promise<Gifts> {
         return this.raw.getAvailableGifts(signal);
     }
 
@@ -3661,7 +3783,7 @@ export class Api<R extends RawApi = RawApi> {
         gift_id: string,
         other?: Other<R, "sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.sendGift({ user_id, gift_id, ...other }, signal);
     }
 
@@ -3686,7 +3808,7 @@ export class Api<R extends RawApi = RawApi> {
             "user_id" | "month_count" | "star_count"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.giftPremiumSubscription(
             { user_id, month_count, star_count, ...other },
             signal,
@@ -3708,7 +3830,7 @@ export class Api<R extends RawApi = RawApi> {
         gift_id: string,
         other?: Other<R, "sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.sendGift({ chat_id, gift_id, ...other }, signal);
     }
 
@@ -3730,7 +3852,7 @@ export class Api<R extends RawApi = RawApi> {
         results: readonly InlineQueryResult[],
         other?: Other<R, "answerInlineQuery", "inline_query_id" | "results">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.answerInlineQuery(
             { inline_query_id, results, ...other },
             signal,
@@ -3750,7 +3872,7 @@ export class Api<R extends RawApi = RawApi> {
         web_app_query_id: string,
         result: InlineQueryResult,
         signal?: AbortSignal,
-    ) {
+    ): Promise<SentWebAppMessage> {
         return this.raw.answerWebAppQuery({ web_app_query_id, result }, signal);
     }
 
@@ -3769,7 +3891,7 @@ export class Api<R extends RawApi = RawApi> {
         result: InlineQueryResult,
         other?: Other<R, "savePreparedInlineMessage", "user_id" | "result">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<PreparedInlineMessage> {
         return this.raw.savePreparedInlineMessage(
             { user_id, result, ...other },
             signal,
@@ -3792,7 +3914,7 @@ export class Api<R extends RawApi = RawApi> {
             | KeyboardButton.RequestChatButton
             | KeyboardButton.RequestManagedBotButton,
         signal?: AbortSignal,
-    ) {
+    ): Promise<PreparedKeyboardButton> {
         return this.raw.savePreparedKeyboardButton({ user_id, button }, signal);
     }
 
@@ -3828,7 +3950,7 @@ export class Api<R extends RawApi = RawApi> {
             | "prices"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.InvoiceMessage> {
         return this.raw.sendInvoice({
             chat_id,
             title,
@@ -3872,7 +3994,7 @@ export class Api<R extends RawApi = RawApi> {
             | "prices"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<string> {
         return this.raw.createInvoiceLink({
             title,
             description,
@@ -3899,7 +4021,7 @@ export class Api<R extends RawApi = RawApi> {
         ok: boolean,
         other?: Other<R, "answerShippingQuery", "shipping_query_id" | "ok">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.answerShippingQuery(
             { shipping_query_id, ok, ...other },
             signal,
@@ -3925,7 +4047,7 @@ export class Api<R extends RawApi = RawApi> {
             "pre_checkout_query_id" | "ok"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.answerPreCheckoutQuery(
             { pre_checkout_query_id, ok, ...other },
             signal,
@@ -3943,7 +4065,7 @@ export class Api<R extends RawApi = RawApi> {
     getStarTransactions(
         other?: Other<R, "getStarTransactions">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<StarTransactions> {
         return this.raw.getStarTransactions({ ...other }, signal);
     }
 
@@ -3960,7 +4082,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         telegram_payment_charge_id: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.refundStarPayment(
             { user_id, telegram_payment_charge_id },
             signal,
@@ -3982,7 +4104,7 @@ export class Api<R extends RawApi = RawApi> {
         telegram_payment_charge_id: string,
         is_canceled: boolean,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.editUserStarSubscription(
             { user_id, telegram_payment_charge_id, is_canceled },
             signal,
@@ -4002,7 +4124,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         other?: Other<R, "verifyUser">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.verifyUser({ user_id, ...other }, signal);
     }
 
@@ -4019,7 +4141,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number | string,
         other?: Other<R, "verifyChat">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.verifyChat({ chat_id, ...other }, signal);
     }
 
@@ -4031,7 +4153,10 @@ export class Api<R extends RawApi = RawApi> {
      *
      * **Official reference:** https://core.telegram.org/bots/api#removeuserverification
      */
-    removeUserVerification(user_id: number, signal?: AbortSignal) {
+    removeUserVerification(
+        user_id: number,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.raw.removeUserVerification({ user_id }, signal);
     }
 
@@ -4046,7 +4171,7 @@ export class Api<R extends RawApi = RawApi> {
     removeChatVerification(
         chat_id: number | string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.removeChatVerification({ chat_id }, signal);
     }
 
@@ -4065,7 +4190,7 @@ export class Api<R extends RawApi = RawApi> {
         chat_id: number,
         message_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.readBusinessMessage(
             { business_connection_id, chat_id, message_id },
             signal,
@@ -4087,7 +4212,7 @@ export class Api<R extends RawApi = RawApi> {
         user_id: number,
         errors: readonly PassportElementError[],
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.raw.setPassportDataErrors({ user_id, errors }, signal);
     }
 
@@ -4106,7 +4231,7 @@ export class Api<R extends RawApi = RawApi> {
         game_short_name: string,
         other?: Other<R, "sendGame", "chat_id" | "game_short_name">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.GameMessage> {
         return this.raw.sendGame(
             { chat_id, game_short_name, ...other },
             signal,
@@ -4136,7 +4261,9 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id" | "user_id" | "score"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.GameMessage)
+    > {
         return this.raw.setGameScore(
             { chat_id, message_id, user_id, score, ...other },
             signal,
@@ -4164,7 +4291,9 @@ export class Api<R extends RawApi = RawApi> {
             "chat_id" | "message_id" | "inline_message_id" | "user_id" | "score"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.GameMessage)
+    > {
         return this.raw.setGameScore(
             { inline_message_id, user_id, score, ...other },
             signal,
@@ -4188,7 +4317,7 @@ export class Api<R extends RawApi = RawApi> {
         message_id: number,
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<GameHighScore[]> {
         return this.raw.getGameHighScores(
             { chat_id, message_id, user_id },
             signal,
@@ -4210,7 +4339,7 @@ export class Api<R extends RawApi = RawApi> {
         inline_message_id: string,
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<GameHighScore[]> {
         return this.raw.getGameHighScores(
             { inline_message_id, user_id },
             signal,

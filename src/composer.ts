@@ -201,7 +201,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             : middleware.map(flatten).reduce(concat);
     }
 
-    middleware() {
+    middleware(): MiddlewareFn<C> {
         return this.handler;
     }
 
@@ -224,7 +224,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * @param middleware The middleware to register
      */
-    use(...middleware: Array<Middleware<C>>) {
+    use(...middleware: Array<Middleware<C>>): Composer<C> {
         const composer = new Composer(...middleware);
         this.handler = concat(this.handler, flatten(composer));
         return composer;
@@ -715,7 +715,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
     drop(
         predicate: (ctx: C) => MaybePromise<boolean>,
         ...middleware: Array<Middleware<C>>
-    ) {
+    ): Composer<C> {
         return this.filter(
             async (ctx: C) => !(await predicate(ctx)),
             ...middleware,
@@ -750,7 +750,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
      *
      * @param middleware The middleware to run concurrently
      */
-    fork(...middleware: Array<Middleware<C>>) {
+    fork(...middleware: Array<Middleware<C>>): Composer<C> {
         const composer = new Composer(...middleware);
         const fork = flatten(composer);
         this.use((ctx, next) => Promise.all([next(), run(fork, ctx)]));
@@ -858,7 +858,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
         predicate: (ctx: C) => MaybePromise<boolean>,
         trueMiddleware: MaybeArray<Middleware<C>>,
         falseMiddleware: MaybeArray<Middleware<C>>,
-    ) {
+    ): Composer<C> {
         return this.lazy(async (ctx) =>
             (await predicate(ctx)) ? trueMiddleware : falseMiddleware
         );
@@ -908,7 +908,7 @@ export class Composer<C extends Context> implements MiddlewareObj<C> {
             next: NextFunction,
         ) => MaybePromise<unknown>,
         ...middleware: Array<Middleware<C>>
-    ) {
+    ): Composer<C> {
         const composer = new Composer<C>(...middleware);
         const bound = flatten(composer);
         this.use(async (ctx, next) => {

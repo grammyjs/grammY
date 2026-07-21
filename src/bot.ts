@@ -291,7 +291,7 @@ export class Bot<
      *
      * @returns true if the bot is initialized, and false otherwise
      */
-    isInited() {
+    isInited(): boolean {
         return this.me !== undefined;
     }
 
@@ -516,7 +516,7 @@ a known bot info object.",
      * before `bot.isInited()` returns true). By extension, this method
      * returns true before `onStart` callback of `bot.start()` is invoked.
      */
-    isRunning() {
+    isRunning(): boolean {
         return this.pollingRunning;
     }
 

@@ -9,8 +9,27 @@ import {
 } from "./filter.ts";
 import {
     type AcceptedGiftTypes,
+    type BotAccessSettings,
+    type BotSubscriptionUpdated,
+    type BusinessConnection,
+    type BusinessMessagesDeleted,
+    type CallbackQuery,
     type Chat,
+    type ChatAdministratorRights,
+    type ChatBoostRemoved,
+    type ChatBoostUpdated,
+    type ChatFullInfo,
+    type ChatInviteLink,
+    type ChatJoinRequest,
+    type ChatMember,
+    type ChatMemberAdministrator,
+    type ChatMemberOwner,
+    type ChatMemberUpdated,
     type ChatPermissions,
+    type ChosenInlineResult,
+    type File,
+    type ForumTopic,
+    type InlineQuery,
     type InlineQueryResult,
     type InputChecklist,
     type InputFile,
@@ -29,14 +48,34 @@ import {
     type InputStoryContent,
     type KeyboardButton,
     type LabeledPrice,
+    type ManagedBotUpdated,
+    type MenuButton,
     type Message,
     type MessageEntity,
+    type MessageId,
+    type MessageReactionCountUpdated,
+    type MessageReactionUpdated,
+    type OwnedGifts,
+    type PaidMediaPurchased,
     type PassportElementError,
+    type Poll,
+    type PollAnswer,
+    type PreCheckoutQuery,
+    type PreparedInlineMessage,
+    type PreparedKeyboardButton,
     type ReactionType,
     type ReactionTypeEmoji,
+    type SentGuestMessage,
+    type ShippingQuery,
+    type StarAmount,
+    type Sticker,
+    type Story,
     type Update,
     type User,
+    type UserChatBoosts,
     type UserFromGetMe,
+    type UserProfileAudios,
+    type UserProfilePhotos,
 } from "./types.ts";
 
 // === Util types
@@ -417,107 +456,113 @@ export class Context implements RenamedUpdate {
 
     // Keep in sync with types in `filter.ts`.
     /** Alias for `ctx.update.message` */
-    get message() {
+    get message(): (Message & Update.NonChannel) | undefined {
         return this.update.message;
     }
     /** Alias for `ctx.update.edited_message` */
-    get editedMessage() {
+    get editedMessage():
+        | (Message & Update.Edited & Update.NonChannel)
+        | undefined {
         return this.update.edited_message;
     }
     /** Alias for `ctx.update.channel_post` */
-    get channelPost() {
+    get channelPost(): (Message & Update.Channel) | undefined {
         return this.update.channel_post;
     }
     /** Alias for `ctx.update.edited_channel_post` */
-    get editedChannelPost() {
+    get editedChannelPost():
+        | (Message & Update.Edited & Update.Channel)
+        | undefined {
         return this.update.edited_channel_post;
     }
     /** Alias for `ctx.update.business_connection` */
-    get businessConnection() {
+    get businessConnection(): BusinessConnection | undefined {
         return this.update.business_connection;
     }
     /** Alias for `ctx.update.business_message` */
-    get businessMessage() {
+    get businessMessage(): (Message & Update.Private) | undefined {
         return this.update.business_message;
     }
     /** Alias for `ctx.update.edited_business_message` */
-    get editedBusinessMessage() {
+    get editedBusinessMessage():
+        | (Message & Update.Edited & Update.Private)
+        | undefined {
         return this.update.edited_business_message;
     }
     /** Alias for `ctx.update.deleted_business_messages` */
-    get deletedBusinessMessages() {
+    get deletedBusinessMessages(): BusinessMessagesDeleted | undefined {
         return this.update.deleted_business_messages;
     }
     /** Alias for `ctx.update.guest_message` */
-    get guestMessage() {
+    get guestMessage(): (Message & Update.NonChannel) | undefined {
         return this.update.guest_message;
     }
     /** Alias for `ctx.update.message_reaction` */
-    get messageReaction() {
+    get messageReaction(): MessageReactionUpdated | undefined {
         return this.update.message_reaction;
     }
     /** Alias for `ctx.update.message_reaction_count` */
-    get messageReactionCount() {
+    get messageReactionCount(): MessageReactionCountUpdated | undefined {
         return this.update.message_reaction_count;
     }
     /** Alias for `ctx.update.inline_query` */
-    get inlineQuery() {
+    get inlineQuery(): InlineQuery | undefined {
         return this.update.inline_query;
     }
     /** Alias for `ctx.update.chosen_inline_result` */
-    get chosenInlineResult() {
+    get chosenInlineResult(): ChosenInlineResult | undefined {
         return this.update.chosen_inline_result;
     }
     /** Alias for `ctx.update.callback_query` */
-    get callbackQuery() {
+    get callbackQuery(): CallbackQuery | undefined {
         return this.update.callback_query;
     }
     /** Alias for `ctx.update.shipping_query` */
-    get shippingQuery() {
+    get shippingQuery(): ShippingQuery | undefined {
         return this.update.shipping_query;
     }
     /** Alias for `ctx.update.pre_checkout_query` */
-    get preCheckoutQuery() {
+    get preCheckoutQuery(): PreCheckoutQuery | undefined {
         return this.update.pre_checkout_query;
     }
     /** Alias for `ctx.update.poll` */
-    get poll() {
+    get poll(): Poll | undefined {
         return this.update.poll;
     }
     /** Alias for `ctx.update.poll_answer` */
-    get pollAnswer() {
+    get pollAnswer(): PollAnswer | undefined {
         return this.update.poll_answer;
     }
     /** Alias for `ctx.update.my_chat_member` */
-    get myChatMember() {
+    get myChatMember(): ChatMemberUpdated | undefined {
         return this.update.my_chat_member;
     }
     /** Alias for `ctx.update.chat_member` */
-    get chatMember() {
+    get chatMember(): ChatMemberUpdated | undefined {
         return this.update.chat_member;
     }
     /** Alias for `ctx.update.managed_bot` */
-    get managedBot() {
+    get managedBot(): ManagedBotUpdated | undefined {
         return this.update.managed_bot;
     }
     /** Alias for `ctx.update.chat_join_request` */
-    get chatJoinRequest() {
+    get chatJoinRequest(): ChatJoinRequest | undefined {
         return this.update.chat_join_request;
     }
     /** Alias for `ctx.update.chat_boost` */
-    get chatBoost() {
+    get chatBoost(): ChatBoostUpdated | undefined {
         return this.update.chat_boost;
     }
     /** Alias for `ctx.update.removed_chat_boost` */
-    get removedChatBoost() {
+    get removedChatBoost(): ChatBoostRemoved | undefined {
         return this.update.removed_chat_boost;
     }
     /** Alias for `ctx.update.purchased_paid_media` */
-    get purchasedPaidMedia() {
+    get purchasedPaidMedia(): PaidMediaPurchased | undefined {
         return this.update.purchased_paid_media;
     }
     /** Alias for `ctx.update.subscription` */
-    get subscription() {
+    get subscription(): BotSubscriptionUpdated | undefined {
         return this.update.subscription;
     }
 
@@ -996,7 +1041,7 @@ export class Context implements RenamedUpdate {
         text: string,
         other?: Other<"sendMessage", "chat_id" | "text">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.TextMessage> {
         const msg = this.msg;
         return this.api.sendMessage(
             orThrow(this.chatId, "sendMessage"),
@@ -1026,7 +1071,7 @@ export class Context implements RenamedUpdate {
         rich_message: InputRichMessage,
         other?: Other<"sendRichMessage", "chat_id" | "rich_message">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.RichMessageMessage> {
         const msg = this.msg;
         return this.api.sendRichMessage(
             orThrow(this.chatId, "sendRichMessage"),
@@ -1059,7 +1104,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "from_chat_id" | "message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message> {
         const msg = this.msg;
         return this.api.forwardMessage(
             chat_id,
@@ -1091,7 +1136,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MessageId[]> {
         const msg = this.msg;
         return this.api.forwardMessages(
             chat_id,
@@ -1118,7 +1163,7 @@ export class Context implements RenamedUpdate {
         chat_id: number | string,
         other?: Other<"copyMessage", "chat_id" | "from_chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MessageId> {
         const msg = this.msg;
         return this.api.copyMessage(
             chat_id,
@@ -1150,7 +1195,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "from_chat_id" | "message_ids"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MessageId[]> {
         const msg = this.msg;
         return this.api.copyMessages(
             chat_id,
@@ -1177,7 +1222,7 @@ export class Context implements RenamedUpdate {
         photo: InputFile | string,
         other?: Other<"sendPhoto", "chat_id" | "photo">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.PhotoMessage> {
         const msg = this.msg;
         return this.api.sendPhoto(
             orThrow(this.chatId, "sendPhoto"),
@@ -1209,7 +1254,7 @@ export class Context implements RenamedUpdate {
         photo: InputFile | string,
         other?: Other<"sendLivePhoto", "chat_id" | "live_photo" | "photo">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.LivePhotoMessage> {
         const msg = this.msg;
         return this.api.sendLivePhoto(
             orThrow(this.chatId, "sendLivePhoto"),
@@ -1242,7 +1287,7 @@ export class Context implements RenamedUpdate {
         audio: InputFile | string,
         other?: Other<"sendAudio", "chat_id" | "audio">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.AudioMessage> {
         const msg = this.msg;
         return this.api.sendAudio(
             orThrow(this.chatId, "sendAudio"),
@@ -1272,7 +1317,7 @@ export class Context implements RenamedUpdate {
         document: InputFile | string,
         other?: Other<"sendDocument", "chat_id" | "document">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.DocumentMessage> {
         const msg = this.msg;
         return this.api.sendDocument(
             orThrow(this.chatId, "sendDocument"),
@@ -1302,7 +1347,7 @@ export class Context implements RenamedUpdate {
         video: InputFile | string,
         other?: Other<"sendVideo", "chat_id" | "video">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VideoMessage> {
         const msg = this.msg;
         return this.api.sendVideo(
             orThrow(this.chatId, "sendVideo"),
@@ -1332,7 +1377,7 @@ export class Context implements RenamedUpdate {
         animation: InputFile | string,
         other?: Other<"sendAnimation", "chat_id" | "animation">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.AnimationMessage> {
         const msg = this.msg;
         return this.api.sendAnimation(
             orThrow(this.chatId, "sendAnimation"),
@@ -1362,7 +1407,7 @@ export class Context implements RenamedUpdate {
         voice: InputFile | string,
         other?: Other<"sendVoice", "chat_id" | "voice">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VoiceMessage> {
         const msg = this.msg;
         return this.api.sendVoice(
             orThrow(this.chatId, "sendVoice"),
@@ -1393,7 +1438,7 @@ export class Context implements RenamedUpdate {
         video_note: InputFile | string,
         other?: Other<"sendVideoNote", "chat_id" | "video_note">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VideoNoteMessage> {
         const msg = this.msg;
         return this.api.sendVideoNote(
             orThrow(this.chatId, "sendVideoNote"),
@@ -1411,7 +1456,9 @@ export class Context implements RenamedUpdate {
     }
 
     /** @deprecated Use `replyWithPaidMedia` instead. */
-    sendPaidMedia(...args: Parameters<Context["replyWithPaidMedia"]>) {
+    sendPaidMedia(
+        ...args: Parameters<Context["replyWithPaidMedia"]>
+    ): Promise<Message.PaidMediaMessage> {
         return this.replyWithPaidMedia(...args);
     }
 
@@ -1430,7 +1477,7 @@ export class Context implements RenamedUpdate {
         media: InputPaidMedia[],
         other?: Other<"sendPaidMedia", "chat_id" | "star_count" | "media">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.PaidMediaMessage> {
         const msg = this.msg;
         return this.api.sendPaidMedia(
             orThrow(this.chatId, "sendPaidMedia"),
@@ -1469,7 +1516,15 @@ export class Context implements RenamedUpdate {
             >,
         other?: Other<"sendMediaGroup", "chat_id" | "media">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        (
+            | Message.AudioMessage
+            | Message.DocumentMessage
+            | Message.LivePhotoMessage
+            | Message.PhotoMessage
+            | Message.VideoMessage
+        )[]
+    > {
         const msg = this.msg;
         return this.api.sendMediaGroup(
             orThrow(this.chatId, "sendMediaGroup"),
@@ -1501,7 +1556,7 @@ export class Context implements RenamedUpdate {
         longitude: number,
         other?: Other<"sendLocation", "chat_id" | "latitude" | "longitude">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.LocationMessage> {
         const msg = this.msg;
         return this.api.sendLocation(
             orThrow(this.chatId, "sendLocation"),
@@ -1541,7 +1596,9 @@ export class Context implements RenamedUpdate {
             | "longitude"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.LocationMessage)
+    > {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
             ? this.api.editMessageLiveLocationInline(
@@ -1575,7 +1632,9 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        true | (Update.Edited & Message.LocationMessage)
+    > {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
             ? this.api.stopMessageLiveLocationInline(
@@ -1613,7 +1672,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "latitude" | "longitude" | "title" | "address"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.VenueMessage> {
         const msg = this.msg;
         return this.api.sendVenue(
             orThrow(this.chatId, "sendVenue"),
@@ -1648,7 +1707,7 @@ export class Context implements RenamedUpdate {
         first_name: string,
         other?: Other<"sendContact", "chat_id" | "phone_number" | "first_name">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.ContactMessage> {
         const msg = this.msg;
         return this.api.sendContact(
             orThrow(this.chatId, "sendContact"),
@@ -1681,7 +1740,7 @@ export class Context implements RenamedUpdate {
         options: (string | InputPollOption)[],
         other?: Other<"sendPoll", "chat_id" | "question" | "options">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.PollMessage> {
         const msg = this.msg;
         return this.api.sendPoll(
             orThrow(this.chatId, "sendPoll"),
@@ -1714,7 +1773,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id" | "chat_id" | "checklist"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.ChecklistMessage> {
         return this.api.sendChecklist(
             orThrow(this.businessConnectionId, "sendChecklist"),
             orThrow(this.chatId, "sendChecklist"),
@@ -1740,7 +1799,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id" | "chat_id" | "messaage_id" | "checklist"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.ChecklistMessage> {
         const msg = orThrow(this.msg, "editMessageChecklist");
         const target = msg.checklist_tasks_done?.checklist_message ??
             msg.checklist_tasks_added?.checklist_message ??
@@ -1775,7 +1834,7 @@ export class Context implements RenamedUpdate {
             | "🎰",
         other?: Other<"sendDice", "chat_id" | "emoji">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.DiceMessage> {
         const msg = this.msg;
         return this.api.sendDice(
             orThrow(this.chatId, "sendDice"),
@@ -1820,7 +1879,7 @@ export class Context implements RenamedUpdate {
             | "upload_video_note",
         other?: Other<"sendChatAction", "chat_id" | "action">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = this.msg;
         return this.api.sendChatAction(
             orThrow(this.chatId, "sendChatAction"),
@@ -1850,7 +1909,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "reaction"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setMessageReaction(
             orThrow(this.chatId, "setMessageReaction"),
             orThrow(this.msgId, "setMessageReaction"),
@@ -1880,7 +1939,7 @@ export class Context implements RenamedUpdate {
         text: string,
         other?: Other<"sendMessageDraft", "chat_id" | "text">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = this.msg;
         return this.api.sendMessageDraft(
             orThrow(this.chatId, "sendMessageDraft"),
@@ -1912,7 +1971,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "rich_message"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = this.msg;
         return this.api.sendRichMessageDraft(
             orThrow(this.chatId, "sendMessageDraft"),
@@ -1939,7 +1998,7 @@ export class Context implements RenamedUpdate {
     getUserProfilePhotos(
         other?: Other<"getUserProfilePhotos", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<UserProfilePhotos> {
         return this.api.getUserProfilePhotos(
             orThrow(this.from, "getUserProfilePhotos").id,
             other,
@@ -1958,7 +2017,7 @@ export class Context implements RenamedUpdate {
     getUserProfileAudios(
         other?: Other<"getUserProfileAudios", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<UserProfileAudios> {
         return this.api.getUserProfileAudios(
             orThrow(this.from, "getUserProfileAudios").id,
             other,
@@ -1977,7 +2036,7 @@ export class Context implements RenamedUpdate {
     setUserEmojiStatus(
         other?: Other<"setUserEmojiStatus", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setUserEmojiStatus(
             orThrow(this.from, "setUserEmojiStatus").id,
             other,
@@ -1993,7 +2052,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getuserchatboosts
      */
-    getUserChatBoosts(chat_id?: number | string, signal?: AbortSignal) {
+    getUserChatBoosts(
+        chat_id?: number | string,
+        signal?: AbortSignal,
+    ): Promise<UserChatBoosts> {
         return this.api.getUserChatBoosts(
             chat_id ?? orThrow(this.chatId, "getUserChatBoosts"),
             orThrow(this.from, "getUserChatBoosts").id,
@@ -2012,7 +2074,7 @@ export class Context implements RenamedUpdate {
     getUserGifts(
         other?: Other<"getUserGifts", "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<OwnedGifts> {
         return this.api.getUserGifts(
             orThrow(this.from, "getUserGifts").id,
             other,
@@ -2031,7 +2093,7 @@ export class Context implements RenamedUpdate {
     getChatGifts(
         other?: Other<"getChatGifts", "chat_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<OwnedGifts> {
         return this.api.getChatGifts(
             orThrow(this.chatId, "getChatGifts"),
             other,
@@ -2045,7 +2107,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getbusinessconnection
      */
-    getBusinessConnection(signal?: AbortSignal) {
+    getBusinessConnection(signal?: AbortSignal): Promise<BusinessConnection> {
         return this.api.getBusinessConnection(
             orThrow(this.businessConnectionId, "getBusinessConnection"),
             signal,
@@ -2059,7 +2121,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmanagedbottoken
      */
-    getManagedBotToken(signal?: AbortSignal) {
+    getManagedBotToken(signal?: AbortSignal): Promise<string> {
         return this.api.getManagedBotToken(
             orThrow(this.managedBot, "getManagedBotToken").bot.id,
             signal,
@@ -2073,7 +2135,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#replacemanagedbottoken
      */
-    replaceManagedBotToken(signal?: AbortSignal) {
+    replaceManagedBotToken(signal?: AbortSignal): Promise<string> {
         return this.api.replaceManagedBotToken(
             orThrow(this.managedBot, "getManagedBotToken").bot.id,
             signal,
@@ -2087,7 +2149,9 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getmanagedbotaccesssettings
      */
-    getManagedBotAccessSettings(signal?: AbortSignal) {
+    getManagedBotAccessSettings(
+        signal?: AbortSignal,
+    ): Promise<BotAccessSettings> {
         return this.api.getManagedBotAccessSettings(
             orThrow(this.managedBot, "getManagedBotAccessSettings").bot.id,
             signal,
@@ -2110,7 +2174,7 @@ export class Context implements RenamedUpdate {
             "user_id" | "is_access_restricted"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setManagedBotAccessSettings(
             orThrow(this.managedBot, "setManagedBotAccessSettings").bot.id,
             is_access_restricted,
@@ -2128,7 +2192,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getfile
      */
-    getFile(signal?: AbortSignal) {
+    getFile(signal?: AbortSignal): Promise<File> {
         const m = orThrow(this.msg, "getFile");
         const file = m.photo !== undefined // handles both photos and live photos
             ? m.photo[m.photo.length - 1]
@@ -2143,7 +2207,7 @@ export class Context implements RenamedUpdate {
     }
 
     /** @deprecated Use `banAuthor` instead. */
-    kickAuthor(...args: Parameters<Context["banAuthor"]>) {
+    kickAuthor(...args: Parameters<Context["banAuthor"]>): Promise<true> {
         return this.banAuthor(...args);
     }
 
@@ -2158,7 +2222,7 @@ export class Context implements RenamedUpdate {
     banAuthor(
         other?: Other<"banChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.banChatMember(
             orThrow(this.chatId, "banAuthor"),
             orThrow(this.from, "banAuthor").id,
@@ -2168,7 +2232,9 @@ export class Context implements RenamedUpdate {
     }
 
     /** @deprecated Use `banChatMember` instead. */
-    kickChatMember(...args: Parameters<Context["banChatMember"]>) {
+    kickChatMember(
+        ...args: Parameters<Context["banChatMember"]>
+    ): Promise<true> {
         return this.banChatMember(...args);
     }
 
@@ -2185,7 +2251,7 @@ export class Context implements RenamedUpdate {
         user_id: number,
         other?: Other<"banChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.banChatMember(
             orThrow(this.chatId, "banChatMember"),
             user_id,
@@ -2207,7 +2273,7 @@ export class Context implements RenamedUpdate {
         user_id: number,
         other?: Other<"unbanChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.unbanChatMember(
             orThrow(this.chatId, "unbanChatMember"),
             user_id,
@@ -2232,7 +2298,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "user_id" | "permissions"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.restrictChatMember(
             orThrow(this.chatId, "restrictAuthor"),
             orThrow(this.from, "restrictAuthor").id,
@@ -2260,7 +2326,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "user_id" | "permissions"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.restrictChatMember(
             orThrow(this.chatId, "restrictChatMember"),
             user_id,
@@ -2281,7 +2347,7 @@ export class Context implements RenamedUpdate {
     promoteAuthor(
         other?: Other<"promoteChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.promoteChatMember(
             orThrow(this.chatId, "promoteAuthor"),
             orThrow(this.from, "promoteAuthor").id,
@@ -2303,7 +2369,7 @@ export class Context implements RenamedUpdate {
         user_id: number,
         other?: Other<"promoteChatMember", "chat_id" | "user_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.promoteChatMember(
             orThrow(this.chatId, "promoteChatMember"),
             user_id,
@@ -2323,7 +2389,7 @@ export class Context implements RenamedUpdate {
     setChatAdministratorAuthorCustomTitle(
         custom_title: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setChatAdministratorCustomTitle(
             orThrow(this.chatId, "setChatAdministratorAuthorCustomTitle"),
             orThrow(this.from, "setChatAdministratorAuthorCustomTitle").id,
@@ -2345,7 +2411,7 @@ export class Context implements RenamedUpdate {
         user_id: number,
         custom_title: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setChatAdministratorCustomTitle(
             orThrow(this.chatId, "setChatAdministratorCustomTitle"),
             user_id,
@@ -2362,7 +2428,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setChatMemberTag
      */
-    setAuthorTag(tag: string, signal?: AbortSignal) {
+    setAuthorTag(tag: string, signal?: AbortSignal): Promise<true> {
         return this.api.setChatMemberTag(
             orThrow(this.chatId, "setChatMemberTag"),
             orThrow(this.from, "setChatMemberTag").id,
@@ -2384,7 +2450,7 @@ export class Context implements RenamedUpdate {
         user_id: number,
         tag: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setChatMemberTag(
             orThrow(this.chatId, "setChatMemberTag"),
             user_id,
@@ -2401,7 +2467,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#banchatsenderchat
      */
-    banChatSenderChat(sender_chat_id: number, signal?: AbortSignal) {
+    banChatSenderChat(
+        sender_chat_id: number,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.api.banChatSenderChat(
             orThrow(this.chatId, "banChatSenderChat"),
             sender_chat_id,
@@ -2420,7 +2489,7 @@ export class Context implements RenamedUpdate {
     unbanChatSenderChat(
         sender_chat_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.unbanChatSenderChat(
             orThrow(this.chatId, "unbanChatSenderChat"),
             sender_chat_id,
@@ -2441,7 +2510,7 @@ export class Context implements RenamedUpdate {
         permissions: ChatPermissions,
         other?: Other<"setChatPermissions", "chat_id" | "permissions">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setChatPermissions(
             orThrow(this.chatId, "setChatPermissions"),
             permissions,
@@ -2459,7 +2528,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#exportchatinvitelink
      */
-    exportChatInviteLink(signal?: AbortSignal) {
+    exportChatInviteLink(signal?: AbortSignal): Promise<string> {
         return this.api.exportChatInviteLink(
             orThrow(this.chatId, "exportChatInviteLink"),
             signal,
@@ -2477,7 +2546,7 @@ export class Context implements RenamedUpdate {
     createChatInviteLink(
         other?: Other<"createChatInviteLink", "chat_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.api.createChatInviteLink(
             orThrow(this.chatId, "createChatInviteLink"),
             other,
@@ -2498,7 +2567,7 @@ export class Context implements RenamedUpdate {
         invite_link: string,
         other?: Other<"editChatInviteLink", "chat_id" | "invite_link">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.api.editChatInviteLink(
             orThrow(this.chatId, "editChatInviteLink"),
             invite_link,
@@ -2525,7 +2594,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "subscription_period" | "subscription_price"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.api.createChatSubscriptionInviteLink(
             orThrow(this.chatId, "createChatSubscriptionInviteLink"),
             subscription_period,
@@ -2551,7 +2620,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "invite_link"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatInviteLink> {
         return this.api.editChatSubscriptionInviteLink(
             orThrow(this.chatId, "editChatSubscriptionInviteLink"),
             invite_link,
@@ -2568,7 +2637,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#revokechatinvitelink
      */
-    revokeChatInviteLink(invite_link: string, signal?: AbortSignal) {
+    revokeChatInviteLink(
+        invite_link: string,
+        signal?: AbortSignal,
+    ): Promise<ChatInviteLink> {
         return this.api.revokeChatInviteLink(
             orThrow(this.chatId, "editChatInviteLink"),
             invite_link,
@@ -2587,7 +2659,7 @@ export class Context implements RenamedUpdate {
     approveChatJoinRequest(
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.approveChatJoinRequest(
             orThrow(this.chatId, "approveChatJoinRequest"),
             user_id,
@@ -2606,7 +2678,7 @@ export class Context implements RenamedUpdate {
     declineChatJoinRequest(
         user_id: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.declineChatJoinRequest(
             orThrow(this.chatId, "declineChatJoinRequest"),
             user_id,
@@ -2625,7 +2697,7 @@ export class Context implements RenamedUpdate {
     answerChatJoinRequestQuery(
         result: "approve" | "decline" | "queue",
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.answerChatJoinRequestQuery(
             orThrow(
                 this.chatJoinRequest?.query_id,
@@ -2644,7 +2716,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#sendchatjoinrequestwebapp
      */
-    replyWithChatJoinRequestWebApp(web_app_url: string, signal?: AbortSignal) {
+    replyWithChatJoinRequestWebApp(
+        web_app_url: string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.api.sendChatJoinRequestWebApp(
             orThrow(
                 this.chatJoinRequest?.query_id,
@@ -2666,7 +2741,7 @@ export class Context implements RenamedUpdate {
     approveSuggestedPost(
         other?: Other<"approveSuggestedPost", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.approveSuggestedPost(
             orThrow(this.chatId, "approveSuggestedPost"),
             orThrow(this.msgId, "approveSuggestedPost"),
@@ -2686,7 +2761,7 @@ export class Context implements RenamedUpdate {
     declineSuggestedPost(
         other?: Other<"declineSuggestedPost", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.declineSuggestedPost(
             orThrow(this.chatId, "declineSuggestedPost"),
             orThrow(this.msgId, "declineSuggestedPost"),
@@ -2703,7 +2778,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatphoto
      */
-    setChatPhoto(photo: InputFile, signal?: AbortSignal) {
+    setChatPhoto(photo: InputFile, signal?: AbortSignal): Promise<true> {
         return this.api.setChatPhoto(
             orThrow(this.chatId, "setChatPhoto"),
             photo,
@@ -2718,7 +2793,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatphoto
      */
-    deleteChatPhoto(signal?: AbortSignal) {
+    deleteChatPhoto(signal?: AbortSignal): Promise<true> {
         return this.api.deleteChatPhoto(
             orThrow(this.chatId, "deleteChatPhoto"),
             signal,
@@ -2733,7 +2808,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchattitle
      */
-    setChatTitle(title: string, signal?: AbortSignal) {
+    setChatTitle(title: string, signal?: AbortSignal): Promise<true> {
         return this.api.setChatTitle(
             orThrow(this.chatId, "setChatTitle"),
             title,
@@ -2749,7 +2824,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatdescription
      */
-    setChatDescription(description: string | undefined, signal?: AbortSignal) {
+    setChatDescription(
+        description: string | undefined,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.api.setChatDescription(
             orThrow(this.chatId, "setChatDescription"),
             description,
@@ -2770,7 +2848,7 @@ export class Context implements RenamedUpdate {
         message_id: number,
         other?: Other<"pinChatMessage", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.pinChatMessage(
             orThrow(this.chatId, "pinChatMessage"),
             message_id,
@@ -2792,7 +2870,7 @@ export class Context implements RenamedUpdate {
         message_id?: number,
         other?: Other<"unpinChatMessage", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.unpinChatMessage(
             orThrow(this.chatId, "unpinChatMessage"),
             message_id,
@@ -2808,7 +2886,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinallchatmessages
      */
-    unpinAllChatMessages(signal?: AbortSignal) {
+    unpinAllChatMessages(signal?: AbortSignal): Promise<true> {
         return this.api.unpinAllChatMessages(
             orThrow(this.chatId, "unpinAllChatMessages"),
             signal,
@@ -2822,7 +2900,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#leavechat
      */
-    leaveChat(signal?: AbortSignal) {
+    leaveChat(signal?: AbortSignal): Promise<true> {
         return this.api.leaveChat(orThrow(this.chatId, "leaveChat"), signal);
     }
 
@@ -2833,7 +2911,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchat
      */
-    getChat(signal?: AbortSignal) {
+    getChat(signal?: AbortSignal): Promise<ChatFullInfo> {
         return this.api.getChat(orThrow(this.chatId, "getChat"), signal);
     }
 
@@ -2848,7 +2926,7 @@ export class Context implements RenamedUpdate {
     getChatAdministrators(
         other?: Other<"getChatAdministrators", "chat_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<(ChatMemberOwner | ChatMemberAdministrator)[]> {
         return this.api.getChatAdministrators(
             orThrow(this.chatId, "getChatAdministrators"),
             other,
@@ -2857,7 +2935,9 @@ export class Context implements RenamedUpdate {
     }
 
     /** @deprecated Use `getChatMemberCount` instead. */
-    getChatMembersCount(...args: Parameters<Context["getChatMemberCount"]>) {
+    getChatMembersCount(
+        ...args: Parameters<Context["getChatMemberCount"]>
+    ): Promise<number> {
         return this.getChatMemberCount(...args);
     }
 
@@ -2868,7 +2948,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmembercount
      */
-    getChatMemberCount(signal?: AbortSignal) {
+    getChatMemberCount(signal?: AbortSignal): Promise<number> {
         return this.api.getChatMemberCount(
             orThrow(this.chatId, "getChatMemberCount"),
             signal,
@@ -2882,7 +2962,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmember
      */
-    getAuthor(signal?: AbortSignal) {
+    getAuthor(signal?: AbortSignal): Promise<ChatMember> {
         return this.api.getChatMember(
             orThrow(this.chatId, "getAuthor"),
             orThrow(this.from, "getAuthor").id,
@@ -2898,7 +2978,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getchatmember
      */
-    getChatMember(user_id: number, signal?: AbortSignal) {
+    getChatMember(user_id: number, signal?: AbortSignal): Promise<ChatMember> {
         return this.api.getChatMember(
             orThrow(this.chatId, "getChatMember"),
             user_id,
@@ -2917,7 +2997,7 @@ export class Context implements RenamedUpdate {
     getUserPersonalChatMessages(
         limit: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message[]> {
         return this.api.getUserPersonalChatMessages(
             orThrow(this.from, "getUserPersonalChatMessages").id,
             limit,
@@ -2933,7 +3013,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setchatstickerset
      */
-    setChatStickerSet(sticker_set_name: string, signal?: AbortSignal) {
+    setChatStickerSet(
+        sticker_set_name: string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.api.setChatStickerSet(
             orThrow(this.chatId, "setChatStickerSet"),
             sticker_set_name,
@@ -2948,7 +3031,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletechatstickerset
      */
-    deleteChatStickerSet(signal?: AbortSignal) {
+    deleteChatStickerSet(signal?: AbortSignal): Promise<true> {
         return this.api.deleteChatStickerSet(
             orThrow(this.chatId, "deleteChatStickerSet"),
             signal,
@@ -2968,7 +3051,7 @@ export class Context implements RenamedUpdate {
         name: string,
         other?: Other<"createForumTopic", "chat_id" | "name">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ForumTopic> {
         return this.api.createForumTopic(
             orThrow(this.chatId, "createForumTopic"),
             name,
@@ -2988,7 +3071,7 @@ export class Context implements RenamedUpdate {
     editForumTopic(
         other?: Other<"editForumTopic", "chat_id" | "message_thread_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const message = orThrow(this.msg, "editForumTopic");
         const thread = orThrow(message.message_thread_id, "editForumTopic");
         return this.api.editForumTopic(message.chat.id, thread, other, signal);
@@ -3001,7 +3084,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#closeforumtopic
      */
-    closeForumTopic(signal?: AbortSignal) {
+    closeForumTopic(signal?: AbortSignal): Promise<true> {
         const message = orThrow(this.msg, "closeForumTopic");
         const thread = orThrow(message.message_thread_id, "closeForumTopic");
         return this.api.closeForumTopic(message.chat.id, thread, signal);
@@ -3014,7 +3097,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#reopenforumtopic
      */
-    reopenForumTopic(signal?: AbortSignal) {
+    reopenForumTopic(signal?: AbortSignal): Promise<true> {
         const message = orThrow(this.msg, "reopenForumTopic");
         const thread = orThrow(message.message_thread_id, "reopenForumTopic");
         return this.api.reopenForumTopic(message.chat.id, thread, signal);
@@ -3027,7 +3110,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deleteforumtopic
      */
-    deleteForumTopic(signal?: AbortSignal) {
+    deleteForumTopic(signal?: AbortSignal): Promise<true> {
         const message = orThrow(this.msg, "deleteForumTopic");
         const thread = orThrow(message.message_thread_id, "deleteForumTopic");
         return this.api.deleteForumTopic(message.chat.id, thread, signal);
@@ -3040,7 +3123,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinallforumtopicmessages
      */
-    unpinAllForumTopicMessages(signal?: AbortSignal) {
+    unpinAllForumTopicMessages(signal?: AbortSignal): Promise<true> {
         const message = orThrow(this.msg, "unpinAllForumTopicMessages");
         const thread = orThrow(
             message.message_thread_id,
@@ -3061,7 +3144,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#editgeneralforumtopic
      */
-    editGeneralForumTopic(name: string, signal?: AbortSignal) {
+    editGeneralForumTopic(name: string, signal?: AbortSignal): Promise<true> {
         return this.api.editGeneralForumTopic(
             orThrow(this.chatId, "editGeneralForumTopic"),
             name,
@@ -3076,7 +3159,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#closegeneralforumtopic
      */
-    closeGeneralForumTopic(signal?: AbortSignal) {
+    closeGeneralForumTopic(signal?: AbortSignal): Promise<true> {
         return this.api.closeGeneralForumTopic(
             orThrow(this.chatId, "closeGeneralForumTopic"),
             signal,
@@ -3090,7 +3173,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#reopengeneralforumtopic
      */
-    reopenGeneralForumTopic(signal?: AbortSignal) {
+    reopenGeneralForumTopic(signal?: AbortSignal): Promise<true> {
         return this.api.reopenGeneralForumTopic(
             orThrow(this.chatId, "reopenGeneralForumTopic"),
             signal,
@@ -3104,7 +3187,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#hidegeneralforumtopic
      */
-    hideGeneralForumTopic(signal?: AbortSignal) {
+    hideGeneralForumTopic(signal?: AbortSignal): Promise<true> {
         return this.api.hideGeneralForumTopic(
             orThrow(this.chatId, "hideGeneralForumTopic"),
             signal,
@@ -3118,7 +3201,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unhidegeneralforumtopic
      */
-    unhideGeneralForumTopic(signal?: AbortSignal) {
+    unhideGeneralForumTopic(signal?: AbortSignal): Promise<true> {
         return this.api.unhideGeneralForumTopic(
             orThrow(this.chatId, "unhideGeneralForumTopic"),
             signal,
@@ -3132,7 +3215,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
      */
-    unpinAllGeneralForumTopicMessages(signal?: AbortSignal) {
+    unpinAllGeneralForumTopicMessages(signal?: AbortSignal): Promise<true> {
         return this.api.unpinAllGeneralForumTopicMessages(
             orThrow(this.chatId, "unpinAllGeneralForumTopicMessages"),
             signal,
@@ -3152,7 +3235,7 @@ export class Context implements RenamedUpdate {
     answerCallbackQuery(
         other?: string | Other<"answerCallbackQuery", "callback_query_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.answerCallbackQuery(
             orThrow(this.callbackQuery, "answerCallbackQuery").id,
             typeof other === "string" ? { text: other } : other,
@@ -3171,7 +3254,7 @@ export class Context implements RenamedUpdate {
     answerGuestQuery(
         result: InlineQueryResult,
         signal?: AbortSignal,
-    ) {
+    ): Promise<SentGuestMessage> {
         return this.api.answerGuestQuery(
             orThrow(this.guestMessage?.guest_query_id, "answerGuestQuery"),
             result,
@@ -3190,7 +3273,7 @@ export class Context implements RenamedUpdate {
     setChatMenuButton(
         other?: Other<"setChatMenuButton">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setChatMenuButton(other, signal);
     }
 
@@ -3205,7 +3288,7 @@ export class Context implements RenamedUpdate {
     getChatMenuButton(
         other?: Other<"getChatMenuButton">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<MenuButton> {
         return this.api.getChatMenuButton(other, signal);
     }
 
@@ -3220,7 +3303,7 @@ export class Context implements RenamedUpdate {
     setMyDefaultAdministratorRights(
         other?: Other<"setMyDefaultAdministratorRights">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setMyDefaultAdministratorRights(other, signal);
     }
 
@@ -3233,7 +3316,7 @@ export class Context implements RenamedUpdate {
     getMyDefaultAdministratorRights(
         other?: Other<"getMyDefaultAdministratorRights">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<ChatAdministratorRights> {
         return this.api.getMyDefaultAdministratorRights(other, signal);
     }
 
@@ -3257,7 +3340,14 @@ export class Context implements RenamedUpdate {
             | "rich_message"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<
+        | true
+        | (
+            & Update.Edited
+            & Message.TextMessage
+        )
+        | (Update.Edited & Message.RichMessageMessage)
+    > {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
             ? this.api.editMessageTextInline(
@@ -3293,7 +3383,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message.CaptionableMessage)> {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
             ? this.api.editMessageCaptionInline(
@@ -3329,7 +3419,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "inline_message_id" | "media"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message)> {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
             ? this.api.editMessageMediaInline(
@@ -3365,7 +3455,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "inline_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true | (Update.Edited & Message)> {
         const inlineId = this.inlineMessageId;
         return inlineId !== undefined
             ? this.api.editMessageReplyMarkupInline(
@@ -3396,7 +3486,7 @@ export class Context implements RenamedUpdate {
     stopPoll(
         other?: Other<"stopPoll", "chat_id" | "message_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Poll> {
         return this.api.stopPoll(
             orThrow(this.chatId, "stopPoll"),
             orThrow(
@@ -3425,7 +3515,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "text"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = orThrow(this.msg, "editEphemeralMessageText");
         return this.api.editEphemeralMessageText(
             msg.chat.id,
@@ -3453,7 +3543,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "media"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = orThrow(this.msg, "editEphemeralMessageMedia");
         return this.api.editEphemeralMessageMedia(
             msg.chat.id,
@@ -3481,7 +3571,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id" | "caption"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = orThrow(this.msg, "editEphemeralMessageCaption");
         return this.api.editEphemeralMessageCaption(
             msg.chat.id,
@@ -3510,7 +3600,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "receiver_user_id" | "ephemeral_message_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = orThrow(this.msg, "editEphemeralMessageReplyMarkup");
         return this.api.editEphemeralMessageReplyMarkup(
             msg.chat.id,
@@ -3540,7 +3630,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletemessage
      */
-    deleteMessage(signal?: AbortSignal) {
+    deleteMessage(signal?: AbortSignal): Promise<true> {
         return this.api.deleteMessage(
             orThrow(this.chatId, "deleteMessage"),
             orThrow(
@@ -3561,7 +3651,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletemessages
      */
-    deleteMessages(message_ids: number[], signal?: AbortSignal) {
+    deleteMessages(message_ids: number[], signal?: AbortSignal): Promise<true> {
         return this.api.deleteMessages(
             orThrow(this.chatId, "deleteMessages"),
             message_ids,
@@ -3578,7 +3668,7 @@ export class Context implements RenamedUpdate {
      */
     deleteEphemeralMessage(
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const msg = orThrow(this.msg, "deleteEphemeralMessage");
         return this.api.deleteEphemeralMessage(
             msg.chat.id,
@@ -3602,7 +3692,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "user_id" | "actor_chat_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const reaction = orThrow(this.messageReaction, "deleteMessageReaction");
         if (reaction.user !== undefined) {
             return this.deleteMessageReactionUser(
@@ -3639,7 +3729,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "user_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.deleteMessageReactionUser(
             orThrow(this.chatId, "deleteMessageReactionUser"),
             orThrow(this.msgId, "deleteMessageReactionUser"),
@@ -3665,7 +3755,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "actor_chat_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.deleteMessageReactionChat(
             orThrow(this.chatId, "deleteMessageReactionChat"),
             orThrow(this.msgId, "deleteMessageReactionChat"),
@@ -3689,7 +3779,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "user_id" | "actor_chat_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         const chatId = orThrow(this.chatId, "deleteAllMessageReactions");
         const actor = this.messageReaction?.actor_chat ?? this.senderChat ??
             this.pollAnswer?.voter_chat;
@@ -3726,7 +3816,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "user_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.deleteAllMessageReactionsUser(
             orThrow(this.chatId, "deleteAllMessageReactionsUser"),
             user_id,
@@ -3751,7 +3841,7 @@ export class Context implements RenamedUpdate {
             "chat_id" | "message_id" | "actor_chat_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.deleteAllMessageReactionsChat(
             orThrow(this.chatId, "deleteAllMessageReactionsChat"),
             actor_chat_id,
@@ -3768,7 +3858,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletebusinessmessages
      */
-    deleteBusinessMessages(message_ids: number[], signal?: AbortSignal) {
+    deleteBusinessMessages(
+        message_ids: number[],
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.api.deleteBusinessMessages(
             orThrow(this.businessConnectionId, "deleteBusinessMessages"),
             message_ids,
@@ -3792,7 +3885,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id" | "first_name"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setBusinessAccountName(
             orThrow(this.businessConnectionId, "setBusinessAccountName"),
             first_name,
@@ -3809,7 +3902,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountusername
      */
-    setBusinessAccountUsername(username: string, signal?: AbortSignal) {
+    setBusinessAccountUsername(
+        username: string,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.api.setBusinessAccountUsername(
             orThrow(this.businessConnectionId, "setBusinessAccountUsername"),
             username,
@@ -3825,7 +3921,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#setbusinessaccountbio
      */
-    setBusinessAccountBio(bio: string, signal?: AbortSignal) {
+    setBusinessAccountBio(bio: string, signal?: AbortSignal): Promise<true> {
         return this.api.setBusinessAccountBio(
             orThrow(this.businessConnectionId, "setBusinessAccountBio"),
             bio,
@@ -3849,7 +3945,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id" | "photo"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setBusinessAccountProfilePhoto(
             orThrow(
                 this.businessConnectionId,
@@ -3875,7 +3971,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.removeBusinessAccountProfilePhoto(
             orThrow(
                 this.businessConnectionId,
@@ -3899,7 +3995,7 @@ export class Context implements RenamedUpdate {
         show_gift_button: boolean,
         accepted_gift_types: AcceptedGiftTypes,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setBusinessAccountGiftSettings(
             orThrow(
                 this.businessConnectionId,
@@ -3918,7 +4014,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getbusinessaccountstarbalance
      */
-    getBusinessAccountStarBalance(signal?: AbortSignal) {
+    getBusinessAccountStarBalance(signal?: AbortSignal): Promise<StarAmount> {
         return this.api.getBusinessAccountStarBalance(
             orThrow(this.businessConnectionId, "getBusinessAccountStarBalance"),
             signal,
@@ -3933,7 +4029,10 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#transferbusinessaccountstars
      */
-    transferBusinessAccountStars(star_count: number, signal?: AbortSignal) {
+    transferBusinessAccountStars(
+        star_count: number,
+        signal?: AbortSignal,
+    ): Promise<true> {
         return this.api.transferBusinessAccountStars(
             orThrow(this.businessConnectionId, "transferBusinessAccountStars"),
             star_count,
@@ -3952,7 +4051,7 @@ export class Context implements RenamedUpdate {
     getBusinessAccountGifts(
         other: Other<"getBusinessAccountGifts", "business_connection_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<OwnedGifts> {
         return this.api.getBusinessAccountGifts(
             orThrow(this.businessConnectionId, "getBusinessAccountGifts"),
             other,
@@ -3971,7 +4070,7 @@ export class Context implements RenamedUpdate {
     convertGiftToStars(
         owned_gift_id: string,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.convertGiftToStars(
             orThrow(this.businessConnectionId, "convertGiftToStars"),
             owned_gift_id,
@@ -3995,7 +4094,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id" | "owned_gift_id"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.upgradeGift(
             orThrow(this.businessConnectionId, "upgradeGift"),
             owned_gift_id,
@@ -4019,7 +4118,7 @@ export class Context implements RenamedUpdate {
         new_owner_chat_id: number,
         star_count: number,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.transferGift(
             orThrow(this.businessConnectionId, "transferGift"),
             owned_gift_id,
@@ -4047,7 +4146,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id" | "content" | "active_period"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Story> {
         return this.api.postStory(
             orThrow(this.businessConnectionId, "postStory"),
             content,
@@ -4076,7 +4175,7 @@ export class Context implements RenamedUpdate {
             | "active_period"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Story> {
         const story = orThrow(this.msg?.story, "repostStory");
         return this.api.repostStory(
             orThrow(this.businessConnectionId, "repostStory"),
@@ -4106,7 +4205,7 @@ export class Context implements RenamedUpdate {
             "business_connection_id" | "story_id" | "content"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Story> {
         return this.api.editStory(
             orThrow(this.businessConnectionId, "editStory"),
             story_id,
@@ -4124,7 +4223,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#deletestory
      */
-    deleteStory(story_id: number, signal?: AbortSignal) {
+    deleteStory(story_id: number, signal?: AbortSignal): Promise<true> {
         return this.api.deleteStory(
             orThrow(this.businessConnectionId, "deleteStory"),
             story_id,
@@ -4145,7 +4244,7 @@ export class Context implements RenamedUpdate {
         sticker: InputFile | string,
         other?: Other<"sendSticker", "chat_id" | "sticker">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.StickerMessage> {
         const msg = this.msg;
         return this.api.sendSticker(
             orThrow(this.chatId, "sendSticker"),
@@ -4170,7 +4269,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#getcustomemojistickers
      */
-    getCustomEmojiStickers(signal?: AbortSignal) {
+    getCustomEmojiStickers(signal?: AbortSignal): Promise<Sticker[]> {
         type Emoji = MessageEntity.CustomEmojiMessageEntity;
         return this.api.getCustomEmojiStickers(
             (this.msg?.entities ?? [])
@@ -4193,7 +4292,7 @@ export class Context implements RenamedUpdate {
         gift_id: string,
         other?: Other<"sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.sendGift(
             orThrow(this.from, "sendGift").id,
             gift_id,
@@ -4220,7 +4319,7 @@ export class Context implements RenamedUpdate {
             "user_id" | "month_count" | "star_count"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.giftPremiumSubscription(
             orThrow(this.from, "giftPremiumSubscription").id,
             month_count,
@@ -4243,7 +4342,7 @@ export class Context implements RenamedUpdate {
         gift_id: string,
         other?: Other<"sendGift", "user_id" | "chat_id" | "gift_id">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.sendGiftToChannel(
             orThrow(this.chat, "sendGift").id,
             gift_id,
@@ -4268,7 +4367,7 @@ export class Context implements RenamedUpdate {
         results: readonly InlineQueryResult[],
         other?: Other<"answerInlineQuery", "inline_query_id" | "results">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.answerInlineQuery(
             orThrow(this.inlineQuery, "answerInlineQuery").id,
             results,
@@ -4290,7 +4389,7 @@ export class Context implements RenamedUpdate {
         result: InlineQueryResult,
         other?: Other<"savePreparedInlineMessage", "user_id" | "result">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<PreparedInlineMessage> {
         return this.api.savePreparedInlineMessage(
             orThrow(this.from, "savePreparedInlineMessage").id,
             result,
@@ -4313,7 +4412,7 @@ export class Context implements RenamedUpdate {
             | KeyboardButton.RequestChatButton
             | KeyboardButton.RequestManagedBotButton,
         signal?: AbortSignal,
-    ) {
+    ): Promise<PreparedKeyboardButton> {
         return this.api.savePreparedKeyboardButton(
             orThrow(this.from, "savePreparedKeyboardButton").id,
             button,
@@ -4350,7 +4449,7 @@ export class Context implements RenamedUpdate {
             | "prices"
         >,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.InvoiceMessage> {
         const msg = this.msg;
         return this.api.sendInvoice(
             orThrow(this.chatId, "sendInvoice"),
@@ -4384,7 +4483,7 @@ export class Context implements RenamedUpdate {
         ok: boolean,
         other?: Other<"answerShippingQuery", "shipping_query_id" | "ok">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.answerShippingQuery(
             orThrow(this.shippingQuery, "answerShippingQuery").id,
             ok,
@@ -4408,7 +4507,7 @@ export class Context implements RenamedUpdate {
             | string
             | Other<"answerPreCheckoutQuery", "pre_checkout_query_id" | "ok">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.answerPreCheckoutQuery(
             orThrow(this.preCheckoutQuery, "answerPreCheckoutQuery").id,
             ok,
@@ -4424,7 +4523,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#refundstarpayment
      */
-    refundStarPayment(signal?: AbortSignal) {
+    refundStarPayment(signal?: AbortSignal): Promise<true> {
         return this.api.refundStarPayment(
             orThrow(this.from, "refundStarPayment").id,
             orThrow(this.msg?.successful_payment, "refundStarPayment")
@@ -4446,7 +4545,7 @@ export class Context implements RenamedUpdate {
         telegram_payment_charge_id: string,
         is_canceled: boolean,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.editUserStarSubscription(
             orThrow(this.from, "editUserStarSubscription").id,
             telegram_payment_charge_id,
@@ -4466,7 +4565,7 @@ export class Context implements RenamedUpdate {
     verifyUser(
         other?: Other<"verifyUser">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.verifyUser(
             orThrow(this.from, "verifyUser").id,
             other,
@@ -4485,7 +4584,7 @@ export class Context implements RenamedUpdate {
     verifyChat(
         other?: Other<"verifyChat">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.verifyChat(
             orThrow(this.chatId, "verifyChat"),
             other,
@@ -4500,7 +4599,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#removeuserverification
      */
-    removeUserVerification(signal?: AbortSignal) {
+    removeUserVerification(signal?: AbortSignal): Promise<true> {
         return this.api.removeUserVerification(
             orThrow(this.from, "removeUserVerification").id,
             signal,
@@ -4516,7 +4615,7 @@ export class Context implements RenamedUpdate {
      */
     removeChatVerification(
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.removeChatVerification(
             orThrow(this.chatId, "removeChatVerification"),
             signal,
@@ -4530,7 +4629,7 @@ export class Context implements RenamedUpdate {
      *
      * **Official reference:** https://core.telegram.org/bots/api#readbusinessmessage
      */
-    readBusinessMessage(signal?: AbortSignal) {
+    readBusinessMessage(signal?: AbortSignal): Promise<true> {
         return this.api.readBusinessMessage(
             orThrow(this.businessConnectionId, "readBusinessMessage"),
             orThrow(this.chatId, "readBusinessMessage"),
@@ -4552,7 +4651,7 @@ export class Context implements RenamedUpdate {
     setPassportDataErrors(
         errors: readonly PassportElementError[],
         signal?: AbortSignal,
-    ) {
+    ): Promise<true> {
         return this.api.setPassportDataErrors(
             orThrow(this.from, "setPassportDataErrors").id,
             errors,
@@ -4573,7 +4672,7 @@ export class Context implements RenamedUpdate {
         game_short_name: string,
         other?: Other<"sendGame", "chat_id" | "game_short_name">,
         signal?: AbortSignal,
-    ) {
+    ): Promise<Message.GameMessage> {
         const msg = this.msg;
         return this.api.sendGame(
             orThrow(this.chatId, "sendGame"),
