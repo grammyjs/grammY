@@ -1,6 +1,9 @@
 {
+    "name": "@grammyjs/grammy",
+    "version": "1.45.1",
     "lock": false,
     "minimumDependencyAge": 0,
+    "exports": "./src/mod.ts",
     "nodeModulesDir": "none",
     "tasks": {
         "check": "deno check --allow-import src/mod.ts",
