@@ -57,136 +57,110 @@ export interface Update {
    * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using <a href="#setwebhook">webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
    */
   update_id: number;
-<tr>
-<td>message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New incoming message of any kind - text, photo, sticker, etc.</td>
-</tr>
-<tr>
-<td>edited_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
-</tr>
-<tr>
-<td>channel_post</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New incoming channel post of any kind - text, photo, sticker, etc.</td>
-</tr>
-<tr>
-<td>edited_channel_post</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.</td>
-</tr>
-<tr>
-<td>business_connection</td>
-<td><a href="#businessconnection">BusinessConnection</a></td>
-<td><em>Optional</em>. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot</td>
-</tr>
-<tr>
-<td>business_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New message from a connected business account</td>
-</tr>
-<tr>
-<td>edited_business_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New version of a message from a connected business account</td>
-</tr>
-<tr>
-<td>deleted_business_messages</td>
-<td><a href="#businessmessagesdeleted">BusinessMessagesDeleted</a></td>
-<td><em>Optional</em>. Messages were deleted from a connected business account</td>
-</tr>
-<tr>
-<td>guest_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. New guest message. The bot can use the field <em>Message.guest_query_id</em> and the method <a href="#answerguestquery">answerGuestQuery</a> to send a message in response.</td>
-</tr>
-<tr>
-<td>message_reaction</td>
-<td><a href="#messagereactionupdated">MessageReactionUpdated</a></td>
-<td><em>Optional</em>. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction&quot;</code> in the list of <em>allowed_updates</em> to receive these updates. The update isn&#39;t received for reactions set by bots.</td>
-</tr>
-<tr>
-<td>message_reaction_count</td>
-<td><a href="#messagereactioncountupdated">MessageReactionCountUpdated</a></td>
-<td><em>Optional</em>. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction_count&quot;</code> in the list of <em>allowed_updates</em> to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.</td>
-</tr>
-<tr>
-<td>inline_query</td>
-<td><a href="#inlinequery">InlineQuery</a></td>
-<td><em>Optional</em>. New incoming <a href="#inline-mode">inline</a> query</td>
-</tr>
-<tr>
-<td>chosen_inline_result</td>
-<td><a href="#choseninlineresult">ChosenInlineResult</a></td>
-<td><em>Optional</em>. The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.</td>
-</tr>
-<tr>
-<td>callback_query</td>
-<td><a href="#callbackquery">CallbackQuery</a></td>
-<td><em>Optional</em>. New incoming callback query</td>
-</tr>
-<tr>
-<td>shipping_query</td>
-<td><a href="#shippingquery">ShippingQuery</a></td>
-<td><em>Optional</em>. New incoming shipping query. Only for invoices with flexible price.</td>
-</tr>
-<tr>
-<td>pre_checkout_query</td>
-<td><a href="#precheckoutquery">PreCheckoutQuery</a></td>
-<td><em>Optional</em>. New incoming pre-checkout query. Contains full information about checkout.</td>
-</tr>
-<tr>
-<td>purchased_paid_media</td>
-<td><a href="#paidmediapurchased">PaidMediaPurchased</a></td>
-<td><em>Optional</em>. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat</td>
-</tr>
-<tr>
-<td>poll</td>
-<td><a href="#poll">Poll</a></td>
-<td><em>Optional</em>. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot.</td>
-</tr>
-<tr>
-<td>poll_answer</td>
-<td><a href="#pollanswer">PollAnswer</a></td>
-<td><em>Optional</em>. A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.</td>
-</tr>
-<tr>
-<td>my_chat_member</td>
-<td><a href="#chatmemberupdated">ChatMemberUpdated</a></td>
-<td><em>Optional</em>. The bot&#39;s chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.</td>
-</tr>
-<tr>
-<td>chat_member</td>
-<td><a href="#chatmemberupdated">ChatMemberUpdated</a></td>
-<td><em>Optional</em>. A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify <code>&quot;chat_member&quot;</code> in the list of <em>allowed_updates</em> to receive these updates.</td>
-</tr>
-<tr>
-<td>chat_join_request</td>
-<td><a href="#chatjoinrequest">ChatJoinRequest</a></td>
-<td><em>Optional</em>. A request to join the chat has been sent. The bot must have the <em>can_invite_users</em> administrator right in the chat to receive these updates.</td>
-</tr>
-<tr>
-<td>chat_boost</td>
-<td><a href="#chatboostupdated">ChatBoostUpdated</a></td>
-<td><em>Optional</em>. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.</td>
-</tr>
-<tr>
-<td>removed_chat_boost</td>
-<td><a href="#chatboostremoved">ChatBoostRemoved</a></td>
-<td><em>Optional</em>. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.</td>
-</tr>
-<tr>
-<td>managed_bot</td>
-<td><a href="#managedbotupdated">ManagedBotUpdated</a></td>
-<td><em>Optional</em>. A new bot was created to be managed by the bot, or token or owner of a managed bot was changed</td>
-</tr>
-<tr>
-<td>subscription</td>
-<td><a href="#botsubscriptionupdated">BotSubscriptionUpdated</a></td>
-<td><em>Optional</em>. User payment subscription has changed</td>
-</tr>
+  /**
+   * New incoming message of any kind - text, photo, sticker, etc.
+   */
+  message?: Message;
+  /**
+   * New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
+   */
+  edited_message?: Message;
+  /**
+   * New incoming channel post of any kind - text, photo, sticker, etc.
+   */
+  channel_post?: Message;
+  /**
+   * New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
+   */
+  edited_channel_post?: Message;
+  /**
+   * The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot
+   */
+  business_connection?: BusinessConnection;
+  /**
+   * New message from a connected business account
+   */
+  business_message?: Message;
+  /**
+   * New version of a message from a connected business account
+   */
+  edited_business_message?: Message;
+  /**
+   * Messages were deleted from a connected business account
+   */
+  deleted_business_messages?: BusinessMessagesDeleted;
+  /**
+   * New guest message. The bot can use the field <em>Message.guest_query_id</em> and the method <a href="#answerguestquery">answerGuestQuery</a> to send a message in response.
+   */
+  guest_message?: Message;
+  /**
+   * A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction&quot;</code> in the list of <em>allowed_updates</em> to receive these updates. The update isn&#39;t received for reactions set by bots.
+   */
+  message_reaction?: MessageReactionUpdated;
+  /**
+   * Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction_count&quot;</code> in the list of <em>allowed_updates</em> to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
+   */
+  message_reaction_count?: MessageReactionCountUpdated;
+  /**
+   * New incoming <a href="#inline-mode">inline</a> query
+   */
+  inline_query?: InlineQuery;
+  /**
+   * The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.
+   */
+  chosen_inline_result?: ChosenInlineResult;
+  /**
+   * New incoming callback query
+   */
+  callback_query?: CallbackQuery;
+  /**
+   * New incoming shipping query. Only for invoices with flexible price.
+   */
+  shipping_query?: ShippingQuery;
+  /**
+   * New incoming pre-checkout query. Contains full information about checkout.
+   */
+  pre_checkout_query?: PreCheckoutQuery;
+  /**
+   * A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat
+   */
+  purchased_paid_media?: PaidMediaPurchased;
+  /**
+   * New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot.
+   */
+  poll?: Poll;
+  /**
+   * A user changed their answer in a non-anonymous poll. Bots receive new votes only in polls that were sent by the bot itself.
+   */
+  poll_answer?: PollAnswer;
+  /**
+   * The bot&#39;s chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
+   */
+  my_chat_member?: ChatMemberUpdated;
+  /**
+   * A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify <code>&quot;chat_member&quot;</code> in the list of <em>allowed_updates</em> to receive these updates.
+   */
+  chat_member?: ChatMemberUpdated;
+  /**
+   * A request to join the chat has been sent. The bot must have the <em>can_invite_users</em> administrator right in the chat to receive these updates.
+   */
+  chat_join_request?: ChatJoinRequest;
+  /**
+   * A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.
+   */
+  chat_boost?: ChatBoostUpdated;
+  /**
+   * A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
+   */
+  removed_chat_boost?: ChatBoostRemoved;
+  /**
+   * A new bot was created to be managed by the bot, or token or owner of a managed bot was changed
+   */
+  managed_bot?: ManagedBotUpdated;
+  /**
+   * User payment subscription has changed
+   */
+  subscription?: BotSubscriptionUpdated;
 </tbody>
 </table>
 }
@@ -580,45 +554,38 @@ export interface ChatFullInfo {
    * The maximum number of reactions that can be set on a message in the chat
    */
   max_reaction_count: number;
-<tr>
-<td>photo</td>
-<td><a href="#chatphoto">ChatPhoto</a></td>
-<td><em>Optional</em>. Chat photo</td>
-</tr>
+  /**
+   * Chat photo
+   */
+  photo?: ChatPhoto;
   /**
    * If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels
    */
   active_usernames?: string[];
-<tr>
-<td>birthdate</td>
-<td><a href="#birthdate">Birthdate</a></td>
-<td><em>Optional</em>. For private chats, the date of birth of the user</td>
-</tr>
-<tr>
-<td>business_intro</td>
-<td><a href="#businessintro">BusinessIntro</a></td>
-<td><em>Optional</em>. For private chats with business accounts, the intro of the business</td>
-</tr>
-<tr>
-<td>business_location</td>
-<td><a href="#businesslocation">BusinessLocation</a></td>
-<td><em>Optional</em>. For private chats with business accounts, the location of the business</td>
-</tr>
-<tr>
-<td>business_opening_hours</td>
-<td><a href="#businessopeninghours">BusinessOpeningHours</a></td>
-<td><em>Optional</em>. For private chats with business accounts, the opening hours of the business</td>
-</tr>
-<tr>
-<td>personal_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. For private chats, the personal channel of the user</td>
-</tr>
-<tr>
-<td>parent_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Information about the corresponding channel chat; for direct messages chats only</td>
-</tr>
+  /**
+   * For private chats, the date of birth of the user
+   */
+  birthdate?: Birthdate;
+  /**
+   * For private chats with business accounts, the intro of the business
+   */
+  business_intro?: BusinessIntro;
+  /**
+   * For private chats with business accounts, the location of the business
+   */
+  business_location?: BusinessLocation;
+  /**
+   * For private chats with business accounts, the opening hours of the business
+   */
+  business_opening_hours?: BusinessOpeningHours;
+  /**
+   * For private chats, the personal channel of the user
+   */
+  personal_chat?: Chat;
+  /**
+   * Information about the corresponding channel chat; for direct messages chats only
+   */
+  parent_chat?: Chat;
 <tr>
 <td>available_reactions</td>
 <td>Array of <a href="#reactiontype">ReactionType</a></td>
@@ -672,16 +639,14 @@ export interface ChatFullInfo {
    * Primary invite link, for groups, supergroups and channel chats
    */
   invite_link?: string;
-<tr>
-<td>pinned_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. The most recent pinned message (by sending date)</td>
-</tr>
-<tr>
-<td>permissions</td>
-<td><a href="#chatpermissions">ChatPermissions</a></td>
-<td><em>Optional</em>. Default chat member permissions, for groups and supergroups</td>
-</tr>
+  /**
+   * The most recent pinned message (by sending date)
+   */
+  pinned_message?: Message;
+  /**
+   * Default chat member permissions, for groups and supergroups
+   */
+  permissions?: ChatPermissions;
 <tr>
 <td>accepted_gift_types</td>
 <td><a href="#acceptedgifttypes">AcceptedGiftTypes</a></td>
@@ -735,40 +700,34 @@ export interface ChatFullInfo {
    * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
    */
   linked_chat_id?: number;
-<tr>
-<td>location</td>
-<td><a href="#chatlocation">ChatLocation</a></td>
-<td><em>Optional</em>. For supergroups, the location to which the supergroup is connected</td>
-</tr>
-<tr>
-<td>rating</td>
-<td><a href="#userrating">UserRating</a></td>
-<td><em>Optional</em>. For private chats, the rating of the user if any</td>
-</tr>
-<tr>
-<td>first_profile_audio</td>
-<td><a href="#audio">Audio</a></td>
-<td><em>Optional</em>. For private chats, the first audio added to the profile of the user</td>
-</tr>
-<tr>
-<td>unique_gift_colors</td>
-<td><a href="#uniquegiftcolors">UniqueGiftColors</a></td>
-<td><em>Optional</em>. The color scheme based on a unique gift that must be used for the chat&#39;s name, message replies and link previews</td>
-</tr>
+  /**
+   * For supergroups, the location to which the supergroup is connected
+   */
+  location?: ChatLocation;
+  /**
+   * For private chats, the rating of the user if any
+   */
+  rating?: UserRating;
+  /**
+   * For private chats, the first audio added to the profile of the user
+   */
+  first_profile_audio?: Audio;
+  /**
+   * The color scheme based on a unique gift that must be used for the chat&#39;s name, message replies and link previews
+   */
+  unique_gift_colors?: UniqueGiftColors;
   /**
    * The number of Telegram Stars a general user has to pay to send a message to the chat
    */
   paid_message_star_count?: number;
-<tr>
-<td>guard_bot</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. The bot that processes join request queries in the chat. The field is only available to chat administrators.</td>
-</tr>
-<tr>
-<td>community</td>
-<td><a href="#community">Community</a></td>
-<td><em>Optional</em>. The <a href="#community">Community</a> to which the chat belongs</td>
-</tr>
+  /**
+   * The bot that processes join request queries in the chat. The field is only available to chat administrators.
+   */
+  guard_bot?: User;
+  /**
+   * The <a href="#community">Community</a> to which the chat belongs
+   */
+  community?: Community;
 </tbody>
 </table>
 }
@@ -793,39 +752,34 @@ export interface Message {
    * Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only
    */
   message_thread_id?: number;
-<tr>
-<td>direct_messages_topic</td>
-<td><a href="#directmessagestopic">DirectMessagesTopic</a></td>
-<td><em>Optional</em>. Information about the direct messages chat topic that contains the message</td>
-</tr>
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats.</td>
-</tr>
-<tr>
-<td>sender_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field <em>from</em> contains a fake sender user in non-channel chats.</td>
-</tr>
+  /**
+   * Information about the direct messages chat topic that contains the message
+   */
+  direct_messages_topic?: DirectMessagesTopic;
+  /**
+   * Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats.
+   */
+  from?: User;
+  /**
+   * Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field <em>from</em> contains a fake sender user in non-channel chats.
+   */
+  sender_chat?: Chat;
   /**
    * If the sender of the message boosted the chat, the number of boosts added by the user
    */
   sender_boost_count?: number;
-<tr>
-<td>sender_business_bot</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.</td>
-</tr>
+  /**
+   * The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.
+   */
+  sender_business_bot?: User;
   /**
    * Tag or custom title of the sender of the message; for supergroups only
    */
   sender_tag?: string;
-<tr>
-<td>receiver_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. For ephemeral messages, the user who received the message</td>
-</tr>
+  /**
+   * For ephemeral messages, the user who received the message
+   */
+  receiver_user?: User;
   /**
    * For ephemeral messages, identifier of the ephemeral message inside this chat. The identifier may be reused for another ephemeral message after the message is deleted or expires.
    */
@@ -847,11 +801,10 @@ export interface Message {
 <td><a href="#chat">Chat</a></td>
 <td>Chat the message belongs to</td>
 </tr>
-<tr>
-<td>forward_origin</td>
-<td><a href="#messageorigin">MessageOrigin</a></td>
-<td><em>Optional</em>. Information about the original message for forwarded messages</td>
-</tr>
+  /**
+   * Information about the original message for forwarded messages
+   */
+  forward_origin?: MessageOrigin;
   /**
    * <em>True</em>, if the message is sent to a topic in a forum supergroup or a private chat with the bot
    */
@@ -860,26 +813,22 @@ export interface Message {
    * <em>True</em>, if the message is a channel post that was automatically forwarded to the connected discussion group
    */
   is_automatic_forward?: true;
-<tr>
-<td>reply_to_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. For replies in the same chat and message thread, the original message. Note that the <a href="#message">Message</a> object in this field will not contain further <em>reply_to_message</em> fields even if it itself is a reply. If the message is a reply to an ephemeral message, then this field may be omitted.</td>
-</tr>
-<tr>
-<td>external_reply</td>
-<td><a href="#externalreplyinfo">ExternalReplyInfo</a></td>
-<td><em>Optional</em>. Information about the message that is being replied to, which may come from another chat or forum topic</td>
-</tr>
-<tr>
-<td>quote</td>
-<td><a href="#textquote">TextQuote</a></td>
-<td><em>Optional</em>. For replies that quote part of the original message, the quoted part of the message</td>
-</tr>
-<tr>
-<td>reply_to_story</td>
-<td><a href="#story">Story</a></td>
-<td><em>Optional</em>. For replies to a story, the original story</td>
-</tr>
+  /**
+   * For replies in the same chat and message thread, the original message. Note that the <a href="#message">Message</a> object in this field will not contain further <em>reply_to_message</em> fields even if it itself is a reply. If the message is a reply to an ephemeral message, then this field may be omitted.
+   */
+  reply_to_message?: Message;
+  /**
+   * Information about the message that is being replied to, which may come from another chat or forum topic
+   */
+  external_reply?: ExternalReplyInfo;
+  /**
+   * For replies that quote part of the original message, the quoted part of the message
+   */
+  quote?: TextQuote;
+  /**
+   * For replies to a story, the original story
+   */
+  reply_to_story?: Story;
   /**
    * Identifier of the specific checklist task that is being replied to
    */
@@ -888,21 +837,18 @@ export interface Message {
    * Persistent identifier of the specific poll option that is being replied to
    */
   reply_to_poll_option_id?: string;
-<tr>
-<td>via_bot</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. Bot through which the message was sent</td>
-</tr>
-<tr>
-<td>guest_bot_caller_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. For a message sent by a guest bot, this is the user whose original message triggered the bot&#39;s response</td>
-</tr>
-<tr>
-<td>guest_bot_caller_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. For a message sent by a guest bot, this is the chat whose original message triggered the bot&#39;s response</td>
-</tr>
+  /**
+   * Bot through which the message was sent
+   */
+  via_bot?: User;
+  /**
+   * For a message sent by a guest bot, this is the user whose original message triggered the bot&#39;s response
+   */
+  guest_bot_caller_user?: User;
+  /**
+   * For a message sent by a guest bot, this is the chat whose original message triggered the bot&#39;s response
+   */
+  guest_bot_caller_chat?: Chat;
   /**
    * Date the message was last edited in Unix time
    */
@@ -940,80 +886,67 @@ export interface Message {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text</td>
 </tr>
-<tr>
-<td>link_preview_options</td>
-<td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td><em>Optional</em>. Options used for link preview generation for the message, if it is a text message and link preview options were changed</td>
-</tr>
-<tr>
-<td>suggested_post_info</td>
-<td><a href="#suggestedpostinfo">SuggestedPostInfo</a></td>
-<td><em>Optional</em>. Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.</td>
-</tr>
+  /**
+   * Options used for link preview generation for the message, if it is a text message and link preview options were changed
+   */
+  link_preview_options?: LinkPreviewOptions;
+  /**
+   * Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.
+   */
+  suggested_post_info?: SuggestedPostInfo;
   /**
    * Unique identifier of the message effect added to the message
    */
   effect_id?: string;
-<tr>
-<td>rich_message</td>
-<td><a href="#richmessage">RichMessage</a></td>
-<td><em>Optional</em>. Message is a rich formatted message</td>
-</tr>
-<tr>
-<td>animation</td>
-<td><a href="#animation">Animation</a></td>
-<td><em>Optional</em>. Message is an animation, information about the animation. For backward compatibility, when this field is set, the <em>document</em> field will also be set.</td>
-</tr>
-<tr>
-<td>audio</td>
-<td><a href="#audio">Audio</a></td>
-<td><em>Optional</em>. Message is an audio file, information about the file</td>
-</tr>
-<tr>
-<td>document</td>
-<td><a href="#document">Document</a></td>
-<td><em>Optional</em>. Message is a general file, information about the file</td>
-</tr>
-<tr>
-<td>live_photo</td>
-<td><a href="#livephoto">LivePhoto</a></td>
-<td><em>Optional</em>. Message is a live photo, information about the live photo. For backward compatibility, when this field is set, the <em>photo</em> field will also be set.</td>
-</tr>
-<tr>
-<td>paid_media</td>
-<td><a href="#paidmediainfo">PaidMediaInfo</a></td>
-<td><em>Optional</em>. Message contains paid media; information about the paid media</td>
-</tr>
+  /**
+   * Message is a rich formatted message
+   */
+  rich_message?: RichMessage;
+  /**
+   * Message is an animation, information about the animation. For backward compatibility, when this field is set, the <em>document</em> field will also be set.
+   */
+  animation?: Animation;
+  /**
+   * Message is an audio file, information about the file
+   */
+  audio?: Audio;
+  /**
+   * Message is a general file, information about the file
+   */
+  document?: Document;
+  /**
+   * Message is a live photo, information about the live photo. For backward compatibility, when this field is set, the <em>photo</em> field will also be set.
+   */
+  live_photo?: LivePhoto;
+  /**
+   * Message contains paid media; information about the paid media
+   */
+  paid_media?: PaidMediaInfo;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Message is a photo, available sizes of the photo</td>
 </tr>
-<tr>
-<td>sticker</td>
-<td><a href="#sticker">Sticker</a></td>
-<td><em>Optional</em>. Message is a sticker, information about the sticker</td>
-</tr>
-<tr>
-<td>story</td>
-<td><a href="#story">Story</a></td>
-<td><em>Optional</em>. Message is a forwarded story</td>
-</tr>
-<tr>
-<td>video</td>
-<td><a href="#video">Video</a></td>
-<td><em>Optional</em>. Message is a video, information about the video</td>
-</tr>
-<tr>
-<td>video_note</td>
-<td><a href="#videonote">VideoNote</a></td>
-<td><em>Optional</em>. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
-</tr>
-<tr>
-<td>voice</td>
-<td><a href="#voice">Voice</a></td>
-<td><em>Optional</em>. Message is a voice message, information about the file</td>
-</tr>
+  /**
+   * Message is a sticker, information about the sticker
+   */
+  sticker?: Sticker;
+  /**
+   * Message is a forwarded story
+   */
+  story?: Story;
+  /**
+   * Message is a video, information about the video
+   */
+  video?: Video;
+  /**
+   * Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message
+   */
+  video_note?: VideoNote;
+  /**
+   * Message is a voice message, information about the file
+   */
+  voice?: Voice;
   /**
    * Caption for the animation, audio, document, paid media, photo, video or voice
    */
@@ -1031,61 +964,51 @@ export interface Message {
    * <em>True</em>, if the message media is covered by a spoiler animation
    */
   has_media_spoiler?: true;
-<tr>
-<td>checklist</td>
-<td><a href="#checklist">Checklist</a></td>
-<td><em>Optional</em>. Message is a checklist</td>
-</tr>
-<tr>
-<td>contact</td>
-<td><a href="#contact">Contact</a></td>
-<td><em>Optional</em>. Message is a shared contact, information about the contact</td>
-</tr>
-<tr>
-<td>dice</td>
-<td><a href="#dice">Dice</a></td>
-<td><em>Optional</em>. Message is a dice with random value</td>
-</tr>
-<tr>
-<td>game</td>
-<td><a href="#game">Game</a></td>
-<td><em>Optional</em>. Message is a game, information about the game. <a href="#games">More about games »</a></td>
-</tr>
-<tr>
-<td>poll</td>
-<td><a href="#poll">Poll</a></td>
-<td><em>Optional</em>. Message is a native poll, information about the poll</td>
-</tr>
-<tr>
-<td>venue</td>
-<td><a href="#venue">Venue</a></td>
-<td><em>Optional</em>. Message is a venue, information about the venue. For backward compatibility, when this field is set, the <em>location</em> field will also be set.</td>
-</tr>
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Message is a shared location, information about the location</td>
-</tr>
+  /**
+   * Message is a checklist
+   */
+  checklist?: Checklist;
+  /**
+   * Message is a shared contact, information about the contact
+   */
+  contact?: Contact;
+  /**
+   * Message is a dice with random value
+   */
+  dice?: Dice;
+  /**
+   * Message is a game, information about the game. <a href="#games">More about games »</a>
+   */
+  game?: Game;
+  /**
+   * Message is a native poll, information about the poll
+   */
+  poll?: Poll;
+  /**
+   * Message is a venue, information about the venue. For backward compatibility, when this field is set, the <em>location</em> field will also be set.
+   */
+  venue?: Venue;
+  /**
+   * Message is a shared location, information about the location
+   */
+  location?: Location;
 <tr>
 <td>new_chat_members</td>
 <td>Array of <a href="#user">User</a></td>
 <td><em>Optional</em>. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)</td>
 </tr>
-<tr>
-<td>left_chat_member</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. A member was removed from the group, information about them (this member may be the bot itself)</td>
-</tr>
-<tr>
-<td>chat_owner_left</td>
-<td><a href="#chatownerleft">ChatOwnerLeft</a></td>
-<td><em>Optional</em>. Service message: chat owner has left</td>
-</tr>
-<tr>
-<td>chat_owner_changed</td>
-<td><a href="#chatownerchanged">ChatOwnerChanged</a></td>
-<td><em>Optional</em>. Service message: chat owner has changed</td>
-</tr>
+  /**
+   * A member was removed from the group, information about them (this member may be the bot itself)
+   */
+  left_chat_member?: User;
+  /**
+   * Service message: chat owner has left
+   */
+  chat_owner_left?: ChatOwnerLeft;
+  /**
+   * Service message: chat owner has changed
+   */
+  chat_owner_changed?: ChatOwnerChanged;
   /**
    * A chat title was changed to this value
    */
@@ -1111,11 +1034,10 @@ export interface Message {
    * Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
    */
   channel_chat_created?: true;
-<tr>
-<td>message_auto_delete_timer_changed</td>
-<td><a href="#messageautodeletetimerchanged">MessageAutoDeleteTimerChanged</a></td>
-<td><em>Optional</em>. Service message: auto-delete timer settings changed in the chat</td>
-</tr>
+  /**
+   * Service message: auto-delete timer settings changed in the chat
+   */
+  message_auto_delete_timer_changed?: MessageAutoDeleteTimerChanged;
   /**
    * The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -1124,230 +1046,186 @@ export interface Message {
    * The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   migrate_from_chat_id?: number;
-<tr>
-<td>pinned_message</td>
-<td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td><em>Optional</em>. Specified message was pinned. Note that the <a href="#message">Message</a> object in this field will not contain further <em>reply_to_message</em> fields even if it itself is a reply.</td>
-</tr>
-<tr>
-<td>invoice</td>
-<td><a href="#invoice">Invoice</a></td>
-<td><em>Optional</em>. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
-</tr>
-<tr>
-<td>successful_payment</td>
-<td><a href="#successfulpayment">SuccessfulPayment</a></td>
-<td><em>Optional</em>. Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a></td>
-</tr>
-<tr>
-<td>refunded_payment</td>
-<td><a href="#refundedpayment">RefundedPayment</a></td>
-<td><em>Optional</em>. Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a></td>
-</tr>
-<tr>
-<td>users_shared</td>
-<td><a href="#usersshared">UsersShared</a></td>
-<td><em>Optional</em>. Service message: users were shared with the bot</td>
-</tr>
-<tr>
-<td>chat_shared</td>
-<td><a href="#chatshared">ChatShared</a></td>
-<td><em>Optional</em>. Service message: a chat was shared with the bot</td>
-</tr>
-<tr>
-<td>gift</td>
-<td><a href="#giftinfo">GiftInfo</a></td>
-<td><em>Optional</em>. Service message: a regular gift was sent or received</td>
-</tr>
-<tr>
-<td>unique_gift</td>
-<td><a href="#uniquegiftinfo">UniqueGiftInfo</a></td>
-<td><em>Optional</em>. Service message: a unique gift was sent or received</td>
-</tr>
-<tr>
-<td>gift_upgrade_sent</td>
-<td><a href="#giftinfo">GiftInfo</a></td>
-<td><em>Optional</em>. Service message: upgrade of a gift was purchased after the gift was sent</td>
-</tr>
+  /**
+   * Specified message was pinned. Note that the <a href="#message">Message</a> object in this field will not contain further <em>reply_to_message</em> fields even if it itself is a reply.
+   */
+  pinned_message?: MaybeInaccessibleMessage;
+  /**
+   * Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a>
+   */
+  invoice?: Invoice;
+  /**
+   * Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a>
+   */
+  successful_payment?: SuccessfulPayment;
+  /**
+   * Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a>
+   */
+  refunded_payment?: RefundedPayment;
+  /**
+   * Service message: users were shared with the bot
+   */
+  users_shared?: UsersShared;
+  /**
+   * Service message: a chat was shared with the bot
+   */
+  chat_shared?: ChatShared;
+  /**
+   * Service message: a regular gift was sent or received
+   */
+  gift?: GiftInfo;
+  /**
+   * Service message: a unique gift was sent or received
+   */
+  unique_gift?: UniqueGiftInfo;
+  /**
+   * Service message: upgrade of a gift was purchased after the gift was sent
+   */
+  gift_upgrade_sent?: GiftInfo;
   /**
    * The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a>
    */
   connected_website?: string;
-<tr>
-<td>write_access_allowed</td>
-<td><a href="#writeaccessallowed">WriteAccessAllowed</a></td>
-<td><em>Optional</em>. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
-</tr>
-<tr>
-<td>passport_data</td>
-<td><a href="#passportdata">PassportData</a></td>
-<td><em>Optional</em>. Telegram Passport data</td>
-</tr>
-<tr>
-<td>proximity_alert_triggered</td>
-<td><a href="#proximityalerttriggered">ProximityAlertTriggered</a></td>
-<td><em>Optional</em>. Service message: a user in the chat triggered another user&#39;s proximity alert while sharing Live Location</td>
-</tr>
-<tr>
-<td>boost_added</td>
-<td><a href="#chatboostadded">ChatBoostAdded</a></td>
-<td><em>Optional</em>. Service message: user boosted the chat</td>
-</tr>
-<tr>
-<td>chat_background_set</td>
-<td><a href="#chatbackground">ChatBackground</a></td>
-<td><em>Optional</em>. Service message: chat background set</td>
-</tr>
-<tr>
-<td>checklist_tasks_done</td>
-<td><a href="#checklisttasksdone">ChecklistTasksDone</a></td>
-<td><em>Optional</em>. Service message: some tasks in a checklist were marked as done or not done</td>
-</tr>
-<tr>
-<td>checklist_tasks_added</td>
-<td><a href="#checklisttasksadded">ChecklistTasksAdded</a></td>
-<td><em>Optional</em>. Service message: tasks were added to a checklist</td>
-</tr>
-<tr>
-<td>community_chat_added</td>
-<td><a href="#communitychatadded">CommunityChatAdded</a></td>
-<td><em>Optional</em>. Service message: chat added to a <a href="#community">Community</a></td>
-</tr>
-<tr>
-<td>community_chat_removed</td>
-<td><a href="#communitychatremoved">CommunityChatRemoved</a></td>
-<td><em>Optional</em>. Service message: chat removed from a <a href="#community">Community</a></td>
-</tr>
-<tr>
-<td>direct_message_price_changed</td>
-<td><a href="#directmessagepricechanged">DirectMessagePriceChanged</a></td>
-<td><em>Optional</em>. Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed</td>
-</tr>
-<tr>
-<td>forum_topic_created</td>
-<td><a href="#forumtopiccreated">ForumTopicCreated</a></td>
-<td><em>Optional</em>. Service message: forum topic created</td>
-</tr>
-<tr>
-<td>forum_topic_edited</td>
-<td><a href="#forumtopicedited">ForumTopicEdited</a></td>
-<td><em>Optional</em>. Service message: forum topic edited</td>
-</tr>
-<tr>
-<td>forum_topic_closed</td>
-<td><a href="#forumtopicclosed">ForumTopicClosed</a></td>
-<td><em>Optional</em>. Service message: forum topic closed</td>
-</tr>
-<tr>
-<td>forum_topic_reopened</td>
-<td><a href="#forumtopicreopened">ForumTopicReopened</a></td>
-<td><em>Optional</em>. Service message: forum topic reopened</td>
-</tr>
-<tr>
-<td>general_forum_topic_hidden</td>
-<td><a href="#generalforumtopichidden">GeneralForumTopicHidden</a></td>
-<td><em>Optional</em>. Service message: the &#39;General&#39; forum topic hidden</td>
-</tr>
-<tr>
-<td>general_forum_topic_unhidden</td>
-<td><a href="#generalforumtopicunhidden">GeneralForumTopicUnhidden</a></td>
-<td><em>Optional</em>. Service message: the &#39;General&#39; forum topic unhidden</td>
-</tr>
-<tr>
-<td>giveaway_created</td>
-<td><a href="#giveawaycreated">GiveawayCreated</a></td>
-<td><em>Optional</em>. Service message: a scheduled giveaway was created</td>
-</tr>
-<tr>
-<td>giveaway</td>
-<td><a href="#giveaway">Giveaway</a></td>
-<td><em>Optional</em>. The message is a scheduled giveaway message</td>
-</tr>
-<tr>
-<td>giveaway_winners</td>
-<td><a href="#giveawaywinners">GiveawayWinners</a></td>
-<td><em>Optional</em>. A giveaway with public winners was completed</td>
-</tr>
-<tr>
-<td>giveaway_completed</td>
-<td><a href="#giveawaycompleted">GiveawayCompleted</a></td>
-<td><em>Optional</em>. Service message: a giveaway without public winners was completed</td>
-</tr>
-<tr>
-<td>managed_bot_created</td>
-<td><a href="#managedbotcreated">ManagedBotCreated</a></td>
-<td><em>Optional</em>. Service message: user created a bot that will be managed by the current bot</td>
-</tr>
-<tr>
-<td>paid_message_price_changed</td>
-<td><a href="#paidmessagepricechanged">PaidMessagePriceChanged</a></td>
-<td><em>Optional</em>. Service message: the price for paid messages has changed in the chat</td>
-</tr>
-<tr>
-<td>poll_option_added</td>
-<td><a href="#polloptionadded">PollOptionAdded</a></td>
-<td><em>Optional</em>. Service message: answer option was added to a poll</td>
-</tr>
-<tr>
-<td>poll_option_deleted</td>
-<td><a href="#polloptiondeleted">PollOptionDeleted</a></td>
-<td><em>Optional</em>. Service message: answer option was deleted from a poll</td>
-</tr>
-<tr>
-<td>suggested_post_approved</td>
-<td><a href="#suggestedpostapproved">SuggestedPostApproved</a></td>
-<td><em>Optional</em>. Service message: a suggested post was approved</td>
-</tr>
-<tr>
-<td>suggested_post_approval_failed</td>
-<td><a href="#suggestedpostapprovalfailed">SuggestedPostApprovalFailed</a></td>
-<td><em>Optional</em>. Service message: approval of a suggested post has failed</td>
-</tr>
-<tr>
-<td>suggested_post_declined</td>
-<td><a href="#suggestedpostdeclined">SuggestedPostDeclined</a></td>
-<td><em>Optional</em>. Service message: a suggested post was declined</td>
-</tr>
-<tr>
-<td>suggested_post_paid</td>
-<td><a href="#suggestedpostpaid">SuggestedPostPaid</a></td>
-<td><em>Optional</em>. Service message: payment for a suggested post was received</td>
-</tr>
-<tr>
-<td>suggested_post_refunded</td>
-<td><a href="#suggestedpostrefunded">SuggestedPostRefunded</a></td>
-<td><em>Optional</em>. Service message: payment for a suggested post was refunded</td>
-</tr>
-<tr>
-<td>video_chat_scheduled</td>
-<td><a href="#videochatscheduled">VideoChatScheduled</a></td>
-<td><em>Optional</em>. Service message: video chat scheduled</td>
-</tr>
-<tr>
-<td>video_chat_started</td>
-<td><a href="#videochatstarted">VideoChatStarted</a></td>
-<td><em>Optional</em>. Service message: video chat started</td>
-</tr>
-<tr>
-<td>video_chat_ended</td>
-<td><a href="#videochatended">VideoChatEnded</a></td>
-<td><em>Optional</em>. Service message: video chat ended</td>
-</tr>
-<tr>
-<td>video_chat_participants_invited</td>
-<td><a href="#videochatparticipantsinvited">VideoChatParticipantsInvited</a></td>
-<td><em>Optional</em>. Service message: new participants invited to a video chat</td>
-</tr>
-<tr>
-<td>web_app_data</td>
-<td><a href="#webappdata">WebAppData</a></td>
-<td><em>Optional</em>. Service message: data sent by a Web App</td>
-</tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message. <code>login_url</code> buttons are represented as ordinary <code>url</code> buttons.</td>
-</tr>
+  /**
+   * Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
+   */
+  write_access_allowed?: WriteAccessAllowed;
+  /**
+   * Telegram Passport data
+   */
+  passport_data?: PassportData;
+  /**
+   * Service message: a user in the chat triggered another user&#39;s proximity alert while sharing Live Location
+   */
+  proximity_alert_triggered?: ProximityAlertTriggered;
+  /**
+   * Service message: user boosted the chat
+   */
+  boost_added?: ChatBoostAdded;
+  /**
+   * Service message: chat background set
+   */
+  chat_background_set?: ChatBackground;
+  /**
+   * Service message: some tasks in a checklist were marked as done or not done
+   */
+  checklist_tasks_done?: ChecklistTasksDone;
+  /**
+   * Service message: tasks were added to a checklist
+   */
+  checklist_tasks_added?: ChecklistTasksAdded;
+  /**
+   * Service message: chat added to a <a href="#community">Community</a>
+   */
+  community_chat_added?: CommunityChatAdded;
+  /**
+   * Service message: chat removed from a <a href="#community">Community</a>
+   */
+  community_chat_removed?: CommunityChatRemoved;
+  /**
+   * Service message: the price for paid messages in the corresponding direct messages chat of a channel has changed
+   */
+  direct_message_price_changed?: DirectMessagePriceChanged;
+  /**
+   * Service message: forum topic created
+   */
+  forum_topic_created?: ForumTopicCreated;
+  /**
+   * Service message: forum topic edited
+   */
+  forum_topic_edited?: ForumTopicEdited;
+  /**
+   * Service message: forum topic closed
+   */
+  forum_topic_closed?: ForumTopicClosed;
+  /**
+   * Service message: forum topic reopened
+   */
+  forum_topic_reopened?: ForumTopicReopened;
+  /**
+   * Service message: the &#39;General&#39; forum topic hidden
+   */
+  general_forum_topic_hidden?: GeneralForumTopicHidden;
+  /**
+   * Service message: the &#39;General&#39; forum topic unhidden
+   */
+  general_forum_topic_unhidden?: GeneralForumTopicUnhidden;
+  /**
+   * Service message: a scheduled giveaway was created
+   */
+  giveaway_created?: GiveawayCreated;
+  /**
+   * The message is a scheduled giveaway message
+   */
+  giveaway?: Giveaway;
+  /**
+   * A giveaway with public winners was completed
+   */
+  giveaway_winners?: GiveawayWinners;
+  /**
+   * Service message: a giveaway without public winners was completed
+   */
+  giveaway_completed?: GiveawayCompleted;
+  /**
+   * Service message: user created a bot that will be managed by the current bot
+   */
+  managed_bot_created?: ManagedBotCreated;
+  /**
+   * Service message: the price for paid messages has changed in the chat
+   */
+  paid_message_price_changed?: PaidMessagePriceChanged;
+  /**
+   * Service message: answer option was added to a poll
+   */
+  poll_option_added?: PollOptionAdded;
+  /**
+   * Service message: answer option was deleted from a poll
+   */
+  poll_option_deleted?: PollOptionDeleted;
+  /**
+   * Service message: a suggested post was approved
+   */
+  suggested_post_approved?: SuggestedPostApproved;
+  /**
+   * Service message: approval of a suggested post has failed
+   */
+  suggested_post_approval_failed?: SuggestedPostApprovalFailed;
+  /**
+   * Service message: a suggested post was declined
+   */
+  suggested_post_declined?: SuggestedPostDeclined;
+  /**
+   * Service message: payment for a suggested post was received
+   */
+  suggested_post_paid?: SuggestedPostPaid;
+  /**
+   * Service message: payment for a suggested post was refunded
+   */
+  suggested_post_refunded?: SuggestedPostRefunded;
+  /**
+   * Service message: video chat scheduled
+   */
+  video_chat_scheduled?: VideoChatScheduled;
+  /**
+   * Service message: video chat started
+   */
+  video_chat_started?: VideoChatStarted;
+  /**
+   * Service message: video chat ended
+   */
+  video_chat_ended?: VideoChatEnded;
+  /**
+   * Service message: new participants invited to a video chat
+   */
+  video_chat_participants_invited?: VideoChatParticipantsInvited;
+  /**
+   * Service message: data sent by a Web App
+   */
+  web_app_data?: WebAppData;
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message. <code>login_url</code> buttons are represented as ordinary <code>url</code> buttons.
+   */
+  reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
 }
@@ -1438,11 +1316,10 @@ export interface MessageEntity {
    * For “text_link” only, URL that will be opened after user taps on the text
    */
   url?: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. For “text_mention” only, the mentioned user</td>
-</tr>
+  /**
+   * For “text_mention” only, the mentioned user
+   */
+  user?: User;
   /**
    * For “pre” only, the programming language of the entity text
    */
@@ -1513,129 +1390,107 @@ export interface ExternalReplyInfo {
 <td><a href="#messageorigin">MessageOrigin</a></td>
 <td>Origin of the message replied to by the given message</td>
 </tr>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Chat the original message belongs to. Available only if the chat is a supergroup or a channel.</td>
-</tr>
+  /**
+   * Chat the original message belongs to. Available only if the chat is a supergroup or a channel.
+   */
+  chat?: Chat;
   /**
    * Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel.
    */
   message_id?: number;
-<tr>
-<td>link_preview_options</td>
-<td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td><em>Optional</em>. Options used for link preview generation for the original message, if it is a text message</td>
-</tr>
-<tr>
-<td>animation</td>
-<td><a href="#animation">Animation</a></td>
-<td><em>Optional</em>. Message is an animation, information about the animation</td>
-</tr>
-<tr>
-<td>audio</td>
-<td><a href="#audio">Audio</a></td>
-<td><em>Optional</em>. Message is an audio file, information about the file</td>
-</tr>
-<tr>
-<td>document</td>
-<td><a href="#document">Document</a></td>
-<td><em>Optional</em>. Message is a general file, information about the file</td>
-</tr>
-<tr>
-<td>live_photo</td>
-<td><a href="#livephoto">LivePhoto</a></td>
-<td><em>Optional</em>. Message is a live photo, information about the live photo</td>
-</tr>
-<tr>
-<td>paid_media</td>
-<td><a href="#paidmediainfo">PaidMediaInfo</a></td>
-<td><em>Optional</em>. Message contains paid media; information about the paid media</td>
-</tr>
+  /**
+   * Options used for link preview generation for the original message, if it is a text message
+   */
+  link_preview_options?: LinkPreviewOptions;
+  /**
+   * Message is an animation, information about the animation
+   */
+  animation?: Animation;
+  /**
+   * Message is an audio file, information about the file
+   */
+  audio?: Audio;
+  /**
+   * Message is a general file, information about the file
+   */
+  document?: Document;
+  /**
+   * Message is a live photo, information about the live photo
+   */
+  live_photo?: LivePhoto;
+  /**
+   * Message contains paid media; information about the paid media
+   */
+  paid_media?: PaidMediaInfo;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Message is a photo, available sizes of the photo</td>
 </tr>
-<tr>
-<td>sticker</td>
-<td><a href="#sticker">Sticker</a></td>
-<td><em>Optional</em>. Message is a sticker, information about the sticker</td>
-</tr>
-<tr>
-<td>story</td>
-<td><a href="#story">Story</a></td>
-<td><em>Optional</em>. Message is a forwarded story</td>
-</tr>
-<tr>
-<td>video</td>
-<td><a href="#video">Video</a></td>
-<td><em>Optional</em>. Message is a video, information about the video</td>
-</tr>
-<tr>
-<td>video_note</td>
-<td><a href="#videonote">VideoNote</a></td>
-<td><em>Optional</em>. Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message</td>
-</tr>
-<tr>
-<td>voice</td>
-<td><a href="#voice">Voice</a></td>
-<td><em>Optional</em>. Message is a voice message, information about the file</td>
-</tr>
+  /**
+   * Message is a sticker, information about the sticker
+   */
+  sticker?: Sticker;
+  /**
+   * Message is a forwarded story
+   */
+  story?: Story;
+  /**
+   * Message is a video, information about the video
+   */
+  video?: Video;
+  /**
+   * Message is a <a href="https://telegram.org/blog/video-messages-and-telescope">video note</a>, information about the video message
+   */
+  video_note?: VideoNote;
+  /**
+   * Message is a voice message, information about the file
+   */
+  voice?: Voice;
   /**
    * <em>True</em>, if the message media is covered by a spoiler animation
    */
   has_media_spoiler?: true;
-<tr>
-<td>checklist</td>
-<td><a href="#checklist">Checklist</a></td>
-<td><em>Optional</em>. Message is a checklist</td>
-</tr>
-<tr>
-<td>contact</td>
-<td><a href="#contact">Contact</a></td>
-<td><em>Optional</em>. Message is a shared contact, information about the contact</td>
-</tr>
-<tr>
-<td>dice</td>
-<td><a href="#dice">Dice</a></td>
-<td><em>Optional</em>. Message is a dice with random value</td>
-</tr>
-<tr>
-<td>game</td>
-<td><a href="#game">Game</a></td>
-<td><em>Optional</em>. Message is a game, information about the game. <a href="#games">More about games »</a></td>
-</tr>
-<tr>
-<td>giveaway</td>
-<td><a href="#giveaway">Giveaway</a></td>
-<td><em>Optional</em>. Message is a scheduled giveaway, information about the giveaway</td>
-</tr>
-<tr>
-<td>giveaway_winners</td>
-<td><a href="#giveawaywinners">GiveawayWinners</a></td>
-<td><em>Optional</em>. A giveaway with public winners was completed</td>
-</tr>
-<tr>
-<td>invoice</td>
-<td><a href="#invoice">Invoice</a></td>
-<td><em>Optional</em>. Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a></td>
-</tr>
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Message is a shared location, information about the location</td>
-</tr>
-<tr>
-<td>poll</td>
-<td><a href="#poll">Poll</a></td>
-<td><em>Optional</em>. Message is a native poll, information about the poll</td>
-</tr>
-<tr>
-<td>venue</td>
-<td><a href="#venue">Venue</a></td>
-<td><em>Optional</em>. Message is a venue, information about the venue</td>
-</tr>
+  /**
+   * Message is a checklist
+   */
+  checklist?: Checklist;
+  /**
+   * Message is a shared contact, information about the contact
+   */
+  contact?: Contact;
+  /**
+   * Message is a dice with random value
+   */
+  dice?: Dice;
+  /**
+   * Message is a game, information about the game. <a href="#games">More about games »</a>
+   */
+  game?: Game;
+  /**
+   * Message is a scheduled giveaway, information about the giveaway
+   */
+  giveaway?: Giveaway;
+  /**
+   * A giveaway with public winners was completed
+   */
+  giveaway_winners?: GiveawayWinners;
+  /**
+   * Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a>
+   */
+  invoice?: Invoice;
+  /**
+   * Message is a shared location, information about the location
+   */
+  location?: Location;
+  /**
+   * Message is a native poll, information about the poll
+   */
+  poll?: Poll;
+  /**
+   * Message is a venue, information about the venue
+   */
+  venue?: Venue;
 </tbody>
 </table>
 }
@@ -1906,11 +1761,10 @@ export interface Animation {
    * Duration of the video in seconds as defined by the sender
    */
   duration: number;
-<tr>
-<td>thumbnail</td>
-<td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Animation thumbnail as defined by the sender</td>
-</tr>
+  /**
+   * Animation thumbnail as defined by the sender
+   */
+  thumbnail?: PhotoSize;
   /**
    * Original animation filename as defined by the sender
    */
@@ -1971,11 +1825,10 @@ export interface Audio {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-<tr>
-<td>thumbnail</td>
-<td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Thumbnail of the album cover to which the music file belongs</td>
-</tr>
+  /**
+   * Thumbnail of the album cover to which the music file belongs
+   */
+  thumbnail?: PhotoSize;
 </tbody>
 </table>
 }
@@ -2000,11 +1853,10 @@ export interface Document {
    * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
    */
   file_unique_id: string;
-<tr>
-<td>thumbnail</td>
-<td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Document thumbnail as defined by the sender</td>
-</tr>
+  /**
+   * Document thumbnail as defined by the sender
+   */
+  thumbnail?: PhotoSize;
   /**
    * Original filename as defined by the sender
    */
@@ -2167,11 +2019,10 @@ export interface Video {
    * Duration of the video in seconds as defined by the sender
    */
   duration: number;
-<tr>
-<td>thumbnail</td>
-<td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Video thumbnail</td>
-</tr>
+  /**
+   * Video thumbnail
+   */
+  thumbnail?: PhotoSize;
 <tr>
 <td>cover</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
@@ -2230,11 +2081,10 @@ export interface VideoNote {
    * Duration of the video in seconds as defined by the sender
    */
   duration: number;
-<tr>
-<td>thumbnail</td>
-<td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Video thumbnail</td>
-</tr>
+  /**
+   * Video thumbnail
+   */
+  thumbnail?: PhotoSize;
   /**
    * File size in bytes
    */
@@ -2516,56 +2366,47 @@ export interface PollMedia {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>animation</td>
-<td><a href="#animation">Animation</a></td>
-<td><em>Optional</em>. Media is an animation, information about the animation</td>
-</tr>
-<tr>
-<td>audio</td>
-<td><a href="#audio">Audio</a></td>
-<td><em>Optional</em>. Media is an audio file, information about the file; currently, can&#39;t be received in a poll option</td>
-</tr>
-<tr>
-<td>document</td>
-<td><a href="#document">Document</a></td>
-<td><em>Optional</em>. Media is a general file, information about the file; currently, can&#39;t be received in a poll option</td>
-</tr>
-<tr>
-<td>link</td>
-<td><a href="#link">Link</a></td>
-<td><em>Optional</em>. The HTTP link attached to the poll option</td>
-</tr>
-<tr>
-<td>live_photo</td>
-<td><a href="#livephoto">LivePhoto</a></td>
-<td><em>Optional</em>. Media is a live photo, information about the live photo</td>
-</tr>
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Media is a shared location, information about the location</td>
-</tr>
+  /**
+   * Media is an animation, information about the animation
+   */
+  animation?: Animation;
+  /**
+   * Media is an audio file, information about the file; currently, can&#39;t be received in a poll option
+   */
+  audio?: Audio;
+  /**
+   * Media is a general file, information about the file; currently, can&#39;t be received in a poll option
+   */
+  document?: Document;
+  /**
+   * The HTTP link attached to the poll option
+   */
+  link?: Link;
+  /**
+   * Media is a live photo, information about the live photo
+   */
+  live_photo?: LivePhoto;
+  /**
+   * Media is a shared location, information about the location
+   */
+  location?: Location;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Media is a photo, available sizes of the photo</td>
 </tr>
-<tr>
-<td>sticker</td>
-<td><a href="#sticker">Sticker</a></td>
-<td><em>Optional</em>. Media is a sticker, information about the sticker; currently, for poll options only</td>
-</tr>
-<tr>
-<td>venue</td>
-<td><a href="#venue">Venue</a></td>
-<td><em>Optional</em>. Media is a venue, information about the venue</td>
-</tr>
-<tr>
-<td>video</td>
-<td><a href="#video">Video</a></td>
-<td><em>Optional</em>. Media is a video, information about the video</td>
-</tr>
+  /**
+   * Media is a sticker, information about the sticker; currently, for poll options only
+   */
+  sticker?: Sticker;
+  /**
+   * Media is a venue, information about the venue
+   */
+  venue?: Venue;
+  /**
+   * Media is a video, information about the video
+   */
+  video?: Video;
 </tbody>
 </table>
 }
@@ -2637,25 +2478,22 @@ export interface PollOption {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities that appear in the option <em>text</em>. Currently, only custom emoji entities are allowed in poll option texts</td>
 </tr>
-<tr>
-<td>media</td>
-<td><a href="#pollmedia">PollMedia</a></td>
-<td><em>Optional</em>. Media added to the poll option</td>
-</tr>
+  /**
+   * Media added to the poll option
+   */
+  media?: PollMedia;
   /**
    * Number of users who voted for this option; may be 0 if unknown
    */
   voter_count: number;
-<tr>
-<td>added_by_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. User who added the option; omitted if the option wasn&#39;t added by a user after poll creation</td>
-</tr>
-<tr>
-<td>added_by_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Chat that added the option; omitted if the option wasn&#39;t added by a chat after poll creation</td>
-</tr>
+  /**
+   * User who added the option; omitted if the option wasn&#39;t added by a user after poll creation
+   */
+  added_by_user?: User;
+  /**
+   * Chat that added the option; omitted if the option wasn&#39;t added by a chat after poll creation
+   */
+  added_by_chat?: Chat;
   /**
    * Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll
    */
@@ -2689,11 +2527,10 @@ export interface InputPollOption {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of <em>text_parse_mode</em>.</td>
 </tr>
-<tr>
-<td>media</td>
-<td><a href="#inputpolloptionmedia">InputPollOptionMedia</a></td>
-<td><em>Optional</em>. Media added to the poll option</td>
-</tr>
+  /**
+   * Media added to the poll option
+   */
+  media?: InputPollOptionMedia;
 </tbody>
 </table>
 }
@@ -2714,16 +2551,14 @@ export interface PollAnswer {
    * Unique poll identifier
    */
   poll_id: string;
-<tr>
-<td>voter_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. The chat that changed the answer to the poll, if the voter is anonymous</td>
-</tr>
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. The user that changed the answer to the poll, if the voter isn&#39;t anonymous</td>
-</tr>
+  /**
+   * The chat that changed the answer to the poll, if the voter is anonymous
+   */
+  voter_chat?: Chat;
+  /**
+   * The user that changed the answer to the poll, if the voter isn&#39;t anonymous
+   */
+  user?: User;
   /**
    * 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
    */
@@ -2811,11 +2646,10 @@ export interface Poll {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities like usernames, URLs, bot commands, etc. that appear in the <em>explanation</em></td>
 </tr>
-<tr>
-<td>explanation_media</td>
-<td><a href="#pollmedia">PollMedia</a></td>
-<td><em>Optional</em>. Media added to the quiz explanation</td>
-</tr>
+  /**
+   * Media added to the quiz explanation
+   */
+  explanation_media?: PollMedia;
   /**
    * Amount of time in seconds the poll will be active after creation
    */
@@ -2833,11 +2667,10 @@ export interface Poll {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities like usernames, URLs, bot commands, etc. that appear in the description</td>
 </tr>
-<tr>
-<td>media</td>
-<td><a href="#pollmedia">PollMedia</a></td>
-<td><em>Optional</em>. Media added to the poll description; for polls inside the <a href="#message">Message</a> object only</td>
-</tr>
+  /**
+   * Media added to the poll description; for polls inside the <a href="#message">Message</a> object only
+   */
+  media?: PollMedia;
 </tbody>
 </table>
 }
@@ -2867,16 +2700,14 @@ export interface ChecklistTask {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities that appear in the task text</td>
 </tr>
-<tr>
-<td>completed_by_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. User that completed the task; omitted if the task wasn&#39;t completed by a user</td>
-</tr>
-<tr>
-<td>completed_by_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Chat that completed the task; omitted if the task wasn&#39;t completed by a chat</td>
-</tr>
+  /**
+   * User that completed the task; omitted if the task wasn&#39;t completed by a user
+   */
+  completed_by_user?: User;
+  /**
+   * Chat that completed the task; omitted if the task wasn&#39;t completed by a chat
+   */
+  completed_by_chat?: Chat;
   /**
    * Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed
    */
@@ -3245,11 +3076,10 @@ export interface PollOptionAdded {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>poll_message</td>
-<td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td><em>Optional</em>. Message containing the poll to which the option was added, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the poll to which the option was added, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  poll_message?: MaybeInaccessibleMessage;
   /**
    * Unique identifier of the added option
    */
@@ -3279,11 +3109,10 @@ export interface PollOptionDeleted {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>poll_message</td>
-<td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td><em>Optional</em>. Message containing the poll from which the option was deleted, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the poll from which the option was deleted, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  poll_message?: MaybeInaccessibleMessage;
   /**
    * Unique identifier of the deleted option
    */
@@ -3590,11 +3419,10 @@ export interface ChecklistTasksDone {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>checklist_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  checklist_message?: Message;
   /**
    * Identifiers of the tasks that were marked as done
    */
@@ -3619,11 +3447,10 @@ export interface ChecklistTasksAdded {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>checklist_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  checklist_message?: Message;
 <tr>
 <td>tasks</td>
 <td>Array of <a href="#checklisttask">ChecklistTask</a></td>
@@ -3978,16 +3805,14 @@ export interface SuggestedPostApproved {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>suggested_post_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
-<tr>
-<td>price</td>
-<td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td><em>Optional</em>. Amount paid for the post</td>
-</tr>
+  /**
+   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  suggested_post_message?: Message;
+  /**
+   * Amount paid for the post
+   */
+  price?: SuggestedPostPrice;
   /**
    * Date when the post will be published
    */
@@ -4008,11 +3833,10 @@ export interface SuggestedPostApprovalFailed {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>suggested_post_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  suggested_post_message?: Message;
 <tr>
 <td>price</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
@@ -4034,11 +3858,10 @@ export interface SuggestedPostDeclined {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>suggested_post_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  suggested_post_message?: Message;
   /**
    * Comment with which the post was declined
    */
@@ -4059,11 +3882,10 @@ export interface SuggestedPostPaid {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>suggested_post_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  suggested_post_message?: Message;
   /**
    * Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.
    */
@@ -4072,11 +3894,10 @@ export interface SuggestedPostPaid {
    * The amount of the currency that was received by the channel in nanograms; for payments in TON grams only
    */
   amount?: number;
-<tr>
-<td>star_amount</td>
-<td><a href="#staramount">StarAmount</a></td>
-<td><em>Optional</em>. The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only</td>
-</tr>
+  /**
+   * The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only
+   */
+  star_amount?: StarAmount;
 </tbody>
 </table>
 }
@@ -4093,11 +3914,10 @@ export interface SuggestedPostRefunded {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>suggested_post_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
-</tr>
+  /**
+   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
+   */
+  suggested_post_message?: Message;
   /**
    * Reason for the refund. Currently, one of “post_deleted” if the post was deleted within 24 hours of being posted or removed from scheduled messages without being posted, or “payment_refunded” if the payer refunded their payment.
    */
@@ -4265,11 +4085,10 @@ export interface GiveawayCompleted {
    * Number of undistributed prizes
    */
   unclaimed_prize_count?: number;
-<tr>
-<td>giveaway_message</td>
-<td><a href="#message">Message</a></td>
-<td><em>Optional</em>. Message with the giveaway that was completed, if it wasn&#39;t deleted</td>
-</tr>
+  /**
+   * Message with the giveaway that was completed, if it wasn&#39;t deleted
+   */
+  giveaway_message?: Message;
   /**
    * <em>True</em>, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.
    */
@@ -4354,11 +4173,10 @@ export interface SuggestedPostInfo {
    * State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”.
    */
   state: string;
-<tr>
-<td>price</td>
-<td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td><em>Optional</em>. Proposed price of the post. If the field is omitted, then the post is unpaid.</td>
-</tr>
+  /**
+   * Proposed price of the post. If the field is omitted, then the post is unpaid.
+   */
+  price?: SuggestedPostPrice;
   /**
    * Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.
    */
@@ -4379,11 +4197,10 @@ export interface SuggestedPostParameters {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>price</td>
-<td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td><em>Optional</em>. Proposed price for the post. If the field is omitted, then the post is unpaid.</td>
-</tr>
+  /**
+   * Proposed price for the post. If the field is omitted, then the post is unpaid.
+   */
+  price?: SuggestedPostPrice;
   /**
    * Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.
    */
@@ -4408,11 +4225,10 @@ export interface DirectMessagesTopic {
    * Unique identifier of the topic. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   topic_id: number;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. Information about the user that created the topic. Currently, it is always present.</td>
-</tr>
+  /**
+   * Information about the user that created the topic. Currently, it is always present.
+   */
+  user?: User;
 </tbody>
 </table>
 }
@@ -4586,21 +4402,18 @@ export interface KeyboardButton {
    * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
    */
   style?: string;
-<tr>
-<td>request_users</td>
-<td><a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a></td>
-<td><em>Optional</em>. If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.</td>
-</tr>
-<tr>
-<td>request_chat</td>
-<td><a href="#keyboardbuttonrequestchat">KeyboardButtonRequestChat</a></td>
-<td><em>Optional</em>. If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.</td>
-</tr>
-<tr>
-<td>request_managed_bot</td>
-<td><a href="#keyboardbuttonrequestmanagedbot">KeyboardButtonRequestManagedBot</a></td>
-<td><em>Optional</em>. If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the <a href="https://t.me/BotFather">@BotFather</a> Mini App. Available in private chats only.</td>
-</tr>
+  /**
+   * If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
+   */
+  request_users?: KeyboardButtonRequestUsers;
+  /**
+   * If specified, pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat_shared” service message. Available in private chats only.
+   */
+  request_chat?: KeyboardButtonRequestChat;
+  /**
+   * If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the <a href="https://t.me/BotFather">@BotFather</a> Mini App. Available in private chats only.
+   */
+  request_managed_bot?: KeyboardButtonRequestManagedBot;
   /**
    * If <em>True</em>, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.
    */
@@ -4609,16 +4422,14 @@ export interface KeyboardButton {
    * If <em>True</em>, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.
    */
   request_location?: boolean;
-<tr>
-<td>request_poll</td>
-<td><a href="#keyboardbuttonpolltype">KeyboardButtonPollType</a></td>
-<td><em>Optional</em>. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.</td>
-</tr>
-<tr>
-<td>web_app</td>
-<td><a href="#webappinfo">WebAppInfo</a></td>
-<td><em>Optional</em>. If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.</td>
-</tr>
+  /**
+   * If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only.
+   */
+  request_poll?: KeyboardButtonPollType;
+  /**
+   * If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
+   */
+  web_app?: WebAppInfo;
 </tbody>
 </table>
 }
@@ -4699,16 +4510,14 @@ export interface KeyboardButtonRequestChat {
    * Pass <em>True</em> to request a chat owned by the user. Otherwise, no additional restrictions are applied.
    */
   chat_is_created?: boolean;
-<tr>
-<td>user_administrator_rights</td>
-<td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td><em>Optional</em>. A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of <em>bot_administrator_rights</em>. If not specified, no additional restrictions are applied.</td>
-</tr>
-<tr>
-<td>bot_administrator_rights</td>
-<td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
-<td><em>Optional</em>. A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of <em>user_administrator_rights</em>. If not specified, no additional restrictions are applied.</td>
-</tr>
+  /**
+   * A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of <em>bot_administrator_rights</em>. If not specified, no additional restrictions are applied.
+   */
+  user_administrator_rights?: ChatAdministratorRights;
+  /**
+   * A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of <em>user_administrator_rights</em>. If not specified, no additional restrictions are applied.
+   */
+  bot_administrator_rights?: ChatAdministratorRights;
   /**
    * Pass <em>True</em> to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.
    */
@@ -4854,16 +4663,14 @@ export interface InlineKeyboardButton {
    * Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes
    */
   callback_data?: string;
-<tr>
-<td>web_app</td>
-<td><a href="#webappinfo">WebAppInfo</a></td>
-<td><em>Optional</em>. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.</td>
-</tr>
-<tr>
-<td>login_url</td>
-<td><a href="#loginurl">LoginUrl</a></td>
-<td><em>Optional</em>. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.</td>
-</tr>
+  /**
+   * Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
+   */
+  web_app?: WebAppInfo;
+  /**
+   * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.
+   */
+  login_url?: LoginUrl;
   /**
    * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
    */
@@ -4872,21 +4679,18 @@ export interface InlineKeyboardButton {
    * If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.
    */
   switch_inline_query_current_chat?: string;
-<tr>
-<td>switch_inline_query_chosen_chat</td>
-<td><a href="#switchinlinequerychosenchat">SwitchInlineQueryChosenChat</a></td>
-<td><em>Optional</em>. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot&#39;s username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account.</td>
-</tr>
-<tr>
-<td>copy_text</td>
-<td><a href="#copytextbutton">CopyTextButton</a></td>
-<td><em>Optional</em>. Description of the button that copies the specified text to the clipboard</td>
-</tr>
-<tr>
-<td>callback_game</td>
-<td><a href="#callbackgame">CallbackGame</a></td>
-<td><em>Optional</em>. Description of the game that will be launched when the user presses the button.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row.</td>
-</tr>
+  /**
+   * If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot&#39;s username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
+   */
+  switch_inline_query_chosen_chat?: SwitchInlineQueryChosenChat;
+  /**
+   * Description of the button that copies the specified text to the clipboard
+   */
+  copy_text?: CopyTextButton;
+  /**
+   * Description of the game that will be launched when the user presses the button.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row.
+   */
+  callback_game?: CallbackGame;
   /**
    * Specify <em>True</em>, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
    */
@@ -5012,11 +4816,10 @@ export interface CallbackQuery {
 <td><a href="#user">User</a></td>
 <td>Sender</td>
 </tr>
-<tr>
-<td>message</td>
-<td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
-<td><em>Optional</em>. Message sent by the bot with the callback button that originated the query</td>
-</tr>
+  /**
+   * Message sent by the bot with the callback button that originated the query
+   */
+  message?: MaybeInaccessibleMessage;
   /**
    * Identifier of the message sent via the bot in inline mode, that originated the query
    */
@@ -5309,11 +5112,10 @@ export interface ChatMemberUpdated {
 <td><a href="#chatmember">ChatMember</a></td>
 <td>New information about the chat member</td>
 </tr>
-<tr>
-<td>invite_link</td>
-<td><a href="#chatinvitelink">ChatInviteLink</a></td>
-<td><em>Optional</em>. Chat invite link, which was used by the user to join the chat; for joining by invite link events only</td>
-</tr>
+  /**
+   * Chat invite link, which was used by the user to join the chat; for joining by invite link events only
+   */
+  invite_link?: ChatInviteLink;
   /**
    * <em>True</em>, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator
    */
@@ -5699,11 +5501,10 @@ export interface ChatJoinRequest {
    * Bio of the user
    */
   bio?: string;
-<tr>
-<td>invite_link</td>
-<td><a href="#chatinvitelink">ChatInviteLink</a></td>
-<td><em>Optional</em>. Chat invite link that was used by the user to send the join request</td>
-</tr>
+  /**
+   * Chat invite link that was used by the user to send the join request
+   */
+  invite_link?: ChatInviteLink;
   /**
    * Identifier of the join request query; for bots assigned to process join requests only. If present, then the bot must call <a href="#sendchatjoinrequestwebapp">sendChatJoinRequestWebApp</a> or directly call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> within 10 seconds.
    */
@@ -5840,11 +5641,10 @@ export interface BusinessIntro {
    * Message text of the business intro
    */
   message?: string;
-<tr>
-<td>sticker</td>
-<td><a href="#sticker">Sticker</a></td>
-<td><em>Optional</em>. Sticker of the business intro</td>
-</tr>
+  /**
+   * Sticker of the business intro
+   */
+  sticker?: Sticker;
 </tbody>
 </table>
 }
@@ -5865,11 +5665,10 @@ export interface BusinessLocation {
    * Address of the business
    */
   address: string;
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Location of the business</td>
-</tr>
+  /**
+   * Location of the business
+   */
+  location?: Location;
 </tbody>
 </table>
 }
@@ -6066,11 +5865,10 @@ export interface StoryAreaTypeLocation {
    * Location longitude in degrees
    */
   longitude: number;
-<tr>
-<td>address</td>
-<td><a href="#locationaddress">LocationAddress</a></td>
-<td><em>Optional</em>. Address of the location</td>
-</tr>
+  /**
+   * Address of the location
+   */
+  address?: LocationAddress;
 </tbody>
 </table>
 }
@@ -6364,16 +6162,14 @@ export interface MessageReactionUpdated {
    * Unique identifier of the message inside the chat
    */
   message_id: number;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. The user that changed the reaction, if the user isn&#39;t anonymous</td>
-</tr>
-<tr>
-<td>actor_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. The chat on behalf of which the reaction was changed, if the user is anonymous</td>
-</tr>
+  /**
+   * The user that changed the reaction, if the user isn&#39;t anonymous
+   */
+  user?: User;
+  /**
+   * The chat on behalf of which the reaction was changed, if the user is anonymous
+   */
+  actor_chat?: Chat;
   /**
    * Date of the change in Unix time
    */
@@ -6543,20 +6339,18 @@ export interface Gift {
    * The number of remaining gifts of this type that can be sent by the bot; for limited gifts only
    */
   personal_remaining_count?: number;
-<tr>
-<td>background</td>
-<td><a href="#giftbackground">GiftBackground</a></td>
-<td><em>Optional</em>. Background of the gift</td>
-</tr>
+  /**
+   * Background of the gift
+   */
+  background?: GiftBackground;
   /**
    * The total number of different unique gifts that can be obtained by upgrading the gift
    */
   unique_gift_variant_count?: number;
-<tr>
-<td>publisher_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Information about the chat that published the gift</td>
-</tr>
+  /**
+   * Information about the chat that published the gift
+   */
+  publisher_chat?: Chat;
 </tbody>
 </table>
 }
@@ -6800,16 +6594,14 @@ export interface UniqueGift {
    * <em>True</em>, if the gift is assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
    */
   is_from_blockchain?: true;
-<tr>
-<td>colors</td>
-<td><a href="#uniquegiftcolors">UniqueGiftColors</a></td>
-<td><em>Optional</em>. The color scheme that can be used by the gift&#39;s owner for the chat&#39;s name, replies to messages and link previews; for business account gifts and gifts that are currently on sale only</td>
-</tr>
-<tr>
-<td>publisher_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. Information about the chat that published the gift</td>
-</tr>
+  /**
+   * The color scheme that can be used by the gift&#39;s owner for the chat&#39;s name, replies to messages and link previews; for business account gifts and gifts that are currently on sale only
+   */
+  colors?: UniqueGiftColors;
+  /**
+   * Information about the chat that published the gift
+   */
+  publisher_chat?: Chat;
 </tbody>
 </table>
 }
@@ -6951,11 +6743,10 @@ export interface OwnedGiftRegular {
    * Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only
    */
   owned_gift_id?: string;
-<tr>
-<td>sender_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. Sender of the gift if it is a known user</td>
-</tr>
+  /**
+   * Sender of the gift if it is a known user
+   */
+  sender_user?: User;
   /**
    * Date the gift was sent in Unix time
    */
@@ -7030,11 +6821,10 @@ export interface OwnedGiftUnique {
    * Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only
    */
   owned_gift_id?: string;
-<tr>
-<td>sender_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. Sender of the gift if it is a known user</td>
-</tr>
+  /**
+   * Sender of the gift if it is a known user
+   */
+  sender_user?: User;
   /**
    * Date the gift was sent in Unix time
    */
@@ -7627,11 +7417,10 @@ export interface ChatBoostSourceGiveaway {
    * Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn&#39;t sent yet.
    */
   giveaway_message_id: number;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. User that won the prize in the giveaway if any; for Telegram Premium giveaways only</td>
-</tr>
+  /**
+   * User that won the prize in the giveaway if any; for Telegram Premium giveaways only
+   */
+  user?: User;
   /**
    * The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
    */
@@ -7749,11 +7538,10 @@ export interface ChatOwnerLeft {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>new_owner</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. The user who will become the new owner of the chat if the previous owner does not return to the chat</td>
-</tr>
+  /**
+   * The user who will become the new owner of the chat if the previous owner does not return to the chat
+   */
+  new_owner?: User;
 </tbody>
 </table>
 }
@@ -7901,11 +7689,10 @@ export interface BusinessConnection {
    * Date the connection was established in Unix time
    */
   date: number;
-<tr>
-<td>rights</td>
-<td><a href="#businessbotrights">BusinessBotRights</a></td>
-<td><em>Optional</em>. Rights of the business bot</td>
-</tr>
+  /**
+   * Rights of the business bot
+   */
+  rights?: BusinessBotRights;
   /**
    * <em>True</em>, if the connection is active
    */
@@ -16444,11 +16231,10 @@ export interface Sticker {
    * <em>True</em>, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a>
    */
   is_video: boolean;
-<tr>
-<td>thumbnail</td>
-<td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Sticker thumbnail in the .WEBP or .JPG format</td>
-</tr>
+  /**
+   * Sticker thumbnail in the .WEBP or .JPG format
+   */
+  thumbnail?: PhotoSize;
   /**
    * Emoji associated with the sticker
    */
@@ -16457,16 +16243,14 @@ export interface Sticker {
    * Name of the sticker set to which the sticker belongs
    */
   set_name?: string;
-<tr>
-<td>premium_animation</td>
-<td><a href="#file">File</a></td>
-<td><em>Optional</em>. For premium regular stickers, premium animation for the sticker</td>
-</tr>
-<tr>
-<td>mask_position</td>
-<td><a href="#maskposition">MaskPosition</a></td>
-<td><em>Optional</em>. For mask stickers, the position where the mask should be placed</td>
-</tr>
+  /**
+   * For premium regular stickers, premium animation for the sticker
+   */
+  premium_animation?: File;
+  /**
+   * For mask stickers, the position where the mask should be placed
+   */
+  mask_position?: MaskPosition;
   /**
    * For custom emoji stickers, unique identifier of the custom emoji
    */
@@ -16512,11 +16296,10 @@ export interface StickerSet {
 <td>Array of <a href="#sticker">Sticker</a></td>
 <td>List of all set stickers</td>
 </tr>
-<tr>
-<td>thumbnail</td>
-<td><a href="#photosize">PhotoSize</a></td>
-<td><em>Optional</em>. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format</td>
-</tr>
+  /**
+   * Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
+   */
+  thumbnail?: PhotoSize;
 </tbody>
 </table>
 }
@@ -16577,11 +16360,10 @@ export interface InputSticker {
    * List of 1-20 emoji associated with the sticker
    */
   emoji_list: string[];
-<tr>
-<td>mask_position</td>
-<td><a href="#maskposition">MaskPosition</a></td>
-<td><em>Optional</em>. Position where the mask should be placed on faces. For “mask” stickers only.</td>
-</tr>
+  /**
+   * Position where the mask should be placed on faces. For “mask” stickers only.
+   */
+  mask_position?: MaskPosition;
   /**
    * List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.
    */
@@ -18449,11 +18231,10 @@ export interface RichBlockCaption {
 <td><a href="#richtext">RichText</a></td>
 <td>Block caption</td>
 </tr>
-<tr>
-<td>credit</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Block credit which corresponds to the HTML tag &lt;cite&gt;</td>
-</tr>
+  /**
+   * Block credit which corresponds to the HTML tag &lt;cite&gt;
+   */
+  credit?: RichText;
 </tbody>
 </table>
 }
@@ -18470,11 +18251,10 @@ export interface RichBlockTableCell {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Text in the cell. If omitted, then the cell is invisible.</td>
-</tr>
+  /**
+   * Text in the cell. If omitted, then the cell is invisible.
+   */
+  text?: RichText;
   /**
    * <em>True</em>, if the cell is a header cell
    */
@@ -18809,11 +18589,10 @@ export interface RichBlockBlockQuotation {
 <td>Array of <a href="#richblock">RichBlock</a></td>
 <td>Content of the block</td>
 </tr>
-<tr>
-<td>credit</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Credit of the block</td>
-</tr>
+  /**
+   * Credit of the block
+   */
+  credit?: RichText;
 </tbody>
 </table>
 }
@@ -18839,11 +18618,10 @@ export interface RichBlockPullQuotation {
 <td><a href="#richtext">RichText</a></td>
 <td>Text of the block</td>
 </tr>
-<tr>
-<td>credit</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Credit of the block</td>
-</tr>
+  /**
+   * Credit of the block
+   */
+  credit?: RichText;
 </tbody>
 </table>
 }
@@ -18869,11 +18647,10 @@ export interface RichBlockCollage {
 <td>Array of <a href="#richblock">RichBlock</a></td>
 <td>Elements of the collage</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -18899,11 +18676,10 @@ export interface RichBlockSlideshow {
 <td>Array of <a href="#richblock">RichBlock</a></td>
 <td>Elements of the slideshow</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -18937,11 +18713,10 @@ export interface RichBlockTable {
    * <em>True</em>, if the table is striped
    */
   is_striped?: true;
-<tr>
-<td>caption</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Caption of the table</td>
-</tr>
+  /**
+   * Caption of the table
+   */
+  caption?: RichText;
 </tbody>
 </table>
 }
@@ -19013,11 +18788,10 @@ export interface RichBlockMap {
    * Expected height of the map
    */
   height: number;
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19047,11 +18821,10 @@ export interface RichBlockAnimation {
    * <em>True</em>, if the media preview is covered by a spoiler animation
    */
   has_spoiler?: true;
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19077,11 +18850,10 @@ export interface RichBlockAudio {
 <td><a href="#audio">Audio</a></td>
 <td>The audio</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19111,11 +18883,10 @@ export interface RichBlockPhoto {
    * <em>True</em>, if the media preview is covered by a spoiler animation
    */
   has_spoiler?: true;
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19145,11 +18916,10 @@ export interface RichBlockVideo {
    * <em>True</em>, if the media preview is covered by a spoiler animation
    */
   has_spoiler?: true;
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19175,11 +18945,10 @@ export interface RichBlockVoiceNote {
 <td><a href="#voice">Voice</a></td>
 <td>The voice note</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19515,11 +19284,10 @@ export interface InputRichBlockBlockQuotation {
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
 <td>Content of the block</td>
 </tr>
-<tr>
-<td>credit</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Credit of the block</td>
-</tr>
+  /**
+   * Credit of the block
+   */
+  credit?: RichText;
 </tbody>
 </table>
 }
@@ -19545,11 +19313,10 @@ export interface InputRichBlockPullQuotation {
 <td><a href="#richtext">RichText</a></td>
 <td>Text of the block</td>
 </tr>
-<tr>
-<td>credit</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Credit of the block</td>
-</tr>
+  /**
+   * Credit of the block
+   */
+  credit?: RichText;
 </tbody>
 </table>
 }
@@ -19575,11 +19342,10 @@ export interface InputRichBlockCollage {
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
 <td>Elements of the collage</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19605,11 +19371,10 @@ export interface InputRichBlockSlideshow {
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
 <td>Elements of the slideshow</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19643,11 +19408,10 @@ export interface InputRichBlockTable {
    * Pass <em>True</em> if the table is striped
    */
   is_striped?: true;
-<tr>
-<td>caption</td>
-<td><a href="#richtext">RichText</a></td>
-<td><em>Optional</em>. Caption of the table</td>
-</tr>
+  /**
+   * Caption of the table
+   */
+  caption?: RichText;
 </tbody>
 </table>
 }
@@ -19719,11 +19483,10 @@ export interface InputRichBlockMap {
    * Map height; 0-10000
    */
   height: number;
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19749,11 +19512,10 @@ export interface InputRichBlockAnimation {
 <td><a href="#inputmediaanimation">InputMediaAnimation</a></td>
 <td>The animation. Caption is ignored.</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19779,11 +19541,10 @@ export interface InputRichBlockAudio {
 <td><a href="#inputmediaaudio">InputMediaAudio</a></td>
 <td>The audio. Caption is ignored.</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19809,11 +19570,10 @@ export interface InputRichBlockPhoto {
 <td><a href="#inputmediaphoto">InputMediaPhoto</a></td>
 <td>The photo. Caption is ignored.</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19839,11 +19599,10 @@ export interface InputRichBlockVideo {
 <td><a href="#inputmediavideo">InputMediaVideo</a></td>
 <td>The video. Caption is ignored.</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19869,11 +19628,10 @@ export interface InputRichBlockVoiceNote {
 <td><a href="#inputmediavoicenote">InputMediaVoiceNote</a></td>
 <td>The voice note. Caption is ignored.</td>
 </tr>
-<tr>
-<td>caption</td>
-<td><a href="#richblockcaption">RichBlockCaption</a></td>
-<td><em>Optional</em>. Caption of the block</td>
-</tr>
+  /**
+   * Caption of the block
+   */
+  caption?: RichBlockCaption;
 </tbody>
 </table>
 }
@@ -19939,11 +19697,10 @@ export interface InlineQuery {
    * Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat.
    */
   chat_type?: string;
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Sender location, only for bots that request user location</td>
-</tr>
+  /**
+   * Sender location, only for bots that request user location
+   */
+  location?: Location;
 </tbody>
 </table>
 }
@@ -20019,11 +19776,10 @@ export interface InlineQueryResultsButton {
    * Label text on the button
    */
   text: string;
-<tr>
-<td>web_app</td>
-<td><a href="#webappinfo">WebAppInfo</a></td>
-<td><em>Optional</em>. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.</td>
-</tr>
+  /**
+   * Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.
+   */
+  web_app?: WebAppInfo;
   /**
    * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.<br><br><em>Example:</em> An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
    */
@@ -20107,11 +19863,10 @@ export interface InlineQueryResultArticle {
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
 <td>Content of the message to be sent</td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
   /**
    * URL of the result
    */
@@ -20197,16 +19952,14 @@ export interface InlineQueryResultPhoto {
    * Pass <em>True</em> if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the photo</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the photo
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -20276,16 +20029,14 @@ export interface InlineQueryResultGif {
    * Pass <em>True</em> if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the GIF animation</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the GIF animation
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -20355,16 +20106,14 @@ export interface InlineQueryResultMpeg4Gif {
    * Pass <em>True</em> if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video animation</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the video animation
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -20440,16 +20189,14 @@ export interface InlineQueryResultVideo {
    * Short description of the result
    */
   description?: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video. This field is <strong>required</strong> if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the video. This field is <strong>required</strong> if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -20503,16 +20250,14 @@ export interface InlineQueryResultAudio {
    * Audio duration in seconds
    */
   audio_duration?: number;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the audio</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the audio
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -20562,16 +20307,14 @@ export interface InlineQueryResultVoice {
    * Recording duration in seconds
    */
   voice_duration?: number;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the voice recording</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the voice recording
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -20625,16 +20368,14 @@ export interface InlineQueryResultDocument {
    * Short description of the result
    */
   description?: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the file</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the file
+   */
+  input_message_content?: InputMessageContent;
   /**
    * URL of the thumbnail (JPEG only) for the file
    */
@@ -20699,16 +20440,14 @@ export interface InlineQueryResultLocation {
    * For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
    */
   proximity_alert_radius?: number;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the location</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the location
+   */
+  input_message_content?: InputMessageContent;
   /**
    * Url of the thumbnail for the result
    */
@@ -20777,16 +20516,14 @@ export interface InlineQueryResultVenue {
    * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
    */
   google_place_type?: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the venue</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the venue
+   */
+  input_message_content?: InputMessageContent;
   /**
    * Url of the thumbnail for the result
    */
@@ -20839,16 +20576,14 @@ export interface InlineQueryResultContact {
    * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
    */
   vcard?: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the contact</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the contact
+   */
+  input_message_content?: InputMessageContent;
   /**
    * Url of the thumbnail for the result
    */
@@ -20889,11 +20624,10 @@ export interface InlineQueryResultGame {
    * Short name of the game
    */
   game_short_name: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
 </tbody>
 </table>
 }
@@ -20947,16 +20681,14 @@ export interface InlineQueryResultCachedPhoto {
    * Pass <em>True</em> if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the photo</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the photo
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21006,16 +20738,14 @@ export interface InlineQueryResultCachedGif {
    * Pass <em>True</em> if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the GIF animation</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the GIF animation
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21065,16 +20795,14 @@ export interface InlineQueryResultCachedMpeg4Gif {
    * Pass <em>True</em> if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video animation</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the video animation
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21103,16 +20831,14 @@ export interface InlineQueryResultCachedSticker {
    * A valid file identifier of the sticker
    */
   sticker_file_id: string;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the sticker</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the sticker
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21162,16 +20888,14 @@ export interface InlineQueryResultCachedDocument {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the file</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the file
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21225,16 +20949,14 @@ export interface InlineQueryResultCachedVideo {
    * Pass <em>True</em> if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the video</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the video
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21280,16 +21002,14 @@ export interface InlineQueryResultCachedVoice {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the voice message</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the voice message
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21331,16 +21051,14 @@ export interface InlineQueryResultCachedAudio {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>reply_markup</td>
-<td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
-<td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
-</tr>
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td><em>Optional</em>. Content of the message to be sent instead of the audio</td>
-</tr>
+  /**
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   */
+  reply_markup?: InlineKeyboardMarkup;
+  /**
+   * Content of the message to be sent instead of the audio
+   */
+  input_message_content?: InputMessageContent;
 </tbody>
 </table>
 }
@@ -21387,11 +21105,10 @@ export interface InputTextMessageContent {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>link_preview_options</td>
-<td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
-<td><em>Optional</em>. Link preview generation options for the message</td>
-</tr>
+  /**
+   * Link preview generation options for the message
+   */
+  link_preview_options?: LinkPreviewOptions;
 </tbody>
 </table>
 }
@@ -21657,11 +21374,10 @@ export interface ChosenInlineResult {
 <td><a href="#user">User</a></td>
 <td>The user that chose the result</td>
 </tr>
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td><em>Optional</em>. Sender location, only for bots that require user location</td>
-</tr>
+  /**
+   * Sender location, only for bots that require user location
+   */
+  location?: Location;
   /**
    * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.
    */
@@ -22341,11 +22057,10 @@ export interface OrderInfo {
    * User email
    */
   email?: string;
-<tr>
-<td>shipping_address</td>
-<td><a href="#shippingaddress">ShippingAddress</a></td>
-<td><em>Optional</em>. User shipping address</td>
-</tr>
+  /**
+   * User shipping address
+   */
+  shipping_address?: ShippingAddress;
 </tbody>
 </table>
 }
@@ -22419,11 +22134,10 @@ export interface SuccessfulPayment {
    * Identifier of the shipping option chosen by the user
    */
   shipping_option_id?: string;
-<tr>
-<td>order_info</td>
-<td><a href="#orderinfo">OrderInfo</a></td>
-<td><em>Optional</em>. Order information provided by the user</td>
-</tr>
+  /**
+   * Order information provided by the user
+   */
+  order_info?: OrderInfo;
   /**
    * Telegram payment identifier
    */
@@ -22543,11 +22257,10 @@ export interface PreCheckoutQuery {
    * Identifier of the shipping option chosen by the user
    */
   shipping_option_id?: string;
-<tr>
-<td>order_info</td>
-<td><a href="#orderinfo">OrderInfo</a></td>
-<td><em>Optional</em>. Order information provided by the user</td>
-</tr>
+  /**
+   * Order information provided by the user
+   */
+  order_info?: OrderInfo;
 </tbody>
 </table>
 }
@@ -22668,16 +22381,14 @@ export interface AffiliateInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>affiliate_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. The bot or the user that received an affiliate commission if it was received by a bot or a user</td>
-</tr>
-<tr>
-<td>affiliate_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td><em>Optional</em>. The chat that received an affiliate commission if it was received by a chat</td>
-</tr>
+  /**
+   * The bot or the user that received an affiliate commission if it was received by a bot or a user
+   */
+  affiliate_user?: User;
+  /**
+   * The chat that received an affiliate commission if it was received by a chat
+   */
+  affiliate_chat?: Chat;
   /**
    * The number of Telegram Stars received by the affiliate for each 1000 Telegram Stars received by the bot from referred users
    */
@@ -22738,11 +22449,10 @@ export interface TransactionPartnerUser {
 <td><a href="#user">User</a></td>
 <td>Information about the user</td>
 </tr>
-<tr>
-<td>affiliate</td>
-<td><a href="#affiliateinfo">AffiliateInfo</a></td>
-<td><em>Optional</em>. Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.</td>
-</tr>
+  /**
+   * Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.
+   */
+  affiliate?: AffiliateInfo;
   /**
    * Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.
    */
@@ -22760,11 +22470,10 @@ export interface TransactionPartnerUser {
    * Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.
    */
   paid_media_payload?: string;
-<tr>
-<td>gift</td>
-<td><a href="#gift">Gift</a></td>
-<td><em>Optional</em>. The gift sent to the user by the bot; for “gift_purchase” transactions only</td>
-</tr>
+  /**
+   * The gift sent to the user by the bot; for “gift_purchase” transactions only
+   */
+  gift?: Gift;
   /**
    * Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only
    */
@@ -22794,11 +22503,10 @@ export interface TransactionPartnerChat {
 <td><a href="#chat">Chat</a></td>
 <td>Information about the chat</td>
 </tr>
-<tr>
-<td>gift</td>
-<td><a href="#gift">Gift</a></td>
-<td><em>Optional</em>. The gift sent to the chat by the bot</td>
-</tr>
+  /**
+   * The gift sent to the chat by the bot
+   */
+  gift?: Gift;
 </tbody>
 </table>
 }
@@ -22819,11 +22527,10 @@ export interface TransactionPartnerAffiliateProgram {
    * Type of the transaction partner, always “affiliate_program”
    */
   type: string;
-<tr>
-<td>sponsor_user</td>
-<td><a href="#user">User</a></td>
-<td><em>Optional</em>. Information about the bot that sponsored the affiliate program</td>
-</tr>
+  /**
+   * Information about the bot that sponsored the affiliate program
+   */
+  sponsor_user?: User;
   /**
    * The number of Telegram Stars received by the bot for each 1000 Telegram Stars received by the affiliate program sponsor from referred users
    */
@@ -22848,11 +22555,10 @@ export interface TransactionPartnerFragment {
    * Type of the transaction partner, always “fragment”
    */
   type: string;
-<tr>
-<td>withdrawal_state</td>
-<td><a href="#revenuewithdrawalstate">RevenueWithdrawalState</a></td>
-<td><em>Optional</em>. State of the transaction if the transaction is outgoing</td>
-</tr>
+  /**
+   * State of the transaction if the transaction is outgoing
+   */
+  withdrawal_state?: RevenueWithdrawalState;
 </tbody>
 </table>
 }
@@ -22949,16 +22655,14 @@ export interface StarTransaction {
    * Date the transaction was created in Unix time
    */
   date: number;
-<tr>
-<td>source</td>
-<td><a href="#transactionpartner">TransactionPartner</a></td>
-<td><em>Optional</em>. Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions.</td>
-</tr>
-<tr>
-<td>receiver</td>
-<td><a href="#transactionpartner">TransactionPartner</a></td>
-<td><em>Optional</em>. Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions.</td>
-</tr>
+  /**
+   * Source of an incoming transaction (e.g., a user purchasing goods or services, Fragment refunding a failed withdrawal). Only for incoming transactions.
+   */
+  source?: TransactionPartner;
+  /**
+   * Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions.
+   */
+  receiver?: TransactionPartner;
 </tbody>
 </table>
 }
@@ -23077,21 +22781,18 @@ export interface EncryptedPassportElement {
 <td>Array of <a href="#passportfile">PassportFile</a></td>
 <td><em>Optional</em>. Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
-<tr>
-<td>front_side</td>
-<td><a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
-</tr>
-<tr>
-<td>reverse_side</td>
-<td><a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
-</tr>
-<tr>
-<td>selfie</td>
-<td><a href="#passportfile">PassportFile</a></td>
-<td><em>Optional</em>. Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
-</tr>
+  /**
+   * Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   */
+  front_side?: PassportFile;
+  /**
+   * Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   */
+  reverse_side?: PassportFile;
+  /**
+   * Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   */
+  selfie?: PassportFile;
 <tr>
 <td>translation</td>
 <td>Array of <a href="#passportfile">PassportFile</a></td>
@@ -23607,11 +23308,10 @@ export interface Game {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities that appear in <em>text</em>, such as usernames, URLs, bot commands, etc.</td>
 </tr>
-<tr>
-<td>animation</td>
-<td><a href="#animation">Animation</a></td>
-<td><em>Optional</em>. Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a>.</td>
-</tr>
+  /**
+   * Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a>.
+   */
+  animation?: Animation;
 </tbody>
 </table>
 }
