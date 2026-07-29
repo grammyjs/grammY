@@ -8596,12 +8596,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em>
+     */
+    entities?: MessageEntity[];
     /**
      * Link preview generation options for the message
      */
@@ -8951,12 +8949,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the new caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Pass <em>True</em> if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.
      */
@@ -9101,12 +9097,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Pass <em>True</em> if the caption must be shown above the message media
      */
@@ -9204,12 +9198,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Pass <em>True</em> if the caption must be shown above the message media
      */
@@ -9305,12 +9297,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Duration of the audio in seconds
      */
@@ -9416,12 +9406,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Disables automatic server-side content type detection for files uploaded using multipart/form-data
      */
@@ -9535,12 +9523,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Pass <em>True</em> if the caption must be shown above the message media
      */
@@ -9654,12 +9640,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Pass <em>True</em> if the caption must be shown above the message media
      */
@@ -9753,12 +9737,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Duration of the voice message in seconds
      */
@@ -9939,12 +9921,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the media caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Pass <em>True</em> if the caption must be shown above the message media
      */
@@ -10368,12 +10348,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the question. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
      */
     question_parse_mode?: string;
-<tr>
-<td>question_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of <em>question_parse_mode</em>.</td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of <em>question_parse_mode</em>.
+     */
+    question_entities?: MessageEntity[];
 <tr>
 <td>options</td>
 <td>Array of <a href="#inputpolloption">InputPollOption</a></td>
@@ -10428,12 +10406,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the explanation. See <a href="#formatting-options">formatting options</a> for more details.
      */
     explanation_parse_mode?: string;
-<tr>
-<td>explanation_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of <em>explanation_parse_mode</em>.</td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of <em>explanation_parse_mode</em>.
+     */
+    explanation_entities?: MessageEntity[];
     /**
      * Media added to the quiz explanation
      */
@@ -10458,12 +10434,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the poll description. See <a href="#formatting-options">formatting options</a> for more details.
      */
     description_parse_mode?: string;
-<tr>
-<td>description_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the poll description, which can be specified instead of <em>description_parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the poll description, which can be specified instead of <em>description_parse_mode</em>
+     */
+    description_entities?: MessageEntity[];
     /**
      * Media added to the poll description
      */
@@ -10653,12 +10627,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em>
+     */
+    entities?: MessageEntity[];
 </tbody>
 </table>
   }): never;
@@ -10726,12 +10698,10 @@ export interface ApiMethods {
      * Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
      */
     message_id: number;
-<tr>
-<td>reaction</td>
-<td>Array of <a href="#reactiontype">ReactionType</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can&#39;t be used by bots.</td>
-</tr>
+    /**
+     * A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can&#39;t be used by bots.
+     */
+    reaction?: ReactionType[];
     /**
      * Pass <em>True</em> to set the reaction with a big animation
      */
@@ -12951,12 +12921,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
      */
     text_parse_mode?: string;
-<tr>
-<td>text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.</td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+     */
+    text_entities?: MessageEntity[];
 </tbody>
 </table>
   }): never;
@@ -12996,12 +12964,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
      */
     text_parse_mode?: string;
-<tr>
-<td>text_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.</td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+     */
+    text_entities?: MessageEntity[];
 </tbody>
 </table>
   }): never;
@@ -13707,18 +13673,14 @@ export interface ApiMethods {
      * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
-<tr>
-<td>areas</td>
-<td>Array of <a href="#storyarea">StoryArea</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of clickable areas to be shown on the story</td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
+    /**
+     * A JSON-serialized list of clickable areas to be shown on the story
+     */
+    areas?: StoryArea[];
     /**
      * Pass <em>True</em> to keep the story accessible after it expires
      */
@@ -13809,18 +13771,14 @@ export interface ApiMethods {
      * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
-<tr>
-<td>areas</td>
-<td>Array of <a href="#storyarea">StoryArea</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of clickable areas to be shown on the story</td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
+    /**
+     * A JSON-serialized list of clickable areas to be shown on the story
+     */
+    areas?: StoryArea[];
 </tbody>
 </table>
   }): never;
@@ -13995,12 +13953,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em>
+     */
+    entities?: MessageEntity[];
     /**
      * Link preview generation options for the message
      */
@@ -14058,12 +14014,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * Pass <em>True</em> if the caption must be shown above the message media. Supported only for animation, photo and video messages.
      */
@@ -14383,12 +14337,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em>
+     */
+    entities?: MessageEntity[];
     /**
      * Link preview generation options for the message
      */
@@ -14479,12 +14431,10 @@ export interface ApiMethods {
      * Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
-<tr>
-<td>caption_entities</td>
-<td>Array of <a href="#messageentity">MessageEntity</a></td>
-<td>Optional</td>
-<td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
-</tr>
+    /**
+     * A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em>
+     */
+    caption_entities?: MessageEntity[];
     /**
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
@@ -20008,12 +19958,10 @@ export interface ApiMethods {
      * Pass <em>True</em> if delivery to the specified address is possible and <em>False</em> if there are any problems (for example, if delivery to the specified address is not possible)
      */
     ok: boolean;
-<tr>
-<td>shipping_options</td>
-<td>Array of <a href="#shippingoption">ShippingOption</a></td>
-<td>Optional</td>
-<td>Required if <em>ok</em> is <em>True</em>. A JSON-serialized Array of available shipping options.</td>
-</tr>
+    /**
+     * Required if <em>ok</em> is <em>True</em>. A JSON-serialized Array of available shipping options.
+     */
+    shipping_options?: ShippingOption[];
     /**
      * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
      */
