@@ -439,56 +439,46 @@ export interface User {
    * <em>True</em>, if this user added the bot to the attachment menu
    */
   added_to_attachment_menu?: true;
-<tr>
-<td>can_join_groups</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>can_read_all_group_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>supports_guest_queries</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot supports guest queries from chats it is not a member of. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>supports_inline_queries</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>can_connect_to_business</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can be connected to a user account to manage it. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>has_main_web_app</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>has_topics_enabled</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot has forum topic mode enabled in private chats. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>allows_users_to_create_topics</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot allows users to create and delete topics in private chats. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>can_manage_bots</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if other bots can be created to be controlled by the bot. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
-<tr>
-<td>supports_join_request_queries</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the bot supports join request queries and can be assigned to process them. Returned only in <a href="#getme">getMe</a>.</td>
-</tr>
+  /**
+   * <em>True</em>, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.
+   */
+  can_join_groups?: boolean;
+  /**
+   * <em>True</em>, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
+   */
+  can_read_all_group_messages?: boolean;
+  /**
+   * <em>True</em>, if the bot supports guest queries from chats it is not a member of. Returned only in <a href="#getme">getMe</a>.
+   */
+  supports_guest_queries?: boolean;
+  /**
+   * <em>True</em>, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.
+   */
+  supports_inline_queries?: boolean;
+  /**
+   * <em>True</em>, if the bot can be connected to a user account to manage it. Returned only in <a href="#getme">getMe</a>.
+   */
+  can_connect_to_business?: boolean;
+  /**
+   * <em>True</em>, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.
+   */
+  has_main_web_app?: boolean;
+  /**
+   * <em>True</em>, if the bot has forum topic mode enabled in private chats. Returned only in <a href="#getme">getMe</a>.
+   */
+  has_topics_enabled?: boolean;
+  /**
+   * <em>True</em>, if the bot allows users to create and delete topics in private chats. Returned only in <a href="#getme">getMe</a>.
+   */
+  allows_users_to_create_topics?: boolean;
+  /**
+   * <em>True</em>, if other bots can be created to be controlled by the bot. Returned only in <a href="#getme">getMe</a>.
+   */
+  can_manage_bots?: boolean;
+  /**
+   * <em>True</em>, if the bot supports join request queries and can be assigned to process them. Returned only in <a href="#getme">getMe</a>.
+   */
+  supports_join_request_queries?: boolean;
 </tbody>
 </table>
 }
@@ -1679,11 +1669,10 @@ export interface ReplyParameters {
    * Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if <em>message_id</em> isn&#39;t specified.
    */
   ephemeral_message_id?: number;
-<tr>
-<td>allow_sending_without_reply</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the message should be sent even if the specified message to be replied to is not found. Always <em>False</em> for replies in another chat or forum topic, and sent ephemeral messages. Always <em>True</em> for messages sent on behalf of a business account.</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the message should be sent even if the specified message to be replied to is not found. Always <em>False</em> for replies in another chat or forum topic, and sent ephemeral messages. Always <em>True</em> for messages sent on behalf of a business account.
+   */
+  allow_sending_without_reply?: boolean;
   /**
    * Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities. The message will fail to send if the quote isn&#39;t found in the original message. Ignored for ephemeral messages.
    */
@@ -3010,16 +2999,14 @@ export interface InputChecklist {
 <td>Array of <a href="#inputchecklisttask">InputChecklistTask</a></td>
 <td>List of 1-30 tasks in the checklist</td>
 </tr>
-<tr>
-<td>others_can_add_tasks</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if other users can add tasks to the checklist</td>
-</tr>
-<tr>
-<td>others_can_mark_tasks_as_done</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if other users can mark tasks as done or not done in the checklist</td>
-</tr>
+  /**
+   * Pass <em>True</em> if other users can add tasks to the checklist
+   */
+  others_can_add_tasks?: boolean;
+  /**
+   * Pass <em>True</em> if other users can mark tasks as done or not done in the checklist
+   */
+  others_can_mark_tasks_as_done?: boolean;
 </tbody>
 </table>
 }
@@ -3873,20 +3860,18 @@ export interface WriteAccessAllowed {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>from_request</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
-</tr>
+  /**
+   * <em>True</em>, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
+   */
+  from_request?: boolean;
   /**
    * Name of the Web App, if the access was granted when the Web App was launched from a link
    */
   web_app_name?: string;
-<tr>
-<td>from_attachment_menu</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the access was granted when the bot was added to the attachment or side menu</td>
-</tr>
+  /**
+   * <em>True</em>, if the access was granted when the bot was added to the attachment or side menu
+   */
+  from_attachment_menu?: boolean;
 </tbody>
 </table>
 }
@@ -4326,30 +4311,26 @@ export interface LinkPreviewOptions {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>is_disabled</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the link preview is disabled</td>
-</tr>
+  /**
+   * <em>True</em>, if the link preview is disabled
+   */
+  is_disabled?: boolean;
   /**
    * URL to use for the link preview. If empty, then the first URL found in the message text will be used.
    */
   url?: string;
-<tr>
-<td>prefer_small_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
-</tr>
-<tr>
-<td>prefer_large_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview</td>
-</tr>
-<tr>
-<td>show_above_text</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text</td>
-</tr>
+  /**
+   * <em>True</em>, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
+   */
+  prefer_small_media?: boolean;
+  /**
+   * <em>True</em>, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
+   */
+  prefer_large_media?: boolean;
+  /**
+   * <em>True</em>, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text
+   */
+  show_above_text?: boolean;
 </tbody>
 </table>
 }
@@ -4578,30 +4559,26 @@ export interface ReplyKeyboardMarkup {
 <td>Array of Array of <a href="#keyboardbutton">KeyboardButton</a></td>
 <td>Array of button rows, each represented by an Array of <a href="#keyboardbutton">KeyboardButton</a> objects</td>
 </tr>
-<tr>
-<td>is_persistent</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to <em>False</em>, in which case the custom keyboard can be hidden and opened with a keyboard icon.</td>
-</tr>
-<tr>
-<td>resize_keyboard</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to <em>False</em>, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.</td>
-</tr>
-<tr>
-<td>one_time_keyboard</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to <em>False</em>.</td>
-</tr>
+  /**
+   * Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to <em>False</em>, in which case the custom keyboard can be hidden and opened with a keyboard icon.
+   */
+  is_persistent?: boolean;
+  /**
+   * Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to <em>False</em>, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.
+   */
+  resize_keyboard?: boolean;
+  /**
+   * Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to <em>False</em>.
+   */
+  one_time_keyboard?: boolean;
   /**
    * The placeholder to be shown in the input field when the keyboard is active; 1-64 characters
    */
   input_field_placeholder?: string;
-<tr>
-<td>selective</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.</td>
-</tr>
+  /**
+   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
+   */
+  selective?: boolean;
 </tbody>
 </table>
 }
@@ -4645,16 +4622,14 @@ export interface KeyboardButton {
 <td><a href="#keyboardbuttonrequestmanagedbot">KeyboardButtonRequestManagedBot</a></td>
 <td><em>Optional</em>. If specified, pressing the button will ask the user to create and share a bot that will be managed by the current bot. Available for bots that enabled management of other bots in the <a href="https://t.me/BotFather">@BotFather</a> Mini App. Available in private chats only.</td>
 </tr>
-<tr>
-<td>request_contact</td>
-<td>Boolean</td>
-<td><em>Optional</em>. If <em>True</em>, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.</td>
-</tr>
-<tr>
-<td>request_location</td>
-<td>Boolean</td>
-<td><em>Optional</em>. If <em>True</em>, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.</td>
-</tr>
+  /**
+   * If <em>True</em>, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.
+   */
+  request_contact?: boolean;
+  /**
+   * If <em>True</em>, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.
+   */
+  request_location?: boolean;
 <tr>
 <td>request_poll</td>
 <td><a href="#keyboardbuttonpolltype">KeyboardButtonPollType</a></td>
@@ -4685,35 +4660,30 @@ export interface KeyboardButtonRequestUsers {
    * Signed 32-bit identifier of the request that will be received back in the <a href="#usersshared">UsersShared</a> object. Must be unique within the message.
    */
   request_id: number;
-<tr>
-<td>user_is_bot</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request bots, pass <em>False</em> to request regular users. If not specified, no additional restrictions are applied.</td>
-</tr>
-<tr>
-<td>user_is_premium</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request premium users, pass <em>False</em> to request non-premium users. If not specified, no additional restrictions are applied.</td>
-</tr>
+  /**
+   * Pass <em>True</em> to request bots, pass <em>False</em> to request regular users. If not specified, no additional restrictions are applied.
+   */
+  user_is_bot?: boolean;
+  /**
+   * Pass <em>True</em> to request premium users, pass <em>False</em> to request non-premium users. If not specified, no additional restrictions are applied.
+   */
+  user_is_premium?: boolean;
   /**
    * The maximum number of users to be selected; 1-10. Defaults to 1.
    */
   max_quantity?: number;
-<tr>
-<td>request_name</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the users&#39; first and last names</td>
-</tr>
-<tr>
-<td>request_username</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the users&#39; usernames</td>
-</tr>
-<tr>
-<td>request_photo</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the users&#39; photos</td>
-</tr>
+  /**
+   * Pass <em>True</em> to request the users&#39; first and last names
+   */
+  request_name?: boolean;
+  /**
+   * Pass <em>True</em> to request the users&#39; usernames
+   */
+  request_username?: boolean;
+  /**
+   * Pass <em>True</em> to request the users&#39; photos
+   */
+  request_photo?: boolean;
 </tbody>
 </table>
 }
@@ -4739,21 +4709,18 @@ export interface KeyboardButtonRequestChat {
 <td>Boolean</td>
 <td>Pass <em>True</em> to request a channel chat, pass <em>False</em> to request a group or a supergroup chat</td>
 </tr>
-<tr>
-<td>chat_is_forum</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a forum supergroup, pass <em>False</em> to request a non-forum chat. If not specified, no additional restrictions are applied.</td>
-</tr>
-<tr>
-<td>chat_has_username</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a supergroup or a channel with a username, pass <em>False</em> to request a chat without a username. If not specified, no additional restrictions are applied.</td>
-</tr>
-<tr>
-<td>chat_is_created</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a chat owned by the user. Otherwise, no additional restrictions are applied.</td>
-</tr>
+  /**
+   * Pass <em>True</em> to request a forum supergroup, pass <em>False</em> to request a non-forum chat. If not specified, no additional restrictions are applied.
+   */
+  chat_is_forum?: boolean;
+  /**
+   * Pass <em>True</em> to request a supergroup or a channel with a username, pass <em>False</em> to request a chat without a username. If not specified, no additional restrictions are applied.
+   */
+  chat_has_username?: boolean;
+  /**
+   * Pass <em>True</em> to request a chat owned by the user. Otherwise, no additional restrictions are applied.
+   */
+  chat_is_created?: boolean;
 <tr>
 <td>user_administrator_rights</td>
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
@@ -4764,26 +4731,22 @@ export interface KeyboardButtonRequestChat {
 <td><a href="#chatadministratorrights">ChatAdministratorRights</a></td>
 <td><em>Optional</em>. A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of <em>user_administrator_rights</em>. If not specified, no additional restrictions are applied.</td>
 </tr>
-<tr>
-<td>bot_is_member</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.</td>
-</tr>
-<tr>
-<td>request_title</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the chat&#39;s title</td>
-</tr>
-<tr>
-<td>request_username</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the chat&#39;s username</td>
-</tr>
-<tr>
-<td>request_photo</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the chat&#39;s photo</td>
-</tr>
+  /**
+   * Pass <em>True</em> to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.
+   */
+  bot_is_member?: boolean;
+  /**
+   * Pass <em>True</em> to request the chat&#39;s title
+   */
+  request_title?: boolean;
+  /**
+   * Pass <em>True</em> to request the chat&#39;s username
+   */
+  request_username?: boolean;
+  /**
+   * Pass <em>True</em> to request the chat&#39;s photo
+   */
+  request_photo?: boolean;
 </tbody>
 </table>
 }
@@ -4852,11 +4815,10 @@ export interface ReplyKeyboardRemove {
    * Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use <em>one_time_keyboard</em> in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)
    */
   remove_keyboard: true;
-<tr>
-<td>selective</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.</td>
-</tr>
+  /**
+   * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
+   */
+  selective?: boolean;
 </tbody>
 </table>
 }
@@ -4947,11 +4909,10 @@ export interface InlineKeyboardButton {
 <td><a href="#callbackgame">CallbackGame</a></td>
 <td><em>Optional</em>. Description of the game that will be launched when the user presses the button.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row.</td>
 </tr>
-<tr>
-<td>pay</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Specify <em>True</em>, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.</td>
-</tr>
+  /**
+   * Specify <em>True</em>, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
+   */
+  pay?: boolean;
 </tbody>
 </table>
 }
@@ -4986,11 +4947,10 @@ export interface LoginUrl {
    * Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The <em>url</em>&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.
    */
   bot_username?: string;
-<tr>
-<td>request_write_access</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to request the permission for your bot to send messages to the user</td>
-</tr>
+  /**
+   * Pass <em>True</em> to request the permission for your bot to send messages to the user
+   */
+  request_write_access?: boolean;
 </tbody>
 </table>
 }
@@ -5011,26 +4971,22 @@ export interface SwitchInlineQueryChosenChat {
    * The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted.
    */
   query?: string;
-<tr>
-<td>allow_user_chats</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if private chats with users can be chosen</td>
-</tr>
-<tr>
-<td>allow_bot_chats</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if private chats with bots can be chosen</td>
-</tr>
-<tr>
-<td>allow_group_chats</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if group and supergroup chats can be chosen</td>
-</tr>
-<tr>
-<td>allow_channel_chats</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if channel chats can be chosen</td>
-</tr>
+  /**
+   * <em>True</em>, if private chats with users can be chosen
+   */
+  allow_user_chats?: boolean;
+  /**
+   * <em>True</em>, if private chats with bots can be chosen
+   */
+  allow_bot_chats?: boolean;
+  /**
+   * <em>True</em>, if group and supergroup chats can be chosen
+   */
+  allow_group_chats?: boolean;
+  /**
+   * <em>True</em>, if channel chats can be chosen
+   */
+  allow_channel_chats?: boolean;
 </tbody>
 </table>
 }
@@ -5130,11 +5086,10 @@ export interface ForceReply {
    * The placeholder to be shown in the input field when the reply is active; 1-64 characters
    */
   input_field_placeholder?: string;
-<tr>
-<td>selective</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.</td>
-</tr>
+  /**
+   * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   */
+  selective?: boolean;
 </tbody>
 </table>
 }
@@ -5326,36 +5281,30 @@ export interface ChatAdministratorRights {
 <td>Boolean</td>
 <td><em>True</em>, if the administrator can delete stories posted by other users</td>
 </tr>
-<tr>
-<td>can_post_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
-</tr>
-<tr>
-<td>can_edit_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only</td>
-</tr>
-<tr>
-<td>can_pin_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only</td>
-</tr>
-<tr>
-<td>can_manage_topics</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
-</tr>
-<tr>
-<td>can_manage_direct_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
-</tr>
-<tr>
-<td>can_manage_tags</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.</td>
-</tr>
+  /**
+   * <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
+   */
+  can_post_messages?: boolean;
+  /**
+   * <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only
+   */
+  can_edit_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only
+   */
+  can_pin_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+   */
+  can_manage_topics?: boolean;
+  /**
+   * <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
+   */
+  can_manage_direct_messages?: boolean;
+  /**
+   * <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.
+   */
+  can_manage_tags?: boolean;
 </tbody>
 </table>
 }
@@ -5401,16 +5350,14 @@ export interface ChatMemberUpdated {
 <td><a href="#chatinvitelink">ChatInviteLink</a></td>
 <td><em>Optional</em>. Chat invite link, which was used by the user to join the chat; for joining by invite link events only</td>
 </tr>
-<tr>
-<td>via_join_request</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator</td>
-</tr>
-<tr>
-<td>via_chat_folder_invite_link</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user joined the chat via a chat folder invite link</td>
-</tr>
+  /**
+   * <em>True</em>, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator
+   */
+  via_join_request?: boolean;
+  /**
+   * <em>True</em>, if the user joined the chat via a chat folder invite link
+   */
+  via_chat_folder_invite_link?: boolean;
 </tbody>
 </table>
 }
@@ -5547,36 +5494,30 @@ export interface ChatMemberAdministrator {
 <td>Boolean</td>
 <td><em>True</em>, if the administrator can delete stories posted by other users</td>
 </tr>
-<tr>
-<td>can_post_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only</td>
-</tr>
-<tr>
-<td>can_edit_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only</td>
-</tr>
-<tr>
-<td>can_pin_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only</td>
-</tr>
-<tr>
-<td>can_manage_topics</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only</td>
-</tr>
-<tr>
-<td>can_manage_direct_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only</td>
-</tr>
-<tr>
-<td>can_manage_tags</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.</td>
-</tr>
+  /**
+   * <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
+   */
+  can_post_messages?: boolean;
+  /**
+   * <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only
+   */
+  can_edit_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only
+   */
+  can_pin_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+   */
+  can_manage_topics?: boolean;
+  /**
+   * <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
+   */
+  can_manage_direct_messages?: boolean;
+  /**
+   * <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.
+   */
+  can_manage_tags?: boolean;
   /**
    * Custom title for this user
    */
@@ -5849,86 +5790,70 @@ export interface ChatPermissions {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>can_send_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
-</tr>
-<tr>
-<td>can_send_audios</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send audios</td>
-</tr>
-<tr>
-<td>can_send_documents</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send documents</td>
-</tr>
-<tr>
-<td>can_send_photos</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send photos</td>
-</tr>
-<tr>
-<td>can_send_videos</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send videos</td>
-</tr>
-<tr>
-<td>can_send_video_notes</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send video notes</td>
-</tr>
-<tr>
-<td>can_send_voice_notes</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send voice notes</td>
-</tr>
-<tr>
-<td>can_send_polls</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send polls and checklists</td>
-</tr>
-<tr>
-<td>can_send_other_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots</td>
-</tr>
-<tr>
-<td>can_add_web_page_previews</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to add web page previews to their messages</td>
-</tr>
-<tr>
-<td>can_react_to_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to react to messages. If omitted, defaults to the value of <em>can_send_messages</em>.</td>
-</tr>
-<tr>
-<td>can_edit_tag</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to edit their own tag. If omitted, defaults to the value of <em>can_pin_messages</em>.</td>
-</tr>
-<tr>
-<td>can_change_info</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups.</td>
-</tr>
-<tr>
-<td>can_invite_users</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to invite new users to the chat</td>
-</tr>
-<tr>
-<td>can_pin_messages</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to pin messages. Ignored in public supergroups.</td>
-</tr>
-<tr>
-<td>can_manage_topics</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the user is allowed to create forum topics. If omitted, defaults to the value of can_pin_messages.</td>
-</tr>
+  /**
+   * <em>True</em>, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues
+   */
+  can_send_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send audios
+   */
+  can_send_audios?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send documents
+   */
+  can_send_documents?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send photos
+   */
+  can_send_photos?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send videos
+   */
+  can_send_videos?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send video notes
+   */
+  can_send_video_notes?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send voice notes
+   */
+  can_send_voice_notes?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send polls and checklists
+   */
+  can_send_polls?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots
+   */
+  can_send_other_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to add web page previews to their messages
+   */
+  can_add_web_page_previews?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to react to messages. If omitted, defaults to the value of <em>can_send_messages</em>.
+   */
+  can_react_to_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to edit their own tag. If omitted, defaults to the value of <em>can_pin_messages</em>.
+   */
+  can_edit_tag?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups.
+   */
+  can_change_info?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to invite new users to the chat
+   */
+  can_invite_users?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to pin messages. Ignored in public supergroups.
+   */
+  can_pin_messages?: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to create forum topics. If omitted, defaults to the value of can_pin_messages.
+   */
+  can_manage_topics?: boolean;
 </tbody>
 </table>
 }
@@ -6245,16 +6170,14 @@ export interface StoryAreaTypeSuggestedReaction {
 <td><a href="#reactiontype">ReactionType</a></td>
 <td>Type of the reaction</td>
 </tr>
-<tr>
-<td>is_dark</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the reaction area has a dark background</td>
-</tr>
-<tr>
-<td>is_flipped</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if reaction area corner is flipped</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the reaction area has a dark background
+   */
+  is_dark?: boolean;
+  /**
+   * Pass <em>True</em> if reaction area corner is flipped
+   */
+  is_flipped?: boolean;
 </tbody>
 </table>
 }
@@ -7353,11 +7276,10 @@ export interface BotCommand {
    * Description of the command; 1-256 characters
    */
   description: string;
-<tr>
-<td>is_ephemeral</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot</td>
-</tr>
+  /**
+   * <em>True</em>, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
+   */
+  is_ephemeral?: boolean;
 </tbody>
 </table>
 }
@@ -8268,11 +8190,10 @@ export interface InputMediaAnimation {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
   /**
    * Animation width
    */
@@ -8285,11 +8206,10 @@ export interface InputMediaAnimation {
    * Animation duration in seconds
    */
   duration?: number;
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the animation needs to be covered with a spoiler animation</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the animation needs to be covered with a spoiler animation
+   */
+  has_spoiler?: boolean;
 </tbody>
 </table>
 }
@@ -8384,11 +8304,10 @@ export interface InputMediaDocument {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>disable_content_type_detection</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always <em>True</em>, if the document is sent as part of an album.</td>
-</tr>
+  /**
+   * Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always <em>True</em>, if the document is sent as part of an album.
+   */
+  disable_content_type_detection?: boolean;
 </tbody>
 </table>
 }
@@ -8454,16 +8373,14 @@ export interface InputMediaLivePhoto {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the live photo needs to be covered with a spoiler animation</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
+  /**
+   * Pass <em>True</em> if the live photo needs to be covered with a spoiler animation
+   */
+  has_spoiler?: boolean;
 </tbody>
 </table>
 }
@@ -8536,16 +8453,14 @@ export interface InputMediaPhoto {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the photo needs to be covered with a spoiler animation</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
+  /**
+   * Pass <em>True</em> if the photo needs to be covered with a spoiler animation
+   */
+  has_spoiler?: boolean;
 </tbody>
 </table>
 }
@@ -8677,11 +8592,10 @@ export interface InputMediaVideo {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
   /**
    * Video width
    */
@@ -8694,16 +8608,14 @@ export interface InputMediaVideo {
    * Video duration in seconds
    */
   duration?: number;
-<tr>
-<td>supports_streaming</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the uploaded video is suitable for streaming</td>
-</tr>
-<tr>
-<td>has_spoiler</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the video needs to be covered with a spoiler animation</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the uploaded video is suitable for streaming
+   */
+  supports_streaming?: boolean;
+  /**
+   * Pass <em>True</em> if the video needs to be covered with a spoiler animation
+   */
+  has_spoiler?: boolean;
 </tbody>
 </table>
 }
@@ -8860,11 +8772,10 @@ export interface InputPaidMediaVideo {
    * Video duration in seconds
    */
   duration?: number;
-<tr>
-<td>supports_streaming</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the uploaded video is suitable for streaming</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the uploaded video is suitable for streaming
+   */
+  supports_streaming?: boolean;
 </tbody>
 </table>
 }
@@ -8994,11 +8905,10 @@ export interface InputStoryContentVideo {
 <td>Float</td>
 <td><em>Optional</em>. Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0.</td>
 </tr>
-<tr>
-<td>is_animation</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the video has no sound</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the video has no sound
+   */
+  is_animation?: boolean;
 </tbody>
 </table>
 }
@@ -17675,11 +17585,10 @@ export interface RichMessage {
 <td>Array of <a href="#richblock">RichBlock</a></td>
 <td>Content of the message</td>
 </tr>
-<tr>
-<td>is_rtl</td>
-<td>Boolean</td>
-<td><em>Optional</em>. <em>True</em>, if the rich message must be shown right-to-left</td>
-</tr>
+  /**
+   * <em>True</em>, if the rich message must be shown right-to-left
+   */
+  is_rtl?: boolean;
 </tbody>
 </table>
 }
@@ -17714,16 +17623,14 @@ export interface InputRichMessage {
 <td>Array of <a href="#inputrichmessagemedia">InputRichMessageMedia</a></td>
 <td><em>Optional</em>. List of media that are specified in the <em>markdown</em> or <em>html</em> fields using <code>tg://photo?id=</code>, <code>tg://video?id=</code>, and <code>tg://audio?id=</code> links</td>
 </tr>
-<tr>
-<td>is_rtl</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the rich message must be shown right-to-left</td>
-</tr>
-<tr>
-<td>skip_entity_detection</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> to skip automatic detection of entities (e.g., URLs, email addresses, username mentions, hashtags, cashtags, bot commands, or phone numbers) in the text</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the rich message must be shown right-to-left
+   */
+  is_rtl?: boolean;
+  /**
+   * Pass <em>True</em> to skip automatic detection of entities (e.g., URLs, email addresses, username mentions, hashtags, cashtags, bot commands, or phone numbers) in the text
+   */
+  skip_entity_detection?: boolean;
 </tbody>
 </table>
 }
@@ -20386,11 +20293,10 @@ export interface InlineQueryResultPhoto {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -20466,11 +20372,10 @@ export interface InlineQueryResultGif {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -20546,11 +20451,10 @@ export interface InlineQueryResultMpeg4Gif {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -20616,11 +20520,10 @@ export interface InlineQueryResultVideo {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
   /**
    * Video width
    */
@@ -21145,11 +21048,10 @@ export interface InlineQueryResultCachedPhoto {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21205,11 +21107,10 @@ export interface InlineQueryResultCachedGif {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21265,11 +21166,10 @@ export interface InlineQueryResultCachedMpeg4Gif {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21426,11 +21326,10 @@ export interface InlineQueryResultCachedVideo {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the caption must be shown above the message media
+   */
+  show_caption_above_media?: boolean;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21814,41 +21713,34 @@ export interface InputInvoiceMessageContent {
    * Photo height
    */
   photo_height?: number;
-<tr>
-<td>need_name</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_phone_number</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_email</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>need_shipping_address</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>send_phone_number_to_provider</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>send_email_to_provider</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
-<tr>
-<td>is_flexible</td>
-<td>Boolean</td>
-<td><em>Optional</em>. Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+  /**
+   * Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  need_name?: boolean;
+  /**
+   * Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  need_phone_number?: boolean;
+  /**
+   * Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  need_email?: boolean;
+  /**
+   * Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  need_shipping_address?: boolean;
+  /**
+   * Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  send_phone_number_to_provider?: boolean;
+  /**
+   * Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  send_email_to_provider?: boolean;
+  /**
+   * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  is_flexible?: boolean;
 </tbody>
 </table>
 }
