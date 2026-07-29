@@ -48,7 +48,7 @@ export interface ApiSuccess<T> {
 /**
  * This <a href="#available-types">object</a> represents an incoming update.
  *
- * At most <strong>one</strong> of the optional fields can be present in any given update.
+ * At most **one** of the optional fields can be present in any given update.
  *
  * @see {@link https://core.telegram.org/bots/api#update}
  */
@@ -169,7 +169,7 @@ export interface ApiMethods {
   /**
    * Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.
    * 
-   * > <strong>Notes</strong>
+   * > **Notes**
    * >
    * > 1. This method will not work if an outgoing webhook is set up.
    * > 2. In order to avoid getting duplicate updates, recalculate _offset_ after each server response.
@@ -203,11 +203,11 @@ export interface ApiMethods {
    *
    * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
    * 
-   * > <strong>Notes</strong>
+   * > **Notes**
    * >
    * > 1. You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.
    * > 2. To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
-   * > 3. Ports currently supported _for webhooks_: <strong>443, 80, 88, 8443</strong>.
+   * > 3. Ports currently supported _for webhooks_: **443, 80, 88, 8443**.
    *
    * > If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.
    *
@@ -1179,7 +1179,7 @@ export type MaybeInaccessibleMessage =
  */
 export interface MessageEntity {
   /**
-   * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (<strong>bold text</strong>), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+   * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
    */
   type: string;
   /**
@@ -1993,7 +1993,7 @@ export interface Link {
   url: string;
 }
 /**
- * At most <strong>one</strong> of the optional fields can be present in any given object.
+ * At most **one** of the optional fields can be present in any given object.
  *
  * @see {@link https://core.telegram.org/bots/api#pollmedia}
  */
@@ -3695,13 +3695,13 @@ export interface InlineKeyboardButton {
   /**
    * Description of the game that will be launched when the user presses the button.
    *
-   * <strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row.
+   * **NOTE:** This type of button **must** always be the first button in the first row.
    */
   callback_game?: CallbackGame;
   /**
    * Specify `true`, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.
    *
-   * <strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
+   * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
    */
   pay?: boolean;
 }
@@ -3720,7 +3720,7 @@ export interface LoginUrl {
   /**
    * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.
    *
-   * <strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
+   * **NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
    */
   url: string;
   /**
@@ -3777,7 +3777,7 @@ export interface CopyTextButton {
 /**
  * This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.
  * 
- * > <strong>NOTE:</strong> After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
+ * > **NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
  *
  * @see {@link https://core.telegram.org/bots/api#callbackquery}
  */
@@ -3814,7 +3814,7 @@ export interface CallbackQuery {
 /**
  * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a user account.
  * 
- * > <strong>Example:</strong> A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
+ * > **Example:** A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
  * >
  * > - Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.
  * > - Guide the user through a step-by-step process. &#39;Please send me your question&#39;, &#39;Cool, now let&#39;s add the first answer option&#39;, &#39;Great. Keep adding answer options, then send /done when you&#39;re ready&#39;.
@@ -5459,7 +5459,7 @@ export interface BotCommand {
  * 
  * The following algorithm is used to determine the list of commands for a particular user viewing the bot menu. The first list of commands which is set is returned:
  * 
- * <strong>Commands in the chat with the bot</strong>
+ * **Commands in the chat with the bot**
  *
  * - botCommandScopeChat + language_code
  * - botCommandScopeChat
@@ -5468,7 +5468,7 @@ export interface BotCommand {
  * - botCommandScopeDefault + language_code
  * - botCommandScopeDefault
  *
- * <strong>Commands in group and supergroup chats</strong>
+ * **Commands in group and supergroup chats**
  *
  * - botCommandScopeChatMember + language_code
  * - botCommandScopeChatMember
@@ -6725,7 +6725,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns `true` on success. Requires no parameters.
+   * Use this method to log out from the cloud Bot API server before launching the bot locally. You **must** log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns `true` on success. Requires no parameters.
    *
    * @see {@link https://core.telegram.org/bots/api#logout}
    */
@@ -6821,7 +6821,7 @@ export interface ApiMethods {
  *
  * The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
   
- * Note that Telegram clients will display an <strong>alert</strong> to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
+ * Note that Telegram clients will display an **alert** to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
  *
  * Message entities can be nested, providing following restrictions are met:
  *
@@ -6832,7 +6832,7 @@ export interface ApiMethods {
  *
  * Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username. Please note:
  *
- * - These links will work <strong>only</strong> if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
+ * - These links will work **only** if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
  * - Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.
  *
  * You can find the list of programming and markup languages for which syntax highlighting is supported at <a href="https://github.com/TelegramMessenger/libprisma#supported-languages">libprisma#supported-languages</a>.
@@ -6843,12 +6843,12 @@ export interface ApiMethods {
  *
  * If the format string is empty, the underlying text is displayed as-is; however, the user can still receive the underlying date in their local format. When populated, the format string determines the output based on the presence of the following control characters:
  *
- * - <strong>`r`</strong>: Displays the time relative to the current time. Cannot be combined with any other control characters.
- * - <strong>`w`</strong>: Displays the day of the week in the user&#39;s localized language.
- * - <strong>`d`</strong>: Displays the date in short form (e.g., “17.03.22”).
- * - <strong>`D`</strong>: Displays the date in long form (e.g., “March 17, 2022”).
- * - <strong>`t`</strong>: Displays the time in short form (e.g., “22:45”).
- * - <strong>`T`</strong>: Displays the time in long form (e.g., “22:45:00”).
+ * - **`r`**: Displays the time relative to the current time. Cannot be combined with any other control characters.
+ * - **`w`**: Displays the day of the week in the user&#39;s localized language.
+ * - **`d`**: Displays the date in short form (e.g., “17.03.22”).
+ * - **`D`**: Displays the date in long form (e.g., “March 17, 2022”).
+ * - **`t`**: Displays the time in short form (e.g., “22:45”).
+ * - **`T`**: Displays the time in long form (e.g., “22:45:00”).
  *
  * ##### MarkdownV2 style
  *
@@ -6895,7 +6895,7 @@ export interface ApiMethods {
  * - Inside the `(...)` part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.
  * - In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.
  * - In case of ambiguity between `italic` and `underline` entities `__` is always greedily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
- * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.
+ * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
  * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  *
@@ -6939,7 +6939,7 @@ export interface ApiMethods {
  * - The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;` and `&amp;quot;`.
  * - Use nested `pre` and `code` tags, to define programming language for `pre` entity.
  * - Programming language can&#39;t be specified for standalone `code` tags.
- * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.
+ * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
  * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  *
@@ -8527,7 +8527,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
+   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
    */
@@ -8564,7 +8564,7 @@ export interface ApiMethods {
    *
    * > Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.
    * 
-   * We only recommend using this method when a response from the bot will take a <strong>noticeable</strong> amount of time to arrive.
+   * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.
    *
    * @see {@link https://core.telegram.org/bots/api#sendchataction}
    */
@@ -8679,7 +8679,7 @@ export interface ApiMethods {
   /**
    * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.
    * 
-   * <strong>Note:</strong> This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.
+   * **Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.
    *
    * @see {@link https://core.telegram.org/bots/api#getfile}
    */
@@ -8717,7 +8717,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter _only_if_banned_. Returns `true` on success.
+   * Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don&#39;t want this, use the parameter _only_if_banned_. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
    */
@@ -8894,7 +8894,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
+   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
    */
@@ -10712,7 +10712,7 @@ export interface ApiMethods {
 // === UPDATING MESSAGES
 export interface ApiMethods {
   /**
-   * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagetext}
    */
@@ -10761,7 +10761,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
    */
@@ -10806,7 +10806,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
    */
@@ -10950,7 +10950,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
    */
@@ -11418,7 +11418,7 @@ export interface InputSticker {
    */
   sticker: string;
   /**
-   * Format of the added sticker, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, “video” for a <strong>.WEBM</strong> video
+   * Format of the added sticker, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, “video” for a **.WEBM** video
    */
   format: string;
   /**
@@ -11743,11 +11743,11 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * A <strong>.WEBP</strong> or <strong>.PNG</strong> image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a <strong>.TGS</strong> animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a <strong>.WEBM</strong> video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+     * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
      */
     thumbnail?: InputFile | string;
     /**
-     * Format of the thumbnail, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, or “video” for a <strong>.WEBM</strong> video
+     * Format of the thumbnail, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, or “video” for a **.WEBM** video
      */
     format: string;
   }): never;
@@ -11798,11 +11798,11 @@ export interface ApiMethods {
  *
  * Rich messages are subject to the following limits:
  *
- * - Up to <strong>32768 UTF-8 characters</strong> in the rich message text, including custom emoji alternative text and formula source.
- * - Up to <strong>500 blocks</strong>, including nested blocks, list items, ordered list items, table rows, quotation blocks, and details blocks.
- * - Up to <strong>16 levels</strong> of nested formatting and blocks.
- * - Up to <strong>50 media attachments</strong> in total, including photos, videos, and audio files.
- * - Up to <strong>20 columns</strong> in a table.
+ * - Up to **32768 UTF-8 characters** in the rich message text, including custom emoji alternative text and formula source.
+ * - Up to **500 blocks**, including nested blocks, list items, ordered list items, table rows, quotation blocks, and details blocks.
+ * - Up to **16 levels** of nested formatting and blocks.
+ * - Up to **50 media attachments** in total, including photos, videos, and audio files.
+ * - Up to **20 columns** in a table.
  *
  * ##### Rich Markdown style
  *
@@ -12095,7 +12095,7 @@ export interface RichMessage {
   is_rtl?: boolean;
 }
 /**
- * Describes a rich message to be sent. Exactly <strong>one</strong> of the fields _html_, _markdown_, or _blocks_ must be used.
+ * Describes a rich message to be sent. Exactly **one** of the fields _html_, _markdown_, or _blocks_ must be used.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichmessage}
  */
@@ -12199,7 +12199,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
+   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendrichmessagedraft}
    */
@@ -13746,7 +13746,7 @@ export interface ApiMethods {
   /**
    * Use this method to send answers to an inline query. On success, `true` is returned.
    *
-   * No more than <strong>50</strong> results per query are allowed.
+   * No more than **50** results per query are allowed.
    *
    * @see {@link https://core.telegram.org/bots/api#answerinlinequery}
    */
@@ -13778,7 +13778,7 @@ export interface ApiMethods {
   }): never;
 }
 /**
- * This object represents a button to be shown above inline query results. You <strong>must</strong> use exactly one of the optional fields.
+ * This object represents a button to be shown above inline query results. You **must** use exactly one of the optional fields.
  *
  * @see {@link https://core.telegram.org/bots/api#inlinequeryresultsbutton}
  */
@@ -13822,7 +13822,7 @@ export interface InlineQueryResultsButton {
  * - <a href="#inlinequeryresultvideo">InlineQueryResultVideo</a>
  * - <a href="#inlinequeryresultvoice">InlineQueryResultVoice</a>
  * 
- * <strong>Note:</strong> All URLs passed in inline query results will be available to end users and therefore must be assumed to be <strong>public</strong>.
+ * **Note:** All URLs passed in inline query results will be available to end users and therefore must be assumed to be **public**.
  *
  * @see {@link https://core.telegram.org/bots/api#inlinequeryresult}
  */
@@ -13909,7 +13909,7 @@ export interface InlineQueryResultPhoto {
    */
   id: string;
   /**
-   * A valid URL of the photo. Photo must be in <strong>JPEG</strong> format. Photo size must not exceed 5MB.
+   * A valid URL of the photo. Photo must be in **JPEG** format. Photo size must not exceed 5MB.
    */
   photo_url: string;
   /**
@@ -14094,7 +14094,7 @@ export interface InlineQueryResultMpeg4Gif {
 /**
  * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the video.
  *
- * > If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you <strong>must</strong> replace its content using _input_message_content_.
+ * > If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you **must** replace its content using _input_message_content_.
  *
  * @see {@link https://core.telegram.org/bots/api#inlinequeryresultvideo}
  */
@@ -14160,7 +14160,7 @@ export interface InlineQueryResultVideo {
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
-   * Content of the message to be sent instead of the video. This field is <strong>required</strong> if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
+   * Content of the message to be sent instead of the video. This field is **required** if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
    */
   input_message_content?: InputMessageContent;
 }
@@ -14263,7 +14263,7 @@ export interface InlineQueryResultVoice {
   input_message_content?: InputMessageContent;
 }
 /**
- * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the file. Currently, only <strong>.PDF</strong> and <strong>.ZIP</strong> files can be sent using this method.
+ * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use _input_message_content_ to send a message with the specified content instead of the file. Currently, only **.PDF** and **.ZIP** files can be sent using this method.
  *
  * @see {@link https://core.telegram.org/bots/api#inlinequeryresultdocument}
  */
@@ -15058,11 +15058,11 @@ export interface InputInvoiceMessageContent {
    */
   prices: LabeledPrice[];
   /**
-   * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   max_tip_amount?: number;
   /**
-   * A JSON-serialized Array of suggested amounts of tip in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
+   * A JSON-serialized Array of suggested amounts of tip in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
    */
   suggested_tip_amounts?: number[];
   /**
@@ -15117,7 +15117,7 @@ export interface InputInvoiceMessageContent {
 /**
  * Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.
  * 
- * <strong>Note:</strong> It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">\@BotFather</a> in order to receive these objects in updates.
+ * **Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">\@BotFather</a> in order to receive these objects in updates.
  *
  * @see {@link https://core.telegram.org/bots/api#choseninlineresult}
  */
@@ -15188,15 +15188,15 @@ export interface ApiMethods {
      */
     prices: LabeledPrice[];
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     max_tip_amount?: number;
     /**
-     * A JSON-serialized Array of suggested amounts of tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
+     * A JSON-serialized Array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
      */
     suggested_tip_amounts?: number[];
     /**
-     * Unique deep-linking parameter. If left empty, <strong>forwarded copies</strong> of the sent message will have a _Pay_ button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a _URL_ button with a deep link to the bot (instead of a _Pay_ button), with the value used as the start parameter.
+     * Unique deep-linking parameter. If left empty, **forwarded copies** of the sent message will have a _Pay_ button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a _URL_ button with a deep link to the bot (instead of a _Pay_ button), with the value used as the start parameter.
      */
     start_parameter?: string;
     /**
@@ -15317,11 +15317,11 @@ export interface ApiMethods {
      */
     subscription_period?: number;
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     max_tip_amount?: number;
     /**
-     * A JSON-serialized Array of suggested amounts of tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
+     * A JSON-serialized Array of suggested amounts of tips in the _smallest units_ of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed _max_tip_amount_.
      */
     suggested_tip_amounts?: number[];
     /**
@@ -15401,7 +15401,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, `true` is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+   * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, `true` is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
    *
    * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
    */
@@ -15494,7 +15494,7 @@ export interface LabeledPrice {
    */
   label: string;
   /**
-   * Price of the product in the _smallest units_ of the <a href="/bots/payments#supported-currencies">currency</a> (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Price of the product in the _smallest units_ of the <a href="/bots/payments#supported-currencies">currency</a> (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   amount: number;
 }
@@ -15521,7 +15521,7 @@ export interface Invoice {
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
 }
@@ -15609,7 +15609,7 @@ export interface SuccessfulPayment {
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -15656,7 +15656,7 @@ export interface RefundedPayment {
    */
   currency: string;
   /**
-   * Total refunded price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -15714,7 +15714,7 @@ export interface PreCheckoutQuery {
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
