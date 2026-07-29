@@ -1,6 +1,6 @@
 import { createDebug } from "@grammyjs/debug";
 import type { ApiMethods, ApiResult, Present } from "./types.ts";
-import { toGrammyError, toHttpError } from "./error.ts";
+import { toBotApiError, toHttpError } from "./error.ts";
 import {
     createFormDataPayload,
     createJsonPayload,
@@ -373,7 +373,7 @@ class ApiClient<R extends RawApi> {
     ) {
         const data = await this.call(callData, signal);
         if (data.ok) return data.result;
-        else throw toGrammyError(data, callData);
+        else throw toBotApiError(data, callData);
     }
 }
 

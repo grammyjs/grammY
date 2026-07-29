@@ -14,7 +14,7 @@ const debug = createDebug("grammy:warn");
  * Telegram Bot API servers, however, an error code was returned for the
  * respective method call.
  */
-export class GrammyError extends Error implements ApiError {
+export class BotApiError extends Error implements ApiError {
     /** Flag that this request was unsuccessful. Always `false`. */
     public readonly ok: false = false;
     /** An integer holding Telegram's error code. Subject to change. */
@@ -32,13 +32,13 @@ export class GrammyError extends Error implements ApiError {
         public readonly payload: Record<string, unknown>,
     ) {
         super(`${message} (${err.error_code}: ${err.description})`);
-        this.name = "GrammyError";
+        this.name = "BotApiError";
         this.error_code = err.error_code;
         this.description = err.description;
         this.parameters = err.parameters ?? {};
     }
 }
-export function toGrammyError<R extends RawApi>(
+export function toBotApiError<R extends RawApi>(
     err: ApiError,
     { method, payload: p }: CallData<R>,
 ) {
@@ -55,7 +55,7 @@ export function toGrammyError<R extends RawApi>(
             break;
     }
     const payload: Present = p ?? {};
-    return new GrammyError(
+    return new BotApiError(
         `Call to '${method}' failed!`,
         err,
         method,

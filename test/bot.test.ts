@@ -1,7 +1,7 @@
 import { Bot } from "../src/bot.ts";
 import { BotError } from "../src/composer.ts";
 import type { Context } from "../src/context.ts";
-import { GrammyError, HttpError } from "../src/error.ts";
+import { BotApiError, HttpError } from "../src/error.ts";
 import type { Update, UserFromGetMe } from "../src/types.ts";
 import {
     afterEach,
@@ -135,7 +135,7 @@ describe("Bot initialization", () => {
         const init1 = bot.init();
         const init2 = bot.init();
 
-        // Reject with plain Error (won't trigger retries, only HttpError/GrammyError do)
+        // Reject with plain Error (won't trigger retries, only HttpError/BotApiError do)
         reject(new Error("Network error"));
 
         await assertRejects(() => init1);
@@ -168,7 +168,7 @@ describe("Bot initialization", () => {
         using _ = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
-                throw new GrammyError(
+                throw new BotApiError(
                     "Bad Gateway",
                     {
                         ok: false,
@@ -194,7 +194,7 @@ describe("Bot initialization", () => {
         using _ = stub(bot.api, "getMe", () => {
             callCount++;
             if (callCount === 1) {
-                throw new GrammyError(
+                throw new BotApiError(
                     "Too Many Requests",
                     {
                         ok: false,
@@ -344,7 +344,7 @@ describe("Bot error handling", () => {
             using consoleError = stub(console, "error");
             using _ = stub(bot.api, "getUpdates", () =>
                 Promise.reject(
-                    new GrammyError(
+                    new BotApiError(
                         "Unauthorized",
                         {
                             ok: false,
@@ -364,14 +364,14 @@ describe("Bot error handling", () => {
                 consoleError.calls[0].args[0],
                 "long polling crashed",
             );
-            assertInstanceOf(consoleError.calls[0].args[1], GrammyError);
+            assertInstanceOf(consoleError.calls[0].args[1], BotApiError);
         });
 
         it("should handle 409 conflict errors by stopping", async () => {
             using consoleError = stub(console, "error");
             using _ = stub(bot.api, "getUpdates", () =>
                 Promise.reject(
-                    new GrammyError(
+                    new BotApiError(
                         "Conflict",
                         {
                             ok: false,
@@ -392,7 +392,7 @@ describe("Bot error handling", () => {
                 consoleError.calls[0].args[0],
                 "long polling crashed",
             );
-            assertInstanceOf(consoleError.calls[0].args[1], GrammyError);
+            assertInstanceOf(consoleError.calls[0].args[1], BotApiError);
         });
 
         it("should retry on 429 errors", async () => {
@@ -411,7 +411,7 @@ describe("Bot error handling", () => {
                         case 1:
                             // First call: return 429 error
                             return Promise.reject(
-                                new GrammyError(
+                                new BotApiError(
                                     "Too Many Requests",
                                     {
                                         ok: false,

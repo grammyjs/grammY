@@ -1,5 +1,5 @@
 import { createRawApi, type TransformableApi } from "../src/client.ts";
-import { GrammyError } from "../src/mod.ts";
+import { BotApiError } from "../src/mod.ts";
 import type { ApiResult } from "../src/types.ts";
 import {
     afterEach,
@@ -52,7 +52,7 @@ describe("API client", () => {
         response = { ok: false, error_code: 42, description: "evil" };
         await assertRejects(
             () => api.raw.getMe({}),
-            GrammyError,
+            BotApiError,
             "Call to 'getMe' failed! (42: evil)",
         );
     });

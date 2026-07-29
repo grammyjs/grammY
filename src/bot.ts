@@ -11,7 +11,7 @@ import {
 import { Context, type MaybeArray, type ReactionContext } from "./context.ts";
 import { Api } from "./api.ts";
 import type { ApiClientOptions, WebhookReplyEnvelope } from "./client.ts";
-import { GrammyError, HttpError } from "./error.ts";
+import { BotApiError, HttpError } from "./error.ts";
 import {
     type FilterQuery,
     type FilterQueryContext,
@@ -526,7 +526,7 @@ a known bot info object.",
             return;
         }
         let sleepSeconds = 3;
-        if (error instanceof GrammyError) {
+        if (error instanceof BotApiError) {
             debugErr(error.message);
             // rethrow upon unauthorized or conflict
             if (error.error_code === 401 || error.error_code === 409) {
@@ -577,7 +577,7 @@ async function withRetries<T>(
         if (error instanceof HttpError) {
             delay = true;
             strategy = "retry";
-        } else if (error instanceof GrammyError) {
+        } else if (error instanceof BotApiError) {
             if (error.error_code >= 500) {
                 delay = true;
                 strategy = "retry";

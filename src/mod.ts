@@ -53,4 +53,4 @@ export {
     type Transformer,
     type WebhookReplyEnvelope,
 } from "./client.ts";
-export { GrammyError, HttpError } from "./error.ts";
+export { BotApiError, HttpError } from "./error.ts";
