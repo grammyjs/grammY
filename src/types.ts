@@ -378,11 +378,10 @@ export interface WebhookInfo {
    * The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
    */
   max_connections?: number;
-<tr>
-<td>allowed_updates</td>
-<td>Array of String</td>
-<td><em>Optional</em>. A list of update types the bot is subscribed to. Defaults to all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em>.</td>
-</tr>
+  /**
+   * A list of update types the bot is subscribed to. Defaults to all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em>.
+   */
+  allowed_updates?: string[];
 </tbody>
 </table>
 }
@@ -586,11 +585,10 @@ export interface ChatFullInfo {
 <td><a href="#chatphoto">ChatPhoto</a></td>
 <td><em>Optional</em>. Chat photo</td>
 </tr>
-<tr>
-<td>active_usernames</td>
-<td>Array of String</td>
-<td><em>Optional</em>. If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels</td>
-</tr>
+  /**
+   * If non-empty, the list of all <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames">active chat usernames</a>; for private chats, supergroups and channels
+   */
+  active_usernames?: string[];
 <tr>
 <td>birthdate</td>
 <td><a href="#birthdate">Birthdate</a></td>
@@ -2798,11 +2796,10 @@ export interface Poll {
    * <em>True</em> if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours
    */
   members_only: boolean;
-<tr>
-<td>country_codes</td>
-<td>Array of String</td>
-<td><em>Optional</em>. A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which users can vote in the poll. The country code “FT” is used for users with anonymous numbers. If omitted, then users from any country can participate in the poll.</td>
-</tr>
+  /**
+   * A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which users can vote in the poll. The country code “FT” is used for users with anonymous numbers. If omitted, then users from any country can participate in the poll.
+   */
+  country_codes?: string[];
 <tr>
 <td>correct_option_ids</td>
 <td>Array of Integer</td>
@@ -4172,11 +4169,10 @@ export interface Giveaway {
    * Description of additional giveaway prize
    */
   prize_description?: string;
-<tr>
-<td>country_codes</td>
-<td>Array of String</td>
-<td><em>Optional</em>. A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.</td>
-</tr>
+  /**
+   * A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.
+   */
+  country_codes?: string[];
   /**
    * The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
    */
@@ -16596,11 +16592,10 @@ export interface InputSticker {
 <td><a href="#maskposition">MaskPosition</a></td>
 <td><em>Optional</em>. Position where the mask should be placed on faces. For “mask” stickers only.</td>
 </tr>
-<tr>
-<td>keywords</td>
-<td>Array of String</td>
-<td><em>Optional</em>. List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.</td>
-</tr>
+  /**
+   * List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.
+   */
+  keywords?: string[];
 </tbody>
 </table>
 }
