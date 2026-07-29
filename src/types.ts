@@ -350,11 +350,10 @@ export interface WebhookInfo {
    * Webhook URL, may be empty if webhook is not set up
    */
   url: string;
-<tr>
-<td>has_custom_certificate</td>
-<td>Boolean</td>
-<td><em>True</em>, if a custom certificate was provided for webhook certificate checks</td>
-</tr>
+  /**
+   * <em>True</em>, if a custom certificate was provided for webhook certificate checks
+   */
+  has_custom_certificate: boolean;
   /**
    * Number of updates awaiting delivery
    */
@@ -410,11 +409,10 @@ export interface User {
    * Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   id: number;
-<tr>
-<td>is_bot</td>
-<td>Boolean</td>
-<td><em>True</em>, if this user is a bot</td>
-</tr>
+  /**
+   * <em>True</em>, if this user is a bot
+   */
+  is_bot: boolean;
   /**
    * User&#39;s or bot&#39;s first name
    */
@@ -2776,35 +2774,30 @@ export interface Poll {
    * Total number of users that voted in the poll
    */
   total_voter_count: number;
-<tr>
-<td>is_closed</td>
-<td>Boolean</td>
-<td><em>True</em>, if the poll is closed</td>
-</tr>
-<tr>
-<td>is_anonymous</td>
-<td>Boolean</td>
-<td><em>True</em>, if the poll is anonymous</td>
-</tr>
+  /**
+   * <em>True</em>, if the poll is closed
+   */
+  is_closed: boolean;
+  /**
+   * <em>True</em>, if the poll is anonymous
+   */
+  is_anonymous: boolean;
   /**
    * Poll type, currently can be “regular” or “quiz”
    */
   type: string;
-<tr>
-<td>allows_multiple_answers</td>
-<td>Boolean</td>
-<td><em>True</em>, if the poll allows multiple answers</td>
-</tr>
-<tr>
-<td>allows_revoting</td>
-<td>Boolean</td>
-<td><em>True</em>, if the poll allows to change the chosen answer options</td>
-</tr>
-<tr>
-<td>members_only</td>
-<td>Boolean</td>
-<td><em>True</em> if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours</td>
-</tr>
+  /**
+   * <em>True</em>, if the poll allows multiple answers
+   */
+  allows_multiple_answers: boolean;
+  /**
+   * <em>True</em>, if the poll allows to change the chosen answer options
+   */
+  allows_revoting: boolean;
+  /**
+   * <em>True</em> if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours
+   */
+  members_only: boolean;
 <tr>
 <td>country_codes</td>
 <td>Array of String</td>
@@ -3973,11 +3966,10 @@ export interface DirectMessagePriceChanged {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>are_direct_messages_enabled</td>
-<td>Boolean</td>
-<td><em>True</em>, if direct messages are enabled for the channel chat; <em>False</em> otherwise</td>
-</tr>
+  /**
+   * <em>True</em>, if direct messages are enabled for the channel chat; <em>False</em> otherwise
+   */
+  are_direct_messages_enabled: boolean;
   /**
    * The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.
    */
@@ -4704,11 +4696,10 @@ export interface KeyboardButtonRequestChat {
    * Signed 32-bit identifier of the request, which will be received back in the <a href="#chatshared">ChatShared</a> object. Must be unique within the message.
    */
   request_id: number;
-<tr>
-<td>chat_is_channel</td>
-<td>Boolean</td>
-<td>Pass <em>True</em> to request a channel chat, pass <em>False</em> to request a group or a supergroup chat</td>
-</tr>
+  /**
+   * Pass <em>True</em> to request a channel chat, pass <em>False</em> to request a group or a supergroup chat
+   */
+  chat_is_channel: boolean;
   /**
    * Pass <em>True</em> to request a forum supergroup, pass <em>False</em> to request a non-forum chat. If not specified, no additional restrictions are applied.
    */
@@ -5171,21 +5162,18 @@ export interface ChatInviteLink {
 <td><a href="#user">User</a></td>
 <td>Creator of the link</td>
 </tr>
-<tr>
-<td>creates_join_request</td>
-<td>Boolean</td>
-<td><em>True</em>, if users joining the chat via the link need to be approved by chat administrators</td>
-</tr>
-<tr>
-<td>is_primary</td>
-<td>Boolean</td>
-<td><em>True</em>, if the link is primary</td>
-</tr>
-<tr>
-<td>is_revoked</td>
-<td>Boolean</td>
-<td><em>True</em>, if the link is revoked</td>
-</tr>
+  /**
+   * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators
+   */
+  creates_join_request: boolean;
+  /**
+   * <em>True</em>, if the link is primary
+   */
+  is_primary: boolean;
+  /**
+   * <em>True</em>, if the link is revoked
+   */
+  is_revoked: boolean;
   /**
    * Invite link name
    */
@@ -5226,61 +5214,50 @@ export interface ChatAdministratorRights {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>is_anonymous</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user&#39;s presence in the chat is hidden</td>
-</tr>
-<tr>
-<td>can_manage_chat</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
-</tr>
-<tr>
-<td>can_delete_messages</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can delete messages of other users</td>
-</tr>
-<tr>
-<td>can_manage_video_chats</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can manage video chats</td>
-</tr>
-<tr>
-<td>can_restrict_members</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
-</tr>
-<tr>
-<td>can_promote_members</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)</td>
-</tr>
-<tr>
-<td>can_change_info</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to change the chat title, photo and other settings</td>
-</tr>
-<tr>
-<td>can_invite_users</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to invite new users to the chat</td>
-</tr>
-<tr>
-<td>can_post_stories</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can post stories to the chat</td>
-</tr>
-<tr>
-<td>can_edit_stories</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
-</tr>
-<tr>
-<td>can_delete_stories</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can delete stories posted by other users</td>
-</tr>
+  /**
+   * <em>True</em>, if the user&#39;s presence in the chat is hidden
+   */
+  is_anonymous: boolean;
+  /**
+   * <em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
+   */
+  can_manage_chat: boolean;
+  /**
+   * <em>True</em>, if the administrator can delete messages of other users
+   */
+  can_delete_messages: boolean;
+  /**
+   * <em>True</em>, if the administrator can manage video chats
+   */
+  can_manage_video_chats: boolean;
+  /**
+   * <em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics
+   */
+  can_restrict_members: boolean;
+  /**
+   * <em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+   */
+  can_promote_members: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings
+   */
+  can_change_info: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to invite new users to the chat
+   */
+  can_invite_users: boolean;
+  /**
+   * <em>True</em>, if the administrator can post stories to the chat
+   */
+  can_post_stories: boolean;
+  /**
+   * <em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+   */
+  can_edit_stories: boolean;
+  /**
+   * <em>True</em>, if the administrator can delete stories posted by other users
+   */
+  can_delete_stories: boolean;
   /**
    * <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
    */
@@ -5400,11 +5377,10 @@ export interface ChatMemberOwner {
 <td><a href="#user">User</a></td>
 <td>Information about the user</td>
 </tr>
-<tr>
-<td>is_anonymous</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user&#39;s presence in the chat is hidden</td>
-</tr>
+  /**
+   * <em>True</em>, if the user&#39;s presence in the chat is hidden
+   */
+  is_anonymous: boolean;
   /**
    * Custom title for this user
    */
@@ -5434,66 +5410,54 @@ export interface ChatMemberAdministrator {
 <td><a href="#user">User</a></td>
 <td>Information about the user</td>
 </tr>
-<tr>
-<td>can_be_edited</td>
-<td>Boolean</td>
-<td><em>True</em>, if the bot is allowed to edit administrator privileges of that user</td>
-</tr>
-<tr>
-<td>is_anonymous</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user&#39;s presence in the chat is hidden</td>
-</tr>
-<tr>
-<td>can_manage_chat</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.</td>
-</tr>
-<tr>
-<td>can_delete_messages</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can delete messages of other users</td>
-</tr>
-<tr>
-<td>can_manage_video_chats</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can manage video chats</td>
-</tr>
-<tr>
-<td>can_restrict_members</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics</td>
-</tr>
-<tr>
-<td>can_promote_members</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)</td>
-</tr>
-<tr>
-<td>can_change_info</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to change the chat title, photo and other settings</td>
-</tr>
-<tr>
-<td>can_invite_users</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to invite new users to the chat</td>
-</tr>
-<tr>
-<td>can_post_stories</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can post stories to the chat</td>
-</tr>
-<tr>
-<td>can_edit_stories</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive</td>
-</tr>
-<tr>
-<td>can_delete_stories</td>
-<td>Boolean</td>
-<td><em>True</em>, if the administrator can delete stories posted by other users</td>
-</tr>
+  /**
+   * <em>True</em>, if the bot is allowed to edit administrator privileges of that user
+   */
+  can_be_edited: boolean;
+  /**
+   * <em>True</em>, if the user&#39;s presence in the chat is hidden
+   */
+  is_anonymous: boolean;
+  /**
+   * <em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
+   */
+  can_manage_chat: boolean;
+  /**
+   * <em>True</em>, if the administrator can delete messages of other users
+   */
+  can_delete_messages: boolean;
+  /**
+   * <em>True</em>, if the administrator can manage video chats
+   */
+  can_manage_video_chats: boolean;
+  /**
+   * <em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics
+   */
+  can_restrict_members: boolean;
+  /**
+   * <em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+   */
+  can_promote_members: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings
+   */
+  can_change_info: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to invite new users to the chat
+   */
+  can_invite_users: boolean;
+  /**
+   * <em>True</em>, if the administrator can post stories to the chat
+   */
+  can_post_stories: boolean;
+  /**
+   * <em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+   */
+  can_edit_stories: boolean;
+  /**
+   * <em>True</em>, if the administrator can delete stories posted by other users
+   */
+  can_delete_stories: boolean;
   /**
    * <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
    */
@@ -5584,91 +5548,74 @@ export interface ChatMemberRestricted {
 <td><a href="#user">User</a></td>
 <td>Information about the user</td>
 </tr>
-<tr>
-<td>is_member</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is a member of the chat at the moment of the request</td>
-</tr>
-<tr>
-<td>can_send_messages</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues</td>
-</tr>
-<tr>
-<td>can_send_audios</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send audios</td>
-</tr>
-<tr>
-<td>can_send_documents</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send documents</td>
-</tr>
-<tr>
-<td>can_send_photos</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send photos</td>
-</tr>
-<tr>
-<td>can_send_videos</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send videos</td>
-</tr>
-<tr>
-<td>can_send_video_notes</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send video notes</td>
-</tr>
-<tr>
-<td>can_send_voice_notes</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send voice notes</td>
-</tr>
-<tr>
-<td>can_send_polls</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send polls and checklists</td>
-</tr>
-<tr>
-<td>can_send_other_messages</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots</td>
-</tr>
-<tr>
-<td>can_add_web_page_previews</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to add web page previews to their messages</td>
-</tr>
-<tr>
-<td>can_react_to_messages</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to react to messages</td>
-</tr>
-<tr>
-<td>can_edit_tag</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to edit their own tag</td>
-</tr>
-<tr>
-<td>can_change_info</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to change the chat title, photo and other settings</td>
-</tr>
-<tr>
-<td>can_invite_users</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to invite new users to the chat</td>
-</tr>
-<tr>
-<td>can_pin_messages</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to pin messages</td>
-</tr>
-<tr>
-<td>can_manage_topics</td>
-<td>Boolean</td>
-<td><em>True</em>, if the user is allowed to create forum topics</td>
-</tr>
+  /**
+   * <em>True</em>, if the user is a member of the chat at the moment of the request
+   */
+  is_member: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues
+   */
+  can_send_messages: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send audios
+   */
+  can_send_audios: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send documents
+   */
+  can_send_documents: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send photos
+   */
+  can_send_photos: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send videos
+   */
+  can_send_videos: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send video notes
+   */
+  can_send_video_notes: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send voice notes
+   */
+  can_send_voice_notes: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send polls and checklists
+   */
+  can_send_polls: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots
+   */
+  can_send_other_messages: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to add web page previews to their messages
+   */
+  can_add_web_page_previews: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to react to messages
+   */
+  can_react_to_messages: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to edit their own tag
+   */
+  can_edit_tag: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings
+   */
+  can_change_info: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to invite new users to the chat
+   */
+  can_invite_users: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to pin messages
+   */
+  can_pin_messages: boolean;
+  /**
+   * <em>True</em>, if the user is allowed to create forum topics
+   */
+  can_manage_topics: boolean;
   /**
    * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever.
    */
@@ -7177,11 +7124,10 @@ export interface BotAccessSettings {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>is_access_restricted</td>
-<td>Boolean</td>
-<td><em>True</em>, if only selected users can access the bot. The bot&#39;s owner can always access it.</td>
-</tr>
+  /**
+   * <em>True</em>, if only selected users can access the bot. The bot&#39;s owner can always access it.
+   */
+  is_access_restricted: boolean;
 <tr>
 <td>added_users</td>
 <td>Array of <a href="#user">User</a></td>
@@ -7203,31 +7149,26 @@ export interface AcceptedGiftTypes {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>unlimited_gifts</td>
-<td>Boolean</td>
-<td><em>True</em>, if unlimited regular gifts are accepted</td>
-</tr>
-<tr>
-<td>limited_gifts</td>
-<td>Boolean</td>
-<td><em>True</em>, if limited regular gifts are accepted</td>
-</tr>
-<tr>
-<td>unique_gifts</td>
-<td>Boolean</td>
-<td><em>True</em>, if unique gifts or gifts that can be upgraded to unique for free are accepted</td>
-</tr>
-<tr>
-<td>premium_subscription</td>
-<td>Boolean</td>
-<td><em>True</em>, if a Telegram Premium subscription is accepted</td>
-</tr>
-<tr>
-<td>gifts_from_channels</td>
-<td>Boolean</td>
-<td><em>True</em>, if transfers of unique gifts from channels are accepted</td>
-</tr>
+  /**
+   * <em>True</em>, if unlimited regular gifts are accepted
+   */
+  unlimited_gifts: boolean;
+  /**
+   * <em>True</em>, if limited regular gifts are accepted
+   */
+  limited_gifts: boolean;
+  /**
+   * <em>True</em>, if unique gifts or gifts that can be upgraded to unique for free are accepted
+   */
+  unique_gifts: boolean;
+  /**
+   * <em>True</em>, if a Telegram Premium subscription is accepted
+   */
+  premium_subscription: boolean;
+  /**
+   * <em>True</em>, if transfers of unique gifts from channels are accepted
+   */
+  gifts_from_channels: boolean;
 </tbody>
 </table>
 }
@@ -7989,11 +7930,10 @@ export interface BusinessConnection {
 <td><a href="#businessbotrights">BusinessBotRights</a></td>
 <td><em>Optional</em>. Rights of the business bot</td>
 </tr>
-<tr>
-<td>is_enabled</td>
-<td>Boolean</td>
-<td><em>True</em>, if the connection is active</td>
-</tr>
+  /**
+   * <em>True</em>, if the connection is active
+   */
+  is_enabled: boolean;
 </tbody>
 </table>
 }
@@ -16529,16 +16469,14 @@ export interface Sticker {
    * Sticker height
    */
   height: number;
-<tr>
-<td>is_animated</td>
-<td>Boolean</td>
-<td><em>True</em>, if the sticker is <a href="https://telegram.org/blog/animated-stickers">animated</a></td>
-</tr>
-<tr>
-<td>is_video</td>
-<td>Boolean</td>
-<td><em>True</em>, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a></td>
-</tr>
+  /**
+   * <em>True</em>, if the sticker is <a href="https://telegram.org/blog/animated-stickers">animated</a>
+   */
+  is_animated: boolean;
+  /**
+   * <em>True</em>, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a>
+   */
+  is_video: boolean;
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
