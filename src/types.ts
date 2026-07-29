@@ -7,7 +7,7 @@ export type Empty = Record<string, never>;
 /**
  * Structure of an HTTP response body from the Bot API.
  * 
- * The response contains a JSON object, which always has a Boolean field &#39;ok&#39; and may have an optional String field &#39;description&#39; with a human-readable description of the result. If &#39;ok&#39; equals <em>True</em>, the request was successful and the result of the query can be found in the &#39;result&#39; field. In case of an unsuccessful request, &#39;ok&#39; equals <em>False</em> and the error is explained in the &#39;description&#39;. An Integer &#39;error_code&#39; field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field &#39;parameters&#39; of the type <a href="#responseparameters">ResponseParameters</a>, which can help to automatically handle the error.
+ * The response contains a JSON object, which always has a Boolean field &#39;ok&#39; and may have an optional String field &#39;description&#39; with a human-readable description of the result. If &#39;ok&#39; equals `true`, the request was successful and the result of the query can be found in the &#39;result&#39; field. In case of an unsuccessful request, &#39;ok&#39; equals `false` and the error is explained in the &#39;description&#39;. An Integer &#39;error_code&#39; field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field &#39;parameters&#39; of the type <a href="#responseparameters">ResponseParameters</a>, which can help to automatically handle the error.
  */
 export type ApiResponse<T> = ApiError | ApiSuccess<T>
 /**
@@ -192,7 +192,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns <em>True</em> on success.
+   * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns `true` on success.
    *
    * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter <em>secret_token</em>. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
    * 
@@ -224,7 +224,7 @@ export interface ApiMethods {
      */
     allowed_updates?: string[];
     /**
-     * Pass <em>True</em> to drop all pending updates
+     * Pass `true` to drop all pending updates
      */
     drop_pending_updates?: boolean;
     /**
@@ -235,13 +235,13 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns <em>True</em> on success.
+   * Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletewebhook}
    */
   deleteWebhook(args: {
     /**
-     * Pass <em>True</em> to drop all pending updates
+     * Pass `true` to drop all pending updates
      */
     drop_pending_updates?: boolean;
   }): never;
@@ -265,7 +265,7 @@ export interface WebhookInfo {
    */
   url: string;
   /**
-   * <em>True</em>, if a custom certificate was provided for webhook certificate checks
+   * `true`, if a custom certificate was provided for webhook certificate checks
    */
   has_custom_certificate: boolean;
   /**
@@ -309,7 +309,7 @@ export interface User {
    */
   id: number;
   /**
-   * <em>True</em>, if this user is a bot
+   * `true`, if this user is a bot
    */
   is_bot: boolean;
   /**
@@ -329,51 +329,51 @@ export interface User {
    */
   language_code?: string;
   /**
-   * <em>True</em>, if this user is a Telegram Premium user
+   * `true`, if this user is a Telegram Premium user
    */
   is_premium?: true;
   /**
-   * <em>True</em>, if this user added the bot to the attachment menu
+   * `true`, if this user added the bot to the attachment menu
    */
   added_to_attachment_menu?: true;
   /**
-   * <em>True</em>, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.
    */
   can_join_groups?: boolean;
   /**
-   * <em>True</em>, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
    */
   can_read_all_group_messages?: boolean;
   /**
-   * <em>True</em>, if the bot supports guest queries from chats it is not a member of. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot supports guest queries from chats it is not a member of. Returned only in <a href="#getme">getMe</a>.
    */
   supports_guest_queries?: boolean;
   /**
-   * <em>True</em>, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.
    */
   supports_inline_queries?: boolean;
   /**
-   * <em>True</em>, if the bot can be connected to a user account to manage it. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot can be connected to a user account to manage it. Returned only in <a href="#getme">getMe</a>.
    */
   can_connect_to_business?: boolean;
   /**
-   * <em>True</em>, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.
    */
   has_main_web_app?: boolean;
   /**
-   * <em>True</em>, if the bot has forum topic mode enabled in private chats. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot has forum topic mode enabled in private chats. Returned only in <a href="#getme">getMe</a>.
    */
   has_topics_enabled?: boolean;
   /**
-   * <em>True</em>, if the bot allows users to create and delete topics in private chats. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot allows users to create and delete topics in private chats. Returned only in <a href="#getme">getMe</a>.
    */
   allows_users_to_create_topics?: boolean;
   /**
-   * <em>True</em>, if other bots can be created to be controlled by the bot. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if other bots can be created to be controlled by the bot. Returned only in <a href="#getme">getMe</a>.
    */
   can_manage_bots?: boolean;
   /**
-   * <em>True</em>, if the bot supports join request queries and can be assigned to process them. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot supports join request queries and can be assigned to process them. Returned only in <a href="#getme">getMe</a>.
    */
   supports_join_request_queries?: boolean;
 }
@@ -408,11 +408,11 @@ export interface Chat {
    */
   last_name?: string;
   /**
-   * <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
+   * `true`, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
    */
   is_forum?: true;
   /**
-   * <em>True</em>, if the chat is the direct messages chat of a channel
+   * `true`, if the chat is the direct messages chat of a channel
    */
   is_direct_messages?: true;
 }
@@ -447,11 +447,11 @@ export interface ChatFullInfo {
    */
   last_name?: string;
   /**
-   * <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
+   * `true`, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
    */
   is_forum?: true;
   /**
-   * <em>True</em>, if the chat is the direct messages chat of a channel
+   * `true`, if the chat is the direct messages chat of a channel
    */
   is_direct_messages?: true;
   /**
@@ -523,19 +523,19 @@ export interface ChatFullInfo {
    */
   bio?: string;
   /**
-   * <em>True</em>, if privacy settings of the other party in the private chat allows to use <code>tg://user?id=&lt;user_id&gt;</code> links only in chats with the user
+   * `true`, if privacy settings of the other party in the private chat allows to use <code>tg://user?id=&lt;user_id&gt;</code> links only in chats with the user
    */
   has_private_forwards?: true;
   /**
-   * <em>True</em>, if the privacy settings of the other party restrict sending voice and video note messages in the private chat
+   * `true`, if the privacy settings of the other party restrict sending voice and video note messages in the private chat
    */
   has_restricted_voice_and_video_messages?: true;
   /**
-   * <em>True</em>, if users need to join the supergroup before they can send messages
+   * `true`, if users need to join the supergroup before they can send messages
    */
   join_to_send_messages?: true;
   /**
-   * <em>True</em>, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators
+   * `true`, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators
    */
   join_by_request?: true;
   /**
@@ -559,7 +559,7 @@ export interface ChatFullInfo {
    */
   accepted_gift_types: AcceptedGiftTypes;
   /**
-   * <em>True</em>, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.
+   * `true`, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.
    */
   can_send_paid_media?: true;
   /**
@@ -575,19 +575,19 @@ export interface ChatFullInfo {
    */
   message_auto_delete_time?: number;
   /**
-   * <em>True</em>, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.
+   * `true`, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.
    */
   has_aggressive_anti_spam_enabled?: true;
   /**
-   * <em>True</em>, if non-administrators can only get the list of bots and administrators in the chat
+   * `true`, if non-administrators can only get the list of bots and administrators in the chat
    */
   has_hidden_members?: true;
   /**
-   * <em>True</em>, if messages from the chat can&#39;t be forwarded to other chats
+   * `true`, if messages from the chat can&#39;t be forwarded to other chats
    */
   has_protected_content?: true;
   /**
-   * <em>True</em>, if new chat members will have access to old messages; available only to chat administrators
+   * `true`, if new chat members will have access to old messages; available only to chat administrators
    */
   has_visible_history?: true;
   /**
@@ -595,7 +595,7 @@ export interface ChatFullInfo {
    */
   sticker_set_name?: string;
   /**
-   * <em>True</em>, if the bot can change the group sticker set
+   * `true`, if the bot can change the group sticker set
    */
   can_set_sticker_set?: true;
   /**
@@ -702,11 +702,11 @@ export interface Message {
    */
   forward_origin?: MessageOrigin;
   /**
-   * <em>True</em>, if the message is sent to a topic in a forum supergroup or a private chat with the bot
+   * `true`, if the message is sent to a topic in a forum supergroup or a private chat with the bot
    */
   is_topic_message?: true;
   /**
-   * <em>True</em>, if the message is a channel post that was automatically forwarded to the connected discussion group
+   * `true`, if the message is a channel post that was automatically forwarded to the connected discussion group
    */
   is_automatic_forward?: true;
   /**
@@ -750,15 +750,15 @@ export interface Message {
    */
   edit_date?: number;
   /**
-   * <em>True</em>, if the message can&#39;t be forwarded
+   * `true`, if the message can&#39;t be forwarded
    */
   has_protected_content?: true;
   /**
-   * <em>True</em>, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
+   * `true`, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
    */
   is_from_offline?: true;
   /**
-   * <em>True</em>, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.
+   * `true`, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.
    */
   is_paid_post?: true;
   /**
@@ -850,11 +850,11 @@ export interface Message {
    */
   caption_entities?: MessageEntity[];
   /**
-   * <em>True</em>, if the caption must be shown above the message media
+   * `true`, if the caption must be shown above the message media
    */
   show_caption_above_media?: true;
   /**
-   * <em>True</em>, if the message media is covered by a spoiler animation
+   * `true`, if the message media is covered by a spoiler animation
    */
   has_media_spoiler?: true;
   /**
@@ -1221,7 +1221,7 @@ export interface TextQuote {
    */
   position: number;
   /**
-   * <em>True</em>, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.
+   * `true`, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.
    */
   is_manual?: true;
 }
@@ -1292,7 +1292,7 @@ export interface ExternalReplyInfo {
    */
   voice?: Voice;
   /**
-   * <em>True</em>, if the message media is covered by a spoiler animation
+   * `true`, if the message media is covered by a spoiler animation
    */
   has_media_spoiler?: true;
   /**
@@ -1355,7 +1355,7 @@ export interface ReplyParameters {
    */
   ephemeral_message_id?: number;
   /**
-   * Pass <em>True</em> if the message should be sent even if the specified message to be replied to is not found. Always <em>False</em> for replies in another chat or forum topic, and sent ephemeral messages. Always <em>True</em> for messages sent on behalf of a business account.
+   * Pass `true` if the message should be sent even if the specified message to be replied to is not found. Always `false` for replies in another chat or forum topic, and sent ephemeral messages. Always `true` for messages sent on behalf of a business account.
    */
   allow_sending_without_reply?: boolean;
   /**
@@ -2188,11 +2188,11 @@ export interface Poll {
    */
   total_voter_count: number;
   /**
-   * <em>True</em>, if the poll is closed
+   * `true`, if the poll is closed
    */
   is_closed: boolean;
   /**
-   * <em>True</em>, if the poll is anonymous
+   * `true`, if the poll is anonymous
    */
   is_anonymous: boolean;
   /**
@@ -2200,15 +2200,15 @@ export interface Poll {
    */
   type: string;
   /**
-   * <em>True</em>, if the poll allows multiple answers
+   * `true`, if the poll allows multiple answers
    */
   allows_multiple_answers: boolean;
   /**
-   * <em>True</em>, if the poll allows to change the chosen answer options
+   * `true`, if the poll allows to change the chosen answer options
    */
   allows_revoting: boolean;
   /**
-   * <em>True</em> if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours
+   * `true` if voting is limited to users who have been members of the chat where the poll was originally sent for more than 24 hours
    */
   members_only: boolean;
   /**
@@ -2302,11 +2302,11 @@ export interface Checklist {
    */
   tasks: ChecklistTask[];
   /**
-   * <em>True</em>, if users other than the creator of the list can add tasks to the list
+   * `true`, if users other than the creator of the list can add tasks to the list
    */
   others_can_add_tasks?: true;
   /**
-   * <em>True</em>, if users other than the creator of the list can mark tasks as done or not done
+   * `true`, if users other than the creator of the list can mark tasks as done or not done
    */
   others_can_mark_tasks_as_done?: true;
 }
@@ -2356,11 +2356,11 @@ export interface InputChecklist {
    */
   tasks: InputChecklistTask[];
   /**
-   * Pass <em>True</em> if other users can add tasks to the checklist
+   * Pass `true` if other users can add tasks to the checklist
    */
   others_can_add_tasks?: boolean;
   /**
-   * Pass <em>True</em> if other users can mark tasks as done or not done in the checklist
+   * Pass `true` if other users can mark tasks as done or not done in the checklist
    */
   others_can_mark_tasks_as_done?: boolean;
 }
@@ -2696,11 +2696,11 @@ export interface BackgroundTypeWallpaper {
    */
   dark_theme_dimming: number;
   /**
-   * <em>True</em>, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12
+   * `true`, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12
    */
   is_blurred?: true;
   /**
-   * <em>True</em>, if the background moves slightly when the device is tilted
+   * `true`, if the background moves slightly when the device is tilted
    */
   is_moving?: true;
 }
@@ -2727,11 +2727,11 @@ export interface BackgroundTypePattern {
    */
   intensity: number;
   /**
-   * <em>True</em>, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only.
+   * `true`, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only.
    */
   is_inverted?: true;
   /**
-   * <em>True</em>, if the background moves slightly when the device is tilted
+   * `true`, if the background moves slightly when the device is tilted
    */
   is_moving?: true;
 }
@@ -2831,7 +2831,7 @@ export interface ForumTopicCreated {
    */
   icon_custom_emoji_id?: string;
   /**
-   * <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
+   * `true`, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
    */
   is_name_implicit?: true;
 }
@@ -2950,7 +2950,7 @@ export interface ChatShared {
  */
 export interface WriteAccessAllowed {
   /**
-   * <em>True</em>, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
+   * `true`, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
    */
   from_request?: boolean;
   /**
@@ -2958,7 +2958,7 @@ export interface WriteAccessAllowed {
    */
   web_app_name?: string;
   /**
-   * <em>True</em>, if the access was granted when the bot was added to the attachment or side menu
+   * `true`, if the access was granted when the bot was added to the attachment or side menu
    */
   from_attachment_menu?: boolean;
 }
@@ -3019,7 +3019,7 @@ export interface PaidMessagePriceChanged {
  */
 export interface DirectMessagePriceChanged {
   /**
-   * <em>True</em>, if direct messages are enabled for the channel chat; <em>False</em> otherwise
+   * `true`, if direct messages are enabled for the channel chat; `false` otherwise
    */
   are_direct_messages_enabled: boolean;
   /**
@@ -3144,11 +3144,11 @@ export interface Giveaway {
    */
   winner_count: number;
   /**
-   * <em>True</em>, if only users who join the chats after the giveaway started should be eligible to win
+   * `true`, if only users who join the chats after the giveaway started should be eligible to win
    */
   only_new_members?: true;
   /**
-   * <em>True</em>, if the list of giveaway winners will be visible to everyone
+   * `true`, if the list of giveaway winners will be visible to everyone
    */
   has_public_winners?: true;
   /**
@@ -3211,11 +3211,11 @@ export interface GiveawayWinners {
    */
   unclaimed_prize_count?: number;
   /**
-   * <em>True</em>, if only users who had joined the chats after the giveaway started were eligible to win
+   * `true`, if only users who had joined the chats after the giveaway started were eligible to win
    */
   only_new_members?: true;
   /**
-   * <em>True</em>, if the giveaway was canceled because the payment for it was refunded
+   * `true`, if the giveaway was canceled because the payment for it was refunded
    */
   was_refunded?: true;
   /**
@@ -3242,7 +3242,7 @@ export interface GiveawayCompleted {
    */
   giveaway_message?: Message;
   /**
-   * <em>True</em>, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.
+   * `true`, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.
    */
   is_star_giveaway?: true;
 }
@@ -3253,7 +3253,7 @@ export interface GiveawayCompleted {
  */
 export interface LinkPreviewOptions {
   /**
-   * <em>True</em>, if the link preview is disabled
+   * `true`, if the link preview is disabled
    */
   is_disabled?: boolean;
   /**
@@ -3261,15 +3261,15 @@ export interface LinkPreviewOptions {
    */
   url?: string;
   /**
-   * <em>True</em>, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
+   * `true`, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
    */
   prefer_small_media?: boolean;
   /**
-   * <em>True</em>, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
+   * `true`, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
    */
   prefer_large_media?: boolean;
   /**
-   * <em>True</em>, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text
+   * `true`, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text
    */
   show_above_text?: boolean;
 }
@@ -3414,15 +3414,15 @@ export interface ReplyKeyboardMarkup {
    */
   keyboard: KeyboardButton[][];
   /**
-   * Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to <em>False</em>, in which case the custom keyboard can be hidden and opened with a keyboard icon.
+   * Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to `false`, in which case the custom keyboard can be hidden and opened with a keyboard icon.
    */
   is_persistent?: boolean;
   /**
-   * Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to <em>False</em>, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.
+   * Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to `false`, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.
    */
   resize_keyboard?: boolean;
   /**
-   * Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to <em>False</em>.
+   * Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to `false`.
    */
   one_time_keyboard?: boolean;
   /**
@@ -3435,7 +3435,7 @@ export interface ReplyKeyboardMarkup {
   selective?: boolean;
 }
 /**
- * This object represents one button of the reply keyboard. At most one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button. For simple text buttons, <em>String</em> can be used instead of this object to specify the button text.
+ * This object represents one button of the reply keyboard. At most one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button. For simple text buttons, `string` can be used instead of this object to specify the button text.
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbutton}
  */
@@ -3465,11 +3465,11 @@ export interface KeyboardButton {
    */
   request_managed_bot?: KeyboardButtonRequestManagedBot;
   /**
-   * If <em>True</em>, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.
+   * If `true`, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.
    */
   request_contact?: boolean;
   /**
-   * If <em>True</em>, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.
+   * If `true`, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.
    */
   request_location?: boolean;
   /**
@@ -3492,11 +3492,11 @@ export interface KeyboardButtonRequestUsers {
    */
   request_id: number;
   /**
-   * Pass <em>True</em> to request bots, pass <em>False</em> to request regular users. If not specified, no additional restrictions are applied.
+   * Pass `true` to request bots, pass `false` to request regular users. If not specified, no additional restrictions are applied.
    */
   user_is_bot?: boolean;
   /**
-   * Pass <em>True</em> to request premium users, pass <em>False</em> to request non-premium users. If not specified, no additional restrictions are applied.
+   * Pass `true` to request premium users, pass `false` to request non-premium users. If not specified, no additional restrictions are applied.
    */
   user_is_premium?: boolean;
   /**
@@ -3504,15 +3504,15 @@ export interface KeyboardButtonRequestUsers {
    */
   max_quantity?: number;
   /**
-   * Pass <em>True</em> to request the users&#39; first and last names
+   * Pass `true` to request the users&#39; first and last names
    */
   request_name?: boolean;
   /**
-   * Pass <em>True</em> to request the users&#39; usernames
+   * Pass `true` to request the users&#39; usernames
    */
   request_username?: boolean;
   /**
-   * Pass <em>True</em> to request the users&#39; photos
+   * Pass `true` to request the users&#39; photos
    */
   request_photo?: boolean;
 }
@@ -3527,19 +3527,19 @@ export interface KeyboardButtonRequestChat {
    */
   request_id: number;
   /**
-   * Pass <em>True</em> to request a channel chat, pass <em>False</em> to request a group or a supergroup chat
+   * Pass `true` to request a channel chat, pass `false` to request a group or a supergroup chat
    */
   chat_is_channel: boolean;
   /**
-   * Pass <em>True</em> to request a forum supergroup, pass <em>False</em> to request a non-forum chat. If not specified, no additional restrictions are applied.
+   * Pass `true` to request a forum supergroup, pass `false` to request a non-forum chat. If not specified, no additional restrictions are applied.
    */
   chat_is_forum?: boolean;
   /**
-   * Pass <em>True</em> to request a supergroup or a channel with a username, pass <em>False</em> to request a chat without a username. If not specified, no additional restrictions are applied.
+   * Pass `true` to request a supergroup or a channel with a username, pass `false` to request a chat without a username. If not specified, no additional restrictions are applied.
    */
   chat_has_username?: boolean;
   /**
-   * Pass <em>True</em> to request a chat owned by the user. Otherwise, no additional restrictions are applied.
+   * Pass `true` to request a chat owned by the user. Otherwise, no additional restrictions are applied.
    */
   chat_is_created?: boolean;
   /**
@@ -3551,19 +3551,19 @@ export interface KeyboardButtonRequestChat {
    */
   bot_administrator_rights?: ChatAdministratorRights;
   /**
-   * Pass <em>True</em> to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.
+   * Pass `true` to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.
    */
   bot_is_member?: boolean;
   /**
-   * Pass <em>True</em> to request the chat&#39;s title
+   * Pass `true` to request the chat&#39;s title
    */
   request_title?: boolean;
   /**
-   * Pass <em>True</em> to request the chat&#39;s username
+   * Pass `true` to request the chat&#39;s username
    */
   request_username?: boolean;
   /**
-   * Pass <em>True</em> to request the chat&#39;s photo
+   * Pass `true` to request the chat&#39;s photo
    */
   request_photo?: boolean;
 }
@@ -3678,7 +3678,7 @@ export interface InlineKeyboardButton {
    */
   callback_game?: CallbackGame;
   /**
-   * Specify <em>True</em>, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
+   * Specify `true`, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
    */
   pay?: boolean;
 }
@@ -3707,7 +3707,7 @@ export interface LoginUrl {
    */
   bot_username?: string;
   /**
-   * Pass <em>True</em> to request the permission for your bot to send messages to the user
+   * Pass `true` to request the permission for your bot to send messages to the user
    */
   request_write_access?: boolean;
 }
@@ -3722,19 +3722,19 @@ export interface SwitchInlineQueryChosenChat {
    */
   query?: string;
   /**
-   * <em>True</em>, if private chats with users can be chosen
+   * `true`, if private chats with users can be chosen
    */
   allow_user_chats?: boolean;
   /**
-   * <em>True</em>, if private chats with bots can be chosen
+   * `true`, if private chats with bots can be chosen
    */
   allow_bot_chats?: boolean;
   /**
-   * <em>True</em>, if group and supergroup chats can be chosen
+   * `true`, if group and supergroup chats can be chosen
    */
   allow_group_chats?: boolean;
   /**
-   * <em>True</em>, if channel chats can be chosen
+   * `true`, if channel chats can be chosen
    */
   allow_channel_chats?: boolean;
 }
@@ -3865,15 +3865,15 @@ export interface ChatInviteLink {
    */
   creator: User;
   /**
-   * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators
+   * `true`, if users joining the chat via the link need to be approved by chat administrators
    */
   creates_join_request: boolean;
   /**
-   * <em>True</em>, if the link is primary
+   * `true`, if the link is primary
    */
   is_primary: boolean;
   /**
-   * <em>True</em>, if the link is revoked
+   * `true`, if the link is revoked
    */
   is_revoked: boolean;
   /**
@@ -3908,71 +3908,71 @@ export interface ChatInviteLink {
  */
 export interface ChatAdministratorRights {
   /**
-   * <em>True</em>, if the user&#39;s presence in the chat is hidden
+   * `true`, if the user&#39;s presence in the chat is hidden
    */
   is_anonymous: boolean;
   /**
-   * <em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
+   * `true`, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
    */
   can_manage_chat: boolean;
   /**
-   * <em>True</em>, if the administrator can delete messages of other users
+   * `true`, if the administrator can delete messages of other users
    */
   can_delete_messages: boolean;
   /**
-   * <em>True</em>, if the administrator can manage video chats
+   * `true`, if the administrator can manage video chats
    */
   can_manage_video_chats: boolean;
   /**
-   * <em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics
+   * `true`, if the administrator can restrict, ban or unban chat members, or access supergroup statistics
    */
   can_restrict_members: boolean;
   /**
-   * <em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+   * `true`, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
    */
   can_promote_members: boolean;
   /**
-   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings
+   * `true`, if the user is allowed to change the chat title, photo and other settings
    */
   can_change_info: boolean;
   /**
-   * <em>True</em>, if the user is allowed to invite new users to the chat
+   * `true`, if the user is allowed to invite new users to the chat
    */
   can_invite_users: boolean;
   /**
-   * <em>True</em>, if the administrator can post stories to the chat
+   * `true`, if the administrator can post stories to the chat
    */
   can_post_stories: boolean;
   /**
-   * <em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+   * `true`, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
    */
   can_edit_stories: boolean;
   /**
-   * <em>True</em>, if the administrator can delete stories posted by other users
+   * `true`, if the administrator can delete stories posted by other users
    */
   can_delete_stories: boolean;
   /**
-   * <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
+   * `true`, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
    */
   can_post_messages?: boolean;
   /**
-   * <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only
+   * `true`, if the administrator can edit messages of other users and can pin messages; for channels only
    */
   can_edit_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only
+   * `true`, if the user is allowed to pin messages; for groups and supergroups only
    */
   can_pin_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+   * `true`, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
    */
   can_manage_topics?: boolean;
   /**
-   * <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
+   * `true`, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
    */
   can_manage_direct_messages?: boolean;
   /**
-   * <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.
+   * `true`, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.
    */
   can_manage_tags?: boolean;
 }
@@ -4007,11 +4007,11 @@ export interface ChatMemberUpdated {
    */
   invite_link?: ChatInviteLink;
   /**
-   * <em>True</em>, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator
+   * `true`, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator
    */
   via_join_request?: boolean;
   /**
-   * <em>True</em>, if the user joined the chat via a chat folder invite link
+   * `true`, if the user joined the chat via a chat folder invite link
    */
   via_chat_folder_invite_link?: boolean;
 }
@@ -4049,7 +4049,7 @@ export interface ChatMemberOwner {
    */
   user: User;
   /**
-   * <em>True</em>, if the user&#39;s presence in the chat is hidden
+   * `true`, if the user&#39;s presence in the chat is hidden
    */
   is_anonymous: boolean;
   /**
@@ -4072,75 +4072,75 @@ export interface ChatMemberAdministrator {
    */
   user: User;
   /**
-   * <em>True</em>, if the bot is allowed to edit administrator privileges of that user
+   * `true`, if the bot is allowed to edit administrator privileges of that user
    */
   can_be_edited: boolean;
   /**
-   * <em>True</em>, if the user&#39;s presence in the chat is hidden
+   * `true`, if the user&#39;s presence in the chat is hidden
    */
   is_anonymous: boolean;
   /**
-   * <em>True</em>, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
+   * `true`, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
    */
   can_manage_chat: boolean;
   /**
-   * <em>True</em>, if the administrator can delete messages of other users
+   * `true`, if the administrator can delete messages of other users
    */
   can_delete_messages: boolean;
   /**
-   * <em>True</em>, if the administrator can manage video chats
+   * `true`, if the administrator can manage video chats
    */
   can_manage_video_chats: boolean;
   /**
-   * <em>True</em>, if the administrator can restrict, ban or unban chat members, or access supergroup statistics
+   * `true`, if the administrator can restrict, ban or unban chat members, or access supergroup statistics
    */
   can_restrict_members: boolean;
   /**
-   * <em>True</em>, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
+   * `true`, if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by the user)
    */
   can_promote_members: boolean;
   /**
-   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings
+   * `true`, if the user is allowed to change the chat title, photo and other settings
    */
   can_change_info: boolean;
   /**
-   * <em>True</em>, if the user is allowed to invite new users to the chat
+   * `true`, if the user is allowed to invite new users to the chat
    */
   can_invite_users: boolean;
   /**
-   * <em>True</em>, if the administrator can post stories to the chat
+   * `true`, if the administrator can post stories to the chat
    */
   can_post_stories: boolean;
   /**
-   * <em>True</em>, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+   * `true`, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
    */
   can_edit_stories: boolean;
   /**
-   * <em>True</em>, if the administrator can delete stories posted by other users
+   * `true`, if the administrator can delete stories posted by other users
    */
   can_delete_stories: boolean;
   /**
-   * <em>True</em>, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
+   * `true`, if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
    */
   can_post_messages?: boolean;
   /**
-   * <em>True</em>, if the administrator can edit messages of other users and can pin messages; for channels only
+   * `true`, if the administrator can edit messages of other users and can pin messages; for channels only
    */
   can_edit_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to pin messages; for groups and supergroups only
+   * `true`, if the user is allowed to pin messages; for groups and supergroups only
    */
   can_pin_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+   * `true`, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
    */
   can_manage_topics?: boolean;
   /**
-   * <em>True</em>, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
+   * `true`, if the administrator can manage direct messages of the channel and decline suggested posts; for channels only
    */
   can_manage_direct_messages?: boolean;
   /**
-   * <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.
+   * `true`, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.
    */
   can_manage_tags?: boolean;
   /**
@@ -4190,71 +4190,71 @@ export interface ChatMemberRestricted {
    */
   user: User;
   /**
-   * <em>True</em>, if the user is a member of the chat at the moment of the request
+   * `true`, if the user is a member of the chat at the moment of the request
    */
   is_member: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues
+   * `true`, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues
    */
   can_send_messages: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send audios
+   * `true`, if the user is allowed to send audios
    */
   can_send_audios: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send documents
+   * `true`, if the user is allowed to send documents
    */
   can_send_documents: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send photos
+   * `true`, if the user is allowed to send photos
    */
   can_send_photos: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send videos
+   * `true`, if the user is allowed to send videos
    */
   can_send_videos: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send video notes
+   * `true`, if the user is allowed to send video notes
    */
   can_send_video_notes: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send voice notes
+   * `true`, if the user is allowed to send voice notes
    */
   can_send_voice_notes: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send polls and checklists
+   * `true`, if the user is allowed to send polls and checklists
    */
   can_send_polls: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots
+   * `true`, if the user is allowed to send animations, games, stickers and use inline bots
    */
   can_send_other_messages: boolean;
   /**
-   * <em>True</em>, if the user is allowed to add web page previews to their messages
+   * `true`, if the user is allowed to add web page previews to their messages
    */
   can_add_web_page_previews: boolean;
   /**
-   * <em>True</em>, if the user is allowed to react to messages
+   * `true`, if the user is allowed to react to messages
    */
   can_react_to_messages: boolean;
   /**
-   * <em>True</em>, if the user is allowed to edit their own tag
+   * `true`, if the user is allowed to edit their own tag
    */
   can_edit_tag: boolean;
   /**
-   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings
+   * `true`, if the user is allowed to change the chat title, photo and other settings
    */
   can_change_info: boolean;
   /**
-   * <em>True</em>, if the user is allowed to invite new users to the chat
+   * `true`, if the user is allowed to invite new users to the chat
    */
   can_invite_users: boolean;
   /**
-   * <em>True</em>, if the user is allowed to pin messages
+   * `true`, if the user is allowed to pin messages
    */
   can_pin_messages: boolean;
   /**
-   * <em>True</em>, if the user is allowed to create forum topics
+   * `true`, if the user is allowed to create forum topics
    */
   can_manage_topics: boolean;
   /**
@@ -4338,67 +4338,67 @@ export interface ChatJoinRequest {
  */
 export interface ChatPermissions {
   /**
-   * <em>True</em>, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues
+   * `true`, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues
    */
   can_send_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send audios
+   * `true`, if the user is allowed to send audios
    */
   can_send_audios?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send documents
+   * `true`, if the user is allowed to send documents
    */
   can_send_documents?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send photos
+   * `true`, if the user is allowed to send photos
    */
   can_send_photos?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send videos
+   * `true`, if the user is allowed to send videos
    */
   can_send_videos?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send video notes
+   * `true`, if the user is allowed to send video notes
    */
   can_send_video_notes?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send voice notes
+   * `true`, if the user is allowed to send voice notes
    */
   can_send_voice_notes?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send polls and checklists
+   * `true`, if the user is allowed to send polls and checklists
    */
   can_send_polls?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to send animations, games, stickers and use inline bots
+   * `true`, if the user is allowed to send animations, games, stickers and use inline bots
    */
   can_send_other_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to add web page previews to their messages
+   * `true`, if the user is allowed to add web page previews to their messages
    */
   can_add_web_page_previews?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to react to messages. If omitted, defaults to the value of <em>can_send_messages</em>.
+   * `true`, if the user is allowed to react to messages. If omitted, defaults to the value of <em>can_send_messages</em>.
    */
   can_react_to_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to edit their own tag. If omitted, defaults to the value of <em>can_pin_messages</em>.
+   * `true`, if the user is allowed to edit their own tag. If omitted, defaults to the value of <em>can_pin_messages</em>.
    */
   can_edit_tag?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups.
+   * `true`, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups.
    */
   can_change_info?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to invite new users to the chat
+   * `true`, if the user is allowed to invite new users to the chat
    */
   can_invite_users?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to pin messages. Ignored in public supergroups.
+   * `true`, if the user is allowed to pin messages. Ignored in public supergroups.
    */
   can_pin_messages?: boolean;
   /**
-   * <em>True</em>, if the user is allowed to create forum topics. If omitted, defaults to the value of can_pin_messages.
+   * `true`, if the user is allowed to create forum topics. If omitted, defaults to the value of can_pin_messages.
    */
   can_manage_topics?: boolean;
 }
@@ -4617,11 +4617,11 @@ export interface StoryAreaTypeSuggestedReaction {
    */
   reaction_type: ReactionType;
   /**
-   * Pass <em>True</em> if the reaction area has a dark background
+   * Pass `true` if the reaction area has a dark background
    */
   is_dark?: boolean;
   /**
-   * Pass <em>True</em> if reaction area corner is flipped
+   * Pass `true` if reaction area corner is flipped
    */
   is_flipped?: boolean;
 }
@@ -4858,7 +4858,7 @@ export interface ForumTopic {
    */
   icon_custom_emoji_id?: string;
   /**
-   * <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
+   * `true`, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
    */
   is_name_implicit?: true;
 }
@@ -4904,11 +4904,11 @@ export interface Gift {
    */
   upgrade_star_count?: number;
   /**
-   * <em>True</em>, if the gift can only be purchased by Telegram Premium subscribers
+   * `true`, if the gift can only be purchased by Telegram Premium subscribers
    */
   is_premium?: true;
   /**
-   * <em>True</em>, if the gift can be used (after being upgraded) to customize a user&#39;s appearance
+   * `true`, if the gift can be used (after being upgraded) to customize a user&#39;s appearance
    */
   has_colors?: true;
   /**
@@ -5101,15 +5101,15 @@ export interface UniqueGift {
    */
   backdrop: UniqueGiftBackdrop;
   /**
-   * <em>True</em>, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers
+   * `true`, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers
    */
   is_premium?: true;
   /**
-   * <em>True</em>, if the gift was used to craft another gift and isn&#39;t available anymore
+   * `true`, if the gift was used to craft another gift and isn&#39;t available anymore
    */
   is_burned?: true;
   /**
-   * <em>True</em>, if the gift is assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+   * `true`, if the gift is assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
    */
   is_from_blockchain?: true;
   /**
@@ -5144,11 +5144,11 @@ export interface GiftInfo {
    */
   prepaid_upgrade_star_count?: number;
   /**
-   * <em>True</em>, if the gift&#39;s upgrade was purchased after the gift was sent
+   * `true`, if the gift&#39;s upgrade was purchased after the gift was sent
    */
   is_upgrade_separate?: true;
   /**
-   * <em>True</em>, if the gift can be upgraded to a unique gift
+   * `true`, if the gift can be upgraded to a unique gift
    */
   can_be_upgraded?: true;
   /**
@@ -5160,7 +5160,7 @@ export interface GiftInfo {
    */
   entities?: MessageEntity[];
   /**
-   * <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
+   * `true`, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
    */
   is_private?: true;
   /**
@@ -5249,19 +5249,19 @@ export interface OwnedGiftRegular {
    */
   entities?: MessageEntity[];
   /**
-   * <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
+   * `true`, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
    */
   is_private?: true;
   /**
-   * <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
+   * `true`, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
    */
   is_saved?: true;
   /**
-   * <em>True</em>, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only
+   * `true`, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only
    */
   can_be_upgraded?: true;
   /**
-   * <em>True</em>, if the gift was refunded and isn&#39;t available anymore
+   * `true`, if the gift was refunded and isn&#39;t available anymore
    */
   was_refunded?: true;
   /**
@@ -5273,7 +5273,7 @@ export interface OwnedGiftRegular {
    */
   prepaid_upgrade_star_count?: number;
   /**
-   * <em>True</em>, if the gift&#39;s upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only
+   * `true`, if the gift&#39;s upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only
    */
   is_upgrade_separate?: true;
   /**
@@ -5308,11 +5308,11 @@ export interface OwnedGiftUnique {
    */
   send_date: number;
   /**
-   * <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
+   * `true`, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
    */
   is_saved?: true;
   /**
-   * <em>True</em>, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only
+   * `true`, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only
    */
   can_be_transferred?: true;
   /**
@@ -5350,7 +5350,7 @@ export interface OwnedGifts {
  */
 export interface BotAccessSettings {
   /**
-   * <em>True</em>, if only selected users can access the bot. The bot&#39;s owner can always access it.
+   * `true`, if only selected users can access the bot. The bot&#39;s owner can always access it.
    */
   is_access_restricted: boolean;
   /**
@@ -5365,23 +5365,23 @@ export interface BotAccessSettings {
  */
 export interface AcceptedGiftTypes {
   /**
-   * <em>True</em>, if unlimited regular gifts are accepted
+   * `true`, if unlimited regular gifts are accepted
    */
   unlimited_gifts: boolean;
   /**
-   * <em>True</em>, if limited regular gifts are accepted
+   * `true`, if limited regular gifts are accepted
    */
   limited_gifts: boolean;
   /**
-   * <em>True</em>, if unique gifts or gifts that can be upgraded to unique for free are accepted
+   * `true`, if unique gifts or gifts that can be upgraded to unique for free are accepted
    */
   unique_gifts: boolean;
   /**
-   * <em>True</em>, if a Telegram Premium subscription is accepted
+   * `true`, if a Telegram Premium subscription is accepted
    */
   premium_subscription: boolean;
   /**
-   * <em>True</em>, if transfers of unique gifts from channels are accepted
+   * `true`, if transfers of unique gifts from channels are accepted
    */
   gifts_from_channels: boolean;
 }
@@ -5415,7 +5415,7 @@ export interface BotCommand {
    */
   description: string;
   /**
-   * <em>True</em>, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
+   * `true`, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
    */
   is_ephemeral?: boolean;
 }
@@ -5716,7 +5716,7 @@ export interface ChatBoostSourceGiveaway {
    */
   prize_star_count?: number;
   /**
-   * <em>True</em>, if the giveaway was completed, but there was no user to win the prize
+   * `true`, if the giveaway was completed, but there was no user to win the prize
    */
   is_unclaimed?: true;
 }
@@ -5821,59 +5821,59 @@ export interface UserChatBoosts {
  */
 export interface BusinessBotRights {
   /**
-   * <em>True</em>, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours
+   * `true`, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours
    */
   can_reply?: true;
   /**
-   * <em>True</em>, if the bot can mark incoming private messages as read
+   * `true`, if the bot can mark incoming private messages as read
    */
   can_read_messages?: true;
   /**
-   * <em>True</em>, if the bot can delete messages sent by the bot
+   * `true`, if the bot can delete messages sent by the bot
    */
   can_delete_sent_messages?: true;
   /**
-   * <em>True</em>, if the bot can delete all private messages in managed chats
+   * `true`, if the bot can delete all private messages in managed chats
    */
   can_delete_all_messages?: true;
   /**
-   * <em>True</em>, if the bot can edit the first and last name of the business account
+   * `true`, if the bot can edit the first and last name of the business account
    */
   can_edit_name?: true;
   /**
-   * <em>True</em>, if the bot can edit the bio of the business account
+   * `true`, if the bot can edit the bio of the business account
    */
   can_edit_bio?: true;
   /**
-   * <em>True</em>, if the bot can edit the profile photo of the business account
+   * `true`, if the bot can edit the profile photo of the business account
    */
   can_edit_profile_photo?: true;
   /**
-   * <em>True</em>, if the bot can edit the username of the business account
+   * `true`, if the bot can edit the username of the business account
    */
   can_edit_username?: true;
   /**
-   * <em>True</em>, if the bot can change the privacy settings pertaining to gifts for the business account
+   * `true`, if the bot can change the privacy settings pertaining to gifts for the business account
    */
   can_change_gift_settings?: true;
   /**
-   * <em>True</em>, if the bot can view gifts and the amount of Telegram Stars owned by the business account
+   * `true`, if the bot can view gifts and the amount of Telegram Stars owned by the business account
    */
   can_view_gifts_and_stars?: true;
   /**
-   * <em>True</em>, if the bot can convert regular gifts owned by the business account to Telegram Stars
+   * `true`, if the bot can convert regular gifts owned by the business account to Telegram Stars
    */
   can_convert_gifts_to_stars?: true;
   /**
-   * <em>True</em>, if the bot can transfer and upgrade gifts owned by the business account
+   * `true`, if the bot can transfer and upgrade gifts owned by the business account
    */
   can_transfer_and_upgrade_gifts?: true;
   /**
-   * <em>True</em>, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts
+   * `true`, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts
    */
   can_transfer_stars?: true;
   /**
-   * <em>True</em>, if the bot can post, edit and delete stories on behalf of the business account
+   * `true`, if the bot can post, edit and delete stories on behalf of the business account
    */
   can_manage_stories?: true;
 }
@@ -5904,7 +5904,7 @@ export interface BusinessConnection {
    */
   rights?: BusinessBotRights;
   /**
-   * <em>True</em>, if the connection is active
+   * `true`, if the connection is active
    */
   is_enabled: boolean;
 }
@@ -6040,7 +6040,7 @@ export interface InputMediaAnimation {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -6056,7 +6056,7 @@ export interface InputMediaAnimation {
    */
   duration?: number;
   /**
-   * Pass <em>True</em> if the animation needs to be covered with a spoiler animation
+   * Pass `true` if the animation needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
 }
@@ -6134,7 +6134,7 @@ export interface InputMediaDocument {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always <em>True</em>, if the document is sent as part of an album.
+   * Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always `true`, if the document is sent as part of an album.
    */
   disable_content_type_detection?: boolean;
 }
@@ -6184,11 +6184,11 @@ export interface InputMediaLivePhoto {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
-   * Pass <em>True</em> if the live photo needs to be covered with a spoiler animation
+   * Pass `true` if the live photo needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
 }
@@ -6242,11 +6242,11 @@ export interface InputMediaPhoto {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
-   * Pass <em>True</em> if the photo needs to be covered with a spoiler animation
+   * Pass `true` if the photo needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
 }
@@ -6351,7 +6351,7 @@ export interface InputMediaVideo {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -6367,11 +6367,11 @@ export interface InputMediaVideo {
    */
   duration?: number;
   /**
-   * Pass <em>True</em> if the uploaded video is suitable for streaming
+   * Pass `true` if the uploaded video is suitable for streaming
    */
   supports_streaming?: boolean;
   /**
-   * Pass <em>True</em> if the video needs to be covered with a spoiler animation
+   * Pass `true` if the video needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
 }
@@ -6498,7 +6498,7 @@ export interface InputPaidMediaVideo {
    */
   duration?: number;
   /**
-   * Pass <em>True</em> if the uploaded video is suitable for streaming
+   * Pass `true` if the uploaded video is suitable for streaming
    */
   supports_streaming?: boolean;
 }
@@ -6596,7 +6596,7 @@ export interface InputStoryContentVideo {
    */
   cover_frame_timestamp?: number;
   /**
-   * Pass <em>True</em> if the video has no sound
+   * Pass `true` if the video has no sound
    */
   is_animation?: boolean;
 }
@@ -6700,7 +6700,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns <em>True</em> on success. Requires no parameters.
+   * Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns `true` on success. Requires no parameters.
    *
    * @see {@link https://core.telegram.org/bots/api#logout}
    */
@@ -6708,7 +6708,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns <em>True</em> on success. Requires no parameters.
+   * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns `true` on success. Requires no parameters.
    *
    * @see {@link https://core.telegram.org/bots/api#close}
    */
@@ -6770,7 +6770,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7071,7 +7071,7 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass <em>True</em> if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.
+     * Pass `true` if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.
      */
     show_caption_above_media?: boolean;
     /**
@@ -7083,7 +7083,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7140,7 +7140,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to copy the messages without their captions
+     * Pass `true` to copy the messages without their captions
      */
     remove_caption?: boolean;
   }): never;
@@ -7193,11 +7193,11 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass <em>True</em> if the caption must be shown above the message media
+     * Pass `true` if the caption must be shown above the message media
      */
     show_caption_above_media?: boolean;
     /**
-     * Pass <em>True</em> if the photo needs to be covered with a spoiler animation
+     * Pass `true` if the photo needs to be covered with a spoiler animation
      */
     has_spoiler?: boolean;
     /**
@@ -7209,7 +7209,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7282,11 +7282,11 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass <em>True</em> if the caption must be shown above the message media
+     * Pass `true` if the caption must be shown above the message media
      */
     show_caption_above_media?: boolean;
     /**
-     * Pass <em>True</em> if the video needs to be covered with a spoiler animation
+     * Pass `true` if the video needs to be covered with a spoiler animation
      */
     has_spoiler?: boolean;
     /**
@@ -7298,7 +7298,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7393,7 +7393,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7478,7 +7478,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7571,15 +7571,15 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass <em>True</em> if the caption must be shown above the message media
+     * Pass `true` if the caption must be shown above the message media
      */
     show_caption_above_media?: boolean;
     /**
-     * Pass <em>True</em> if the video needs to be covered with a spoiler animation
+     * Pass `true` if the video needs to be covered with a spoiler animation
      */
     has_spoiler?: boolean;
     /**
-     * Pass <em>True</em> if the uploaded video is suitable for streaming
+     * Pass `true` if the uploaded video is suitable for streaming
      */
     supports_streaming?: boolean;
     /**
@@ -7591,7 +7591,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7676,11 +7676,11 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass <em>True</em> if the caption must be shown above the message media
+     * Pass `true` if the caption must be shown above the message media
      */
     show_caption_above_media?: boolean;
     /**
-     * Pass <em>True</em> if the animation needs to be covered with a spoiler animation
+     * Pass `true` if the animation needs to be covered with a spoiler animation
      */
     has_spoiler?: boolean;
     /**
@@ -7692,7 +7692,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7773,7 +7773,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7850,7 +7850,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7919,7 +7919,7 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass <em>True</em> if the caption must be shown above the message media
+     * Pass `true` if the caption must be shown above the message media
      */
     show_caption_above_media?: boolean;
     /**
@@ -7931,7 +7931,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7984,7 +7984,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8061,7 +8061,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8154,7 +8154,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8231,7 +8231,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8288,7 +8288,7 @@ export interface ApiMethods {
      */
     options: InputPollOption[];
     /**
-     * <em>True</em>, if the poll needs to be anonymous, defaults to <em>True</em>
+     * `true`, if the poll needs to be anonymous, defaults to `true`
      */
     is_anonymous?: boolean;
     /**
@@ -8296,27 +8296,27 @@ export interface ApiMethods {
      */
     type?: string;
     /**
-     * Pass <em>True</em> if the poll allows multiple answers, defaults to <em>False</em>
+     * Pass `true` if the poll allows multiple answers, defaults to `false`
      */
     allows_multiple_answers?: boolean;
     /**
-     * Pass <em>True</em> if the poll allows to change chosen answer options, defaults to <em>False</em> for quizzes and to <em>True</em> for regular polls
+     * Pass `true` if the poll allows to change chosen answer options, defaults to `false` for quizzes and to `true` for regular polls
      */
     allows_revoting?: boolean;
     /**
-     * Pass <em>True</em> if the poll options must be shown in random order
+     * Pass `true` if the poll options must be shown in random order
      */
     shuffle_options?: boolean;
     /**
-     * Pass <em>True</em> if answer options can be added to the poll after creation; not supported for anonymous polls and quizzes
+     * Pass `true` if answer options can be added to the poll after creation; not supported for anonymous polls and quizzes
      */
     allow_adding_options?: boolean;
     /**
-     * Pass <em>True</em> if poll results must be shown only after the poll closes
+     * Pass `true` if poll results must be shown only after the poll closes
      */
     hide_results_until_closes?: boolean;
     /**
-     * Pass <em>True</em> if voting is limited to users who have been members of the chat where the poll is being sent for more than 24 hours; for channel chats only
+     * Pass `true` if voting is limited to users who have been members of the chat where the poll is being sent for more than 24 hours; for channel chats only
      */
     members_only?: boolean;
     /**
@@ -8352,7 +8352,7 @@ export interface ApiMethods {
      */
     close_date?: number;
     /**
-     * Pass <em>True</em> if the poll needs to be immediately closed. This can be useful for poll preview.
+     * Pass `true` if the poll needs to be immediately closed. This can be useful for poll preview.
      */
     is_closed?: boolean;
     /**
@@ -8380,7 +8380,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8474,7 +8474,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8497,7 +8497,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
+   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
    */
@@ -8530,7 +8530,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns <em>True</em> on success.
+   * Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns `true` on success.
    *
    * > Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with <em>action</em> = <em>upload_photo</em>. The user will see a “sending photo” status for the bot.
    * 
@@ -8559,7 +8559,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.
+   * Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
    */
@@ -8577,7 +8577,7 @@ export interface ApiMethods {
      */
     reaction?: ReactionType[];
     /**
-     * Pass <em>True</em> to set the reaction with a big animation
+     * Pass `true` to set the reaction with a big animation
      */
     is_big?: boolean;
   }): never;
@@ -8626,7 +8626,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns <em>True</em> on success.
+   * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setuseremojistatus}
    */
@@ -8662,7 +8662,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#banchatmember}
    */
@@ -8680,14 +8680,14 @@ export interface ApiMethods {
      */
     until_date?: number;
     /**
-     * Pass <em>True</em> to delete all messages from the chat for the user that is being removed. If <em>False</em>, the user will be able to see messages in the group that were sent before the user was removed. Always <em>True</em> for supergroups and channels.
+     * Pass `true` to delete all messages from the chat for the user that is being removed. If `false`, the user will be able to see messages in the group that were sent before the user was removed. Always `true` for supergroups and channels.
      */
     revoke_messages?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns <em>True</em> on success.
+   * Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
    */
@@ -8708,7 +8708,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift restrictions from a user. Returns <em>True</em> on success.
+   * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass `true` for all permissions to lift restrictions from a user. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#restrictchatmember}
    */
@@ -8726,7 +8726,7 @@ export interface ApiMethods {
      */
     permissions: ChatPermissions;
     /**
-     * Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
+     * Pass `true` if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
      */
     use_independent_chat_permissions?: boolean;
     /**
@@ -8737,7 +8737,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all boolean parameters to demote a user. Returns <em>True</em> on success.
+   * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass `false` for all boolean parameters to demote a user. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#promotechatmember}
    */
@@ -8751,78 +8751,78 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Pass <em>True</em> if the administrator&#39;s presence in the chat is hidden
+     * Pass `true` if the administrator&#39;s presence in the chat is hidden
      */
     is_anonymous?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
+     * Pass `true` if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages, ignore slow mode, and send messages to the chat without paying Telegram Stars. Implied by any other administrator privilege.
      */
     can_manage_chat?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can delete messages of other users
+     * Pass `true` if the administrator can delete messages of other users
      */
     can_delete_messages?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can manage video chats
+     * Pass `true` if the administrator can manage video chats
      */
     can_manage_video_chats?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can restrict, ban or unban chat members, or access supergroup statistics. For backward compatibility, defaults to <em>True</em> for promotions of channel administrators.
+     * Pass `true` if the administrator can restrict, ban or unban chat members, or access supergroup statistics. For backward compatibility, defaults to `true` for promotions of channel administrators.
      */
     can_restrict_members?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)
+     * Pass `true` if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)
      */
     can_promote_members?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can change chat title, photo and other settings
+     * Pass `true` if the administrator can change chat title, photo and other settings
      */
     can_change_info?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can invite new users to the chat
+     * Pass `true` if the administrator can invite new users to the chat
      */
     can_invite_users?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can post stories to the chat
+     * Pass `true` if the administrator can post stories to the chat
      */
     can_post_stories?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+     * Pass `true` if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
      */
     can_edit_stories?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can delete stories posted by other users
+     * Pass `true` if the administrator can delete stories posted by other users
      */
     can_delete_stories?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
+     * Pass `true` if the administrator can post messages in the channel, approve suggested posts, or access channel statistics; for channels only
      */
     can_post_messages?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can edit messages of other users and can pin messages; for channels only
+     * Pass `true` if the administrator can edit messages of other users and can pin messages; for channels only
      */
     can_edit_messages?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can pin messages; for supergroups only
+     * Pass `true` if the administrator can pin messages; for supergroups only
      */
     can_pin_messages?: boolean;
     /**
-     * Pass <em>True</em> if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
+     * Pass `true` if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
      */
     can_manage_topics?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can manage direct messages within the channel and decline suggested posts; for channels only
+     * Pass `true` if the administrator can manage direct messages within the channel and decline suggested posts; for channels only
      */
     can_manage_direct_messages?: boolean;
     /**
-     * Pass <em>True</em> if the administrator can edit the tags of regular members; for groups and supergroups only
+     * Pass `true` if the administrator can edit the tags of regular members; for groups and supergroups only
      */
     can_manage_tags?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns <em>True</em> on success.
+   * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatadministratorcustomtitle}
    */
@@ -8843,7 +8843,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_tags</em> administrator right. Returns <em>True</em> on success.
+   * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_tags</em> administrator right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatmembertag}
    */
@@ -8864,7 +8864,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
    */
@@ -8881,7 +8881,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unbanchatsenderchat}
    */
@@ -8898,7 +8898,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns <em>True</em> on success.
+   * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatpermissions}
    */
@@ -8912,14 +8912,14 @@ export interface ApiMethods {
      */
     permissions: ChatPermissions;
     /**
-     * Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
+     * Pass `true` if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
      */
     use_independent_chat_permissions?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as <em>String</em> on success.
+   * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as `string` on success.
    * 
    * > Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.
    *
@@ -8956,7 +8956,7 @@ export interface ApiMethods {
      */
     member_limit?: number;
     /**
-     * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.
+     * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, <em>member_limit</em> can&#39;t be specified.
      */
     creates_join_request?: boolean;
   }): never;
@@ -8989,7 +8989,7 @@ export interface ApiMethods {
      */
     member_limit?: number;
     /**
-     * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.
+     * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, <em>member_limit</em> can&#39;t be specified.
      */
     creates_join_request?: boolean;
   }): never;
@@ -9059,7 +9059,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
+   * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#approvechatjoinrequest}
    */
@@ -9076,7 +9076,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
+   * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#declinechatjoinrequest}
    */
@@ -9093,7 +9093,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to process a received chat join request query. Returns <em>True</em> on success.
+   * Use this method to process a received chat join request query. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#answerchatjoinrequestquery}
    */
@@ -9110,7 +9110,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns <em>True</em> on success.
+   * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendchatjoinrequestwebapp}
    */
@@ -9127,7 +9127,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   * Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatphoto}
    */
@@ -9144,7 +9144,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   * Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletechatphoto}
    */
@@ -9157,7 +9157,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   * Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchattitle}
    */
@@ -9174,7 +9174,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatdescription}
    */
@@ -9191,7 +9191,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns <em>True</em> on success.
+   * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#pinchatmessage}
    */
@@ -9209,14 +9209,14 @@ export interface ApiMethods {
      */
     message_id: number;
     /**
-     * Pass <em>True</em> if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
+     * Pass `true` if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
      */
     disable_notification?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns <em>True</em> on success.
+   * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unpinchatmessage}
    */
@@ -9237,7 +9237,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns <em>True</em> on success.
+   * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unpinallchatmessages}
    */
@@ -9250,7 +9250,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method for your bot to leave a group, supergroup or channel. Returns <em>True</em> on success.
+   * Use this method for your bot to leave a group, supergroup or channel. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#leavechat}
    */
@@ -9286,14 +9286,14 @@ export interface ApiMethods {
      */
     chat_id: number | string;
     /**
-     * Pass <em>True</em> to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.
+     * Pass `true` to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.
      */
     return_bots?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the number of members in a chat. Returns <em>Integer</em> on success.
+   * Use this method to get the number of members in a chat. Returns `number` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getchatmembercount}
    */
@@ -9340,7 +9340,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
+   * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatstickerset}
    */
@@ -9357,7 +9357,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
+   * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletechatstickerset}
    */
@@ -9403,7 +9403,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
+   * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#editforumtopic}
    */
@@ -9428,7 +9428,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
+   * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#closeforumtopic}
    */
@@ -9445,7 +9445,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
+   * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#reopenforumtopic}
    */
@@ -9462,7 +9462,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns <em>True</em> on success.
+   * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deleteforumtopic}
    */
@@ -9479,7 +9479,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
+   * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unpinallforumtopicmessages}
    */
@@ -9496,7 +9496,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
+   * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#editgeneralforumtopic}
    */
@@ -9513,7 +9513,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
+   * Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#closegeneralforumtopic}
    */
@@ -9526,7 +9526,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns <em>True</em> on success.
+   * Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#reopengeneralforumtopic}
    */
@@ -9539,7 +9539,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns <em>True</em> on success.
+   * Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#hidegeneralforumtopic}
    */
@@ -9552,7 +9552,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
+   * Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unhidegeneralforumtopic}
    */
@@ -9565,7 +9565,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
+   * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages}
    */
@@ -9578,7 +9578,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, <em>True</em> is returned.
+   * Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, `true` is returned.
    *
    * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">\@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
    *
@@ -9594,7 +9594,7 @@ export interface ApiMethods {
      */
     text?: string;
     /**
-     * If <em>True</em>, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to <em>False</em>.
+     * If `true`, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to `false`.
      */
     show_alert?: boolean;
     /**
@@ -9656,7 +9656,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the token of a managed bot. Returns the token as <em>String</em> on success.
+   * Use this method to get the token of a managed bot. Returns the token as `string` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getmanagedbottoken}
    */
@@ -9669,7 +9669,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as <em>String</em> on success.
+   * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as `string` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#replacemanagedbottoken}
    */
@@ -9695,7 +9695,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the access settings of a managed bot. Returns <em>True</em> on success.
+   * Use this method to change the access settings of a managed bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmanagedbotaccesssettings}
    */
@@ -9705,18 +9705,18 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Pass <em>True</em> if only selected users can access the bot. The bot&#39;s owner can always access it.
+     * Pass `true` if only selected users can access the bot. The bot&#39;s owner can always access it.
      */
     is_access_restricted: boolean;
     /**
-     * A JSON-serialized list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if <em>is_access_restricted</em> is <em>False</em>.
+     * A JSON-serialized list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if <em>is_access_restricted</em> is `false`.
      */
     added_user_ids?: number[];
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns <em>True</em> on success.
+   * Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmycommands}
    */
@@ -9737,7 +9737,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns <em>True</em> on success.
+   * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemycommands}
    */
@@ -9771,7 +9771,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s name. Returns <em>True</em> on success.
+   * Use this method to change the bot&#39;s name. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmyname}
    */
@@ -9801,7 +9801,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns <em>True</em> on success.
+   * Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmydescription}
    */
@@ -9831,7 +9831,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns <em>True</em> on success.
+   * Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmyshortdescription}
    */
@@ -9861,7 +9861,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Changes the profile photo of the bot. Returns <em>True</em> on success.
+   * Changes the profile photo of the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmyprofilephoto}
    */
@@ -9874,7 +9874,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Removes the profile photo of the bot. Requires no parameters. Returns <em>True</em> on success.
+   * Removes the profile photo of the bot. Requires no parameters. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#removemyprofilephoto}
    */
@@ -9882,7 +9882,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns <em>True</em> on success.
+   * Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatmenubutton}
    */
@@ -9912,7 +9912,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns <em>True</em> on success.
+   * Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmydefaultadministratorrights}
    */
@@ -9922,7 +9922,7 @@ export interface ApiMethods {
      */
     rights?: ChatAdministratorRights;
     /**
-     * Pass <em>True</em> to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
+     * Pass `true` to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
      */
     for_channels?: boolean;
   }): never;
@@ -9935,7 +9935,7 @@ export interface ApiMethods {
    */
   getMyDefaultAdministratorRights(args: {
     /**
-     * Pass <em>True</em> to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
+     * Pass `true` to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
      */
     for_channels?: boolean;
   }): never;
@@ -9950,7 +9950,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns <em>True</em> on success.
+   * Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendgift}
    */
@@ -9968,7 +9968,7 @@ export interface ApiMethods {
      */
     gift_id: string;
     /**
-     * Pass <em>True</em> to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver
+     * Pass `true` to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver
      */
     pay_for_upgrade?: boolean;
     /**
@@ -9987,7 +9987,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Gifts a Telegram Premium subscription to the given user. Returns <em>True</em> on success.
+   * Gifts a Telegram Premium subscription to the given user. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#giftpremiumsubscription}
    */
@@ -10020,7 +10020,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
+   * Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#verifyuser}
    */
@@ -10037,7 +10037,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
+   * Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#verifychat}
    */
@@ -10054,7 +10054,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
+   * Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#removeuserverification}
    */
@@ -10067,7 +10067,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
+   * Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#removechatverification}
    */
@@ -10080,7 +10080,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns <em>True</em> on success.
+   * Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#readbusinessmessage}
    */
@@ -10101,7 +10101,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns <em>True</em> on success.
+   * Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletebusinessmessages}
    */
@@ -10118,7 +10118,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns <em>True</em> on success.
+   * Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setbusinessaccountname}
    */
@@ -10139,7 +10139,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns <em>True</em> on success.
+   * Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setbusinessaccountusername}
    */
@@ -10156,7 +10156,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns <em>True</em> on success.
+   * Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setbusinessaccountbio}
    */
@@ -10173,7 +10173,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
+   * Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setbusinessaccountprofilephoto}
    */
@@ -10187,14 +10187,14 @@ export interface ApiMethods {
      */
     photo: InputProfilePhoto;
     /**
-     * Pass <em>True</em> to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.
+     * Pass `true` to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.
      */
     is_public?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
+   * Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#removebusinessaccountprofilephoto}
    */
@@ -10204,14 +10204,14 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * Pass <em>True</em> to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.
+     * Pass `true` to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.
      */
     is_public?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns <em>True</em> on success.
+   * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings}
    */
@@ -10221,7 +10221,7 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * Pass <em>True</em> if a button for sending a gift to the user or by the business account must always be shown in the input field
+     * Pass `true` if a button for sending a gift to the user or by the business account must always be shown in the input field
      */
     show_gift_button: boolean;
     /**
@@ -10245,7 +10245,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns <em>True</em> on success.
+   * Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#transferbusinessaccountstars}
    */
@@ -10272,35 +10272,35 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * Pass <em>True</em> to exclude gifts that aren&#39;t saved to the account&#39;s profile page
+     * Pass `true` to exclude gifts that aren&#39;t saved to the account&#39;s profile page
      */
     exclude_unsaved?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that are saved to the account&#39;s profile page
+     * Pass `true` to exclude gifts that are saved to the account&#39;s profile page
      */
     exclude_saved?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times
+     * Pass `true` to exclude gifts that can be purchased an unlimited number of times
      */
     exclude_unlimited?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
      */
     exclude_limited_upgradable?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
      */
     exclude_limited_non_upgradable?: boolean;
     /**
-     * Pass <em>True</em> to exclude unique gifts
+     * Pass `true` to exclude unique gifts
      */
     exclude_unique?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
      */
     exclude_from_blockchain?: boolean;
     /**
-     * Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.
+     * Pass `true` to sort results by gift price instead of send date. Sorting is applied before pagination.
      */
     sort_by_price?: boolean;
     /**
@@ -10325,27 +10325,27 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times
+     * Pass `true` to exclude gifts that can be purchased an unlimited number of times
      */
     exclude_unlimited?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
      */
     exclude_limited_upgradable?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
      */
     exclude_limited_non_upgradable?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
      */
     exclude_from_blockchain?: boolean;
     /**
-     * Pass <em>True</em> to exclude unique gifts
+     * Pass `true` to exclude unique gifts
      */
     exclude_unique?: boolean;
     /**
-     * Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.
+     * Pass `true` to sort results by gift price instead of send date. Sorting is applied before pagination.
      */
     sort_by_price?: boolean;
     /**
@@ -10370,35 +10370,35 @@ export interface ApiMethods {
      */
     chat_id: number | string;
     /**
-     * Pass <em>True</em> to exclude gifts that aren&#39;t saved to the chat&#39;s profile page. Always <em>True</em>, unless the bot has the <em>can_post_messages</em> administrator right in the channel.
+     * Pass `true` to exclude gifts that aren&#39;t saved to the chat&#39;s profile page. Always `true`, unless the bot has the <em>can_post_messages</em> administrator right in the channel.
      */
     exclude_unsaved?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that are saved to the chat&#39;s profile page. Always <em>False</em>, unless the bot has the <em>can_post_messages</em> administrator right in the channel.
+     * Pass `true` to exclude gifts that are saved to the chat&#39;s profile page. Always `false`, unless the bot has the <em>can_post_messages</em> administrator right in the channel.
      */
     exclude_saved?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased an unlimited number of times
+     * Pass `true` to exclude gifts that can be purchased an unlimited number of times
      */
     exclude_unlimited?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can be upgraded to unique
      */
     exclude_limited_upgradable?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
      */
     exclude_limited_non_upgradable?: boolean;
     /**
-     * Pass <em>True</em> to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
      */
     exclude_from_blockchain?: boolean;
     /**
-     * Pass <em>True</em> to exclude unique gifts
+     * Pass `true` to exclude unique gifts
      */
     exclude_unique?: boolean;
     /**
-     * Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.
+     * Pass `true` to sort results by gift price instead of send date. Sorting is applied before pagination.
      */
     sort_by_price?: boolean;
     /**
@@ -10413,7 +10413,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns <em>True</em> on success.
+   * Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#convertgifttostars}
    */
@@ -10430,7 +10430,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns <em>True</em> on success.
+   * Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#upgradegift}
    */
@@ -10444,7 +10444,7 @@ export interface ApiMethods {
      */
     owned_gift_id: string;
     /**
-     * Pass <em>True</em> to keep the original gift text, sender and receiver in the upgraded gift
+     * Pass `true` to keep the original gift text, sender and receiver in the upgraded gift
      */
     keep_original_details?: boolean;
     /**
@@ -10455,7 +10455,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns <em>True</em> on success.
+   * Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#transfergift}
    */
@@ -10514,11 +10514,11 @@ export interface ApiMethods {
      */
     areas?: StoryArea[];
     /**
-     * Pass <em>True</em> to keep the story accessible after it expires
+     * Pass `true` to keep the story accessible after it expires
      */
     post_to_chat_page?: boolean;
     /**
-     * Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting
+     * Pass `true` if the content of the story must be protected from forwarding and screenshotting
      */
     protect_content?: boolean;
   }): never;
@@ -10547,11 +10547,11 @@ export interface ApiMethods {
      */
     active_period: number;
     /**
-     * Pass <em>True</em> to keep the story accessible after it expires
+     * Pass `true` to keep the story accessible after it expires
      */
     post_to_chat_page?: boolean;
     /**
-     * Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting
+     * Pass `true` if the content of the story must be protected from forwarding and screenshotting
      */
     protect_content?: boolean;
   }): never;
@@ -10595,7 +10595,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <em>True</em> on success.
+   * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletestory}
    */
@@ -10643,19 +10643,19 @@ export interface ApiMethods {
      */
     result: InlineQueryResult;
     /**
-     * Pass <em>True</em> if the message can be sent to private chats with users
+     * Pass `true` if the message can be sent to private chats with users
      */
     allow_user_chats?: boolean;
     /**
-     * Pass <em>True</em> if the message can be sent to private chats with bots
+     * Pass `true` if the message can be sent to private chats with bots
      */
     allow_bot_chats?: boolean;
     /**
-     * Pass <em>True</em> if the message can be sent to group and supergroup chats
+     * Pass `true` if the message can be sent to group and supergroup chats
      */
     allow_group_chats?: boolean;
     /**
-     * Pass <em>True</em> if the message can be sent to channel chats
+     * Pass `true` if the message can be sent to channel chats
      */
     allow_channel_chats?: boolean;
   }): never;
@@ -10680,7 +10680,7 @@ export interface ApiMethods {
 // === UPDATING MESSAGES
 export interface ApiMethods {
   /**
-   * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagetext}
    */
@@ -10729,7 +10729,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
    */
@@ -10763,7 +10763,7 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass <em>True</em> if the caption must be shown above the message media. Supported only for animation, photo and video messages.
+     * Pass `true` if the caption must be shown above the message media. Supported only for animation, photo and video messages.
      */
     show_caption_above_media?: boolean;
     /**
@@ -10774,7 +10774,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
    */
@@ -10807,7 +10807,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
+   * Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
    */
@@ -10860,7 +10860,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
+   * Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
    */
@@ -10918,7 +10918,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
    */
@@ -10972,7 +10972,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#editephemeralmessagetext}
    */
@@ -11013,7 +11013,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#editephemeralmessagemedia}
    */
@@ -11042,7 +11042,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#editephemeralmessagecaption}
    */
@@ -11079,7 +11079,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#editephemeralmessagereplymarkup}
    */
@@ -11104,7 +11104,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
+   * Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#approvesuggestedpost}
    */
@@ -11125,7 +11125,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
+   * Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#declinesuggestedpost}
    */
@@ -11146,7 +11146,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns <em>True</em> on success.
+   * Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemessage}
    */
@@ -11163,7 +11163,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns <em>True</em> on success.
+   * Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemessages}
    */
@@ -11180,7 +11180,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns <em>True</em> on success.
+   * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deleteephemeralmessage}
    */
@@ -11201,7 +11201,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
+   * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
    */
@@ -11226,7 +11226,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
+   * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
    */
@@ -11273,11 +11273,11 @@ export interface Sticker {
    */
   height: number;
   /**
-   * <em>True</em>, if the sticker is <a href="https://telegram.org/blog/animated-stickers">animated</a>
+   * `true`, if the sticker is <a href="https://telegram.org/blog/animated-stickers">animated</a>
    */
   is_animated: boolean;
   /**
-   * <em>True</em>, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a>
+   * `true`, if the sticker is a <a href="https://telegram.org/blog/video-stickers-better-reactions">video sticker</a>
    */
   is_video: boolean;
   /**
@@ -11305,7 +11305,7 @@ export interface Sticker {
    */
   custom_emoji_id?: string;
   /**
-   * <em>True</em>, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places
+   * `true`, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places
    */
   needs_repainting?: true;
   /**
@@ -11438,7 +11438,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -11508,7 +11508,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns <em>True</em> on success.
+   * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#createnewstickerset}
    */
@@ -11534,14 +11534,14 @@ export interface ApiMethods {
      */
     sticker_type?: string;
     /**
-     * Pass <em>True</em> if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
+     * Pass `true` if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
      */
     needs_repainting?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns <em>True</em> on success.
+   * Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#addstickertoset}
    */
@@ -11562,7 +11562,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to move a sticker in a set created by the bot to a specific position. Returns <em>True</em> on success.
+   * Use this method to move a sticker in a set created by the bot to a specific position. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setstickerpositioninset}
    */
@@ -11579,7 +11579,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.
+   * Use this method to delete a sticker from a set created by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletestickerfromset}
    */
@@ -11592,7 +11592,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns <em>True</em> on success.
+   * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#replacestickerinset}
    */
@@ -11617,7 +11617,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
+   * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setstickeremojilist}
    */
@@ -11634,7 +11634,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
+   * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setstickerkeywords}
    */
@@ -11651,7 +11651,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns <em>True</em> on success.
+   * Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setstickermaskposition}
    */
@@ -11668,7 +11668,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set the title of a created sticker set. Returns <em>True</em> on success.
+   * Use this method to set the title of a created sticker set. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setstickersettitle}
    */
@@ -11685,7 +11685,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns <em>True</em> on success.
+   * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setstickersetthumbnail}
    */
@@ -11710,7 +11710,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set the thumbnail of a custom emoji sticker set. Returns <em>True</em> on success.
+   * Use this method to set the thumbnail of a custom emoji sticker set. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail}
    */
@@ -11727,7 +11727,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a sticker set that was created by the bot. Returns <em>True</em> on success.
+   * Use this method to delete a sticker set that was created by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletestickerset}
    */
@@ -11746,7 +11746,7 @@ export interface ApiMethods {
  * 
  * <a href="#inputrichmessage">Rich messages</a> support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting, or explicit <a href="#inputrichblock">blocks</a>.
  * 
- * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass <em>True</em> in the <em>skip_entity_detection</em> field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
+ * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass `true` in the <em>skip_entity_detection</em> field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
  *
  * When <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting is used, you can use links in the form <code>tg://photo?id=...</code>, <code>tg://video?id=...</code>, and <code>tg://audio?id=...</code> instead of an HTTP URL to reuse previously uploaded files or upload a new file.
  *
@@ -12046,7 +12046,7 @@ export interface RichMessage {
    */
   blocks: RichBlock[];
   /**
-   * <em>True</em>, if the rich message must be shown right-to-left
+   * `true`, if the rich message must be shown right-to-left
    */
   is_rtl?: boolean;
 }
@@ -12073,11 +12073,11 @@ export interface InputRichMessage {
    */
   media?: InputRichMessageMedia[];
   /**
-   * Pass <em>True</em> if the rich message must be shown right-to-left
+   * Pass `true` if the rich message must be shown right-to-left
    */
   is_rtl?: boolean;
   /**
-   * Pass <em>True</em> to skip automatic detection of entities (e.g., URLs, email addresses, username mentions, hashtags, cashtags, bot commands, or phone numbers) in the text
+   * Pass `true` to skip automatic detection of entities (e.g., URLs, email addresses, username mentions, hashtags, cashtags, bot commands, or phone numbers) in the text
    */
   skip_entity_detection?: boolean;
 }
@@ -12132,7 +12132,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -12155,7 +12155,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
+   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendrichmessagedraft}
    */
@@ -12696,7 +12696,7 @@ export interface RichBlockTableCell {
    */
   text?: RichText;
   /**
-   * <em>True</em>, if the cell is a header cell
+   * `true`, if the cell is a header cell
    */
   is_header?: true;
   /**
@@ -12731,11 +12731,11 @@ export interface RichBlockListItem {
    */
   blocks: RichBlock[];
   /**
-   * <em>True</em>, if the item has a checkbox
+   * `true`, if the item has a checkbox
    */
   has_checkbox?: true;
   /**
-   * <em>True</em>, if the item has a checked checkbox
+   * `true`, if the item has a checked checkbox
    */
   is_checked?: true;
   /**
@@ -13011,11 +13011,11 @@ export interface RichBlockTable {
    */
   cells: RichBlockTableCell[][];
   /**
-   * <em>True</em>, if the table has borders
+   * `true`, if the table has borders
    */
   is_bordered?: true;
   /**
-   * <em>True</em>, if the table is striped
+   * `true`, if the table is striped
    */
   is_striped?: true;
   /**
@@ -13042,7 +13042,7 @@ export interface RichBlockDetails {
    */
   blocks: RichBlock[];
   /**
-   * <em>True</em>, if the content of the block is visible by default
+   * `true`, if the content of the block is visible by default
    */
   is_open?: true;
 }
@@ -13092,7 +13092,7 @@ export interface RichBlockAnimation {
    */
   animation: Animation;
   /**
-   * <em>True</em>, if the media preview is covered by a spoiler animation
+   * `true`, if the media preview is covered by a spoiler animation
    */
   has_spoiler?: true;
   /**
@@ -13134,7 +13134,7 @@ export interface RichBlockPhoto {
    */
   photo: PhotoSize[];
   /**
-   * <em>True</em>, if the media preview is covered by a spoiler animation
+   * `true`, if the media preview is covered by a spoiler animation
    */
   has_spoiler?: true;
   /**
@@ -13157,7 +13157,7 @@ export interface RichBlockVideo {
    */
   video: Video;
   /**
-   * <em>True</em>, if the media preview is covered by a spoiler animation
+   * `true`, if the media preview is covered by a spoiler animation
    */
   has_spoiler?: true;
   /**
@@ -13210,11 +13210,11 @@ export interface InputRichBlockListItem {
    */
   blocks: InputRichBlock[];
   /**
-   * Pass <em>True</em> if the item has a checkbox
+   * Pass `true` if the item has a checkbox
    */
   has_checkbox?: true;
   /**
-   * Pass <em>True</em> if the item has a checked checkbox
+   * Pass `true` if the item has a checked checkbox
    */
   is_checked?: true;
   /**
@@ -13490,11 +13490,11 @@ export interface InputRichBlockTable {
    */
   cells: RichBlockTableCell[][];
   /**
-   * Pass <em>True</em> if the table has borders
+   * Pass `true` if the table has borders
    */
   is_bordered?: true;
   /**
-   * Pass <em>True</em> if the table is striped
+   * Pass `true` if the table is striped
    */
   is_striped?: true;
   /**
@@ -13521,7 +13521,7 @@ export interface InputRichBlockDetails {
    */
   blocks: InputRichBlock[];
   /**
-   * Pass <em>True</em> if the content of the block is visible by default
+   * Pass `true` if the content of the block is visible by default
    */
   is_open?: true;
 }
@@ -13700,7 +13700,7 @@ export interface InlineQuery {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than <strong>50</strong> results per query are allowed.
+   * Use this method to send answers to an inline query. On success, `true` is returned.<br>No more than <strong>50</strong> results per query are allowed.
    *
    * @see {@link https://core.telegram.org/bots/api#answerinlinequery}
    */
@@ -13718,7 +13718,7 @@ export interface ApiMethods {
      */
     cache_time?: number;
     /**
-     * Pass <em>True</em> if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.
+     * Pass `true` if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.
      */
     is_personal?: boolean;
     /**
@@ -13897,7 +13897,7 @@ export interface InlineQueryResultPhoto {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -13964,7 +13964,7 @@ export interface InlineQueryResultGif {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -14031,7 +14031,7 @@ export interface InlineQueryResultMpeg4Gif {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -14088,7 +14088,7 @@ export interface InlineQueryResultVideo {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -14520,7 +14520,7 @@ export interface InlineQueryResultCachedPhoto {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -14567,7 +14567,7 @@ export interface InlineQueryResultCachedGif {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -14614,7 +14614,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -14739,7 +14739,7 @@ export interface InlineQueryResultCachedVideo {
    */
   caption_entities?: MessageEntity[];
   /**
-   * Pass <em>True</em> if the caption must be shown above the message media
+   * Pass `true` if the caption must be shown above the message media
    */
   show_caption_above_media?: boolean;
   /**
@@ -15038,31 +15038,31 @@ export interface InputInvoiceMessageContent {
    */
   photo_height?: number;
   /**
-   * Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Pass `true` if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   need_name?: boolean;
   /**
-   * Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Pass `true` if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   need_phone_number?: boolean;
   /**
-   * Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Pass `true` if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   need_email?: boolean;
   /**
-   * Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Pass `true` if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   need_shipping_address?: boolean;
   /**
-   * Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Pass `true` if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   send_phone_number_to_provider?: boolean;
   /**
-   * Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Pass `true` if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   send_email_to_provider?: boolean;
   /**
-   * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Pass `true` if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   is_flexible?: boolean;
 }
@@ -15172,31 +15172,31 @@ export interface ApiMethods {
      */
     photo_height?: number;
     /**
-     * Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_name?: boolean;
     /**
-     * Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_phone_number?: boolean;
     /**
-     * Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_email?: boolean;
     /**
-     * Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_shipping_address?: boolean;
     /**
-     * Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     send_phone_number_to_provider?: boolean;
     /**
-     * Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     send_email_to_provider?: boolean;
     /**
-     * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     is_flexible?: boolean;
     /**
@@ -15208,7 +15208,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -15231,7 +15231,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to create a link for an invoice. Returns the created invoice link as <em>String</em> on success.
+   * Use this method to create a link for an invoice. Returns the created invoice link as `string` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#createinvoicelink}
    */
@@ -15297,38 +15297,38 @@ export interface ApiMethods {
      */
     photo_height?: number;
     /**
-     * Pass <em>True</em> if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s full name to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_name?: boolean;
     /**
-     * Pass <em>True</em> if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s phone number to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_phone_number?: boolean;
     /**
-     * Pass <em>True</em> if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s email address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_email?: boolean;
     /**
-     * Pass <em>True</em> if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if you require the user&#39;s shipping address to complete the order. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     need_shipping_address?: boolean;
     /**
-     * Pass <em>True</em> if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if the user&#39;s phone number should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     send_phone_number_to_provider?: boolean;
     /**
-     * Pass <em>True</em> if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if the user&#39;s email address should be sent to the provider. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     send_email_to_provider?: boolean;
     /**
-     * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Pass `true` if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     is_flexible?: boolean;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, <em>True</em> is returned.
+   * If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#answershippingquery}
    */
@@ -15338,22 +15338,22 @@ export interface ApiMethods {
      */
     shipping_query_id: string;
     /**
-     * Pass <em>True</em> if delivery to the specified address is possible and <em>False</em> if there are any problems (for example, if delivery to the specified address is not possible)
+     * Pass `true` if delivery to the specified address is possible and `false` if there are any problems (for example, if delivery to the specified address is not possible)
      */
     ok: boolean;
     /**
-     * Required if <em>ok</em> is <em>True</em>. A JSON-serialized Array of available shipping options.
+     * Required if <em>ok</em> is `true`. A JSON-serialized Array of available shipping options.
      */
     shipping_options?: ShippingOption[];
     /**
-     * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
+     * Required if <em>ok</em> is `false`. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
      */
     error_message?: string;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, <em>True</em> is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+   * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, `true` is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
    *
    * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
    */
@@ -15363,11 +15363,11 @@ export interface ApiMethods {
      */
     pre_checkout_query_id: string;
     /**
-     * Specify <em>True</em> if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use <em>False</em> if there are any problems.
+     * Specify `true` if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use `false` if there are any problems.
      */
     ok: boolean;
     /**
-     * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.
+     * Required if <em>ok</em> is `false`. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.
      */
     error_message?: string;
   }): never;
@@ -15399,7 +15399,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns <em>True</em> on success.
+   * Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#refundstarpayment}
    */
@@ -15416,7 +15416,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns <em>True</em> on success.
+   * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#edituserstarsubscription}
    */
@@ -15430,7 +15430,7 @@ export interface ApiMethods {
      */
     telegram_payment_charge_id: string;
     /**
-     * Pass <em>True</em> to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass <em>False</em> to allow the user to re-enable a subscription that was previously canceled by the bot.
+     * Pass `true` to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass `false` to allow the user to re-enable a subscription that was previously canceled by the bot.
      */
     is_canceled: boolean;
   }): never;
@@ -15573,11 +15573,11 @@ export interface SuccessfulPayment {
    */
   subscription_expiration_date?: number;
   /**
-   * <em>True</em>, if the payment is a recurring payment for a subscription
+   * `true`, if the payment is a recurring payment for a subscription
    */
   is_recurring?: true;
   /**
-   * <em>True</em>, if the payment is the first payment for a subscription
+   * `true`, if the payment is the first payment for a subscription
    */
   is_first_recurring?: true;
   /**
@@ -16085,7 +16085,7 @@ export interface EncryptedCredentials {
 }
 export interface ApiMethods {
   /**
-   * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns <em>True</em> on success.
+   * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns `true` on success.
    *
    * Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
    *
@@ -16371,7 +16371,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -16427,7 +16427,7 @@ export interface Game {
 export type CallbackGame = Empty;
 export interface ApiMethods {
   /**
-   * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.
+   * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise `true` is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is `false`.
    *
    * @see {@link https://core.telegram.org/bots/api#setgamescore}
    */
@@ -16441,11 +16441,11 @@ export interface ApiMethods {
      */
     score: number;
     /**
-     * Pass <em>True</em> if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters.
+     * Pass `true` if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters.
      */
     force?: boolean;
     /**
-     * Pass <em>True</em> if the game message should not be automatically edited to include the current scoreboard
+     * Pass `true` if the game message should not be automatically edited to include the current scoreboard
      */
     disable_edit_message?: boolean;
     /**
