@@ -4188,11 +4188,10 @@ export interface UserProfilePhotos {
    * Total number of profile pictures the target user has
    */
   total_count: number;
-<tr>
-<td>photos</td>
-<td>Array of Array of <a href="#photosize">PhotoSize</a></td>
-<td>Requested profile pictures (in up to 4 sizes each)</td>
-</tr>
+  /**
+   * Requested profile pictures (in up to 4 sizes each)
+   */
+  photos: PhotoSize[][];
 </tbody>
 </table>
 }
@@ -4287,11 +4286,10 @@ export interface ReplyKeyboardMarkup {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>keyboard</td>
-<td>Array of Array of <a href="#keyboardbutton">KeyboardButton</a></td>
-<td>Array of button rows, each represented by an Array of <a href="#keyboardbutton">KeyboardButton</a> objects</td>
-</tr>
+  /**
+   * Array of button rows, each represented by an Array of <a href="#keyboardbutton">KeyboardButton</a> objects
+   */
+  keyboard: KeyboardButton[][];
   /**
    * Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to <em>False</em>, in which case the custom keyboard can be hidden and opened with a keyboard icon.
    */
@@ -4560,11 +4558,10 @@ export interface InlineKeyboardMarkup {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>inline_keyboard</td>
-<td>Array of Array of <a href="#inlinekeyboardbutton">InlineKeyboardButton</a></td>
-<td>Array of button rows, each represented by an Array of <a href="#inlinekeyboardbutton">InlineKeyboardButton</a> objects</td>
-</tr>
+  /**
+   * Array of button rows, each represented by an Array of <a href="#inlinekeyboardbutton">InlineKeyboardButton</a> objects
+   */
+  inline_keyboard: InlineKeyboardButton[][];
 </tbody>
 </table>
 }
@@ -18539,11 +18536,10 @@ export interface RichBlockTable {
    * Type of the block, always “table”
    */
   type: string;
-<tr>
-<td>cells</td>
-<td>Array of Array of <a href="#richblocktablecell">RichBlockTableCell</a></td>
-<td>Cells of the table</td>
-</tr>
+  /**
+   * Cells of the table
+   */
+  cells: RichBlockTableCell[][];
   /**
    * <em>True</em>, if the table has borders
    */
@@ -19215,11 +19211,10 @@ export interface InputRichBlockTable {
    * Type of the block, always “table”
    */
   type: string;
-<tr>
-<td>cells</td>
-<td>Array of Array of <a href="#richblocktablecell">RichBlockTableCell</a></td>
-<td>Cells of the table</td>
-</tr>
+  /**
+   * Cells of the table
+   */
+  cells: RichBlockTableCell[][];
   /**
    * Pass <em>True</em> if the table has borders
    */
