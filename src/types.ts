@@ -788,7 +788,7 @@ export interface User {
     /**
      * {@link https://en.wikipedia.org/wiki/IETF_language_tag | IETF language tag} of the user's language
      */
-    language_code?: string;
+    language_code?: LanguageCode;
     /**
      * `true`, if this user is a Telegram Premium user
      */
@@ -10370,7 +10370,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): true;
 }
 export interface ApiMethods {
@@ -10387,7 +10387,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): true;
 }
 export interface ApiMethods {
@@ -10404,7 +10404,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code or an empty string
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): BotCommand[];
 }
 export interface ApiMethods {
@@ -10421,7 +10421,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name.
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): true;
 }
 export interface ApiMethods {
@@ -10434,7 +10434,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code or an empty string
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): BotName;
 }
 export interface ApiMethods {
@@ -10451,7 +10451,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): true;
 }
 export interface ApiMethods {
@@ -10464,7 +10464,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code or an empty string
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): BotDescription;
 }
 export interface ApiMethods {
@@ -10481,7 +10481,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): true;
 }
 export interface ApiMethods {
@@ -10494,7 +10494,7 @@ export interface ApiMethods {
         /**
          * A two-letter ISO 639-1 language code or an empty string
          */
-        language_code?: string;
+        language_code?: LanguageCode;
     }): BotShortDescription;
 }
 export interface ApiMethods {
