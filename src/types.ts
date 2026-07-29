@@ -46,7 +46,9 @@ export interface ApiSuccess<T> {
 }
 // === GETTING UPDATES
 /**
- * This <a href="#available-types">object</a> represents an incoming update.<br>At most <strong>one</strong> of the optional fields can be present in any given update.
+ * This <a href="#available-types">object</a> represents an incoming update.
+ *
+ * At most <strong>one</strong> of the optional fields can be present in any given update.
  *
  * @see {@link https://core.telegram.org/bots/api#update}
  */
@@ -167,7 +169,10 @@ export interface ApiMethods {
   /**
    * Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.
    * 
-   * > <strong>Notes</strong><br><strong>1.</strong> This method will not work if an outgoing webhook is set up.<br><strong>2.</strong> In order to avoid getting duplicate updates, recalculate _offset_ after each server response.
+   * > <strong>Notes</strong>
+   * >
+   * > 1. This method will not work if an outgoing webhook is set up.
+   * > 2. In order to avoid getting duplicate updates, recalculate _offset_ after each server response.
    *
    * @see {@link https://core.telegram.org/bots/api#getupdates}
    */
@@ -185,7 +190,9 @@ export interface ApiMethods {
      */
     timeout?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+     *
+     * Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
      */
     allowed_updates?: string[];
   }): never;
@@ -196,7 +203,11 @@ export interface ApiMethods {
    *
    * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
    * 
-   * > <strong>Notes</strong><br><strong>1.</strong> You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br><strong>2.</strong> To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.<br><strong>3.</strong> Ports currently supported _for webhooks_: <strong>443, 80, 88, 8443</strong>.
+   * > <strong>Notes</strong>
+   * >
+   * > 1. You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.
+   * > 2. To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
+   * > 3. Ports currently supported _for webhooks_: <strong>443, 80, 88, 8443</strong>.
    *
    * > If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.
    *
@@ -220,7 +231,9 @@ export interface ApiMethods {
      */
     max_connections?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+     *
+     * Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
      */
     allowed_updates?: string[];
     /**
@@ -3430,7 +3443,9 @@ export interface ReplyKeyboardMarkup {
    */
   input_field_placeholder?: string;
   /**
-   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
+   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   *
+   * _Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
    */
   selective?: boolean;
 }
@@ -3608,7 +3623,9 @@ export interface ReplyKeyboardRemove {
    */
   remove_keyboard: true;
   /**
-   * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br>_Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
+   * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   *
+   * _Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
    */
   selective?: boolean;
 }
@@ -3662,7 +3679,9 @@ export interface InlineKeyboardButton {
    */
   switch_inline_query?: string;
   /**
-   * If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.
+   * If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.
+   *
+   * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.
    */
   switch_inline_query_current_chat?: string;
   /**
@@ -3674,11 +3693,15 @@ export interface InlineKeyboardButton {
    */
   copy_text?: CopyTextButton;
   /**
-   * Description of the game that will be launched when the user presses the button.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row.
+   * Description of the game that will be launched when the user presses the button.
+   *
+   * <strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row.
    */
   callback_game?: CallbackGame;
   /**
-   * Specify `true`, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
+   * Specify `true`, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.
+   *
+   * <strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
    */
   pay?: boolean;
 }
@@ -3695,7 +3718,9 @@ export interface InlineKeyboardButton {
  */
 export interface LoginUrl {
   /**
-   * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
+   * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.
+   *
+   * <strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
    */
   url: string;
   /**
@@ -6798,7 +6823,12 @@ export interface ApiMethods {
   
  * Note that Telegram clients will display an <strong>alert</strong> to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
  *
- * Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.<br>- _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.
+ * Message entities can be nested, providing following restrictions are met:
+ *
+ * - If two entities have common characters, then one of them is fully contained inside another.
+ * - _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.
+ * - _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.
+ * - All other entities can&#39;t contain each other.
  *
  * Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username. Please note:
  *
@@ -9598,7 +9628,9 @@ export interface ApiMethods {
      */
     show_alert?: boolean;
     /**
-     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">\@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.<br><br>Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
+     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">\@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.
+     *
+     * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
      */
     url?: string;
     /**
@@ -11146,7 +11178,19 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted _can_post_messages_ permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has _can_delete_messages_ administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has _can_manage_direct_messages_ administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns `true` on success.
+   * Use this method to delete a message, including service messages, with the following limitations:
+   *
+   * - A message can only be deleted if it was sent less than 48 hours ago.
+   * - Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.
+   * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
+   * - Bots can delete outgoing messages in private chats, groups, and supergroups.
+   * - Bots can delete incoming messages in private chats.
+   * - Bots granted _can_post_messages_ permissions can delete outgoing messages in channels.
+   * - If the bot is an administrator of a group, it can delete any message there.
+   * - If the bot has _can_delete_messages_ administrator right in a supergroup or a channel, it can delete any message there.
+   * - If the bot has _can_manage_direct_messages_ administrator right in a channel, it can delete any message in the corresponding direct messages chat.
+   *
+   * Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemessage}
    */
@@ -13700,7 +13744,9 @@ export interface InlineQuery {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send answers to an inline query. On success, `true` is returned.<br>No more than <strong>50</strong> results per query are allowed.
+   * Use this method to send answers to an inline query. On success, `true` is returned.
+   *
+   * No more than <strong>50</strong> results per query are allowed.
    *
    * @see {@link https://core.telegram.org/bots/api#answerinlinequery}
    */
@@ -13746,7 +13792,9 @@ export interface InlineQueryResultsButton {
    */
   web_app?: WebAppInfo;
   /**
-   * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
+   * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
+   *
+   * _Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
    */
   start_parameter?: string;
 }
