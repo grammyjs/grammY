@@ -10581,12 +10581,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>checklist</td>
-<td><a href="#inputchecklist">InputChecklist</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object for the checklist to send</td>
-</tr>
+    /**
+     * A JSON-serialized object for the checklist to send
+     */
+    checklist: InputChecklist;
     /**
      * Sends the message silently. Users will receive a notification with no sound.
      */
@@ -11017,12 +11015,10 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-<tr>
-<td>permissions</td>
-<td><a href="#chatpermissions">ChatPermissions</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object for new user permissions</td>
-</tr>
+    /**
+     * A JSON-serialized object for new user permissions
+     */
+    permissions: ChatPermissions;
     /**
      * Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
      */
@@ -11277,12 +11273,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>permissions</td>
-<td><a href="#chatpermissions">ChatPermissions</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object for new default chat permissions</td>
-</tr>
+    /**
+     * A JSON-serialized object for new default chat permissions
+     */
+    permissions: ChatPermissions;
     /**
      * Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
      */
@@ -11636,12 +11630,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>photo</td>
-<td><a href="#inputfile">InputFile</a></td>
-<td>Yes</td>
-<td>New chat photo, uploaded using multipart/form-data</td>
-</tr>
+    /**
+     * New chat photo, uploaded using multipart/form-data
+     */
+    photo: InputFile;
 </tbody>
 </table>
   }): never;
@@ -12448,12 +12440,10 @@ export interface ApiMethods {
      * Unique identifier for the query to be answered
      */
     guest_query_id: string;
-<tr>
-<td>result</td>
-<td><a href="#inlinequeryresult">InlineQueryResult</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object describing the message to be sent</td>
-</tr>
+    /**
+     * A JSON-serialized object describing the message to be sent
+     */
+    result: InlineQueryResult;
 </tbody>
 </table>
   }): never;
@@ -12862,12 +12852,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>photo</td>
-<td><a href="#inputprofilephoto">InputProfilePhoto</a></td>
-<td>Yes</td>
-<td>The new profile photo to set</td>
-</tr>
+    /**
+     * The new profile photo to set
+     */
+    photo: InputProfilePhoto;
 </tbody>
 </table>
   }): never;
@@ -13346,12 +13334,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection
      */
     business_connection_id: string;
-<tr>
-<td>photo</td>
-<td><a href="#inputprofilephoto">InputProfilePhoto</a></td>
-<td>Yes</td>
-<td>The new profile photo to set</td>
-</tr>
+    /**
+     * The new profile photo to set
+     */
+    photo: InputProfilePhoto;
     /**
      * Pass <em>True</em> to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.
      */
@@ -13410,12 +13396,10 @@ export interface ApiMethods {
      * Pass <em>True</em> if a button for sending a gift to the user or by the business account must always be shown in the input field
      */
     show_gift_button: boolean;
-<tr>
-<td>accepted_gift_types</td>
-<td><a href="#acceptedgifttypes">AcceptedGiftTypes</a></td>
-<td>Yes</td>
-<td>Types of gifts accepted by the business account</td>
-</tr>
+    /**
+     * Types of gifts accepted by the business account
+     */
+    accepted_gift_types: AcceptedGiftTypes;
 </tbody>
 </table>
   }): never;
@@ -13769,12 +13753,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection
      */
     business_connection_id: string;
-<tr>
-<td>content</td>
-<td><a href="#inputstorycontent">InputStoryContent</a></td>
-<td>Yes</td>
-<td>Content of the story</td>
-</tr>
+    /**
+     * Content of the story
+     */
+    content: InputStoryContent;
     /**
      * Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code>
      */
@@ -13877,12 +13859,10 @@ export interface ApiMethods {
      * Unique identifier of the story to edit
      */
     story_id: number;
-<tr>
-<td>content</td>
-<td><a href="#inputstorycontent">InputStoryContent</a></td>
-<td>Yes</td>
-<td>Content of the story</td>
-</tr>
+    /**
+     * Content of the story
+     */
+    content: InputStoryContent;
     /**
      * Caption of the story, 0-2048 characters after entities parsing
      */
@@ -13953,12 +13933,10 @@ export interface ApiMethods {
      * Unique identifier for the query to be answered
      */
     web_app_query_id: string;
-<tr>
-<td>result</td>
-<td><a href="#inlinequeryresult">InlineQueryResult</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object describing the message to be sent</td>
-</tr>
+    /**
+     * A JSON-serialized object describing the message to be sent
+     */
+    result: InlineQueryResult;
 </tbody>
 </table>
   }): never;
@@ -13982,12 +13960,10 @@ export interface ApiMethods {
      * Unique identifier of the target user that can use the prepared message
      */
     user_id: number;
-<tr>
-<td>result</td>
-<td><a href="#inlinequeryresult">InlineQueryResult</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object describing the message to be sent</td>
-</tr>
+    /**
+     * A JSON-serialized object describing the message to be sent
+     */
+    result: InlineQueryResult;
     /**
      * Pass <em>True</em> if the message can be sent to private chats with users
      */
@@ -14027,12 +14003,10 @@ export interface ApiMethods {
      * Unique identifier of the target user that can use the button
      */
     user_id: number;
-<tr>
-<td>button</td>
-<td><a href="#keyboardbutton">KeyboardButton</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object describing the button to be saved. The button must be of the type <em>request_users</em>, <em>request_chat</em>, or <em>request_managed_bot</em>.</td>
-</tr>
+    /**
+     * A JSON-serialized object describing the button to be saved. The button must be of the type <em>request_users</em>, <em>request_chat</em>, or <em>request_managed_bot</em>.
+     */
+    button: KeyboardButton;
 </tbody>
 </table>
   }): never;
@@ -14197,12 +14171,10 @@ export interface ApiMethods {
      * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
      */
     inline_message_id?: string;
-<tr>
-<td>media</td>
-<td><a href="#inputmedia">InputMedia</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object for the new media content of the message</td>
-</tr>
+    /**
+     * A JSON-serialized object for the new media content of the message
+     */
+    media: InputMedia;
     /**
      * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
@@ -14346,12 +14318,10 @@ export interface ApiMethods {
      * Unique identifier for the target message
      */
     message_id: number;
-<tr>
-<td>checklist</td>
-<td><a href="#inputchecklist">InputChecklist</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object for the new checklist</td>
-</tr>
+    /**
+     * A JSON-serialized object for the new checklist
+     */
+    checklist: InputChecklist;
     /**
      * A JSON-serialized object for the new <a href="/bots/features#inline-keyboards">inline keyboard</a> for the message
      */
@@ -14522,12 +14492,10 @@ export interface ApiMethods {
      * Identifier of the ephemeral message to edit
      */
     ephemeral_message_id: number;
-<tr>
-<td>media</td>
-<td><a href="#inputmedia">InputMedia</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object for the new media content of the message. A new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL.</td>
-</tr>
+    /**
+     * A JSON-serialized object for the new media content of the message. A new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL.
+     */
+    media: InputMedia;
     /**
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
@@ -15179,12 +15147,10 @@ export interface ApiMethods {
      * User identifier of sticker file owner
      */
     user_id: number;
-<tr>
-<td>sticker</td>
-<td><a href="#inputfile">InputFile</a></td>
-<td>Yes</td>
-<td>A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers"><a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a></a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+    /**
+     * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers"><a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a></a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a>
+     */
+    sticker: InputFile;
     /**
      * Format of the sticker, must be one of “static”, “animated”, “video”
      */
@@ -15261,12 +15227,10 @@ export interface ApiMethods {
      * Sticker set name
      */
     name: string;
-<tr>
-<td>sticker</td>
-<td><a href="#inputsticker">InputSticker</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn&#39;t changed.</td>
-</tr>
+    /**
+     * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn&#39;t changed.
+     */
+    sticker: InputSticker;
 </tbody>
 </table>
   }): never;
@@ -15348,12 +15312,10 @@ export interface ApiMethods {
      * File identifier of the replaced sticker
      */
     old_sticker: string;
-<tr>
-<td>sticker</td>
-<td><a href="#inputsticker">InputSticker</a></td>
-<td>Yes</td>
-<td>A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.</td>
-</tr>
+    /**
+     * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.
+     */
+    sticker: InputSticker;
 </tbody>
 </table>
   }): never;
@@ -15942,12 +15904,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>rich_message</td>
-<td><a href="#inputrichmessage">InputRichMessage</a></td>
-<td>Yes</td>
-<td>The message to be sent</td>
-</tr>
+    /**
+     * The message to be sent
+     */
+    rich_message: InputRichMessage;
     /**
      * Sends the message <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
      */
@@ -16009,12 +15969,10 @@ export interface ApiMethods {
      * Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
      */
     draft_id: number;
-<tr>
-<td>rich_message</td>
-<td><a href="#inputrichmessage">InputRichMessage</a></td>
-<td>Yes</td>
-<td>The partial message to be streamed. Direct upload of new files isn&#39;t supported.</td>
-</tr>
+    /**
+     * The partial message to be streamed. Direct upload of new files isn&#39;t supported.
+     */
+    rich_message: InputRichMessage;
 </tbody>
 </table>
   }): never;
