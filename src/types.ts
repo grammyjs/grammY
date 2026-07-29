@@ -1499,11 +1499,10 @@ export interface ReplyParameters {
    * Identifier of the message that will be replied to in the current chat, or in the chat <em>chat_id</em> if it is specified. Required if <em>ephemeral_message_id</em> isn&#39;t specified.
    */
   message_id?: number;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td><em>Optional</em>. If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format <code>@username</code>. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages.</td>
-</tr>
+  /**
+   * If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format <code>@username</code>. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages.
+   */
+  chat_id?: number | string;
   /**
    * Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if <em>message_id</em> isn&#39;t specified.
    */
