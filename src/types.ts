@@ -1,23 +1,42 @@
 // === MAKING REQUESTS
-<p>All queries to the Telegram Bot API must be served over HTTPS and need to be presented in this form: <code>https://api.telegram.org/bot&lt;token&gt;/METHOD_NAME</code>. Like this for example:</p>
-<pre><code>https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe</code></pre>
-<p>We support <strong>GET</strong> and <strong>POST</strong> HTTP methods. We support four ways of passing parameters in Bot API requests:</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Query_string">URL query string</a></li>
-<li>application/x-www-form-urlencoded</li>
-<li>application/json (except for uploading files)</li>
-<li>multipart/form-data (use to upload files)</li>
-</ul>
-<p>The response contains a JSON object, which always has a Boolean field &#39;ok&#39; and may have an optional String field &#39;description&#39; with a human-readable description of the result. If &#39;ok&#39; equals <em>True</em>, the request was successful and the result of the query can be found in the &#39;result&#39; field. In case of an unsuccessful request, &#39;ok&#39; equals <em>False</em> and the error is explained in the &#39;description&#39;. An Integer &#39;error_code&#39; field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field &#39;parameters&#39; of the type <a href="#responseparameters">ResponseParameters</a>, which can help to automatically handle the error.</p>
-<ul>
-<li>All methods in the Bot API are case-insensitive.</li>
-<li>All queries must be made using UTF-8.</li>
-</ul>
-<h4><a class="anchor" name="making-requests-when-getting-updates" href="#making-requests-when-getting-updates"><i class="anchor-icon"></i></a>Making requests when getting updates</h4>
-<p>If you&#39;re using <a href="#getting-updates"><strong>webhooks</strong></a>, you can perform a request to the Bot API while sending an answer to the webhook. Use either <em>application/json</em> or <em>application/x-www-form-urlencoded</em> or <em>multipart/form-data</em> response content type for passing parameters. Specify the method to be invoked in the <em>method</em> parameter of the request. It&#39;s not possible to know that such a request was successful or get its result.</p>
-<blockquote>
-<p>Please see our <a href="/bots/faq#how-can-i-make-requests-in-response-to-updates">FAQ</a> for examples.</p>
-</blockquote>
+/**
+ * Structure of an HTTP response body from the Bot API
+ */
+export type ApiResponse<T> = ApiError | ApiSuccess<T>
+/**
+ * Structure of an HTTP response body from the Bot API for a failed request
+ */
+export interface ApiError {
+    /**
+     * Indicates that the request has failed
+     */
+    ok: false;
+    /**
+     * Error code of the failing request, subject to change
+     */
+    error_code: number;
+    /**
+     * A human-readable explanation of the error
+     */
+    description: string;
+    /**
+     * Parameters which can help to automatically handle the error
+     */
+    parameters?: ResponseParameters;
+}
+/**
+ * Structure of an HTTP response body from the Bot API for a successful request
+ */
+export interface ApiSuccess<T> {
+    /**
+     * Indicates that the request has succeeded
+     */
+    ok: true;
+    /**
+     * Result of the query
+     */
+    result: T;
+}
 // === GETTING UPDATES
 <p>There are two mutually exclusive ways of receiving updates for your bot - the <a href="#getupdates">getUpdates</a> method on one hand and <a href="#setwebhook">webhooks</a> on the other. Incoming updates are stored on the server until the bot receives them either way, but they will not be kept longer than 24 hours.</p>
 <p>Regardless of which option you choose, you will receive JSON-serialized <a href="#update">Update</a> objects as a result.</p>
