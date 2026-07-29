@@ -431,16 +431,14 @@ export interface User {
    * <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language
    */
   language_code?: string;
-<tr>
-<td>is_premium</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if this user is a Telegram Premium user</td>
-</tr>
-<tr>
-<td>added_to_attachment_menu</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if this user added the bot to the attachment menu</td>
-</tr>
+  /**
+   * <em>True</em>, if this user is a Telegram Premium user
+   */
+  is_premium?: true;
+  /**
+   * <em>True</em>, if this user added the bot to the attachment menu
+   */
+  added_to_attachment_menu?: true;
 <tr>
 <td>can_join_groups</td>
 <td>Boolean</td>
@@ -531,16 +529,14 @@ export interface Chat {
    * Last name of the other party in a private chat
    */
   last_name?: string;
-<tr>
-<td>is_forum</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
-</tr>
-<tr>
-<td>is_direct_messages</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the chat is the direct messages chat of a channel</td>
-</tr>
+  /**
+   * <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
+   */
+  is_forum?: true;
+  /**
+   * <em>True</em>, if the chat is the direct messages chat of a channel
+   */
+  is_direct_messages?: true;
 </tbody>
 </table>
 }
@@ -581,16 +577,14 @@ export interface ChatFullInfo {
    * Last name of the other party in a private chat
    */
   last_name?: string;
-<tr>
-<td>is_forum</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)</td>
-</tr>
-<tr>
-<td>is_direct_messages</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the chat is the direct messages chat of a channel</td>
-</tr>
+  /**
+   * <em>True</em>, if the supergroup chat is a forum (has <a href="https://telegram.org/blog/topics-in-groups-collectible-usernames#topics-in-groups">topics</a> enabled)
+   */
+  is_forum?: true;
+  /**
+   * <em>True</em>, if the chat is the direct messages chat of a channel
+   */
+  is_direct_messages?: true;
   /**
    * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See <a href="#accent-colors">accent colors</a> for more details.
    */
@@ -668,26 +662,22 @@ export interface ChatFullInfo {
    * Bio of the other party in a private chat
    */
   bio?: string;
-<tr>
-<td>has_private_forwards</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if privacy settings of the other party in the private chat allows to use <code>tg://user?id=&lt;user_id&gt;</code> links only in chats with the user</td>
-</tr>
-<tr>
-<td>has_restricted_voice_and_video_messages</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the privacy settings of the other party restrict sending voice and video note messages in the private chat</td>
-</tr>
-<tr>
-<td>join_to_send_messages</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if users need to join the supergroup before they can send messages</td>
-</tr>
-<tr>
-<td>join_by_request</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators</td>
-</tr>
+  /**
+   * <em>True</em>, if privacy settings of the other party in the private chat allows to use <code>tg://user?id=&lt;user_id&gt;</code> links only in chats with the user
+   */
+  has_private_forwards?: true;
+  /**
+   * <em>True</em>, if the privacy settings of the other party restrict sending voice and video note messages in the private chat
+   */
+  has_restricted_voice_and_video_messages?: true;
+  /**
+   * <em>True</em>, if users need to join the supergroup before they can send messages
+   */
+  join_to_send_messages?: true;
+  /**
+   * <em>True</em>, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators
+   */
+  join_by_request?: true;
   /**
    * Description, for groups, supergroups and channel chats
    */
@@ -711,11 +701,10 @@ export interface ChatFullInfo {
 <td><a href="#acceptedgifttypes">AcceptedGiftTypes</a></td>
 <td>Information about types of gifts that are accepted by the chat or by the corresponding user for private chats</td>
 </tr>
-<tr>
-<td>can_send_paid_media</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.</td>
-</tr>
+  /**
+   * <em>True</em>, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.
+   */
+  can_send_paid_media?: true;
   /**
    * For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds
    */
@@ -728,35 +717,30 @@ export interface ChatFullInfo {
    * The time after which all messages sent to the chat will be automatically deleted; in seconds
    */
   message_auto_delete_time?: number;
-<tr>
-<td>has_aggressive_anti_spam_enabled</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.</td>
-</tr>
-<tr>
-<td>has_hidden_members</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if non-administrators can only get the list of bots and administrators in the chat</td>
-</tr>
-<tr>
-<td>has_protected_content</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if messages from the chat can&#39;t be forwarded to other chats</td>
-</tr>
-<tr>
-<td>has_visible_history</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if new chat members will have access to old messages; available only to chat administrators</td>
-</tr>
+  /**
+   * <em>True</em>, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.
+   */
+  has_aggressive_anti_spam_enabled?: true;
+  /**
+   * <em>True</em>, if non-administrators can only get the list of bots and administrators in the chat
+   */
+  has_hidden_members?: true;
+  /**
+   * <em>True</em>, if messages from the chat can&#39;t be forwarded to other chats
+   */
+  has_protected_content?: true;
+  /**
+   * <em>True</em>, if new chat members will have access to old messages; available only to chat administrators
+   */
+  has_visible_history?: true;
   /**
    * For supergroups, name of the group sticker set
    */
   sticker_set_name?: string;
-<tr>
-<td>can_set_sticker_set</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can change the group sticker set</td>
-</tr>
+  /**
+   * <em>True</em>, if the bot can change the group sticker set
+   */
+  can_set_sticker_set?: true;
   /**
    * For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.
    */
@@ -882,16 +866,14 @@ export interface Message {
 <td><a href="#messageorigin">MessageOrigin</a></td>
 <td><em>Optional</em>. Information about the original message for forwarded messages</td>
 </tr>
-<tr>
-<td>is_topic_message</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message is sent to a topic in a forum supergroup or a private chat with the bot</td>
-</tr>
-<tr>
-<td>is_automatic_forward</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message is a channel post that was automatically forwarded to the connected discussion group</td>
-</tr>
+  /**
+   * <em>True</em>, if the message is sent to a topic in a forum supergroup or a private chat with the bot
+   */
+  is_topic_message?: true;
+  /**
+   * <em>True</em>, if the message is a channel post that was automatically forwarded to the connected discussion group
+   */
+  is_automatic_forward?: true;
 <tr>
 <td>reply_to_message</td>
 <td><a href="#message">Message</a></td>
@@ -939,21 +921,18 @@ export interface Message {
    * Date the message was last edited in Unix time
    */
   edit_date?: number;
-<tr>
-<td>has_protected_content</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message can&#39;t be forwarded</td>
-</tr>
-<tr>
-<td>is_from_offline</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message</td>
-</tr>
-<tr>
-<td>is_paid_post</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.</td>
-</tr>
+  /**
+   * <em>True</em>, if the message can&#39;t be forwarded
+   */
+  has_protected_content?: true;
+  /**
+   * <em>True</em>, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
+   */
+  is_from_offline?: true;
+  /**
+   * <em>True</em>, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.
+   */
+  is_paid_post?: true;
   /**
    * The unique identifier inside this chat of a media message group this message belongs to
    */
@@ -1058,16 +1037,14 @@ export interface Message {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption</td>
 </tr>
-<tr>
-<td>show_caption_above_media</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the caption must be shown above the message media</td>
-</tr>
-<tr>
-<td>has_media_spoiler</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message media is covered by a spoiler animation</td>
-</tr>
+  /**
+   * <em>True</em>, if the caption must be shown above the message media
+   */
+  show_caption_above_media?: true;
+  /**
+   * <em>True</em>, if the message media is covered by a spoiler animation
+   */
+  has_media_spoiler?: true;
 <tr>
 <td>checklist</td>
 <td><a href="#checklist">Checklist</a></td>
@@ -1132,26 +1109,22 @@ export interface Message {
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. A chat photo was change to this value</td>
 </tr>
-<tr>
-<td>delete_chat_photo</td>
-<td>True</td>
-<td><em>Optional</em>. Service message: the chat photo was deleted</td>
-</tr>
-<tr>
-<td>group_chat_created</td>
-<td>True</td>
-<td><em>Optional</em>. Service message: the group has been created</td>
-</tr>
-<tr>
-<td>supergroup_chat_created</td>
-<td>True</td>
-<td><em>Optional</em>. Service message: the supergroup has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.</td>
-</tr>
-<tr>
-<td>channel_chat_created</td>
-<td>True</td>
-<td><em>Optional</em>. Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.</td>
-</tr>
+  /**
+   * Service message: the chat photo was deleted
+   */
+  delete_chat_photo?: true;
+  /**
+   * Service message: the group has been created
+   */
+  group_chat_created?: true;
+  /**
+   * Service message: the supergroup has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
+   */
+  supergroup_chat_created?: true;
+  /**
+   * Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
+   */
+  channel_chat_created?: true;
 <tr>
 <td>message_auto_delete_timer_changed</td>
 <td><a href="#messageautodeletetimerchanged">MessageAutoDeleteTimerChanged</a></td>
@@ -1529,11 +1502,10 @@ export interface TextQuote {
    * Approximate quote position in the original message in UTF-16 code units as specified by the sender
    */
   position: number;
-<tr>
-<td>is_manual</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.</td>
-</tr>
+  /**
+   * <em>True</em>, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.
+   */
+  is_manual?: true;
 </tbody>
 </table>
 }
@@ -1624,11 +1596,10 @@ export interface ExternalReplyInfo {
 <td><a href="#voice">Voice</a></td>
 <td><em>Optional</em>. Message is a voice message, information about the file</td>
 </tr>
-<tr>
-<td>has_media_spoiler</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the message media is covered by a spoiler animation</td>
-</tr>
+  /**
+   * <em>True</em>, if the message media is covered by a spoiler animation
+   */
+  has_media_spoiler?: true;
 <tr>
 <td>checklist</td>
 <td><a href="#checklist">Checklist</a></td>
@@ -2964,16 +2935,14 @@ export interface Checklist {
 <td>Array of <a href="#checklisttask">ChecklistTask</a></td>
 <td>List of tasks in the checklist</td>
 </tr>
-<tr>
-<td>others_can_add_tasks</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if users other than the creator of the list can add tasks to the list</td>
-</tr>
-<tr>
-<td>others_can_mark_tasks_as_done</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if users other than the creator of the list can mark tasks as done or not done</td>
-</tr>
+  /**
+   * <em>True</em>, if users other than the creator of the list can add tasks to the list
+   */
+  others_can_add_tasks?: true;
+  /**
+   * <em>True</em>, if users other than the creator of the list can mark tasks as done or not done
+   */
+  others_can_mark_tasks_as_done?: true;
 </tbody>
 </table>
 }
@@ -3540,16 +3509,14 @@ export interface BackgroundTypeWallpaper {
    * Dimming of the background in dark themes, as a percentage; 0-100
    */
   dark_theme_dimming: number;
-<tr>
-<td>is_blurred</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12</td>
-</tr>
-<tr>
-<td>is_moving</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the background moves slightly when the device is tilted</td>
-</tr>
+  /**
+   * <em>True</em>, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12
+   */
+  is_blurred?: true;
+  /**
+   * <em>True</em>, if the background moves slightly when the device is tilted
+   */
+  is_moving?: true;
 </tbody>
 </table>
 }
@@ -3584,16 +3551,14 @@ export interface BackgroundTypePattern {
    * Intensity of the pattern when it is shown above the filled background; 0-100
    */
   intensity: number;
-<tr>
-<td>is_inverted</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only.</td>
-</tr>
-<tr>
-<td>is_moving</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the background moves slightly when the device is tilted</td>
-</tr>
+  /**
+   * <em>True</em>, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only.
+   */
+  is_inverted?: true;
+  /**
+   * <em>True</em>, if the background moves slightly when the device is tilted
+   */
+  is_moving?: true;
 </tbody>
 </table>
 }
@@ -3749,11 +3714,10 @@ export interface ForumTopicCreated {
    * Unique identifier of the custom emoji shown as the topic icon
    */
   icon_custom_emoji_id?: string;
-<tr>
-<td>is_name_implicit</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot</td>
-</tr>
+  /**
+   * <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
+   */
+  is_name_implicit?: true;
 </tbody>
 </table>
 }
@@ -4222,16 +4186,14 @@ export interface Giveaway {
    * The number of users which are supposed to be selected as winners of the giveaway
    */
   winner_count: number;
-<tr>
-<td>only_new_members</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if only users who join the chats after the giveaway started should be eligible to win</td>
-</tr>
-<tr>
-<td>has_public_winners</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the list of giveaway winners will be visible to everyone</td>
-</tr>
+  /**
+   * <em>True</em>, if only users who join the chats after the giveaway started should be eligible to win
+   */
+  only_new_members?: true;
+  /**
+   * <em>True</em>, if the list of giveaway winners will be visible to everyone
+   */
+  has_public_winners?: true;
   /**
    * Description of additional giveaway prize
    */
@@ -4303,16 +4265,14 @@ export interface GiveawayWinners {
    * Number of undistributed prizes
    */
   unclaimed_prize_count?: number;
-<tr>
-<td>only_new_members</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if only users who had joined the chats after the giveaway started were eligible to win</td>
-</tr>
-<tr>
-<td>was_refunded</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the giveaway was canceled because the payment for it was refunded</td>
-</tr>
+  /**
+   * <em>True</em>, if only users who had joined the chats after the giveaway started were eligible to win
+   */
+  only_new_members?: true;
+  /**
+   * <em>True</em>, if the giveaway was canceled because the payment for it was refunded
+   */
+  was_refunded?: true;
   /**
    * Description of additional giveaway prize
    */
@@ -4346,11 +4306,10 @@ export interface GiveawayCompleted {
 <td><a href="#message">Message</a></td>
 <td><em>Optional</em>. Message with the giveaway that was completed, if it wasn&#39;t deleted</td>
 </tr>
-<tr>
-<td>is_star_giveaway</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.</td>
-</tr>
+  /**
+   * <em>True</em>, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.
+   */
+  is_star_giveaway?: true;
 </tbody>
 </table>
 }
@@ -6649,11 +6608,10 @@ export interface ForumTopic {
    * Unique identifier of the custom emoji shown as the topic icon
    */
   icon_custom_emoji_id?: string;
-<tr>
-<td>is_name_implicit</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot</td>
-</tr>
+  /**
+   * <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
+   */
+  is_name_implicit?: true;
 </tbody>
 </table>
 }
@@ -6715,16 +6673,14 @@ export interface Gift {
    * The number of Telegram Stars that must be paid to upgrade the gift to a unique one
    */
   upgrade_star_count?: number;
-<tr>
-<td>is_premium</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can only be purchased by Telegram Premium subscribers</td>
-</tr>
-<tr>
-<td>has_colors</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can be used (after being upgraded) to customize a user&#39;s appearance</td>
-</tr>
+  /**
+   * <em>True</em>, if the gift can only be purchased by Telegram Premium subscribers
+   */
+  is_premium?: true;
+  /**
+   * <em>True</em>, if the gift can be used (after being upgraded) to customize a user&#39;s appearance
+   */
+  has_colors?: true;
   /**
    * The total number of gifts of this type that can be sent by all users; for limited gifts only
    */
@@ -6988,21 +6944,18 @@ export interface UniqueGift {
 <td><a href="#uniquegiftbackdrop">UniqueGiftBackdrop</a></td>
 <td>Backdrop of the gift</td>
 </tr>
-<tr>
-<td>is_premium</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers</td>
-</tr>
-<tr>
-<td>is_burned</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift was used to craft another gift and isn&#39;t available anymore</td>
-</tr>
-<tr>
-<td>is_from_blockchain</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift is assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram</td>
-</tr>
+  /**
+   * <em>True</em>, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers
+   */
+  is_premium?: true;
+  /**
+   * <em>True</em>, if the gift was used to craft another gift and isn&#39;t available anymore
+   */
+  is_burned?: true;
+  /**
+   * <em>True</em>, if the gift is assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+   */
+  is_from_blockchain?: true;
 <tr>
 <td>colors</td>
 <td><a href="#uniquegiftcolors">UniqueGiftColors</a></td>
@@ -7046,16 +6999,14 @@ export interface GiftInfo {
    * Number of Telegram Stars that were prepaid for the ability to upgrade the gift
    */
   prepaid_upgrade_star_count?: number;
-<tr>
-<td>is_upgrade_separate</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift&#39;s upgrade was purchased after the gift was sent</td>
-</tr>
-<tr>
-<td>can_be_upgraded</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can be upgraded to a unique gift</td>
-</tr>
+  /**
+   * <em>True</em>, if the gift&#39;s upgrade was purchased after the gift was sent
+   */
+  is_upgrade_separate?: true;
+  /**
+   * <em>True</em>, if the gift can be upgraded to a unique gift
+   */
+  can_be_upgraded?: true;
   /**
    * Text of the message that was added to the gift
    */
@@ -7065,11 +7016,10 @@ export interface GiftInfo {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities that appear in the text</td>
 </tr>
-<tr>
-<td>is_private</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
-</tr>
+  /**
+   * <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
+   */
+  is_private?: true;
   /**
    * Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.
    */
@@ -7175,26 +7125,22 @@ export interface OwnedGiftRegular {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities that appear in the text</td>
 </tr>
-<tr>
-<td>is_private</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
-</tr>
-<tr>
-<td>is_saved</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
-</tr>
-<tr>
-<td>can_be_upgraded</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only</td>
-</tr>
-<tr>
-<td>was_refunded</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift was refunded and isn&#39;t available anymore</td>
-</tr>
+  /**
+   * <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
+   */
+  is_private?: true;
+  /**
+   * <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
+   */
+  is_saved?: true;
+  /**
+   * <em>True</em>, if the gift can be upgraded to a unique gift; for gifts received on behalf of business accounts only
+   */
+  can_be_upgraded?: true;
+  /**
+   * <em>True</em>, if the gift was refunded and isn&#39;t available anymore
+   */
+  was_refunded?: true;
   /**
    * Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars; for gifts received on behalf of business accounts only
    */
@@ -7203,11 +7149,10 @@ export interface OwnedGiftRegular {
    * Number of Telegram Stars that were paid for the ability to upgrade the gift
    */
   prepaid_upgrade_star_count?: number;
-<tr>
-<td>is_upgrade_separate</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift&#39;s upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only</td>
-</tr>
+  /**
+   * <em>True</em>, if the gift&#39;s upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only
+   */
+  is_upgrade_separate?: true;
   /**
    * Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.
    */
@@ -7250,16 +7195,14 @@ export interface OwnedGiftUnique {
    * Date the gift was sent in Unix time
    */
   send_date: number;
-<tr>
-<td>is_saved</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only</td>
-</tr>
-<tr>
-<td>can_be_transferred</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only</td>
-</tr>
+  /**
+   * <em>True</em>, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
+   */
+  is_saved?: true;
+  /**
+   * <em>True</em>, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only
+   */
+  can_be_transferred?: true;
   /**
    * Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift
    */
@@ -7856,11 +7799,10 @@ export interface ChatBoostSourceGiveaway {
    * The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
    */
   prize_star_count?: number;
-<tr>
-<td>is_unclaimed</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the giveaway was completed, but there was no user to win the prize</td>
-</tr>
+  /**
+   * <em>True</em>, if the giveaway was completed, but there was no user to win the prize
+   */
+  is_unclaimed?: true;
 </tbody>
 </table>
 }
@@ -8033,76 +7975,62 @@ export interface BusinessBotRights {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>can_reply</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours</td>
-</tr>
-<tr>
-<td>can_read_messages</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can mark incoming private messages as read</td>
-</tr>
-<tr>
-<td>can_delete_sent_messages</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can delete messages sent by the bot</td>
-</tr>
-<tr>
-<td>can_delete_all_messages</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can delete all private messages in managed chats</td>
-</tr>
-<tr>
-<td>can_edit_name</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the first and last name of the business account</td>
-</tr>
-<tr>
-<td>can_edit_bio</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the bio of the business account</td>
-</tr>
-<tr>
-<td>can_edit_profile_photo</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the profile photo of the business account</td>
-</tr>
-<tr>
-<td>can_edit_username</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can edit the username of the business account</td>
-</tr>
-<tr>
-<td>can_change_gift_settings</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can change the privacy settings pertaining to gifts for the business account</td>
-</tr>
-<tr>
-<td>can_view_gifts_and_stars</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can view gifts and the amount of Telegram Stars owned by the business account</td>
-</tr>
-<tr>
-<td>can_convert_gifts_to_stars</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can convert regular gifts owned by the business account to Telegram Stars</td>
-</tr>
-<tr>
-<td>can_transfer_and_upgrade_gifts</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can transfer and upgrade gifts owned by the business account</td>
-</tr>
-<tr>
-<td>can_transfer_stars</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts</td>
-</tr>
-<tr>
-<td>can_manage_stories</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the bot can post, edit and delete stories on behalf of the business account</td>
-</tr>
+  /**
+   * <em>True</em>, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours
+   */
+  can_reply?: true;
+  /**
+   * <em>True</em>, if the bot can mark incoming private messages as read
+   */
+  can_read_messages?: true;
+  /**
+   * <em>True</em>, if the bot can delete messages sent by the bot
+   */
+  can_delete_sent_messages?: true;
+  /**
+   * <em>True</em>, if the bot can delete all private messages in managed chats
+   */
+  can_delete_all_messages?: true;
+  /**
+   * <em>True</em>, if the bot can edit the first and last name of the business account
+   */
+  can_edit_name?: true;
+  /**
+   * <em>True</em>, if the bot can edit the bio of the business account
+   */
+  can_edit_bio?: true;
+  /**
+   * <em>True</em>, if the bot can edit the profile photo of the business account
+   */
+  can_edit_profile_photo?: true;
+  /**
+   * <em>True</em>, if the bot can edit the username of the business account
+   */
+  can_edit_username?: true;
+  /**
+   * <em>True</em>, if the bot can change the privacy settings pertaining to gifts for the business account
+   */
+  can_change_gift_settings?: true;
+  /**
+   * <em>True</em>, if the bot can view gifts and the amount of Telegram Stars owned by the business account
+   */
+  can_view_gifts_and_stars?: true;
+  /**
+   * <em>True</em>, if the bot can convert regular gifts owned by the business account to Telegram Stars
+   */
+  can_convert_gifts_to_stars?: true;
+  /**
+   * <em>True</em>, if the bot can transfer and upgrade gifts owned by the business account
+   */
+  can_transfer_and_upgrade_gifts?: true;
+  /**
+   * <em>True</em>, if the bot can transfer Telegram Stars received by the business account to its own account, or use them to upgrade and transfer gifts
+   */
+  can_transfer_stars?: true;
+  /**
+   * <em>True</em>, if the bot can post, edit and delete stories on behalf of the business account
+   */
+  can_manage_stories?: true;
 </tbody>
 </table>
 }
@@ -16730,11 +16658,10 @@ export interface Sticker {
    * For custom emoji stickers, unique identifier of the custom emoji
    */
   custom_emoji_id?: string;
-<tr>
-<td>needs_repainting</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places</td>
-</tr>
+  /**
+   * <em>True</em>, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places
+   */
+  needs_repainting?: true;
   /**
    * File size in bytes
    */
@@ -18743,11 +18670,10 @@ export interface RichBlockTableCell {
 <td><a href="#richtext">RichText</a></td>
 <td><em>Optional</em>. Text in the cell. If omitted, then the cell is invisible.</td>
 </tr>
-<tr>
-<td>is_header</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the cell is a header cell</td>
-</tr>
+  /**
+   * <em>True</em>, if the cell is a header cell
+   */
+  is_header?: true;
   /**
    * The number of columns the cell spans if it is bigger than 1
    */
@@ -18789,16 +18715,14 @@ export interface RichBlockListItem {
 <td>Array of <a href="#richblock">RichBlock</a></td>
 <td>The content of the item</td>
 </tr>
-<tr>
-<td>has_checkbox</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the item has a checkbox</td>
-</tr>
-<tr>
-<td>is_checked</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the item has a checked checkbox</td>
-</tr>
+  /**
+   * <em>True</em>, if the item has a checkbox
+   */
+  has_checkbox?: true;
+  /**
+   * <em>True</em>, if the item has a checked checkbox
+   */
+  is_checked?: true;
   /**
    * For ordered lists, the numeric value of the item label
    */
@@ -19200,16 +19124,14 @@ export interface RichBlockTable {
 <td>Array of Array of <a href="#richblocktablecell">RichBlockTableCell</a></td>
 <td>Cells of the table</td>
 </tr>
-<tr>
-<td>is_bordered</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the table has borders</td>
-</tr>
-<tr>
-<td>is_striped</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the table is striped</td>
-</tr>
+  /**
+   * <em>True</em>, if the table has borders
+   */
+  is_bordered?: true;
+  /**
+   * <em>True</em>, if the table is striped
+   */
+  is_striped?: true;
 <tr>
 <td>caption</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19245,11 +19167,10 @@ export interface RichBlockDetails {
 <td>Array of <a href="#richblock">RichBlock</a></td>
 <td>Content of the block</td>
 </tr>
-<tr>
-<td>is_open</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the content of the block is visible by default</td>
-</tr>
+  /**
+   * <em>True</em>, if the content of the block is visible by default
+   */
+  is_open?: true;
 </tbody>
 </table>
 }
@@ -19317,11 +19238,10 @@ export interface RichBlockAnimation {
 <td><a href="#animation">Animation</a></td>
 <td>The animation</td>
 </tr>
-<tr>
-<td>has_spoiler</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the media preview is covered by a spoiler animation</td>
-</tr>
+  /**
+   * <em>True</em>, if the media preview is covered by a spoiler animation
+   */
+  has_spoiler?: true;
 <tr>
 <td>caption</td>
 <td><a href="#richblockcaption">RichBlockCaption</a></td>
@@ -19382,11 +19302,10 @@ export interface RichBlockPhoto {
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td>Available sizes of the photo</td>
 </tr>
-<tr>
-<td>has_spoiler</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the media preview is covered by a spoiler animation</td>
-</tr>
+  /**
+   * <em>True</em>, if the media preview is covered by a spoiler animation
+   */
+  has_spoiler?: true;
 <tr>
 <td>caption</td>
 <td><a href="#richblockcaption">RichBlockCaption</a></td>
@@ -19417,11 +19336,10 @@ export interface RichBlockVideo {
 <td><a href="#video">Video</a></td>
 <td>The video</td>
 </tr>
-<tr>
-<td>has_spoiler</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the media preview is covered by a spoiler animation</td>
-</tr>
+  /**
+   * <em>True</em>, if the media preview is covered by a spoiler animation
+   */
+  has_spoiler?: true;
 <tr>
 <td>caption</td>
 <td><a href="#richblockcaption">RichBlockCaption</a></td>
@@ -19503,16 +19421,14 @@ export interface InputRichBlockListItem {
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
 <td>The content of the item</td>
 </tr>
-<tr>
-<td>has_checkbox</td>
-<td>True</td>
-<td><em>Optional</em>. Pass <em>True</em> if the item has a checkbox</td>
-</tr>
-<tr>
-<td>is_checked</td>
-<td>True</td>
-<td><em>Optional</em>. Pass <em>True</em> if the item has a checked checkbox</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the item has a checkbox
+   */
+  has_checkbox?: true;
+  /**
+   * Pass <em>True</em> if the item has a checked checkbox
+   */
+  is_checked?: true;
   /**
    * For ordered lists, the numeric value of the item label
    */
@@ -19914,16 +19830,14 @@ export interface InputRichBlockTable {
 <td>Array of Array of <a href="#richblocktablecell">RichBlockTableCell</a></td>
 <td>Cells of the table</td>
 </tr>
-<tr>
-<td>is_bordered</td>
-<td>True</td>
-<td><em>Optional</em>. Pass <em>True</em> if the table has borders</td>
-</tr>
-<tr>
-<td>is_striped</td>
-<td>True</td>
-<td><em>Optional</em>. Pass <em>True</em> if the table is striped</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the table has borders
+   */
+  is_bordered?: true;
+  /**
+   * Pass <em>True</em> if the table is striped
+   */
+  is_striped?: true;
 <tr>
 <td>caption</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19959,11 +19873,10 @@ export interface InputRichBlockDetails {
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
 <td>Content of the block</td>
 </tr>
-<tr>
-<td>is_open</td>
-<td>True</td>
-<td><em>Optional</em>. Pass <em>True</em> if the content of the block is visible by default</td>
-</tr>
+  /**
+   * Pass <em>True</em> if the content of the block is visible by default
+   */
+  is_open?: true;
 </tbody>
 </table>
 }
@@ -22715,16 +22628,14 @@ export interface SuccessfulPayment {
    * Expiration date of the subscription, in Unix time; for recurring payments only
    */
   subscription_expiration_date?: number;
-<tr>
-<td>is_recurring</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the payment is a recurring payment for a subscription</td>
-</tr>
-<tr>
-<td>is_first_recurring</td>
-<td>True</td>
-<td><em>Optional</em>. <em>True</em>, if the payment is the first payment for a subscription</td>
-</tr>
+  /**
+   * <em>True</em>, if the payment is a recurring payment for a subscription
+   */
+  is_recurring?: true;
+  /**
+   * <em>True</em>, if the payment is the first payment for a subscription
+   */
+  is_first_recurring?: true;
   /**
    * Identifier of the shipping option chosen by the user
    */
