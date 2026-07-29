@@ -3,6 +3,454 @@
  * Object with no keys
  */
 export type Empty = Record<string, never>;
+/**
+ * A two-letter ISO 639-1 language code.
+ *
+ * @see {@link https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes}
+ * @see {@link https://www.loc.gov/standards/iso639-2/php/code_list.php}
+ */
+export type LanguageCode = typeof LanguageCodes[keyof typeof LanguageCodes];
+
+// === HELPER RUNTIME CODE ===
+/** More readable aliases for {@link LanguageCode} values */
+export const LanguageCodes = {
+    /** ISO 639-1 language code for Abkhazian */
+    Abkhazian: "ab",
+    /** ISO 639-1 language code for Afar */
+    Afar: "aa",
+    /** ISO 639-1 language code for Afrikaans */
+    Afrikaans: "af",
+    /** ISO 639-1 language code for Akan */
+    Akan: "ak",
+    /** ISO 639-1 language code for Albanian */
+    Albanian: "sq",
+    /** ISO 639-1 language code for Amharic */
+    Amharic: "am",
+    /** ISO 639-1 language code for Arabic */
+    Arabic: "ar",
+    /** ISO 639-1 language code for Aragonese */
+    Aragonese: "an",
+    /** ISO 639-1 language code for Armenian */
+    Armenian: "hy",
+    /** ISO 639-1 language code for Assamese */
+    Assamese: "as",
+    /** ISO 639-1 language code for Avaric */
+    Avaric: "av",
+    /** ISO 639-1 language code for Avestan */
+    Avestan: "ae",
+    /** ISO 639-1 language code for Aymara */
+    Aymara: "ay",
+    /** ISO 639-1 language code for Azerbaijani */
+    Azerbaijani: "az",
+    /** ISO 639-1 language code for Bambara */
+    Bambara: "bm",
+    /** ISO 639-1 language code for Bashkir */
+    Bashkir: "ba",
+    /** ISO 639-1 language code for Basque */
+    Basque: "eu",
+    /** ISO 639-1 language code for Belarusian */
+    Belarusian: "be",
+    /** ISO 639-1 language code for Bengali */
+    Bengali: "bn",
+    /** ISO 639-1 language code for Bislama */
+    Bislama: "bi",
+    /** ISO 639-1 language code for Bosnian */
+    Bosnian: "bs",
+    /** ISO 639-1 language code for Breton */
+    Breton: "br",
+    /** ISO 639-1 language code for Bulgarian */
+    Bulgarian: "bg",
+    /** ISO 639-1 language code for Burmese */
+    Burmese: "my",
+    /** ISO 639-1 language code for Catalan */
+    Catalan: "ca",
+    /** ISO 639-1 language code for Chamorro */
+    Chamorro: "ch",
+    /** ISO 639-1 language code for Chechen */
+    Chechen: "ce",
+    /** ISO 639-1 language code for Chichewa */
+    Chichewa: "ny",
+    /** ISO 639-1 language code for Chinese */
+    Chinese: "zh",
+    /** ISO 639-1 language code for Church Slavonic */
+    ChurchSlavonic: "cu",
+    /** ISO 639-1 language code for Chuvash */
+    Chuvash: "cv",
+    /** ISO 639-1 language code for Cornish */
+    Cornish: "kw",
+    /** ISO 639-1 language code for Corsican */
+    Corsican: "co",
+    /** ISO 639-1 language code for Cree */
+    Cree: "cr",
+    /** ISO 639-1 language code for Croatian */
+    Croatian: "hr",
+    /** ISO 639-1 language code for Czech */
+    Czech: "cs",
+    /** ISO 639-1 language code for Danish */
+    Danish: "da",
+    /** ISO 639-1 language code for Divehi */
+    Divehi: "dv",
+    /** ISO 639-1 language code for Dutch */
+    Dutch: "nl",
+    /** ISO 639-1 language code for Dzongkha */
+    Dzongkha: "dz",
+    /** ISO 639-1 language code for English */
+    English: "en",
+    /** ISO 639-1 language code for Esperanto */
+    Esperanto: "eo",
+    /** ISO 639-1 language code for Estonian */
+    Estonian: "et",
+    /** ISO 639-1 language code for Ewe */
+    Ewe: "ee",
+    /** ISO 639-1 language code for Faroese */
+    Faroese: "fo",
+    /** ISO 639-1 language code for Fijian */
+    Fijian: "fj",
+    /** ISO 639-1 language code for Finnish */
+    Finnish: "fi",
+    /** ISO 639-1 language code for French */
+    French: "fr",
+    /** ISO 639-1 language code for Western Frisian */
+    WesternFrisian: "fy",
+    /** ISO 639-1 language code for Fulah */
+    Fulah: "ff",
+    /** ISO 639-1 language code for Gaelic */
+    Gaelic: "gd",
+    /** ISO 639-1 language code for Galician */
+    Galician: "gl",
+    /** ISO 639-1 language code for Ganda */
+    Ganda: "lg",
+    /** ISO 639-1 language code for Georgian */
+    Georgian: "ka",
+    /** ISO 639-1 language code for German */
+    German: "de",
+    /** ISO 639-1 language code for Greek */
+    Greek: "el",
+    /** ISO 639-1 language code for Kalaallisut */
+    Kalaallisut: "kl",
+    /** ISO 639-1 language code for Guarani */
+    Guarani: "gn",
+    /** ISO 639-1 language code for Gujarati */
+    Gujarati: "gu",
+    /** ISO 639-1 language code for Haitian */
+    Haitian: "ht",
+    /** ISO 639-1 language code for Hausa */
+    Hausa: "ha",
+    /** ISO 639-1 language code for Hebrew */
+    Hebrew: "he",
+    /** ISO 639-1 language code for Herero */
+    Herero: "hz",
+    /** ISO 639-1 language code for Hindi */
+    Hindi: "hi",
+    /** ISO 639-1 language code for Hiri Motu */
+    HiriMotu: "ho",
+    /** ISO 639-1 language code for Hungarian */
+    Hungarian: "hu",
+    /** ISO 639-1 language code for Icelandic */
+    Icelandic: "is",
+    /** ISO 639-1 language code for Ido */
+    Ido: "io",
+    /** ISO 639-1 language code for Igbo */
+    Igbo: "ig",
+    /** ISO 639-1 language code for Indonesian */
+    Indonesian: "id",
+    /** ISO 639-1 language code for Interlingua */
+    Interlingua: "ia",
+    /** ISO 639-1 language code for Interlingue */
+    Interlingue: "ie",
+    /** ISO 639-1 language code for Inuktitut */
+    Inuktitut: "iu",
+    /** ISO 639-1 language code for Inupiaq */
+    Inupiaq: "ik",
+    /** ISO 639-1 language code for Irish */
+    Irish: "ga",
+    /** ISO 639-1 language code for Italian */
+    Italian: "it",
+    /** ISO 639-1 language code for Japanese */
+    Japanese: "ja",
+    /** ISO 639-1 language code for Javanese */
+    Javanese: "jv",
+    /** ISO 639-1 language code for Kannada */
+    Kannada: "kn",
+    /** ISO 639-1 language code for Kanuri */
+    Kanuri: "kr",
+    /** ISO 639-1 language code for Kashmiri */
+    Kashmiri: "ks",
+    /** ISO 639-1 language code for Kazakh */
+    Kazakh: "kk",
+    /** ISO 639-1 language code for Central Khmer */
+    CentralKhmer: "km",
+    /** ISO 639-1 language code for Kikuyu */
+    Kikuyu: "ki",
+    /** ISO 639-1 language code for Kinyarwanda */
+    Kinyarwanda: "rw",
+    /** ISO 639-1 language code for Kirghiz */
+    Kirghiz: "ky",
+    /** ISO 639-1 language code for Komi */
+    Komi: "kv",
+    /** ISO 639-1 language code for Kongo */
+    Kongo: "kg",
+    /** ISO 639-1 language code for Korean */
+    Korean: "ko",
+    /** ISO 639-1 language code for Kuanyama */
+    Kuanyama: "kj",
+    /** ISO 639-1 language code for Kurdish */
+    Kurdish: "ku",
+    /** ISO 639-1 language code for Lao */
+    Lao: "lo",
+    /** ISO 639-1 language code for Latin */
+    Latin: "la",
+    /** ISO 639-1 language code for Latvian */
+    Latvian: "lv",
+    /** ISO 639-1 language code for Limburgan */
+    Limburgan: "li",
+    /** ISO 639-1 language code for Lingala */
+    Lingala: "ln",
+    /** ISO 639-1 language code for Lithuanian */
+    Lithuanian: "lt",
+    /** ISO 639-1 language code for Luba-Katanga */
+    LubaKatanga: "lu",
+    /** ISO 639-1 language code for Luxembourgish */
+    Luxembourgish: "lb",
+    /** ISO 639-1 language code for Macedonian */
+    Macedonian: "mk",
+    /** ISO 639-1 language code for Malagasy */
+    Malagasy: "mg",
+    /** ISO 639-1 language code for Malay */
+    Malay: "ms",
+    /** ISO 639-1 language code for Malayalam */
+    Malayalam: "ml",
+    /** ISO 639-1 language code for Maltese */
+    Maltese: "mt",
+    /** ISO 639-1 language code for Manx */
+    Manx: "gv",
+    /** ISO 639-1 language code for Maori */
+    Maori: "mi",
+    /** ISO 639-1 language code for Marathi */
+    Marathi: "mr",
+    /** ISO 639-1 language code for Marshallese */
+    Marshallese: "mh",
+    /** ISO 639-1 language code for Mongolian */
+    Mongolian: "mn",
+    /** ISO 639-1 language code for Nauru */
+    Nauru: "na",
+    /** ISO 639-1 language code for Navajo */
+    Navajo: "nv",
+    /** ISO 639-1 language code for North Ndebele */
+    NorthNdebele: "nd",
+    /** ISO 639-1 language code for South Ndebele */
+    SouthNdebele: "nr",
+    /** ISO 639-1 language code for Ndonga */
+    Ndonga: "ng",
+    /** ISO 639-1 language code for Nepali */
+    Nepali: "ne",
+    /** ISO 639-1 language code for Norwegian */
+    Norwegian: "no",
+    /** ISO 639-1 language code for Norwegian Bokmål */
+    NorwegianBokmål: "nb",
+    /** ISO 639-1 language code for Norwegian Nynorsk */
+    NorwegianNynorsk: "nn",
+    /** ISO 639-1 language code for SichuanYi */
+    SichuanYi: "ii",
+    /** ISO 639-1 language code for Occitan */
+    Occitan: "oc",
+    /** ISO 639-1 language code for Ojibwa */
+    Ojibwa: "oj",
+    /** ISO 639-1 language code for Oriya */
+    Oriya: "or",
+    /** ISO 639-1 language code for Oromo */
+    Oromo: "om",
+    /** ISO 639-1 language code for Ossetian */
+    Ossetian: "os",
+    /** ISO 639-1 language code for Pali */
+    Pali: "pi",
+    /** ISO 639-1 language code for Pashto */
+    Pashto: "ps",
+    /** ISO 639-1 language code for Persian */
+    Persian: "fa",
+    /** ISO 639-1 language code for Polish */
+    Polish: "pl",
+    /** ISO 639-1 language code for Portuguese */
+    Portuguese: "pt",
+    /** ISO 639-1 language code for Punjabi */
+    Punjabi: "pa",
+    /** ISO 639-1 language code for Quechua */
+    Quechua: "qu",
+    /** ISO 639-1 language code for Romanian */
+    Romanian: "ro",
+    /** ISO 639-1 language code for Romansh */
+    Romansh: "rm",
+    /** ISO 639-1 language code for Rundi */
+    Rundi: "rn",
+    /** ISO 639-1 language code for Russian */
+    Russian: "ru",
+    /** ISO 639-1 language code for Northern Sami */
+    NorthernSami: "se",
+    /** ISO 639-1 language code for Samoan */
+    Samoan: "sm",
+    /** ISO 639-1 language code for Sango */
+    Sango: "sg",
+    /** ISO 639-1 language code for Sanskrit */
+    Sanskrit: "sa",
+    /** ISO 639-1 language code for Sardinian */
+    Sardinian: "sc",
+    /** ISO 639-1 language code for Serbian */
+    Serbian: "sr",
+    /** ISO 639-1 language code for Shona */
+    Shona: "sn",
+    /** ISO 639-1 language code for Sindhi */
+    Sindhi: "sd",
+    /** ISO 639-1 language code for Sinhala */
+    Sinhala: "si",
+    /** ISO 639-1 language code for Slovak */
+    Slovak: "sk",
+    /** ISO 639-1 language code for Slovenian */
+    Slovenian: "sl",
+    /** ISO 639-1 language code for Somali */
+    Somali: "so",
+    /** ISO 639-1 language code for Southern Sotho */
+    SouthernSotho: "st",
+    /** ISO 639-1 language code for Spanish */
+    Spanish: "es",
+    /** ISO 639-1 language code for Sundanese */
+    Sundanese: "su",
+    /** ISO 639-1 language code for Swahili */
+    Swahili: "sw",
+    /** ISO 639-1 language code for Swati */
+    Swati: "ss",
+    /** ISO 639-1 language code for Swedish */
+    Swedish: "sv",
+    /** ISO 639-1 language code for Tagalog */
+    Tagalog: "tl",
+    /** ISO 639-1 language code for Tahitian */
+    Tahitian: "ty",
+    /** ISO 639-1 language code for Tajik */
+    Tajik: "tg",
+    /** ISO 639-1 language code for Tamil */
+    Tamil: "ta",
+    /** ISO 639-1 language code for Tatar */
+    Tatar: "tt",
+    /** ISO 639-1 language code for Telugu */
+    Telugu: "te",
+    /** ISO 639-1 language code for Thai */
+    Thai: "th",
+    /** ISO 639-1 language code for Tibetan */
+    Tibetan: "bo",
+    /** ISO 639-1 language code for Tigrinya */
+    Tigrinya: "ti",
+    /** ISO 639-1 language code for Tonga */
+    Tonga: "to",
+    /** ISO 639-1 language code for Tsonga */
+    Tsonga: "ts",
+    /** ISO 639-1 language code for Tswana */
+    Tswana: "tn",
+    /** ISO 639-1 language code for Turkish */
+    Turkish: "tr",
+    /** ISO 639-1 language code for Turkmen */
+    Turkmen: "tk",
+    /** ISO 639-1 language code for Twi */
+    Twi: "tw",
+    /** ISO 639-1 language code for Uighur */
+    Uighur: "ug",
+    /** ISO 639-1 language code for Ukrainian */
+    Ukrainian: "uk",
+    /** ISO 639-1 language code for Urdu */
+    Urdu: "ur",
+    /** ISO 639-1 language code for Uzbek */
+    Uzbek: "uz",
+    /** ISO 639-1 language code for Venda */
+    Venda: "ve",
+    /** ISO 639-1 language code for Vietnamese */
+    Vietnamese: "vi",
+    /** ISO 639-1 language code for Volapük */
+    Volapük: "vo",
+    /** ISO 639-1 language code for Walloon */
+    Walloon: "wa",
+    /** ISO 639-1 language code for Welsh */
+    Welsh: "cy",
+    /** ISO 639-1 language code for Wolof */
+    Wolof: "wo",
+    /** ISO 639-1 language code for Xhosa */
+    Xhosa: "xh",
+    /** ISO 639-1 language code for Yiddish */
+    Yiddish: "yi",
+    /** ISO 639-1 language code for Yoruba */
+    Yoruba: "yo",
+    /** ISO 639-1 language code for Zhuang */
+    Zhuang: "za",
+    /** ISO 639-1 language code for Zulu */
+    Zulu: "zu",
+} as const;
+function preprocess(data: ConstructorParameters<typeof InputFile>[0]) {
+    if ("base64" in data) {
+        return Uint8Array.fromBase64(data.base64, { alphabet: "base64" });
+    }
+    if ("base64url" in data) {
+        return Uint8Array.fromBase64(data.base64url, { alphabet: "base64url" });
+    }
+    if ("hex" in data) {
+        return Uint8Array.fromHex(data.hex);
+    }
+    if ("readable" in data) return data.readable;
+    if (data instanceof Response || data instanceof Blob) return data;
+    if ("url" in data) return new URL(data.url);
+    if ("text" in data) return new TextEncoder().encode(data.text);
+    return data;
+}
+const isDeno = typeof Deno !== "undefined";
+declare const Bun: { file(path: string): Blob } | undefined;
+const isBun = typeof Bun !== "undefined";
+let createReadStream: typeof import("node:fs").createReadStream | undefined;
+async function readFile(path: string): Promise<AsyncIterable<Uint8Array>> {
+    if (isDeno) {
+        const file = await Deno.open(path);
+        return file.readable;
+    }
+    if (isBun) {
+        const file = Bun.file(path);
+        return file.stream();
+    }
+    createReadStream ??=
+        globalThis.process.getBuiltinModule("node:fs").createReadStream;
+    return createReadStream(path);
+}
+async function fetchFile(url: URL): Promise<AsyncIterable<Uint8Array>> {
+    // https://github.com/nodejs/undici/issues/2751
+    if (url.protocol === "file") return await readFile(url.pathname);
+    const response = await fetch(url);
+    if (!response.ok || response.body === null) {
+        throw new ResponseError(response);
+    }
+    return response.body;
+}
+/** Error class for failed fetch requests during file uploads */
+export class ResponseError extends Error {
+    /** Status code of the failed fetch request */
+    readonly error_code: number;
+    /** Used to construct a new error when a fetch request fails */
+    constructor(readonly response: Response) {
+        let message = response.body ? response.statusText : "No response body";
+        if (response.url) message += ` from ${response.url}`;
+        super(message);
+        this.name = ResponseError.name;
+        this.error_code = response.status;
+    }
+}
+let basename: typeof import("node:path").basename | undefined;
+function guessFilename(file: ReturnType<typeof preprocess>) {
+    basename ??= globalThis.process.getBuiltinModule("node:path").basename;
+    if ("path" in file && typeof file.path === "string") {
+        return basename(file.path);
+    }
+    if ("url" in file && file.url) file = new URL(file.url);
+    if (file instanceof File) return file.name;
+    if (!(file instanceof URL)) return undefined;
+    if (file.pathname !== "/") {
+        const filename = basename(file.pathname);
+        if (filename) return filename;
+    }
+    return basename(file.hostname);
+}
 // === MAKING REQUESTS ===
 /**
  * Structure of an HTTP response body from the Bot API.
@@ -6436,7 +6884,95 @@ export interface InputMediaVoiceNote {
  *
  * @see {@link https://core.telegram.org/bots/api#inputfile}
  */
-export interface InputFile {}
+export class InputFile {
+    /**
+     * Internal random instance identifier. You never need to use this.
+     *
+     * Determines how this `InputFile` is stringified via
+     * {@link InputFile.toJSON}.
+     */
+    public readonly _id: string = crypto.getRandomValues(new Uint8Array(8))
+        .toHex();
+    private consumed = false;
+    private readonly fileData: ReturnType<typeof preprocess>;
+    /**
+     * Optional name of the constructed `InputFile` instance.
+     *
+     * Check out the
+     * [documentation](https://grammy.dev/guide/files#uploading-your-own-files)
+     * on sending files with `InputFile`.
+     */
+    public readonly name?: string;
+    /**
+     * Constructs an `InputFile` that can be used in the API to send files. An
+     * `InputFile` wraps a number of different sources for [sending
+     * files](https://grammy.dev/guide/files#uploading-your-own-files).
+     *
+     * @param file A path, URL, buffer, stream, or any file data source
+     * @param filename Optional name of the file
+     */
+    constructor(
+        file:
+            | { path: string }
+            | { url: string }
+            | URL
+            | Blob
+            | Response
+            | Uint8Array
+            | AsyncIterable<Uint8Array>
+            | { readable: AsyncIterable<Uint8Array> }
+            | { text: string }
+            | { base64: string }
+            | { base64url: string }
+            | { hex: string }
+            | (() =>
+                | AsyncIterable<Uint8Array>
+                | Promise<AsyncIterable<Uint8Array>>),
+        filename?: string,
+    ) {
+        this.fileData = preprocess(file);
+        this.name = filename ?? guessFilename(this.fileData);
+    }
+    /**
+     * Internal property to convert this instance into a binary representation
+     * that can be sent to the Bot API server in the request body. You should
+     * never have to call this manually.
+     */
+    async *[Symbol.asyncIterator](): AsyncIterator<Uint8Array, undefined> {
+        // prefer extending `preprocess` -- it's not re-ran on retry
+        const data = this.fileData;
+        if (this.consumed) {
+            throw new TypeError("Cannot reuse InputFile data source!");
+        } else if (typeof data === "function") {
+            yield* await data();
+        } else if (data instanceof Uint8Array) {
+            yield data;
+        } else if ("stream" in data) {
+            yield* data.stream();
+        } else if (Symbol.asyncIterator in data) {
+            this.consumed = true;
+            yield* data;
+        } else if ("path" in data) {
+            yield* await readFile(data.path);
+        } else if (data instanceof Response) {
+            if (data.body === null) throw new ResponseError(data);
+            this.consumed = true;
+            yield* data.body;
+        } else if (data instanceof URL) {
+            yield* await fetchFile(data);
+        } else {
+            data satisfies never;
+        }
+    }
+    /**
+     * Called by `JSON.stringify` when turning this instance into a JSON representation.
+     *
+     * @returns An `attach://` string with a long random identifier
+     */
+    toJSON(): string {
+        return `attach://${this._id}`;
+    }
+}
 /**
  * This object describes the paid media to be sent. Currently, it can be one of
  *
