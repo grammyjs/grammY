@@ -1,9 +1,9 @@
-// === HELPER TYPES
+// === HELPER TYPES ===
 /**
  * Object with no keys
  */
 export type Empty = Record<string, never>;
-// === MAKING REQUESTS
+// === MAKING REQUESTS ===
 /**
  * Structure of an HTTP response body from the Bot API.
  *
@@ -44,7 +44,7 @@ export interface ApiSuccess<T> {
      */
     result: T;
 }
-// === GETTING UPDATES
+// === GETTING UPDATES ===
 /**
  * This {@link https://core.telegram.org/bots/api#available-types | object} represents an incoming update.
  *
@@ -310,7 +310,7 @@ export interface WebhookInfo {
      */
     allowed_updates?: string[];
 }
-// === AVAILABLE TYPES
+// === AVAILABLE TYPES ===
 /**
  * This object represents a Telegram user or bot.
  *
@@ -6714,7 +6714,7 @@ export type ProfileAccentColorId =
     | 13
     | 14
     | 15;
-// === AVAILABLE METHODS
+// === AVAILABLE METHODS ===
 export interface ApiMethods {
     /**
      * A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a {@link User} object.
@@ -10779,7 +10779,7 @@ export interface ApiMethods {
         button: KeyboardButton;
     }): PreparedKeyboardButton;
 }
-// === UPDATING MESSAGES
+// === UPDATING MESSAGES ===
 export interface ApiMethods {
     /**
      * Use this method to edit text, rich and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
@@ -11359,7 +11359,7 @@ export interface ApiMethods {
         actor_chat_id?: number;
     }): true;
 }
-// === STICKERS
+// === STICKERS ===
 /**
  * This object represents a sticker.
  *
@@ -11856,7 +11856,7 @@ export interface ApiMethods {
         name: string;
     }): true;
 }
-// === RICH MESSAGES
+// === RICH MESSAGES ===
 /**
  * Rich formatted message.
  *
@@ -13790,7 +13790,7 @@ export interface InputRichBlockThinking {
      */
     text: RichText;
 }
-// === INLINE MODE
+// === INLINE MODE ===
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
  *
@@ -15223,7 +15223,7 @@ export interface ChosenInlineResult {
      */
     query: string;
 }
-// === PAYMENTS
+// === PAYMENTS ===
 export interface ApiMethods {
     /**
      * Use this method to send invoices. On success, the sent {@link Message} is returned.
@@ -16106,7 +16106,7 @@ export interface StarTransactions {
      */
     transactions: StarTransaction[];
 }
-// === TELEGRAM PASSPORT
+// === TELEGRAM PASSPORT ===
 /**
  * Describes Telegram Passport data shared with the bot by the user.
  *
@@ -16466,7 +16466,7 @@ export interface PassportElementErrorUnspecified {
      */
     message: string;
 }
-// === GAMES
+// === GAMES ===
 export interface ApiMethods {
     /**
      * Use this method to send a game. On success, the sent {@link Message} is returned.
