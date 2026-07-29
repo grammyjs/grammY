@@ -9903,12 +9903,10 @@ export interface ApiMethods {
      * The number of Telegram Stars that must be paid to buy access to the media; 1-25000
      */
     star_count: number;
-<tr>
-<td>media</td>
-<td>Array of <a href="#inputpaidmedia">InputPaidMedia</a></td>
-<td>Yes</td>
-<td>A JSON-serialized Array describing the media to be sent; up to 10 items</td>
-</tr>
+    /**
+     * A JSON-serialized Array describing the media to be sent; up to 10 items
+     */
+    media: InputPaidMedia[];
     /**
      * Bot-defined paid media payload, 0-128 bytes. This will not be displayed to the user, use it for your internal processes.
      */
@@ -10352,12 +10350,10 @@ export interface ApiMethods {
      * A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of <em>question_parse_mode</em>.
      */
     question_entities?: MessageEntity[];
-<tr>
-<td>options</td>
-<td>Array of <a href="#inputpolloption">InputPollOption</a></td>
-<td>Yes</td>
-<td>A JSON-serialized list of 1-12 answer options</td>
-</tr>
+    /**
+     * A JSON-serialized list of 1-12 answer options
+     */
+    options: InputPollOption[];
     /**
      * <em>True</em>, if the poll needs to be anonymous, defaults to <em>True</em>
      */
@@ -12523,12 +12519,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>commands</td>
-<td>Array of <a href="#botcommand">BotCommand</a></td>
-<td>Yes</td>
-<td>A JSON-serialized list of bot commands to be set as the list of the bot&#39;s commands. At most 100 commands can be specified.</td>
-</tr>
+    /**
+     * A JSON-serialized list of bot commands to be set as the list of the bot&#39;s commands. At most 100 commands can be specified.
+     */
+    commands: BotCommand[];
     /**
      * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
      */
@@ -15070,12 +15064,10 @@ export interface ApiMethods {
      * Sticker set title, 1-64 characters
      */
     title: string;
-<tr>
-<td>stickers</td>
-<td>Array of <a href="#inputsticker">InputSticker</a></td>
-<td>Yes</td>
-<td>A JSON-serialized list of 1-50 initial stickers to be added to the sticker set</td>
-</tr>
+    /**
+     * A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
+     */
+    stickers: InputSticker[];
     /**
      * Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.
      */
@@ -18040,12 +18032,10 @@ export interface ApiMethods {
      * Unique identifier for the answered query
      */
     inline_query_id: string;
-<tr>
-<td>results</td>
-<td>Array of <a href="#inlinequeryresult">InlineQueryResult</a></td>
-<td>Yes</td>
-<td>A JSON-serialized Array of results for the inline query</td>
-</tr>
+    /**
+     * A JSON-serialized Array of results for the inline query
+     */
+    results: InlineQueryResult[];
     /**
      * The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.
      */
@@ -19728,12 +19718,10 @@ export interface ApiMethods {
      * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     currency: string;
-<tr>
-<td>prices</td>
-<td>Array of <a href="#labeledprice">LabeledPrice</a></td>
-<td>Yes</td>
-<td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    prices: LabeledPrice[];
     /**
      * The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
@@ -19865,12 +19853,10 @@ export interface ApiMethods {
      * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     currency: string;
-<tr>
-<td>prices</td>
-<td>Array of <a href="#labeledprice">LabeledPrice</a></td>
-<td>Yes</td>
-<td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    prices: LabeledPrice[];
     /**
      * The number of seconds the subscription will be active for before the next payment. The currency must be set to “XTR” (Telegram Stars) if the parameter is used. Currently, it must always be 2592000 (30 days) if specified. Any number of subscriptions can be active for a given bot at the same time, including multiple concurrent subscriptions from the same user. Subscription price must no exceed 10000 Telegram Stars.
      */
@@ -21001,12 +20987,10 @@ export interface ApiMethods {
      * User identifier
      */
     user_id: number;
-<tr>
-<td>errors</td>
-<td>Array of <a href="#passportelementerror">PassportElementError</a></td>
-<td>Yes</td>
-<td>A JSON-serialized Array describing the errors</td>
-</tr>
+    /**
+     * A JSON-serialized Array describing the errors
+     */
+    errors: PassportElementError[];
 </tbody>
 </table>
   }): never;
