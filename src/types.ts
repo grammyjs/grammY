@@ -4848,11 +4848,10 @@ export interface ReplyKeyboardRemove {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>remove_keyboard</td>
-<td>True</td>
-<td>Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use <em>one_time_keyboard</em> in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)</td>
-</tr>
+  /**
+   * Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use <em>one_time_keyboard</em> in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)
+   */
+  remove_keyboard: true;
 <tr>
 <td>selective</td>
 <td>Boolean</td>
@@ -5123,11 +5122,10 @@ export interface ForceReply {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>force_reply</td>
-<td>True</td>
-<td>Shows reply interface to the user, as if they manually selected the bot&#39;s message and tapped &#39;Reply&#39;</td>
-</tr>
+  /**
+   * Shows reply interface to the user, as if they manually selected the bot&#39;s message and tapped &#39;Reply&#39;
+   */
+  force_reply: true;
   /**
    * The placeholder to be shown in the input field when the reply is active; 1-64 characters
    */
