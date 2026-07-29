@@ -53,11 +53,10 @@ export interface Update {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>update_id</td>
-<td>Integer</td>
-<td>The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using <a href="#setwebhook">webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.</td>
-</tr>
+  /**
+   * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using <a href="#setwebhook">webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+   */
+  update_id: number;
 <tr>
 <td>message</td>
 <td><a href="#message">Message</a></td>
@@ -357,11 +356,10 @@ export interface WebhookInfo {
 <td>Boolean</td>
 <td><em>True</em>, if a custom certificate was provided for webhook certificate checks</td>
 </tr>
-<tr>
-<td>pending_update_count</td>
-<td>Integer</td>
-<td>Number of updates awaiting delivery</td>
-</tr>
+  /**
+   * Number of updates awaiting delivery
+   */
+  pending_update_count: number;
 <tr>
 <td>ip_address</td>
 <td>String</td>
@@ -411,11 +409,10 @@ export interface User {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>Integer</td>
-<td>Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  id: number;
 <tr>
 <td>is_bot</td>
 <td>Boolean</td>
@@ -517,11 +514,10 @@ export interface Chat {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>Integer</td>
-<td>Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  id: number;
 <tr>
 <td>type</td>
 <td>String</td>
@@ -573,11 +569,10 @@ export interface ChatFullInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>Integer</td>
-<td>Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  id: number;
 <tr>
 <td>type</td>
 <td>String</td>
@@ -613,16 +608,14 @@ export interface ChatFullInfo {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the chat is the direct messages chat of a channel</td>
 </tr>
-<tr>
-<td>accent_color_id</td>
-<td>Integer</td>
-<td>Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See <a href="#accent-colors">accent colors</a> for more details.</td>
-</tr>
-<tr>
-<td>max_reaction_count</td>
-<td>Integer</td>
-<td>The maximum number of reactions that can be set on a message in the chat</td>
-</tr>
+  /**
+   * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See <a href="#accent-colors">accent colors</a> for more details.
+   */
+  accent_color_id: number;
+  /**
+   * The maximum number of reactions that can be set on a message in the chat
+   */
+  max_reaction_count: number;
 <tr>
 <td>photo</td>
 <td><a href="#chatphoto">ChatPhoto</a></td>
@@ -847,11 +840,10 @@ export interface Message {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Unique message identifier inside this chat; 0 for ephemeral messages. In specific instances (e.g., a message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.</td>
-</tr>
+  /**
+   * Unique message identifier inside this chat; 0 for ephemeral messages. In specific instances (e.g., a message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.
+   */
+  message_id: number;
   /**
    * Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only
    */
@@ -894,11 +886,10 @@ export interface Message {
    * For ephemeral messages, identifier of the ephemeral message inside this chat. The identifier may be reused for another ephemeral message after the message is deleted or expires.
    */
   ephemeral_message_id?: number;
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the message was sent in Unix time. It is always a positive number, representing a valid date.</td>
-</tr>
+  /**
+   * Date the message was sent in Unix time. It is always a positive number, representing a valid date.
+   */
+  date: number;
 <tr>
 <td>guest_query_id</td>
 <td>String</td>
@@ -1450,11 +1441,10 @@ export interface MessageId {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Unique message identifier. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.</td>
-</tr>
+  /**
+   * Unique message identifier. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.
+   */
+  message_id: number;
 </tbody>
 </table>
 }
@@ -1476,16 +1466,14 @@ export interface InaccessibleMessage {
 <td><a href="#chat">Chat</a></td>
 <td>Chat the message belonged to</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Unique message identifier inside the chat</td>
-</tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Always 0. The field can be used to differentiate regular and inaccessible messages.</td>
-</tr>
+  /**
+   * Unique message identifier inside the chat
+   */
+  message_id: number;
+  /**
+   * Always 0. The field can be used to differentiate regular and inaccessible messages.
+   */
+  date: number;
 </tbody>
 </table>
 }
@@ -1516,16 +1504,14 @@ export interface MessageEntity {
 <td>String</td>
 <td>Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag” (<code>#hashtag</code> or <code>#hashtag@chatusername</code>), “cashtag” (<code>$USD</code> or <code>$USD@chatusername</code>), “bot_command” (<code>/start@jobs_bot</code>), “url” (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number” (<code>+1-212-555-0123</code>), “bold” (<strong>bold text</strong>), “italic” (<em>italic text</em>), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).</td>
 </tr>
-<tr>
-<td>offset</td>
-<td>Integer</td>
-<td>Offset in <a href="/api/entities#entity-length">UTF-16 code units</a> to the start of the entity</td>
-</tr>
-<tr>
-<td>length</td>
-<td>Integer</td>
-<td>Length of the entity in <a href="/api/entities#entity-length">UTF-16 code units</a></td>
-</tr>
+  /**
+   * Offset in <a href="/api/entities#entity-length">UTF-16 code units</a> to the start of the entity
+   */
+  offset: number;
+  /**
+   * Length of the entity in <a href="/api/entities#entity-length">UTF-16 code units</a>
+   */
+  length: number;
 <tr>
 <td>url</td>
 <td>String</td>
@@ -1581,11 +1567,10 @@ export interface TextQuote {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. Special entities that appear in the quote. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are kept in quotes.</td>
 </tr>
-<tr>
-<td>position</td>
-<td>Integer</td>
-<td>Approximate quote position in the original message in UTF-16 code units as specified by the sender</td>
-</tr>
+  /**
+   * Approximate quote position in the original message in UTF-16 code units as specified by the sender
+   */
+  position: number;
 <tr>
 <td>is_manual</td>
 <td>True</td>
@@ -1832,11 +1817,10 @@ export interface MessageOriginUser {
 <td>String</td>
 <td>Type of the message origin, always “user”</td>
 </tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the message was sent originally in Unix time</td>
-</tr>
+  /**
+   * Date the message was sent originally in Unix time
+   */
+  date: number;
 <tr>
 <td>sender_user</td>
 <td><a href="#user">User</a></td>
@@ -1863,11 +1847,10 @@ export interface MessageOriginHiddenUser {
 <td>String</td>
 <td>Type of the message origin, always “hidden_user”</td>
 </tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the message was sent originally in Unix time</td>
-</tr>
+  /**
+   * Date the message was sent originally in Unix time
+   */
+  date: number;
 <tr>
 <td>sender_user_name</td>
 <td>String</td>
@@ -1894,11 +1877,10 @@ export interface MessageOriginChat {
 <td>String</td>
 <td>Type of the message origin, always “chat”</td>
 </tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the message was sent originally in Unix time</td>
-</tr>
+  /**
+   * Date the message was sent originally in Unix time
+   */
+  date: number;
 <tr>
 <td>sender_chat</td>
 <td><a href="#chat">Chat</a></td>
@@ -1930,21 +1912,19 @@ export interface MessageOriginChannel {
 <td>String</td>
 <td>Type of the message origin, always “channel”</td>
 </tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the message was sent originally in Unix time</td>
-</tr>
+  /**
+   * Date the message was sent originally in Unix time
+   */
+  date: number;
 <tr>
 <td>chat</td>
 <td><a href="#chat">Chat</a></td>
 <td>Channel chat to which the message was originally sent</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Unique message identifier inside the chat</td>
-</tr>
+  /**
+   * Unique message identifier inside the chat
+   */
+  message_id: number;
 <tr>
 <td>author_signature</td>
 <td>String</td>
@@ -1976,16 +1956,14 @@ export interface PhotoSize {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Photo width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Photo height</td>
-</tr>
+  /**
+   * Photo width
+   */
+  width: number;
+  /**
+   * Photo height
+   */
+  height: number;
   /**
    * File size in bytes
    */
@@ -2016,21 +1994,18 @@ export interface Animation {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Video width as defined by the sender</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Video height as defined by the sender</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Duration of the video in seconds as defined by the sender</td>
-</tr>
+  /**
+   * Video width as defined by the sender
+   */
+  width: number;
+  /**
+   * Video height as defined by the sender
+   */
+  height: number;
+  /**
+   * Duration of the video in seconds as defined by the sender
+   */
+  duration: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
@@ -2076,11 +2051,10 @@ export interface Audio {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Duration of the audio in seconds as defined by the sender</td>
-</tr>
+  /**
+   * Duration of the audio in seconds as defined by the sender
+   */
+  duration: number;
 <tr>
 <td>performer</td>
 <td>String</td>
@@ -2186,21 +2160,18 @@ export interface LivePhoto {
 <td>String</td>
 <td>Unique identifier for the video file which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Video width as defined by the sender</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Video height as defined by the sender</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Duration of the video in seconds as defined by the sender</td>
-</tr>
+  /**
+   * Video width as defined by the sender
+   */
+  width: number;
+  /**
+   * Video height as defined by the sender
+   */
+  height: number;
+  /**
+   * Duration of the video in seconds as defined by the sender
+   */
+  duration: number;
 <tr>
 <td>mime_type</td>
 <td>String</td>
@@ -2231,11 +2202,10 @@ export interface Story {
 <td><a href="#chat">Chat</a></td>
 <td>Chat that posted the story</td>
 </tr>
-<tr>
-<td>id</td>
-<td>Integer</td>
-<td>Unique identifier for the story in the chat</td>
-</tr>
+  /**
+   * Unique identifier for the story in the chat
+   */
+  id: number;
 </tbody>
 </table>
 }
@@ -2262,16 +2232,14 @@ export interface VideoQuality {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Video width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Video height</td>
-</tr>
+  /**
+   * Video width
+   */
+  width: number;
+  /**
+   * Video height
+   */
+  height: number;
 <tr>
 <td>codec</td>
 <td>String</td>
@@ -2307,21 +2275,18 @@ export interface Video {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Video width as defined by the sender</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Video height as defined by the sender</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Duration of the video in seconds as defined by the sender</td>
-</tr>
+  /**
+   * Video width as defined by the sender
+   */
+  width: number;
+  /**
+   * Video height as defined by the sender
+   */
+  height: number;
+  /**
+   * Duration of the video in seconds as defined by the sender
+   */
+  duration: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
@@ -2381,16 +2346,14 @@ export interface VideoNote {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>length</td>
-<td>Integer</td>
-<td>Video width and height (diameter of the video message) as defined by the sender</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Duration of the video in seconds as defined by the sender</td>
-</tr>
+  /**
+   * Video width and height (diameter of the video message) as defined by the sender
+   */
+  length: number;
+  /**
+   * Duration of the video in seconds as defined by the sender
+   */
+  duration: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
@@ -2426,11 +2389,10 @@ export interface Voice {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Duration of the audio in seconds as defined by the sender</td>
-</tr>
+  /**
+   * Duration of the audio in seconds as defined by the sender
+   */
+  duration: number;
 <tr>
 <td>mime_type</td>
 <td>String</td>
@@ -2456,11 +2418,10 @@ export interface PaidMediaInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>star_count</td>
-<td>Integer</td>
-<td>The number of Telegram Stars that must be paid to buy access to the media</td>
-</tr>
+  /**
+   * The number of Telegram Stars that must be paid to buy access to the media
+   */
+  star_count: number;
 <tr>
 <td>paid_media</td>
 <td>Array of <a href="#paidmedia">PaidMedia</a></td>
@@ -2651,11 +2612,10 @@ export interface Dice {
 <td>String</td>
 <td>Emoji on which the dice throw animation is based</td>
 </tr>
-<tr>
-<td>value</td>
-<td>Integer</td>
-<td>Value of the dice, 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />” base emoji, 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />” base emoji, 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />” base emoji</td>
-</tr>
+  /**
+   * Value of the dice, 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />” base emoji, 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />” base emoji, 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />” base emoji
+   */
+  value: number;
 </tbody>
 </table>
 }
@@ -2821,11 +2781,10 @@ export interface PollOption {
 <td><a href="#pollmedia">PollMedia</a></td>
 <td><em>Optional</em>. Media added to the poll option</td>
 </tr>
-<tr>
-<td>voter_count</td>
-<td>Integer</td>
-<td>Number of users who voted for this option; may be 0 if unknown</td>
-</tr>
+  /**
+   * Number of users who voted for this option; may be 0 if unknown
+   */
+  voter_count: number;
 <tr>
 <td>added_by_user</td>
 <td><a href="#user">User</a></td>
@@ -2953,11 +2912,10 @@ export interface Poll {
 <td>Array of <a href="#polloption">PollOption</a></td>
 <td>List of poll options</td>
 </tr>
-<tr>
-<td>total_voter_count</td>
-<td>Integer</td>
-<td>Total number of users that voted in the poll</td>
-</tr>
+  /**
+   * Total number of users that voted in the poll
+   */
+  total_voter_count: number;
 <tr>
 <td>is_closed</td>
 <td>Boolean</td>
@@ -3052,11 +3010,10 @@ export interface ChecklistTask {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>Integer</td>
-<td>Unique identifier of the task</td>
-</tr>
+  /**
+   * Unique identifier of the task
+   */
+  id: number;
 <tr>
 <td>text</td>
 <td>String</td>
@@ -3138,11 +3095,10 @@ export interface InputChecklistTask {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>Integer</td>
-<td>Unique identifier of the task; must be positive and unique among all task identifiers currently present in the checklist</td>
-</tr>
+  /**
+   * Unique identifier of the task; must be positive and unique among all task identifiers currently present in the checklist
+   */
+  id: number;
 <tr>
 <td>text</td>
 <td>String</td>
@@ -3350,11 +3306,10 @@ export interface ProximityAlertTriggered {
 <td><a href="#user">User</a></td>
 <td>User that set the alert</td>
 </tr>
-<tr>
-<td>distance</td>
-<td>Integer</td>
-<td>The distance between the users</td>
-</tr>
+  /**
+   * The distance between the users
+   */
+  distance: number;
 </tbody>
 </table>
 }
@@ -3371,11 +3326,10 @@ export interface MessageAutoDeleteTimerChanged {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>message_auto_delete_time</td>
-<td>Integer</td>
-<td>New auto-delete time for messages in the chat; in seconds</td>
-</tr>
+  /**
+   * New auto-delete time for messages in the chat; in seconds
+   */
+  message_auto_delete_time: number;
 </tbody>
 </table>
 }
@@ -3542,11 +3496,10 @@ export interface ChatBoostAdded {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>boost_count</td>
-<td>Integer</td>
-<td>Number of boosts added by the user</td>
-</tr>
+  /**
+   * Number of boosts added by the user
+   */
+  boost_count: number;
 </tbody>
 </table>
 }
@@ -3579,11 +3532,10 @@ export interface BackgroundFillSolid {
 <td>String</td>
 <td>Type of the background fill, always “solid”</td>
 </tr>
-<tr>
-<td>color</td>
-<td>Integer</td>
-<td>The color of the background fill in the RGB24 format</td>
-</tr>
+  /**
+   * The color of the background fill in the RGB24 format
+   */
+  color: number;
 </tbody>
 </table>
 }
@@ -3605,21 +3557,18 @@ export interface BackgroundFillGradient {
 <td>String</td>
 <td>Type of the background fill, always “gradient”</td>
 </tr>
-<tr>
-<td>top_color</td>
-<td>Integer</td>
-<td>Top color of the gradient in the RGB24 format</td>
-</tr>
-<tr>
-<td>bottom_color</td>
-<td>Integer</td>
-<td>Bottom color of the gradient in the RGB24 format</td>
-</tr>
-<tr>
-<td>rotation_angle</td>
-<td>Integer</td>
-<td>Clockwise rotation angle of the background fill in degrees; 0-359</td>
-</tr>
+  /**
+   * Top color of the gradient in the RGB24 format
+   */
+  top_color: number;
+  /**
+   * Bottom color of the gradient in the RGB24 format
+   */
+  bottom_color: number;
+  /**
+   * Clockwise rotation angle of the background fill in degrees; 0-359
+   */
+  rotation_angle: number;
 </tbody>
 </table>
 }
@@ -3685,11 +3634,10 @@ export interface BackgroundTypeFill {
 <td><a href="#backgroundfill">BackgroundFill</a></td>
 <td>The background fill</td>
 </tr>
-<tr>
-<td>dark_theme_dimming</td>
-<td>Integer</td>
-<td>Dimming of the background in dark themes, as a percentage; 0-100</td>
-</tr>
+  /**
+   * Dimming of the background in dark themes, as a percentage; 0-100
+   */
+  dark_theme_dimming: number;
 </tbody>
 </table>
 }
@@ -3716,11 +3664,10 @@ export interface BackgroundTypeWallpaper {
 <td><a href="#document">Document</a></td>
 <td>Document with the wallpaper</td>
 </tr>
-<tr>
-<td>dark_theme_dimming</td>
-<td>Integer</td>
-<td>Dimming of the background in dark themes, as a percentage; 0-100</td>
-</tr>
+  /**
+   * Dimming of the background in dark themes, as a percentage; 0-100
+   */
+  dark_theme_dimming: number;
 <tr>
 <td>is_blurred</td>
 <td>True</td>
@@ -3762,11 +3709,10 @@ export interface BackgroundTypePattern {
 <td><a href="#backgroundfill">BackgroundFill</a></td>
 <td>The background fill that is combined with the pattern</td>
 </tr>
-<tr>
-<td>intensity</td>
-<td>Integer</td>
-<td>Intensity of the pattern when it is shown above the filled background; 0-100</td>
-</tr>
+  /**
+   * Intensity of the pattern when it is shown above the filled background; 0-100
+   */
+  intensity: number;
 <tr>
 <td>is_inverted</td>
 <td>True</td>
@@ -3927,11 +3873,10 @@ export interface ForumTopicCreated {
 <td>String</td>
 <td>Name of the topic</td>
 </tr>
-<tr>
-<td>icon_color</td>
-<td>Integer</td>
-<td>Color of the topic icon in RGB format</td>
-</tr>
+  /**
+   * Color of the topic icon in RGB format
+   */
+  icon_color: number;
 <tr>
 <td>icon_custom_emoji_id</td>
 <td>String</td>
@@ -4000,11 +3945,10 @@ export interface SharedUser {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.</td>
-</tr>
+  /**
+   * Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.
+   */
+  user_id: number;
 <tr>
 <td>first_name</td>
 <td>String</td>
@@ -4041,11 +3985,10 @@ export interface UsersShared {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>request_id</td>
-<td>Integer</td>
-<td>Identifier of the request</td>
-</tr>
+  /**
+   * Identifier of the request
+   */
+  request_id: number;
 <tr>
 <td>users</td>
 <td>Array of <a href="#shareduser">SharedUser</a></td>
@@ -4067,16 +4010,14 @@ export interface ChatShared {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>request_id</td>
-<td>Integer</td>
-<td>Identifier of the request</td>
-</tr>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means.</td>
-</tr>
+  /**
+   * Identifier of the request
+   */
+  request_id: number;
+  /**
+   * Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means.
+   */
+  chat_id: number;
 <tr>
 <td>title</td>
 <td>String</td>
@@ -4139,11 +4080,10 @@ export interface VideoChatScheduled {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>start_date</td>
-<td>Integer</td>
-<td>Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator</td>
-</tr>
+  /**
+   * Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
+   */
+  start_date: number;
 </tbody>
 </table>
 }
@@ -4164,11 +4104,10 @@ export interface VideoChatEnded {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Video chat duration in seconds</td>
-</tr>
+  /**
+   * Video chat duration in seconds
+   */
+  duration: number;
 </tbody>
 </table>
 }
@@ -4206,11 +4145,10 @@ export interface PaidMessagePriceChanged {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>paid_message_star_count</td>
-<td>Integer</td>
-<td>The new number of Telegram Stars that must be paid by non-administrator users of the supergroup chat for each sent message</td>
-</tr>
+  /**
+   * The new number of Telegram Stars that must be paid by non-administrator users of the supergroup chat for each sent message
+   */
+  paid_message_star_count: number;
 </tbody>
 </table>
 }
@@ -4262,11 +4200,10 @@ export interface SuggestedPostApproved {
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
 <td><em>Optional</em>. Amount paid for the post</td>
 </tr>
-<tr>
-<td>send_date</td>
-<td>Integer</td>
-<td>Date when the post will be published</td>
-</tr>
+  /**
+   * Date when the post will be published
+   */
+  send_date: number;
 </tbody>
 </table>
 }
@@ -4421,16 +4358,14 @@ export interface Giveaway {
 <td>Array of <a href="#chat">Chat</a></td>
 <td>The list of chats which the user must join to participate in the giveaway</td>
 </tr>
-<tr>
-<td>winners_selection_date</td>
-<td>Integer</td>
-<td>Point in time (Unix timestamp) when winners of the giveaway will be selected</td>
-</tr>
-<tr>
-<td>winner_count</td>
-<td>Integer</td>
-<td>The number of users which are supposed to be selected as winners of the giveaway</td>
-</tr>
+  /**
+   * Point in time (Unix timestamp) when winners of the giveaway will be selected
+   */
+  winners_selection_date: number;
+  /**
+   * The number of users which are supposed to be selected as winners of the giveaway
+   */
+  winner_count: number;
 <tr>
 <td>only_new_members</td>
 <td>True</td>
@@ -4480,21 +4415,18 @@ export interface GiveawayWinners {
 <td><a href="#chat">Chat</a></td>
 <td>The chat that created the giveaway</td>
 </tr>
-<tr>
-<td>giveaway_message_id</td>
-<td>Integer</td>
-<td>Identifier of the message with the giveaway in the chat</td>
-</tr>
-<tr>
-<td>winners_selection_date</td>
-<td>Integer</td>
-<td>Point in time (Unix timestamp) when winners of the giveaway were selected</td>
-</tr>
-<tr>
-<td>winner_count</td>
-<td>Integer</td>
-<td>Total number of winners in the giveaway</td>
-</tr>
+  /**
+   * Identifier of the message with the giveaway in the chat
+   */
+  giveaway_message_id: number;
+  /**
+   * Point in time (Unix timestamp) when winners of the giveaway were selected
+   */
+  winners_selection_date: number;
+  /**
+   * Total number of winners in the giveaway
+   */
+  winner_count: number;
 <tr>
 <td>winners</td>
 <td>Array of <a href="#user">User</a></td>
@@ -4547,11 +4479,10 @@ export interface GiveawayCompleted {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>winner_count</td>
-<td>Integer</td>
-<td>Number of winners in the giveaway</td>
-</tr>
+  /**
+   * Number of winners in the giveaway
+   */
+  winner_count: number;
   /**
    * Number of undistributed prizes
    */
@@ -4628,11 +4559,10 @@ export interface SuggestedPostPrice {
 <td>String</td>
 <td>Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for TON grams.</td>
 </tr>
-<tr>
-<td>amount</td>
-<td>Integer</td>
-<td>The amount of the currency that will be paid for the post in the <em>smallest units</em> of the currency, i.e. Telegram Stars or nanograms. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanograms must be between 10000000 and 10000000000000.</td>
-</tr>
+  /**
+   * The amount of the currency that will be paid for the post in the <em>smallest units</em> of the currency, i.e. Telegram Stars or nanograms. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanograms must be between 10000000 and 10000000000000.
+   */
+  amount: number;
 </tbody>
 </table>
 }
@@ -4704,11 +4634,10 @@ export interface DirectMessagesTopic {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>topic_id</td>
-<td>Integer</td>
-<td>Unique identifier of the topic. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * Unique identifier of the topic. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  topic_id: number;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -4730,11 +4659,10 @@ export interface UserProfilePhotos {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>total_count</td>
-<td>Integer</td>
-<td>Total number of profile pictures the target user has</td>
-</tr>
+  /**
+   * Total number of profile pictures the target user has
+   */
+  total_count: number;
 <tr>
 <td>photos</td>
 <td>Array of Array of <a href="#photosize">PhotoSize</a></td>
@@ -4756,11 +4684,10 @@ export interface UserProfileAudios {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>total_count</td>
-<td>Integer</td>
-<td>Total number of profile audios for the target user</td>
-</tr>
+  /**
+   * Total number of profile audios for the target user
+   */
+  total_count: number;
 <tr>
 <td>audios</td>
 <td>Array of <a href="#audio">Audio</a></td>
@@ -4952,11 +4879,10 @@ export interface KeyboardButtonRequestUsers {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>request_id</td>
-<td>Integer</td>
-<td>Signed 32-bit identifier of the request that will be received back in the <a href="#usersshared">UsersShared</a> object. Must be unique within the message.</td>
-</tr>
+  /**
+   * Signed 32-bit identifier of the request that will be received back in the <a href="#usersshared">UsersShared</a> object. Must be unique within the message.
+   */
+  request_id: number;
 <tr>
 <td>user_is_bot</td>
 <td>Boolean</td>
@@ -5002,11 +4928,10 @@ export interface KeyboardButtonRequestChat {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>request_id</td>
-<td>Integer</td>
-<td>Signed 32-bit identifier of the request, which will be received back in the <a href="#chatshared">ChatShared</a> object. Must be unique within the message.</td>
-</tr>
+  /**
+   * Signed 32-bit identifier of the request, which will be received back in the <a href="#chatshared">ChatShared</a> object. Must be unique within the message.
+   */
+  request_id: number;
 <tr>
 <td>chat_is_channel</td>
 <td>Boolean</td>
@@ -5073,11 +4998,10 @@ export interface KeyboardButtonRequestManagedBot {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>request_id</td>
-<td>Integer</td>
-<td>Signed 32-bit identifier of the request. Must be unique within the message.</td>
-</tr>
+  /**
+   * Signed 32-bit identifier of the request. Must be unique within the message.
+   */
+  request_id: number;
 <tr>
 <td>suggested_name</td>
 <td>String</td>
@@ -5448,11 +5372,10 @@ export interface Community {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>Integer</td>
-<td>Unique identifier for this community. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * Unique identifier for this community. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  id: number;
 <tr>
 <td>name</td>
 <td>String</td>
@@ -5687,11 +5610,10 @@ export interface ChatMemberUpdated {
 <td><a href="#user">User</a></td>
 <td>Performer of the action, which resulted in the change</td>
 </tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the change was done in Unix time</td>
-</tr>
+  /**
+   * Date the change was done in Unix time
+   */
+  date: number;
 <tr>
 <td>old_chat_member</td>
 <td><a href="#chatmember">ChatMember</a></td>
@@ -6042,11 +5964,10 @@ export interface ChatMemberRestricted {
 <td>Boolean</td>
 <td><em>True</em>, if the user is allowed to create forum topics</td>
 </tr>
-<tr>
-<td>until_date</td>
-<td>Integer</td>
-<td>Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever.</td>
-</tr>
+  /**
+   * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever.
+   */
+  until_date: number;
 </tbody>
 </table>
 }
@@ -6099,11 +6020,10 @@ export interface ChatMemberBanned {
 <td><a href="#user">User</a></td>
 <td>Information about the user</td>
 </tr>
-<tr>
-<td>until_date</td>
-<td>Integer</td>
-<td>Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever.</td>
-</tr>
+  /**
+   * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever.
+   */
+  until_date: number;
 </tbody>
 </table>
 }
@@ -6130,16 +6050,14 @@ export interface ChatJoinRequest {
 <td><a href="#user">User</a></td>
 <td>User that sent the join request</td>
 </tr>
-<tr>
-<td>user_chat_id</td>
-<td>Integer</td>
-<td>Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 5 minutes to send messages until the join request is processed, assuming no other administrator contacted the user.</td>
-</tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the request was sent in Unix time</td>
-</tr>
+  /**
+   * Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 5 minutes to send messages until the join request is processed, assuming no other administrator contacted the user.
+   */
+  user_chat_id: number;
+  /**
+   * Date the request was sent in Unix time
+   */
+  date: number;
 <tr>
 <td>bio</td>
 <td>String</td>
@@ -6267,16 +6185,14 @@ export interface Birthdate {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>day</td>
-<td>Integer</td>
-<td>Day of the user&#39;s birth; 1-31</td>
-</tr>
-<tr>
-<td>month</td>
-<td>Integer</td>
-<td>Month of the user&#39;s birth; 1-12</td>
-</tr>
+  /**
+   * Day of the user&#39;s birth; 1-31
+   */
+  day: number;
+  /**
+   * Month of the user&#39;s birth; 1-12
+   */
+  month: number;
   /**
    * Year of the user&#39;s birth
    */
@@ -6354,16 +6270,14 @@ export interface BusinessOpeningHoursInterval {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>opening_minute</td>
-<td>Integer</td>
-<td>The minute&#39;s sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7 * 24 * 60</td>
-</tr>
-<tr>
-<td>closing_minute</td>
-<td>Integer</td>
-<td>The minute&#39;s sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8 * 24 * 60</td>
-</tr>
+  /**
+   * The minute&#39;s sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7 * 24 * 60
+   */
+  opening_minute: number;
+  /**
+   * The minute&#39;s sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8 * 24 * 60
+   */
+  closing_minute: number;
 </tbody>
 </table>
 }
@@ -6406,21 +6320,18 @@ export interface UserRating {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>level</td>
-<td>Integer</td>
-<td>Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern.</td>
-</tr>
-<tr>
-<td>rating</td>
-<td>Integer</td>
-<td>Numerical value of the user&#39;s rating; the higher the rating, the better</td>
-</tr>
-<tr>
-<td>current_level_rating</td>
-<td>Integer</td>
-<td>The rating value required to get the current level</td>
-</tr>
+  /**
+   * Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern.
+   */
+  level: number;
+  /**
+   * Numerical value of the user&#39;s rating; the higher the rating, the better
+   */
+  rating: number;
+  /**
+   * The rating value required to get the current level
+   */
+  current_level_rating: number;
   /**
    * The rating value required to get to the next level; omitted if the maximum level was reached
    */
@@ -6651,11 +6562,10 @@ export interface StoryAreaTypeWeather {
 <td>String</td>
 <td>Emoji representing the weather</td>
 </tr>
-<tr>
-<td>background_color</td>
-<td>Integer</td>
-<td>A color of the area background in the ARGB format</td>
-</tr>
+  /**
+   * A color of the area background in the ARGB format
+   */
+  background_color: number;
 </tbody>
 </table>
 }
@@ -6839,11 +6749,10 @@ export interface ReactionCount {
 <td><a href="#reactiontype">ReactionType</a></td>
 <td>Type of the reaction</td>
 </tr>
-<tr>
-<td>total_count</td>
-<td>Integer</td>
-<td>Number of times the reaction was added</td>
-</tr>
+  /**
+   * Number of times the reaction was added
+   */
+  total_count: number;
 </tbody>
 </table>
 }
@@ -6865,11 +6774,10 @@ export interface MessageReactionUpdated {
 <td><a href="#chat">Chat</a></td>
 <td>The chat containing the message the user reacted to</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Unique identifier of the message inside the chat</td>
-</tr>
+  /**
+   * Unique identifier of the message inside the chat
+   */
+  message_id: number;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -6880,11 +6788,10 @@ export interface MessageReactionUpdated {
 <td><a href="#chat">Chat</a></td>
 <td><em>Optional</em>. The chat on behalf of which the reaction was changed, if the user is anonymous</td>
 </tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date of the change in Unix time</td>
-</tr>
+  /**
+   * Date of the change in Unix time
+   */
+  date: number;
 <tr>
 <td>old_reaction</td>
 <td>Array of <a href="#reactiontype">ReactionType</a></td>
@@ -6916,16 +6823,14 @@ export interface MessageReactionCountUpdated {
 <td><a href="#chat">Chat</a></td>
 <td>The chat containing the message</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Unique message identifier inside the chat</td>
-</tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date of the change in Unix time</td>
-</tr>
+  /**
+   * Unique message identifier inside the chat
+   */
+  message_id: number;
+  /**
+   * Date of the change in Unix time
+   */
+  date: number;
 <tr>
 <td>reactions</td>
 <td>Array of <a href="#reactioncount">ReactionCount</a></td>
@@ -6947,21 +6852,19 @@ export interface ForumTopic {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Unique identifier of the forum topic</td>
-</tr>
+  /**
+   * Unique identifier of the forum topic
+   */
+  message_thread_id: number;
 <tr>
 <td>name</td>
 <td>String</td>
 <td>Name of the topic</td>
 </tr>
-<tr>
-<td>icon_color</td>
-<td>Integer</td>
-<td>Color of the topic icon in RGB format</td>
-</tr>
+  /**
+   * Color of the topic icon in RGB format
+   */
+  icon_color: number;
 <tr>
 <td>icon_custom_emoji_id</td>
 <td>String</td>
@@ -6988,21 +6891,18 @@ export interface GiftBackground {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>center_color</td>
-<td>Integer</td>
-<td>Center color of the background in RGB format</td>
-</tr>
-<tr>
-<td>edge_color</td>
-<td>Integer</td>
-<td>Edge color of the background in RGB format</td>
-</tr>
-<tr>
-<td>text_color</td>
-<td>Integer</td>
-<td>Text color of the background in RGB format</td>
-</tr>
+  /**
+   * Center color of the background in RGB format
+   */
+  center_color: number;
+  /**
+   * Edge color of the background in RGB format
+   */
+  edge_color: number;
+  /**
+   * Text color of the background in RGB format
+   */
+  text_color: number;
 </tbody>
 </table>
 }
@@ -7029,11 +6929,10 @@ export interface Gift {
 <td><a href="#sticker">Sticker</a></td>
 <td>The sticker that represents the gift</td>
 </tr>
-<tr>
-<td>star_count</td>
-<td>Integer</td>
-<td>The number of Telegram Stars that must be paid to send the sticker</td>
-</tr>
+  /**
+   * The number of Telegram Stars that must be paid to send the sticker
+   */
+  star_count: number;
   /**
    * The number of Telegram Stars that must be paid to upgrade the gift to a unique one
    */
@@ -7125,11 +7024,10 @@ export interface UniqueGiftModel {
 <td><a href="#sticker">Sticker</a></td>
 <td>The sticker that represents the unique gift</td>
 </tr>
-<tr>
-<td>rarity_per_mille</td>
-<td>Integer</td>
-<td>The number of unique gifts that receive this model for every 1000 gift upgrades. Always 0 for crafted gifts.</td>
-</tr>
+  /**
+   * The number of unique gifts that receive this model for every 1000 gift upgrades. Always 0 for crafted gifts.
+   */
+  rarity_per_mille: number;
 <tr>
 <td>rarity</td>
 <td>String</td>
@@ -7161,11 +7059,10 @@ export interface UniqueGiftSymbol {
 <td><a href="#sticker">Sticker</a></td>
 <td>The sticker that represents the unique gift</td>
 </tr>
-<tr>
-<td>rarity_per_mille</td>
-<td>Integer</td>
-<td>The number of unique gifts that receive this model for every 1000 gifts upgraded</td>
-</tr>
+  /**
+   * The number of unique gifts that receive this model for every 1000 gifts upgraded
+   */
+  rarity_per_mille: number;
 </tbody>
 </table>
 }
@@ -7182,26 +7079,22 @@ export interface UniqueGiftBackdropColors {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>center_color</td>
-<td>Integer</td>
-<td>The color in the center of the backdrop in RGB format</td>
-</tr>
-<tr>
-<td>edge_color</td>
-<td>Integer</td>
-<td>The color on the edges of the backdrop in RGB format</td>
-</tr>
-<tr>
-<td>symbol_color</td>
-<td>Integer</td>
-<td>The color to be applied to the symbol in RGB format</td>
-</tr>
-<tr>
-<td>text_color</td>
-<td>Integer</td>
-<td>The color for the text on the backdrop in RGB format</td>
-</tr>
+  /**
+   * The color in the center of the backdrop in RGB format
+   */
+  center_color: number;
+  /**
+   * The color on the edges of the backdrop in RGB format
+   */
+  edge_color: number;
+  /**
+   * The color to be applied to the symbol in RGB format
+   */
+  symbol_color: number;
+  /**
+   * The color for the text on the backdrop in RGB format
+   */
+  text_color: number;
 </tbody>
 </table>
 }
@@ -7228,11 +7121,10 @@ export interface UniqueGiftBackdrop {
 <td><a href="#uniquegiftbackdropcolors">UniqueGiftBackdropColors</a></td>
 <td>Colors of the backdrop</td>
 </tr>
-<tr>
-<td>rarity_per_mille</td>
-<td>Integer</td>
-<td>The number of unique gifts that receive this backdrop for every 1000 gifts upgraded</td>
-</tr>
+  /**
+   * The number of unique gifts that receive this backdrop for every 1000 gifts upgraded
+   */
+  rarity_per_mille: number;
 </tbody>
 </table>
 }
@@ -7259,21 +7151,19 @@ export interface UniqueGiftColors {
 <td>String</td>
 <td>Custom emoji identifier of the unique gift&#39;s symbol</td>
 </tr>
-<tr>
-<td>light_theme_main_color</td>
-<td>Integer</td>
-<td>Main color used in light themes; RGB format</td>
-</tr>
+  /**
+   * Main color used in light themes; RGB format
+   */
+  light_theme_main_color: number;
 <tr>
 <td>light_theme_other_colors</td>
 <td>Array of Integer</td>
 <td>List of 1-3 additional colors used in light themes; RGB format</td>
 </tr>
-<tr>
-<td>dark_theme_main_color</td>
-<td>Integer</td>
-<td>Main color used in dark themes; RGB format</td>
-</tr>
+  /**
+   * Main color used in dark themes; RGB format
+   */
+  dark_theme_main_color: number;
 <tr>
 <td>dark_theme_other_colors</td>
 <td>Array of Integer</td>
@@ -7310,11 +7200,10 @@ export interface UniqueGift {
 <td>String</td>
 <td>Unique name of the gift. This name can be used in <code>https://t.me/nft/...</code> links and story areas.</td>
 </tr>
-<tr>
-<td>number</td>
-<td>Integer</td>
-<td>Unique number of the upgraded gift among gifts upgraded from the same regular gift</td>
-</tr>
+  /**
+   * Unique number of the upgraded gift among gifts upgraded from the same regular gift
+   */
+  number: number;
 <tr>
 <td>model</td>
 <td><a href="#uniquegiftmodel">UniqueGiftModel</a></td>
@@ -7511,11 +7400,10 @@ export interface OwnedGiftRegular {
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. Sender of the gift if it is a known user</td>
 </tr>
-<tr>
-<td>send_date</td>
-<td>Integer</td>
-<td>Date the gift was sent in Unix time</td>
-</tr>
+  /**
+   * Date the gift was sent in Unix time
+   */
+  send_date: number;
 <tr>
 <td>text</td>
 <td>String</td>
@@ -7599,11 +7487,10 @@ export interface OwnedGiftUnique {
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. Sender of the gift if it is a known user</td>
 </tr>
-<tr>
-<td>send_date</td>
-<td>Integer</td>
-<td>Date the gift was sent in Unix time</td>
-</tr>
+  /**
+   * Date the gift was sent in Unix time
+   */
+  send_date: number;
 <tr>
 <td>is_saved</td>
 <td>True</td>
@@ -7638,11 +7525,10 @@ export interface OwnedGifts {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>total_count</td>
-<td>Integer</td>
-<td>The total number of gifts owned by the user or the chat</td>
-</tr>
+  /**
+   * The total number of gifts owned by the user or the chat
+   */
+  total_count: number;
 <tr>
 <td>gifts</td>
 <td>Array of <a href="#ownedgift">OwnedGift</a></td>
@@ -7736,11 +7622,10 @@ export interface StarAmount {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>amount</td>
-<td>Integer</td>
-<td>Integer amount of Telegram Stars, rounded to 0; can be negative</td>
-</tr>
+  /**
+   * Integer amount of Telegram Stars, rounded to 0; can be negative
+   */
+  amount: number;
   /**
    * The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if <em>amount</em> is non-positive
    */
@@ -7983,11 +7868,10 @@ export interface BotCommandScopeChatMember {
 <td>Integer or String</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.</td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Unique identifier of the target user</td>
-</tr>
+  /**
+   * Unique identifier of the target user
+   */
+  user_id: number;
 </tbody>
 </table>
 }
@@ -8220,11 +8104,10 @@ export interface ChatBoostSourceGiveaway {
 <td>String</td>
 <td>Source of the boost, always “giveaway”</td>
 </tr>
-<tr>
-<td>giveaway_message_id</td>
-<td>Integer</td>
-<td>Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn&#39;t sent yet.</td>
-</tr>
+  /**
+   * Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn&#39;t sent yet.
+   */
+  giveaway_message_id: number;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -8260,16 +8143,14 @@ export interface ChatBoost {
 <td>String</td>
 <td>Unique identifier of the boost</td>
 </tr>
-<tr>
-<td>add_date</td>
-<td>Integer</td>
-<td>Point in time (Unix timestamp) when the chat was boosted</td>
-</tr>
-<tr>
-<td>expiration_date</td>
-<td>Integer</td>
-<td>Point in time (Unix timestamp) when the boost will automatically expire, unless the booster&#39;s Telegram Premium subscription is prolonged</td>
-</tr>
+  /**
+   * Point in time (Unix timestamp) when the chat was boosted
+   */
+  add_date: number;
+  /**
+   * Point in time (Unix timestamp) when the boost will automatically expire, unless the booster&#39;s Telegram Premium subscription is prolonged
+   */
+  expiration_date: number;
 <tr>
 <td>source</td>
 <td><a href="#chatboostsource">ChatBoostSource</a></td>
@@ -8327,11 +8208,10 @@ export interface ChatBoostRemoved {
 <td>String</td>
 <td>Unique identifier of the boost</td>
 </tr>
-<tr>
-<td>remove_date</td>
-<td>Integer</td>
-<td>Point in time (Unix timestamp) when the boost was removed</td>
-</tr>
+  /**
+   * Point in time (Unix timestamp) when the boost was removed
+   */
+  remove_date: number;
 <tr>
 <td>source</td>
 <td><a href="#chatboostsource">ChatBoostSource</a></td>
@@ -8512,16 +8392,14 @@ export interface BusinessConnection {
 <td><a href="#user">User</a></td>
 <td>Business account user that created the business connection</td>
 </tr>
-<tr>
-<td>user_chat_id</td>
-<td>Integer</td>
-<td>Identifier of a private chat with the user who created the business connection. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the connection was established in Unix time</td>
-</tr>
+  /**
+   * Identifier of a private chat with the user who created the business connection. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  user_chat_id: number;
+  /**
+   * Date the connection was established in Unix time
+   */
+  date: number;
 <tr>
 <td>rights</td>
 <td><a href="#businessbotrights">BusinessBotRights</a></td>
@@ -8626,11 +8504,10 @@ export interface PreparedInlineMessage {
 <td>String</td>
 <td>Unique identifier of the prepared message</td>
 </tr>
-<tr>
-<td>expiration_date</td>
-<td>Integer</td>
-<td>Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used.</td>
-</tr>
+  /**
+   * Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used.
+   */
+  expiration_date: number;
 </tbody>
 </table>
 }
@@ -17146,16 +17023,14 @@ export interface Sticker {
 <td>String</td>
 <td>Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields <em>is_animated</em> and <em>is_video</em>.</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Sticker width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Sticker height</td>
-</tr>
+  /**
+   * Sticker width
+   */
+  width: number;
+  /**
+   * Sticker height
+   */
+  height: number;
 <tr>
 <td>is_animated</td>
 <td>Boolean</td>
@@ -18644,11 +18519,10 @@ export interface RichTextDateTime {
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>unix_time</td>
-<td>Integer</td>
-<td>The Unix time associated with the entity</td>
-</tr>
+  /**
+   * The Unix time associated with the entity
+   */
+  unix_time: number;
 <tr>
 <td>date_time_format</td>
 <td>String</td>
@@ -19427,11 +19301,10 @@ export interface RichBlockSectionHeading {
 <td><a href="#richtext">RichText</a></td>
 <td>Text of the block</td>
 </tr>
-<tr>
-<td>size</td>
-<td>Integer</td>
-<td>Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest</td>
-</tr>
+  /**
+   * Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest
+   */
+  size: number;
 </tbody>
 </table>
 }
@@ -19815,21 +19688,18 @@ export interface RichBlockMap {
 <td><a href="#location">Location</a></td>
 <td>Location of the center of the map</td>
 </tr>
-<tr>
-<td>zoom</td>
-<td>Integer</td>
-<td>Map zoom level; 13-20</td>
-</tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Expected width of the map</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Expected height of the map</td>
-</tr>
+  /**
+   * Map zoom level; 13-20
+   */
+  zoom: number;
+  /**
+   * Expected width of the map
+   */
+  width: number;
+  /**
+   * Expected height of the map
+   */
+  height: number;
 <tr>
 <td>caption</td>
 <td><a href="#richblockcaption">RichBlockCaption</a></td>
@@ -20170,11 +20040,10 @@ export interface InputRichBlockSectionHeading {
 <td><a href="#richtext">RichText</a></td>
 <td>Text of the block</td>
 </tr>
-<tr>
-<td>size</td>
-<td>Integer</td>
-<td>Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest</td>
-</tr>
+  /**
+   * Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest
+   */
+  size: number;
 </tbody>
 </table>
 }
@@ -20558,21 +20427,18 @@ export interface InputRichBlockMap {
 <td><a href="#location">Location</a></td>
 <td>Location of the center of the map</td>
 </tr>
-<tr>
-<td>zoom</td>
-<td>Integer</td>
-<td>Map zoom level; 0-24</td>
-</tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Map width; 0-10000</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Map height; 0-10000</td>
-</tr>
+  /**
+   * Map zoom level; 0-24
+   */
+  zoom: number;
+  /**
+   * Map width; 0-10000
+   */
+  width: number;
+  /**
+   * Map height; 0-10000
+   */
+  height: number;
 <tr>
 <td>caption</td>
 <td><a href="#richblockcaption">RichBlockCaption</a></td>
@@ -23279,11 +23145,10 @@ export interface LabeledPrice {
 <td>String</td>
 <td>Portion label</td>
 </tr>
-<tr>
-<td>amount</td>
-<td>Integer</td>
-<td>Price of the product in the <em>smallest units</em> of the <a href="/bots/payments#supported-currencies">currency</a> (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
-</tr>
+  /**
+   * Price of the product in the <em>smallest units</em> of the <a href="/bots/payments#supported-currencies">currency</a> (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   */
+  amount: number;
 </tbody>
 </table>
 }
@@ -23320,11 +23185,10 @@ export interface Invoice {
 <td>String</td>
 <td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a></td>
 </tr>
-<tr>
-<td>total_amount</td>
-<td>Integer</td>
-<td>Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
-</tr>
+  /**
+   * Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   */
+  total_amount: number;
 </tbody>
 </table>
 }
@@ -23459,11 +23323,10 @@ export interface SuccessfulPayment {
 <td>String</td>
 <td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a></td>
 </tr>
-<tr>
-<td>total_amount</td>
-<td>Integer</td>
-<td>Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
-</tr>
+  /**
+   * Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   */
+  total_amount: number;
 <tr>
 <td>invoice_payload</td>
 <td>String</td>
@@ -23524,11 +23387,10 @@ export interface RefundedPayment {
 <td>String</td>
 <td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Currently, always “XTR”.</td>
 </tr>
-<tr>
-<td>total_amount</td>
-<td>Integer</td>
-<td>Total refunded price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code>, <code>total_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
-</tr>
+  /**
+   * Total refunded price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code>, <code>total_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   */
+  total_amount: number;
 <tr>
 <td>invoice_payload</td>
 <td>String</td>
@@ -23611,11 +23473,10 @@ export interface PreCheckoutQuery {
 <td>String</td>
 <td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a></td>
 </tr>
-<tr>
-<td>total_amount</td>
-<td>Integer</td>
-<td>Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).</td>
-</tr>
+  /**
+   * Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   */
+  total_amount: number;
 <tr>
 <td>invoice_payload</td>
 <td>String</td>
@@ -23710,11 +23571,10 @@ export interface RevenueWithdrawalStateSucceeded {
 <td>String</td>
 <td>Type of the state, always “succeeded”</td>
 </tr>
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the withdrawal was completed in Unix time</td>
-</tr>
+  /**
+   * Date the withdrawal was completed in Unix time
+   */
+  date: number;
 <tr>
 <td>url</td>
 <td>String</td>
@@ -23767,16 +23627,14 @@ export interface AffiliateInfo {
 <td><a href="#chat">Chat</a></td>
 <td><em>Optional</em>. The chat that received an affiliate commission if it was received by a chat</td>
 </tr>
-<tr>
-<td>commission_per_mille</td>
-<td>Integer</td>
-<td>The number of Telegram Stars received by the affiliate for each 1000 Telegram Stars received by the bot from referred users</td>
-</tr>
-<tr>
-<td>amount</td>
-<td>Integer</td>
-<td>Integer amount of Telegram Stars received by the affiliate from the transaction, rounded to 0; can be negative for refunds</td>
-</tr>
+  /**
+   * The number of Telegram Stars received by the affiliate for each 1000 Telegram Stars received by the bot from referred users
+   */
+  commission_per_mille: number;
+  /**
+   * Integer amount of Telegram Stars received by the affiliate from the transaction, rounded to 0; can be negative for refunds
+   */
+  amount: number;
   /**
    * The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds
    */
@@ -23921,11 +23779,10 @@ export interface TransactionPartnerAffiliateProgram {
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. Information about the bot that sponsored the affiliate program</td>
 </tr>
-<tr>
-<td>commission_per_mille</td>
-<td>Integer</td>
-<td>The number of Telegram Stars received by the bot for each 1000 Telegram Stars received by the affiliate program sponsor from referred users</td>
-</tr>
+  /**
+   * The number of Telegram Stars received by the bot for each 1000 Telegram Stars received by the affiliate program sponsor from referred users
+   */
+  commission_per_mille: number;
 </tbody>
 </table>
 }
@@ -23994,11 +23851,10 @@ export interface TransactionPartnerTelegramApi {
 <td>String</td>
 <td>Type of the transaction partner, always “telegram_api”</td>
 </tr>
-<tr>
-<td>request_count</td>
-<td>Integer</td>
-<td>The number of successful requests that exceeded regular limits and were therefore billed</td>
-</tr>
+  /**
+   * The number of successful requests that exceeded regular limits and were therefore billed
+   */
+  request_count: number;
 </tbody>
 </table>
 }
@@ -24041,20 +23897,18 @@ export interface StarTransaction {
 <td>String</td>
 <td>Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with <em>SuccessfulPayment.telegram_payment_charge_id</em> for successful incoming payments from users.</td>
 </tr>
-<tr>
-<td>amount</td>
-<td>Integer</td>
-<td>Integer amount of Telegram Stars transferred by the transaction</td>
-</tr>
+  /**
+   * Integer amount of Telegram Stars transferred by the transaction
+   */
+  amount: number;
   /**
    * The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999
    */
   nanostar_amount?: number;
-<tr>
-<td>date</td>
-<td>Integer</td>
-<td>Date the transaction was created in Unix time</td>
-</tr>
+  /**
+   * Date the transaction was created in Unix time
+   */
+  date: number;
 <tr>
 <td>source</td>
 <td><a href="#transactionpartner">TransactionPartner</a></td>
@@ -24140,16 +23994,14 @@ export interface PassportFile {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td>File size in bytes</td>
-</tr>
-<tr>
-<td>file_date</td>
-<td>Integer</td>
-<td>Unix time when the file was uploaded</td>
-</tr>
+  /**
+   * File size in bytes
+   */
+  file_size: number;
+  /**
+   * Unix time when the file was uploaded
+   */
+  file_date: number;
 </tbody>
 </table>
 }
@@ -24896,21 +24748,19 @@ export interface GameHighScore {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>position</td>
-<td>Integer</td>
-<td>Position in high score table for the game</td>
-</tr>
+  /**
+   * Position in high score table for the game
+   */
+  position: number;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
 <td>User</td>
 </tr>
-<tr>
-<td>score</td>
-<td>Integer</td>
-<td>Score</td>
-</tr>
+  /**
+   * Score
+   */
+  score: number;
 </tbody>
 </table>
 }
