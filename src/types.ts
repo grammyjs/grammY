@@ -1,4 +1,4 @@
-<h3><a class="anchor" name="making-requests" href="#making-requests"><i class="anchor-icon"></i></a>Making requests</h3>
+// === MAKING REQUESTS
 <p>All queries to the Telegram Bot API must be served over HTTPS and need to be presented in this form: <code>https://api.telegram.org/bot&lt;token&gt;/METHOD_NAME</code>. Like this for example:</p>
 <pre><code>https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe</code></pre>
 <p>We support <strong>GET</strong> and <strong>POST</strong> HTTP methods. We support four ways of passing parameters in Bot API requests:</p>
@@ -18,21 +18,7 @@
 <blockquote>
 <p>Please see our <a href="/bots/faq#how-can-i-make-requests-in-response-to-updates">FAQ</a> for examples.</p>
 </blockquote>
-<h3><a class="anchor" name="using-a-local-bot-api-server" href="#using-a-local-bot-api-server"><i class="anchor-icon"></i></a>Using a Local Bot API Server</h3>
-<p>The Bot API server source code is available at <a href="https://github.com/tdlib/telegram-bot-api">telegram-bot-api</a>. You can run it locally and send the requests to your own server instead of <code>https://api.telegram.org</code>. If you switch to a local Bot API server, your bot will be able to:</p>
-<ul>
-<li>Download files without a size limit.</li>
-<li>Upload files up to 2000 MB.</li>
-<li>Upload files using their local path and <a href="https://en.wikipedia.org/wiki/File_URI_scheme">the file URI scheme</a>.</li>
-<li>Use an HTTP URL for the webhook.</li>
-<li>Use any local IP address for the webhook.</li>
-<li>Use any port for the webhook.</li>
-<li>Set <em>max_webhook_connections</em> up to 100000.</li>
-<li>Receive the absolute local path as a value of the <em>file_path</em> field without the need to download the file after a <a href="#getfile">getFile</a> request.</li>
-</ul>
-<h4><a class="anchor" name="do-i-need-a-local-bot-api-server" href="#do-i-need-a-local-bot-api-server"><i class="anchor-icon"></i></a>Do I need a Local Bot API Server</h4>
-<p>The majority of bots will be OK with the default configuration, running on our servers. But if you feel that you need one of <a href="#using-a-local-bot-api-server">these features</a>, you&#39;re welcome to switch to your own at any time.</p>
-<h3><a class="anchor" name="getting-updates" href="#getting-updates"><i class="anchor-icon"></i></a>Getting updates</h3>
+// === GETTING UPDATES
 <p>There are two mutually exclusive ways of receiving updates for your bot - the <a href="#getupdates">getUpdates</a> method on one hand and <a href="#setwebhook">webhooks</a> on the other. Incoming updates are stored on the server until the bot receives them either way, but they will not be kept longer than 24 hours.</p>
 <p>Regardless of which option you choose, you will receive JSON-serialized <a href="#update">Update</a> objects as a result.</p>
 <h4><a class="anchor" name="update" href="#update"><i class="anchor-icon"></i></a>Update</h4>
@@ -365,7 +351,7 @@
 </tr>
 </tbody>
 </table>
-<h3><a class="anchor" name="available-types" href="#available-types"><i class="anchor-icon"></i></a>Available types</h3>
+// === AVAILABLE TYPES
 <p>All types used in the Bot API responses are represented as JSON-objects.</p>
 <p>It is safe to use 32-bit signed integers for storing all <strong>Integer</strong> fields unless otherwise noted.</p>
 <blockquote>
@@ -8954,7 +8940,7 @@
 </table></p>
 <h4><a class="anchor" name="inline-mode-objects" href="#inline-mode-objects"><i class="anchor-icon"></i></a>Inline mode objects</h4>
 <p>Objects and methods used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
-<h3><a class="anchor" name="available-methods" href="#available-methods"><i class="anchor-icon"></i></a>Available methods</h3>
+// === AVAILABLE METHODS
 <blockquote>
 <p>All methods in the Bot API are case-insensitive. We support <strong>GET</strong> and <strong>POST</strong> HTTP methods. Use either <a href="https://en.wikipedia.org/wiki/Query_string">URL query string</a> or <em>application/json</em> or <em>application/x-www-form-urlencoded</em> or <em>multipart/form-data</em> for passing parameters in Bot API requests.<br>On successful call, a JSON-object containing the result will be returned.</p>
 </blockquote>
@@ -14860,7 +14846,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </table>
 <h4><a class="anchor" name="inline-mode-methods" href="#inline-mode-methods"><i class="anchor-icon"></i></a>Inline mode methods</h4>
 <p>Methods and objects used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
-<h3><a class="anchor" name="updating-messages" href="#updating-messages"><i class="anchor-icon"></i></a>Updating messages</h3>
+// === UPDATING MESSAGES
 <p>The following methods allow you to change an existing message in the message history instead of sending a new one with a result of an action. This is most useful for messages with <a href="/bots/features#inline-keyboards">inline keyboards</a> using callback queries, but can also help reduce clutter in conversations with regular chat bots.</p>
 <p>Please note, that it is currently only possible to edit messages without <em>reply_markup</em> or with <a href="/bots/features#inline-keyboards">inline keyboards</a>.</p>
 <h4><a class="anchor" name="editmessagetext" href="#editmessagetext"><i class="anchor-icon"></i></a>editMessageText</h4>
@@ -15723,7 +15709,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h3><a class="anchor" name="stickers" href="#stickers"><i class="anchor-icon"></i></a>Stickers</h3>
+// === STICKERS
 <p>The following methods and objects allow your bot to handle stickers and sticker sets.</p>
 <h4><a class="anchor" name="sticker" href="#sticker"><i class="anchor-icon"></i></a>Sticker</h4>
 <p>This object represents a sticker.</p>
@@ -16452,7 +16438,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h3><a class="anchor" name="rich-messages" href="#rich-messages"><i class="anchor-icon"></i></a>Rich messages</h3>
+// === RICH MESSAGES
 <p>The following methods and objects allow your bot to handle and send rich messages.</p>
 <h4><a class="anchor" name="rich-message-formatting-options" href="#rich-message-formatting-options"><i class="anchor-icon"></i></a>Rich Message Formatting Options</h4>
 <p><a href="#inputrichmessage">Rich messages</a> support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting, or explicit <a href="#inputrichblock">blocks</a>.</p>
@@ -18980,7 +18966,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h3><a class="anchor" name="inline-mode" href="#inline-mode"><i class="anchor-icon"></i></a>Inline mode</h3>
+// === INLINE MODE
 <p>The following methods and objects allow your bot to work in <a href="/bots/inline">inline mode</a>.<br>Please see our <a href="/bots/inline">Introduction to Inline bots</a> for more details.</p>
 <p>To enable this option, send the <code>/setinline</code> command to <a href="https://t.me/botfather">@BotFather</a> and provide the placeholder text that the user will see in the input field after typing your bot&#39;s name.</p>
 <h4><a class="anchor" name="inlinequery" href="#inlinequery"><i class="anchor-icon"></i></a>InlineQuery</h4>
@@ -20849,7 +20835,7 @@ all the text above was on the same line
 </tbody>
 </table>
 <p><strong>Note:</strong> It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.</p>
-<h3><a class="anchor" name="payments" href="#payments"><i class="anchor-icon"></i></a>Payments</h3>
+// === PAYMENTS
 <p>Your bot can accept payments from Telegram users. Please see the <a href="/bots/payments">introduction to payments</a> for more details on the process and how to set up payments for your bot.</p>
 <h4><a class="anchor" name="sendinvoice" href="#sendinvoice"><i class="anchor-icon"></i></a>sendInvoice</h4>
 <p>Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.</p>
@@ -22105,7 +22091,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h3><a class="anchor" name="telegram-passport" href="#telegram-passport"><i class="anchor-icon"></i></a>Telegram Passport</h3>
+// === TELEGRAM PASSPORT
 <p><strong>Telegram Passport</strong> is a unified authorization method for services that require personal identification. Users can upload their documents once, then instantly share their data with services that require real-world ID (finance, ICOs, etc.). Please see the <a href="/passport">manual</a> for details.</p>
 <h4><a class="anchor" name="passportdata" href="#passportdata"><i class="anchor-icon"></i></a>PassportData</h4>
 <p>Describes Telegram Passport data shared with the bot by the user.</p>
@@ -22596,7 +22582,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h3><a class="anchor" name="games" href="#games"><i class="anchor-icon"></i></a>Games</h3>
+// === GAMES
 <p>Your bot can offer users <strong>HTML5 games</strong> to play solo or to compete against each other in groups and one-on-one chats. Create games via <a href="https://t.me/botfather">@BotFather</a> using the <em>/newgame</em> command. Please note that this kind of power requires responsibility: you will need to accept the terms for each game that your bots will be offering.</p>
 <ul>
 <li>Games are a new type of content on Telegram, represented by the <a href="#game">Game</a> and <a href="#inlinequeryresultgame">InlineQueryResultGame</a> objects.</li>
