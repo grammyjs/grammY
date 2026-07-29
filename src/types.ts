@@ -9988,12 +9988,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>media</td>
-<td>Array of <a href="#inputmediaaudio">InputMediaAudio</a>, <a href="#inputmediadocument">InputMediaDocument</a>, <a href="#inputmedialivephoto">InputMediaLivePhoto</a>, <a href="#inputmediaphoto">InputMediaPhoto</a> and <a href="#inputmediavideo">InputMediaVideo</a></td>
-<td>Yes</td>
-<td>A JSON-serialized Array describing messages to be sent, must include 2-10 items</td>
-</tr>
+    /**
+     * A JSON-serialized Array describing messages to be sent, must include 2-10 items
+     */
+    media: Array<InputMediaAudio | InputMediaDocument | InputMediaLivePhoto | InputMediaPhoto | InputMediaVideo>;
     /**
      * Sends messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
      */
