@@ -233,6 +233,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns <em>True</em> on success.
@@ -298,6 +300,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns <em>True</em> on success.
@@ -321,11 +325,14 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the <em>url</em> field empty.
    */
-  getWebhookInfo(args: {
+  getWebhookInfo(args: {}): never;
+}
 /**
  * Describes the current status of a webhook.
  */
@@ -9499,17 +9506,20 @@ export interface ApiMethods {
   /**
    * A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.
    */
-  getMe(args: {
+  getMe(args: {}): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns <em>True</em> on success. Requires no parameters.
    */
-  logOut(args: {
+  logOut(args: {}): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns <em>True</em> on success. Requires no parameters.
    */
-  close(args: {
+  close(args: {}): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.
@@ -9629,6 +9639,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 <h4><a class="anchor" name="formatting-options" href="#formatting-options"><i class="anchor-icon"></i></a>Formatting options</h4>
 <p>The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.</p>
 <p>Note that Telegram clients will display an <strong>alert</strong> to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).</p>
@@ -9854,6 +9866,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
@@ -9913,6 +9927,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.
@@ -10032,6 +10048,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
@@ -10097,6 +10115,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.
@@ -10228,6 +10248,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send live photos. On success, the sent <a href="#message">Message</a> is returned.
@@ -10365,6 +10387,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
@@ -10510,6 +10534,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
@@ -10641,6 +10667,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
@@ -10814,6 +10842,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
@@ -10969,6 +10999,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
@@ -11094,6 +11126,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.
@@ -11213,6 +11247,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.
@@ -11332,6 +11368,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of <a href="#message">Message</a> objects that were sent is returned.
@@ -11409,6 +11447,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.
@@ -11540,6 +11580,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.
@@ -11683,6 +11725,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.
@@ -11802,6 +11846,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.
@@ -12023,6 +12069,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.
@@ -12088,6 +12136,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.
@@ -12177,6 +12227,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
@@ -12230,6 +12282,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns <em>True</em> on success.
@@ -12315,6 +12369,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.
@@ -12350,6 +12406,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get a list of profile audios for a user. Returns a <a href="#userprofileaudios">UserProfileAudios</a> object.
@@ -12385,6 +12443,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns <em>True</em> on success.
@@ -12420,6 +12480,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>, where <code>&lt;file_path&gt;</code> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.
@@ -12445,6 +12507,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
@@ -12486,6 +12550,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns <em>True</em> on success.
@@ -12521,6 +12587,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift restrictions from a user. Returns <em>True</em> on success.
@@ -12568,6 +12636,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all boolean parameters to demote a user. Returns <em>True</em> on success.
@@ -12699,6 +12769,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns <em>True</em> on success.
@@ -12734,6 +12806,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_tags</em> administrator right. Returns <em>True</em> on success.
@@ -12769,6 +12843,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
@@ -12798,6 +12874,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
@@ -12827,6 +12905,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns <em>True</em> on success.
@@ -12862,6 +12942,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as <em>String</em> on success.
@@ -12887,6 +12969,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
@@ -12934,6 +13018,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
@@ -12987,6 +13073,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the <em>can_invite_users</em> administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
@@ -13028,6 +13116,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit a subscription invite link created by the bot. The bot must have the <em>can_invite_users</em> administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
@@ -13063,6 +13153,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
@@ -13092,6 +13184,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
@@ -13121,6 +13215,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
@@ -13150,6 +13246,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to process a received chat join request query. Returns <em>True</em> on success.
@@ -13179,6 +13277,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns <em>True</em> on success.
@@ -13208,6 +13308,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
@@ -13237,6 +13339,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
@@ -13260,6 +13364,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
@@ -13289,6 +13395,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
@@ -13318,6 +13426,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns <em>True</em> on success.
@@ -13359,6 +13469,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns <em>True</em> on success.
@@ -13394,6 +13506,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns <em>True</em> on success.
@@ -13417,6 +13531,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method for your bot to leave a group, supergroup or channel. Returns <em>True</em> on success.
@@ -13440,6 +13556,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.
@@ -13463,6 +13581,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get a list of administrators in a chat. Returns an Array of <a href="#chatmember">ChatMember</a> objects.
@@ -13492,6 +13612,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the number of members in a chat. Returns <em>Integer</em> on success.
@@ -13515,6 +13637,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.
@@ -13544,6 +13668,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of <a href="#message">Message</a> objects is returned.
@@ -13573,6 +13699,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
@@ -13602,6 +13730,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
@@ -13625,11 +13755,14 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.
    */
-  getForumTopicIconStickers(args: {
+  getForumTopicIconStickers(args: {}): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator right. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.
@@ -13671,6 +13804,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
@@ -13712,6 +13847,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
@@ -13741,6 +13878,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
@@ -13770,6 +13909,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns <em>True</em> on success.
@@ -13799,6 +13940,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
@@ -13828,6 +13971,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
@@ -13857,6 +14002,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
@@ -13880,6 +14027,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns <em>True</em> on success.
@@ -13903,6 +14052,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns <em>True</em> on success.
@@ -13926,6 +14077,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
@@ -13949,6 +14102,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
@@ -13972,6 +14127,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, <em>True</em> is returned.
@@ -14021,6 +14178,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to reply to a received guest message. On success, a <a href="#sentguestmessage">SentGuestMessage</a> object is returned.
@@ -14050,6 +14209,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.
@@ -14079,6 +14240,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.
@@ -14102,6 +14265,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the token of a managed bot. Returns the token as <em>String</em> on success.
@@ -14125,6 +14290,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as <em>String</em> on success.
@@ -14148,6 +14315,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the access settings of a managed bot. Returns a <a href="#botaccesssettings">BotAccessSettings</a> object on success.
@@ -14171,6 +14340,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the access settings of a managed bot. Returns <em>True</em> on success.
@@ -14206,6 +14377,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns <em>True</em> on success.
@@ -14241,6 +14414,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns <em>True</em> on success.
@@ -14270,6 +14445,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.
@@ -14299,6 +14476,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the bot&#39;s name. Returns <em>True</em> on success.
@@ -14328,6 +14507,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.
@@ -14351,6 +14532,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns <em>True</em> on success.
@@ -14380,6 +14563,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.
@@ -14403,6 +14588,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns <em>True</em> on success.
@@ -14432,6 +14619,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.
@@ -14455,6 +14644,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Changes the profile photo of the bot. Returns <em>True</em> on success.
@@ -14478,11 +14669,14 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Removes the profile photo of the bot. Requires no parameters. Returns <em>True</em> on success.
    */
-  removeMyProfilePhoto(args: {
+  removeMyProfilePhoto(args: {}): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns <em>True</em> on success.
@@ -14512,6 +14706,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.
@@ -14535,6 +14731,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns <em>True</em> on success.
@@ -14564,6 +14762,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.
@@ -14587,11 +14787,14 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.
    */
-  getAvailableGifts(args: {
+  getAvailableGifts(args: {}): never;
+}
 export interface ApiMethods {
   /**
    * Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns <em>True</em> on success.
@@ -14651,6 +14854,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Gifts a Telegram Premium subscription to the given user. Returns <em>True</em> on success.
@@ -14704,6 +14909,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
@@ -14733,6 +14940,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
@@ -14762,6 +14971,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
@@ -14785,6 +14996,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
@@ -14808,6 +15021,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns <em>True</em> on success.
@@ -14843,6 +15058,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns <em>True</em> on success.
@@ -14872,6 +15089,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns <em>True</em> on success.
@@ -14907,6 +15126,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns <em>True</em> on success.
@@ -14936,6 +15157,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns <em>True</em> on success.
@@ -14965,6 +15188,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
@@ -15000,6 +15225,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
@@ -15029,6 +15256,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns <em>True</em> on success.
@@ -15064,6 +15293,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Returns the amount of Telegram Stars owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#staramount">StarAmount</a> on success.
@@ -15087,6 +15318,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns <em>True</em> on success.
@@ -15116,6 +15349,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Returns the gifts received and owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
@@ -15199,6 +15434,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Returns the gifts owned and hosted by a user. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
@@ -15270,6 +15507,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Returns the gifts owned by a chat. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
@@ -15353,6 +15592,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns <em>True</em> on success.
@@ -15382,6 +15623,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns <em>True</em> on success.
@@ -15423,6 +15666,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns <em>True</em> on success.
@@ -15464,6 +15709,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Posts a story on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.
@@ -15535,6 +15782,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the <em>can_manage_stories</em> business bot right for both business accounts. Returns <a href="#story">Story</a> on success.
@@ -15588,6 +15837,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Edits a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.
@@ -15647,6 +15898,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <em>True</em> on success.
@@ -15676,6 +15929,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.
@@ -15705,6 +15960,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.
@@ -15758,6 +16015,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Stores a keyboard button that can be used by a user within a Mini App. Returns a <a href="#preparedkeyboardbutton">PreparedKeyboardButton</a> object.
@@ -15787,6 +16046,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 <h4><a class="anchor" name="inline-mode-methods" href="#inline-mode-methods"><i class="anchor-icon"></i></a>Inline mode methods</h4>
 <p>Methods and objects used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
 // === UPDATING MESSAGES
@@ -15869,6 +16130,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
@@ -15940,6 +16203,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
@@ -15993,6 +16258,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
@@ -16076,6 +16343,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
@@ -16123,6 +16392,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.
@@ -16170,6 +16441,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
@@ -16217,6 +16490,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.
@@ -16258,6 +16533,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
@@ -16323,6 +16600,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
@@ -16370,6 +16649,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
@@ -16429,6 +16710,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
@@ -16470,6 +16753,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
@@ -16505,6 +16790,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
@@ -16540,6 +16827,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns <em>True</em> on success.
@@ -16569,6 +16858,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns <em>True</em> on success.
@@ -16598,6 +16889,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns <em>True</em> on success.
@@ -16633,6 +16926,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
@@ -16674,6 +16969,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
@@ -16709,6 +17006,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 // === STICKERS
 <p>The following methods and objects allow your bot to handle stickers and sticker sets.</p>
 /**
@@ -17023,6 +17322,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.
@@ -17046,6 +17347,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.
@@ -17069,6 +17372,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.
@@ -17104,6 +17409,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns <em>True</em> on success.
@@ -17157,6 +17464,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns <em>True</em> on success.
@@ -17192,6 +17501,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to move a sticker in a set created by the bot to a specific position. Returns <em>True</em> on success.
@@ -17221,6 +17532,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.
@@ -17244,6 +17557,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns <em>True</em> on success.
@@ -17285,6 +17600,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
@@ -17314,6 +17631,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
@@ -17343,6 +17662,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns <em>True</em> on success.
@@ -17372,6 +17693,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set the title of a created sticker set. Returns <em>True</em> on success.
@@ -17401,6 +17724,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns <em>True</em> on success.
@@ -17442,6 +17767,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to set the thumbnail of a custom emoji sticker set. Returns <em>True</em> on success.
@@ -17471,6 +17798,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to delete a sticker set that was created by the bot. Returns <em>True</em> on success.
@@ -17494,6 +17823,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 // === RICH MESSAGES
 <p>The following methods and objects allow your bot to handle and send rich messages.</p>
 <h4><a class="anchor" name="rich-message-formatting-options" href="#rich-message-formatting-options"><i class="anchor-icon"></i></a>Rich Message Formatting Options</h4>
@@ -17946,6 +18277,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
@@ -17987,6 +18320,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 /**
  * This object represents a rich formatted text. Currently, it can be either a String for plain text, an Array of <a href="#richtext">RichText</a>, or any of the following types:
  *
@@ -20347,6 +20682,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 /**
  * This object represents a button to be shown above inline query results. You <strong>must</strong> use exactly one of the optional fields.
  */
@@ -22409,6 +22746,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to create a link for an invoice. Returns the created invoice link as <em>String</em> on success.
@@ -22558,6 +22897,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, <em>True</em> is returned.
@@ -22599,6 +22940,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, <em>True</em> is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
@@ -22634,11 +22977,14 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.
    */
-  getMyStarBalance(args: {
+  getMyStarBalance(args: {}): never;
+}
 export interface ApiMethods {
   /**
    * Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.
@@ -22668,6 +23014,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns <em>True</em> on success.
@@ -22697,6 +23045,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns <em>True</em> on success.
@@ -22732,6 +23082,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 /**
  * This object represents a portion of the price for goods or services.
  */
@@ -23730,6 +24082,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 /**
  * This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:
  *
@@ -24163,6 +24517,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
  */
@@ -24271,6 +24627,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of <a href="#gamehighscore">GameHighScore</a> objects.
@@ -24314,6 +24672,8 @@ export interface ApiMethods {
 </tr>
 </tbody>
 </table>
+  }): never;
+}
 /**
  * This object represents one row of the high scores table for a game.
  */
