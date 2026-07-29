@@ -3430,7 +3430,7 @@ export interface ReplyKeyboardMarkup {
    */
   input_field_placeholder?: string;
   /**
-   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
+   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
    */
   selective?: boolean;
 }
@@ -9580,7 +9580,7 @@ export interface ApiMethods {
   /**
    * Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, <em>True</em> is returned.
    *
-   * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
+   * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">\@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
    *
    * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
    */
@@ -9598,7 +9598,7 @@ export interface ApiMethods {
      */
     show_alert?: boolean;
     /**
-     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton"><em>callback_game</em></a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
+     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">\@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton"><em>callback_game</em></a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
      */
     url?: string;
     /**
@@ -14998,7 +14998,7 @@ export interface InputInvoiceMessageContent {
    */
   payload: string;
   /**
-   * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Payment provider token, obtained via <a href="https://t.me/botfather">\@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   provider_token?: string;
   /**
@@ -15069,7 +15069,7 @@ export interface InputInvoiceMessageContent {
 /**
  * Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.
  * 
- * <strong>Note:</strong> It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.
+ * <strong>Note:</strong> It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">\@BotFather</a> in order to receive these objects in updates.
  *
  * @see {@link https://core.telegram.org/bots/api#choseninlineresult}
  */
@@ -15128,7 +15128,7 @@ export interface ApiMethods {
      */
     payload: string;
     /**
-     * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Payment provider token, obtained via <a href="https://t.me/botfather">\@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     provider_token?: string;
     /**
@@ -15253,7 +15253,7 @@ export interface ApiMethods {
      */
     payload: string;
     /**
-     * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Payment provider token, obtained via <a href="https://t.me/botfather">\@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     provider_token?: string;
     /**
@@ -16359,7 +16359,7 @@ export interface ApiMethods {
      */
     message_thread_id?: number;
     /**
-     * Short name of the game, serves as the unique identifier for the game. Set up your games via <a href="https://t.me/botfather">@BotFather</a>.
+     * Short name of the game, serves as the unique identifier for the game. Set up your games via <a href="https://t.me/botfather">\@BotFather</a>.
      */
     game_short_name: string;
     /**
