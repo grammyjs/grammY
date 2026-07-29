@@ -346,11 +346,10 @@ export interface WebhookInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>Webhook URL, may be empty if webhook is not set up</td>
-</tr>
+  /**
+   * Webhook URL, may be empty if webhook is not set up
+   */
+  url: string;
 <tr>
 <td>has_custom_certificate</td>
 <td>Boolean</td>
@@ -416,11 +415,10 @@ export interface User {
 <td>Boolean</td>
 <td><em>True</em>, if this user is a bot</td>
 </tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td>User&#39;s or bot&#39;s first name</td>
-</tr>
+  /**
+   * User&#39;s or bot&#39;s first name
+   */
+  first_name: string;
   /**
    * User&#39;s or bot&#39;s last name
    */
@@ -513,11 +511,10 @@ export interface Chat {
    * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   id: number;
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the chat, can be either “private”, “group”, “supergroup” or “channel”</td>
-</tr>
+  /**
+   * Type of the chat, can be either “private”, “group”, “supergroup” or “channel”
+   */
+  type: string;
   /**
    * Title, for supergroups, channels and group chats
    */
@@ -564,11 +561,10 @@ export interface ChatFullInfo {
    * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   id: number;
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the chat, can be either “private”, “group”, “supergroup” or “channel”</td>
-</tr>
+  /**
+   * Type of the chat, can be either “private”, “group”, “supergroup” or “channel”
+   */
+  type: string;
   /**
    * Title, for supergroups, channels and group chats
    */
@@ -1467,11 +1463,10 @@ export interface MessageEntity {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag” (<code>#hashtag</code> or <code>#hashtag@chatusername</code>), “cashtag” (<code>$USD</code> or <code>$USD@chatusername</code>), “bot_command” (<code>/start@jobs_bot</code>), “url” (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number” (<code>+1-212-555-0123</code>), “bold” (<strong>bold text</strong>), “italic” (<em>italic text</em>), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).</td>
-</tr>
+  /**
+   * Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag” (<code>#hashtag</code> or <code>#hashtag@chatusername</code>), “cashtag” (<code>$USD</code> or <code>$USD@chatusername</code>), “bot_command” (<code>/start@jobs_bot</code>), “url” (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number” (<code>+1-212-555-0123</code>), “bold” (<strong>bold text</strong>), “italic” (<em>italic text</em>), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+   */
+  type: string;
   /**
    * Offset in <a href="/api/entities#entity-length">UTF-16 code units</a> to the start of the entity
    */
@@ -1521,11 +1516,10 @@ export interface TextQuote {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Text of the quoted part of a message that is replied to by the given message</td>
-</tr>
+  /**
+   * Text of the quoted part of a message that is replied to by the given message
+   */
+  text: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -1773,11 +1767,10 @@ export interface MessageOriginUser {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the message origin, always “user”</td>
-</tr>
+  /**
+   * Type of the message origin, always “user”
+   */
+  type: string;
   /**
    * Date the message was sent originally in Unix time
    */
@@ -1803,20 +1796,18 @@ export interface MessageOriginHiddenUser {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the message origin, always “hidden_user”</td>
-</tr>
+  /**
+   * Type of the message origin, always “hidden_user”
+   */
+  type: string;
   /**
    * Date the message was sent originally in Unix time
    */
   date: number;
-<tr>
-<td>sender_user_name</td>
-<td>String</td>
-<td>Name of the user that sent the message originally</td>
-</tr>
+  /**
+   * Name of the user that sent the message originally
+   */
+  sender_user_name: string;
 </tbody>
 </table>
 }
@@ -1833,11 +1824,10 @@ export interface MessageOriginChat {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the message origin, always “chat”</td>
-</tr>
+  /**
+   * Type of the message origin, always “chat”
+   */
+  type: string;
   /**
    * Date the message was sent originally in Unix time
    */
@@ -1867,11 +1857,10 @@ export interface MessageOriginChannel {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the message origin, always “channel”</td>
-</tr>
+  /**
+   * Type of the message origin, always “channel”
+   */
+  type: string;
   /**
    * Date the message was sent originally in Unix time
    */
@@ -1905,16 +1894,14 @@ export interface PhotoSize {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Photo width
    */
@@ -1943,16 +1930,14 @@ export interface Animation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Video width as defined by the sender
    */
@@ -1998,16 +1983,14 @@ export interface Audio {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Duration of the audio in seconds as defined by the sender
    */
@@ -2053,16 +2036,14 @@ export interface Document {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
@@ -2101,16 +2082,14 @@ export interface LivePhoto {
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Available sizes of the corresponding static photo</td>
 </tr>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for the video file which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for the video file which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for the video file which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for the video file which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Video width as defined by the sender
    */
@@ -2172,16 +2151,14 @@ export interface VideoQuality {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Video width
    */
@@ -2190,11 +2167,10 @@ export interface VideoQuality {
    * Video height
    */
   height: number;
-<tr>
-<td>codec</td>
-<td>String</td>
-<td>Codec that was used to encode the video, for example, “h264”, “h265”, or “av01”</td>
-</tr>
+  /**
+   * Codec that was used to encode the video, for example, “h264”, “h265”, or “av01”
+   */
+  codec: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -2215,16 +2191,14 @@ export interface Video {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Video width as defined by the sender
    */
@@ -2284,16 +2258,14 @@ export interface VideoNote {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Video width and height (diameter of the video message) as defined by the sender
    */
@@ -2327,16 +2299,14 @@ export interface Voice {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * Duration of the audio in seconds as defined by the sender
    */
@@ -2403,11 +2373,10 @@ export interface PaidMediaLivePhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the paid media, always “live_photo”</td>
-</tr>
+  /**
+   * Type of the paid media, always “live_photo”
+   */
+  type: string;
 <tr>
 <td>live_photo</td>
 <td><a href="#livephoto">LivePhoto</a></td>
@@ -2429,11 +2398,10 @@ export interface PaidMediaPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the paid media, always “photo”</td>
-</tr>
+  /**
+   * Type of the paid media, always “photo”
+   */
+  type: string;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
@@ -2455,11 +2423,10 @@ export interface PaidMediaPreview {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the paid media, always “preview”</td>
-</tr>
+  /**
+   * Type of the paid media, always “preview”
+   */
+  type: string;
   /**
    * Media width as defined by the sender
    */
@@ -2488,11 +2455,10 @@ export interface PaidMediaVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the paid media, always “video”</td>
-</tr>
+  /**
+   * Type of the paid media, always “video”
+   */
+  type: string;
 <tr>
 <td>video</td>
 <td><a href="#video">Video</a></td>
@@ -2514,16 +2480,14 @@ export interface Contact {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>phone_number</td>
-<td>String</td>
-<td>Contact&#39;s phone number</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td>Contact&#39;s first name</td>
-</tr>
+  /**
+   * Contact&#39;s phone number
+   */
+  phone_number: string;
+  /**
+   * Contact&#39;s first name
+   */
+  first_name: string;
   /**
    * Contact&#39;s last name
    */
@@ -2552,11 +2516,10 @@ export interface Dice {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>emoji</td>
-<td>String</td>
-<td>Emoji on which the dice throw animation is based</td>
-</tr>
+  /**
+   * Emoji on which the dice throw animation is based
+   */
+  emoji: string;
   /**
    * Value of the dice, 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />” base emoji, 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />” base emoji, 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />” base emoji
    */
@@ -2577,11 +2540,10 @@ export interface Link {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>URL of the link</td>
-</tr>
+  /**
+   * URL of the link
+   */
+  url: string;
 </tbody>
 </table>
 }
@@ -2706,16 +2668,14 @@ export interface PollOption {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>persistent_id</td>
-<td>String</td>
-<td>Unique identifier of the option, persistent on option addition and deletion</td>
-</tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Option text, 1-100 characters</td>
-</tr>
+  /**
+   * Unique identifier of the option, persistent on option addition and deletion
+   */
+  persistent_id: string;
+  /**
+   * Option text, 1-100 characters
+   */
+  text: string;
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -2760,11 +2720,10 @@ export interface InputPollOption {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Option text, 1-100 characters</td>
-</tr>
+  /**
+   * Option text, 1-100 characters
+   */
+  text: string;
   /**
    * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
    */
@@ -2795,11 +2754,10 @@ export interface PollAnswer {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>poll_id</td>
-<td>String</td>
-<td>Unique poll identifier</td>
-</tr>
+  /**
+   * Unique poll identifier
+   */
+  poll_id: string;
 <tr>
 <td>voter_chat</td>
 <td><a href="#chat">Chat</a></td>
@@ -2836,16 +2794,14 @@ export interface Poll {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique poll identifier</td>
-</tr>
-<tr>
-<td>question</td>
-<td>String</td>
-<td>Poll question, 1-300 characters</td>
-</tr>
+  /**
+   * Unique poll identifier
+   */
+  id: string;
+  /**
+   * Poll question, 1-300 characters
+   */
+  question: string;
 <tr>
 <td>question_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -2870,11 +2826,10 @@ export interface Poll {
 <td>Boolean</td>
 <td><em>True</em>, if the poll is anonymous</td>
 </tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Poll type, currently can be “regular” or “quiz”</td>
-</tr>
+  /**
+   * Poll type, currently can be “regular” or “quiz”
+   */
+  type: string;
 <tr>
 <td>allows_multiple_answers</td>
 <td>Boolean</td>
@@ -2956,11 +2911,10 @@ export interface ChecklistTask {
    * Unique identifier of the task
    */
   id: number;
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Text of the task</td>
-</tr>
+  /**
+   * Text of the task
+   */
+  text: string;
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -2996,11 +2950,10 @@ export interface Checklist {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title of the checklist</td>
-</tr>
+  /**
+   * Title of the checklist
+   */
+  title: string;
 <tr>
 <td>title_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -3041,11 +2994,10 @@ export interface InputChecklistTask {
    * Unique identifier of the task; must be positive and unique among all task identifiers currently present in the checklist
    */
   id: number;
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Text of the task; 1-100 characters after entities parsing</td>
-</tr>
+  /**
+   * Text of the task; 1-100 characters after entities parsing
+   */
+  text: string;
   /**
    * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details.
    */
@@ -3071,11 +3023,10 @@ export interface InputChecklist {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title of the checklist; 1-255 characters after entities parsing</td>
-</tr>
+  /**
+   * Title of the checklist; 1-255 characters after entities parsing
+   */
+  title: string;
   /**
    * Mode for parsing entities in the title. See <a href="#formatting-options">formatting options</a> for more details.
    */
@@ -3164,16 +3115,14 @@ export interface Venue {
 <td><a href="#location">Location</a></td>
 <td>Venue location. Can&#39;t be a live location.</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Name of the venue</td>
-</tr>
-<tr>
-<td>address</td>
-<td>String</td>
-<td>Address of the venue</td>
-</tr>
+  /**
+   * Name of the venue
+   */
+  title: string;
+  /**
+   * Address of the venue
+   */
+  address: string;
   /**
    * Foursquare identifier of the venue
    */
@@ -3206,16 +3155,14 @@ export interface WebAppData {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>data</td>
-<td>String</td>
-<td>The data. Be aware that a bad client can send arbitrary data in this field.</td>
-</tr>
-<tr>
-<td>button_text</td>
-<td>String</td>
-<td>Text of the <em>web_app</em> keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.</td>
-</tr>
+  /**
+   * The data. Be aware that a bad client can send arbitrary data in this field.
+   */
+  data: string;
+  /**
+   * Text of the <em>web_app</em> keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.
+   */
+  button_text: string;
 </tbody>
 </table>
 }
@@ -3334,16 +3281,14 @@ export interface BotSubscriptionUpdated {
 <td><a href="#user">User</a></td>
 <td>User who subscribed for payments toward the bot</td>
 </tr>
-<tr>
-<td>invoice_payload</td>
-<td>String</td>
-<td>Bot-specified invoice payload</td>
-</tr>
-<tr>
-<td>state</td>
-<td>String</td>
-<td>The new state of the subscription. Currently, it can be one of “canceled” if the user canceled the subscription, “active” if the user re-enabled a previously canceled subscription, or “failed” if payment for the subscription failed.</td>
-</tr>
+  /**
+   * Bot-specified invoice payload
+   */
+  invoice_payload: string;
+  /**
+   * The new state of the subscription. Currently, it can be one of “canceled” if the user canceled the subscription, “active” if the user re-enabled a previously canceled subscription, or “failed” if payment for the subscription failed.
+   */
+  state: string;
 </tbody>
 </table>
 }
@@ -3365,16 +3310,14 @@ export interface PollOptionAdded {
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
 <td><em>Optional</em>. Message containing the poll to which the option was added, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
 </tr>
-<tr>
-<td>option_persistent_id</td>
-<td>String</td>
-<td>Unique identifier of the added option</td>
-</tr>
-<tr>
-<td>option_text</td>
-<td>String</td>
-<td>Option text</td>
-</tr>
+  /**
+   * Unique identifier of the added option
+   */
+  option_persistent_id: string;
+  /**
+   * Option text
+   */
+  option_text: string;
 <tr>
 <td>option_text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -3401,16 +3344,14 @@ export interface PollOptionDeleted {
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
 <td><em>Optional</em>. Message containing the poll from which the option was deleted, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
 </tr>
-<tr>
-<td>option_persistent_id</td>
-<td>String</td>
-<td>Unique identifier of the deleted option</td>
-</tr>
-<tr>
-<td>option_text</td>
-<td>String</td>
-<td>Option text</td>
-</tr>
+  /**
+   * Unique identifier of the deleted option
+   */
+  option_persistent_id: string;
+  /**
+   * Option text
+   */
+  option_text: string;
 <tr>
 <td>option_text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -3463,11 +3404,10 @@ export interface BackgroundFillSolid {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the background fill, always “solid”</td>
-</tr>
+  /**
+   * Type of the background fill, always “solid”
+   */
+  type: string;
   /**
    * The color of the background fill in the RGB24 format
    */
@@ -3488,11 +3428,10 @@ export interface BackgroundFillGradient {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the background fill, always “gradient”</td>
-</tr>
+  /**
+   * Type of the background fill, always “gradient”
+   */
+  type: string;
   /**
    * Top color of the gradient in the RGB24 format
    */
@@ -3521,11 +3460,10 @@ export interface BackgroundFillFreeformGradient {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the background fill, always “freeform_gradient”</td>
-</tr>
+  /**
+   * Type of the background fill, always “freeform_gradient”
+   */
+  type: string;
 <tr>
 <td>colors</td>
 <td>Array of Integer</td>
@@ -3560,11 +3498,10 @@ export interface BackgroundTypeFill {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the background, always “fill”</td>
-</tr>
+  /**
+   * Type of the background, always “fill”
+   */
+  type: string;
 <tr>
 <td>fill</td>
 <td><a href="#backgroundfill">BackgroundFill</a></td>
@@ -3590,11 +3527,10 @@ export interface BackgroundTypeWallpaper {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the background, always “wallpaper”</td>
-</tr>
+  /**
+   * Type of the background, always “wallpaper”
+   */
+  type: string;
 <tr>
 <td>document</td>
 <td><a href="#document">Document</a></td>
@@ -3630,11 +3566,10 @@ export interface BackgroundTypePattern {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the background, always “pattern”</td>
-</tr>
+  /**
+   * Type of the background, always “pattern”
+   */
+  type: string;
 <tr>
 <td>document</td>
 <td><a href="#document">Document</a></td>
@@ -3675,16 +3610,14 @@ export interface BackgroundTypeChatTheme {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the background, always “chat_theme”</td>
-</tr>
-<tr>
-<td>theme_name</td>
-<td>String</td>
-<td>Name of the chat theme, which is usually an emoji</td>
-</tr>
+  /**
+   * Type of the background, always “chat_theme”
+   */
+  type: string;
+  /**
+   * Name of the chat theme, which is usually an emoji
+   */
+  theme_name: string;
 </tbody>
 </table>
 }
@@ -3804,11 +3737,10 @@ export interface ForumTopicCreated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Name of the topic</td>
-</tr>
+  /**
+   * Name of the topic
+   */
+  name: string;
   /**
    * Color of the topic icon in RGB format
    */
@@ -4203,11 +4135,10 @@ export interface SuggestedPostPaid {
 <td><a href="#message">Message</a></td>
 <td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
 </tr>
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.</td>
-</tr>
+  /**
+   * Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.
+   */
+  currency: string;
   /**
    * The amount of the currency that was received by the channel in nanograms; for payments in TON grams only
    */
@@ -4238,11 +4169,10 @@ export interface SuggestedPostRefunded {
 <td><a href="#message">Message</a></td>
 <td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
 </tr>
-<tr>
-<td>reason</td>
-<td>String</td>
-<td>Reason for the refund. Currently, one of “post_deleted” if the post was deleted within 24 hours of being posted or removed from scheduled messages without being posted, or “payment_refunded” if the payer refunded their payment.</td>
-</tr>
+  /**
+   * Reason for the refund. Currently, one of “post_deleted” if the post was deleted within 24 hours of being posted or removed from scheduled messages without being posted, or “payment_refunded” if the payer refunded their payment.
+   */
+  reason: string;
 </tbody>
 </table>
 }
@@ -4477,11 +4407,10 @@ export interface SuggestedPostPrice {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for TON grams.</td>
-</tr>
+  /**
+   * Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for TON grams.
+   */
+  currency: string;
   /**
    * The amount of the currency that will be paid for the post in the <em>smallest units</em> of the currency, i.e. Telegram Stars or nanograms. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanograms must be between 10000000 and 10000000000000.
    */
@@ -4502,11 +4431,10 @@ export interface SuggestedPostInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>state</td>
-<td>String</td>
-<td>State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”.</td>
-</tr>
+  /**
+   * State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”.
+   */
+  state: string;
 <tr>
 <td>price</td>
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
@@ -4634,16 +4562,14 @@ export interface File {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -4668,11 +4594,10 @@ export interface WebAppInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a></td>
-</tr>
+  /**
+   * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
+   */
+  url: string;
 </tbody>
 </table>
 }
@@ -4734,11 +4659,10 @@ export interface KeyboardButton {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Text of the button. If none of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> are used, it will be sent as a message when the button is pressed.</td>
-</tr>
+  /**
+   * Text of the button. If none of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> are used, it will be sent as a message when the button is pressed.
+   */
+  text: string;
   /**
    * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
    */
@@ -5012,11 +4936,10 @@ export interface InlineKeyboardButton {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Label text on the button</td>
-</tr>
+  /**
+   * Label text on the button
+   */
+  text: string;
   /**
    * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
    */
@@ -5093,11 +5016,10 @@ export interface LoginUrl {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.</td>
-</tr>
+  /**
+   * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
+   */
+  url: string;
   /**
    * New text of the button in forwarded messages
    */
@@ -5167,11 +5089,10 @@ export interface CopyTextButton {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>The text to be copied to the clipboard; 1-256 characters</td>
-</tr>
+  /**
+   * The text to be copied to the clipboard; 1-256 characters
+   */
+  text: string;
 </tbody>
 </table>
 }
@@ -5190,11 +5111,10 @@ export interface CallbackQuery {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this query</td>
-</tr>
+  /**
+   * Unique identifier for this query
+   */
+  id: string;
 <tr>
 <td>from</td>
 <td><a href="#user">User</a></td>
@@ -5209,11 +5129,10 @@ export interface CallbackQuery {
    * Identifier of the message sent via the bot in inline mode, that originated the query
    */
   inline_message_id?: string;
-<tr>
-<td>chat_instance</td>
-<td>String</td>
-<td>Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in <a href="#games">games</a>.</td>
-</tr>
+  /**
+   * Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in <a href="#games">games</a>.
+   */
+  chat_instance: string;
   /**
    * Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.
    */
@@ -5279,11 +5198,10 @@ export interface Community {
    * Unique identifier for this community. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   id: number;
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Name of the community</td>
-</tr>
+  /**
+   * Name of the community
+   */
+  name: string;
 </tbody>
 </table>
 }
@@ -5300,26 +5218,22 @@ export interface ChatPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>small_file_id</td>
-<td>String</td>
-<td>File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.</td>
-</tr>
-<tr>
-<td>small_file_unique_id</td>
-<td>String</td>
-<td>Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
-<tr>
-<td>big_file_id</td>
-<td>String</td>
-<td>File identifier of big (640x640) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.</td>
-</tr>
-<tr>
-<td>big_file_unique_id</td>
-<td>String</td>
-<td>Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
+   */
+  small_file_id: string;
+  /**
+   * Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  small_file_unique_id: string;
+  /**
+   * File identifier of big (640x640) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
+   */
+  big_file_id: string;
+  /**
+   * Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  big_file_unique_id: string;
 </tbody>
 </table>
 }
@@ -5336,11 +5250,10 @@ export interface ChatInviteLink {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>invite_link</td>
-<td>String</td>
-<td>The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.</td>
-</tr>
+  /**
+   * The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
+   */
+  invite_link: string;
 <tr>
 <td>creator</td>
 <td><a href="#user">User</a></td>
@@ -5574,11 +5487,10 @@ export interface ChatMemberOwner {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>status</td>
-<td>String</td>
-<td>The member&#39;s status in the chat, always “creator”</td>
-</tr>
+  /**
+   * The member&#39;s status in the chat, always “creator”
+   */
+  status: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -5609,11 +5521,10 @@ export interface ChatMemberAdministrator {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>status</td>
-<td>String</td>
-<td>The member&#39;s status in the chat, always “administrator”</td>
-</tr>
+  /**
+   * The member&#39;s status in the chat, always “administrator”
+   */
+  status: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -5729,11 +5640,10 @@ export interface ChatMemberMember {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>status</td>
-<td>String</td>
-<td>The member&#39;s status in the chat, always “member”</td>
-</tr>
+  /**
+   * The member&#39;s status in the chat, always “member”
+   */
+  status: string;
   /**
    * Tag of the member
    */
@@ -5763,11 +5673,10 @@ export interface ChatMemberRestricted {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>status</td>
-<td>String</td>
-<td>The member&#39;s status in the chat, always “restricted”</td>
-</tr>
+  /**
+   * The member&#39;s status in the chat, always “restricted”
+   */
+  status: string;
   /**
    * Tag of the member
    */
@@ -5882,11 +5791,10 @@ export interface ChatMemberLeft {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>status</td>
-<td>String</td>
-<td>The member&#39;s status in the chat, always “left”</td>
-</tr>
+  /**
+   * The member&#39;s status in the chat, always “left”
+   */
+  status: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -5908,11 +5816,10 @@ export interface ChatMemberBanned {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>status</td>
-<td>String</td>
-<td>The member&#39;s status in the chat, always “kicked”</td>
-</tr>
+  /**
+   * The member&#39;s status in the chat, always “kicked”
+   */
+  status: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -6138,11 +6045,10 @@ export interface BusinessLocation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>address</td>
-<td>String</td>
-<td>Address of the business</td>
-</tr>
+  /**
+   * Address of the business
+   */
+  address: string;
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
@@ -6188,11 +6094,10 @@ export interface BusinessOpeningHours {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>time_zone_name</td>
-<td>String</td>
-<td>Unique name of the time zone for which the opening hours are defined</td>
-</tr>
+  /**
+   * Unique name of the time zone for which the opening hours are defined
+   */
+  time_zone_name: string;
 <tr>
 <td>opening_hours</td>
 <td>Array of <a href="#businessopeninghoursinterval">BusinessOpeningHoursInterval</a></td>
@@ -6292,11 +6197,10 @@ export interface LocationAddress {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>country_code</td>
-<td>String</td>
-<td>The two-letter ISO 3166-1 alpha-2 country code of the country where the location is located</td>
-</tr>
+  /**
+   * The two-letter ISO 3166-1 alpha-2 country code of the country where the location is located
+   */
+  country_code: string;
   /**
    * State of the location
    */
@@ -6340,11 +6244,10 @@ export interface StoryAreaTypeLocation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the area, always “location”</td>
-</tr>
+  /**
+   * Type of the area, always “location”
+   */
+  type: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -6376,11 +6279,10 @@ export interface StoryAreaTypeSuggestedReaction {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the area, always “suggested_reaction”</td>
-</tr>
+  /**
+   * Type of the area, always “suggested_reaction”
+   */
+  type: string;
 <tr>
 <td>reaction_type</td>
 <td><a href="#reactiontype">ReactionType</a></td>
@@ -6412,16 +6314,14 @@ export interface StoryAreaTypeLink {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the area, always “link”</td>
-</tr>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>HTTP or tg:// URL to be opened when the area is clicked</td>
-</tr>
+  /**
+   * Type of the area, always “link”
+   */
+  type: string;
+  /**
+   * HTTP or tg:// URL to be opened when the area is clicked
+   */
+  url: string;
 </tbody>
 </table>
 }
@@ -6438,21 +6338,19 @@ export interface StoryAreaTypeWeather {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the area, always “weather”</td>
-</tr>
+  /**
+   * Type of the area, always “weather”
+   */
+  type: string;
 <tr>
 <td>temperature</td>
 <td>Float</td>
 <td>Temperature, in degree Celsius</td>
 </tr>
-<tr>
-<td>emoji</td>
-<td>String</td>
-<td>Emoji representing the weather</td>
-</tr>
+  /**
+   * Emoji representing the weather
+   */
+  emoji: string;
   /**
    * A color of the area background in the ARGB format
    */
@@ -6473,16 +6371,14 @@ export interface StoryAreaTypeUniqueGift {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the area, always “unique_gift”</td>
-</tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Unique name of the gift</td>
-</tr>
+  /**
+   * Type of the area, always “unique_gift”
+   */
+  type: string;
+  /**
+   * Unique name of the gift
+   */
+  name: string;
 </tbody>
 </table>
 }
@@ -6530,11 +6426,10 @@ export interface ChatLocation {
 <td><a href="#location">Location</a></td>
 <td>The location to which the supergroup is connected. Can&#39;t be a live location.</td>
 </tr>
-<tr>
-<td>address</td>
-<td>String</td>
-<td>Location address; 1-64 characters, as defined by the chat owner</td>
-</tr>
+  /**
+   * Location address; 1-64 characters, as defined by the chat owner
+   */
+  address: string;
 </tbody>
 </table>
 }
@@ -6562,16 +6457,14 @@ export interface ReactionTypeEmoji {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the reaction, always “emoji”</td>
-</tr>
-<tr>
-<td>emoji</td>
-<td>String</td>
-<td>Reaction emoji. Currently, it can be one of &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29DA4.png" width="20" height="20" alt="❤" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918E.png" width="20" height="20" alt="👎" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F94A5.png" width="20" height="20" alt="🔥" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B0.png" width="20" height="20" alt="🥰" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918F.png" width="20" height="20" alt="👏" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9881.png" width="20" height="20" alt="😁" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA494.png" width="20" height="20" alt="🤔" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AF.png" width="20" height="20" alt="🤯" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98B1.png" width="20" height="20" alt="😱" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AC.png" width="20" height="20" alt="🤬" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A2.png" width="20" height="20" alt="😢" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E89.png" width="20" height="20" alt="🎉" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A9.png" width="20" height="20" alt="🤩" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AE.png" width="20" height="20" alt="🤮" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F92A9.png" width="20" height="20" alt="💩" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F998F.png" width="20" height="20" alt="🙏" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918C.png" width="20" height="20" alt="👌" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F958A.png" width="20" height="20" alt="🕊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A1.png" width="20" height="20" alt="🤡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B1.png" width="20" height="20" alt="🥱" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B4.png" width="20" height="20" alt="🥴" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F988D.png" width="20" height="20" alt="😍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F90B3.png" width="20" height="20" alt="🐳" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29DA4E2808DF09F94A5.png" width="20" height="20" alt="❤‍🔥" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8C9A.png" width="20" height="20" alt="🌚" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8CAD.png" width="20" height="20" alt="🌭" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F92AF.png" width="20" height="20" alt="💯" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A3.png" width="20" height="20" alt="🤣" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29AA1.png" width="20" height="20" alt="⚡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8D8C.png" width="20" height="20" alt="🍌" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F86.png" width="20" height="20" alt="🏆" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9294.png" width="20" height="20" alt="💔" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A8.png" width="20" height="20" alt="🤨" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9890.png" width="20" height="20" alt="😐" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8D93.png" width="20" height="20" alt="🍓" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8DBE.png" width="20" height="20" alt="🍾" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F928B.png" width="20" height="20" alt="💋" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9695.png" width="20" height="20" alt="🖕" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9888.png" width="20" height="20" alt="😈" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98B4.png" width="20" height="20" alt="😴" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98AD.png" width="20" height="20" alt="😭" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA493.png" width="20" height="20" alt="🤓" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91BB.png" width="20" height="20" alt="👻" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91A8E2808DF09F92BB.png" width="20" height="20" alt="👨‍💻" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9180.png" width="20" height="20" alt="👀" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E83.png" width="20" height="20" alt="🎃" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9988.png" width="20" height="20" alt="🙈" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9887.png" width="20" height="20" alt="😇" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A8.png" width="20" height="20" alt="😨" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA49D.png" width="20" height="20" alt="🤝" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29C8D.png" width="20" height="20" alt="✍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA497.png" width="20" height="20" alt="🤗" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FABA1.png" width="20" height="20" alt="🫡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E85.png" width="20" height="20" alt="🎅" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E84.png" width="20" height="20" alt="🎄" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29883.png" width="20" height="20" alt="☃" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9285.png" width="20" height="20" alt="💅" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AA.png" width="20" height="20" alt="🤪" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F97BF.png" width="20" height="20" alt="🗿" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8692.png" width="20" height="20" alt="🆒" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9298.png" width="20" height="20" alt="💘" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9989.png" width="20" height="20" alt="🙉" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA684.png" width="20" height="20" alt="🦄" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9898.png" width="20" height="20" alt="😘" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F928A.png" width="20" height="20" alt="💊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F998A.png" width="20" height="20" alt="🙊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F988E.png" width="20" height="20" alt="😎" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91BE.png" width="20" height="20" alt="👾" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7E2808DE29982.png" width="20" height="20" alt="🤷‍♂" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7.png" width="20" height="20" alt="🤷" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7E2808DE29980.png" width="20" height="20" alt="🤷‍♀" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A1.png" width="20" height="20" alt="😡" />&quot;.</td>
-</tr>
+  /**
+   * Type of the reaction, always “emoji”
+   */
+  type: string;
+  /**
+   * Reaction emoji. Currently, it can be one of &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29DA4.png" width="20" height="20" alt="❤" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918E.png" width="20" height="20" alt="👎" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F94A5.png" width="20" height="20" alt="🔥" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B0.png" width="20" height="20" alt="🥰" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918F.png" width="20" height="20" alt="👏" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9881.png" width="20" height="20" alt="😁" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA494.png" width="20" height="20" alt="🤔" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AF.png" width="20" height="20" alt="🤯" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98B1.png" width="20" height="20" alt="😱" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AC.png" width="20" height="20" alt="🤬" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A2.png" width="20" height="20" alt="😢" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E89.png" width="20" height="20" alt="🎉" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A9.png" width="20" height="20" alt="🤩" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AE.png" width="20" height="20" alt="🤮" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F92A9.png" width="20" height="20" alt="💩" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F998F.png" width="20" height="20" alt="🙏" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918C.png" width="20" height="20" alt="👌" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F958A.png" width="20" height="20" alt="🕊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A1.png" width="20" height="20" alt="🤡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B1.png" width="20" height="20" alt="🥱" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B4.png" width="20" height="20" alt="🥴" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F988D.png" width="20" height="20" alt="😍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F90B3.png" width="20" height="20" alt="🐳" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29DA4E2808DF09F94A5.png" width="20" height="20" alt="❤‍🔥" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8C9A.png" width="20" height="20" alt="🌚" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8CAD.png" width="20" height="20" alt="🌭" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F92AF.png" width="20" height="20" alt="💯" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A3.png" width="20" height="20" alt="🤣" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29AA1.png" width="20" height="20" alt="⚡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8D8C.png" width="20" height="20" alt="🍌" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F86.png" width="20" height="20" alt="🏆" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9294.png" width="20" height="20" alt="💔" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A8.png" width="20" height="20" alt="🤨" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9890.png" width="20" height="20" alt="😐" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8D93.png" width="20" height="20" alt="🍓" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8DBE.png" width="20" height="20" alt="🍾" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F928B.png" width="20" height="20" alt="💋" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9695.png" width="20" height="20" alt="🖕" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9888.png" width="20" height="20" alt="😈" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98B4.png" width="20" height="20" alt="😴" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98AD.png" width="20" height="20" alt="😭" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA493.png" width="20" height="20" alt="🤓" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91BB.png" width="20" height="20" alt="👻" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91A8E2808DF09F92BB.png" width="20" height="20" alt="👨‍💻" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9180.png" width="20" height="20" alt="👀" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E83.png" width="20" height="20" alt="🎃" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9988.png" width="20" height="20" alt="🙈" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9887.png" width="20" height="20" alt="😇" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A8.png" width="20" height="20" alt="😨" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA49D.png" width="20" height="20" alt="🤝" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29C8D.png" width="20" height="20" alt="✍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA497.png" width="20" height="20" alt="🤗" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FABA1.png" width="20" height="20" alt="🫡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E85.png" width="20" height="20" alt="🎅" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E84.png" width="20" height="20" alt="🎄" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29883.png" width="20" height="20" alt="☃" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9285.png" width="20" height="20" alt="💅" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AA.png" width="20" height="20" alt="🤪" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F97BF.png" width="20" height="20" alt="🗿" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8692.png" width="20" height="20" alt="🆒" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9298.png" width="20" height="20" alt="💘" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9989.png" width="20" height="20" alt="🙉" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA684.png" width="20" height="20" alt="🦄" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9898.png" width="20" height="20" alt="😘" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F928A.png" width="20" height="20" alt="💊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F998A.png" width="20" height="20" alt="🙊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F988E.png" width="20" height="20" alt="😎" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91BE.png" width="20" height="20" alt="👾" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7E2808DE29982.png" width="20" height="20" alt="🤷‍♂" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7.png" width="20" height="20" alt="🤷" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7E2808DE29980.png" width="20" height="20" alt="🤷‍♀" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A1.png" width="20" height="20" alt="😡" />&quot;.
+   */
+  emoji: string;
 </tbody>
 </table>
 }
@@ -6588,16 +6481,14 @@ export interface ReactionTypeCustomEmoji {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the reaction, always “custom_emoji”</td>
-</tr>
-<tr>
-<td>custom_emoji_id</td>
-<td>String</td>
-<td>Custom emoji identifier</td>
-</tr>
+  /**
+   * Type of the reaction, always “custom_emoji”
+   */
+  type: string;
+  /**
+   * Custom emoji identifier
+   */
+  custom_emoji_id: string;
 </tbody>
 </table>
 }
@@ -6614,11 +6505,10 @@ export interface ReactionTypePaid {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the reaction, always “paid”</td>
-</tr>
+  /**
+   * Type of the reaction, always “paid”
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -6747,11 +6637,10 @@ export interface ForumTopic {
    * Unique identifier of the forum topic
    */
   message_thread_id: number;
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Name of the topic</td>
-</tr>
+  /**
+   * Name of the topic
+   */
+  name: string;
   /**
    * Color of the topic icon in RGB format
    */
@@ -6809,11 +6698,10 @@ export interface Gift {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier of the gift</td>
-</tr>
+  /**
+   * Unique identifier of the gift
+   */
+  id: string;
 <tr>
 <td>sticker</td>
 <td><a href="#sticker">Sticker</a></td>
@@ -6904,11 +6792,10 @@ export interface UniqueGiftModel {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Name of the model</td>
-</tr>
+  /**
+   * Name of the model
+   */
+  name: string;
 <tr>
 <td>sticker</td>
 <td><a href="#sticker">Sticker</a></td>
@@ -6938,11 +6825,10 @@ export interface UniqueGiftSymbol {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Name of the symbol</td>
-</tr>
+  /**
+   * Name of the symbol
+   */
+  name: string;
 <tr>
 <td>sticker</td>
 <td><a href="#sticker">Sticker</a></td>
@@ -7000,11 +6886,10 @@ export interface UniqueGiftBackdrop {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Name of the backdrop</td>
-</tr>
+  /**
+   * Name of the backdrop
+   */
+  name: string;
 <tr>
 <td>colors</td>
 <td><a href="#uniquegiftbackdropcolors">UniqueGiftBackdropColors</a></td>
@@ -7030,16 +6915,14 @@ export interface UniqueGiftColors {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>model_custom_emoji_id</td>
-<td>String</td>
-<td>Custom emoji identifier of the unique gift&#39;s model</td>
-</tr>
-<tr>
-<td>symbol_custom_emoji_id</td>
-<td>String</td>
-<td>Custom emoji identifier of the unique gift&#39;s symbol</td>
-</tr>
+  /**
+   * Custom emoji identifier of the unique gift&#39;s model
+   */
+  model_custom_emoji_id: string;
+  /**
+   * Custom emoji identifier of the unique gift&#39;s symbol
+   */
+  symbol_custom_emoji_id: string;
   /**
    * Main color used in light themes; RGB format
    */
@@ -7074,21 +6957,18 @@ export interface UniqueGift {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>gift_id</td>
-<td>String</td>
-<td>Identifier of the regular gift from which the gift was upgraded</td>
-</tr>
-<tr>
-<td>base_name</td>
-<td>String</td>
-<td>Human-readable name of the regular gift from which this unique gift was upgraded</td>
-</tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Unique name of the gift. This name can be used in <code>https://t.me/nft/...</code> links and story areas.</td>
-</tr>
+  /**
+   * Identifier of the regular gift from which the gift was upgraded
+   */
+  gift_id: string;
+  /**
+   * Human-readable name of the regular gift from which this unique gift was upgraded
+   */
+  base_name: string;
+  /**
+   * Unique name of the gift. This name can be used in <code>https://t.me/nft/...</code> links and story areas.
+   */
+  name: string;
   /**
    * Unique number of the upgraded gift among gifts upgraded from the same regular gift
    */
@@ -7215,11 +7095,10 @@ export interface UniqueGiftInfo {
 <td><a href="#uniquegift">UniqueGift</a></td>
 <td>Information about the gift</td>
 </tr>
-<tr>
-<td>origin</td>
-<td>String</td>
-<td>Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers.</td>
-</tr>
+  /**
+   * Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers.
+   */
+  origin: string;
   /**
    * For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.
    */
@@ -7265,11 +7144,10 @@ export interface OwnedGiftRegular {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the gift, always “regular”</td>
-</tr>
+  /**
+   * Type of the gift, always “regular”
+   */
+  type: string;
 <tr>
 <td>gift</td>
 <td><a href="#gift">Gift</a></td>
@@ -7350,11 +7228,10 @@ export interface OwnedGiftUnique {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the gift, always “unique”</td>
-</tr>
+  /**
+   * Type of the gift, always “unique”
+   */
+  type: string;
 <tr>
 <td>gift</td>
 <td><a href="#uniquegift">UniqueGift</a></td>
@@ -7527,16 +7404,14 @@ export interface BotCommand {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>command</td>
-<td>String</td>
-<td>Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores.</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Description of the command; 1-256 characters</td>
-</tr>
+  /**
+   * Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores.
+   */
+  command: string;
+  /**
+   * Description of the command; 1-256 characters
+   */
+  description: string;
 <tr>
 <td>is_ephemeral</td>
 <td>Boolean</td>
@@ -7603,11 +7478,10 @@ export interface BotCommandScopeDefault {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Scope type, must be <em>default</em></td>
-</tr>
+  /**
+   * Scope type, must be <em>default</em>
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -7624,11 +7498,10 @@ export interface BotCommandScopeAllPrivateChats {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Scope type, must be <em>all_private_chats</em></td>
-</tr>
+  /**
+   * Scope type, must be <em>all_private_chats</em>
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -7645,11 +7518,10 @@ export interface BotCommandScopeAllGroupChats {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Scope type, must be <em>all_group_chats</em></td>
-</tr>
+  /**
+   * Scope type, must be <em>all_group_chats</em>
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -7666,11 +7538,10 @@ export interface BotCommandScopeAllChatAdministrators {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Scope type, must be <em>all_chat_administrators</em></td>
-</tr>
+  /**
+   * Scope type, must be <em>all_chat_administrators</em>
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -7687,11 +7558,10 @@ export interface BotCommandScopeChat {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Scope type, must be <em>chat</em></td>
-</tr>
+  /**
+   * Scope type, must be <em>chat</em>
+   */
+  type: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -7713,11 +7583,10 @@ export interface BotCommandScopeChatAdministrators {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Scope type, must be <em>chat_administrators</em></td>
-</tr>
+  /**
+   * Scope type, must be <em>chat_administrators</em>
+   */
+  type: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -7739,11 +7608,10 @@ export interface BotCommandScopeChatMember {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Scope type, must be <em>chat_member</em></td>
-</tr>
+  /**
+   * Scope type, must be <em>chat_member</em>
+   */
+  type: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -7769,11 +7637,10 @@ export interface BotName {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>The bot&#39;s name</td>
-</tr>
+  /**
+   * The bot&#39;s name
+   */
+  name: string;
 </tbody>
 </table>
 }
@@ -7790,11 +7657,10 @@ export interface BotDescription {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>The bot&#39;s description</td>
-</tr>
+  /**
+   * The bot&#39;s description
+   */
+  description: string;
 </tbody>
 </table>
 }
@@ -7811,11 +7677,10 @@ export interface BotShortDescription {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>short_description</td>
-<td>String</td>
-<td>The bot&#39;s short description</td>
-</tr>
+  /**
+   * The bot&#39;s short description
+   */
+  short_description: string;
 </tbody>
 </table>
 }
@@ -7844,11 +7709,10 @@ export interface MenuButtonCommands {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the button, must be <em>commands</em></td>
-</tr>
+  /**
+   * Type of the button, must be <em>commands</em>
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -7865,16 +7729,14 @@ export interface MenuButtonWebApp {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the button, must be <em>web_app</em></td>
-</tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Text on the button</td>
-</tr>
+  /**
+   * Type of the button, must be <em>web_app</em>
+   */
+  type: string;
+  /**
+   * Text on the button
+   */
+  text: string;
 <tr>
 <td>web_app</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
@@ -7896,11 +7758,10 @@ export interface MenuButtonDefault {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the button, must be <em>default</em></td>
-</tr>
+  /**
+   * Type of the button, must be <em>default</em>
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -7928,11 +7789,10 @@ export interface ChatBoostSourcePremium {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Source of the boost, always “premium”</td>
-</tr>
+  /**
+   * Source of the boost, always “premium”
+   */
+  source: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -7954,11 +7814,10 @@ export interface ChatBoostSourceGiftCode {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Source of the boost, always “gift_code”</td>
-</tr>
+  /**
+   * Source of the boost, always “gift_code”
+   */
+  source: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -7980,11 +7839,10 @@ export interface ChatBoostSourceGiveaway {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Source of the boost, always “giveaway”</td>
-</tr>
+  /**
+   * Source of the boost, always “giveaway”
+   */
+  source: string;
   /**
    * Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn&#39;t sent yet.
    */
@@ -8019,11 +7877,10 @@ export interface ChatBoost {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>boost_id</td>
-<td>String</td>
-<td>Unique identifier of the boost</td>
-</tr>
+  /**
+   * Unique identifier of the boost
+   */
+  boost_id: string;
   /**
    * Point in time (Unix timestamp) when the chat was boosted
    */
@@ -8084,11 +7941,10 @@ export interface ChatBoostRemoved {
 <td><a href="#chat">Chat</a></td>
 <td>Chat which was boosted</td>
 </tr>
-<tr>
-<td>boost_id</td>
-<td>String</td>
-<td>Unique identifier of the boost</td>
-</tr>
+  /**
+   * Unique identifier of the boost
+   */
+  boost_id: string;
   /**
    * Point in time (Unix timestamp) when the boost was removed
    */
@@ -8263,11 +8119,10 @@ export interface BusinessConnection {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+  /**
+   * Unique identifier of the business connection
+   */
+  id: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -8307,11 +8162,10 @@ export interface BusinessMessagesDeleted {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+  /**
+   * Unique identifier of the business connection
+   */
+  business_connection_id: string;
 <tr>
 <td>chat</td>
 <td><a href="#chat">Chat</a></td>
@@ -8358,11 +8212,10 @@ export interface SentGuestMessage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Identifier of the sent inline message</td>
-</tr>
+  /**
+   * Identifier of the sent inline message
+   */
+  inline_message_id: string;
 </tbody>
 </table>
 }
@@ -8379,11 +8232,10 @@ export interface PreparedInlineMessage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier of the prepared message</td>
-</tr>
+  /**
+   * Unique identifier of the prepared message
+   */
+  id: string;
   /**
    * Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used.
    */
@@ -8404,11 +8256,10 @@ export interface PreparedKeyboardButton {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier of the keyboard button</td>
-</tr>
+  /**
+   * Unique identifier of the keyboard button
+   */
+  id: string;
 </tbody>
 </table>
 }
@@ -8466,16 +8317,14 @@ export interface InputMediaAnimation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>animation</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>animation</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
@@ -8531,16 +8380,14 @@ export interface InputMediaAudio {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>audio</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>audio</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
@@ -8586,16 +8433,14 @@ export interface InputMediaDocument {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>document</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>document</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
@@ -8634,16 +8479,14 @@ export interface InputMediaLink {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>link</em></td>
-</tr>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>HTTP URL of the link</td>
-</tr>
+  /**
+   * Type of the media, must be <em>link</em>
+   */
+  type: string;
+  /**
+   * HTTP URL of the link
+   */
+  url: string;
 </tbody>
 </table>
 }
@@ -8660,21 +8503,18 @@ export interface InputMediaLivePhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>live_photo</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
-</tr>
-<tr>
-<td>photo</td>
-<td>String</td>
-<td>The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
-</tr>
+  /**
+   * Type of the media, must be <em>live_photo</em>
+   */
+  type: string;
+  /**
+   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   */
+  media: string;
+  /**
+   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   */
+  photo: string;
   /**
    * Caption of the live photo to be sent, 0-1024 characters after entities parsing
    */
@@ -8714,11 +8554,10 @@ export interface InputMediaLocation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>location</em></td>
-</tr>
+  /**
+   * Type of the media, must be <em>location</em>
+   */
+  type: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -8750,16 +8589,14 @@ export interface InputMediaPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>photo</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>photo</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Caption of the photo to be sent, 0-1024 characters after entities parsing
    */
@@ -8799,16 +8636,14 @@ export interface InputMediaSticker {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>sticker</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>sticker</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Emoji associated with the sticker; only for just uploaded stickers
    */
@@ -8829,11 +8664,10 @@ export interface InputMediaVenue {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>venue</em></td>
-</tr>
+  /**
+   * Type of the media, must be <em>venue</em>
+   */
+  type: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -8844,16 +8678,14 @@ export interface InputMediaVenue {
 <td>Float</td>
 <td>Longitude of the location</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Name of the venue</td>
-</tr>
-<tr>
-<td>address</td>
-<td>String</td>
-<td>Address of the venue</td>
-</tr>
+  /**
+   * Name of the venue
+   */
+  title: string;
+  /**
+   * Address of the venue
+   */
+  address: string;
   /**
    * Foursquare identifier of the venue
    */
@@ -8886,16 +8718,14 @@ export interface InputMediaVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>video</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>video</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
@@ -8964,16 +8794,14 @@ export interface InputMediaVoiceNote {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>voice_note</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass &quot;attach://&lt;file_attach_name&gt;&quot; to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>voice_note</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass &quot;attach://&lt;file_attach_name&gt;&quot; to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Caption of the voice message to be sent, 0-1024 characters after entities parsing
    */
@@ -9022,21 +8850,18 @@ export interface InputPaidMediaLivePhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>live_photo</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
-</tr>
-<tr>
-<td>photo</td>
-<td>String</td>
-<td>The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
-</tr>
+  /**
+   * Type of the media, must be <em>live_photo</em>
+   */
+  type: string;
+  /**
+   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   */
+  media: string;
+  /**
+   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   */
+  photo: string;
 </tbody>
 </table>
 }
@@ -9053,16 +8878,14 @@ export interface InputPaidMediaPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>photo</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>photo</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
 </tbody>
 </table>
 }
@@ -9079,16 +8902,14 @@ export interface InputPaidMediaVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the media, must be <em>video</em></td>
-</tr>
-<tr>
-<td>media</td>
-<td>String</td>
-<td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the media, must be <em>video</em>
+   */
+  type: string;
+  /**
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  media: string;
   /**
    * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
@@ -9143,16 +8964,14 @@ export interface InputProfilePhotoStatic {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the profile photo, must be <em>static</em></td>
-</tr>
-<tr>
-<td>photo</td>
-<td>String</td>
-<td>The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the profile photo, must be <em>static</em>
+   */
+  type: string;
+  /**
+   * The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  photo: string;
 </tbody>
 </table>
 }
@@ -9169,16 +8988,14 @@ export interface InputProfilePhotoAnimated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the profile photo, must be <em>animated</em></td>
-</tr>
-<tr>
-<td>animation</td>
-<td>String</td>
-<td>The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the profile photo, must be <em>animated</em>
+   */
+  type: string;
+  /**
+   * The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  animation: string;
 <tr>
 <td>main_frame_timestamp</td>
 <td>Float</td>
@@ -9209,16 +9026,14 @@ export interface InputStoryContentPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the content, must be <em>photo</em></td>
-</tr>
-<tr>
-<td>photo</td>
-<td>String</td>
-<td>The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the content, must be <em>photo</em>
+   */
+  type: string;
+  /**
+   * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  photo: string;
 </tbody>
 </table>
 }
@@ -9235,16 +9050,14 @@ export interface InputStoryContentVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the content, must be <em>video</em></td>
-</tr>
-<tr>
-<td>video</td>
-<td>String</td>
-<td>The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Type of the content, must be <em>video</em>
+   */
+  type: string;
+  /**
+   * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  video: string;
 <tr>
 <td>duration</td>
 <td>Float</td>
@@ -16860,21 +16673,18 @@ export interface Sticker {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields <em>is_animated</em> and <em>is_video</em>.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
+  /**
+   * Type of the sticker, currently one of “regular”, “mask”, “custom_emoji”. The type of the sticker is independent from its format, which is determined by the fields <em>is_animated</em> and <em>is_video</em>.
+   */
+  type: string;
   /**
    * Sticker width
    */
@@ -16945,21 +16755,18 @@ export interface StickerSet {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Sticker set name</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Sticker set title</td>
-</tr>
-<tr>
-<td>sticker_type</td>
-<td>String</td>
-<td>Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”</td>
-</tr>
+  /**
+   * Sticker set name
+   */
+  name: string;
+  /**
+   * Sticker set title
+   */
+  title: string;
+  /**
+   * Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”
+   */
+  sticker_type: string;
 <tr>
 <td>stickers</td>
 <td>Array of <a href="#sticker">Sticker</a></td>
@@ -16986,11 +16793,10 @@ export interface MaskPosition {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>point</td>
-<td>String</td>
-<td>The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.</td>
-</tr>
+  /**
+   * The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
+   */
+  point: string;
 <tr>
 <td>x_shift</td>
 <td>Float</td>
@@ -17022,16 +16828,14 @@ export interface InputSticker {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>sticker</td>
-<td>String</td>
-<td>The added sticker. Pass a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
-<tr>
-<td>format</td>
-<td>String</td>
-<td>Format of the added sticker, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, “video” for a <strong>.WEBM</strong> video</td>
-</tr>
+  /**
+   * The added sticker. Pass a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  sticker: string;
+  /**
+   * Format of the added sticker, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, “video” for a <strong>.WEBM</strong> video
+   */
+  format: string;
 <tr>
 <td>emoji_list</td>
 <td>Array of String</td>
@@ -18011,11 +17815,10 @@ export interface InputRichMessageMedia {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier of the media used in a <code>tg://photo?id=</code>, <code>tg://video?id=</code>, or <code>tg://audio?id=</code> link. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.</td>
-</tr>
+  /**
+   * Unique identifier of the media used in a <code>tg://photo?id=</code>, <code>tg://video?id=</code>, or <code>tg://audio?id=</code> link. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.
+   */
+  id: string;
 <tr>
 <td>media</td>
 <td><a href="#inputmediaanimation">InputMediaAnimation</a> or <a href="#inputmediaaudio">InputMediaAudio</a> or <a href="#inputmediaphoto">InputMediaPhoto</a> or <a href="#inputmediavideo">InputMediaVideo</a> or <a href="#inputmediavoicenote">InputMediaVoiceNote</a></td>
@@ -18226,11 +18029,10 @@ export interface RichTextBold {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “bold”</td>
-</tr>
+  /**
+   * Type of the rich text, always “bold”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18252,11 +18054,10 @@ export interface RichTextItalic {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “italic”</td>
-</tr>
+  /**
+   * Type of the rich text, always “italic”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18278,11 +18079,10 @@ export interface RichTextUnderline {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “underline”</td>
-</tr>
+  /**
+   * Type of the rich text, always “underline”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18304,11 +18104,10 @@ export interface RichTextStrikethrough {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “strikethrough”</td>
-</tr>
+  /**
+   * Type of the rich text, always “strikethrough”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18330,11 +18129,10 @@ export interface RichTextSpoiler {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “spoiler”</td>
-</tr>
+  /**
+   * Type of the rich text, always “spoiler”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18356,11 +18154,10 @@ export interface RichTextDateTime {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “date_time”</td>
-</tr>
+  /**
+   * Type of the rich text, always “date_time”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18370,11 +18167,10 @@ export interface RichTextDateTime {
    * The Unix time associated with the entity
    */
   unix_time: number;
-<tr>
-<td>date_time_format</td>
-<td>String</td>
-<td>The string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.</td>
-</tr>
+  /**
+   * The string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.
+   */
+  date_time_format: string;
 </tbody>
 </table>
 }
@@ -18391,11 +18187,10 @@ export interface RichTextTextMention {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “text_mention”</td>
-</tr>
+  /**
+   * Type of the rich text, always “text_mention”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18422,11 +18217,10 @@ export interface RichTextSubscript {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “subscript”</td>
-</tr>
+  /**
+   * Type of the rich text, always “subscript”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18448,11 +18242,10 @@ export interface RichTextSuperscript {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “superscript”</td>
-</tr>
+  /**
+   * Type of the rich text, always “superscript”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18474,11 +18267,10 @@ export interface RichTextMarked {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “marked”</td>
-</tr>
+  /**
+   * Type of the rich text, always “marked”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18500,11 +18292,10 @@ export interface RichTextCode {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “code”</td>
-</tr>
+  /**
+   * Type of the rich text, always “code”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -18526,21 +18317,18 @@ export interface RichTextCustomEmoji {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “custom_emoji”</td>
-</tr>
-<tr>
-<td>custom_emoji_id</td>
-<td>String</td>
-<td>Unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker.</td>
-</tr>
-<tr>
-<td>alternative_text</td>
-<td>String</td>
-<td>Alternative emoji for the custom emoji</td>
-</tr>
+  /**
+   * Type of the rich text, always “custom_emoji”
+   */
+  type: string;
+  /**
+   * Unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker.
+   */
+  custom_emoji_id: string;
+  /**
+   * Alternative emoji for the custom emoji
+   */
+  alternative_text: string;
 </tbody>
 </table>
 }
@@ -18557,16 +18345,14 @@ export interface RichTextMathematicalExpression {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “mathematical_expression”</td>
-</tr>
-<tr>
-<td>expression</td>
-<td>String</td>
-<td>The expression in LaTeX format</td>
-</tr>
+  /**
+   * Type of the rich text, always “mathematical_expression”
+   */
+  type: string;
+  /**
+   * The expression in LaTeX format
+   */
+  expression: string;
 </tbody>
 </table>
 }
@@ -18583,21 +18369,19 @@ export interface RichTextUrl {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “url”</td>
-</tr>
+  /**
+   * Type of the rich text, always “url”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>URL of the link</td>
-</tr>
+  /**
+   * URL of the link
+   */
+  url: string;
 </tbody>
 </table>
 }
@@ -18614,21 +18398,19 @@ export interface RichTextEmailAddress {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “email_address”</td>
-</tr>
+  /**
+   * Type of the rich text, always “email_address”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>email_address</td>
-<td>String</td>
-<td>The email address</td>
-</tr>
+  /**
+   * The email address
+   */
+  email_address: string;
 </tbody>
 </table>
 }
@@ -18645,21 +18427,19 @@ export interface RichTextPhoneNumber {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “phone_number”</td>
-</tr>
+  /**
+   * Type of the rich text, always “phone_number”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>phone_number</td>
-<td>String</td>
-<td>The phone number</td>
-</tr>
+  /**
+   * The phone number
+   */
+  phone_number: string;
 </tbody>
 </table>
 }
@@ -18676,21 +18456,19 @@ export interface RichTextBankCardNumber {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “bank_card_number”</td>
-</tr>
+  /**
+   * Type of the rich text, always “bank_card_number”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>bank_card_number</td>
-<td>String</td>
-<td>The bank card number</td>
-</tr>
+  /**
+   * The bank card number
+   */
+  bank_card_number: string;
 </tbody>
 </table>
 }
@@ -18707,21 +18485,19 @@ export interface RichTextMention {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “mention”</td>
-</tr>
+  /**
+   * Type of the rich text, always “mention”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>username</td>
-<td>String</td>
-<td>The username</td>
-</tr>
+  /**
+   * The username
+   */
+  username: string;
 </tbody>
 </table>
 }
@@ -18738,21 +18514,19 @@ export interface RichTextHashtag {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “hashtag”</td>
-</tr>
+  /**
+   * Type of the rich text, always “hashtag”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>hashtag</td>
-<td>String</td>
-<td>The hashtag</td>
-</tr>
+  /**
+   * The hashtag
+   */
+  hashtag: string;
 </tbody>
 </table>
 }
@@ -18769,21 +18543,19 @@ export interface RichTextCashtag {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “cashtag”</td>
-</tr>
+  /**
+   * Type of the rich text, always “cashtag”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>cashtag</td>
-<td>String</td>
-<td>The cashtag</td>
-</tr>
+  /**
+   * The cashtag
+   */
+  cashtag: string;
 </tbody>
 </table>
 }
@@ -18800,21 +18572,19 @@ export interface RichTextBotCommand {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “bot_command”</td>
-</tr>
+  /**
+   * Type of the rich text, always “bot_command”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The text</td>
 </tr>
-<tr>
-<td>bot_command</td>
-<td>String</td>
-<td>The bot command</td>
-</tr>
+  /**
+   * The bot command
+   */
+  bot_command: string;
 </tbody>
 </table>
 }
@@ -18831,16 +18601,14 @@ export interface RichTextAnchor {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “anchor”</td>
-</tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>The name of the anchor</td>
-</tr>
+  /**
+   * Type of the rich text, always “anchor”
+   */
+  type: string;
+  /**
+   * The name of the anchor
+   */
+  name: string;
 </tbody>
 </table>
 }
@@ -18857,21 +18625,19 @@ export interface RichTextAnchorLink {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “anchor_link”</td>
-</tr>
+  /**
+   * Type of the rich text, always “anchor_link”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The link text</td>
 </tr>
-<tr>
-<td>anchor_name</td>
-<td>String</td>
-<td>The name of the anchor. If the name is empty, then the link brings back to the top of the message.</td>
-</tr>
+  /**
+   * The name of the anchor. If the name is empty, then the link brings back to the top of the message.
+   */
+  anchor_name: string;
 </tbody>
 </table>
 }
@@ -18888,21 +18654,19 @@ export interface RichTextReference {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “reference”</td>
-</tr>
+  /**
+   * Type of the rich text, always “reference”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>Text of the reference</td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>The name of the reference</td>
-</tr>
+  /**
+   * The name of the reference
+   */
+  name: string;
 </tbody>
 </table>
 }
@@ -18919,21 +18683,19 @@ export interface RichTextReferenceLink {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the rich text, always “reference_link”</td>
-</tr>
+  /**
+   * Type of the rich text, always “reference_link”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
 <td>The link text</td>
 </tr>
-<tr>
-<td>reference_name</td>
-<td>String</td>
-<td>The name of the reference</td>
-</tr>
+  /**
+   * The name of the reference
+   */
+  reference_name: string;
 </tbody>
 </table>
 }
@@ -18994,16 +18756,14 @@ export interface RichBlockTableCell {
    * The number of rows the cell spans if it is bigger than 1
    */
   rowspan?: number;
-<tr>
-<td>align</td>
-<td>String</td>
-<td>Horizontal cell content alignment. Currently, must be one of “left”, “center”, or “right”.</td>
-</tr>
-<tr>
-<td>valign</td>
-<td>String</td>
-<td>Vertical cell content alignment. Currently, must be one of “top”, “middle”, or “bottom”.</td>
-</tr>
+  /**
+   * Horizontal cell content alignment. Currently, must be one of “left”, “center”, or “right”.
+   */
+  align: string;
+  /**
+   * Vertical cell content alignment. Currently, must be one of “top”, “middle”, or “bottom”.
+   */
+  valign: string;
 </tbody>
 </table>
 }
@@ -19020,11 +18780,10 @@ export interface RichBlockListItem {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>label</td>
-<td>String</td>
-<td>Label of the item</td>
-</tr>
+  /**
+   * Label of the item
+   */
+  label: string;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#richblock">RichBlock</a></td>
@@ -19111,11 +18870,10 @@ export interface RichBlockParagraph {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “paragraph”</td>
-</tr>
+  /**
+   * Type of the block, always “paragraph”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19137,11 +18895,10 @@ export interface RichBlockSectionHeading {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “heading”</td>
-</tr>
+  /**
+   * Type of the block, always “heading”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19167,11 +18924,10 @@ export interface RichBlockPreformatted {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “pre”</td>
-</tr>
+  /**
+   * Type of the block, always “pre”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19197,11 +18953,10 @@ export interface RichBlockFooter {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “footer”</td>
-</tr>
+  /**
+   * Type of the block, always “footer”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19223,11 +18978,10 @@ export interface RichBlockDivider {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “divider”</td>
-</tr>
+  /**
+   * Type of the block, always “divider”
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -19244,16 +18998,14 @@ export interface RichBlockMathematicalExpression {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “mathematical_expression”</td>
-</tr>
-<tr>
-<td>expression</td>
-<td>String</td>
-<td>The mathematical expression in LaTeX format</td>
-</tr>
+  /**
+   * Type of the block, always “mathematical_expression”
+   */
+  type: string;
+  /**
+   * The mathematical expression in LaTeX format
+   */
+  expression: string;
 </tbody>
 </table>
 }
@@ -19270,16 +19022,14 @@ export interface RichBlockAnchor {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “anchor”</td>
-</tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>The name of the anchor</td>
-</tr>
+  /**
+   * Type of the block, always “anchor”
+   */
+  type: string;
+  /**
+   * The name of the anchor
+   */
+  name: string;
 </tbody>
 </table>
 }
@@ -19296,11 +19046,10 @@ export interface RichBlockList {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “list”</td>
-</tr>
+  /**
+   * Type of the block, always “list”
+   */
+  type: string;
 <tr>
 <td>items</td>
 <td>Array of <a href="#richblocklistitem">RichBlockListItem</a></td>
@@ -19322,11 +19071,10 @@ export interface RichBlockBlockQuotation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “blockquote”</td>
-</tr>
+  /**
+   * Type of the block, always “blockquote”
+   */
+  type: string;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#richblock">RichBlock</a></td>
@@ -19353,11 +19101,10 @@ export interface RichBlockPullQuotation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “pullquote”</td>
-</tr>
+  /**
+   * Type of the block, always “pullquote”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19384,11 +19131,10 @@ export interface RichBlockCollage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “collage”</td>
-</tr>
+  /**
+   * Type of the block, always “collage”
+   */
+  type: string;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#richblock">RichBlock</a></td>
@@ -19415,11 +19161,10 @@ export interface RichBlockSlideshow {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “slideshow”</td>
-</tr>
+  /**
+   * Type of the block, always “slideshow”
+   */
+  type: string;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#richblock">RichBlock</a></td>
@@ -19446,11 +19191,10 @@ export interface RichBlockTable {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “table”</td>
-</tr>
+  /**
+   * Type of the block, always “table”
+   */
+  type: string;
 <tr>
 <td>cells</td>
 <td>Array of Array of <a href="#richblocktablecell">RichBlockTableCell</a></td>
@@ -19487,11 +19231,10 @@ export interface RichBlockDetails {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “details”</td>
-</tr>
+  /**
+   * Type of the block, always “details”
+   */
+  type: string;
 <tr>
 <td>summary</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19523,11 +19266,10 @@ export interface RichBlockMap {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “map”</td>
-</tr>
+  /**
+   * Type of the block, always “map”
+   */
+  type: string;
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
@@ -19566,11 +19308,10 @@ export interface RichBlockAnimation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “animation”</td>
-</tr>
+  /**
+   * Type of the block, always “animation”
+   */
+  type: string;
 <tr>
 <td>animation</td>
 <td><a href="#animation">Animation</a></td>
@@ -19602,11 +19343,10 @@ export interface RichBlockAudio {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “audio”</td>
-</tr>
+  /**
+   * Type of the block, always “audio”
+   */
+  type: string;
 <tr>
 <td>audio</td>
 <td><a href="#audio">Audio</a></td>
@@ -19633,11 +19373,10 @@ export interface RichBlockPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “photo”</td>
-</tr>
+  /**
+   * Type of the block, always “photo”
+   */
+  type: string;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
@@ -19669,11 +19408,10 @@ export interface RichBlockVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “video”</td>
-</tr>
+  /**
+   * Type of the block, always “video”
+   */
+  type: string;
 <tr>
 <td>video</td>
 <td><a href="#video">Video</a></td>
@@ -19705,11 +19443,10 @@ export interface RichBlockVoiceNote {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “voice_note”</td>
-</tr>
+  /**
+   * Type of the block, always “voice_note”
+   */
+  type: string;
 <tr>
 <td>voice_note</td>
 <td><a href="#voice">Voice</a></td>
@@ -19736,11 +19473,10 @@ export interface RichBlockThinking {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “thinking”</td>
-</tr>
+  /**
+   * Type of the block, always “thinking”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19848,11 +19584,10 @@ export interface InputRichBlockParagraph {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “paragraph”</td>
-</tr>
+  /**
+   * Type of the block, always “paragraph”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19874,11 +19609,10 @@ export interface InputRichBlockSectionHeading {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “heading”</td>
-</tr>
+  /**
+   * Type of the block, always “heading”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19904,11 +19638,10 @@ export interface InputRichBlockPreformatted {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “pre”</td>
-</tr>
+  /**
+   * Type of the block, always “pre”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19934,11 +19667,10 @@ export interface InputRichBlockFooter {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “footer”</td>
-</tr>
+  /**
+   * Type of the block, always “footer”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -19960,11 +19692,10 @@ export interface InputRichBlockDivider {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “divider”</td>
-</tr>
+  /**
+   * Type of the block, always “divider”
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -19981,16 +19712,14 @@ export interface InputRichBlockMathematicalExpression {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “mathematical_expression”</td>
-</tr>
-<tr>
-<td>expression</td>
-<td>String</td>
-<td>The mathematical expression in LaTeX format</td>
-</tr>
+  /**
+   * Type of the block, always “mathematical_expression”
+   */
+  type: string;
+  /**
+   * The mathematical expression in LaTeX format
+   */
+  expression: string;
 </tbody>
 </table>
 }
@@ -20007,16 +19736,14 @@ export interface InputRichBlockAnchor {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “anchor”</td>
-</tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>The name of the anchor</td>
-</tr>
+  /**
+   * Type of the block, always “anchor”
+   */
+  type: string;
+  /**
+   * The name of the anchor
+   */
+  name: string;
 </tbody>
 </table>
 }
@@ -20033,11 +19760,10 @@ export interface InputRichBlockList {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “list”</td>
-</tr>
+  /**
+   * Type of the block, always “list”
+   */
+  type: string;
 <tr>
 <td>items</td>
 <td>Array of <a href="#inputrichblocklistitem">InputRichBlockListItem</a></td>
@@ -20059,11 +19785,10 @@ export interface InputRichBlockBlockQuotation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “blockquote”</td>
-</tr>
+  /**
+   * Type of the block, always “blockquote”
+   */
+  type: string;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
@@ -20090,11 +19815,10 @@ export interface InputRichBlockPullQuotation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “pullquote”</td>
-</tr>
+  /**
+   * Type of the block, always “pullquote”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -20121,11 +19845,10 @@ export interface InputRichBlockCollage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “collage”</td>
-</tr>
+  /**
+   * Type of the block, always “collage”
+   */
+  type: string;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
@@ -20152,11 +19875,10 @@ export interface InputRichBlockSlideshow {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “slideshow”</td>
-</tr>
+  /**
+   * Type of the block, always “slideshow”
+   */
+  type: string;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
@@ -20183,11 +19905,10 @@ export interface InputRichBlockTable {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “table”</td>
-</tr>
+  /**
+   * Type of the block, always “table”
+   */
+  type: string;
 <tr>
 <td>cells</td>
 <td>Array of Array of <a href="#richblocktablecell">RichBlockTableCell</a></td>
@@ -20224,11 +19945,10 @@ export interface InputRichBlockDetails {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “details”</td>
-</tr>
+  /**
+   * Type of the block, always “details”
+   */
+  type: string;
 <tr>
 <td>summary</td>
 <td><a href="#richtext">RichText</a></td>
@@ -20260,11 +19980,10 @@ export interface InputRichBlockMap {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “map”</td>
-</tr>
+  /**
+   * Type of the block, always “map”
+   */
+  type: string;
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
@@ -20303,11 +20022,10 @@ export interface InputRichBlockAnimation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “animation”</td>
-</tr>
+  /**
+   * Type of the block, always “animation”
+   */
+  type: string;
 <tr>
 <td>animation</td>
 <td><a href="#inputmediaanimation">InputMediaAnimation</a></td>
@@ -20334,11 +20052,10 @@ export interface InputRichBlockAudio {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “audio”</td>
-</tr>
+  /**
+   * Type of the block, always “audio”
+   */
+  type: string;
 <tr>
 <td>audio</td>
 <td><a href="#inputmediaaudio">InputMediaAudio</a></td>
@@ -20365,11 +20082,10 @@ export interface InputRichBlockPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “photo”</td>
-</tr>
+  /**
+   * Type of the block, always “photo”
+   */
+  type: string;
 <tr>
 <td>photo</td>
 <td><a href="#inputmediaphoto">InputMediaPhoto</a></td>
@@ -20396,11 +20112,10 @@ export interface InputRichBlockVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “video”</td>
-</tr>
+  /**
+   * Type of the block, always “video”
+   */
+  type: string;
 <tr>
 <td>video</td>
 <td><a href="#inputmediavideo">InputMediaVideo</a></td>
@@ -20427,11 +20142,10 @@ export interface InputRichBlockVoiceNote {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “voice_note”</td>
-</tr>
+  /**
+   * Type of the block, always “voice_note”
+   */
+  type: string;
 <tr>
 <td>voice_note</td>
 <td><a href="#inputmediavoicenote">InputMediaVoiceNote</a></td>
@@ -20458,11 +20172,10 @@ export interface InputRichBlockThinking {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the block, always “thinking”</td>
-</tr>
+  /**
+   * Type of the block, always “thinking”
+   */
+  type: string;
 <tr>
 <td>text</td>
 <td><a href="#richtext">RichText</a></td>
@@ -20487,26 +20200,23 @@ export interface InlineQuery {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this query</td>
-</tr>
+  /**
+   * Unique identifier for this query
+   */
+  id: string;
 <tr>
 <td>from</td>
 <td><a href="#user">User</a></td>
 <td>Sender</td>
 </tr>
-<tr>
-<td>query</td>
-<td>String</td>
-<td>Text of the query (up to 256 characters)</td>
-</tr>
-<tr>
-<td>offset</td>
-<td>String</td>
-<td>Offset of the results to be returned, can be controlled by the bot</td>
-</tr>
+  /**
+   * Text of the query (up to 256 characters)
+   */
+  query: string;
+  /**
+   * Offset of the results to be returned, can be controlled by the bot
+   */
+  offset: string;
   /**
    * Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat.
    */
@@ -20587,11 +20297,10 @@ export interface InlineQueryResultsButton {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Label text on the button</td>
-</tr>
+  /**
+   * Label text on the button
+   */
+  text: string;
 <tr>
 <td>web_app</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
@@ -20663,21 +20372,18 @@ export interface InlineQueryResultArticle {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>article</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 Bytes</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title of the result</td>
-</tr>
+  /**
+   * Type of the result, must be <em>article</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 Bytes
+   */
+  id: string;
+  /**
+   * Title of the result
+   */
+  title: string;
 <tr>
 <td>input_message_content</td>
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
@@ -20724,26 +20430,22 @@ export interface InlineQueryResultPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>photo</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>photo_url</td>
-<td>String</td>
-<td>A valid URL of the photo. Photo must be in <strong>JPEG</strong> format. Photo size must not exceed 5MB.</td>
-</tr>
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td>URL of the thumbnail for the photo</td>
-</tr>
+  /**
+   * Type of the result, must be <em>photo</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid URL of the photo. Photo must be in <strong>JPEG</strong> format. Photo size must not exceed 5MB.
+   */
+  photo_url: string;
+  /**
+   * URL of the thumbnail for the photo
+   */
+  thumbnail_url: string;
   /**
    * Width of the photo
    */
@@ -20804,21 +20506,18 @@ export interface InlineQueryResultGif {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>gif</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>gif_url</td>
-<td>String</td>
-<td>A valid URL for the GIF file</td>
-</tr>
+  /**
+   * Type of the result, must be <em>gif</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid URL for the GIF file
+   */
+  gif_url: string;
   /**
    * Width of the GIF
    */
@@ -20831,11 +20530,10 @@ export interface InlineQueryResultGif {
    * Duration of the GIF in seconds
    */
   gif_duration?: number;
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td>URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result</td>
-</tr>
+  /**
+   * URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+   */
+  thumbnail_url: string;
   /**
    * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.
    */
@@ -20888,21 +20586,18 @@ export interface InlineQueryResultMpeg4Gif {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>mpeg4_gif</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>mpeg4_url</td>
-<td>String</td>
-<td>A valid URL for the MPEG4 file</td>
-</tr>
+  /**
+   * Type of the result, must be <em>mpeg4_gif</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid URL for the MPEG4 file
+   */
+  mpeg4_url: string;
   /**
    * Video width
    */
@@ -20915,11 +20610,10 @@ export interface InlineQueryResultMpeg4Gif {
    * Video duration in seconds
    */
   mpeg4_duration?: number;
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td>URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result</td>
-</tr>
+  /**
+   * URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+   */
+  thumbnail_url: string;
   /**
    * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.
    */
@@ -20974,36 +20668,30 @@ export interface InlineQueryResultVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>video</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>video_url</td>
-<td>String</td>
-<td>A valid URL for the embedded video player or video file</td>
-</tr>
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td>MIME type of the content of the video URL, “text/html” or “video/mp4”</td>
-</tr>
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td>URL of the thumbnail (JPEG only) for the video</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title for the result</td>
-</tr>
+  /**
+   * Type of the result, must be <em>video</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid URL for the embedded video player or video file
+   */
+  video_url: string;
+  /**
+   * MIME type of the content of the video URL, “text/html” or “video/mp4”
+   */
+  mime_type: string;
+  /**
+   * URL of the thumbnail (JPEG only) for the video
+   */
+  thumbnail_url: string;
+  /**
+   * Title for the result
+   */
+  title: string;
   /**
    * Caption of the video to be sent, 0-1024 characters after entities parsing
    */
@@ -21064,26 +20752,22 @@ export interface InlineQueryResultAudio {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>audio</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>audio_url</td>
-<td>String</td>
-<td>A valid URL for the audio file</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title</td>
-</tr>
+  /**
+   * Type of the result, must be <em>audio</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid URL for the audio file
+   */
+  audio_url: string;
+  /**
+   * Title
+   */
+  title: string;
   /**
    * Caption, 0-1024 characters after entities parsing
    */
@@ -21131,26 +20815,22 @@ export interface InlineQueryResultVoice {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>voice</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>voice_url</td>
-<td>String</td>
-<td>A valid URL for the voice recording</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Recording title</td>
-</tr>
+  /**
+   * Type of the result, must be <em>voice</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid URL for the voice recording
+   */
+  voice_url: string;
+  /**
+   * Recording title
+   */
+  title: string;
   /**
    * Caption, 0-1024 characters after entities parsing
    */
@@ -21194,21 +20874,18 @@ export interface InlineQueryResultDocument {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>document</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title for the result</td>
-</tr>
+  /**
+   * Type of the result, must be <em>document</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * Title for the result
+   */
+  title: string;
   /**
    * Caption of the document to be sent, 0-1024 characters after entities parsing
    */
@@ -21222,16 +20899,14 @@ export interface InlineQueryResultDocument {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>document_url</td>
-<td>String</td>
-<td>A valid URL for the file</td>
-</tr>
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td>MIME type of the content of the file, either “application/pdf” or “application/zip”</td>
-</tr>
+  /**
+   * A valid URL for the file
+   */
+  document_url: string;
+  /**
+   * MIME type of the content of the file, either “application/pdf” or “application/zip”
+   */
+  mime_type: string;
   /**
    * Short description of the result
    */
@@ -21274,16 +20949,14 @@ export interface InlineQueryResultLocation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>location</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 Bytes</td>
-</tr>
+  /**
+   * Type of the result, must be <em>location</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 Bytes
+   */
+  id: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -21294,11 +20967,10 @@ export interface InlineQueryResultLocation {
 <td>Float</td>
 <td>Location longitude in degrees</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Location title</td>
-</tr>
+  /**
+   * Location title
+   */
+  title: string;
 <tr>
 <td>horizontal_accuracy</td>
 <td>Float</td>
@@ -21354,16 +21026,14 @@ export interface InlineQueryResultVenue {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>venue</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 Bytes</td>
-</tr>
+  /**
+   * Type of the result, must be <em>venue</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 Bytes
+   */
+  id: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -21374,16 +21044,14 @@ export interface InlineQueryResultVenue {
 <td>Float</td>
 <td>Longitude of the venue location in degrees</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title of the venue</td>
-</tr>
-<tr>
-<td>address</td>
-<td>String</td>
-<td>Address of the venue</td>
-</tr>
+  /**
+   * Title of the venue
+   */
+  title: string;
+  /**
+   * Address of the venue
+   */
+  address: string;
   /**
    * Foursquare identifier of the venue if known
    */
@@ -21438,26 +21106,22 @@ export interface InlineQueryResultContact {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>contact</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 Bytes</td>
-</tr>
-<tr>
-<td>phone_number</td>
-<td>String</td>
-<td>Contact&#39;s phone number</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td>Contact&#39;s first name</td>
-</tr>
+  /**
+   * Type of the result, must be <em>contact</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 Bytes
+   */
+  id: string;
+  /**
+   * Contact&#39;s phone number
+   */
+  phone_number: string;
+  /**
+   * Contact&#39;s first name
+   */
+  first_name: string;
   /**
    * Contact&#39;s last name
    */
@@ -21504,21 +21168,18 @@ export interface InlineQueryResultGame {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>game</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>game_short_name</td>
-<td>String</td>
-<td>Short name of the game</td>
-</tr>
+  /**
+   * Type of the result, must be <em>game</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * Short name of the game
+   */
+  game_short_name: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21540,21 +21201,18 @@ export interface InlineQueryResultCachedPhoto {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>photo</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>photo_file_id</td>
-<td>String</td>
-<td>A valid file identifier of the photo</td>
-</tr>
+  /**
+   * Type of the result, must be <em>photo</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid file identifier of the photo
+   */
+  photo_file_id: string;
   /**
    * Title for the result
    */
@@ -21607,21 +21265,18 @@ export interface InlineQueryResultCachedGif {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>gif</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>gif_file_id</td>
-<td>String</td>
-<td>A valid file identifier for the GIF file</td>
-</tr>
+  /**
+   * Type of the result, must be <em>gif</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid file identifier for the GIF file
+   */
+  gif_file_id: string;
   /**
    * Title for the result
    */
@@ -21670,21 +21325,18 @@ export interface InlineQueryResultCachedMpeg4Gif {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>mpeg4_gif</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>mpeg4_file_id</td>
-<td>String</td>
-<td>A valid file identifier for the MPEG4 file</td>
-</tr>
+  /**
+   * Type of the result, must be <em>mpeg4_gif</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid file identifier for the MPEG4 file
+   */
+  mpeg4_file_id: string;
   /**
    * Title for the result
    */
@@ -21733,21 +21385,18 @@ export interface InlineQueryResultCachedSticker {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>sticker</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>sticker_file_id</td>
-<td>String</td>
-<td>A valid file identifier of the sticker</td>
-</tr>
+  /**
+   * Type of the result, must be <em>sticker</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid file identifier of the sticker
+   */
+  sticker_file_id: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21774,26 +21423,22 @@ export interface InlineQueryResultCachedDocument {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>document</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title for the result</td>
-</tr>
-<tr>
-<td>document_file_id</td>
-<td>String</td>
-<td>A valid file identifier for the file</td>
-</tr>
+  /**
+   * Type of the result, must be <em>document</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * Title for the result
+   */
+  title: string;
+  /**
+   * A valid file identifier for the file
+   */
+  document_file_id: string;
   /**
    * Short description of the result
    */
@@ -21837,26 +21482,22 @@ export interface InlineQueryResultCachedVideo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>video</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>video_file_id</td>
-<td>String</td>
-<td>A valid file identifier for the video file</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title for the result</td>
-</tr>
+  /**
+   * Type of the result, must be <em>video</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid file identifier for the video file
+   */
+  video_file_id: string;
+  /**
+   * Title for the result
+   */
+  title: string;
   /**
    * Short description of the result
    */
@@ -21905,26 +21546,22 @@ export interface InlineQueryResultCachedVoice {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>voice</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>voice_file_id</td>
-<td>String</td>
-<td>A valid file identifier for the voice message</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Voice message title</td>
-</tr>
+  /**
+   * Type of the result, must be <em>voice</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid file identifier for the voice message
+   */
+  voice_file_id: string;
+  /**
+   * Voice message title
+   */
+  title: string;
   /**
    * Caption, 0-1024 characters after entities parsing
    */
@@ -21964,21 +21601,18 @@ export interface InlineQueryResultCachedAudio {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the result, must be <em>audio</em></td>
-</tr>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier for this result, 1-64 bytes</td>
-</tr>
-<tr>
-<td>audio_file_id</td>
-<td>String</td>
-<td>A valid file identifier for the audio file</td>
-</tr>
+  /**
+   * Type of the result, must be <em>audio</em>
+   */
+  type: string;
+  /**
+   * Unique identifier for this result, 1-64 bytes
+   */
+  id: string;
+  /**
+   * A valid file identifier for the audio file
+   */
+  audio_file_id: string;
   /**
    * Caption, 0-1024 characters after entities parsing
    */
@@ -22035,11 +21669,10 @@ export interface InputTextMessageContent {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>message_text</td>
-<td>String</td>
-<td>Text of the message to be sent, 1-4096 characters</td>
-</tr>
+  /**
+   * Text of the message to be sent, 1-4096 characters
+   */
+  message_text: string;
   /**
    * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
    */
@@ -22144,16 +21777,14 @@ export interface InputVenueMessageContent {
 <td>Float</td>
 <td>Longitude of the venue in degrees</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Name of the venue</td>
-</tr>
-<tr>
-<td>address</td>
-<td>String</td>
-<td>Address of the venue</td>
-</tr>
+  /**
+   * Name of the venue
+   */
+  title: string;
+  /**
+   * Address of the venue
+   */
+  address: string;
   /**
    * Foursquare identifier of the venue, if known
    */
@@ -22186,16 +21817,14 @@ export interface InputContactMessageContent {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>phone_number</td>
-<td>String</td>
-<td>Contact&#39;s phone number</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td>Contact&#39;s first name</td>
-</tr>
+  /**
+   * Contact&#39;s phone number
+   */
+  phone_number: string;
+  /**
+   * Contact&#39;s first name
+   */
+  first_name: string;
   /**
    * Contact&#39;s last name
    */
@@ -22220,30 +21849,26 @@ export interface InputInvoiceMessageContent {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Product name, 1-32 characters</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Product description, 1-255 characters</td>
-</tr>
-<tr>
-<td>payload</td>
-<td>String</td>
-<td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
-</tr>
+  /**
+   * Product name, 1-32 characters
+   */
+  title: string;
+  /**
+   * Product description, 1-255 characters
+   */
+  description: string;
+  /**
+   * Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.
+   */
+  payload: string;
   /**
    * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   provider_token?: string;
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+  /**
+   * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  currency: string;
 <tr>
 <td>prices</td>
 <td>Array of <a href="#labeledprice">LabeledPrice</a></td>
@@ -22331,11 +21956,10 @@ export interface ChosenInlineResult {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>result_id</td>
-<td>String</td>
-<td>The unique identifier for the result that was chosen</td>
-</tr>
+  /**
+   * The unique identifier for the result that was chosen
+   */
+  result_id: string;
 <tr>
 <td>from</td>
 <td><a href="#user">User</a></td>
@@ -22350,11 +21974,10 @@ export interface ChosenInlineResult {
    * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.
    */
   inline_message_id?: string;
-<tr>
-<td>query</td>
-<td>String</td>
-<td>The query that was used to obtain the result</td>
-</tr>
+  /**
+   * The query that was used to obtain the result
+   */
+  query: string;
 </tbody>
 </table>
 }
@@ -22914,11 +22537,10 @@ export interface LabeledPrice {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>label</td>
-<td>String</td>
-<td>Portion label</td>
-</tr>
+  /**
+   * Portion label
+   */
+  label: string;
   /**
    * Price of the product in the <em>smallest units</em> of the <a href="/bots/payments#supported-currencies">currency</a> (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
@@ -22939,26 +22561,22 @@ export interface Invoice {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Product name</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Product description</td>
-</tr>
-<tr>
-<td>start_parameter</td>
-<td>String</td>
-<td>Unique bot deep-linking parameter that can be used to generate this invoice</td>
-</tr>
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a></td>
-</tr>
+  /**
+   * Product name
+   */
+  title: string;
+  /**
+   * Product description
+   */
+  description: string;
+  /**
+   * Unique bot deep-linking parameter that can be used to generate this invoice
+   */
+  start_parameter: string;
+  /**
+   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+   */
+  currency: string;
   /**
    * Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
@@ -22979,36 +22597,30 @@ export interface ShippingAddress {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>country_code</td>
-<td>String</td>
-<td>Two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country code</td>
-</tr>
-<tr>
-<td>state</td>
-<td>String</td>
-<td>State, if applicable</td>
-</tr>
-<tr>
-<td>city</td>
-<td>String</td>
-<td>City</td>
-</tr>
-<tr>
-<td>street_line1</td>
-<td>String</td>
-<td>First line for the address</td>
-</tr>
-<tr>
-<td>street_line2</td>
-<td>String</td>
-<td>Second line for the address</td>
-</tr>
-<tr>
-<td>post_code</td>
-<td>String</td>
-<td>Address post code</td>
-</tr>
+  /**
+   * Two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country code
+   */
+  country_code: string;
+  /**
+   * State, if applicable
+   */
+  state: string;
+  /**
+   * City
+   */
+  city: string;
+  /**
+   * First line for the address
+   */
+  street_line1: string;
+  /**
+   * Second line for the address
+   */
+  street_line2: string;
+  /**
+   * Address post code
+   */
+  post_code: string;
 </tbody>
 </table>
 }
@@ -23058,16 +22670,14 @@ export interface ShippingOption {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Shipping option identifier</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Option title</td>
-</tr>
+  /**
+   * Shipping option identifier
+   */
+  id: string;
+  /**
+   * Option title
+   */
+  title: string;
 <tr>
 <td>prices</td>
 <td>Array of <a href="#labeledprice">LabeledPrice</a></td>
@@ -23089,20 +22699,18 @@ export interface SuccessfulPayment {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a></td>
-</tr>
+  /**
+   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+   */
+  currency: string;
   /**
    * Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
-<tr>
-<td>invoice_payload</td>
-<td>String</td>
-<td>Bot-specified invoice payload</td>
-</tr>
+  /**
+   * Bot-specified invoice payload
+   */
+  invoice_payload: string;
   /**
    * Expiration date of the subscription, in Unix time; for recurring payments only
    */
@@ -23126,16 +22734,14 @@ export interface SuccessfulPayment {
 <td><a href="#orderinfo">OrderInfo</a></td>
 <td><em>Optional</em>. Order information provided by the user</td>
 </tr>
-<tr>
-<td>telegram_payment_charge_id</td>
-<td>String</td>
-<td>Telegram payment identifier</td>
-</tr>
-<tr>
-<td>provider_payment_charge_id</td>
-<td>String</td>
-<td>Provider payment identifier</td>
-</tr>
+  /**
+   * Telegram payment identifier
+   */
+  telegram_payment_charge_id: string;
+  /**
+   * Provider payment identifier
+   */
+  provider_payment_charge_id: string;
 </tbody>
 </table>
 }
@@ -23152,25 +22758,22 @@ export interface RefundedPayment {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Currently, always “XTR”.</td>
-</tr>
+  /**
+   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Currently, always “XTR”.
+   */
+  currency: string;
   /**
    * Total refunded price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code>, <code>total_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
-<tr>
-<td>invoice_payload</td>
-<td>String</td>
-<td>Bot-specified invoice payload</td>
-</tr>
-<tr>
-<td>telegram_payment_charge_id</td>
-<td>String</td>
-<td>Telegram payment identifier</td>
-</tr>
+  /**
+   * Bot-specified invoice payload
+   */
+  invoice_payload: string;
+  /**
+   * Telegram payment identifier
+   */
+  telegram_payment_charge_id: string;
   /**
    * Provider payment identifier
    */
@@ -23191,21 +22794,19 @@ export interface ShippingQuery {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique query identifier</td>
-</tr>
+  /**
+   * Unique query identifier
+   */
+  id: string;
 <tr>
 <td>from</td>
 <td><a href="#user">User</a></td>
 <td>User who sent the query</td>
 </tr>
-<tr>
-<td>invoice_payload</td>
-<td>String</td>
-<td>Bot-specified invoice payload</td>
-</tr>
+  /**
+   * Bot-specified invoice payload
+   */
+  invoice_payload: string;
 <tr>
 <td>shipping_address</td>
 <td><a href="#shippingaddress">ShippingAddress</a></td>
@@ -23227,30 +22828,27 @@ export interface PreCheckoutQuery {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique query identifier</td>
-</tr>
+  /**
+   * Unique query identifier
+   */
+  id: string;
 <tr>
 <td>from</td>
 <td><a href="#user">User</a></td>
 <td>User who sent the query</td>
 </tr>
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a></td>
-</tr>
+  /**
+   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+   */
+  currency: string;
   /**
    * Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
-<tr>
-<td>invoice_payload</td>
-<td>String</td>
-<td>Bot-specified invoice payload</td>
-</tr>
+  /**
+   * Bot-specified invoice payload
+   */
+  invoice_payload: string;
   /**
    * Identifier of the shipping option chosen by the user
    */
@@ -23281,11 +22879,10 @@ export interface PaidMediaPurchased {
 <td><a href="#user">User</a></td>
 <td>User who purchased the media</td>
 </tr>
-<tr>
-<td>paid_media_payload</td>
-<td>String</td>
-<td>Bot-specified paid media payload</td>
-</tr>
+  /**
+   * Bot-specified paid media payload
+   */
+  paid_media_payload: string;
 </tbody>
 </table>
 }
@@ -23313,11 +22910,10 @@ export interface RevenueWithdrawalStatePending {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the state, always “pending”</td>
-</tr>
+  /**
+   * Type of the state, always “pending”
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -23334,20 +22930,18 @@ export interface RevenueWithdrawalStateSucceeded {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the state, always “succeeded”</td>
-</tr>
+  /**
+   * Type of the state, always “succeeded”
+   */
+  type: string;
   /**
    * Date the withdrawal was completed in Unix time
    */
   date: number;
-<tr>
-<td>url</td>
-<td>String</td>
-<td>An HTTPS URL that can be used to see transaction details</td>
-</tr>
+  /**
+   * An HTTPS URL that can be used to see transaction details
+   */
+  url: string;
 </tbody>
 </table>
 }
@@ -23364,11 +22958,10 @@ export interface RevenueWithdrawalStateFailed {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the state, always “failed”</td>
-</tr>
+  /**
+   * Type of the state, always “failed”
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -23442,16 +23035,14 @@ export interface TransactionPartnerUser {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the transaction partner, always “user”</td>
-</tr>
-<tr>
-<td>transaction_type</td>
-<td>String</td>
-<td>Type of the transaction, currently one of “invoice_payment” for payments via invoices, “paid_media_payment” for payments for paid media, “gift_purchase” for gifts sent by the bot, “premium_purchase” for Telegram Premium subscriptions gifted by the bot, “business_account_transfer” for direct transfers from managed business accounts</td>
-</tr>
+  /**
+   * Type of the transaction partner, always “user”
+   */
+  type: string;
+  /**
+   * Type of the transaction, currently one of “invoice_payment” for payments via invoices, “paid_media_payment” for payments for paid media, “gift_purchase” for gifts sent by the bot, “premium_purchase” for Telegram Premium subscriptions gifted by the bot, “business_account_transfer” for direct transfers from managed business accounts
+   */
+  transaction_type: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -23504,11 +23095,10 @@ export interface TransactionPartnerChat {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the transaction partner, always “chat”</td>
-</tr>
+  /**
+   * Type of the transaction partner, always “chat”
+   */
+  type: string;
 <tr>
 <td>chat</td>
 <td><a href="#chat">Chat</a></td>
@@ -23535,11 +23125,10 @@ export interface TransactionPartnerAffiliateProgram {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the transaction partner, always “affiliate_program”</td>
-</tr>
+  /**
+   * Type of the transaction partner, always “affiliate_program”
+   */
+  type: string;
 <tr>
 <td>sponsor_user</td>
 <td><a href="#user">User</a></td>
@@ -23565,11 +23154,10 @@ export interface TransactionPartnerFragment {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the transaction partner, always “fragment”</td>
-</tr>
+  /**
+   * Type of the transaction partner, always “fragment”
+   */
+  type: string;
 <tr>
 <td>withdrawal_state</td>
 <td><a href="#revenuewithdrawalstate">RevenueWithdrawalState</a></td>
@@ -23591,11 +23179,10 @@ export interface TransactionPartnerTelegramAds {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the transaction partner, always “telegram_ads”</td>
-</tr>
+  /**
+   * Type of the transaction partner, always “telegram_ads”
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -23612,11 +23199,10 @@ export interface TransactionPartnerTelegramApi {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the transaction partner, always “telegram_api”</td>
-</tr>
+  /**
+   * Type of the transaction partner, always “telegram_api”
+   */
+  type: string;
   /**
    * The number of successful requests that exceeded regular limits and were therefore billed
    */
@@ -23637,11 +23223,10 @@ export interface TransactionPartnerOther {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of the transaction partner, always “other”</td>
-</tr>
+  /**
+   * Type of the transaction partner, always “other”
+   */
+  type: string;
 </tbody>
 </table>
 }
@@ -23658,11 +23243,10 @@ export interface StarTransaction {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>String</td>
-<td>Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with <em>SuccessfulPayment.telegram_payment_charge_id</em> for successful incoming payments from users.</td>
-</tr>
+  /**
+   * Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with <em>SuccessfulPayment.telegram_payment_charge_id</em> for successful incoming payments from users.
+   */
+  id: string;
   /**
    * Integer amount of Telegram Stars transferred by the transaction
    */
@@ -23750,16 +23334,14 @@ export interface PassportFile {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Identifier for this file, which can be used to download or reuse the file</td>
-</tr>
-<tr>
-<td>file_unique_id</td>
-<td>String</td>
-<td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
-</tr>
+  /**
+   * Identifier for this file, which can be used to download or reuse the file
+   */
+  file_id: string;
+  /**
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   */
+  file_unique_id: string;
   /**
    * File size in bytes
    */
@@ -23784,11 +23366,10 @@ export interface EncryptedPassportElement {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.</td>
-</tr>
+  /**
+   * Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.
+   */
+  type: string;
   /**
    * Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
    */
@@ -23826,11 +23407,10 @@ export interface EncryptedPassportElement {
 <td>Array of <a href="#passportfile">PassportFile</a></td>
 <td><em>Optional</em>. Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
 </tr>
-<tr>
-<td>hash</td>
-<td>String</td>
-<td>Base64-encoded element hash for using in <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a></td>
-</tr>
+  /**
+   * Base64-encoded element hash for using in <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a>
+   */
+  hash: string;
 </tbody>
 </table>
 }
@@ -23847,21 +23427,18 @@ export interface EncryptedCredentials {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>data</td>
-<td>String</td>
-<td>Base64-encoded encrypted JSON-serialized data with unique user&#39;s payload, data hashes and secrets required for <a href="#encryptedpassportelement">EncryptedPassportElement</a> decryption and authentication</td>
-</tr>
-<tr>
-<td>hash</td>
-<td>String</td>
-<td>Base64-encoded data hash for data authentication</td>
-</tr>
-<tr>
-<td>secret</td>
-<td>String</td>
-<td>Base64-encoded secret, encrypted with the bot&#39;s public RSA key, required for data decryption</td>
-</tr>
+  /**
+   * Base64-encoded encrypted JSON-serialized data with unique user&#39;s payload, data hashes and secrets required for <a href="#encryptedpassportelement">EncryptedPassportElement</a> decryption and authentication
+   */
+  data: string;
+  /**
+   * Base64-encoded data hash for data authentication
+   */
+  hash: string;
+  /**
+   * Base64-encoded secret, encrypted with the bot&#39;s public RSA key, required for data decryption
+   */
+  secret: string;
 </tbody>
 </table>
 }
@@ -23934,31 +23511,26 @@ export interface PassportElementErrorDataField {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>data</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>The section of the user&#39;s Telegram Passport which has the error, one of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”</td>
-</tr>
-<tr>
-<td>field_name</td>
-<td>String</td>
-<td>Name of the data field which has the error</td>
-</tr>
-<tr>
-<td>data_hash</td>
-<td>String</td>
-<td>Base64-encoded data hash</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error source, must be <em>data</em>
+   */
+  source: string;
+  /**
+   * The section of the user&#39;s Telegram Passport which has the error, one of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”
+   */
+  type: string;
+  /**
+   * Name of the data field which has the error
+   */
+  field_name: string;
+  /**
+   * Base64-encoded data hash
+   */
+  data_hash: string;
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -23975,26 +23547,22 @@ export interface PassportElementErrorFrontSide {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>front_side</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>The section of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”</td>
-</tr>
-<tr>
-<td>file_hash</td>
-<td>String</td>
-<td>Base64-encoded hash of the file with the front side of the document</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error source, must be <em>front_side</em>
+   */
+  source: string;
+  /**
+   * The section of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
+   */
+  type: string;
+  /**
+   * Base64-encoded hash of the file with the front side of the document
+   */
+  file_hash: string;
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24011,26 +23579,22 @@ export interface PassportElementErrorReverseSide {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>reverse_side</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>The section of the user&#39;s Telegram Passport which has the issue, one of “driver_license”, “identity_card”</td>
-</tr>
-<tr>
-<td>file_hash</td>
-<td>String</td>
-<td>Base64-encoded hash of the file with the reverse side of the document</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error source, must be <em>reverse_side</em>
+   */
+  source: string;
+  /**
+   * The section of the user&#39;s Telegram Passport which has the issue, one of “driver_license”, “identity_card”
+   */
+  type: string;
+  /**
+   * Base64-encoded hash of the file with the reverse side of the document
+   */
+  file_hash: string;
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24047,26 +23611,22 @@ export interface PassportElementErrorSelfie {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>selfie</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>The section of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”</td>
-</tr>
-<tr>
-<td>file_hash</td>
-<td>String</td>
-<td>Base64-encoded hash of the file with the selfie</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error source, must be <em>selfie</em>
+   */
+  source: string;
+  /**
+   * The section of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
+   */
+  type: string;
+  /**
+   * Base64-encoded hash of the file with the selfie
+   */
+  file_hash: string;
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24083,26 +23643,22 @@ export interface PassportElementErrorFile {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>file</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>The section of the user&#39;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”</td>
-</tr>
-<tr>
-<td>file_hash</td>
-<td>String</td>
-<td>Base64-encoded file hash</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error source, must be <em>file</em>
+   */
+  source: string;
+  /**
+   * The section of the user&#39;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   */
+  type: string;
+  /**
+   * Base64-encoded file hash
+   */
+  file_hash: string;
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24119,26 +23675,23 @@ export interface PassportElementErrorFiles {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>files</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>The section of the user&#39;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”</td>
-</tr>
+  /**
+   * Error source, must be <em>files</em>
+   */
+  source: string;
+  /**
+   * The section of the user&#39;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   */
+  type: string;
 <tr>
 <td>file_hashes</td>
 <td>Array of String</td>
 <td>List of base64-encoded file hashes</td>
 </tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24155,26 +23708,22 @@ export interface PassportElementErrorTranslationFile {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>translation_file</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of element of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”</td>
-</tr>
-<tr>
-<td>file_hash</td>
-<td>String</td>
-<td>Base64-encoded file hash</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error source, must be <em>translation_file</em>
+   */
+  source: string;
+  /**
+   * Type of element of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   */
+  type: string;
+  /**
+   * Base64-encoded file hash
+   */
+  file_hash: string;
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24191,26 +23740,23 @@ export interface PassportElementErrorTranslationFiles {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>translation_files</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of element of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”</td>
-</tr>
+  /**
+   * Error source, must be <em>translation_files</em>
+   */
+  source: string;
+  /**
+   * Type of element of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   */
+  type: string;
 <tr>
 <td>file_hashes</td>
 <td>Array of String</td>
 <td>List of base64-encoded file hashes</td>
 </tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24227,26 +23773,22 @@ export interface PassportElementErrorUnspecified {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>source</td>
-<td>String</td>
-<td>Error source, must be <em>unspecified</em></td>
-</tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Type of element of the user&#39;s Telegram Passport which has the issue</td>
-</tr>
-<tr>
-<td>element_hash</td>
-<td>String</td>
-<td>Base64-encoded element hash</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td>Error message</td>
-</tr>
+  /**
+   * Error source, must be <em>unspecified</em>
+   */
+  source: string;
+  /**
+   * Type of element of the user&#39;s Telegram Passport which has the issue
+   */
+  type: string;
+  /**
+   * Base64-encoded element hash
+   */
+  element_hash: string;
+  /**
+   * Error message
+   */
+  message: string;
 </tbody>
 </table>
 }
@@ -24355,16 +23897,14 @@ export interface Game {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Title of the game</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Description of the game</td>
-</tr>
+  /**
+   * Title of the game
+   */
+  title: string;
+  /**
+   * Description of the game
+   */
+  description: string;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
