@@ -12698,12 +12698,10 @@ export interface ApiMethods {
      * User identifier of the managed bot whose access settings will be changed
      */
     user_id: number;
-<tr>
-<td>is_access_restricted</td>
-<td>Boolean</td>
-<td>Yes</td>
-<td>Pass <em>True</em> if only selected users can access the bot. The bot&#39;s owner can always access it.</td>
-</tr>
+    /**
+     * Pass <em>True</em> if only selected users can access the bot. The bot&#39;s owner can always access it.
+     */
+    is_access_restricted: boolean;
 <tr>
 <td>added_user_ids</td>
 <td>Array of Integer</td>
@@ -13522,12 +13520,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection
      */
     business_connection_id: string;
-<tr>
-<td>show_gift_button</td>
-<td>Boolean</td>
-<td>Yes</td>
-<td>Pass <em>True</em> if a button for sending a gift to the user or by the business account must always be shown in the input field</td>
-</tr>
+    /**
+     * Pass <em>True</em> if a button for sending a gift to the user or by the business account must always be shown in the input field
+     */
+    show_gift_button: boolean;
 <tr>
 <td>accepted_gift_types</td>
 <td><a href="#acceptedgifttypes">AcceptedGiftTypes</a></td>
@@ -20300,12 +20296,10 @@ export interface ApiMethods {
      * Unique identifier for the query to be answered
      */
     shipping_query_id: string;
-<tr>
-<td>ok</td>
-<td>Boolean</td>
-<td>Yes</td>
-<td>Pass <em>True</em> if delivery to the specified address is possible and <em>False</em> if there are any problems (for example, if delivery to the specified address is not possible)</td>
-</tr>
+    /**
+     * Pass <em>True</em> if delivery to the specified address is possible and <em>False</em> if there are any problems (for example, if delivery to the specified address is not possible)
+     */
+    ok: boolean;
 <tr>
 <td>shipping_options</td>
 <td>Array of <a href="#shippingoption">ShippingOption</a></td>
@@ -20339,12 +20333,10 @@ export interface ApiMethods {
      * Unique identifier for the query to be answered
      */
     pre_checkout_query_id: string;
-<tr>
-<td>ok</td>
-<td>Boolean</td>
-<td>Yes</td>
-<td>Specify <em>True</em> if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use <em>False</em> if there are any problems.</td>
-</tr>
+    /**
+     * Specify <em>True</em> if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use <em>False</em> if there are any problems.
+     */
+    ok: boolean;
     /**
      * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.
      */
@@ -20436,12 +20428,10 @@ export interface ApiMethods {
      * Telegram payment identifier for the subscription
      */
     telegram_payment_charge_id: string;
-<tr>
-<td>is_canceled</td>
-<td>Boolean</td>
-<td>Yes</td>
-<td>Pass <em>True</em> to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass <em>False</em> to allow the user to re-enable a subscription that was previously canceled by the bot.</td>
-</tr>
+    /**
+     * Pass <em>True</em> to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass <em>False</em> to allow the user to re-enable a subscription that was previously canceled by the bot.
+     */
+    is_canceled: boolean;
 </tbody>
 </table>
   }): never;
