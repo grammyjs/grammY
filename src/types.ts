@@ -3026,11 +3026,10 @@ export interface Location {
 <td>Float</td>
 <td>Longitude as defined by the sender</td>
 </tr>
-<tr>
-<td>horizontal_accuracy</td>
-<td>Float</td>
-<td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
-</tr>
+  /**
+   * The radius of uncertainty for the location, measured in meters; 0-1500
+   */
+  horizontal_accuracy?: number;
   /**
    * Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.
    */
@@ -8351,11 +8350,10 @@ export interface InputMediaLocation {
 <td>Float</td>
 <td>Longitude of the location</td>
 </tr>
-<tr>
-<td>horizontal_accuracy</td>
-<td>Float</td>
-<td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
-</tr>
+  /**
+   * The radius of uncertainty for the location, measured in meters; 0-1500
+   */
+  horizontal_accuracy?: number;
 </tbody>
 </table>
 }
@@ -8773,11 +8771,10 @@ export interface InputProfilePhotoAnimated {
    * The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
   animation: string;
-<tr>
-<td>main_frame_timestamp</td>
-<td>Float</td>
-<td><em>Optional</em>. Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.</td>
-</tr>
+  /**
+   * Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.
+   */
+  main_frame_timestamp?: number;
 </tbody>
 </table>
 }
@@ -8835,16 +8832,14 @@ export interface InputStoryContentVideo {
    * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
   video: string;
-<tr>
-<td>duration</td>
-<td>Float</td>
-<td><em>Optional</em>. Precise duration of the video in seconds; 0-60</td>
-</tr>
-<tr>
-<td>cover_frame_timestamp</td>
-<td>Float</td>
-<td><em>Optional</em>. Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0.</td>
-</tr>
+  /**
+   * Precise duration of the video in seconds; 0-60
+   */
+  duration?: number;
+  /**
+   * Timestamp in seconds of the frame that will be used as the static cover for the story. Defaults to 0.0.
+   */
+  cover_frame_timestamp?: number;
   /**
    * Pass <em>True</em> if the video has no sound
    */
@@ -20723,11 +20718,10 @@ export interface InlineQueryResultLocation {
    * Location title
    */
   title: string;
-<tr>
-<td>horizontal_accuracy</td>
-<td>Float</td>
-<td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
-</tr>
+  /**
+   * The radius of uncertainty for the location, measured in meters; 0-1500
+   */
+  horizontal_accuracy?: number;
   /**
    * Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely
    */
@@ -21482,11 +21476,10 @@ export interface InputLocationMessageContent {
 <td>Float</td>
 <td>Longitude of the location in degrees</td>
 </tr>
-<tr>
-<td>horizontal_accuracy</td>
-<td>Float</td>
-<td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
-</tr>
+  /**
+   * The radius of uncertainty for the location, measured in meters; 0-1500
+   */
+  horizontal_accuracy?: number;
   /**
    * Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely
    */
