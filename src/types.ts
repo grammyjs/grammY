@@ -2724,11 +2724,10 @@ export interface PollAnswer {
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. The user that changed the answer to the poll, if the voter isn&#39;t anonymous</td>
 </tr>
-<tr>
-<td>option_ids</td>
-<td>Array of Integer</td>
-<td>0-based identifiers of chosen answer options. May be empty if the vote was retracted.</td>
-</tr>
+  /**
+   * 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
+   */
+  option_ids: number[];
   /**
    * Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.
    */
@@ -3405,11 +3404,10 @@ export interface BackgroundFillFreeformGradient {
    * Type of the background fill, always “freeform_gradient”
    */
   type: string;
-<tr>
-<td>colors</td>
-<td>Array of Integer</td>
-<td>A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format</td>
-</tr>
+  /**
+   * A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format
+   */
+  colors: number[];
 </tbody>
 </table>
 }
@@ -6731,20 +6729,18 @@ export interface UniqueGiftColors {
    * Main color used in light themes; RGB format
    */
   light_theme_main_color: number;
-<tr>
-<td>light_theme_other_colors</td>
-<td>Array of Integer</td>
-<td>List of 1-3 additional colors used in light themes; RGB format</td>
-</tr>
+  /**
+   * List of 1-3 additional colors used in light themes; RGB format
+   */
+  light_theme_other_colors: number[];
   /**
    * Main color used in dark themes; RGB format
    */
   dark_theme_main_color: number;
-<tr>
-<td>dark_theme_other_colors</td>
-<td>Array of Integer</td>
-<td>List of 1-3 additional colors used in dark themes; RGB format</td>
-</tr>
+  /**
+   * List of 1-3 additional colors used in dark themes; RGB format
+   */
+  dark_theme_other_colors: number[];
 </tbody>
 </table>
 }
@@ -7939,11 +7935,10 @@ export interface BusinessMessagesDeleted {
 <td><a href="#chat">Chat</a></td>
 <td>Information about a chat in the business account. The bot may not have access to the chat or the corresponding user.</td>
 </tr>
-<tr>
-<td>message_ids</td>
-<td>Array of Integer</td>
-<td>The list of identifiers of deleted messages in the chat of the business account</td>
-</tr>
+  /**
+   * The list of identifiers of deleted messages in the chat of the business account
+   */
+  message_ids: number[];
 </tbody>
 </table>
 }
