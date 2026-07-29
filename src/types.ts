@@ -278,11 +278,6 @@ export interface WebhookInfo {
   allowed_updates?: string[];
 }
 // === AVAILABLE TYPES
-<p>All types used in the Bot API responses are represented as JSON-objects.</p>
-<p>It is safe to use 32-bit signed integers for storing all <strong>Integer</strong> fields unless otherwise noted.</p>
-<blockquote>
-<p><strong>Optional</strong> fields may be not returned when irrelevant.</p>
-</blockquote>
 /**
  * This object represents a Telegram user or bot.
  */
@@ -5062,6 +5057,34 @@ export interface BotCommand {
  * - <a href="#botcommandscopechat">BotCommandScopeChat</a>
  * - <a href="#botcommandscopechatadministrators">BotCommandScopeChatAdministrators</a>
  * - <a href="#botcommandscopechatmember">BotCommandScopeChatMember</a>
+ * 
+ * #### Determining list of commands
+ * 
+ * The following algorithm is used to determine the list of commands for a particular user viewing the bot menu. The first list of commands which is set is returned:
+ * 
+ * <strong>Commands in the chat with the bot</strong>
+ *
+ * - botCommandScopeChat + language_code
+ * - botCommandScopeChat
+ * - botCommandScopeAllPrivateChats + language_code
+ * - botCommandScopeAllPrivateChats
+ * - botCommandScopeDefault + language_code
+ * - botCommandScopeDefault
+ *
+ * <strong>Commands in group and supergroup chats</strong>
+ *
+ * - botCommandScopeChatMember + language_code
+ * - botCommandScopeChatMember
+ * - botCommandScopeChatAdministrators + language_code (administrators only)
+ * - botCommandScopeChatAdministrators (administrators only)
+ * - botCommandScopeChat + language_code
+ * - botCommandScopeChat
+ * - botCommandScopeAllChatAdministrators + language_code (administrators only)
+ * - botCommandScopeAllChatAdministrators (administrators only)
+ * - botCommandScopeAllGroupChats + language_code
+ * - botCommandScopeAllGroupChats
+ * - botCommandScopeDefault + language_code
+ * - botCommandScopeDefault
  */
 export type BotCommandScope =
  | BotCommandScopeDefault
@@ -5071,32 +5094,6 @@ export type BotCommandScope =
  | BotCommandScopeChat
  | BotCommandScopeChatAdministrators
  | BotCommandScopeChatMember
-<h4><a class="anchor" name="determining-list-of-commands" href="#determining-list-of-commands"><i class="anchor-icon"></i></a>Determining list of commands</h4>
-<p>The following algorithm is used to determine the list of commands for a particular user viewing the bot menu. The first list of commands which is set is returned:</p>
-<p><strong>Commands in the chat with the bot</strong></p>
-<ul>
-<li>botCommandScopeChat + language_code</li>
-<li>botCommandScopeChat</li>
-<li>botCommandScopeAllPrivateChats + language_code</li>
-<li>botCommandScopeAllPrivateChats</li>
-<li>botCommandScopeDefault + language_code</li>
-<li>botCommandScopeDefault</li>
-</ul>
-<p><strong>Commands in group and supergroup chats</strong></p>
-<ul>
-<li>botCommandScopeChatMember + language_code</li>
-<li>botCommandScopeChatMember</li>
-<li>botCommandScopeChatAdministrators + language_code (administrators only)</li>
-<li>botCommandScopeChatAdministrators (administrators only)</li>
-<li>botCommandScopeChat + language_code</li>
-<li>botCommandScopeChat</li>
-<li>botCommandScopeAllChatAdministrators + language_code (administrators only)</li>
-<li>botCommandScopeAllChatAdministrators (administrators only)</li>
-<li>botCommandScopeAllGroupChats + language_code</li>
-<li>botCommandScopeAllGroupChats</li>
-<li>botCommandScopeDefault + language_code</li>
-<li>botCommandScopeDefault</li>
-</ul>
 /**
  * Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.
  */
@@ -5209,12 +5206,13 @@ export interface BotShortDescription {
  * - <a href="#menubuttoncommands">MenuButtonCommands</a>
  * - <a href="#menubuttonwebapp">MenuButtonWebApp</a>
  * - <a href="#menubuttondefault">MenuButtonDefault</a>
+ * 
+ * If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.
  */
 export type MenuButton =
  | MenuButtonCommands
  | MenuButtonWebApp
  | MenuButtonDefault
-<p>If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.</p>
 /**
  * Represents a menu button, which opens the bot&#39;s list of commands.
  */
@@ -6118,82 +6116,92 @@ export interface InputStoryContentVideo {
    */
   is_animation?: boolean;
 }
-<h4><a class="anchor" name="sending-files" href="#sending-files"><i class="anchor-icon"></i></a>Sending files</h4>
-<p>There are three ways to send files (photos, stickers, audio, media, etc.):</p>
-<ol>
-<li>If the file is already stored somewhere on the Telegram servers, you don&#39;t need to reupload it: each file object has a <strong>file_id</strong> field, simply pass this <strong>file_id</strong> as a parameter instead of uploading. There are <strong>no limits</strong> for files sent this way.</li>
-<li>Provide Telegram with an HTTP URL for the file to be sent. Telegram will download and send the file. 5 MB max size for photos and 20 MB max for other types of content.</li>
-<li>Post the file using multipart/form-data in the usual way that files are uploaded via the browser. 10 MB max size for photos, 50 MB for other files.</li>
-</ol>
-<p><strong>Sending by file_id</strong></p>
-<ul>
-<li>It is not possible to change the file type when resending by <strong>file_id</strong>. I.e. a <a href="#video">video</a> can&#39;t be <a href="#sendphoto">sent as a photo</a>, a <a href="#photosize">photo</a> can&#39;t be <a href="#senddocument">sent as a document</a>, etc.</li>
-<li>It is not possible to resend thumbnails.</li>
-<li>Resending a photo by <strong>file_id</strong> will send all of its <a href="#photosize">sizes</a>.</li>
-<li><strong>file_id</strong> is unique for each individual bot and <strong>can&#39;t</strong> be transferred from one bot to another.</li>
-<li><strong>file_id</strong> uniquely identifies a file, but a file can have different valid <strong>file_id</strong>s even for the same bot.</li>
-</ul>
-<p><strong>Sending by URL</strong></p>
-<ul>
-<li>When sending by URL the target file must have the correct MIME type (e.g., audio/mpeg for <a href="#sendaudio">sendAudio</a>, etc.).</li>
-<li>In <a href="#senddocument">sendDocument</a>, sending by URL will currently only work for <strong>.PDF</strong> and <strong>.ZIP</strong> files.</li>
-<li>To use <a href="#sendvoice">sendVoice</a>, the file must have the type audio/ogg and be no more than 1MB in size. 1-20MB voice notes will be sent as files.</li>
-<li>Other configurations may work but we can&#39;t guarantee that they will.</li>
-</ul>
-<h4><a class="anchor" name="accent-colors" href="#accent-colors"><i class="anchor-icon"></i></a>Accent colors</h4>
-<p>Colors with identifiers 0 (red), 1 (orange), 2 (purple/violet), 3 (green), 4 (cyan), 5 (blue), 6 (pink) can be customized by app themes. Additionally, the following colors in RGB format are currently in use.</p>
-<p><table class="table table-hover table-bordered">
-<thead>
-<tr><th>Color identifier</th><th>Light colors</th><th>Dark colors</th></tr>
-</thead>
-<tbody>
-<tr><td>7</td><td>E15052 F9AE63</td><td>FF9380 992F37</td></tr>
-<tr><td>8</td><td>E0802B FAC534</td><td>ECB04E C35714</td></tr>
-<tr><td>9</td><td>A05FF3 F48FFF</td><td>C697FF 5E31C8</td></tr>
-<tr><td>10</td><td>27A910 A7DC57</td><td>A7EB6E 167E2D</td></tr>
-<tr><td>11</td><td>27ACCE 82E8D6</td><td>40D8D0 045C7F</td></tr>
-<tr><td>12</td><td>3391D4 7DD3F0</td><td>52BFFF 0B5494</td></tr>
-<tr><td>13</td><td>DD4371 FFBE9F</td><td>FF86A6 8E366E</td></tr>
-<tr><td>14</td><td>247BED F04856 FFFFFF</td><td>3FA2FE E5424F FFFFFF</td></tr>
-<tr><td>15</td><td>D67722 1EA011 FFFFFF</td><td>FF905E 32A527 FFFFFF</td></tr>
-<tr><td>16</td><td>179E42 E84A3F FFFFFF</td><td>66D364 D5444F FFFFFF</td></tr>
-<tr><td>17</td><td>2894AF 6FC456 FFFFFF</td><td>22BCE2 3DA240 FFFFFF</td></tr>
-<tr><td>18</td><td>0C9AB3 FFAD95 FFE6B5</td><td>22BCE2 FF9778 FFDA6B</td></tr>
-<tr><td>19</td><td>7757D6 F79610 FFDE8E</td><td>9791FF F2731D FFDB59</td></tr>
-<tr><td>20</td><td>1585CF F2AB1D FFFFFF</td><td>3DA6EB EEA51D FFFFFF</td></tr>
-</tbody>
-</table></p>
-<h4><a class="anchor" name="profile-accent-colors" href="#profile-accent-colors"><i class="anchor-icon"></i></a>Profile accent colors</h4>
-<p>Currently, the following colors in RGB format are in use for profile backgrounds.</p>
-<p><table class="table table-hover table-bordered">
-<thead>
-<tr><th>Color identifier</th><th>Light colors</th><th>Dark colors</th></tr>
-</thead>
-<tbody>
-<tr><td>0</td><td>BA5650</td><td>9C4540</td></tr>
-<tr><td>1</td><td>C27C3E</td><td>945E2C</td></tr>
-<tr><td>2</td><td>956AC8</td><td>715099</td></tr>
-<tr><td>3</td><td>49A355</td><td>33713B</td></tr>
-<tr><td>4</td><td>3E97AD</td><td>387E87</td></tr>
-<tr><td>5</td><td>5A8FBB</td><td>477194</td></tr>
-<tr><td>6</td><td>B85378</td><td>944763</td></tr>
-<tr><td>7</td><td>7F8B95</td><td>435261</td></tr>
-<tr><td>8</td><td>C9565D D97C57</td><td>994343 AC583E</td></tr>
-<tr><td>9</td><td>CF7244 CC9433</td><td>8F552F A17232</td></tr>
-<tr><td>10</td><td>9662D4 B966B6</td><td>634691 9250A2</td></tr>
-<tr><td>11</td><td>3D9755 89A650</td><td>296A43 5F8F44</td></tr>
-<tr><td>12</td><td>3D95BA 50AD98</td><td>306C7C 3E987E</td></tr>
-<tr><td>13</td><td>538BC2 4DA8BD</td><td>38618C 458BA1</td></tr>
-<tr><td>14</td><td>B04F74 D1666D</td><td>884160 A65259</td></tr>
-<tr><td>15</td><td>637482 7B8A97</td><td>53606E 384654</td></tr>
-</tbody>
-</table></p>
-<h4><a class="anchor" name="inline-mode-objects" href="#inline-mode-objects"><i class="anchor-icon"></i></a>Inline mode objects</h4>
-<p>Objects and methods used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
+/**
+ * #### Accent colors
+ * 
+ * Colors with identifiers 0 (red), 1 (orange), 2 (purple/violet), 3 (green), 4 (cyan), 5 (blue), 6 (pink) can be customized by app themes. Additionally, the following colors in RGB format are currently in use.</p>
+ * 
+ * | Color identifier | Light colors         | Dark colors          |
+ * | :--------------- | :------------------- | :------------------- |
+ * |  7               | E15052 F9AE63        | FF9380 992F37        |
+ * |  8               | E0802B FAC534        | ECB04E C35714        |
+ * |  9               | A05FF3 F48FFF        | C697FF 5E31C8        |
+ * | 10               | 27A910 A7DC57        | A7EB6E 167E2D        |
+ * | 11               | 27ACCE 82E8D6        | 40D8D0 045C7F        |
+ * | 12               | 3391D4 7DD3F0        | 52BFFF 0B5494        |
+ * | 13               | DD4371 FFBE9F        | FF86A6 8E366E        |
+ * | 14               | 247BED F04856 FFFFFF | 3FA2FE E5424F FFFFFF |
+ * | 15               | D67722 1EA011 FFFFFF | FF905E 32A527 FFFFFF |
+ * | 16               | 179E42 E84A3F FFFFFF | 66D364 D5444F FFFFFF |
+ * | 17               | 2894AF 6FC456 FFFFFF | 22BCE2 3DA240 FFFFFF |
+ * | 18               | 0C9AB3 FFAD95 FFE6B5 | 22BCE2 FF9778 FFDA6B |
+ * | 19               | 7757D6 F79610 FFDE8E | 9791FF F2731D FFDB59 |
+ * | 20               | 1585CF F2AB1D FFFFFF | 3DA6EB EEA51D FFFFFF |
+ */
+export type AccentColorId =
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+/**
+ * #### Profile accent colors
+ * 
+ * Currently, the following colors in RGB format are in use for profile backgrounds.
+ * 
+ * | Color identifier | Light colors  | Dark colors   |
+ * | :--------------- | :------------ | :------------ |
+ * | 0                | BA5650        | 9C4540        |
+ * | 1                | C27C3E        | 945E2C        |
+ * | 2                | 956AC8        | 715099        |
+ * | 3                | 49A355        | 33713B        |
+ * | 4                | 3E97AD        | 387E87        |
+ * | 5                | 5A8FBB        | 477194        |
+ * | 6                | B85378        | 944763        |
+ * | 7                | 7F8B95        | 435261        |
+ * | 8                | C9565D D97C57 | 994343 AC583E |
+ * | 9                | CF7244 CC9433 | 8F552F A17232 |
+ * | 10               | 9662D4 B966B6 | 634691 9250A2 |
+ * | 11               | 3D9755 89A650 | 296A43 5F8F44 |
+ * | 12               | 3D95BA 50AD98 | 306C7C 3E987E |
+ * | 13               | 538BC2 4DA8BD | 38618C 458BA1 |
+ * | 14               | B04F74 D1666D | 884160 A65259 |
+ * | 15               | 637482 7B8A97 | 53606E 384654 |
+ */
+export type ProfileAccentColorId =
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
 // === AVAILABLE METHODS
-<blockquote>
-<p>All methods in the Bot API are case-insensitive. We support <strong>GET</strong> and <strong>POST</strong> HTTP methods. Use either <a href="https://en.wikipedia.org/wiki/Query_string">URL query string</a> or <em>application/json</em> or <em>application/x-www-form-urlencoded</em> or <em>multipart/form-data</em> for passing parameters in Bot API requests.<br>On successful call, a JSON-object containing the result will be returned.</p>
-</blockquote>
 export interface ApiMethods {
   /**
    * A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.
@@ -6411,30 +6419,6 @@ pre-formatted fixed-width code block written in the Python programming language
 <li>To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the character &#39;\&#39; before them.</li>
 <li>Escaping inside entities is not allowed, so entity must be closed first and reopened again: use <code>_snake_\__case_</code> for italic <code>snake_case</code> and <code>*2*\**2=4*</code> for bold <code>2*2=4</code>.</li>
 </ul>
-<h4><a class="anchor" name="ephemeral-messages-and-commands" href="#ephemeral-messages-and-commands"><i class="anchor-icon"></i></a>Ephemeral Messages and Commands</h4>
-<p>Ephemeral interactions allow a bot and an individual member of a group or supergroup chat to communicate privately on the public timeline without cluttering the chat for other members. They may disappear automatically after some time, or if the app is restarted.</p>
-<p><strong>Ephemeral Commands (User to Bot)</strong><br>Bots can declare ephemeral commands by setting the <em>is_ephemeral</em> field to <em>True</em> in the <a href="#botcommand">BotCommand</a> class. A user can then send an ephemeral command that is received by the target bot but remains invisible to all members of the chat, including both users and other bots.</p>
-<p><strong>Ephemeral Messages</strong><br>Bots can send an ephemeral message response back to a specific user designated by the <em>receiver_user_id</em> parameter. Other members of the group or supergroup chat will not see the message.</p>
-<blockquote>
-<p>It is <strong>not guaranteed</strong> that the ephemeral message will be received, especially if the user is offline.</p>
-</blockquote>
-<p><strong>Reply Targets and Conditions</strong></p>
-<ul>
-<li><p>Any bot can send an ephemeral message to a user within <strong>15 seconds</strong> of the incoming eligible action. The message will be sent to the exact client application that triggered the action. For this the bot must provide either:</p>
-<ul>
-<li>The <em>callback_query_id</em> from a received callback query, or</li>
-<li>The <em>reply_parameters.ephemeral_message_id</em> from an incoming ephemeral message.</li>
-</ul>
-</li>
-<li><p>If the bot is a chat administrator, it can send an ephemeral message to any non-bot member of the chat at any time without needing to specify a <em>callback_query_id</em> or <em>reply_parameters.ephemeral_message_id</em>. In this case, the message may be delivered across multiple active client applications of the user, but is regardless not guaranteed to be delivered to any of them.</p>
-</li>
-</ul>
-<h4><a class="anchor" name="paid-broadcasts" href="#paid-broadcasts"><i class="anchor-icon"></i></a>Paid Broadcasts</h4>
-<p>By default, all bots are able to broadcast up to <a href="https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this">30 messages</a> per second to their users. Developers can increase this limit by enabling <em>Paid Broadcasts</em> in <a href="https://t.me/botfather">@BotFather</a> - allowing their bot to broadcast <strong>up to 1000 messages</strong> per second.</p>
-<p>Each message broadcasted over the free amount of 30 messages per second incurs a cost of 0.1 Stars per message, paid with Telegram Stars from the bot&#39;s balance. In order to use this feature, a bot must have at least <em>10,000 Stars</em> on its balance.</p>
-<blockquote>
-<p>Bots with increased limits are only charged for messages that are broadcasted successfully.</p>
-</blockquote>
 export interface ApiMethods {
   /**
    * Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.
@@ -7985,9 +7969,10 @@ export interface ApiMethods {
    * Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns <em>True</em> on success.
    *
    * > Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with <em>action</em> = <em>upload_photo</em>. The user will see a “sending photo” status for the bot.
+   * 
+   * We only recommend using this method when a response from the bot will take a <strong>noticeable</strong> amount of time to arrive.
    */
   sendChatAction(args: {
-<p>We only recommend using this method when a response from the bot will take a <strong>noticeable</strong> amount of time to arrive.</p>
     /**
      * Unique identifier of the business connection on behalf of which the action will be sent
      */
@@ -8004,8 +7989,6 @@ export interface ApiMethods {
      * Type of action to broadcast. Choose one, depending on what the user is about to receive: <em>typing</em> for <a href="#sendmessage">text messages</a>, <em>upload_photo</em> for <a href="#sendphoto">photos</a>, <em>record_video</em> or <em>upload_video</em> for <a href="#sendvideo">videos</a>, <em>record_voice</em> or <em>upload_voice</em> for <a href="#sendvoice">voice notes</a>, <em>upload_document</em> for <a href="#senddocument">general files</a>, <em>choose_sticker</em> for <a href="#sendsticker">stickers</a>, <em>find_location</em> for <a href="#sendlocation">location data</a>, <em>record_video_note</em> or <em>upload_video_note</em> for <a href="#sendvideonote">video notes</a>.
      */
     action: string;
-</tbody>
-</table>
 export interface ApiMethods {
   /**
    * Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.
@@ -9916,11 +9899,7 @@ export interface ApiMethods {
     button: KeyboardButton;
   }): never;
 }
-<h4><a class="anchor" name="inline-mode-methods" href="#inline-mode-methods"><i class="anchor-icon"></i></a>Inline mode methods</h4>
-<p>Methods and objects used in the inline mode are described in the <a href="#inline-mode">Inline mode section</a>.</p>
 // === UPDATING MESSAGES
-<p>The following methods allow you to change an existing message in the message history instead of sending a new one with a result of an action. This is most useful for messages with <a href="/bots/features#inline-keyboards">inline keyboards</a> using callback queries, but can also help reduce clutter in conversations with regular chat bots.</p>
-<p>Please note, that it is currently only possible to edit messages without <em>reply_markup</em> or with <a href="/bots/features#inline-keyboards">inline keyboards</a>.</p>
 export interface ApiMethods {
   /**
    * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
@@ -10451,7 +10430,6 @@ export interface ApiMethods {
   }): never;
 }
 // === STICKERS
-<p>The following methods and objects allow your bot to handle stickers and sticker sets.</p>
 /**
  * This object represents a sticker.
  */
@@ -12646,8 +12624,6 @@ export interface InputRichBlockThinking {
   text: RichText;
 }
 // === INLINE MODE
-<p>The following methods and objects allow your bot to work in <a href="/bots/inline">inline mode</a>.<br>Please see our <a href="/bots/inline">Introduction to Inline bots</a> for more details.</p>
-<p>To enable this option, send the <code>/setinline</code> command to <a href="https://t.me/botfather">@BotFather</a> and provide the placeholder text that the user will see in the input field after typing your bot&#39;s name.</p>
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
  */
@@ -12748,6 +12724,8 @@ export interface InlineQueryResultsButton {
  * - <a href="#inlinequeryresultvenue">InlineQueryResultVenue</a>
  * - <a href="#inlinequeryresultvideo">InlineQueryResultVideo</a>
  * - <a href="#inlinequeryresultvoice">InlineQueryResultVoice</a>
+ * 
+ * <strong>Note:</strong> All URLs passed in inline query results will be available to end users and therefore must be assumed to be <strong>public</strong>.
  */
 export type InlineQueryResult =
  | InlineQueryResultCachedAudio
@@ -12770,7 +12748,6 @@ export type InlineQueryResult =
  | InlineQueryResultVenue
  | InlineQueryResultVideo
  | InlineQueryResultVoice
-<p><strong>Note:</strong> All URLs passed in inline query results will be available to end users and therefore must be assumed to be <strong>public</strong>.</p>
 /**
  * Represents a link to an article or web page.
  */
@@ -14012,7 +13989,6 @@ export interface ChosenInlineResult {
   query: string;
 }
 // === PAYMENTS
-<p>Your bot can accept payments from Telegram users. Please see the <a href="/bots/payments">introduction to payments</a> for more details on the process and how to set up payments for your bot.</p>
 export interface ApiMethods {
   /**
    * Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.
@@ -14830,7 +14806,6 @@ export interface StarTransactions {
   transactions: StarTransaction[];
 }
 // === TELEGRAM PASSPORT
-<p><strong>Telegram Passport</strong> is a unified authorization method for services that require personal identification. Users can upload their documents once, then instantly share their data with services that require real-world ID (finance, ICOs, etc.). Please see the <a href="/passport">manual</a> for details.</p>
 /**
  * Describes Telegram Passport data shared with the bot by the user.
  */
@@ -15161,18 +15136,6 @@ export interface PassportElementErrorUnspecified {
   message: string;
 }
 // === GAMES
-<p>Your bot can offer users <strong>HTML5 games</strong> to play solo or to compete against each other in groups and one-on-one chats. Create games via <a href="https://t.me/botfather">@BotFather</a> using the <em>/newgame</em> command. Please note that this kind of power requires responsibility: you will need to accept the terms for each game that your bots will be offering.</p>
-<ul>
-<li>Games are a new type of content on Telegram, represented by the <a href="#game">Game</a> and <a href="#inlinequeryresultgame">InlineQueryResultGame</a> objects.</li>
-<li>Once you&#39;ve created a game via <a href="https://t.me/botfather">BotFather</a>, you can send games to chats as regular messages using the <a href="#sendgame">sendGame</a> method, or use <a href="#inline-mode">inline mode</a> with <a href="#inlinequeryresultgame">InlineQueryResultGame</a>.</li>
-<li>If you send the game message without any buttons, it will automatically have a &#39;Play <em>GameName</em>&#39; button. When this button is pressed, your bot gets a <a href="#callbackquery">CallbackQuery</a> with the <em>game_short_name</em> of the requested game. You provide the correct URL for this particular user and the app opens the game in the in-app browser.</li>
-<li>You can manually add multiple buttons to your game message. Please note that the first button in the first row <strong>must always</strong> launch the game, using the field <em>callback_game</em> in <a href="#inlinekeyboardbutton">InlineKeyboardButton</a>. You can add extra buttons according to taste: e.g., for a description of the rules, or to open the game&#39;s official community.</li>
-<li>To make your game more attractive, you can upload a GIF animation that demonstrates the game to the users via <a href="https://t.me/botfather">BotFather</a> (see <a href="https://t.me/gamebot?game=lumberjack">Lumberjack</a> for example).</li>
-<li>A game message will also display high scores for the current chat. Use <a href="#setgamescore">setGameScore</a> to post high scores to the chat with the game, add the <em>disable_edit_message</em> parameter to disable automatic update of the message with the current scoreboard.</li>
-<li>Use <a href="#getgamehighscores">getGameHighScores</a> to get data for in-game high score tables.</li>
-<li>You can also add an extra <a href="/bots/games#sharing-your-game-to-telegram-chats">sharing button</a> for users to share their best score to different chats.</li>
-<li>For examples of what can be done using this new stuff, check the <a href="https://t.me/gamebot">@gamebot</a> and <a href="https://t.me/gamee">@gamee</a> bots.</li>
-</ul>
 export interface ApiMethods {
   /**
    * Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.
@@ -15330,12 +15293,3 @@ export interface GameHighScore {
    */
   score: number;
 }
-<hr>
-<p>And that&#39;s about all we&#39;ve got for now.<br>If you&#39;ve got any questions, please check out our <a href="/bots/faq"><strong>Bot FAQ »</strong></a></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</body>
-</html>
