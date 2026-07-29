@@ -367,26 +367,23 @@ export interface WebhookInfo {
 <td>String</td>
 <td><em>Optional</em>. Currently used webhook IP address</td>
 </tr>
-<tr>
-<td>last_error_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Unix time for the most recent error that happened when trying to deliver an update via webhook</td>
-</tr>
+  /**
+   * Unix time for the most recent error that happened when trying to deliver an update via webhook
+   */
+  last_error_date?: number;
 <tr>
 <td>last_error_message</td>
 <td>String</td>
 <td><em>Optional</em>. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook</td>
 </tr>
-<tr>
-<td>last_synchronization_error_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters</td>
-</tr>
-<tr>
-<td>max_connections</td>
-<td>Integer</td>
-<td><em>Optional</em>. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery</td>
-</tr>
+  /**
+   * Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters
+   */
+  last_synchronization_error_date?: number;
+  /**
+   * The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
+   */
+  max_connections?: number;
 <tr>
 <td>allowed_updates</td>
 <td>Array of String</td>
@@ -676,11 +673,10 @@ export interface ChatFullInfo {
 <td>String</td>
 <td><em>Optional</em>. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background</td>
 </tr>
-<tr>
-<td>profile_accent_color_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.</td>
-</tr>
+  /**
+   * Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.
+   */
+  profile_accent_color_id?: number;
 <tr>
 <td>profile_background_custom_emoji_id</td>
 <td>String</td>
@@ -691,11 +687,10 @@ export interface ChatFullInfo {
 <td>String</td>
 <td><em>Optional</em>. Custom emoji identifier of the emoji status of the chat or the other party in a private chat</td>
 </tr>
-<tr>
-<td>emoji_status_expiration_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any</td>
-</tr>
+  /**
+   * Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any
+   */
+  emoji_status_expiration_date?: number;
 <tr>
 <td>bio</td>
 <td>String</td>
@@ -751,21 +746,18 @@ export interface ChatFullInfo {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.</td>
 </tr>
-<tr>
-<td>slow_mode_delay</td>
-<td>Integer</td>
-<td><em>Optional</em>. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds</td>
-</tr>
-<tr>
-<td>unrestrict_boost_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions</td>
-</tr>
-<tr>
-<td>message_auto_delete_time</td>
-<td>Integer</td>
-<td><em>Optional</em>. The time after which all messages sent to the chat will be automatically deleted; in seconds</td>
-</tr>
+  /**
+   * For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds
+   */
+  slow_mode_delay?: number;
+  /**
+   * For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions
+   */
+  unrestrict_boost_count?: number;
+  /**
+   * The time after which all messages sent to the chat will be automatically deleted; in seconds
+   */
+  message_auto_delete_time?: number;
 <tr>
 <td>has_aggressive_anti_spam_enabled</td>
 <td>True</td>
@@ -801,11 +793,10 @@ export interface ChatFullInfo {
 <td>String</td>
 <td><em>Optional</em>. For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.</td>
 </tr>
-<tr>
-<td>linked_chat_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+   */
+  linked_chat_id?: number;
 <tr>
 <td>location</td>
 <td><a href="#chatlocation">ChatLocation</a></td>
@@ -826,11 +817,10 @@ export interface ChatFullInfo {
 <td><a href="#uniquegiftcolors">UniqueGiftColors</a></td>
 <td><em>Optional</em>. The color scheme based on a unique gift that must be used for the chat&#39;s name, message replies and link previews</td>
 </tr>
-<tr>
-<td>paid_message_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars a general user has to pay to send a message to the chat</td>
-</tr>
+  /**
+   * The number of Telegram Stars a general user has to pay to send a message to the chat
+   */
+  paid_message_star_count?: number;
 <tr>
 <td>guard_bot</td>
 <td><a href="#user">User</a></td>
@@ -862,11 +852,10 @@ export interface Message {
 <td>Integer</td>
 <td>Unique message identifier inside this chat; 0 for ephemeral messages. In specific instances (e.g., a message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only</td>
-</tr>
+  /**
+   * Unique identifier of a message thread or forum topic to which the message belongs; for supergroups and private chats only
+   */
+  message_thread_id?: number;
 <tr>
 <td>direct_messages_topic</td>
 <td><a href="#directmessagestopic">DirectMessagesTopic</a></td>
@@ -882,11 +871,10 @@ export interface Message {
 <td><a href="#chat">Chat</a></td>
 <td><em>Optional</em>. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field <em>from</em> contains a fake sender user in non-channel chats.</td>
 </tr>
-<tr>
-<td>sender_boost_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. If the sender of the message boosted the chat, the number of boosts added by the user</td>
-</tr>
+  /**
+   * If the sender of the message boosted the chat, the number of boosts added by the user
+   */
+  sender_boost_count?: number;
 <tr>
 <td>sender_business_bot</td>
 <td><a href="#user">User</a></td>
@@ -902,11 +890,10 @@ export interface Message {
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. For ephemeral messages, the user who received the message</td>
 </tr>
-<tr>
-<td>ephemeral_message_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. For ephemeral messages, identifier of the ephemeral message inside this chat. The identifier may be reused for another ephemeral message after the message is deleted or expires.</td>
-</tr>
+  /**
+   * For ephemeral messages, identifier of the ephemeral message inside this chat. The identifier may be reused for another ephemeral message after the message is deleted or expires.
+   */
+  ephemeral_message_id?: number;
 <tr>
 <td>date</td>
 <td>Integer</td>
@@ -962,11 +949,10 @@ export interface Message {
 <td><a href="#story">Story</a></td>
 <td><em>Optional</em>. For replies to a story, the original story</td>
 </tr>
-<tr>
-<td>reply_to_checklist_task_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Identifier of the specific checklist task that is being replied to</td>
-</tr>
+  /**
+   * Identifier of the specific checklist task that is being replied to
+   */
+  reply_to_checklist_task_id?: number;
 <tr>
 <td>reply_to_poll_option_id</td>
 <td>String</td>
@@ -987,11 +973,10 @@ export interface Message {
 <td><a href="#chat">Chat</a></td>
 <td><em>Optional</em>. For a message sent by a guest bot, this is the chat whose original message triggered the bot&#39;s response</td>
 </tr>
-<tr>
-<td>edit_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Date the message was last edited in Unix time</td>
-</tr>
+  /**
+   * Date the message was last edited in Unix time
+   */
+  edit_date?: number;
 <tr>
 <td>has_protected_content</td>
 <td>True</td>
@@ -1017,11 +1002,10 @@ export interface Message {
 <td>String</td>
 <td><em>Optional</em>. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator</td>
 </tr>
-<tr>
-<td>paid_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars that were paid by the sender of the message to send it</td>
-</tr>
+  /**
+   * The number of Telegram Stars that were paid by the sender of the message to send it
+   */
+  paid_star_count?: number;
 <tr>
 <td>text</td>
 <td>String</td>
@@ -1217,16 +1201,14 @@ export interface Message {
 <td><a href="#messageautodeletetimerchanged">MessageAutoDeleteTimerChanged</a></td>
 <td><em>Optional</em>. Service message: auto-delete timer settings changed in the chat</td>
 </tr>
-<tr>
-<td>migrate_to_chat_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
-<tr>
-<td>migrate_from_chat_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  migrate_to_chat_id?: number;
+  /**
+   * The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  migrate_from_chat_id?: number;
 <tr>
 <td>pinned_message</td>
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
@@ -1564,11 +1546,10 @@ export interface MessageEntity {
 <td>String</td>
 <td><em>Optional</em>. For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker.</td>
 </tr>
-<tr>
-<td>unix_time</td>
-<td>Integer</td>
-<td><em>Optional</em>. For “date_time” only, the Unix time associated with the entity</td>
-</tr>
+  /**
+   * For “date_time” only, the Unix time associated with the entity
+   */
+  unix_time?: number;
 <tr>
 <td>date_time_format</td>
 <td>String</td>
@@ -1636,11 +1617,10 @@ export interface ExternalReplyInfo {
 <td><a href="#chat">Chat</a></td>
 <td><em>Optional</em>. Chat the original message belongs to. Available only if the chat is a supergroup or a channel.</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel.</td>
-</tr>
+  /**
+   * Unique message identifier inside the original chat. Available only if the original chat is a supergroup or a channel.
+   */
+  message_id?: number;
 <tr>
 <td>link_preview_options</td>
 <td><a href="#linkpreviewoptions">LinkPreviewOptions</a></td>
@@ -1772,21 +1752,19 @@ export interface ReplyParameters {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Identifier of the message that will be replied to in the current chat, or in the chat <em>chat_id</em> if it is specified. Required if <em>ephemeral_message_id</em> isn&#39;t specified.</td>
-</tr>
+  /**
+   * Identifier of the message that will be replied to in the current chat, or in the chat <em>chat_id</em> if it is specified. Required if <em>ephemeral_message_id</em> isn&#39;t specified.
+   */
+  message_id?: number;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
 <td><em>Optional</em>. If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format <code>@username</code>. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages.</td>
 </tr>
-<tr>
-<td>ephemeral_message_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if <em>message_id</em> isn&#39;t specified.</td>
-</tr>
+  /**
+   * Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if <em>message_id</em> isn&#39;t specified.
+   */
+  ephemeral_message_id?: number;
 <tr>
 <td>allow_sending_without_reply</td>
 <td>Boolean</td>
@@ -1807,16 +1785,14 @@ export interface ReplyParameters {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. A JSON-serialized list of special entities that appear in the quote. It can be specified instead of <em>quote_parse_mode</em>.</td>
 </tr>
-<tr>
-<td>quote_position</td>
-<td>Integer</td>
-<td><em>Optional</em>. Position of the quote in the original message in UTF-16 code units</td>
-</tr>
-<tr>
-<td>checklist_task_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Identifier of the specific checklist task to be replied to</td>
-</tr>
+  /**
+   * Position of the quote in the original message in UTF-16 code units
+   */
+  quote_position?: number;
+  /**
+   * Identifier of the specific checklist task to be replied to
+   */
+  checklist_task_id?: number;
 <tr>
 <td>poll_option_id</td>
 <td>String</td>
@@ -2010,11 +1986,10 @@ export interface PhotoSize {
 <td>Integer</td>
 <td>Photo height</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes</td>
-</tr>
+  /**
+   * File size in bytes
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2071,11 +2046,10 @@ export interface Animation {
 <td>String</td>
 <td><em>Optional</em>. MIME type of the file as defined by the sender</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2127,11 +2101,10 @@ export interface Audio {
 <td>String</td>
 <td><em>Optional</em>. MIME type of the file as defined by the sender</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#photosize">PhotoSize</a></td>
@@ -2178,11 +2151,10 @@ export interface Document {
 <td>String</td>
 <td><em>Optional</em>. MIME type of the file as defined by the sender</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2234,11 +2206,10 @@ export interface LivePhoto {
 <td>String</td>
 <td><em>Optional</em>. MIME type of the file as defined by the sender</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2306,11 +2277,10 @@ export interface VideoQuality {
 <td>String</td>
 <td>Codec that was used to encode the video, for example, “h264”, “h265”, or “av01”</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2362,11 +2332,10 @@ export interface Video {
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Available sizes of the cover of the video in the message</td>
 </tr>
-<tr>
-<td>start_timestamp</td>
-<td>Integer</td>
-<td><em>Optional</em>. Timestamp in seconds from which the video will play in the message</td>
-</tr>
+  /**
+   * Timestamp in seconds from which the video will play in the message
+   */
+  start_timestamp?: number;
 <tr>
 <td>qualities</td>
 <td>Array of <a href="#videoquality">VideoQuality</a></td>
@@ -2382,11 +2351,10 @@ export interface Video {
 <td>String</td>
 <td><em>Optional</em>. MIME type of the file as defined by the sender</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2428,11 +2396,10 @@ export interface VideoNote {
 <td><a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Video thumbnail</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes</td>
-</tr>
+  /**
+   * File size in bytes
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2469,11 +2436,10 @@ export interface Voice {
 <td>String</td>
 <td><em>Optional</em>. MIME type of the file as defined by the sender</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -2586,21 +2552,18 @@ export interface PaidMediaPreview {
 <td>String</td>
 <td>Type of the paid media, always “preview”</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Media width as defined by the sender</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Media height as defined by the sender</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Duration of the media in seconds as defined by the sender</td>
-</tr>
+  /**
+   * Media width as defined by the sender
+   */
+  width?: number;
+  /**
+   * Media height as defined by the sender
+   */
+  height?: number;
+  /**
+   * Duration of the media in seconds as defined by the sender
+   */
+  duration?: number;
 </tbody>
 </table>
 }
@@ -2658,11 +2621,10 @@ export interface Contact {
 <td>String</td>
 <td><em>Optional</em>. Contact&#39;s last name</td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
+  /**
+   * Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  user_id?: number;
 <tr>
 <td>vcard</td>
 <td>String</td>
@@ -2874,11 +2836,10 @@ export interface PollOption {
 <td><a href="#chat">Chat</a></td>
 <td><em>Optional</em>. Chat that added the option; omitted if the option wasn&#39;t added by a chat after poll creation</td>
 </tr>
-<tr>
-<td>addition_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll</td>
-</tr>
+  /**
+   * Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll
+   */
+  addition_date?: number;
 </tbody>
 </table>
 }
@@ -3052,16 +3013,14 @@ export interface Poll {
 <td><a href="#pollmedia">PollMedia</a></td>
 <td><em>Optional</em>. Media added to the quiz explanation</td>
 </tr>
-<tr>
-<td>open_period</td>
-<td>Integer</td>
-<td><em>Optional</em>. Amount of time in seconds the poll will be active after creation</td>
-</tr>
-<tr>
-<td>close_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the poll will be automatically closed</td>
-</tr>
+  /**
+   * Amount of time in seconds the poll will be active after creation
+   */
+  open_period?: number;
+  /**
+   * Point in time (Unix timestamp) when the poll will be automatically closed
+   */
+  close_date?: number;
 <tr>
 <td>description</td>
 <td>String</td>
@@ -3118,11 +3077,10 @@ export interface ChecklistTask {
 <td><a href="#chat">Chat</a></td>
 <td><em>Optional</em>. Chat that completed the task; omitted if the task wasn&#39;t completed by a chat</td>
 </tr>
-<tr>
-<td>completion_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed</td>
-</tr>
+  /**
+   * Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed
+   */
+  completion_date?: number;
 </tbody>
 </table>
 }
@@ -3277,21 +3235,18 @@ export interface Location {
 <td>Float</td>
 <td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
-<tr>
-<td>live_period</td>
-<td>Integer</td>
-<td><em>Optional</em>. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.</td>
-</tr>
-<tr>
-<td>heading</td>
-<td>Integer</td>
-<td><em>Optional</em>. The direction in which user is moving, in degrees; 1-360. For active live locations only.</td>
-</tr>
-<tr>
-<td>proximity_alert_radius</td>
-<td>Integer</td>
-<td><em>Optional</em>. The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.</td>
-</tr>
+  /**
+   * Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.
+   */
+  live_period?: number;
+  /**
+   * The direction in which user is moving, in degrees; 1-360. For active live locations only.
+   */
+  heading?: number;
+  /**
+   * The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
+   */
+  proximity_alert_radius?: number;
 </tbody>
 </table>
 }
@@ -4277,11 +4232,10 @@ export interface DirectMessagePriceChanged {
 <td>Boolean</td>
 <td><em>True</em>, if direct messages are enabled for the channel chat; <em>False</em> otherwise</td>
 </tr>
-<tr>
-<td>direct_message_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.</td>
-</tr>
+  /**
+   * The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.
+   */
+  direct_message_star_count?: number;
 </tbody>
 </table>
 }
@@ -4391,11 +4345,10 @@ export interface SuggestedPostPaid {
 <td>String</td>
 <td>Currency in which the payment was made. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.</td>
 </tr>
-<tr>
-<td>amount</td>
-<td>Integer</td>
-<td><em>Optional</em>. The amount of the currency that was received by the channel in nanograms; for payments in TON grams only</td>
-</tr>
+  /**
+   * The amount of the currency that was received by the channel in nanograms; for payments in TON grams only
+   */
+  amount?: number;
 <tr>
 <td>star_amount</td>
 <td><a href="#staramount">StarAmount</a></td>
@@ -4443,11 +4396,10 @@ export interface GiveawayCreated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>prize_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
-</tr>
+  /**
+   * The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
+   */
+  prize_star_count?: number;
 </tbody>
 </table>
 }
@@ -4499,16 +4451,14 @@ export interface Giveaway {
 <td>Array of String</td>
 <td><em>Optional</em>. A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which eligible users for the giveaway must come. If empty, then all users can participate in the giveaway. Users with a phone number that was bought on Fragment can always participate in giveaways.</td>
 </tr>
-<tr>
-<td>prize_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
-</tr>
-<tr>
-<td>premium_subscription_month_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
-</tr>
+  /**
+   * The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
+   */
+  prize_star_count?: number;
+  /**
+   * The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only
+   */
+  premium_subscription_month_count?: number;
 </tbody>
 </table>
 }
@@ -4550,26 +4500,22 @@ export interface GiveawayWinners {
 <td>Array of <a href="#user">User</a></td>
 <td>List of up to 100 winners of the giveaway</td>
 </tr>
-<tr>
-<td>additional_chat_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of other chats the user had to join in order to be eligible for the giveaway</td>
-</tr>
-<tr>
-<td>prize_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only</td>
-</tr>
-<tr>
-<td>premium_subscription_month_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only</td>
-</tr>
-<tr>
-<td>unclaimed_prize_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of undistributed prizes</td>
-</tr>
+  /**
+   * The number of other chats the user had to join in order to be eligible for the giveaway
+   */
+  additional_chat_count?: number;
+  /**
+   * The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only
+   */
+  prize_star_count?: number;
+  /**
+   * The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only
+   */
+  premium_subscription_month_count?: number;
+  /**
+   * Number of undistributed prizes
+   */
+  unclaimed_prize_count?: number;
 <tr>
 <td>only_new_members</td>
 <td>True</td>
@@ -4606,11 +4552,10 @@ export interface GiveawayCompleted {
 <td>Integer</td>
 <td>Number of winners in the giveaway</td>
 </tr>
-<tr>
-<td>unclaimed_prize_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of undistributed prizes</td>
-</tr>
+  /**
+   * Number of undistributed prizes
+   */
+  unclaimed_prize_count?: number;
 <tr>
 <td>giveaway_message</td>
 <td><a href="#message">Message</a></td>
@@ -4714,11 +4659,10 @@ export interface SuggestedPostInfo {
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
 <td><em>Optional</em>. Proposed price of the post. If the field is omitted, then the post is unpaid.</td>
 </tr>
-<tr>
-<td>send_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.</td>
-</tr>
+  /**
+   * Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.
+   */
+  send_date?: number;
 </tbody>
 </table>
 }
@@ -4740,11 +4684,10 @@ export interface SuggestedPostParameters {
 <td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
 <td><em>Optional</em>. Proposed price for the post. If the field is omitted, then the post is unpaid.</td>
 </tr>
-<tr>
-<td>send_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.</td>
-</tr>
+  /**
+   * Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.
+   */
+  send_date?: number;
 </tbody>
 </table>
 }
@@ -4851,11 +4794,10 @@ export interface File {
 <td>String</td>
 <td>Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.</td>
-</tr>
+  /**
+   * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
+   */
+  file_size?: number;
 <tr>
 <td>file_path</td>
 <td>String</td>
@@ -5025,11 +4967,10 @@ export interface KeyboardButtonRequestUsers {
 <td>Boolean</td>
 <td><em>Optional</em>. Pass <em>True</em> to request premium users, pass <em>False</em> to request non-premium users. If not specified, no additional restrictions are applied.</td>
 </tr>
-<tr>
-<td>max_quantity</td>
-<td>Integer</td>
-<td><em>Optional</em>. The maximum number of users to be selected; 1-10. Defaults to 1.</td>
-</tr>
+  /**
+   * The maximum number of users to be selected; 1-10. Defaults to 1.
+   */
+  max_quantity?: number;
 <tr>
 <td>request_name</td>
 <td>Boolean</td>
@@ -5599,31 +5540,26 @@ export interface ChatInviteLink {
 <td>String</td>
 <td><em>Optional</em>. Invite link name</td>
 </tr>
-<tr>
-<td>expire_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the link will expire or has been expired</td>
-</tr>
-<tr>
-<td>member_limit</td>
-<td>Integer</td>
-<td><em>Optional</em>. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
-</tr>
-<tr>
-<td>pending_join_request_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of pending join requests created using this link</td>
-</tr>
-<tr>
-<td>subscription_period</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of seconds the subscription will be active for before the next payment</td>
-</tr>
-<tr>
-<td>subscription_price</td>
-<td>Integer</td>
-<td><em>Optional</em>. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link</td>
-</tr>
+  /**
+   * Point in time (Unix timestamp) when the link will expire or has been expired
+   */
+  expire_date?: number;
+  /**
+   * The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+   */
+  member_limit?: number;
+  /**
+   * Number of pending join requests created using this link
+   */
+  pending_join_request_count?: number;
+  /**
+   * The number of seconds the subscription will be active for before the next payment
+   */
+  subscription_period?: number;
+  /**
+   * The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link
+   */
+  subscription_price?: number;
 </tbody>
 </table>
 }
@@ -5986,11 +5922,10 @@ export interface ChatMemberMember {
 <td><a href="#user">User</a></td>
 <td>Information about the user</td>
 </tr>
-<tr>
-<td>until_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Date when the user&#39;s subscription will expire; Unix time</td>
-</tr>
+  /**
+   * Date when the user&#39;s subscription will expire; Unix time
+   */
+  until_date?: number;
 </tbody>
 </table>
 }
@@ -6342,11 +6277,10 @@ export interface Birthdate {
 <td>Integer</td>
 <td>Month of the user&#39;s birth; 1-12</td>
 </tr>
-<tr>
-<td>year</td>
-<td>Integer</td>
-<td><em>Optional</em>. Year of the user&#39;s birth</td>
-</tr>
+  /**
+   * Year of the user&#39;s birth
+   */
+  year?: number;
 </tbody>
 </table>
 }
@@ -6487,11 +6421,10 @@ export interface UserRating {
 <td>Integer</td>
 <td>The rating value required to get the current level</td>
 </tr>
-<tr>
-<td>next_level_rating</td>
-<td>Integer</td>
-<td><em>Optional</em>. The rating value required to get to the next level; omitted if the maximum level was reached</td>
-</tr>
+  /**
+   * The rating value required to get to the next level; omitted if the maximum level was reached
+   */
+  next_level_rating?: number;
 </tbody>
 </table>
 }
@@ -7101,11 +7034,10 @@ export interface Gift {
 <td>Integer</td>
 <td>The number of Telegram Stars that must be paid to send the sticker</td>
 </tr>
-<tr>
-<td>upgrade_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars that must be paid to upgrade the gift to a unique one</td>
-</tr>
+  /**
+   * The number of Telegram Stars that must be paid to upgrade the gift to a unique one
+   */
+  upgrade_star_count?: number;
 <tr>
 <td>is_premium</td>
 <td>True</td>
@@ -7116,36 +7048,31 @@ export interface Gift {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the gift can be used (after being upgraded) to customize a user&#39;s appearance</td>
 </tr>
-<tr>
-<td>total_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The total number of gifts of this type that can be sent by all users; for limited gifts only</td>
-</tr>
-<tr>
-<td>remaining_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of remaining gifts of this type that can be sent by all users; for limited gifts only</td>
-</tr>
-<tr>
-<td>personal_total_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The total number of gifts of this type that can be sent by the bot; for limited gifts only</td>
-</tr>
-<tr>
-<td>personal_remaining_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of remaining gifts of this type that can be sent by the bot; for limited gifts only</td>
-</tr>
+  /**
+   * The total number of gifts of this type that can be sent by all users; for limited gifts only
+   */
+  total_count?: number;
+  /**
+   * The number of remaining gifts of this type that can be sent by all users; for limited gifts only
+   */
+  remaining_count?: number;
+  /**
+   * The total number of gifts of this type that can be sent by the bot; for limited gifts only
+   */
+  personal_total_count?: number;
+  /**
+   * The number of remaining gifts of this type that can be sent by the bot; for limited gifts only
+   */
+  personal_remaining_count?: number;
 <tr>
 <td>background</td>
 <td><a href="#giftbackground">GiftBackground</a></td>
 <td><em>Optional</em>. Background of the gift</td>
 </tr>
-<tr>
-<td>unique_gift_variant_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The total number of different unique gifts that can be obtained by upgrading the gift</td>
-</tr>
+  /**
+   * The total number of different unique gifts that can be obtained by upgrading the gift
+   */
+  unique_gift_variant_count?: number;
 <tr>
 <td>publisher_chat</td>
 <td><a href="#chat">Chat</a></td>
@@ -7454,16 +7381,14 @@ export interface GiftInfo {
 <td>String</td>
 <td><em>Optional</em>. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
 </tr>
-<tr>
-<td>convert_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that can be claimed by the receiver by converting the gift; omitted if conversion to Telegram Stars is impossible</td>
-</tr>
-<tr>
-<td>prepaid_upgrade_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that were prepaid for the ability to upgrade the gift</td>
-</tr>
+  /**
+   * Number of Telegram Stars that can be claimed by the receiver by converting the gift; omitted if conversion to Telegram Stars is impossible
+   */
+  convert_star_count?: number;
+  /**
+   * Number of Telegram Stars that were prepaid for the ability to upgrade the gift
+   */
+  prepaid_upgrade_star_count?: number;
 <tr>
 <td>is_upgrade_separate</td>
 <td>True</td>
@@ -7489,11 +7414,10 @@ export interface GiftInfo {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them</td>
 </tr>
-<tr>
-<td>unique_gift_number</td>
-<td>Integer</td>
-<td><em>Optional</em>. Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.</td>
-</tr>
+  /**
+   * Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.
+   */
+  unique_gift_number?: number;
 </tbody>
 </table>
 }
@@ -7525,26 +7449,23 @@ export interface UniqueGiftInfo {
 <td>String</td>
 <td><em>Optional</em>. For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.</td>
 </tr>
-<tr>
-<td>last_resale_amount</td>
-<td>Integer</td>
-<td><em>Optional</em>. For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanograms</td>
-</tr>
+  /**
+   * For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanograms
+   */
+  last_resale_amount?: number;
 <tr>
 <td>owned_gift_id</td>
 <td>String</td>
 <td><em>Optional</em>. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
 </tr>
-<tr>
-<td>transfer_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
-</tr>
-<tr>
-<td>next_transfer_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now.</td>
-</tr>
+  /**
+   * Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift
+   */
+  transfer_star_count?: number;
+  /**
+   * Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now.
+   */
+  next_transfer_date?: number;
 </tbody>
 </table>
 }
@@ -7625,26 +7546,23 @@ export interface OwnedGiftRegular {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the gift was refunded and isn&#39;t available anymore</td>
 </tr>
-<tr>
-<td>convert_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars; for gifts received on behalf of business accounts only</td>
-</tr>
-<tr>
-<td>prepaid_upgrade_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that were paid for the ability to upgrade the gift</td>
-</tr>
+  /**
+   * Number of Telegram Stars that can be claimed by the receiver instead of the gift; omitted if the gift cannot be converted to Telegram Stars; for gifts received on behalf of business accounts only
+   */
+  convert_star_count?: number;
+  /**
+   * Number of Telegram Stars that were paid for the ability to upgrade the gift
+   */
+  prepaid_upgrade_star_count?: number;
 <tr>
 <td>is_upgrade_separate</td>
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the gift&#39;s upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only</td>
 </tr>
-<tr>
-<td>unique_gift_number</td>
-<td>Integer</td>
-<td><em>Optional</em>. Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.</td>
-</tr>
+  /**
+   * Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.
+   */
+  unique_gift_number?: number;
 </tbody>
 </table>
 }
@@ -7696,16 +7614,14 @@ export interface OwnedGiftUnique {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the gift can be transferred to another owner; for gifts received on behalf of business accounts only</td>
 </tr>
-<tr>
-<td>transfer_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift</td>
-</tr>
-<tr>
-<td>next_transfer_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now.</td>
-</tr>
+  /**
+   * Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift
+   */
+  transfer_star_count?: number;
+  /**
+   * Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now.
+   */
+  next_transfer_date?: number;
 </tbody>
 </table>
 }
@@ -7825,11 +7741,10 @@ export interface StarAmount {
 <td>Integer</td>
 <td>Integer amount of Telegram Stars, rounded to 0; can be negative</td>
 </tr>
-<tr>
-<td>nanostar_amount</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if <em>amount</em> is non-positive</td>
-</tr>
+  /**
+   * The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if <em>amount</em> is non-positive
+   */
+  nanostar_amount?: number;
 </tbody>
 </table>
 }
@@ -8315,11 +8230,10 @@ export interface ChatBoostSourceGiveaway {
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. User that won the prize in the giveaway if any; for Telegram Premium giveaways only</td>
 </tr>
-<tr>
-<td>prize_star_count</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only</td>
-</tr>
+  /**
+   * The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
+   */
+  prize_star_count?: number;
 <tr>
 <td>is_unclaimed</td>
 <td>True</td>
@@ -8754,16 +8668,14 @@ export interface ResponseParameters {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>migrate_to_chat_id</td>
-<td>Integer</td>
-<td><em>Optional</em>. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.</td>
-</tr>
-<tr>
-<td>retry_after</td>
-<td>Integer</td>
-<td><em>Optional</em>. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated</td>
-</tr>
+  /**
+   * The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
+   */
+  migrate_to_chat_id?: number;
+  /**
+   * In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
+   */
+  retry_after?: number;
 </tbody>
 </table>
 }
@@ -8832,21 +8744,18 @@ export interface InputMediaAnimation {
 <td>Boolean</td>
 <td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Animation width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Animation height</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Animation duration in seconds</td>
-</tr>
+  /**
+   * Animation width
+   */
+  width?: number;
+  /**
+   * Animation height
+   */
+  height?: number;
+  /**
+   * Animation duration in seconds
+   */
+  duration?: number;
 <tr>
 <td>has_spoiler</td>
 <td>Boolean</td>
@@ -8898,11 +8807,10 @@ export interface InputMediaAudio {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Duration of the audio in seconds</td>
-</tr>
+  /**
+   * Duration of the audio in seconds
+   */
+  duration?: number;
 <tr>
 <td>performer</td>
 <td>String</td>
@@ -9261,11 +9169,10 @@ export interface InputMediaVideo {
 <td>String</td>
 <td><em>Optional</em>. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>start_timestamp</td>
-<td>Integer</td>
-<td><em>Optional</em>. Start timestamp for the video in the message</td>
-</tr>
+  /**
+   * Start timestamp for the video in the message
+   */
+  start_timestamp?: number;
 <tr>
 <td>caption</td>
 <td>String</td>
@@ -9286,21 +9193,18 @@ export interface InputMediaVideo {
 <td>Boolean</td>
 <td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
 </tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video height</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
-</tr>
+  /**
+   * Video width
+   */
+  width?: number;
+  /**
+   * Video height
+   */
+  height?: number;
+  /**
+   * Video duration in seconds
+   */
+  duration?: number;
 <tr>
 <td>supports_streaming</td>
 <td>Boolean</td>
@@ -9352,11 +9256,10 @@ export interface InputMediaVoiceNote {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Duration of the voice message in seconds</td>
-</tr>
+  /**
+   * Duration of the voice message in seconds
+   */
+  duration?: number;
 </tbody>
 </table>
 }
@@ -9465,26 +9368,22 @@ export interface InputPaidMediaVideo {
 <td>String</td>
 <td><em>Optional</em>. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>start_timestamp</td>
-<td>Integer</td>
-<td><em>Optional</em>. Start timestamp for the video in the message</td>
-</tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video height</td>
-</tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
-</tr>
+  /**
+   * Start timestamp for the video in the message
+   */
+  start_timestamp?: number;
+  /**
+   * Video width
+   */
+  width?: number;
+  /**
+   * Video height
+   */
+  height?: number;
+  /**
+   * Video duration in seconds
+   */
+  duration?: number;
 <tr>
 <td>supports_streaming</td>
 <td>Boolean</td>
@@ -17302,11 +17201,10 @@ export interface Sticker {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places</td>
 </tr>
-<tr>
-<td>file_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. File size in bytes</td>
-</tr>
+  /**
+   * File size in bytes
+   */
+  file_size?: number;
 </tbody>
 </table>
 }
@@ -19367,16 +19265,14 @@ export interface RichBlockTableCell {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the cell is a header cell</td>
 </tr>
-<tr>
-<td>colspan</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of columns the cell spans if it is bigger than 1</td>
-</tr>
-<tr>
-<td>rowspan</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of rows the cell spans if it is bigger than 1</td>
-</tr>
+  /**
+   * The number of columns the cell spans if it is bigger than 1
+   */
+  colspan?: number;
+  /**
+   * The number of rows the cell spans if it is bigger than 1
+   */
+  rowspan?: number;
 <tr>
 <td>align</td>
 <td>String</td>
@@ -19423,11 +19319,10 @@ export interface RichBlockListItem {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the item has a checked checkbox</td>
 </tr>
-<tr>
-<td>value</td>
-<td>Integer</td>
-<td><em>Optional</em>. For ordered lists, the numeric value of the item label</td>
-</tr>
+  /**
+   * For ordered lists, the numeric value of the item label
+   */
+  value?: number;
 <tr>
 <td>type</td>
 <td>String</td>
@@ -20167,11 +20062,10 @@ export interface InputRichBlockListItem {
 <td>True</td>
 <td><em>Optional</em>. Pass <em>True</em> if the item has a checked checkbox</td>
 </tr>
-<tr>
-<td>value</td>
-<td>Integer</td>
-<td><em>Optional</em>. For ordered lists, the numeric value of the item label</td>
-</tr>
+  /**
+   * For ordered lists, the numeric value of the item label
+   */
+  value?: number;
 <tr>
 <td>type</td>
 <td>String</td>
@@ -21102,16 +20996,14 @@ export interface InlineQueryResultArticle {
 <td>String</td>
 <td><em>Optional</em>. Url of the thumbnail for the result</td>
 </tr>
-<tr>
-<td>thumbnail_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
-</tr>
-<tr>
-<td>thumbnail_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
-</tr>
+  /**
+   * Thumbnail width
+   */
+  thumbnail_width?: number;
+  /**
+   * Thumbnail height
+   */
+  thumbnail_height?: number;
 </tbody>
 </table>
 }
@@ -21148,16 +21040,14 @@ export interface InlineQueryResultPhoto {
 <td>String</td>
 <td>URL of the thumbnail for the photo</td>
 </tr>
-<tr>
-<td>photo_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Width of the photo</td>
-</tr>
-<tr>
-<td>photo_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Height of the photo</td>
-</tr>
+  /**
+   * Width of the photo
+   */
+  photo_width?: number;
+  /**
+   * Height of the photo
+   */
+  photo_height?: number;
 <tr>
 <td>title</td>
 <td>String</td>
@@ -21229,21 +21119,18 @@ export interface InlineQueryResultGif {
 <td>String</td>
 <td>A valid URL for the GIF file</td>
 </tr>
-<tr>
-<td>gif_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Width of the GIF</td>
-</tr>
-<tr>
-<td>gif_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Height of the GIF</td>
-</tr>
-<tr>
-<td>gif_duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Duration of the GIF in seconds</td>
-</tr>
+  /**
+   * Width of the GIF
+   */
+  gif_width?: number;
+  /**
+   * Height of the GIF
+   */
+  gif_height?: number;
+  /**
+   * Duration of the GIF in seconds
+   */
+  gif_duration?: number;
 <tr>
 <td>thumbnail_url</td>
 <td>String</td>
@@ -21320,21 +21207,18 @@ export interface InlineQueryResultMpeg4Gif {
 <td>String</td>
 <td>A valid URL for the MPEG4 file</td>
 </tr>
-<tr>
-<td>mpeg4_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video width</td>
-</tr>
-<tr>
-<td>mpeg4_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video height</td>
-</tr>
-<tr>
-<td>mpeg4_duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
-</tr>
+  /**
+   * Video width
+   */
+  mpeg4_width?: number;
+  /**
+   * Video height
+   */
+  mpeg4_height?: number;
+  /**
+   * Video duration in seconds
+   */
+  mpeg4_duration?: number;
 <tr>
 <td>thumbnail_url</td>
 <td>String</td>
@@ -21448,21 +21332,18 @@ export interface InlineQueryResultVideo {
 <td>Boolean</td>
 <td><em>Optional</em>. Pass <em>True</em> if the caption must be shown above the message media</td>
 </tr>
-<tr>
-<td>video_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video width</td>
-</tr>
-<tr>
-<td>video_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video height</td>
-</tr>
-<tr>
-<td>video_duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Video duration in seconds</td>
-</tr>
+  /**
+   * Video width
+   */
+  video_width?: number;
+  /**
+   * Video height
+   */
+  video_height?: number;
+  /**
+   * Video duration in seconds
+   */
+  video_duration?: number;
 <tr>
 <td>description</td>
 <td>String</td>
@@ -21534,11 +21415,10 @@ export interface InlineQueryResultAudio {
 <td>String</td>
 <td><em>Optional</em>. Performer</td>
 </tr>
-<tr>
-<td>audio_duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Audio duration in seconds</td>
-</tr>
+  /**
+   * Audio duration in seconds
+   */
+  audio_duration?: number;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21600,11 +21480,10 @@ export interface InlineQueryResultVoice {
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>voice_duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Recording duration in seconds</td>
-</tr>
+  /**
+   * Recording duration in seconds
+   */
+  voice_duration?: number;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21691,16 +21570,14 @@ export interface InlineQueryResultDocument {
 <td>String</td>
 <td><em>Optional</em>. URL of the thumbnail (JPEG only) for the file</td>
 </tr>
-<tr>
-<td>thumbnail_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
-</tr>
-<tr>
-<td>thumbnail_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
-</tr>
+  /**
+   * Thumbnail width
+   */
+  thumbnail_width?: number;
+  /**
+   * Thumbnail height
+   */
+  thumbnail_height?: number;
 </tbody>
 </table>
 }
@@ -21747,21 +21624,18 @@ export interface InlineQueryResultLocation {
 <td>Float</td>
 <td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
-<tr>
-<td>live_period</td>
-<td>Integer</td>
-<td><em>Optional</em>. Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely</td>
-</tr>
-<tr>
-<td>heading</td>
-<td>Integer</td>
-<td><em>Optional</em>. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
-</tr>
-<tr>
-<td>proximity_alert_radius</td>
-<td>Integer</td>
-<td><em>Optional</em>. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
-</tr>
+  /**
+   * Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely
+   */
+  live_period?: number;
+  /**
+   * For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+   */
+  heading?: number;
+  /**
+   * For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
+   */
+  proximity_alert_radius?: number;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21777,16 +21651,14 @@ export interface InlineQueryResultLocation {
 <td>String</td>
 <td><em>Optional</em>. Url of the thumbnail for the result</td>
 </tr>
-<tr>
-<td>thumbnail_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
-</tr>
-<tr>
-<td>thumbnail_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
-</tr>
+  /**
+   * Thumbnail width
+   */
+  thumbnail_width?: number;
+  /**
+   * Thumbnail height
+   */
+  thumbnail_height?: number;
 </tbody>
 </table>
 }
@@ -21868,16 +21740,14 @@ export interface InlineQueryResultVenue {
 <td>String</td>
 <td><em>Optional</em>. Url of the thumbnail for the result</td>
 </tr>
-<tr>
-<td>thumbnail_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
-</tr>
-<tr>
-<td>thumbnail_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
-</tr>
+  /**
+   * Thumbnail width
+   */
+  thumbnail_width?: number;
+  /**
+   * Thumbnail height
+   */
+  thumbnail_height?: number;
 </tbody>
 </table>
 }
@@ -21939,16 +21809,14 @@ export interface InlineQueryResultContact {
 <td>String</td>
 <td><em>Optional</em>. Url of the thumbnail for the result</td>
 </tr>
-<tr>
-<td>thumbnail_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail width</td>
-</tr>
-<tr>
-<td>thumbnail_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Thumbnail height</td>
-</tr>
+  /**
+   * Thumbnail width
+   */
+  thumbnail_width?: number;
+  /**
+   * Thumbnail height
+   */
+  thumbnail_height?: number;
 </tbody>
 </table>
 }
@@ -22588,21 +22456,18 @@ export interface InputLocationMessageContent {
 <td>Float</td>
 <td><em>Optional</em>. The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
-<tr>
-<td>live_period</td>
-<td>Integer</td>
-<td><em>Optional</em>. Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely</td>
-</tr>
-<tr>
-<td>heading</td>
-<td>Integer</td>
-<td><em>Optional</em>. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
-</tr>
-<tr>
-<td>proximity_alert_radius</td>
-<td>Integer</td>
-<td><em>Optional</em>. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
-</tr>
+  /**
+   * Period in seconds during which the location can be updated, must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely
+   */
+  live_period?: number;
+  /**
+   * For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+   */
+  heading?: number;
+  /**
+   * For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
+   */
+  proximity_alert_radius?: number;
 </tbody>
 </table>
 }
@@ -22741,11 +22606,10 @@ export interface InputInvoiceMessageContent {
 <td>Array of <a href="#labeledprice">LabeledPrice</a></td>
 <td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
-<tr>
-<td>max_tip_amount</td>
-<td>Integer</td>
-<td><em>Optional</em>. The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+  /**
+   * The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  max_tip_amount?: number;
 <tr>
 <td>suggested_tip_amounts</td>
 <td>Array of Integer</td>
@@ -22761,21 +22625,18 @@ export interface InputInvoiceMessageContent {
 <td>String</td>
 <td><em>Optional</em>. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
 </tr>
-<tr>
-<td>photo_size</td>
-<td>Integer</td>
-<td><em>Optional</em>. Photo size in bytes</td>
-</tr>
-<tr>
-<td>photo_width</td>
-<td>Integer</td>
-<td><em>Optional</em>. Photo width</td>
-</tr>
-<tr>
-<td>photo_height</td>
-<td>Integer</td>
-<td><em>Optional</em>. Photo height</td>
-</tr>
+  /**
+   * Photo size in bytes
+   */
+  photo_size?: number;
+  /**
+   * Photo width
+   */
+  photo_width?: number;
+  /**
+   * Photo height
+   */
+  photo_height?: number;
 <tr>
 <td>need_name</td>
 <td>Boolean</td>
@@ -23608,11 +23469,10 @@ export interface SuccessfulPayment {
 <td>String</td>
 <td>Bot-specified invoice payload</td>
 </tr>
-<tr>
-<td>subscription_expiration_date</td>
-<td>Integer</td>
-<td><em>Optional</em>. Expiration date of the subscription, in Unix time; for recurring payments only</td>
-</tr>
+  /**
+   * Expiration date of the subscription, in Unix time; for recurring payments only
+   */
+  subscription_expiration_date?: number;
 <tr>
 <td>is_recurring</td>
 <td>True</td>
@@ -23917,11 +23777,10 @@ export interface AffiliateInfo {
 <td>Integer</td>
 <td>Integer amount of Telegram Stars received by the affiliate from the transaction, rounded to 0; can be negative for refunds</td>
 </tr>
-<tr>
-<td>nanostar_amount</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds</td>
-</tr>
+  /**
+   * The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds
+   */
+  nanostar_amount?: number;
 </tbody>
 </table>
 }
@@ -23982,11 +23841,10 @@ export interface TransactionPartnerUser {
 <td>String</td>
 <td><em>Optional</em>. Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.</td>
 </tr>
-<tr>
-<td>subscription_period</td>
-<td>Integer</td>
-<td><em>Optional</em>. The duration of the paid subscription. Can be available only for “invoice_payment” transactions.</td>
-</tr>
+  /**
+   * The duration of the paid subscription. Can be available only for “invoice_payment” transactions.
+   */
+  subscription_period?: number;
 <tr>
 <td>paid_media</td>
 <td>Array of <a href="#paidmedia">PaidMedia</a></td>
@@ -24002,11 +23860,10 @@ export interface TransactionPartnerUser {
 <td><a href="#gift">Gift</a></td>
 <td><em>Optional</em>. The gift sent to the user by the bot; for “gift_purchase” transactions only</td>
 </tr>
-<tr>
-<td>premium_subscription_duration</td>
-<td>Integer</td>
-<td><em>Optional</em>. Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only</td>
-</tr>
+  /**
+   * Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only
+   */
+  premium_subscription_duration?: number;
 </tbody>
 </table>
 }
@@ -24189,11 +24046,10 @@ export interface StarTransaction {
 <td>Integer</td>
 <td>Integer amount of Telegram Stars transferred by the transaction</td>
 </tr>
-<tr>
-<td>nanostar_amount</td>
-<td>Integer</td>
-<td><em>Optional</em>. The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999</td>
-</tr>
+  /**
+   * The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999
+   */
+  nanostar_amount?: number;
 <tr>
 <td>date</td>
 <td>Integer</td>
