@@ -92,11 +92,11 @@ export interface Update {
    */
   guest_message?: Message;
   /**
-   * A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction&quot;</code> in the list of _allowed_updates_ to receive these updates. The update isn&#39;t received for reactions set by bots.
+   * A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction&quot;` in the list of _allowed_updates_ to receive these updates. The update isn&#39;t received for reactions set by bots.
    */
   message_reaction?: MessageReactionUpdated;
   /**
-   * Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify <code>&quot;message_reaction_count&quot;</code> in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
+   * Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction_count&quot;` in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
    */
   message_reaction_count?: MessageReactionCountUpdated;
   /**
@@ -136,7 +136,7 @@ export interface Update {
    */
   my_chat_member?: ChatMemberUpdated;
   /**
-   * A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify <code>&quot;chat_member&quot;</code> in the list of _allowed_updates_ to receive these updates.
+   * A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify `&quot;chat_member&quot;` in the list of _allowed_updates_ to receive these updates.
    */
   chat_member?: ChatMemberUpdated;
   /**
@@ -185,14 +185,14 @@ export interface ApiMethods {
      */
     timeout?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
      */
     allowed_updates?: string[];
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns `true` on success.
+   * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns `true` on success.
    *
    * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
    * 
@@ -220,7 +220,7 @@ export interface ApiMethods {
      */
     max_connections?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
      */
     allowed_updates?: string[];
     /**
@@ -228,7 +228,7 @@ export interface ApiMethods {
      */
     drop_pending_updates?: boolean;
     /**
-     * A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed. The header is useful to ensure that the request comes from a webhook set by you.
+     * A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed. The header is useful to ensure that the request comes from a webhook set by you.
      */
     secret_token?: string;
   }): never;
@@ -523,7 +523,7 @@ export interface ChatFullInfo {
    */
   bio?: string;
   /**
-   * `true`, if privacy settings of the other party in the private chat allows to use <code>tg://user?id=&lt;user_id&gt;</code> links only in chats with the user
+   * `true`, if privacy settings of the other party in the private chat allows to use `tg://user?id=&lt;user_id&gt;` links only in chats with the user
    */
   has_private_forwards?: true;
   /**
@@ -1114,7 +1114,7 @@ export interface Message {
    */
   web_app_data?: WebAppData;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message. <code>login_url</code> buttons are represented as ordinary <code>url</code> buttons.
+   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message. `login_url` buttons are represented as ordinary `url` buttons.
    */
   reply_markup?: InlineKeyboardMarkup;
 }
@@ -1166,7 +1166,7 @@ export type MaybeInaccessibleMessage =
  */
 export interface MessageEntity {
   /**
-   * Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag” (<code>#hashtag</code> or <code>#hashtag@chatusername</code>), “cashtag” (<code>$USD</code> or <code>$USD@chatusername</code>), “bot_command” (<code>/start@jobs_bot</code>), “url” (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number” (<code>+1-212-555-0123</code>), “bold” (<strong>bold text</strong>), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
+   * Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag` or `#hashtag@chatusername`), “cashtag” (`$USD` or `$USD@chatusername`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`), “bold” (<strong>bold text</strong>), “italic” (_italic text_), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
    */
   type: string;
   /**
@@ -1347,7 +1347,7 @@ export interface ReplyParameters {
    */
   message_id?: number;
   /**
-   * If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format <code>@username</code>. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages.
+   * If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format `@username`. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages.
    */
   chat_id?: number | string;
   /**
@@ -3368,7 +3368,7 @@ export interface UserProfileAudios {
   audios: Audio[];
 }
 /**
- * This object represents a file ready to be downloaded. The file can be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a>.
+ * This object represents a file ready to be downloaded. The file can be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a>.
  *
  * > The maximum file size to download is 20 MB
  *
@@ -3388,7 +3388,7 @@ export interface File {
    */
   file_size?: number;
   /**
-   * File path. Use <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code> to get the file.
+   * File path. Use `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;` to get the file.
    */
   file_path?: string;
 }
@@ -3642,7 +3642,7 @@ export interface InlineKeyboardButton {
    */
   style?: string;
   /**
-   * HTTP or tg:// URL to be opened when the button is pressed. Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
+   * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
    */
   url?: string;
   /**
@@ -5081,7 +5081,7 @@ export interface UniqueGift {
    */
   base_name: string;
   /**
-   * Unique name of the gift. This name can be used in <code>https://t.me/nft/...</code> links and story areas.
+   * Unique name of the gift. This name can be used in `https://t.me/nft/...` links and story areas.
    */
   name: string;
   /**
@@ -5523,7 +5523,7 @@ export interface BotCommandScopeChat {
    */
   type: string;
   /**
-   * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
+   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren&#39;t supported.
    */
   chat_id: number | string;
 }
@@ -5538,7 +5538,7 @@ export interface BotCommandScopeChatAdministrators {
    */
   type: string;
   /**
-   * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
+   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren&#39;t supported.
    */
   chat_id: number | string;
 }
@@ -5553,7 +5553,7 @@ export interface BotCommandScopeChatMember {
    */
   type: string;
   /**
-   * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
+   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren&#39;t supported.
    */
   chat_id: number | string;
   /**
@@ -5635,7 +5635,7 @@ export interface MenuButtonWebApp {
    */
   text: string;
   /**
-   * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Alternatively, a <code>t.me</code> link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
+   * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Alternatively, a `t.me` link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
    */
   web_app: WebAppInfo;
 }
@@ -6726,7 +6726,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -6800,7 +6800,7 @@ export interface ApiMethods {
  *
  * Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.<br>- _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.
  *
- * Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username. Please note:
+ * Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username. Please note:
  *
  * - These links will work <strong>only</strong> if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
  * - Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.
@@ -6809,16 +6809,16 @@ export interface ApiMethods {
  *
  * ##### Date-time entity formatting
  *
- * Date-time entity formatting is specified by a format string, which must adhere to the following regular expression: <code>r|w?[dD]?[tT]?</code>.
+ * Date-time entity formatting is specified by a format string, which must adhere to the following regular expression: `r|w?[dD]?[tT]?`.
  *
  * If the format string is empty, the underlying text is displayed as-is; however, the user can still receive the underlying date in their local format. When populated, the format string determines the output based on the presence of the following control characters:
  *
- * - <strong><code>r</code></strong>: Displays the time relative to the current time. Cannot be combined with any other control characters.
- * - <strong><code>w</code></strong>: Displays the day of the week in the user&#39;s localized language.
- * - <strong><code>d</code></strong>: Displays the date in short form (e.g., “17.03.22”).
- * - <strong><code>D</code></strong>: Displays the date in long form (e.g., “March 17, 2022”).
- * - <strong><code>t</code></strong>: Displays the time in short form (e.g., “22:45”).
- * - <strong><code>T</code></strong>: Displays the time in long form (e.g., “22:45:00”).
+ * - <strong>`r`</strong>: Displays the time relative to the current time. Cannot be combined with any other control characters.
+ * - <strong>`w`</strong>: Displays the day of the week in the user&#39;s localized language.
+ * - <strong>`d`</strong>: Displays the date in short form (e.g., “17.03.22”).
+ * - <strong>`D`</strong>: Displays the date in long form (e.g., “March 17, 2022”).
+ * - <strong>`t`</strong>: Displays the time in short form (e.g., “22:45”).
+ * - <strong>`T`</strong>: Displays the time in long form (e.g., “22:45:00”).
  *
  * ##### MarkdownV2 style
  *
@@ -6861,10 +6861,10 @@ export interface ApiMethods {
  * Please note:
  *
  * - Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding &#39;\&#39; character, in which case it is treated as an ordinary character and not a part of the markup. This implies that &#39;\&#39; character usually must be escaped with a preceding &#39;\&#39; character.
- * - Inside <code>pre</code> and <code>code</code> entities, all &#39;`&#39; and &#39;\&#39; characters must be escaped with a preceding &#39;\&#39; character.
- * - Inside the <code>(...)</code> part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.
+ * - Inside `pre` and `code` entities, all &#39;`&#39; and &#39;\&#39; characters must be escaped with a preceding &#39;\&#39; character.
+ * - Inside the `(...)` part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.
  * - In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.
- * - In case of ambiguity between <code>italic</code> and <code>underline</code> entities <code>__</code> is always greedily treated from left to right as beginning or end of an <code>underline</code> entity, so instead of <code>___italic underline___</code> use <code>___italic underline_**__</code>, adding an empty bold entity as a separator.
+ * - In case of ambiguity between `italic` and `underline` entities `__` is always greedily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
  * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
  * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
@@ -6904,12 +6904,12 @@ export interface ApiMethods {
  * Please note:
  *
  * - Only the tags mentioned above are currently supported.
- * - All <code>&lt;</code>, <code>&gt;</code> and <code>&amp;</code> symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (<code>&lt;</code> with <code>&amp;lt;</code>, <code>&gt;</code> with <code>&amp;gt;</code> and <code>&amp;</code> with <code>&amp;amp;</code>).
+ * - All `&lt;`, `&gt;` and `&amp;` symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (`&lt;` with `&amp;lt;`, `&gt;` with `&amp;gt;` and `&amp;` with `&amp;amp;`).
  * - All numerical HTML entities are supported.
- * - The API currently supports only the following named HTML entities: <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code> and <code>&amp;quot;</code>.
- * - Use nested <code>pre</code> and <code>code</code> tags, to define programming language for <code>pre</code> entity.
- * - Programming language can&#39;t be specified for standalone <code>code</code> tags.
- * - A valid emoji must be used as the content of the <code>tg-emoji</code> tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.
+ * - The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;` and `&amp;quot;`.
+ * - Use nested `pre` and `code` tags, to define programming language for `pre` entity.
+ * - Programming language can&#39;t be specified for standalone `code` tags.
+ * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
  * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  *
@@ -6936,7 +6936,7 @@ export interface ApiMethods {
  * - Entities must not be nested, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
  * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote”, “custom_emoji”, and “date_time” entities, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
  * - To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the character &#39;\&#39; before them.
- * - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use <code>_snake_\__case_</code> for italic <code>snake_case</code> and <code>*2*\**2=4*</code> for bold <code>2*2=4</code>.
+ * - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.
  *
  * @see {@link https://core.telegram.org/bots/api#parsemode}
  */
@@ -6949,7 +6949,7 @@ export interface ApiMethods {
    */
   forwardMessage(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -6961,7 +6961,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     * Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format `@username`)
      */
     from_chat_id: number | string;
     /**
@@ -6998,7 +6998,7 @@ export interface ApiMethods {
    */
   forwardMessages(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7010,7 +7010,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     * Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format `@username`)
      */
     from_chat_id: number | string;
     /**
@@ -7035,7 +7035,7 @@ export interface ApiMethods {
    */
   copyMessage(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7047,7 +7047,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     * Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format `@username`)
      */
     from_chat_id: number | string;
     /**
@@ -7112,7 +7112,7 @@ export interface ApiMethods {
    */
   copyMessages(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7124,7 +7124,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     * Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format `@username`)
      */
     from_chat_id: number | string;
     /**
@@ -7157,7 +7157,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7242,7 +7242,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)
+     * Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)
      */
     chat_id: number | string;
     /**
@@ -7333,7 +7333,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7426,7 +7426,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7511,7 +7511,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7624,7 +7624,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7725,7 +7725,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7806,7 +7806,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -7883,7 +7883,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat&#39;s balance. Otherwise, they will be credited to the bot&#39;s balance.
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat&#39;s balance. Otherwise, they will be credited to the bot&#39;s balance.
      */
     chat_id: number | string;
     /**
@@ -7960,7 +7960,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8009,7 +8009,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8094,7 +8094,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8187,7 +8187,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8264,7 +8264,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Polls can&#39;t be sent to channel direct messages chats.
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. Polls can&#39;t be sent to channel direct messages chats.
      */
     chat_id: number | string;
     /**
@@ -8409,7 +8409,7 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * Unique identifier for the target chat or username of the target bot in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8450,7 +8450,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8544,7 +8544,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot or supergroup in the format <code>@username</code>. Channel chats and channel direct messages chats aren&#39;t supported.
+     * Unique identifier for the target chat or username of the target bot or supergroup in the format `@username`. Channel chats and channel direct messages chats aren&#39;t supported.
      */
     chat_id: number | string;
     /**
@@ -8565,7 +8565,7 @@ export interface ApiMethods {
    */
   setMessageReaction(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8647,7 +8647,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>, where <code>&lt;file_path&gt;</code> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.
+   * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.
    * 
    * <strong>Note:</strong> This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.
    *
@@ -8668,7 +8668,7 @@ export interface ApiMethods {
    */
   banChatMember(args: {
     /**
-     * Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target group or username of the target supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8693,7 +8693,7 @@ export interface ApiMethods {
    */
   unbanChatMember(args: {
     /**
-     * Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target group or username of the target supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8714,7 +8714,7 @@ export interface ApiMethods {
    */
   restrictChatMember(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8743,7 +8743,7 @@ export interface ApiMethods {
    */
   promoteChatMember(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8828,7 +8828,7 @@ export interface ApiMethods {
    */
   setChatAdministratorCustomTitle(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8849,7 +8849,7 @@ export interface ApiMethods {
    */
   setChatMemberTag(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8870,7 +8870,7 @@ export interface ApiMethods {
    */
   banChatSenderChat(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8887,7 +8887,7 @@ export interface ApiMethods {
    */
   unbanChatSenderChat(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8904,7 +8904,7 @@ export interface ApiMethods {
    */
   setChatPermissions(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8927,7 +8927,7 @@ export interface ApiMethods {
    */
   exportChatInviteLink(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -8940,7 +8940,7 @@ export interface ApiMethods {
    */
   createChatInviteLink(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -8969,7 +8969,7 @@ export interface ApiMethods {
    */
   editChatInviteLink(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9002,7 +9002,7 @@ export interface ApiMethods {
    */
   createChatSubscriptionInviteLink(args: {
     /**
-     * Unique identifier for the target channel chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target channel chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9027,7 +9027,7 @@ export interface ApiMethods {
    */
   editChatSubscriptionInviteLink(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9048,7 +9048,7 @@ export interface ApiMethods {
    */
   revokeChatInviteLink(args: {
     /**
-     * Unique identifier of the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier of the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9065,7 +9065,7 @@ export interface ApiMethods {
    */
   approveChatJoinRequest(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9082,7 +9082,7 @@ export interface ApiMethods {
    */
   declineChatJoinRequest(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9133,7 +9133,7 @@ export interface ApiMethods {
    */
   setChatPhoto(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9150,7 +9150,7 @@ export interface ApiMethods {
    */
   deleteChatPhoto(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9163,7 +9163,7 @@ export interface ApiMethods {
    */
   setChatTitle(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9180,7 +9180,7 @@ export interface ApiMethods {
    */
   setChatDescription(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9201,7 +9201,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9226,7 +9226,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9243,7 +9243,7 @@ export interface ApiMethods {
    */
   unpinAllChatMessages(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9256,7 +9256,7 @@ export interface ApiMethods {
    */
   leaveChat(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>. Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`. Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.
      */
     chat_id: number | string;
   }): never;
@@ -9269,7 +9269,7 @@ export interface ApiMethods {
    */
   getChat(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9282,7 +9282,7 @@ export interface ApiMethods {
    */
   getChatAdministrators(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9299,7 +9299,7 @@ export interface ApiMethods {
    */
   getChatMemberCount(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9312,7 +9312,7 @@ export interface ApiMethods {
    */
   getChatMember(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9346,7 +9346,7 @@ export interface ApiMethods {
    */
   setChatStickerSet(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9363,7 +9363,7 @@ export interface ApiMethods {
    */
   deleteChatStickerSet(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9384,7 +9384,7 @@ export interface ApiMethods {
    */
   createForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9409,7 +9409,7 @@ export interface ApiMethods {
    */
   editForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9434,7 +9434,7 @@ export interface ApiMethods {
    */
   closeForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9451,7 +9451,7 @@ export interface ApiMethods {
    */
   reopenForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9468,7 +9468,7 @@ export interface ApiMethods {
    */
   deleteForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9485,7 +9485,7 @@ export interface ApiMethods {
    */
   unpinAllForumTopicMessages(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9502,7 +9502,7 @@ export interface ApiMethods {
    */
   editGeneralForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9519,7 +9519,7 @@ export interface ApiMethods {
    */
   closeGeneralForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9532,7 +9532,7 @@ export interface ApiMethods {
    */
   reopenGeneralForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9545,7 +9545,7 @@ export interface ApiMethods {
    */
   hideGeneralForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9558,7 +9558,7 @@ export interface ApiMethods {
    */
   unhideGeneralForumTopic(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9571,7 +9571,7 @@ export interface ApiMethods {
    */
   unpinAllGeneralForumTopicMessages(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -9580,7 +9580,7 @@ export interface ApiMethods {
   /**
    * Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, `true` is returned.
    *
-   * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">\@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
+   * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">\@BotFather</a> and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
    *
    * @see {@link https://core.telegram.org/bots/api#answercallbackquery}
    */
@@ -9598,7 +9598,7 @@ export interface ApiMethods {
      */
     show_alert?: boolean;
     /**
-     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">\@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
+     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">\@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.<br><br>Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
      */
     url?: string;
     /**
@@ -9632,7 +9632,7 @@ export interface ApiMethods {
    */
   getUserChatBoosts(args: {
     /**
-     * Unique identifier for the chat or username of the channel in the format <code>@username</code>
+     * Unique identifier for the chat or username of the channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -9960,7 +9960,7 @@ export interface ApiMethods {
      */
     user_id?: number;
     /**
-     * Required if _user_id_ is not specified. Unique identifier for the chat or username of the channel (in the format <code>@username</code>) that will receive the gift.
+     * Required if _user_id_ is not specified. Unique identifier for the chat or username of the channel (in the format `@username`) that will receive the gift.
      */
     chat_id?: number | string;
     /**
@@ -10043,7 +10043,7 @@ export interface ApiMethods {
    */
   verifyChat(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Channel direct messages chats can&#39;t be verified.
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. Channel direct messages chats can&#39;t be verified.
      */
     chat_id: number | string;
     /**
@@ -10073,7 +10073,7 @@ export interface ApiMethods {
    */
   removeChatVerification(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot or channel in the format `@username`
      */
     chat_id: number | string;
   }): never;
@@ -10366,7 +10366,7 @@ export interface ApiMethods {
    */
   getChatGifts(args: {
     /**
-     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -10448,7 +10448,7 @@ export interface ApiMethods {
      */
     keep_original_details?: boolean;
     /**
-     * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If <code>gift.prepaid_upgrade_star_count &gt; 0</code>, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and <code>gift.upgrade_star_count</code> must be passed.
+     * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If `gift.prepaid_upgrade_star_count &gt; 0`, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and `gift.upgrade_star_count` must be passed.
      */
     star_count?: number;
   }): never;
@@ -10494,7 +10494,7 @@ export interface ApiMethods {
      */
     content: InputStoryContent;
     /**
-     * Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code>
+     * Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
      */
     active_period: number;
     /**
@@ -10543,7 +10543,7 @@ export interface ApiMethods {
      */
     from_story_id: number;
     /**
-     * Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code>
+     * Period after which the story is moved to the archive, in seconds; must be one of `6 * 3600`, `12 * 3600`, `86400`, or `2 * 86400`
      */
     active_period: number;
     /**
@@ -10690,7 +10690,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
      */
     chat_id?: number | string;
     /**
@@ -10739,7 +10739,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
      */
     chat_id?: number | string;
     /**
@@ -10784,7 +10784,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
      */
     chat_id?: number | string;
     /**
@@ -10817,7 +10817,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
      */
     chat_id?: number | string;
     /**
@@ -10870,7 +10870,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
      */
     chat_id?: number | string;
     /**
@@ -10899,7 +10899,7 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * Unique identifier for the target chat or username of the target bot in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -10928,7 +10928,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     * Required if _inline_message_id_ is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`.
      */
     chat_id?: number | string;
     /**
@@ -10957,7 +10957,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -10978,7 +10978,7 @@ export interface ApiMethods {
    */
   editEphemeralMessageText(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11019,7 +11019,7 @@ export interface ApiMethods {
    */
   editEphemeralMessageMedia(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11048,7 +11048,7 @@ export interface ApiMethods {
    */
   editEphemeralMessageCaption(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11085,7 +11085,7 @@ export interface ApiMethods {
    */
   editEphemeralMessageReplyMarkup(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11152,7 +11152,7 @@ export interface ApiMethods {
    */
   deleteMessage(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11169,7 +11169,7 @@ export interface ApiMethods {
    */
   deleteMessages(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11186,7 +11186,7 @@ export interface ApiMethods {
    */
   deleteEphemeralMessage(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11207,7 +11207,7 @@ export interface ApiMethods {
    */
   deleteMessageReaction(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11232,7 +11232,7 @@ export interface ApiMethods {
    */
   deleteAllMessageReactions(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target supergroup in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11402,7 +11402,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -11518,7 +11518,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Short name of sticker set, to be used in <code>t.me/addstickers/</code> URLs (e.g., _animals_). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in <code>&quot;_by_&lt;bot_username&gt;&quot;</code>. <code>&lt;bot_username&gt;</code> is case insensitive. 1-64 characters.
+     * Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., _animals_). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in `&quot;_by_&lt;bot_username&gt;&quot;`. `&lt;bot_username&gt;` is case insensitive. 1-64 characters.
      */
     name: string;
     /**
@@ -11748,7 +11748,7 @@ export interface ApiMethods {
  * 
  * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass `true` in the _skip_entity_detection_ field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
  *
- * When <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting is used, you can use links in the form <code>tg://photo?id=...</code>, <code>tg://video?id=...</code>, and <code>tg://audio?id=...</code> instead of an HTTP URL to reuse previously uploaded files or upload a new file.
+ * When <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting is used, you can use links in the form `tg://photo?id=...`, `tg://video?id=...`, and `tg://audio?id=...` instead of an HTTP URL to reuse previously uploaded files or upload a new file.
  *
  * ##### Rich Message Limits
  *
@@ -12022,16 +12022,16 @@ export interface ApiMethods {
  *
  * - Only the tags mentioned above are currently supported.
  * - All numerical HTML entities are supported.
- * - The API currently supports only the following named HTML entities: <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code>, <code>&amp;apos;</code>, <code>&amp;nbsp;</code>, <code>&amp;hellip;</code>, <code>&amp;mdash;</code>, <code>&amp;ndash;</code>, <code>&amp;lsquo;</code>, <code>&amp;rsquo;</code>, <code>&amp;ldquo;</code> and <code>&amp;rdquo;</code>.
- * - Use nested <code>pre</code> and <code>code</code> tags to define the programming language for a pre-formatted block.
- * - Programming language can&#39;t be specified for standalone <code>code</code> tags.
- * - Links <code>mailto:...</code>, <code>tel:...</code>, and <code>tg://user?id=...</code> are rendered as e-mail links, phone links, and inline mentions respectively. Other supported links are rendered as regular inline links.
+ * - The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;`, `&amp;quot;`, `&amp;apos;`, `&amp;nbsp;`, `&amp;hellip;`, `&amp;mdash;`, `&amp;ndash;`, `&amp;lsquo;`, `&amp;rsquo;`, `&amp;ldquo;` and `&amp;rdquo;`.
+ * - Use nested `pre` and `code` tags to define the programming language for a pre-formatted block.
+ * - Programming language can&#39;t be specified for standalone `code` tags.
+ * - Links `mailto:...`, `tel:...`, and `tg://user?id=...` are rendered as e-mail links, phone links, and inline mentions respectively. Other supported links are rendered as regular inline links.
  * - Images, videos, and audio files can be specified only as separate media blocks.
  * - Media blocks support only HTTP and HTTPS URLs.
- * - An empty <code>&lt;a name=&quot;...&quot;&gt;&lt;/a&gt;</code> on its own creates an anchor that can be linked to with <code>&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;</code>.
- * - In <code>&lt;figcaption&gt;</code>, you can use <code>&lt;cite&gt;</code> tags to specify caption credit.
- * - Use <code>&lt;tg-reference name=&quot;...&quot;&gt;...&lt;/tg-reference&gt;</code> to define referenced text that can be linked to with <code>&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;</code>.
- * - The body of a <code>&lt;details&gt;</code> tag can contain rich message content. If the <code>open</code> attribute is specified, the block is expanded by default.
+ * - An empty `&lt;a name=&quot;...&quot;&gt;&lt;/a&gt;` on its own creates an anchor that can be linked to with `&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;`.
+ * - In `&lt;figcaption&gt;`, you can use `&lt;cite&gt;` tags to specify caption credit.
+ * - Use `&lt;tg-reference name=&quot;...&quot;&gt;...&lt;/tg-reference&gt;` to define referenced text that can be linked to with `&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;`.
+ * - The body of a `&lt;details&gt;` tag can contain rich message content. If the `open` attribute is specified, the block is expanded by default.
  * - Formula source is treated as raw LaTeX.
  * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  */
@@ -12069,7 +12069,7 @@ export interface InputRichMessage {
    */
   markdown?: string;
   /**
-   * List of media that are specified in the _markdown_ or _html_ fields using <code>tg://photo?id=</code>, <code>tg://video?id=</code>, and <code>tg://audio?id=</code> links
+   * List of media that are specified in the _markdown_ or _html_ fields using `tg://photo?id=`, `tg://video?id=`, and `tg://audio?id=` links
    */
   media?: InputRichMessageMedia[];
   /**
@@ -12088,7 +12088,7 @@ export interface InputRichMessage {
  */
 export interface InputRichMessageMedia {
   /**
-   * Unique identifier of the media used in a <code>tg://photo?id=</code>, <code>tg://video?id=</code>, or <code>tg://audio?id=</code> link. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.
+   * Unique identifier of the media used in a `tg://photo?id=`, `tg://video?id=`, or `tg://audio?id=` link. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
    */
   id: string;
   /**
@@ -12108,7 +12108,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -12797,7 +12797,7 @@ export type RichBlock =
  | RichBlockVoiceNote
  | RichBlockThinking
 /**
- * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
+ * A text paragraph, corresponding to the HTML tag `&lt;p&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockparagraph}
  */
@@ -12812,7 +12812,7 @@ export interface RichBlockParagraph {
   text: RichText;
 }
 /**
- * A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.
+ * A section heading, corresponding to the HTML tags `&lt;h1&gt;`, `&lt;h2&gt;`, `&lt;h3&gt;`, `&lt;h4&gt;`, `&lt;h5&gt;`, or `&lt;h6&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblocksectionheading}
  */
@@ -12831,7 +12831,7 @@ export interface RichBlockSectionHeading {
   size: number;
 }
 /**
- * A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.
+ * A preformatted text block, corresponding to the nested HTML tags `&lt;pre&gt;` and `&lt;code&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockpreformatted}
  */
@@ -12850,7 +12850,7 @@ export interface RichBlockPreformatted {
   language?: string;
 }
 /**
- * A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.
+ * A footer, corresponding to the HTML tag `&lt;footer&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockfooter}
  */
@@ -12865,7 +12865,7 @@ export interface RichBlockFooter {
   text: RichText;
 }
 /**
- * A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.
+ * A divider, corresponding to the HTML tag `&lt;hr/&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockdivider}
  */
@@ -12876,7 +12876,7 @@ export interface RichBlockDivider {
   type: string;
 }
 /**
- * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.
+ * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `&lt;tg-math-block&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockmathematicalexpression}
  */
@@ -12891,7 +12891,7 @@ export interface RichBlockMathematicalExpression {
   expression: string;
 }
 /**
- * A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.
+ * A block with an anchor, corresponding to the HTML tag `&lt;a&gt;` with the attribute `name`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockanchor}
  */
@@ -12906,7 +12906,7 @@ export interface RichBlockAnchor {
   name: string;
 }
 /**
- * A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.
+ * A list of blocks, corresponding to the HTML tag `&lt;ul&gt;` or `&lt;ol&gt;` with multiple nested tags `&lt;li&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblocklist}
  */
@@ -12921,7 +12921,7 @@ export interface RichBlockList {
   items: RichBlockListItem[];
 }
 /**
- * A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.
+ * A block quotation, corresponding to the HTML tag `&lt;blockquote&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockblockquotation}
  */
@@ -12940,7 +12940,7 @@ export interface RichBlockBlockQuotation {
   credit?: RichText;
 }
 /**
- * A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.
+ * A quotation with centered text, loosely corresponding to the HTML tag `&lt;aside&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockpullquotation}
  */
@@ -12959,7 +12959,7 @@ export interface RichBlockPullQuotation {
   credit?: RichText;
 }
 /**
- * A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.
+ * A collage, corresponding to the custom HTML tag `&lt;tg-collage&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockcollage}
  */
@@ -12978,7 +12978,7 @@ export interface RichBlockCollage {
   caption?: RichBlockCaption;
 }
 /**
- * A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.
+ * A slideshow, corresponding to the custom HTML tag `&lt;tg-slideshow&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockslideshow}
  */
@@ -12997,7 +12997,7 @@ export interface RichBlockSlideshow {
   caption?: RichBlockCaption;
 }
 /**
- * A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.
+ * A table, corresponding to the HTML tag `&lt;table&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblocktable}
  */
@@ -13024,7 +13024,7 @@ export interface RichBlockTable {
   caption?: RichText;
 }
 /**
- * An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.
+ * An expandable block for details disclosure, corresponding to the HTML tag `&lt;details&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockdetails}
  */
@@ -13047,7 +13047,7 @@ export interface RichBlockDetails {
   is_open?: true;
 }
 /**
- * A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>.
+ * A block with a map, corresponding to the custom HTML tag `&lt;tg-map&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockmap}
  */
@@ -13078,7 +13078,7 @@ export interface RichBlockMap {
   caption?: RichBlockCaption;
 }
 /**
- * A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.
+ * A block with an animation, corresponding to the HTML tag `&lt;video&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockanimation}
  */
@@ -13101,7 +13101,7 @@ export interface RichBlockAnimation {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
+ * A block with a music file, corresponding to the HTML tag `&lt;audio&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockaudio}
  */
@@ -13120,7 +13120,7 @@ export interface RichBlockAudio {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.
+ * A block with a photo, corresponding to the HTML tag `&lt;img&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockphoto}
  */
@@ -13143,7 +13143,7 @@ export interface RichBlockPhoto {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.
+ * A block with a video, corresponding to the HTML tag `&lt;video&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockvideo}
  */
@@ -13166,7 +13166,7 @@ export interface RichBlockVideo {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
+ * A block with a voice note, corresponding to the HTML tag `&lt;audio&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockvoicenote}
  */
@@ -13185,7 +13185,7 @@ export interface RichBlockVoiceNote {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
+ * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockthinking}
  */
@@ -13276,7 +13276,7 @@ export type InputRichBlock =
  | InputRichBlockVoiceNote
  | InputRichBlockThinking
 /**
- * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
+ * A text paragraph, corresponding to the HTML tag `&lt;p&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockparagraph}
  */
@@ -13291,7 +13291,7 @@ export interface InputRichBlockParagraph {
   text: RichText;
 }
 /**
- * A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.
+ * A section heading, corresponding to the HTML tags `&lt;h1&gt;`, `&lt;h2&gt;`, `&lt;h3&gt;`, `&lt;h4&gt;`, `&lt;h5&gt;`, or `&lt;h6&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblocksectionheading}
  */
@@ -13310,7 +13310,7 @@ export interface InputRichBlockSectionHeading {
   size: number;
 }
 /**
- * A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.
+ * A preformatted text block, corresponding to the nested HTML tags `&lt;pre&gt;` and `&lt;code&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockpreformatted}
  */
@@ -13329,7 +13329,7 @@ export interface InputRichBlockPreformatted {
   language?: string;
 }
 /**
- * A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.
+ * A footer, corresponding to the HTML tag `&lt;footer&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockfooter}
  */
@@ -13344,7 +13344,7 @@ export interface InputRichBlockFooter {
   text: RichText;
 }
 /**
- * A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.
+ * A divider, corresponding to the HTML tag `&lt;hr/&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockdivider}
  */
@@ -13355,7 +13355,7 @@ export interface InputRichBlockDivider {
   type: string;
 }
 /**
- * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.
+ * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `&lt;tg-math-block&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockmathematicalexpression}
  */
@@ -13370,7 +13370,7 @@ export interface InputRichBlockMathematicalExpression {
   expression: string;
 }
 /**
- * A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.
+ * A block with an anchor, corresponding to the HTML tag `&lt;a&gt;` with the attribute `name`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockanchor}
  */
@@ -13385,7 +13385,7 @@ export interface InputRichBlockAnchor {
   name: string;
 }
 /**
- * A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.
+ * A list of blocks, corresponding to the HTML tag `&lt;ul&gt;` or `&lt;ol&gt;` with multiple nested tags `&lt;li&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblocklist}
  */
@@ -13400,7 +13400,7 @@ export interface InputRichBlockList {
   items: InputRichBlockListItem[];
 }
 /**
- * A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.
+ * A block quotation, corresponding to the HTML tag `&lt;blockquote&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockblockquotation}
  */
@@ -13419,7 +13419,7 @@ export interface InputRichBlockBlockQuotation {
   credit?: RichText;
 }
 /**
- * A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.
+ * A quotation with centered text, loosely corresponding to the HTML tag `&lt;aside&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockpullquotation}
  */
@@ -13438,7 +13438,7 @@ export interface InputRichBlockPullQuotation {
   credit?: RichText;
 }
 /**
- * A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.
+ * A collage, corresponding to the custom HTML tag `&lt;tg-collage&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockcollage}
  */
@@ -13457,7 +13457,7 @@ export interface InputRichBlockCollage {
   caption?: RichBlockCaption;
 }
 /**
- * A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.
+ * A slideshow, corresponding to the custom HTML tag `&lt;tg-slideshow&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockslideshow}
  */
@@ -13476,7 +13476,7 @@ export interface InputRichBlockSlideshow {
   caption?: RichBlockCaption;
 }
 /**
- * A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.
+ * A table, corresponding to the HTML tag `&lt;table&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblocktable}
  */
@@ -13503,7 +13503,7 @@ export interface InputRichBlockTable {
   caption?: RichText;
 }
 /**
- * An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.
+ * An expandable block for details disclosure, corresponding to the HTML tag `&lt;details&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockdetails}
  */
@@ -13526,7 +13526,7 @@ export interface InputRichBlockDetails {
   is_open?: true;
 }
 /**
- * A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>. The map&#39;s width and height must not exceed 10000 in total. The width and height ratio must be at most 20.
+ * A block with a map, corresponding to the custom HTML tag `&lt;tg-map&gt;`. The map&#39;s width and height must not exceed 10000 in total. The width and height ratio must be at most 20.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockmap}
  */
@@ -13557,7 +13557,7 @@ export interface InputRichBlockMap {
   caption?: RichBlockCaption;
 }
 /**
- * A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.
+ * A block with an animation, corresponding to the HTML tag `&lt;video&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockanimation}
  */
@@ -13576,7 +13576,7 @@ export interface InputRichBlockAnimation {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
+ * A block with a music file, corresponding to the HTML tag `&lt;audio&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockaudio}
  */
@@ -13595,7 +13595,7 @@ export interface InputRichBlockAudio {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.
+ * A block with a photo, corresponding to the HTML tag `&lt;img&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockphoto}
  */
@@ -13614,7 +13614,7 @@ export interface InputRichBlockPhoto {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.
+ * A block with a video, corresponding to the HTML tag `&lt;video&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockvideo}
  */
@@ -13633,7 +13633,7 @@ export interface InputRichBlockVideo {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
+ * A block with a voice note, corresponding to the HTML tag `&lt;audio&gt;`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockvoicenote}
  */
@@ -13652,7 +13652,7 @@ export interface InputRichBlockVoiceNote {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
+ * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockthinking}
  */
@@ -13746,7 +13746,7 @@ export interface InlineQueryResultsButton {
    */
   web_app?: WebAppInfo;
   /**
-   * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
+   * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.<br><br>_Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
    */
   start_parameter?: string;
 }
@@ -15010,7 +15010,7 @@ export interface InputInvoiceMessageContent {
    */
   prices: LabeledPrice[];
   /**
-   * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   max_tip_amount?: number;
   /**
@@ -15104,7 +15104,7 @@ export interface ApiMethods {
    */
   sendInvoice(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`
      */
     chat_id: number | string;
     /**
@@ -15140,7 +15140,7 @@ export interface ApiMethods {
      */
     prices: LabeledPrice[];
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     max_tip_amount?: number;
     /**
@@ -15224,7 +15224,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay <code>total price</code>&#39; button will be shown. If not empty, the first button must be a Pay button.
+     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -15269,7 +15269,7 @@ export interface ApiMethods {
      */
     subscription_period?: number;
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     max_tip_amount?: number;
     /**
@@ -15446,7 +15446,7 @@ export interface LabeledPrice {
    */
   label: string;
   /**
-   * Price of the product in the _smallest units_ of the <a href="/bots/payments#supported-currencies">currency</a> (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Price of the product in the _smallest units_ of the <a href="/bots/payments#supported-currencies">currency</a> (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   amount: number;
 }
@@ -15473,7 +15473,7 @@ export interface Invoice {
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
 }
@@ -15561,7 +15561,7 @@ export interface SuccessfulPayment {
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -15608,7 +15608,7 @@ export interface RefundedPayment {
    */
   currency: string;
   /**
-   * Total refunded price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code>, <code>total_amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total refunded price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -15666,7 +15666,7 @@ export interface PreCheckoutQuery {
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, <strong>not</strong> float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -16351,7 +16351,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot in the format <code>@username</code>. Games can&#39;t be sent to channel direct messages chats and channel chats.
+     * Unique identifier for the target chat or username of the target bot in the format `@username`. Games can&#39;t be sent to channel direct messages chats and channel chats.
      */
     chat_id: number | string;
     /**
