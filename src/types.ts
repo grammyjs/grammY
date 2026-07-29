@@ -224,12 +224,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>Yes</td>
-<td>HTTPS URL to send updates to. Use an empty string to remove webhook integration.</td>
-</tr>
+    /**
+     * HTTPS URL to send updates to. Use an empty string to remove webhook integration.
+     */
+    url: string;
 <tr>
 <td>certificate</td>
 <td><a href="#inputfile">InputFile</a></td>
@@ -8600,12 +8598,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Yes</td>
-<td>Text of the message to be sent, 1-4096 characters after entities parsing</td>
-</tr>
+    /**
+     * Text of the message to be sent, 1-4096 characters after entities parsing
+     */
+    text: string;
     /**
      * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
      */
@@ -10438,18 +10434,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Longitude of the venue</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Yes</td>
-<td>Name of the venue</td>
-</tr>
-<tr>
-<td>address</td>
-<td>String</td>
-<td>Yes</td>
-<td>Address of the venue</td>
-</tr>
+    /**
+     * Name of the venue
+     */
+    title: string;
+    /**
+     * Address of the venue
+     */
+    address: string;
     /**
      * Foursquare identifier of the venue
      */
@@ -10551,18 +10543,14 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>phone_number</td>
-<td>String</td>
-<td>Yes</td>
-<td>Contact&#39;s phone number</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Contact&#39;s first name</td>
-</tr>
+    /**
+     * Contact&#39;s phone number
+     */
+    phone_number: string;
+    /**
+     * Contact&#39;s first name
+     */
+    first_name: string;
     /**
      * Contact&#39;s last name
      */
@@ -10644,12 +10632,10 @@ export interface ApiMethods {
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
     message_thread_id?: number;
-<tr>
-<td>question</td>
-<td>String</td>
-<td>Yes</td>
-<td>Poll question, 1-300 characters</td>
-</tr>
+    /**
+     * Poll question, 1-300 characters
+     */
+    question: string;
     /**
      * Mode for parsing entities in the question. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
      */
@@ -10831,12 +10817,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11039,12 +11023,10 @@ export interface ApiMethods {
      * Unique identifier for the target message thread or topic of a forum; for supergroups and private chats of bots with forum topic mode enabled only
      */
     message_thread_id?: number;
-<tr>
-<td>action</td>
-<td>String</td>
-<td>Yes</td>
-<td>Type of action to broadcast. Choose one, depending on what the user is about to receive: <em>typing</em> for <a href="#sendmessage">text messages</a>, <em>upload_photo</em> for <a href="#sendphoto">photos</a>, <em>record_video</em> or <em>upload_video</em> for <a href="#sendvideo">videos</a>, <em>record_voice</em> or <em>upload_voice</em> for <a href="#sendvoice">voice notes</a>, <em>upload_document</em> for <a href="#senddocument">general files</a>, <em>choose_sticker</em> for <a href="#sendsticker">stickers</a>, <em>find_location</em> for <a href="#sendlocation">location data</a>, <em>record_video_note</em> or <em>upload_video_note</em> for <a href="#sendvideonote">video notes</a>.</td>
-</tr>
+    /**
+     * Type of action to broadcast. Choose one, depending on what the user is about to receive: <em>typing</em> for <a href="#sendmessage">text messages</a>, <em>upload_photo</em> for <a href="#sendphoto">photos</a>, <em>record_video</em> or <em>upload_video</em> for <a href="#sendvideo">videos</a>, <em>record_voice</em> or <em>upload_voice</em> for <a href="#sendvoice">voice notes</a>, <em>upload_document</em> for <a href="#senddocument">general files</a>, <em>choose_sticker</em> for <a href="#sendsticker">stickers</a>, <em>find_location</em> for <a href="#sendlocation">location data</a>, <em>record_video_note</em> or <em>upload_video_note</em> for <a href="#sendvideonote">video notes</a>.
+     */
+    action: string;
 </tbody>
 </table>
 export interface ApiMethods {
@@ -11198,12 +11180,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>file_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>File identifier to get information about</td>
-</tr>
+    /**
+     * File identifier to get information about
+     */
+    file_id: string;
 </tbody>
 </table>
   }): never;
@@ -11483,12 +11463,10 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-<tr>
-<td>custom_title</td>
-<td>String</td>
-<td>Yes</td>
-<td>New custom title for the administrator; 0-16 characters, emoji are not allowed</td>
-</tr>
+    /**
+     * New custom title for the administrator; 0-16 characters, emoji are not allowed
+     */
+    custom_title: string;
 </tbody>
 </table>
   }): never;
@@ -11712,12 +11690,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>invite_link</td>
-<td>String</td>
-<td>Yes</td>
-<td>The invite link to edit</td>
-</tr>
+    /**
+     * The invite link to edit
+     */
+    invite_link: string;
     /**
      * Invite link name; 0-32 characters
      */
@@ -11798,12 +11774,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>invite_link</td>
-<td>String</td>
-<td>Yes</td>
-<td>The invite link to edit</td>
-</tr>
+    /**
+     * The invite link to edit
+     */
+    invite_link: string;
     /**
      * Invite link name; 0-32 characters
      */
@@ -11833,12 +11807,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>invite_link</td>
-<td>String</td>
-<td>Yes</td>
-<td>The invite link to revoke</td>
-</tr>
+    /**
+     * The invite link to revoke
+     */
+    invite_link: string;
 </tbody>
 </table>
   }): never;
@@ -11916,18 +11888,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_join_request_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the join request query</td>
-</tr>
-<tr>
-<td>result</td>
-<td>String</td>
-<td>Yes</td>
-<td>Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.</td>
-</tr>
+    /**
+     * Unique identifier of the join request query
+     */
+    chat_join_request_query_id: string;
+    /**
+     * Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.
+     */
+    result: string;
 </tbody>
 </table>
   }): never;
@@ -11947,18 +11915,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_join_request_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the join request query</td>
-</tr>
-<tr>
-<td>web_app_url</td>
-<td>String</td>
-<td>Yes</td>
-<td>An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a></td>
-</tr>
+    /**
+     * Unique identifier of the join request query
+     */
+    chat_join_request_query_id: string;
+    /**
+     * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
+     */
+    web_app_url: string;
 </tbody>
 </table>
   }): never;
@@ -12040,12 +12004,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Yes</td>
-<td>New chat title, 1-128 characters</td>
-</tr>
+    /**
+     * New chat title, 1-128 characters
+     */
+    title: string;
 </tbody>
 </table>
   }): never;
@@ -12359,12 +12321,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>sticker_set_name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Name of the sticker set to be set as the group sticker set</td>
-</tr>
+    /**
+     * Name of the sticker set to be set as the group sticker set
+     */
+    sticker_set_name: string;
 </tbody>
 </table>
   }): never;
@@ -12421,12 +12381,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Topic name, 1-128 characters</td>
-</tr>
+    /**
+     * Topic name, 1-128 characters
+     */
+    name: string;
     /**
      * Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F).
      */
@@ -12613,12 +12571,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>New topic name, 1-128 characters</td>
-</tr>
+    /**
+     * New topic name, 1-128 characters
+     */
+    name: string;
 </tbody>
 </table>
   }): never;
@@ -12765,12 +12721,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier for the query to be answered</td>
-</tr>
+    /**
+     * Unique identifier for the query to be answered
+     */
+    callback_query_id: string;
     /**
      * Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters.
      */
@@ -12808,12 +12762,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>guest_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier for the query to be answered</td>
-</tr>
+    /**
+     * Unique identifier for the query to be answered
+     */
+    guest_query_id: string;
 <tr>
 <td>result</td>
 <td><a href="#inlinequeryresult">InlineQueryResult</a></td>
@@ -12868,12 +12820,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
 </tbody>
 </table>
   }): never;
@@ -13395,12 +13345,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>user_id</em> is not specified. Unique identifier for the chat or username of the channel (in the format <code>@username</code>) that will receive the gift.</td>
 </tr>
-<tr>
-<td>gift_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Identifier of the gift; limited gifts can&#39;t be sent to channel chats</td>
-</tr>
+    /**
+     * Identifier of the gift; limited gifts can&#39;t be sent to channel chats
+     */
+    gift_id: string;
 <tr>
 <td>pay_for_upgrade</td>
 <td>Boolean</td>
@@ -13589,12 +13537,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection on behalf of which to read the message</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which to read the message
+     */
+    business_connection_id: string;
     /**
      * Unique identifier of the chat in which the message was received. The chat must have been active in the last 24 hours.
      */
@@ -13622,12 +13568,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection on behalf of which to delete the messages</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which to delete the messages
+     */
+    business_connection_id: string;
 <tr>
 <td>message_ids</td>
 <td>Array of Integer</td>
@@ -13653,18 +13597,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td>Yes</td>
-<td>The new value of the first name for the business account; 1-64 characters</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
+    /**
+     * The new value of the first name for the business account; 1-64 characters
+     */
+    first_name: string;
     /**
      * The new value of the last name for the business account; 0-64 characters
      */
@@ -13688,12 +13628,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
     /**
      * The new value of the username for the business account; 0-32 characters
      */
@@ -13717,12 +13655,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
     /**
      * The new value of the bio for the business account; 0-140 characters
      */
@@ -13746,12 +13682,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
 <tr>
 <td>photo</td>
 <td><a href="#inputprofilephoto">InputProfilePhoto</a></td>
@@ -13783,12 +13717,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
 <tr>
 <td>is_public</td>
 <td>Boolean</td>
@@ -13814,12 +13746,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
 <tr>
 <td>show_gift_button</td>
 <td>Boolean</td>
@@ -13851,12 +13781,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
 </tbody>
 </table>
   }): never;
@@ -13876,12 +13804,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
     /**
      * Number of Telegram Stars to transfer; 1-10000
      */
@@ -13905,12 +13831,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
 <tr>
 <td>exclude_unsaved</td>
 <td>Boolean</td>
@@ -14134,18 +14058,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
-<tr>
-<td>owned_gift_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the regular gift that should be converted to Telegram Stars</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
+    /**
+     * Unique identifier of the regular gift that should be converted to Telegram Stars
+     */
+    owned_gift_id: string;
 </tbody>
 </table>
   }): never;
@@ -14165,18 +14085,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
-<tr>
-<td>owned_gift_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the regular gift that should be upgraded to a unique one</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
+    /**
+     * Unique identifier of the regular gift that should be upgraded to a unique one
+     */
+    owned_gift_id: string;
 <tr>
 <td>keep_original_details</td>
 <td>Boolean</td>
@@ -14206,18 +14122,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
-<tr>
-<td>owned_gift_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the regular gift that should be transferred</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
+    /**
+     * Unique identifier of the regular gift that should be transferred
+     */
+    owned_gift_id: string;
     /**
      * Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.
      */
@@ -14245,12 +14157,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
 <tr>
 <td>content</td>
 <td><a href="#inputstorycontent">InputStoryContent</a></td>
@@ -14312,12 +14222,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
     /**
      * Unique identifier of the chat which posted the story that should be reposted
      */
@@ -14361,12 +14269,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
     /**
      * Unique identifier of the story to edit
      */
@@ -14416,12 +14322,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection</td>
-</tr>
+    /**
+     * Unique identifier of the business connection
+     */
+    business_connection_id: string;
     /**
      * Unique identifier of the story to delete
      */
@@ -14445,12 +14349,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>web_app_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier for the query to be answered</td>
-</tr>
+    /**
+     * Unique identifier for the query to be answered
+     */
+    web_app_query_id: string;
 <tr>
 <td>result</td>
 <td><a href="#inlinequeryresult">InlineQueryResult</a></td>
@@ -14860,12 +14762,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -15003,12 +14903,10 @@ export interface ApiMethods {
      * Identifier of the ephemeral message to edit
      */
     ephemeral_message_id: number;
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Yes</td>
-<td>New text of the message, 1-4096 characters after entity parsing</td>
-</tr>
+    /**
+     * New text of the message, 1-4096 characters after entity parsing
+     */
+    text: string;
     /**
      * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
      */
@@ -15689,12 +15587,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Name of the sticker set</td>
-</tr>
+    /**
+     * Name of the sticker set
+     */
+    name: string;
 </tbody>
 </table>
   }): never;
@@ -15749,12 +15645,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers"><a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a></a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>sticker_format</td>
-<td>String</td>
-<td>Yes</td>
-<td>Format of the sticker, must be one of “static”, “animated”, “video”</td>
-</tr>
+    /**
+     * Format of the sticker, must be one of “static”, “animated”, “video”
+     */
+    sticker_format: string;
 </tbody>
 </table>
   }): never;
@@ -15778,18 +15672,14 @@ export interface ApiMethods {
      * User identifier of created sticker set owner
      */
     user_id: number;
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Short name of sticker set, to be used in <code>t.me/addstickers/</code> URLs (e.g., <em>animals</em>). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in <code>&quot;_by_&lt;bot_username&gt;&quot;</code>. <code>&lt;bot_username&gt;</code> is case insensitive. 1-64 characters.</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set title, 1-64 characters</td>
-</tr>
+    /**
+     * Short name of sticker set, to be used in <code>t.me/addstickers/</code> URLs (e.g., <em>animals</em>). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in <code>&quot;_by_&lt;bot_username&gt;&quot;</code>. <code>&lt;bot_username&gt;</code> is case insensitive. 1-64 characters.
+     */
+    name: string;
+    /**
+     * Sticker set title, 1-64 characters
+     */
+    title: string;
 <tr>
 <td>stickers</td>
 <td>Array of <a href="#inputsticker">InputSticker</a></td>
@@ -15829,12 +15719,10 @@ export interface ApiMethods {
      * User identifier of sticker set owner
      */
     user_id: number;
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set name</td>
-</tr>
+    /**
+     * Sticker set name
+     */
+    name: string;
 <tr>
 <td>sticker</td>
 <td><a href="#inputsticker">InputSticker</a></td>
@@ -15860,12 +15748,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>sticker</td>
-<td>String</td>
-<td>Yes</td>
-<td>File identifier of the sticker</td>
-</tr>
+    /**
+     * File identifier of the sticker
+     */
+    sticker: string;
     /**
      * New sticker position in the set, zero-based
      */
@@ -15889,12 +15775,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>sticker</td>
-<td>String</td>
-<td>Yes</td>
-<td>File identifier of the sticker</td>
-</tr>
+    /**
+     * File identifier of the sticker
+     */
+    sticker: string;
 </tbody>
 </table>
   }): never;
@@ -15918,18 +15802,14 @@ export interface ApiMethods {
      * User identifier of the sticker set owner
      */
     user_id: number;
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set name</td>
-</tr>
-<tr>
-<td>old_sticker</td>
-<td>String</td>
-<td>Yes</td>
-<td>File identifier of the replaced sticker</td>
-</tr>
+    /**
+     * Sticker set name
+     */
+    name: string;
+    /**
+     * File identifier of the replaced sticker
+     */
+    old_sticker: string;
 <tr>
 <td>sticker</td>
 <td><a href="#inputsticker">InputSticker</a></td>
@@ -15955,12 +15835,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>sticker</td>
-<td>String</td>
-<td>Yes</td>
-<td>File identifier of the sticker</td>
-</tr>
+    /**
+     * File identifier of the sticker
+     */
+    sticker: string;
 <tr>
 <td>emoji_list</td>
 <td>Array of String</td>
@@ -15986,12 +15864,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>sticker</td>
-<td>String</td>
-<td>Yes</td>
-<td>File identifier of the sticker</td>
-</tr>
+    /**
+     * File identifier of the sticker
+     */
+    sticker: string;
 <tr>
 <td>keywords</td>
 <td>Array of String</td>
@@ -16017,12 +15893,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>sticker</td>
-<td>String</td>
-<td>Yes</td>
-<td>File identifier of the sticker</td>
-</tr>
+    /**
+     * File identifier of the sticker
+     */
+    sticker: string;
 <tr>
 <td>mask_position</td>
 <td><a href="#maskposition">MaskPosition</a></td>
@@ -16048,18 +15922,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set name</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set title, 1-64 characters</td>
-</tr>
+    /**
+     * Sticker set name
+     */
+    name: string;
+    /**
+     * Sticker set title, 1-64 characters
+     */
+    title: string;
 </tbody>
 </table>
   }): never;
@@ -16079,12 +15949,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set name</td>
-</tr>
+    /**
+     * Sticker set name
+     */
+    name: string;
     /**
      * User identifier of the sticker set owner
      */
@@ -16095,12 +15963,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A <strong>.WEBP</strong> or <strong>.PNG</strong> image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a <strong>.TGS</strong> animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a <strong>.WEBM</strong> video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.</td>
 </tr>
-<tr>
-<td>format</td>
-<td>String</td>
-<td>Yes</td>
-<td>Format of the thumbnail, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, or “video” for a <strong>.WEBM</strong> video</td>
-</tr>
+    /**
+     * Format of the thumbnail, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, or “video” for a <strong>.WEBM</strong> video
+     */
+    format: string;
 </tbody>
 </table>
   }): never;
@@ -16120,12 +15986,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set name</td>
-</tr>
+    /**
+     * Sticker set name
+     */
+    name: string;
     /**
      * Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail
      */
@@ -16149,12 +16013,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Sticker set name</td>
-</tr>
+    /**
+     * Sticker set name
+     */
+    name: string;
 </tbody>
 </table>
   }): never;
@@ -18814,12 +18676,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>inline_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier for the answered query</td>
-</tr>
+    /**
+     * Unique identifier for the answered query
+     */
+    inline_query_id: string;
 <tr>
 <td>results</td>
 <td>Array of <a href="#inlinequeryresult">InlineQueryResult</a></td>
@@ -20492,34 +20352,26 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Yes</td>
-<td>Product name, 1-32 characters</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Yes</td>
-<td>Product description, 1-255 characters</td>
-</tr>
-<tr>
-<td>payload</td>
-<td>String</td>
-<td>Yes</td>
-<td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
-</tr>
+    /**
+     * Product name, 1-32 characters
+     */
+    title: string;
+    /**
+     * Product description, 1-255 characters
+     */
+    description: string;
+    /**
+     * Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.
+     */
+    payload: string;
     /**
      * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     provider_token?: string;
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Yes</td>
-<td>Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    currency: string;
 <tr>
 <td>prices</td>
 <td>Array of <a href="#labeledprice">LabeledPrice</a></td>
@@ -20665,34 +20517,26 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the link will be created. For payments in <a href="https://t.me/BotNews/90">Telegram Stars</a> only.
      */
     business_connection_id?: string;
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Yes</td>
-<td>Product name, 1-32 characters</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Yes</td>
-<td>Product description, 1-255 characters</td>
-</tr>
-<tr>
-<td>payload</td>
-<td>String</td>
-<td>Yes</td>
-<td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
-</tr>
+    /**
+     * Product name, 1-32 characters
+     */
+    title: string;
+    /**
+     * Product description, 1-255 characters
+     */
+    description: string;
+    /**
+     * Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.
+     */
+    payload: string;
     /**
      * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     provider_token?: string;
-<tr>
-<td>currency</td>
-<td>String</td>
-<td>Yes</td>
-<td>Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    currency: string;
 <tr>
 <td>prices</td>
 <td>Array of <a href="#labeledprice">LabeledPrice</a></td>
@@ -20794,12 +20638,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>shipping_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier for the query to be answered</td>
-</tr>
+    /**
+     * Unique identifier for the query to be answered
+     */
+    shipping_query_id: string;
 <tr>
 <td>ok</td>
 <td>Boolean</td>
@@ -20835,12 +20677,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>pre_checkout_query_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Unique identifier for the query to be answered</td>
-</tr>
+    /**
+     * Unique identifier for the query to be answered
+     */
+    pre_checkout_query_id: string;
 <tr>
 <td>ok</td>
 <td>Boolean</td>
@@ -20907,12 +20747,10 @@ export interface ApiMethods {
      * Identifier of the user whose payment will be refunded
      */
     user_id: number;
-<tr>
-<td>telegram_payment_charge_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Telegram payment identifier</td>
-</tr>
+    /**
+     * Telegram payment identifier
+     */
+    telegram_payment_charge_id: string;
 </tbody>
 </table>
   }): never;
@@ -20936,12 +20774,10 @@ export interface ApiMethods {
      * Identifier of the user whose subscription will be edited
      */
     user_id: number;
-<tr>
-<td>telegram_payment_charge_id</td>
-<td>String</td>
-<td>Yes</td>
-<td>Telegram payment identifier for the subscription</td>
-</tr>
+    /**
+     * Telegram payment identifier for the subscription
+     */
+    telegram_payment_charge_id: string;
 <tr>
 <td>is_canceled</td>
 <td>Boolean</td>
@@ -22228,12 +22064,10 @@ export interface ApiMethods {
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
     message_thread_id?: number;
-<tr>
-<td>game_short_name</td>
-<td>String</td>
-<td>Yes</td>
-<td>Short name of the game, serves as the unique identifier for the game. Set up your games via <a href="https://t.me/botfather">@BotFather</a>.</td>
-</tr>
+    /**
+     * Short name of the game, serves as the unique identifier for the game. Set up your games via <a href="https://t.me/botfather">@BotFather</a>.
+     */
+    game_short_name: string;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
