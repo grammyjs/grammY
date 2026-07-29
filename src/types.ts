@@ -10205,12 +10205,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Longitude of the location</td>
 </tr>
-<tr>
-<td>horizontal_accuracy</td>
-<td>Float</td>
-<td>Optional</td>
-<td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
-</tr>
+    /**
+     * The radius of uncertainty for the location, measured in meters; 0-1500
+     */
+    horizontal_accuracy?: number;
     /**
      * Period in seconds during which the location will be updated (see <a href="https://telegram.org/blog/live-locations">Live Locations</a>), must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely. Must be 0 for ephemeral messages.
      */
@@ -14384,12 +14382,10 @@ export interface ApiMethods {
      * New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current <em>live_period</em> by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then <em>live_period</em> remains unchanged.
      */
     live_period?: number;
-<tr>
-<td>horizontal_accuracy</td>
-<td>Float</td>
-<td>Optional</td>
-<td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
-</tr>
+    /**
+     * The radius of uncertainty for the location, measured in meters; 0-1500
+     */
+    horizontal_accuracy?: number;
     /**
      * Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
      */
