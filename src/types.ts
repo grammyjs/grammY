@@ -1,6 +1,8 @@
 // === MAKING REQUESTS
 /**
- * Structure of an HTTP response body from the Bot API
+ * Structure of an HTTP response body from the Bot API.
+ * 
+ * The response contains a JSON object, which always has a Boolean field &#39;ok&#39; and may have an optional String field &#39;description&#39; with a human-readable description of the result. If &#39;ok&#39; equals <em>True</em>, the request was successful and the result of the query can be found in the &#39;result&#39; field. In case of an unsuccessful request, &#39;ok&#39; equals <em>False</em> and the error is explained in the &#39;description&#39;. An Integer &#39;error_code&#39; field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field &#39;parameters&#39; of the type <a href="#responseparameters">ResponseParameters</a>, which can help to automatically handle the error.
  */
 export type ApiResponse<T> = ApiError | ApiSuccess<T>
 /**
@@ -38,9 +40,7 @@ export interface ApiSuccess<T> {
     result: T;
 }
 // === GETTING UPDATES
-<p>There are two mutually exclusive ways of receiving updates for your bot - the <a href="#getupdates">getUpdates</a> method on one hand and <a href="#setwebhook">webhooks</a> on the other. Incoming updates are stored on the server until the bot receives them either way, but they will not be kept longer than 24 hours.</p>
-<p>Regardless of which option you choose, you will receive JSON-serialized <a href="#update">Update</a> objects as a result.</p>
-<h4><a class="anchor" name="update" href="#update"><i class="anchor-icon"></i></a>Update</h4>
+export interface Update = {
 <p>This <a href="#available-types">object</a> represents an incoming update.<br>At most <strong>one</strong> of the optional fields can be present in any given update.</p>
 <table class="table">
 <thead>
@@ -188,7 +188,8 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getupdates" href="#getupdates"><i class="anchor-icon"></i></a>getUpdates</h4>
+export interface ApiMethods {
+  getUpdates(args: {
 <p>Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.</p>
 <table class="table">
 <thead>
@@ -229,7 +230,8 @@ export interface ApiSuccess<T> {
 <blockquote>
 <p><strong>Notes</strong><br><strong>1.</strong> This method will not work if an outgoing webhook is set up.<br><strong>2.</strong> In order to avoid getting duplicate updates, recalculate <em>offset</em> after each server response.</p>
 </blockquote>
-<h4><a class="anchor" name="setwebhook" href="#setwebhook"><i class="anchor-icon"></i></a>setWebhook</h4>
+export interface ApiMethods {
+  setWebhook(args: {
 <p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns <em>True</em> on success.</p>
 <p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter <em>secret_token</em>. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
 <table class="table">
@@ -290,7 +292,8 @@ export interface ApiSuccess<T> {
 <p><strong>Notes</strong><br><strong>1.</strong> You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.<br><strong>2.</strong> To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using <em>certificate</em> parameter. Please upload as InputFile, sending a String will not work.<br><strong>3.</strong> Ports currently supported <em>for webhooks</em>: <strong>443, 80, 88, 8443</strong>.</p>
 <p>If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.</p>
 </blockquote>
-<h4><a class="anchor" name="deletewebhook" href="#deletewebhook"><i class="anchor-icon"></i></a>deleteWebhook</h4>
+export interface ApiMethods {
+  deleteWebhook(args: {
 <p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -310,9 +313,10 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getwebhookinfo" href="#getwebhookinfo"><i class="anchor-icon"></i></a>getWebhookInfo</h4>
+export interface ApiMethods {
+  getWebhookInfo(args: {
 <p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the <em>url</em> field empty.</p>
-<h4><a class="anchor" name="webhookinfo" href="#webhookinfo"><i class="anchor-icon"></i></a>WebhookInfo</h4>
+export interface WebhookInfo = {
 <p>Describes the current status of a webhook.</p>
 <table class="table">
 <thead>
@@ -376,7 +380,7 @@ export interface ApiSuccess<T> {
 <blockquote>
 <p><strong>Optional</strong> fields may be not returned when irrelevant.</p>
 </blockquote>
-<h4><a class="anchor" name="user" href="#user"><i class="anchor-icon"></i></a>User</h4>
+export interface User = {
 <p>This object represents a Telegram user or bot.</p>
 <table class="table">
 <thead>
@@ -479,7 +483,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chat" href="#chat"><i class="anchor-icon"></i></a>Chat</h4>
+export interface Chat = {
 <p>This object represents a chat.</p>
 <table class="table">
 <thead>
@@ -532,7 +536,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatfullinfo" href="#chatfullinfo"><i class="anchor-icon"></i></a>ChatFullInfo</h4>
+export interface ChatFullInfo = {
 <p>This object contains full information about a chat.</p>
 <table class="table">
 <thead>
@@ -810,7 +814,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="message" href="#message"><i class="anchor-icon"></i></a>Message</h4>
+export interface Message = {
 <p>This object represents a message.</p>
 <table class="table">
 <thead>
@@ -1418,7 +1422,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messageid" href="#messageid"><i class="anchor-icon"></i></a>MessageId</h4>
+export interface MessageId = {
 <p>This object represents a unique message identifier.</p>
 <table class="table">
 <thead>
@@ -1436,7 +1440,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inaccessiblemessage" href="#inaccessiblemessage"><i class="anchor-icon"></i></a>InaccessibleMessage</h4>
+export interface InaccessibleMessage = {
 <p>This object describes a message that was deleted or is otherwise inaccessible to the bot.</p>
 <table class="table">
 <thead>
@@ -1464,13 +1468,13 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="maybeinaccessiblemessage" href="#maybeinaccessiblemessage"><i class="anchor-icon"></i></a>MaybeInaccessibleMessage</h4>
+export interface MaybeInaccessibleMessage = {
 <p>This object describes a message that can be inaccessible to the bot. It can be one of</p>
 <ul>
 <li><a href="#message">Message</a></li>
 <li><a href="#inaccessiblemessage">InaccessibleMessage</a></li>
 </ul>
-<h4><a class="anchor" name="messageentity" href="#messageentity"><i class="anchor-icon"></i></a>MessageEntity</h4>
+export interface MessageEntity = {
 <p>This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.</p>
 <table class="table">
 <thead>
@@ -1528,7 +1532,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="textquote" href="#textquote"><i class="anchor-icon"></i></a>TextQuote</h4>
+export interface TextQuote = {
 <p>This object contains information about the quoted part of a message that is replied to by the given message.</p>
 <table class="table">
 <thead>
@@ -1561,7 +1565,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="externalreplyinfo" href="#externalreplyinfo"><i class="anchor-icon"></i></a>ExternalReplyInfo</h4>
+export interface ExternalReplyInfo = {
 <p>This object contains information about a message that is being replied to, which may come from another chat or forum topic.</p>
 <table class="table">
 <thead>
@@ -1704,7 +1708,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="replyparameters" href="#replyparameters"><i class="anchor-icon"></i></a>ReplyParameters</h4>
+export interface ReplyParameters = {
 <p>Describes reply parameters for the message that is being sent.</p>
 <table class="table">
 <thead>
@@ -1767,7 +1771,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messageorigin" href="#messageorigin"><i class="anchor-icon"></i></a>MessageOrigin</h4>
+export interface MessageOrigin = {
 <p>This object describes the origin of a message. It can be one of</p>
 <ul>
 <li><a href="#messageoriginuser">MessageOriginUser</a></li>
@@ -1775,7 +1779,7 @@ export interface ApiSuccess<T> {
 <li><a href="#messageoriginchat">MessageOriginChat</a></li>
 <li><a href="#messageoriginchannel">MessageOriginChannel</a></li>
 </ul>
-<h4><a class="anchor" name="messageoriginuser" href="#messageoriginuser"><i class="anchor-icon"></i></a>MessageOriginUser</h4>
+export interface MessageOriginUser = {
 <p>The message was originally sent by a known user.</p>
 <table class="table">
 <thead>
@@ -1803,7 +1807,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messageoriginhiddenuser" href="#messageoriginhiddenuser"><i class="anchor-icon"></i></a>MessageOriginHiddenUser</h4>
+export interface MessageOriginHiddenUser = {
 <p>The message was originally sent by an unknown user.</p>
 <table class="table">
 <thead>
@@ -1831,7 +1835,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messageoriginchat" href="#messageoriginchat"><i class="anchor-icon"></i></a>MessageOriginChat</h4>
+export interface MessageOriginChat = {
 <p>The message was originally sent on behalf of a chat to a group chat.</p>
 <table class="table">
 <thead>
@@ -1864,7 +1868,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messageoriginchannel" href="#messageoriginchannel"><i class="anchor-icon"></i></a>MessageOriginChannel</h4>
+export interface MessageOriginChannel = {
 <p>The message was originally sent to a channel chat.</p>
 <table class="table">
 <thead>
@@ -1902,7 +1906,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="photosize" href="#photosize"><i class="anchor-icon"></i></a>PhotoSize</h4>
+export interface PhotoSize = {
 <p>This object represents one size of a photo or a <a href="#document">file</a> / <a href="#sticker">sticker</a> thumbnail.</p>
 <table class="table">
 <thead>
@@ -1940,7 +1944,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="animation" href="#animation"><i class="anchor-icon"></i></a>Animation</h4>
+export interface Animation = {
 <p>This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).</p>
 <table class="table">
 <thead>
@@ -1998,7 +2002,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="audio" href="#audio"><i class="anchor-icon"></i></a>Audio</h4>
+export interface Audio = {
 <p>This object represents an audio file to be treated as music by the Telegram clients.</p>
 <table class="table">
 <thead>
@@ -2056,7 +2060,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="document" href="#document"><i class="anchor-icon"></i></a>Document</h4>
+export interface Document = {
 <p>This object represents a general file (as opposed to <a href="#photosize">photos</a>, <a href="#voice">voice messages</a> and <a href="#audio">audio files</a>).</p>
 <table class="table">
 <thead>
@@ -2099,7 +2103,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="livephoto" href="#livephoto"><i class="anchor-icon"></i></a>LivePhoto</h4>
+export interface LivePhoto = {
 <p>This object represents a live photo.</p>
 <table class="table">
 <thead>
@@ -2152,7 +2156,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="story" href="#story"><i class="anchor-icon"></i></a>Story</h4>
+export interface Story = {
 <p>This object represents a story.</p>
 <table class="table">
 <thead>
@@ -2175,7 +2179,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="videoquality" href="#videoquality"><i class="anchor-icon"></i></a>VideoQuality</h4>
+export interface VideoQuality = {
 <p>This object represents a video file of a specific quality.</p>
 <table class="table">
 <thead>
@@ -2218,7 +2222,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="video" href="#video"><i class="anchor-icon"></i></a>Video</h4>
+export interface Video = {
 <p>This object represents a video file.</p>
 <table class="table">
 <thead>
@@ -2291,7 +2295,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="videonote" href="#videonote"><i class="anchor-icon"></i></a>VideoNote</h4>
+export interface VideoNote = {
 <p>This object represents a <a href="https://telegram.org/blog/video-messages-and-telescope">video message</a> (available in Telegram apps as of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>).</p>
 <table class="table">
 <thead>
@@ -2334,7 +2338,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="voice" href="#voice"><i class="anchor-icon"></i></a>Voice</h4>
+export interface Voice = {
 <p>This object represents a voice note.</p>
 <table class="table">
 <thead>
@@ -2372,7 +2376,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmediainfo" href="#paidmediainfo"><i class="anchor-icon"></i></a>PaidMediaInfo</h4>
+export interface PaidMediaInfo = {
 <p>Describes the paid media added to a message.</p>
 <table class="table">
 <thead>
@@ -2395,7 +2399,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmedia" href="#paidmedia"><i class="anchor-icon"></i></a>PaidMedia</h4>
+export interface PaidMedia = {
 <p>This object describes paid media. Currently, it can be one of</p>
 <ul>
 <li><a href="#paidmedialivephoto">PaidMediaLivePhoto</a></li>
@@ -2403,7 +2407,7 @@ export interface ApiSuccess<T> {
 <li><a href="#paidmediapreview">PaidMediaPreview</a></li>
 <li><a href="#paidmediavideo">PaidMediaVideo</a></li>
 </ul>
-<h4><a class="anchor" name="paidmedialivephoto" href="#paidmedialivephoto"><i class="anchor-icon"></i></a>PaidMediaLivePhoto</h4>
+export interface PaidMediaLivePhoto = {
 <p>The paid media is a <a href="#livephoto">live photo</a>.</p>
 <table class="table">
 <thead>
@@ -2426,7 +2430,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmediaphoto" href="#paidmediaphoto"><i class="anchor-icon"></i></a>PaidMediaPhoto</h4>
+export interface PaidMediaPhoto = {
 <p>The paid media is a photo.</p>
 <table class="table">
 <thead>
@@ -2449,7 +2453,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmediapreview" href="#paidmediapreview"><i class="anchor-icon"></i></a>PaidMediaPreview</h4>
+export interface PaidMediaPreview = {
 <p>The paid media isn&#39;t available before the payment.</p>
 <table class="table">
 <thead>
@@ -2482,7 +2486,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmediavideo" href="#paidmediavideo"><i class="anchor-icon"></i></a>PaidMediaVideo</h4>
+export interface PaidMediaVideo = {
 <p>The paid media is a video.</p>
 <table class="table">
 <thead>
@@ -2505,7 +2509,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="contact" href="#contact"><i class="anchor-icon"></i></a>Contact</h4>
+export interface Contact = {
 <p>This object represents a phone contact.</p>
 <table class="table">
 <thead>
@@ -2543,7 +2547,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="dice" href="#dice"><i class="anchor-icon"></i></a>Dice</h4>
+export interface Dice = {
 <p>This object represents an animated emoji that displays a random value.</p>
 <table class="table">
 <thead>
@@ -2566,7 +2570,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="link" href="#link"><i class="anchor-icon"></i></a>Link</h4>
+export interface Link = {
 <p>Represents an HTTP link.</p>
 <table class="table">
 <thead>
@@ -2584,7 +2588,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="pollmedia" href="#pollmedia"><i class="anchor-icon"></i></a>PollMedia</h4>
+export interface PollMedia = {
 <p>At most <strong>one</strong> of the optional fields can be present in any given object.</p>
 <table class="table">
 <thead>
@@ -2647,7 +2651,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputpollmedia" href="#inputpollmedia"><i class="anchor-icon"></i></a>InputPollMedia</h4>
+export interface InputPollMedia = {
 <p>This object represents the content of a poll description or a quiz explanation to be sent. It should be one of</p>
 <ul>
 <li><a href="#inputmediaanimation">InputMediaAnimation</a></li>
@@ -2659,7 +2663,7 @@ export interface ApiSuccess<T> {
 <li><a href="#inputmediavenue">InputMediaVenue</a></li>
 <li><a href="#inputmediavideo">InputMediaVideo</a></li>
 </ul>
-<h4><a class="anchor" name="inputpolloptionmedia" href="#inputpolloptionmedia"><i class="anchor-icon"></i></a>InputPollOptionMedia</h4>
+export interface InputPollOptionMedia = {
 <p>This object represents the content of a poll option to be sent. It should be one of</p>
 <ul>
 <li><a href="#inputmediaanimation">InputMediaAnimation</a></li>
@@ -2671,7 +2675,7 @@ export interface ApiSuccess<T> {
 <li><a href="#inputmediavenue">InputMediaVenue</a></li>
 <li><a href="#inputmediavideo">InputMediaVideo</a></li>
 </ul>
-<h4><a class="anchor" name="polloption" href="#polloption"><i class="anchor-icon"></i></a>PollOption</h4>
+export interface PollOption = {
 <p>This object contains information about one answer option in a poll.</p>
 <table class="table">
 <thead>
@@ -2724,7 +2728,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputpolloption" href="#inputpolloption"><i class="anchor-icon"></i></a>InputPollOption</h4>
+export interface InputPollOption = {
 <p>This object contains information about one answer option in a poll to be sent.</p>
 <table class="table">
 <thead>
@@ -2757,7 +2761,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="pollanswer" href="#pollanswer"><i class="anchor-icon"></i></a>PollAnswer</h4>
+export interface PollAnswer = {
 <p>This object represents an answer of a user in a non-anonymous poll.</p>
 <table class="table">
 <thead>
@@ -2795,7 +2799,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="poll" href="#poll"><i class="anchor-icon"></i></a>Poll</h4>
+export interface Poll = {
 <p>This object contains information about a poll.</p>
 <table class="table">
 <thead>
@@ -2913,7 +2917,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="checklisttask" href="#checklisttask"><i class="anchor-icon"></i></a>ChecklistTask</h4>
+export interface ChecklistTask = {
 <p>Describes a task in a checklist.</p>
 <table class="table">
 <thead>
@@ -2956,7 +2960,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="checklist" href="#checklist"><i class="anchor-icon"></i></a>Checklist</h4>
+export interface Checklist = {
 <p>Describes a checklist.</p>
 <table class="table">
 <thead>
@@ -2994,7 +2998,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputchecklisttask" href="#inputchecklisttask"><i class="anchor-icon"></i></a>InputChecklistTask</h4>
+export interface InputChecklistTask = {
 <p>Describes a task to add to a checklist.</p>
 <table class="table">
 <thead>
@@ -3027,7 +3031,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputchecklist" href="#inputchecklist"><i class="anchor-icon"></i></a>InputChecklist</h4>
+export interface InputChecklist = {
 <p>Describes a checklist to create.</p>
 <table class="table">
 <thead>
@@ -3070,7 +3074,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="location" href="#location"><i class="anchor-icon"></i></a>Location</h4>
+export interface Location = {
 <p>This object represents a point on the map.</p>
 <table class="table">
 <thead>
@@ -3113,7 +3117,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="venue" href="#venue"><i class="anchor-icon"></i></a>Venue</h4>
+export interface Venue = {
 <p>This object represents a venue.</p>
 <table class="table">
 <thead>
@@ -3161,7 +3165,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="webappdata" href="#webappdata"><i class="anchor-icon"></i></a>WebAppData</h4>
+export interface WebAppData = {
 <p>Describes data sent from a <a href="/bots/webapps">Web App</a> to the bot.</p>
 <table class="table">
 <thead>
@@ -3184,7 +3188,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="proximityalerttriggered" href="#proximityalerttriggered"><i class="anchor-icon"></i></a>ProximityAlertTriggered</h4>
+export interface ProximityAlertTriggered = {
 <p>This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.</p>
 <table class="table">
 <thead>
@@ -3212,7 +3216,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messageautodeletetimerchanged" href="#messageautodeletetimerchanged"><i class="anchor-icon"></i></a>MessageAutoDeleteTimerChanged</h4>
+export interface MessageAutoDeleteTimerChanged = {
 <p>This object represents a service message about a change in auto-delete timer settings.</p>
 <table class="table">
 <thead>
@@ -3230,7 +3234,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="managedbotcreated" href="#managedbotcreated"><i class="anchor-icon"></i></a>ManagedBotCreated</h4>
+export interface ManagedBotCreated = {
 <p>This object contains information about the bot that was created to be managed by the current bot.</p>
 <table class="table">
 <thead>
@@ -3248,7 +3252,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="managedbotupdated" href="#managedbotupdated"><i class="anchor-icon"></i></a>ManagedBotUpdated</h4>
+export interface ManagedBotUpdated = {
 <p>This object contains information about the creation, token update, or owner update of a bot that is managed by the current bot.</p>
 <table class="table">
 <thead>
@@ -3271,7 +3275,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botsubscriptionupdated" href="#botsubscriptionupdated"><i class="anchor-icon"></i></a>BotSubscriptionUpdated</h4>
+export interface BotSubscriptionUpdated = {
 <p>This object contains information about changes to a user payment subscription toward the current bot.</p>
 <table class="table">
 <thead>
@@ -3299,7 +3303,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="polloptionadded" href="#polloptionadded"><i class="anchor-icon"></i></a>PollOptionAdded</h4>
+export interface PollOptionAdded = {
 <p>Describes a service message about an option added to a poll.</p>
 <table class="table">
 <thead>
@@ -3332,7 +3336,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="polloptiondeleted" href="#polloptiondeleted"><i class="anchor-icon"></i></a>PollOptionDeleted</h4>
+export interface PollOptionDeleted = {
 <p>Describes a service message about an option deleted from a poll.</p>
 <table class="table">
 <thead>
@@ -3365,7 +3369,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboostadded" href="#chatboostadded"><i class="anchor-icon"></i></a>ChatBoostAdded</h4>
+export interface ChatBoostAdded = {
 <p>This object represents a service message about a user boosting a chat.</p>
 <table class="table">
 <thead>
@@ -3383,14 +3387,14 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundfill" href="#backgroundfill"><i class="anchor-icon"></i></a>BackgroundFill</h4>
+export interface BackgroundFill = {
 <p>This object describes the way a background is filled based on the selected colors. Currently, it can be one of</p>
 <ul>
 <li><a href="#backgroundfillsolid">BackgroundFillSolid</a></li>
 <li><a href="#backgroundfillgradient">BackgroundFillGradient</a></li>
 <li><a href="#backgroundfillfreeformgradient">BackgroundFillFreeformGradient</a></li>
 </ul>
-<h4><a class="anchor" name="backgroundfillsolid" href="#backgroundfillsolid"><i class="anchor-icon"></i></a>BackgroundFillSolid</h4>
+export interface BackgroundFillSolid = {
 <p>The background is filled using the selected color.</p>
 <table class="table">
 <thead>
@@ -3413,7 +3417,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundfillgradient" href="#backgroundfillgradient"><i class="anchor-icon"></i></a>BackgroundFillGradient</h4>
+export interface BackgroundFillGradient = {
 <p>The background is a gradient fill.</p>
 <table class="table">
 <thead>
@@ -3446,7 +3450,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundfillfreeformgradient" href="#backgroundfillfreeformgradient"><i class="anchor-icon"></i></a>BackgroundFillFreeformGradient</h4>
+export interface BackgroundFillFreeformGradient = {
 <p>The background is a freeform gradient that rotates after every message in the chat.</p>
 <table class="table">
 <thead>
@@ -3469,7 +3473,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundtype" href="#backgroundtype"><i class="anchor-icon"></i></a>BackgroundType</h4>
+export interface BackgroundType = {
 <p>This object describes the type of a background. Currently, it can be one of</p>
 <ul>
 <li><a href="#backgroundtypefill">BackgroundTypeFill</a></li>
@@ -3477,7 +3481,7 @@ export interface ApiSuccess<T> {
 <li><a href="#backgroundtypepattern">BackgroundTypePattern</a></li>
 <li><a href="#backgroundtypechattheme">BackgroundTypeChatTheme</a></li>
 </ul>
-<h4><a class="anchor" name="backgroundtypefill" href="#backgroundtypefill"><i class="anchor-icon"></i></a>BackgroundTypeFill</h4>
+export interface BackgroundTypeFill = {
 <p>The background is automatically filled based on the selected colors.</p>
 <table class="table">
 <thead>
@@ -3505,7 +3509,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundtypewallpaper" href="#backgroundtypewallpaper"><i class="anchor-icon"></i></a>BackgroundTypeWallpaper</h4>
+export interface BackgroundTypeWallpaper = {
 <p>The background is a wallpaper in the JPEG format.</p>
 <table class="table">
 <thead>
@@ -3543,7 +3547,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundtypepattern" href="#backgroundtypepattern"><i class="anchor-icon"></i></a>BackgroundTypePattern</h4>
+export interface BackgroundTypePattern = {
 <p>The background is a .PNG or .TGV (gzipped subset of SVG with MIME type “application/x-tgwallpattern”) pattern to be combined with the background fill chosen by the user.</p>
 <table class="table">
 <thead>
@@ -3586,7 +3590,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="backgroundtypechattheme" href="#backgroundtypechattheme"><i class="anchor-icon"></i></a>BackgroundTypeChatTheme</h4>
+export interface BackgroundTypeChatTheme = {
 <p>The background is taken directly from a built-in chat theme.</p>
 <table class="table">
 <thead>
@@ -3609,7 +3613,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatbackground" href="#chatbackground"><i class="anchor-icon"></i></a>ChatBackground</h4>
+export interface ChatBackground = {
 <p>This object represents a chat background.</p>
 <table class="table">
 <thead>
@@ -3627,7 +3631,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="checklisttasksdone" href="#checklisttasksdone"><i class="anchor-icon"></i></a>ChecklistTasksDone</h4>
+export interface ChecklistTasksDone = {
 <p>Describes a service message about checklist tasks marked as done or not done.</p>
 <table class="table">
 <thead>
@@ -3655,7 +3659,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="checklisttasksadded" href="#checklisttasksadded"><i class="anchor-icon"></i></a>ChecklistTasksAdded</h4>
+export interface ChecklistTasksAdded = {
 <p>Describes a service message about tasks added to a checklist.</p>
 <table class="table">
 <thead>
@@ -3678,7 +3682,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="communitychatadded" href="#communitychatadded"><i class="anchor-icon"></i></a>CommunityChatAdded</h4>
+export interface CommunityChatAdded = {
 <p>Describes a service message about a chat being added to a community.</p>
 <table class="table">
 <thead>
@@ -3696,9 +3700,9 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="communitychatremoved" href="#communitychatremoved"><i class="anchor-icon"></i></a>CommunityChatRemoved</h4>
+export interface CommunityChatRemoved = {
 <p>Describes a service message about a chat being removed from a community. Currently holds no information.</p>
-<h4><a class="anchor" name="forumtopiccreated" href="#forumtopiccreated"><i class="anchor-icon"></i></a>ForumTopicCreated</h4>
+export interface ForumTopicCreated = {
 <p>This object represents a service message about a new forum topic created in the chat.</p>
 <table class="table">
 <thead>
@@ -3731,9 +3735,9 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="forumtopicclosed" href="#forumtopicclosed"><i class="anchor-icon"></i></a>ForumTopicClosed</h4>
+export interface ForumTopicClosed = {
 <p>This object represents a service message about a forum topic closed in the chat. Currently holds no information.</p>
-<h4><a class="anchor" name="forumtopicedited" href="#forumtopicedited"><i class="anchor-icon"></i></a>ForumTopicEdited</h4>
+export interface ForumTopicEdited = {
 <p>This object represents a service message about an edited forum topic.</p>
 <table class="table">
 <thead>
@@ -3756,13 +3760,13 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="forumtopicreopened" href="#forumtopicreopened"><i class="anchor-icon"></i></a>ForumTopicReopened</h4>
+export interface ForumTopicReopened = {
 <p>This object represents a service message about a forum topic reopened in the chat. Currently holds no information.</p>
-<h4><a class="anchor" name="generalforumtopichidden" href="#generalforumtopichidden"><i class="anchor-icon"></i></a>GeneralForumTopicHidden</h4>
+export interface GeneralForumTopicHidden = {
 <p>This object represents a service message about General forum topic hidden in the chat. Currently holds no information.</p>
-<h4><a class="anchor" name="generalforumtopicunhidden" href="#generalforumtopicunhidden"><i class="anchor-icon"></i></a>GeneralForumTopicUnhidden</h4>
+export interface GeneralForumTopicUnhidden = {
 <p>This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.</p>
-<h4><a class="anchor" name="shareduser" href="#shareduser"><i class="anchor-icon"></i></a>SharedUser</h4>
+export interface SharedUser = {
 <p>This object contains information about a user that was shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.</p>
 <table class="table">
 <thead>
@@ -3800,7 +3804,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="usersshared" href="#usersshared"><i class="anchor-icon"></i></a>UsersShared</h4>
+export interface UsersShared = {
 <p>This object contains information about the users whose identifiers were shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.</p>
 <table class="table">
 <thead>
@@ -3823,7 +3827,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatshared" href="#chatshared"><i class="anchor-icon"></i></a>ChatShared</h4>
+export interface ChatShared = {
 <p>This object contains information about a chat that was shared with the bot using a <a href="#keyboardbuttonrequestchat">KeyboardButtonRequestChat</a> button.</p>
 <table class="table">
 <thead>
@@ -3861,7 +3865,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="writeaccessallowed" href="#writeaccessallowed"><i class="anchor-icon"></i></a>WriteAccessAllowed</h4>
+export interface WriteAccessAllowed = {
 <p>This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>.</p>
 <table class="table">
 <thead>
@@ -3889,7 +3893,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="videochatscheduled" href="#videochatscheduled"><i class="anchor-icon"></i></a>VideoChatScheduled</h4>
+export interface VideoChatScheduled = {
 <p>This object represents a service message about a video chat scheduled in the chat.</p>
 <table class="table">
 <thead>
@@ -3907,9 +3911,9 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="videochatstarted" href="#videochatstarted"><i class="anchor-icon"></i></a>VideoChatStarted</h4>
+export interface VideoChatStarted = {
 <p>This object represents a service message about a video chat started in the chat. Currently holds no information.</p>
-<h4><a class="anchor" name="videochatended" href="#videochatended"><i class="anchor-icon"></i></a>VideoChatEnded</h4>
+export interface VideoChatEnded = {
 <p>This object represents a service message about a video chat ended in the chat.</p>
 <table class="table">
 <thead>
@@ -3927,7 +3931,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="videochatparticipantsinvited" href="#videochatparticipantsinvited"><i class="anchor-icon"></i></a>VideoChatParticipantsInvited</h4>
+export interface VideoChatParticipantsInvited = {
 <p>This object represents a service message about new members invited to a video chat.</p>
 <table class="table">
 <thead>
@@ -3945,7 +3949,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmessagepricechanged" href="#paidmessagepricechanged"><i class="anchor-icon"></i></a>PaidMessagePriceChanged</h4>
+export interface PaidMessagePriceChanged = {
 <p>Describes a service message about a change in the price of paid messages within a chat.</p>
 <table class="table">
 <thead>
@@ -3963,7 +3967,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="directmessagepricechanged" href="#directmessagepricechanged"><i class="anchor-icon"></i></a>DirectMessagePriceChanged</h4>
+export interface DirectMessagePriceChanged = {
 <p>Describes a service message about a change in the price of direct messages sent to a channel chat.</p>
 <table class="table">
 <thead>
@@ -3986,7 +3990,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostapproved" href="#suggestedpostapproved"><i class="anchor-icon"></i></a>SuggestedPostApproved</h4>
+export interface SuggestedPostApproved = {
 <p>Describes a service message about the approval of a suggested post.</p>
 <table class="table">
 <thead>
@@ -4014,7 +4018,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostapprovalfailed" href="#suggestedpostapprovalfailed"><i class="anchor-icon"></i></a>SuggestedPostApprovalFailed</h4>
+export interface SuggestedPostApprovalFailed = {
 <p>Describes a service message about the failed approval of a suggested post. Currently, only caused by insufficient user funds at the time of approval.</p>
 <table class="table">
 <thead>
@@ -4037,7 +4041,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostdeclined" href="#suggestedpostdeclined"><i class="anchor-icon"></i></a>SuggestedPostDeclined</h4>
+export interface SuggestedPostDeclined = {
 <p>Describes a service message about the rejection of a suggested post.</p>
 <table class="table">
 <thead>
@@ -4060,7 +4064,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostpaid" href="#suggestedpostpaid"><i class="anchor-icon"></i></a>SuggestedPostPaid</h4>
+export interface SuggestedPostPaid = {
 <p>Describes a service message about a successful payment for a suggested post.</p>
 <table class="table">
 <thead>
@@ -4093,7 +4097,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostrefunded" href="#suggestedpostrefunded"><i class="anchor-icon"></i></a>SuggestedPostRefunded</h4>
+export interface SuggestedPostRefunded = {
 <p>Describes a service message about a payment refund for a suggested post.</p>
 <table class="table">
 <thead>
@@ -4116,7 +4120,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="giveawaycreated" href="#giveawaycreated"><i class="anchor-icon"></i></a>GiveawayCreated</h4>
+export interface GiveawayCreated = {
 <p>This object represents a service message about the creation of a scheduled giveaway.</p>
 <table class="table">
 <thead>
@@ -4134,7 +4138,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="giveaway" href="#giveaway"><i class="anchor-icon"></i></a>Giveaway</h4>
+export interface Giveaway = {
 <p>This object represents a message about a scheduled giveaway.</p>
 <table class="table">
 <thead>
@@ -4192,7 +4196,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="giveawaywinners" href="#giveawaywinners"><i class="anchor-icon"></i></a>GiveawayWinners</h4>
+export interface GiveawayWinners = {
 <p>This object represents a message about the completion of a giveaway with public winners.</p>
 <table class="table">
 <thead>
@@ -4265,7 +4269,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="giveawaycompleted" href="#giveawaycompleted"><i class="anchor-icon"></i></a>GiveawayCompleted</h4>
+export interface GiveawayCompleted = {
 <p>This object represents a service message about the completion of a giveaway without public winners.</p>
 <table class="table">
 <thead>
@@ -4298,7 +4302,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="linkpreviewoptions" href="#linkpreviewoptions"><i class="anchor-icon"></i></a>LinkPreviewOptions</h4>
+export interface LinkPreviewOptions = {
 <p>Describes the options used for link preview generation.</p>
 <table class="table">
 <thead>
@@ -4336,7 +4340,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostprice" href="#suggestedpostprice"><i class="anchor-icon"></i></a>SuggestedPostPrice</h4>
+export interface SuggestedPostPrice = {
 <p>Describes the price of a suggested post.</p>
 <table class="table">
 <thead>
@@ -4359,7 +4363,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostinfo" href="#suggestedpostinfo"><i class="anchor-icon"></i></a>SuggestedPostInfo</h4>
+export interface SuggestedPostInfo = {
 <p>Contains information about a suggested post.</p>
 <table class="table">
 <thead>
@@ -4387,7 +4391,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="suggestedpostparameters" href="#suggestedpostparameters"><i class="anchor-icon"></i></a>SuggestedPostParameters</h4>
+export interface SuggestedPostParameters = {
 <p>Contains parameters of a post that is being suggested by the bot.</p>
 <table class="table">
 <thead>
@@ -4410,7 +4414,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="directmessagestopic" href="#directmessagestopic"><i class="anchor-icon"></i></a>DirectMessagesTopic</h4>
+export interface DirectMessagesTopic = {
 <p>Describes a topic of a direct messages chat.</p>
 <table class="table">
 <thead>
@@ -4433,7 +4437,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="userprofilephotos" href="#userprofilephotos"><i class="anchor-icon"></i></a>UserProfilePhotos</h4>
+export interface UserProfilePhotos = {
 <p>This object represent a user&#39;s profile pictures.</p>
 <table class="table">
 <thead>
@@ -4456,7 +4460,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="userprofileaudios" href="#userprofileaudios"><i class="anchor-icon"></i></a>UserProfileAudios</h4>
+export interface UserProfileAudios = {
 <p>This object represents the audios displayed on a user&#39;s profile.</p>
 <table class="table">
 <thead>
@@ -4479,7 +4483,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="file" href="#file"><i class="anchor-icon"></i></a>File</h4>
+export interface File = {
 <p>This object represents a file ready to be downloaded. The file can be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a>.</p>
 <blockquote>
 <p>The maximum file size to download is 20 MB</p>
@@ -4515,7 +4519,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="webappinfo" href="#webappinfo"><i class="anchor-icon"></i></a>WebAppInfo</h4>
+export interface WebAppInfo = {
 <p>Describes a <a href="/bots/webapps">Web App</a>.</p>
 <table class="table">
 <thead>
@@ -4533,7 +4537,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="replykeyboardmarkup" href="#replykeyboardmarkup"><i class="anchor-icon"></i></a>ReplyKeyboardMarkup</h4>
+export interface ReplyKeyboardMarkup = {
 <p>This object represents a <a href="/bots/features#keyboards">custom keyboard</a> with reply options (see <a href="/bots/features#keyboards">Introduction to bots</a> for details and examples). Not supported in channels and for messages sent on behalf of a business account.</p>
 <table class="table">
 <thead>
@@ -4576,7 +4580,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="keyboardbutton" href="#keyboardbutton"><i class="anchor-icon"></i></a>KeyboardButton</h4>
+export interface KeyboardButton = {
 <p>This object represents one button of the reply keyboard. At most one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button. For simple text buttons, <em>String</em> can be used instead of this object to specify the button text.</p>
 <table class="table">
 <thead>
@@ -4639,7 +4643,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="keyboardbuttonrequestusers" href="#keyboardbuttonrequestusers"><i class="anchor-icon"></i></a>KeyboardButtonRequestUsers</h4>
+export interface KeyboardButtonRequestUsers = {
 <p>This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="/bots/features#chat-and-user-selection">More about requesting users »</a></p>
 <table class="table">
 <thead>
@@ -4687,7 +4691,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="keyboardbuttonrequestchat" href="#keyboardbuttonrequestchat"><i class="anchor-icon"></i></a>KeyboardButtonRequestChat</h4>
+export interface KeyboardButtonRequestChat = {
 <p>This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. <a href="/bots/features#chat-and-user-selection">More about requesting chats »</a>.</p>
 <table class="table">
 <thead>
@@ -4755,7 +4759,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="keyboardbuttonrequestmanagedbot" href="#keyboardbuttonrequestmanagedbot"><i class="anchor-icon"></i></a>KeyboardButtonRequestManagedBot</h4>
+export interface KeyboardButtonRequestManagedBot = {
 <p>This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update <em>managed_bot</em> and a <a href="#message">Message</a> with the field <em>managed_bot_created</em>.</p>
 <table class="table">
 <thead>
@@ -4783,7 +4787,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="keyboardbuttonpolltype" href="#keyboardbuttonpolltype"><i class="anchor-icon"></i></a>KeyboardButtonPollType</h4>
+export interface KeyboardButtonPollType = {
 <p>This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.</p>
 <table class="table">
 <thead>
@@ -4801,7 +4805,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="replykeyboardremove" href="#replykeyboardremove"><i class="anchor-icon"></i></a>ReplyKeyboardRemove</h4>
+export interface ReplyKeyboardRemove = {
 <p>Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>). Not supported in channels and for messages sent on behalf of a business account.</p>
 <table class="table">
 <thead>
@@ -4824,7 +4828,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinekeyboardmarkup" href="#inlinekeyboardmarkup"><i class="anchor-icon"></i></a>InlineKeyboardMarkup</h4>
+export interface InlineKeyboardMarkup = {
 <p>This object represents an <a href="/bots/features#inline-keyboards">inline keyboard</a> that appears right next to the message it belongs to.</p>
 <table class="table">
 <thead>
@@ -4842,7 +4846,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinekeyboardbutton" href="#inlinekeyboardbutton"><i class="anchor-icon"></i></a>InlineKeyboardButton</h4>
+export interface InlineKeyboardButton = {
 <p>This object represents one button of an inline keyboard. Exactly one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button.</p>
 <table class="table">
 <thead>
@@ -4920,7 +4924,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="loginurl" href="#loginurl"><i class="anchor-icon"></i></a>LoginUrl</h4>
+export interface LoginUrl = {
 <p>This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the <a href="/widgets/login">Telegram Login Widget</a> when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:</p>
 <div class="blog_image_wrap">
   <a href="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c" target="_blank"><img src="/file/811140909/1631/20k1Z53eiyY.23995/c541e89b74253623d9" title="TITLE" alt="TITLE" srcset="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c , 2x" /></a>
@@ -4961,7 +4965,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="switchinlinequerychosenchat" href="#switchinlinequerychosenchat"><i class="anchor-icon"></i></a>SwitchInlineQueryChosenChat</h4>
+export interface SwitchInlineQueryChosenChat = {
 <p>This object represents an inline button that switches the current user to inline mode in a chosen chat, with an optional default inline query.</p>
 <table class="table">
 <thead>
@@ -4999,7 +5003,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="copytextbutton" href="#copytextbutton"><i class="anchor-icon"></i></a>CopyTextButton</h4>
+export interface CopyTextButton = {
 <p>This object represents an inline keyboard button that copies specified text to the clipboard.</p>
 <table class="table">
 <thead>
@@ -5017,7 +5021,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="callbackquery" href="#callbackquery"><i class="anchor-icon"></i></a>CallbackQuery</h4>
+export interface CallbackQuery = {
 <p>This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field <em>message</em> will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field <em>inline_message_id</em> will be present. Exactly one of the fields <em>data</em> or <em>game_short_name</em> will be present.</p>
 <table class="table">
 <thead>
@@ -5068,7 +5072,7 @@ export interface ApiSuccess<T> {
 <blockquote>
 <p><strong>NOTE:</strong> After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).</p>
 </blockquote>
-<h4><a class="anchor" name="forcereply" href="#forcereply"><i class="anchor-icon"></i></a>ForceReply</h4>
+export interface ForceReply = {
 <p>Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a user account.</p>
 <table class="table">
 <thead>
@@ -5104,7 +5108,7 @@ export interface ApiSuccess<T> {
 </ul>
 <p>The last option is definitely more attractive. And if you use <a href="#forcereply">ForceReply</a> in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.</p>
 </blockquote>
-<h4><a class="anchor" name="community" href="#community"><i class="anchor-icon"></i></a>Community</h4>
+export interface Community = {
 <p>Represents a community (a group of chats).</p>
 <table class="table">
 <thead>
@@ -5127,7 +5131,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatphoto" href="#chatphoto"><i class="anchor-icon"></i></a>ChatPhoto</h4>
+export interface ChatPhoto = {
 <p>This object represents a chat photo.</p>
 <table class="table">
 <thead>
@@ -5160,7 +5164,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatinvitelink" href="#chatinvitelink"><i class="anchor-icon"></i></a>ChatInviteLink</h4>
+export interface ChatInviteLink = {
 <p>Represents an invite link for a chat.</p>
 <table class="table">
 <thead>
@@ -5228,7 +5232,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatadministratorrights" href="#chatadministratorrights"><i class="anchor-icon"></i></a>ChatAdministratorRights</h4>
+export interface ChatAdministratorRights = {
 <p>Represents the rights of an administrator in a chat.</p>
 <table class="table">
 <thead>
@@ -5326,7 +5330,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmemberupdated" href="#chatmemberupdated"><i class="anchor-icon"></i></a>ChatMemberUpdated</h4>
+export interface ChatMemberUpdated = {
 <p>This object represents changes in the status of a chat member.</p>
 <table class="table">
 <thead>
@@ -5379,7 +5383,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmember" href="#chatmember"><i class="anchor-icon"></i></a>ChatMember</h4>
+export interface ChatMember = {
 <p>This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:</p>
 <ul>
 <li><a href="#chatmemberowner">ChatMemberOwner</a></li>
@@ -5389,7 +5393,7 @@ export interface ApiSuccess<T> {
 <li><a href="#chatmemberleft">ChatMemberLeft</a></li>
 <li><a href="#chatmemberbanned">ChatMemberBanned</a></li>
 </ul>
-<h4><a class="anchor" name="chatmemberowner" href="#chatmemberowner"><i class="anchor-icon"></i></a>ChatMemberOwner</h4>
+export interface ChatMemberOwner = {
 <p>Represents a <a href="#chatmember">chat member</a> that owns the chat and has all administrator privileges.</p>
 <table class="table">
 <thead>
@@ -5422,7 +5426,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmemberadministrator" href="#chatmemberadministrator"><i class="anchor-icon"></i></a>ChatMemberAdministrator</h4>
+export interface ChatMemberAdministrator = {
 <p>Represents a <a href="#chatmember">chat member</a> that has some additional privileges.</p>
 <table class="table">
 <thead>
@@ -5540,7 +5544,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmembermember" href="#chatmembermember"><i class="anchor-icon"></i></a>ChatMemberMember</h4>
+export interface ChatMemberMember = {
 <p>Represents a <a href="#chatmember">chat member</a> that has no additional privileges or restrictions.</p>
 <table class="table">
 <thead>
@@ -5573,7 +5577,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmemberrestricted" href="#chatmemberrestricted"><i class="anchor-icon"></i></a>ChatMemberRestricted</h4>
+export interface ChatMemberRestricted = {
 <p>Represents a <a href="#chatmember">chat member</a> that is under certain restrictions in the chat. Supergroups only.</p>
 <table class="table">
 <thead>
@@ -5691,7 +5695,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmemberleft" href="#chatmemberleft"><i class="anchor-icon"></i></a>ChatMemberLeft</h4>
+export interface ChatMemberLeft = {
 <p>Represents a <a href="#chatmember">chat member</a> that isn&#39;t currently a member of the chat, but may join it themselves.</p>
 <table class="table">
 <thead>
@@ -5714,7 +5718,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatmemberbanned" href="#chatmemberbanned"><i class="anchor-icon"></i></a>ChatMemberBanned</h4>
+export interface ChatMemberBanned = {
 <p>Represents a <a href="#chatmember">chat member</a> that was banned in the chat and can&#39;t return to the chat or view chat messages.</p>
 <table class="table">
 <thead>
@@ -5742,7 +5746,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatjoinrequest" href="#chatjoinrequest"><i class="anchor-icon"></i></a>ChatJoinRequest</h4>
+export interface ChatJoinRequest = {
 <p>Represents a join request sent to a chat.</p>
 <table class="table">
 <thead>
@@ -5790,7 +5794,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatpermissions" href="#chatpermissions"><i class="anchor-icon"></i></a>ChatPermissions</h4>
+export interface ChatPermissions = {
 <p>Describes actions that a non-administrator user is allowed to take in a chat.</p>
 <table class="table">
 <thead>
@@ -5883,7 +5887,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="birthdate" href="#birthdate"><i class="anchor-icon"></i></a>Birthdate</h4>
+export interface Birthdate = {
 <p>Describes the birthdate of a user.</p>
 <table class="table">
 <thead>
@@ -5911,7 +5915,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="businessintro" href="#businessintro"><i class="anchor-icon"></i></a>BusinessIntro</h4>
+export interface BusinessIntro = {
 <p>Contains information about the start page settings of a Telegram Business account.</p>
 <table class="table">
 <thead>
@@ -5939,7 +5943,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="businesslocation" href="#businesslocation"><i class="anchor-icon"></i></a>BusinessLocation</h4>
+export interface BusinessLocation = {
 <p>Contains information about the location of a Telegram Business account.</p>
 <table class="table">
 <thead>
@@ -5962,7 +5966,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="businessopeninghoursinterval" href="#businessopeninghoursinterval"><i class="anchor-icon"></i></a>BusinessOpeningHoursInterval</h4>
+export interface BusinessOpeningHoursInterval = {
 <p>Describes an interval of time during which a business is open.</p>
 <table class="table">
 <thead>
@@ -5985,7 +5989,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="businessopeninghours" href="#businessopeninghours"><i class="anchor-icon"></i></a>BusinessOpeningHours</h4>
+export interface BusinessOpeningHours = {
 <p>Describes the opening hours of a business.</p>
 <table class="table">
 <thead>
@@ -6008,7 +6012,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="userrating" href="#userrating"><i class="anchor-icon"></i></a>UserRating</h4>
+export interface UserRating = {
 <p>This object describes the rating of a user based on their Telegram Star spendings.</p>
 <table class="table">
 <thead>
@@ -6041,7 +6045,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyareaposition" href="#storyareaposition"><i class="anchor-icon"></i></a>StoryAreaPosition</h4>
+export interface StoryAreaPosition = {
 <p>Describes the position of a clickable area within a story.</p>
 <table class="table">
 <thead>
@@ -6084,7 +6088,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="locationaddress" href="#locationaddress"><i class="anchor-icon"></i></a>LocationAddress</h4>
+export interface LocationAddress = {
 <p>Describes the physical address of a location.</p>
 <table class="table">
 <thead>
@@ -6117,7 +6121,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyareatype" href="#storyareatype"><i class="anchor-icon"></i></a>StoryAreaType</h4>
+export interface StoryAreaType = {
 <p>Describes the type of a clickable area on a story. Currently, it can be one of</p>
 <ul>
 <li><a href="#storyareatypelocation">StoryAreaTypeLocation</a></li>
@@ -6126,7 +6130,7 @@ export interface ApiSuccess<T> {
 <li><a href="#storyareatypeweather">StoryAreaTypeWeather</a></li>
 <li><a href="#storyareatypeuniquegift">StoryAreaTypeUniqueGift</a></li>
 </ul>
-<h4><a class="anchor" name="storyareatypelocation" href="#storyareatypelocation"><i class="anchor-icon"></i></a>StoryAreaTypeLocation</h4>
+export interface StoryAreaTypeLocation = {
 <p>Describes a story area pointing to a location. Currently, a story can have up to 10 location areas.</p>
 <table class="table">
 <thead>
@@ -6159,7 +6163,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyareatypesuggestedreaction" href="#storyareatypesuggestedreaction"><i class="anchor-icon"></i></a>StoryAreaTypeSuggestedReaction</h4>
+export interface StoryAreaTypeSuggestedReaction = {
 <p>Describes a story area pointing to a suggested reaction. Currently, a story can have up to 5 suggested reaction areas.</p>
 <table class="table">
 <thead>
@@ -6192,7 +6196,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyareatypelink" href="#storyareatypelink"><i class="anchor-icon"></i></a>StoryAreaTypeLink</h4>
+export interface StoryAreaTypeLink = {
 <p>Describes a story area pointing to an HTTP or tg:// link. Currently, a story can have up to 3 link areas.</p>
 <table class="table">
 <thead>
@@ -6215,7 +6219,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyareatypeweather" href="#storyareatypeweather"><i class="anchor-icon"></i></a>StoryAreaTypeWeather</h4>
+export interface StoryAreaTypeWeather = {
 <p>Describes a story area containing weather information. Currently, a story can have up to 3 weather areas.</p>
 <table class="table">
 <thead>
@@ -6248,7 +6252,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyareatypeuniquegift" href="#storyareatypeuniquegift"><i class="anchor-icon"></i></a>StoryAreaTypeUniqueGift</h4>
+export interface StoryAreaTypeUniqueGift = {
 <p>Describes a story area pointing to a unique gift. Currently, a story can have at most 1 unique gift area.</p>
 <table class="table">
 <thead>
@@ -6271,7 +6275,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="storyarea" href="#storyarea"><i class="anchor-icon"></i></a>StoryArea</h4>
+export interface StoryArea = {
 <p>Describes a clickable area on a story media.</p>
 <table class="table">
 <thead>
@@ -6294,7 +6298,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatlocation" href="#chatlocation"><i class="anchor-icon"></i></a>ChatLocation</h4>
+export interface ChatLocation = {
 <p>Represents a location to which a chat is connected.</p>
 <table class="table">
 <thead>
@@ -6317,14 +6321,14 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="reactiontype" href="#reactiontype"><i class="anchor-icon"></i></a>ReactionType</h4>
+export interface ReactionType = {
 <p>This object describes the type of a reaction. Currently, it can be one of</p>
 <ul>
 <li><a href="#reactiontypeemoji">ReactionTypeEmoji</a></li>
 <li><a href="#reactiontypecustomemoji">ReactionTypeCustomEmoji</a></li>
 <li><a href="#reactiontypepaid">ReactionTypePaid</a></li>
 </ul>
-<h4><a class="anchor" name="reactiontypeemoji" href="#reactiontypeemoji"><i class="anchor-icon"></i></a>ReactionTypeEmoji</h4>
+export interface ReactionTypeEmoji = {
 <p>The reaction is based on an emoji.</p>
 <table class="table">
 <thead>
@@ -6347,7 +6351,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="reactiontypecustomemoji" href="#reactiontypecustomemoji"><i class="anchor-icon"></i></a>ReactionTypeCustomEmoji</h4>
+export interface ReactionTypeCustomEmoji = {
 <p>The reaction is based on a custom emoji.</p>
 <table class="table">
 <thead>
@@ -6370,7 +6374,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="reactiontypepaid" href="#reactiontypepaid"><i class="anchor-icon"></i></a>ReactionTypePaid</h4>
+export interface ReactionTypePaid = {
 <p>The reaction is paid.</p>
 <table class="table">
 <thead>
@@ -6388,7 +6392,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="reactioncount" href="#reactioncount"><i class="anchor-icon"></i></a>ReactionCount</h4>
+export interface ReactionCount = {
 <p>Represents a reaction added to a message along with the number of times it was added.</p>
 <table class="table">
 <thead>
@@ -6411,7 +6415,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messagereactionupdated" href="#messagereactionupdated"><i class="anchor-icon"></i></a>MessageReactionUpdated</h4>
+export interface MessageReactionUpdated = {
 <p>This object represents a change of a reaction on a message performed by a user.</p>
 <table class="table">
 <thead>
@@ -6459,7 +6463,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="messagereactioncountupdated" href="#messagereactioncountupdated"><i class="anchor-icon"></i></a>MessageReactionCountUpdated</h4>
+export interface MessageReactionCountUpdated = {
 <p>This object represents reaction changes on a message with anonymous reactions.</p>
 <table class="table">
 <thead>
@@ -6492,7 +6496,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="forumtopic" href="#forumtopic"><i class="anchor-icon"></i></a>ForumTopic</h4>
+export interface ForumTopic = {
 <p>This object represents a forum topic.</p>
 <table class="table">
 <thead>
@@ -6530,7 +6534,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="giftbackground" href="#giftbackground"><i class="anchor-icon"></i></a>GiftBackground</h4>
+export interface GiftBackground = {
 <p>This object describes the background of a gift.</p>
 <table class="table">
 <thead>
@@ -6558,7 +6562,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="gift" href="#gift"><i class="anchor-icon"></i></a>Gift</h4>
+export interface Gift = {
 <p>This object represents a gift that can be sent by the bot.</p>
 <table class="table">
 <thead>
@@ -6636,7 +6640,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="gifts" href="#gifts"><i class="anchor-icon"></i></a>Gifts</h4>
+export interface Gifts = {
 <p>This object represent a list of gifts.</p>
 <table class="table">
 <thead>
@@ -6654,7 +6658,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uniquegiftmodel" href="#uniquegiftmodel"><i class="anchor-icon"></i></a>UniqueGiftModel</h4>
+export interface UniqueGiftModel = {
 <p>This object describes the model of a unique gift.</p>
 <table class="table">
 <thead>
@@ -6687,7 +6691,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uniquegiftsymbol" href="#uniquegiftsymbol"><i class="anchor-icon"></i></a>UniqueGiftSymbol</h4>
+export interface UniqueGiftSymbol = {
 <p>This object describes the symbol shown on the pattern of a unique gift.</p>
 <table class="table">
 <thead>
@@ -6715,7 +6719,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uniquegiftbackdropcolors" href="#uniquegiftbackdropcolors"><i class="anchor-icon"></i></a>UniqueGiftBackdropColors</h4>
+export interface UniqueGiftBackdropColors = {
 <p>This object describes the colors of the backdrop of a unique gift.</p>
 <table class="table">
 <thead>
@@ -6748,7 +6752,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uniquegiftbackdrop" href="#uniquegiftbackdrop"><i class="anchor-icon"></i></a>UniqueGiftBackdrop</h4>
+export interface UniqueGiftBackdrop = {
 <p>This object describes the backdrop of a unique gift.</p>
 <table class="table">
 <thead>
@@ -6776,7 +6780,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uniquegiftcolors" href="#uniquegiftcolors"><i class="anchor-icon"></i></a>UniqueGiftColors</h4>
+export interface UniqueGiftColors = {
 <p>This object contains information about the color scheme for a user&#39;s name, message replies and link previews based on a unique gift.</p>
 <table class="table">
 <thead>
@@ -6819,7 +6823,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uniquegift" href="#uniquegift"><i class="anchor-icon"></i></a>UniqueGift</h4>
+export interface UniqueGift = {
 <p>This object describes a unique gift that was upgraded from a regular gift.</p>
 <table class="table">
 <thead>
@@ -6892,7 +6896,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="giftinfo" href="#giftinfo"><i class="anchor-icon"></i></a>GiftInfo</h4>
+export interface GiftInfo = {
 <p>Describes a service message about a regular gift that was sent or received.</p>
 <table class="table">
 <thead>
@@ -6955,7 +6959,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uniquegiftinfo" href="#uniquegiftinfo"><i class="anchor-icon"></i></a>UniqueGiftInfo</h4>
+export interface UniqueGiftInfo = {
 <p>Describes a service message about a unique gift that was sent or received.</p>
 <table class="table">
 <thead>
@@ -7003,13 +7007,13 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="ownedgift" href="#ownedgift"><i class="anchor-icon"></i></a>OwnedGift</h4>
+export interface OwnedGift = {
 <p>This object describes a gift received and owned by a user or a chat. Currently, it can be one of</p>
 <ul>
 <li><a href="#ownedgiftregular">OwnedGiftRegular</a></li>
 <li><a href="#ownedgiftunique">OwnedGiftUnique</a></li>
 </ul>
-<h4><a class="anchor" name="ownedgiftregular" href="#ownedgiftregular"><i class="anchor-icon"></i></a>OwnedGiftRegular</h4>
+export interface OwnedGiftRegular = {
 <p>Describes a regular gift owned by a user or a chat.</p>
 <table class="table">
 <thead>
@@ -7097,7 +7101,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="ownedgiftunique" href="#ownedgiftunique"><i class="anchor-icon"></i></a>OwnedGiftUnique</h4>
+export interface OwnedGiftUnique = {
 <p>Describes a unique gift received and owned by a user or a chat.</p>
 <table class="table">
 <thead>
@@ -7155,7 +7159,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="ownedgifts" href="#ownedgifts"><i class="anchor-icon"></i></a>OwnedGifts</h4>
+export interface OwnedGifts = {
 <p>Contains the list of gifts received and owned by a user or a chat.</p>
 <table class="table">
 <thead>
@@ -7183,7 +7187,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botaccesssettings" href="#botaccesssettings"><i class="anchor-icon"></i></a>BotAccessSettings</h4>
+export interface BotAccessSettings = {
 <p>This object describes the access settings of a bot.</p>
 <table class="table">
 <thead>
@@ -7206,7 +7210,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="acceptedgifttypes" href="#acceptedgifttypes"><i class="anchor-icon"></i></a>AcceptedGiftTypes</h4>
+export interface AcceptedGiftTypes = {
 <p>This object describes the types of gifts that can be gifted to a user or a chat.</p>
 <table class="table">
 <thead>
@@ -7244,7 +7248,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="staramount" href="#staramount"><i class="anchor-icon"></i></a>StarAmount</h4>
+export interface StarAmount = {
 <p>Describes an amount of Telegram Stars.</p>
 <table class="table">
 <thead>
@@ -7267,7 +7271,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommand" href="#botcommand"><i class="anchor-icon"></i></a>BotCommand</h4>
+export interface BotCommand = {
 <p>This object represents a bot command.</p>
 <table class="table">
 <thead>
@@ -7295,7 +7299,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscope" href="#botcommandscope"><i class="anchor-icon"></i></a>BotCommandScope</h4>
+export interface BotCommandScope = {
 <p>This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:</p>
 <ul>
 <li><a href="#botcommandscopedefault">BotCommandScopeDefault</a></li>
@@ -7332,7 +7336,7 @@ export interface ApiSuccess<T> {
 <li>botCommandScopeDefault + language_code</li>
 <li>botCommandScopeDefault</li>
 </ul>
-<h4><a class="anchor" name="botcommandscopedefault" href="#botcommandscopedefault"><i class="anchor-icon"></i></a>BotCommandScopeDefault</h4>
+export interface BotCommandScopeDefault = {
 <p>Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.</p>
 <table class="table">
 <thead>
@@ -7350,7 +7354,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscopeallprivatechats" href="#botcommandscopeallprivatechats"><i class="anchor-icon"></i></a>BotCommandScopeAllPrivateChats</h4>
+export interface BotCommandScopeAllPrivateChats = {
 <p>Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all private chats.</p>
 <table class="table">
 <thead>
@@ -7368,7 +7372,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscopeallgroupchats" href="#botcommandscopeallgroupchats"><i class="anchor-icon"></i></a>BotCommandScopeAllGroupChats</h4>
+export interface BotCommandScopeAllGroupChats = {
 <p>Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chats.</p>
 <table class="table">
 <thead>
@@ -7386,7 +7390,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscopeallchatadministrators" href="#botcommandscopeallchatadministrators"><i class="anchor-icon"></i></a>BotCommandScopeAllChatAdministrators</h4>
+export interface BotCommandScopeAllChatAdministrators = {
 <p>Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chat administrators.</p>
 <table class="table">
 <thead>
@@ -7404,7 +7408,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscopechat" href="#botcommandscopechat"><i class="anchor-icon"></i></a>BotCommandScopeChat</h4>
+export interface BotCommandScopeChat = {
 <p>Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific chat.</p>
 <table class="table">
 <thead>
@@ -7427,7 +7431,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscopechatadministrators" href="#botcommandscopechatadministrators"><i class="anchor-icon"></i></a>BotCommandScopeChatAdministrators</h4>
+export interface BotCommandScopeChatAdministrators = {
 <p>Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all administrators of a specific group or supergroup chat.</p>
 <table class="table">
 <thead>
@@ -7450,7 +7454,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botcommandscopechatmember" href="#botcommandscopechatmember"><i class="anchor-icon"></i></a>BotCommandScopeChatMember</h4>
+export interface BotCommandScopeChatMember = {
 <p>Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific member of a group or supergroup chat.</p>
 <table class="table">
 <thead>
@@ -7478,7 +7482,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botname" href="#botname"><i class="anchor-icon"></i></a>BotName</h4>
+export interface BotName = {
 <p>This object represents the bot&#39;s name.</p>
 <table class="table">
 <thead>
@@ -7496,7 +7500,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botdescription" href="#botdescription"><i class="anchor-icon"></i></a>BotDescription</h4>
+export interface BotDescription = {
 <p>This object represents the bot&#39;s description.</p>
 <table class="table">
 <thead>
@@ -7514,7 +7518,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="botshortdescription" href="#botshortdescription"><i class="anchor-icon"></i></a>BotShortDescription</h4>
+export interface BotShortDescription = {
 <p>This object represents the bot&#39;s short description.</p>
 <table class="table">
 <thead>
@@ -7532,7 +7536,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="menubutton" href="#menubutton"><i class="anchor-icon"></i></a>MenuButton</h4>
+export interface MenuButton = {
 <p>This object describes the bot&#39;s menu button in a private chat. It should be one of</p>
 <ul>
 <li><a href="#menubuttoncommands">MenuButtonCommands</a></li>
@@ -7540,7 +7544,7 @@ export interface ApiSuccess<T> {
 <li><a href="#menubuttondefault">MenuButtonDefault</a></li>
 </ul>
 <p>If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.</p>
-<h4><a class="anchor" name="menubuttoncommands" href="#menubuttoncommands"><i class="anchor-icon"></i></a>MenuButtonCommands</h4>
+export interface MenuButtonCommands = {
 <p>Represents a menu button, which opens the bot&#39;s list of commands.</p>
 <table class="table">
 <thead>
@@ -7558,7 +7562,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="menubuttonwebapp" href="#menubuttonwebapp"><i class="anchor-icon"></i></a>MenuButtonWebApp</h4>
+export interface MenuButtonWebApp = {
 <p>Represents a menu button, which launches a <a href="/bots/webapps">Web App</a>.</p>
 <table class="table">
 <thead>
@@ -7586,7 +7590,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="menubuttondefault" href="#menubuttondefault"><i class="anchor-icon"></i></a>MenuButtonDefault</h4>
+export interface MenuButtonDefault = {
 <p>Describes that no specific value for the menu button was set.</p>
 <table class="table">
 <thead>
@@ -7604,14 +7608,14 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboostsource" href="#chatboostsource"><i class="anchor-icon"></i></a>ChatBoostSource</h4>
+export interface ChatBoostSource = {
 <p>This object describes the source of a chat boost. It can be one of</p>
 <ul>
 <li><a href="#chatboostsourcepremium">ChatBoostSourcePremium</a></li>
 <li><a href="#chatboostsourcegiftcode">ChatBoostSourceGiftCode</a></li>
 <li><a href="#chatboostsourcegiveaway">ChatBoostSourceGiveaway</a></li>
 </ul>
-<h4><a class="anchor" name="chatboostsourcepremium" href="#chatboostsourcepremium"><i class="anchor-icon"></i></a>ChatBoostSourcePremium</h4>
+export interface ChatBoostSourcePremium = {
 <p>The boost was obtained by subscribing to Telegram Premium or by gifting a Telegram Premium subscription to another user.</p>
 <table class="table">
 <thead>
@@ -7634,7 +7638,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboostsourcegiftcode" href="#chatboostsourcegiftcode"><i class="anchor-icon"></i></a>ChatBoostSourceGiftCode</h4>
+export interface ChatBoostSourceGiftCode = {
 <p>The boost was obtained by the creation of Telegram Premium gift codes to boost a chat. Each such code boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription.</p>
 <table class="table">
 <thead>
@@ -7657,7 +7661,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboostsourcegiveaway" href="#chatboostsourcegiveaway"><i class="anchor-icon"></i></a>ChatBoostSourceGiveaway</h4>
+export interface ChatBoostSourceGiveaway = {
 <p>The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway. This boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription for Telegram Premium giveaways and <em>prize_star_count</em> / 500 times for one year for Telegram Star giveaways.</p>
 <table class="table">
 <thead>
@@ -7695,7 +7699,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboost" href="#chatboost"><i class="anchor-icon"></i></a>ChatBoost</h4>
+export interface ChatBoost = {
 <p>This object contains information about a chat boost.</p>
 <table class="table">
 <thead>
@@ -7728,7 +7732,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboostupdated" href="#chatboostupdated"><i class="anchor-icon"></i></a>ChatBoostUpdated</h4>
+export interface ChatBoostUpdated = {
 <p>This object represents a boost added to a chat or changed.</p>
 <table class="table">
 <thead>
@@ -7751,7 +7755,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatboostremoved" href="#chatboostremoved"><i class="anchor-icon"></i></a>ChatBoostRemoved</h4>
+export interface ChatBoostRemoved = {
 <p>This object represents a boost removed from a chat.</p>
 <table class="table">
 <thead>
@@ -7784,7 +7788,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatownerleft" href="#chatownerleft"><i class="anchor-icon"></i></a>ChatOwnerLeft</h4>
+export interface ChatOwnerLeft = {
 <p>Describes a service message about the chat owner leaving the chat.</p>
 <table class="table">
 <thead>
@@ -7802,7 +7806,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="chatownerchanged" href="#chatownerchanged"><i class="anchor-icon"></i></a>ChatOwnerChanged</h4>
+export interface ChatOwnerChanged = {
 <p>Describes a service message about an ownership change in the chat.</p>
 <table class="table">
 <thead>
@@ -7820,7 +7824,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="userchatboosts" href="#userchatboosts"><i class="anchor-icon"></i></a>UserChatBoosts</h4>
+export interface UserChatBoosts = {
 <p>This object represents a list of boosts added to a chat by a user.</p>
 <table class="table">
 <thead>
@@ -7838,7 +7842,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="businessbotrights" href="#businessbotrights"><i class="anchor-icon"></i></a>BusinessBotRights</h4>
+export interface BusinessBotRights = {
 <p>Represents the rights of a business bot.</p>
 <table class="table">
 <thead>
@@ -7921,7 +7925,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="businessconnection" href="#businessconnection"><i class="anchor-icon"></i></a>BusinessConnection</h4>
+export interface BusinessConnection = {
 <p>Describes the connection of the bot with a business account.</p>
 <table class="table">
 <thead>
@@ -7964,7 +7968,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="businessmessagesdeleted" href="#businessmessagesdeleted"><i class="anchor-icon"></i></a>BusinessMessagesDeleted</h4>
+export interface BusinessMessagesDeleted = {
 <p>This object is received when messages are deleted from a connected business account.</p>
 <table class="table">
 <thead>
@@ -7992,7 +7996,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sentwebappmessage" href="#sentwebappmessage"><i class="anchor-icon"></i></a>SentWebAppMessage</h4>
+export interface SentWebAppMessage = {
 <p>Describes an inline message sent by a <a href="/bots/webapps">Web App</a> on behalf of a user.</p>
 <table class="table">
 <thead>
@@ -8010,7 +8014,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sentguestmessage" href="#sentguestmessage"><i class="anchor-icon"></i></a>SentGuestMessage</h4>
+export interface SentGuestMessage = {
 <p>Describes an inline message sent by a guest bot.</p>
 <table class="table">
 <thead>
@@ -8028,7 +8032,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="preparedinlinemessage" href="#preparedinlinemessage"><i class="anchor-icon"></i></a>PreparedInlineMessage</h4>
+export interface PreparedInlineMessage = {
 <p>Describes an inline message to be sent by a user of a Mini App.</p>
 <table class="table">
 <thead>
@@ -8051,7 +8055,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="preparedkeyboardbutton" href="#preparedkeyboardbutton"><i class="anchor-icon"></i></a>PreparedKeyboardButton</h4>
+export interface PreparedKeyboardButton = {
 <p>Describes a keyboard button to be used by a user of a Mini App.</p>
 <table class="table">
 <thead>
@@ -8069,7 +8073,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="responseparameters" href="#responseparameters"><i class="anchor-icon"></i></a>ResponseParameters</h4>
+export interface ResponseParameters = {
 <p>Describes why a request was unsuccessful.</p>
 <table class="table">
 <thead>
@@ -8092,7 +8096,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmedia" href="#inputmedia"><i class="anchor-icon"></i></a>InputMedia</h4>
+export interface InputMedia = {
 <p>This object represents the content of a media message to be sent. It should be one of</p>
 <ul>
 <li><a href="#inputmediaanimation">InputMediaAnimation</a></li>
@@ -8102,7 +8106,7 @@ export interface ApiSuccess<T> {
 <li><a href="#inputmediaphoto">InputMediaPhoto</a></li>
 <li><a href="#inputmediavideo">InputMediaVideo</a></li>
 </ul>
-<h4><a class="anchor" name="inputmediaanimation" href="#inputmediaanimation"><i class="anchor-icon"></i></a>InputMediaAnimation</h4>
+export interface InputMediaAnimation = {
 <p>Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.</p>
 <table class="table">
 <thead>
@@ -8170,7 +8174,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmediaaudio" href="#inputmediaaudio"><i class="anchor-icon"></i></a>InputMediaAudio</h4>
+export interface InputMediaAudio = {
 <p>Represents an audio file to be treated as music to be sent.</p>
 <table class="table">
 <thead>
@@ -8228,7 +8232,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmediadocument" href="#inputmediadocument"><i class="anchor-icon"></i></a>InputMediaDocument</h4>
+export interface InputMediaDocument = {
 <p>Represents a general file to be sent.</p>
 <table class="table">
 <thead>
@@ -8276,7 +8280,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmedialink" href="#inputmedialink"><i class="anchor-icon"></i></a>InputMediaLink</h4>
+export interface InputMediaLink = {
 <p>Represents an HTTP link to be sent.</p>
 <table class="table">
 <thead>
@@ -8299,7 +8303,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmedialivephoto" href="#inputmedialivephoto"><i class="anchor-icon"></i></a>InputMediaLivePhoto</h4>
+export interface InputMediaLivePhoto = {
 <p>Represents a live photo to be sent.</p>
 <table class="table">
 <thead>
@@ -8352,7 +8356,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmedialocation" href="#inputmedialocation"><i class="anchor-icon"></i></a>InputMediaLocation</h4>
+export interface InputMediaLocation = {
 <p>Represents a location to be sent.</p>
 <table class="table">
 <thead>
@@ -8385,7 +8389,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmediaphoto" href="#inputmediaphoto"><i class="anchor-icon"></i></a>InputMediaPhoto</h4>
+export interface InputMediaPhoto = {
 <p>Represents a photo to be sent.</p>
 <table class="table">
 <thead>
@@ -8433,7 +8437,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmediasticker" href="#inputmediasticker"><i class="anchor-icon"></i></a>InputMediaSticker</h4>
+export interface InputMediaSticker = {
 <p>Represents a sticker file to be sent.</p>
 <table class="table">
 <thead>
@@ -8461,7 +8465,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmediavenue" href="#inputmediavenue"><i class="anchor-icon"></i></a>InputMediaVenue</h4>
+export interface InputMediaVenue = {
 <p>Represents a venue to be sent.</p>
 <table class="table">
 <thead>
@@ -8519,7 +8523,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmediavideo" href="#inputmediavideo"><i class="anchor-icon"></i></a>InputMediaVideo</h4>
+export interface InputMediaVideo = {
 <p>Represents a video to be sent.</p>
 <table class="table">
 <thead>
@@ -8602,7 +8606,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmediavoicenote" href="#inputmediavoicenote"><i class="anchor-icon"></i></a>InputMediaVoiceNote</h4>
+export interface InputMediaVoiceNote = {
 <p>Represents a voice message file to be sent.</p>
 <table class="table">
 <thead>
@@ -8645,16 +8649,16 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputfile" href="#inputfile"><i class="anchor-icon"></i></a>InputFile</h4>
+export interface InputFile = {
 <p>This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser.</p>
-<h4><a class="anchor" name="inputpaidmedia" href="#inputpaidmedia"><i class="anchor-icon"></i></a>InputPaidMedia</h4>
+export interface InputPaidMedia = {
 <p>This object describes the paid media to be sent. Currently, it can be one of</p>
 <ul>
 <li><a href="#inputpaidmedialivephoto">InputPaidMediaLivePhoto</a></li>
 <li><a href="#inputpaidmediaphoto">InputPaidMediaPhoto</a></li>
 <li><a href="#inputpaidmediavideo">InputPaidMediaVideo</a></li>
 </ul>
-<h4><a class="anchor" name="inputpaidmedialivephoto" href="#inputpaidmedialivephoto"><i class="anchor-icon"></i></a>InputPaidMediaLivePhoto</h4>
+export interface InputPaidMediaLivePhoto = {
 <p>The paid media to send is a live photo.</p>
 <table class="table">
 <thead>
@@ -8682,7 +8686,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputpaidmediaphoto" href="#inputpaidmediaphoto"><i class="anchor-icon"></i></a>InputPaidMediaPhoto</h4>
+export interface InputPaidMediaPhoto = {
 <p>The paid media to send is a photo.</p>
 <table class="table">
 <thead>
@@ -8705,7 +8709,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputpaidmediavideo" href="#inputpaidmediavideo"><i class="anchor-icon"></i></a>InputPaidMediaVideo</h4>
+export interface InputPaidMediaVideo = {
 <p>The paid media to send is a video.</p>
 <table class="table">
 <thead>
@@ -8763,13 +8767,13 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputprofilephoto" href="#inputprofilephoto"><i class="anchor-icon"></i></a>InputProfilePhoto</h4>
+export interface InputProfilePhoto = {
 <p>This object describes a profile photo to set. Currently, it can be one of</p>
 <ul>
 <li><a href="#inputprofilephotostatic">InputProfilePhotoStatic</a></li>
 <li><a href="#inputprofilephotoanimated">InputProfilePhotoAnimated</a></li>
 </ul>
-<h4><a class="anchor" name="inputprofilephotostatic" href="#inputprofilephotostatic"><i class="anchor-icon"></i></a>InputProfilePhotoStatic</h4>
+export interface InputProfilePhotoStatic = {
 <p>A static profile photo in the .JPG format.</p>
 <table class="table">
 <thead>
@@ -8792,7 +8796,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputprofilephotoanimated" href="#inputprofilephotoanimated"><i class="anchor-icon"></i></a>InputProfilePhotoAnimated</h4>
+export interface InputProfilePhotoAnimated = {
 <p>An animated profile photo in the MPEG4 format.</p>
 <table class="table">
 <thead>
@@ -8820,13 +8824,13 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputstorycontent" href="#inputstorycontent"><i class="anchor-icon"></i></a>InputStoryContent</h4>
+export interface InputStoryContent = {
 <p>This object describes the content of a story to post. Currently, it can be one of</p>
 <ul>
 <li><a href="#inputstorycontentphoto">InputStoryContentPhoto</a></li>
 <li><a href="#inputstorycontentvideo">InputStoryContentVideo</a></li>
 </ul>
-<h4><a class="anchor" name="inputstorycontentphoto" href="#inputstorycontentphoto"><i class="anchor-icon"></i></a>InputStoryContentPhoto</h4>
+export interface InputStoryContentPhoto = {
 <p>Describes a photo to post as a story.</p>
 <table class="table">
 <thead>
@@ -8849,7 +8853,7 @@ export interface ApiSuccess<T> {
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputstorycontentvideo" href="#inputstorycontentvideo"><i class="anchor-icon"></i></a>InputStoryContentVideo</h4>
+export interface InputStoryContentVideo = {
 <p>Describes a video to post as a story.</p>
 <table class="table">
 <thead>
@@ -8963,13 +8967,17 @@ export interface ApiSuccess<T> {
 <blockquote>
 <p>All methods in the Bot API are case-insensitive. We support <strong>GET</strong> and <strong>POST</strong> HTTP methods. Use either <a href="https://en.wikipedia.org/wiki/Query_string">URL query string</a> or <em>application/json</em> or <em>application/x-www-form-urlencoded</em> or <em>multipart/form-data</em> for passing parameters in Bot API requests.<br>On successful call, a JSON-object containing the result will be returned.</p>
 </blockquote>
-<h4><a class="anchor" name="getme" href="#getme"><i class="anchor-icon"></i></a>getMe</h4>
+export interface ApiMethods {
+  getMe(args: {
 <p>A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.</p>
-<h4><a class="anchor" name="logout" href="#logout"><i class="anchor-icon"></i></a>logOut</h4>
+export interface ApiMethods {
+  logOut(args: {
 <p>Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns <em>True</em> on success. Requires no parameters.</p>
-<h4><a class="anchor" name="close" href="#close"><i class="anchor-icon"></i></a>close</h4>
+export interface ApiMethods {
+  close(args: {
 <p>Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns <em>True</em> on success. Requires no parameters.</p>
-<h4><a class="anchor" name="sendmessage" href="#sendmessage"><i class="anchor-icon"></i></a>sendMessage</h4>
+export interface ApiMethods {
+  sendMessage(args: {
 <p>Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -9233,7 +9241,8 @@ pre-formatted fixed-width code block written in the Python programming language
 <blockquote>
 <p>Bots with increased limits are only charged for messages that are broadcasted successfully.</p>
 </blockquote>
-<h4><a class="anchor" name="forwardmessage" href="#forwardmessage"><i class="anchor-icon"></i></a>forwardMessage</h4>
+export interface ApiMethods {
+  forwardMessage(args: {
 <p>Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -9307,7 +9316,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="forwardmessages" href="#forwardmessages"><i class="anchor-icon"></i></a>forwardMessages</h4>
+export interface ApiMethods {
+  forwardMessages(args: {
 <p>Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
 <table class="table">
 <thead>
@@ -9363,7 +9373,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="copymessage" href="#copymessage"><i class="anchor-icon"></i></a>copyMessage</h4>
+export interface ApiMethods {
+  copyMessage(args: {
 <p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
 <table class="table">
 <thead>
@@ -9479,7 +9490,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="copymessages" href="#copymessages"><i class="anchor-icon"></i></a>copyMessages</h4>
+export interface ApiMethods {
+  copyMessages(args: {
 <p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
 <table class="table">
 <thead>
@@ -9541,7 +9553,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendphoto" href="#sendphoto"><i class="anchor-icon"></i></a>sendPhoto</h4>
+export interface ApiMethods {
+  sendPhoto(args: {
 <p>Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -9669,7 +9682,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendlivephoto" href="#sendlivephoto"><i class="anchor-icon"></i></a>sendLivePhoto</h4>
+export interface ApiMethods {
+  sendLivePhoto(args: {
 <p>Use this method to send live photos. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -9803,7 +9817,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendaudio" href="#sendaudio"><i class="anchor-icon"></i></a>sendAudio</h4>
+export interface ApiMethods {
+  sendAudio(args: {
 <p>Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.</p>
 <p>For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.</p>
 <table class="table">
@@ -9944,7 +9959,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="senddocument" href="#senddocument"><i class="anchor-icon"></i></a>sendDocument</h4>
+export interface ApiMethods {
+  sendDocument(args: {
 <p>Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
@@ -10072,7 +10088,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendvideo" href="#sendvideo"><i class="anchor-icon"></i></a>sendVideo</h4>
+export interface ApiMethods {
+  sendVideo(args: {
 <p>Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
@@ -10242,7 +10259,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendanimation" href="#sendanimation"><i class="anchor-icon"></i></a>sendAnimation</h4>
+export interface ApiMethods {
+  sendAnimation(args: {
 <p>Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
@@ -10394,7 +10412,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendvoice" href="#sendvoice"><i class="anchor-icon"></i></a>sendVoice</h4>
+export interface ApiMethods {
+  sendVoice(args: {
 <p>Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
@@ -10516,7 +10535,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendvideonote" href="#sendvideonote"><i class="anchor-icon"></i></a>sendVideoNote</h4>
+export interface ApiMethods {
+  sendVideoNote(args: {
 <p>As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -10632,7 +10652,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendpaidmedia" href="#sendpaidmedia"><i class="anchor-icon"></i></a>sendPaidMedia</h4>
+export interface ApiMethods {
+  sendPaidMedia(args: {
 <p>Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -10748,7 +10769,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendmediagroup" href="#sendmediagroup"><i class="anchor-icon"></i></a>sendMediaGroup</h4>
+export interface ApiMethods {
+  sendMediaGroup(args: {
 <p>Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of <a href="#message">Message</a> objects that were sent is returned.</p>
 <table class="table">
 <thead>
@@ -10822,7 +10844,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendlocation" href="#sendlocation"><i class="anchor-icon"></i></a>sendLocation</h4>
+export interface ApiMethods {
+  sendLocation(args: {
 <p>Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -10950,7 +10973,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendvenue" href="#sendvenue"><i class="anchor-icon"></i></a>sendVenue</h4>
+export interface ApiMethods {
+  sendVenue(args: {
 <p>Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -11090,7 +11114,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendcontact" href="#sendcontact"><i class="anchor-icon"></i></a>sendContact</h4>
+export interface ApiMethods {
+  sendContact(args: {
 <p>Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -11206,7 +11231,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendpoll" href="#sendpoll"><i class="anchor-icon"></i></a>sendPoll</h4>
+export interface ApiMethods {
+  sendPoll(args: {
 <p>Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -11424,7 +11450,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendchecklist" href="#sendchecklist"><i class="anchor-icon"></i></a>sendChecklist</h4>
+export interface ApiMethods {
+  sendChecklist(args: {
 <p>Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -11486,7 +11513,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="senddice" href="#senddice"><i class="anchor-icon"></i></a>sendDice</h4>
+export interface ApiMethods {
+  sendDice(args: {
 <p>Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -11572,7 +11600,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendmessagedraft" href="#sendmessagedraft"><i class="anchor-icon"></i></a>sendMessageDraft</h4>
+export interface ApiMethods {
+  sendMessageDraft(args: {
 <p>Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -11622,7 +11651,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendchataction" href="#sendchataction"><i class="anchor-icon"></i></a>sendChatAction</h4>
+export interface ApiMethods {
+  sendChatAction(args: {
 <p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns <em>True</em> on success.</p>
 <blockquote>
 <p>Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with <em>action</em> = <em>upload_photo</em>. The user will see a “sending photo” status for the bot.</p>
@@ -11664,7 +11694,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmessagereaction" href="#setmessagereaction"><i class="anchor-icon"></i></a>setMessageReaction</h4>
+export interface ApiMethods {
+  setMessageReaction(args: {
 <p>Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -11702,7 +11733,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getuserprofilephotos" href="#getuserprofilephotos"><i class="anchor-icon"></i></a>getUserProfilePhotos</h4>
+export interface ApiMethods {
+  getUserProfilePhotos(args: {
 <p>Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.</p>
 <table class="table">
 <thead>
@@ -11734,7 +11766,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getuserprofileaudios" href="#getuserprofileaudios"><i class="anchor-icon"></i></a>getUserProfileAudios</h4>
+export interface ApiMethods {
+  getUserProfileAudios(args: {
 <p>Use this method to get a list of profile audios for a user. Returns a <a href="#userprofileaudios">UserProfileAudios</a> object.</p>
 <table class="table">
 <thead>
@@ -11766,7 +11799,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setuseremojistatus" href="#setuseremojistatus"><i class="anchor-icon"></i></a>setUserEmojiStatus</h4>
+export interface ApiMethods {
+  setUserEmojiStatus(args: {
 <p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -11798,7 +11832,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getfile" href="#getfile"><i class="anchor-icon"></i></a>getFile</h4>
+export interface ApiMethods {
+  getFile(args: {
 <p>Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>, where <code>&lt;file_path&gt;</code> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.</p>
 <table class="table">
 <thead>
@@ -11819,7 +11854,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tbody>
 </table>
 <p><strong>Note:</strong> This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.</p>
-<h4><a class="anchor" name="banchatmember" href="#banchatmember"><i class="anchor-icon"></i></a>banChatMember</h4>
+export interface ApiMethods {
+  banChatMember(args: {
 <p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -11857,7 +11893,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="unbanchatmember" href="#unbanchatmember"><i class="anchor-icon"></i></a>unbanChatMember</h4>
+export interface ApiMethods {
+  unbanChatMember(args: {
 <p>Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -11889,7 +11926,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="restrictchatmember" href="#restrictchatmember"><i class="anchor-icon"></i></a>restrictChatMember</h4>
+export interface ApiMethods {
+  restrictChatMember(args: {
 <p>Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift restrictions from a user. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -11933,7 +11971,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="promotechatmember" href="#promotechatmember"><i class="anchor-icon"></i></a>promoteChatMember</h4>
+export interface ApiMethods {
+  promoteChatMember(args: {
 <p>Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all boolean parameters to demote a user. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12061,7 +12100,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setchatadministratorcustomtitle" href="#setchatadministratorcustomtitle"><i class="anchor-icon"></i></a>setChatAdministratorCustomTitle</h4>
+export interface ApiMethods {
+  setChatAdministratorCustomTitle(args: {
 <p>Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12093,7 +12133,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setchatmembertag" href="#setchatmembertag"><i class="anchor-icon"></i></a>setChatMemberTag</h4>
+export interface ApiMethods {
+  setChatMemberTag(args: {
 <p>Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_tags</em> administrator right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12125,7 +12166,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="banchatsenderchat" href="#banchatsenderchat"><i class="anchor-icon"></i></a>banChatSenderChat</h4>
+export interface ApiMethods {
+  banChatSenderChat(args: {
 <p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12151,7 +12193,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="unbanchatsenderchat" href="#unbanchatsenderchat"><i class="anchor-icon"></i></a>unbanChatSenderChat</h4>
+export interface ApiMethods {
+  unbanChatSenderChat(args: {
 <p>Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12177,7 +12220,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setchatpermissions" href="#setchatpermissions"><i class="anchor-icon"></i></a>setChatPermissions</h4>
+export interface ApiMethods {
+  setChatPermissions(args: {
 <p>Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12209,7 +12253,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="exportchatinvitelink" href="#exportchatinvitelink"><i class="anchor-icon"></i></a>exportChatInviteLink</h4>
+export interface ApiMethods {
+  exportChatInviteLink(args: {
 <p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as <em>String</em> on success.</p>
 <table class="table">
 <thead>
@@ -12232,7 +12277,8 @@ pre-formatted fixed-width code block written in the Python programming language
 <blockquote>
 <p>Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.</p>
 </blockquote>
-<h4><a class="anchor" name="createchatinvitelink" href="#createchatinvitelink"><i class="anchor-icon"></i></a>createChatInviteLink</h4>
+export interface ApiMethods {
+  createChatInviteLink(args: {
 <p>Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
@@ -12276,7 +12322,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editchatinvitelink" href="#editchatinvitelink"><i class="anchor-icon"></i></a>editChatInviteLink</h4>
+export interface ApiMethods {
+  editChatInviteLink(args: {
 <p>Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
@@ -12326,7 +12373,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="createchatsubscriptioninvitelink" href="#createchatsubscriptioninvitelink"><i class="anchor-icon"></i></a>createChatSubscriptionInviteLink</h4>
+export interface ApiMethods {
+  createChatSubscriptionInviteLink(args: {
 <p>Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the <em>can_invite_users</em> administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
@@ -12364,7 +12412,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editchatsubscriptioninvitelink" href="#editchatsubscriptioninvitelink"><i class="anchor-icon"></i></a>editChatSubscriptionInviteLink</h4>
+export interface ApiMethods {
+  editChatSubscriptionInviteLink(args: {
 <p>Use this method to edit a subscription invite link created by the bot. The bot must have the <em>can_invite_users</em> administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
@@ -12396,7 +12445,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="revokechatinvitelink" href="#revokechatinvitelink"><i class="anchor-icon"></i></a>revokeChatInviteLink</h4>
+export interface ApiMethods {
+  revokeChatInviteLink(args: {
 <p>Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
@@ -12422,7 +12472,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="approvechatjoinrequest" href="#approvechatjoinrequest"><i class="anchor-icon"></i></a>approveChatJoinRequest</h4>
+export interface ApiMethods {
+  approveChatJoinRequest(args: {
 <p>Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12448,7 +12499,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="declinechatjoinrequest" href="#declinechatjoinrequest"><i class="anchor-icon"></i></a>declineChatJoinRequest</h4>
+export interface ApiMethods {
+  declineChatJoinRequest(args: {
 <p>Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12474,7 +12526,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answerchatjoinrequestquery" href="#answerchatjoinrequestquery"><i class="anchor-icon"></i></a>answerChatJoinRequestQuery</h4>
+export interface ApiMethods {
+  answerChatJoinRequestQuery(args: {
 <p>Use this method to process a received chat join request query. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12500,7 +12553,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendchatjoinrequestwebapp" href="#sendchatjoinrequestwebapp"><i class="anchor-icon"></i></a>sendChatJoinRequestWebApp</h4>
+export interface ApiMethods {
+  sendChatJoinRequestWebApp(args: {
 <p>Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12526,7 +12580,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setchatphoto" href="#setchatphoto"><i class="anchor-icon"></i></a>setChatPhoto</h4>
+export interface ApiMethods {
+  setChatPhoto(args: {
 <p>Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12552,7 +12607,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletechatphoto" href="#deletechatphoto"><i class="anchor-icon"></i></a>deleteChatPhoto</h4>
+export interface ApiMethods {
+  deleteChatPhoto(args: {
 <p>Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12572,7 +12628,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setchattitle" href="#setchattitle"><i class="anchor-icon"></i></a>setChatTitle</h4>
+export interface ApiMethods {
+  setChatTitle(args: {
 <p>Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12598,7 +12655,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setchatdescription" href="#setchatdescription"><i class="anchor-icon"></i></a>setChatDescription</h4>
+export interface ApiMethods {
+  setChatDescription(args: {
 <p>Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12624,7 +12682,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="pinchatmessage" href="#pinchatmessage"><i class="anchor-icon"></i></a>pinChatMessage</h4>
+export interface ApiMethods {
+  pinChatMessage(args: {
 <p>Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12662,7 +12721,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="unpinchatmessage" href="#unpinchatmessage"><i class="anchor-icon"></i></a>unpinChatMessage</h4>
+export interface ApiMethods {
+  unpinChatMessage(args: {
 <p>Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12694,7 +12754,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="unpinallchatmessages" href="#unpinallchatmessages"><i class="anchor-icon"></i></a>unpinAllChatMessages</h4>
+export interface ApiMethods {
+  unpinAllChatMessages(args: {
 <p>Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12714,7 +12775,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="leavechat" href="#leavechat"><i class="anchor-icon"></i></a>leaveChat</h4>
+export interface ApiMethods {
+  leaveChat(args: {
 <p>Use this method for your bot to leave a group, supergroup or channel. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12734,7 +12796,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getchat" href="#getchat"><i class="anchor-icon"></i></a>getChat</h4>
+export interface ApiMethods {
+  getChat(args: {
 <p>Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.</p>
 <table class="table">
 <thead>
@@ -12754,7 +12817,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getchatadministrators" href="#getchatadministrators"><i class="anchor-icon"></i></a>getChatAdministrators</h4>
+export interface ApiMethods {
+  getChatAdministrators(args: {
 <p>Use this method to get a list of administrators in a chat. Returns an Array of <a href="#chatmember">ChatMember</a> objects.</p>
 <table class="table">
 <thead>
@@ -12780,7 +12844,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getchatmembercount" href="#getchatmembercount"><i class="anchor-icon"></i></a>getChatMemberCount</h4>
+export interface ApiMethods {
+  getChatMemberCount(args: {
 <p>Use this method to get the number of members in a chat. Returns <em>Integer</em> on success.</p>
 <table class="table">
 <thead>
@@ -12800,7 +12865,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getchatmember" href="#getchatmember"><i class="anchor-icon"></i></a>getChatMember</h4>
+export interface ApiMethods {
+  getChatMember(args: {
 <p>Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.</p>
 <table class="table">
 <thead>
@@ -12826,7 +12892,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getuserpersonalchatmessages" href="#getuserpersonalchatmessages"><i class="anchor-icon"></i></a>getUserPersonalChatMessages</h4>
+export interface ApiMethods {
+  getUserPersonalChatMessages(args: {
 <p>Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of <a href="#message">Message</a> objects is returned.</p>
 <table class="table">
 <thead>
@@ -12852,7 +12919,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setchatstickerset" href="#setchatstickerset"><i class="anchor-icon"></i></a>setChatStickerSet</h4>
+export interface ApiMethods {
+  setChatStickerSet(args: {
 <p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12878,7 +12946,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletechatstickerset" href="#deletechatstickerset"><i class="anchor-icon"></i></a>deleteChatStickerSet</h4>
+export interface ApiMethods {
+  deleteChatStickerSet(args: {
 <p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12898,9 +12967,11 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getforumtopiciconstickers" href="#getforumtopiciconstickers"><i class="anchor-icon"></i></a>getForumTopicIconStickers</h4>
+export interface ApiMethods {
+  getForumTopicIconStickers(args: {
 <p>Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
-<h4><a class="anchor" name="createforumtopic" href="#createforumtopic"><i class="anchor-icon"></i></a>createForumTopic</h4>
+export interface ApiMethods {
+  createForumTopic(args: {
 <p>Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator right. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
 <table class="table">
 <thead>
@@ -12938,7 +13009,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editforumtopic" href="#editforumtopic"><i class="anchor-icon"></i></a>editForumTopic</h4>
+export interface ApiMethods {
+  editForumTopic(args: {
 <p>Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -12976,7 +13048,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="closeforumtopic" href="#closeforumtopic"><i class="anchor-icon"></i></a>closeForumTopic</h4>
+export interface ApiMethods {
+  closeForumTopic(args: {
 <p>Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13002,7 +13075,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="reopenforumtopic" href="#reopenforumtopic"><i class="anchor-icon"></i></a>reopenForumTopic</h4>
+export interface ApiMethods {
+  reopenForumTopic(args: {
 <p>Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13028,7 +13102,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deleteforumtopic" href="#deleteforumtopic"><i class="anchor-icon"></i></a>deleteForumTopic</h4>
+export interface ApiMethods {
+  deleteForumTopic(args: {
 <p>Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13054,7 +13129,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="unpinallforumtopicmessages" href="#unpinallforumtopicmessages"><i class="anchor-icon"></i></a>unpinAllForumTopicMessages</h4>
+export interface ApiMethods {
+  unpinAllForumTopicMessages(args: {
 <p>Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13080,7 +13156,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editgeneralforumtopic" href="#editgeneralforumtopic"><i class="anchor-icon"></i></a>editGeneralForumTopic</h4>
+export interface ApiMethods {
+  editGeneralForumTopic(args: {
 <p>Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13106,7 +13183,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="closegeneralforumtopic" href="#closegeneralforumtopic"><i class="anchor-icon"></i></a>closeGeneralForumTopic</h4>
+export interface ApiMethods {
+  closeGeneralForumTopic(args: {
 <p>Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13126,7 +13204,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="reopengeneralforumtopic" href="#reopengeneralforumtopic"><i class="anchor-icon"></i></a>reopenGeneralForumTopic</h4>
+export interface ApiMethods {
+  reopenGeneralForumTopic(args: {
 <p>Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13146,7 +13225,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="hidegeneralforumtopic" href="#hidegeneralforumtopic"><i class="anchor-icon"></i></a>hideGeneralForumTopic</h4>
+export interface ApiMethods {
+  hideGeneralForumTopic(args: {
 <p>Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13166,7 +13246,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="unhidegeneralforumtopic" href="#unhidegeneralforumtopic"><i class="anchor-icon"></i></a>unhideGeneralForumTopic</h4>
+export interface ApiMethods {
+  unhideGeneralForumTopic(args: {
 <p>Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13186,7 +13267,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="unpinallgeneralforumtopicmessages" href="#unpinallgeneralforumtopicmessages"><i class="anchor-icon"></i></a>unpinAllGeneralForumTopicMessages</h4>
+export interface ApiMethods {
+  unpinAllGeneralForumTopicMessages(args: {
 <p>Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13206,7 +13288,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answercallbackquery" href="#answercallbackquery"><i class="anchor-icon"></i></a>answerCallbackQuery</h4>
+export interface ApiMethods {
+  answerCallbackQuery(args: {
 <p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, <em>True</em> is returned.</p>
 <blockquote>
 <p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.</p>
@@ -13253,7 +13336,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answerguestquery" href="#answerguestquery"><i class="anchor-icon"></i></a>answerGuestQuery</h4>
+export interface ApiMethods {
+  answerGuestQuery(args: {
 <p>Use this method to reply to a received guest message. On success, a <a href="#sentguestmessage">SentGuestMessage</a> object is returned.</p>
 <table class="table">
 <thead>
@@ -13279,7 +13363,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getuserchatboosts" href="#getuserchatboosts"><i class="anchor-icon"></i></a>getUserChatBoosts</h4>
+export interface ApiMethods {
+  getUserChatBoosts(args: {
 <p>Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.</p>
 <table class="table">
 <thead>
@@ -13305,7 +13390,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getbusinessconnection" href="#getbusinessconnection"><i class="anchor-icon"></i></a>getBusinessConnection</h4>
+export interface ApiMethods {
+  getBusinessConnection(args: {
 <p>Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.</p>
 <table class="table">
 <thead>
@@ -13325,7 +13411,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmanagedbottoken" href="#getmanagedbottoken"><i class="anchor-icon"></i></a>getManagedBotToken</h4>
+export interface ApiMethods {
+  getManagedBotToken(args: {
 <p>Use this method to get the token of a managed bot. Returns the token as <em>String</em> on success.</p>
 <table class="table">
 <thead>
@@ -13345,7 +13432,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="replacemanagedbottoken" href="#replacemanagedbottoken"><i class="anchor-icon"></i></a>replaceManagedBotToken</h4>
+export interface ApiMethods {
+  replaceManagedBotToken(args: {
 <p>Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as <em>String</em> on success.</p>
 <table class="table">
 <thead>
@@ -13365,7 +13453,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmanagedbotaccesssettings" href="#getmanagedbotaccesssettings"><i class="anchor-icon"></i></a>getManagedBotAccessSettings</h4>
+export interface ApiMethods {
+  getManagedBotAccessSettings(args: {
 <p>Use this method to get the access settings of a managed bot. Returns a <a href="#botaccesssettings">BotAccessSettings</a> object on success.</p>
 <table class="table">
 <thead>
@@ -13385,7 +13474,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmanagedbotaccesssettings" href="#setmanagedbotaccesssettings"><i class="anchor-icon"></i></a>setManagedBotAccessSettings</h4>
+export interface ApiMethods {
+  setManagedBotAccessSettings(args: {
 <p>Use this method to change the access settings of a managed bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13417,7 +13507,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmycommands" href="#setmycommands"><i class="anchor-icon"></i></a>setMyCommands</h4>
+export interface ApiMethods {
+  setMyCommands(args: {
 <p>Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13449,7 +13540,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletemycommands" href="#deletemycommands"><i class="anchor-icon"></i></a>deleteMyCommands</h4>
+export interface ApiMethods {
+  deleteMyCommands(args: {
 <p>Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13475,7 +13567,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmycommands" href="#getmycommands"><i class="anchor-icon"></i></a>getMyCommands</h4>
+export interface ApiMethods {
+  getMyCommands(args: {
 <p>Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.</p>
 <table class="table">
 <thead>
@@ -13501,7 +13594,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmyname" href="#setmyname"><i class="anchor-icon"></i></a>setMyName</h4>
+export interface ApiMethods {
+  setMyName(args: {
 <p>Use this method to change the bot&#39;s name. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13527,7 +13621,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmyname" href="#getmyname"><i class="anchor-icon"></i></a>getMyName</h4>
+export interface ApiMethods {
+  getMyName(args: {
 <p>Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.</p>
 <table class="table">
 <thead>
@@ -13547,7 +13642,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmydescription" href="#setmydescription"><i class="anchor-icon"></i></a>setMyDescription</h4>
+export interface ApiMethods {
+  setMyDescription(args: {
 <p>Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13573,7 +13669,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmydescription" href="#getmydescription"><i class="anchor-icon"></i></a>getMyDescription</h4>
+export interface ApiMethods {
+  getMyDescription(args: {
 <p>Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.</p>
 <table class="table">
 <thead>
@@ -13593,7 +13690,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmyshortdescription" href="#setmyshortdescription"><i class="anchor-icon"></i></a>setMyShortDescription</h4>
+export interface ApiMethods {
+  setMyShortDescription(args: {
 <p>Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13619,7 +13717,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmyshortdescription" href="#getmyshortdescription"><i class="anchor-icon"></i></a>getMyShortDescription</h4>
+export interface ApiMethods {
+  getMyShortDescription(args: {
 <p>Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.</p>
 <table class="table">
 <thead>
@@ -13639,7 +13738,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmyprofilephoto" href="#setmyprofilephoto"><i class="anchor-icon"></i></a>setMyProfilePhoto</h4>
+export interface ApiMethods {
+  setMyProfilePhoto(args: {
 <p>Changes the profile photo of the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13659,9 +13759,11 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="removemyprofilephoto" href="#removemyprofilephoto"><i class="anchor-icon"></i></a>removeMyProfilePhoto</h4>
+export interface ApiMethods {
+  removeMyProfilePhoto(args: {
 <p>Removes the profile photo of the bot. Requires no parameters. Returns <em>True</em> on success.</p>
-<h4><a class="anchor" name="setchatmenubutton" href="#setchatmenubutton"><i class="anchor-icon"></i></a>setChatMenuButton</h4>
+export interface ApiMethods {
+  setChatMenuButton(args: {
 <p>Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13687,7 +13789,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getchatmenubutton" href="#getchatmenubutton"><i class="anchor-icon"></i></a>getChatMenuButton</h4>
+export interface ApiMethods {
+  getChatMenuButton(args: {
 <p>Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.</p>
 <table class="table">
 <thead>
@@ -13707,7 +13810,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setmydefaultadministratorrights" href="#setmydefaultadministratorrights"><i class="anchor-icon"></i></a>setMyDefaultAdministratorRights</h4>
+export interface ApiMethods {
+  setMyDefaultAdministratorRights(args: {
 <p>Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13733,7 +13837,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmydefaultadministratorrights" href="#getmydefaultadministratorrights"><i class="anchor-icon"></i></a>getMyDefaultAdministratorRights</h4>
+export interface ApiMethods {
+  getMyDefaultAdministratorRights(args: {
 <p>Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.</p>
 <table class="table">
 <thead>
@@ -13753,9 +13858,11 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getavailablegifts" href="#getavailablegifts"><i class="anchor-icon"></i></a>getAvailableGifts</h4>
+export interface ApiMethods {
+  getAvailableGifts(args: {
 <p>Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.</p>
-<h4><a class="anchor" name="sendgift" href="#sendgift"><i class="anchor-icon"></i></a>sendGift</h4>
+export interface ApiMethods {
+  sendGift(args: {
 <p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13811,7 +13918,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="giftpremiumsubscription" href="#giftpremiumsubscription"><i class="anchor-icon"></i></a>giftPremiumSubscription</h4>
+export interface ApiMethods {
+  giftPremiumSubscription(args: {
 <p>Gifts a Telegram Premium subscription to the given user. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13861,7 +13969,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="verifyuser" href="#verifyuser"><i class="anchor-icon"></i></a>verifyUser</h4>
+export interface ApiMethods {
+  verifyUser(args: {
 <p>Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13887,7 +13996,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="verifychat" href="#verifychat"><i class="anchor-icon"></i></a>verifyChat</h4>
+export interface ApiMethods {
+  verifyChat(args: {
 <p>Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13913,7 +14023,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="removeuserverification" href="#removeuserverification"><i class="anchor-icon"></i></a>removeUserVerification</h4>
+export interface ApiMethods {
+  removeUserVerification(args: {
 <p>Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13933,7 +14044,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="removechatverification" href="#removechatverification"><i class="anchor-icon"></i></a>removeChatVerification</h4>
+export interface ApiMethods {
+  removeChatVerification(args: {
 <p>Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13953,7 +14065,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="readbusinessmessage" href="#readbusinessmessage"><i class="anchor-icon"></i></a>readBusinessMessage</h4>
+export interface ApiMethods {
+  readBusinessMessage(args: {
 <p>Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -13985,7 +14098,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletebusinessmessages" href="#deletebusinessmessages"><i class="anchor-icon"></i></a>deleteBusinessMessages</h4>
+export interface ApiMethods {
+  deleteBusinessMessages(args: {
 <p>Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14011,7 +14125,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setbusinessaccountname" href="#setbusinessaccountname"><i class="anchor-icon"></i></a>setBusinessAccountName</h4>
+export interface ApiMethods {
+  setBusinessAccountName(args: {
 <p>Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14043,7 +14158,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setbusinessaccountusername" href="#setbusinessaccountusername"><i class="anchor-icon"></i></a>setBusinessAccountUsername</h4>
+export interface ApiMethods {
+  setBusinessAccountUsername(args: {
 <p>Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14069,7 +14185,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setbusinessaccountbio" href="#setbusinessaccountbio"><i class="anchor-icon"></i></a>setBusinessAccountBio</h4>
+export interface ApiMethods {
+  setBusinessAccountBio(args: {
 <p>Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14095,7 +14212,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setbusinessaccountprofilephoto" href="#setbusinessaccountprofilephoto"><i class="anchor-icon"></i></a>setBusinessAccountProfilePhoto</h4>
+export interface ApiMethods {
+  setBusinessAccountProfilePhoto(args: {
 <p>Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14127,7 +14245,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="removebusinessaccountprofilephoto" href="#removebusinessaccountprofilephoto"><i class="anchor-icon"></i></a>removeBusinessAccountProfilePhoto</h4>
+export interface ApiMethods {
+  removeBusinessAccountProfilePhoto(args: {
 <p>Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14153,7 +14272,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setbusinessaccountgiftsettings" href="#setbusinessaccountgiftsettings"><i class="anchor-icon"></i></a>setBusinessAccountGiftSettings</h4>
+export interface ApiMethods {
+  setBusinessAccountGiftSettings(args: {
 <p>Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14185,7 +14305,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getbusinessaccountstarbalance" href="#getbusinessaccountstarbalance"><i class="anchor-icon"></i></a>getBusinessAccountStarBalance</h4>
+export interface ApiMethods {
+  getBusinessAccountStarBalance(args: {
 <p>Returns the amount of Telegram Stars owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#staramount">StarAmount</a> on success.</p>
 <table class="table">
 <thead>
@@ -14205,7 +14326,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transferbusinessaccountstars" href="#transferbusinessaccountstars"><i class="anchor-icon"></i></a>transferBusinessAccountStars</h4>
+export interface ApiMethods {
+  transferBusinessAccountStars(args: {
 <p>Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14231,7 +14353,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getbusinessaccountgifts" href="#getbusinessaccountgifts"><i class="anchor-icon"></i></a>getBusinessAccountGifts</h4>
+export interface ApiMethods {
+  getBusinessAccountGifts(args: {
 <p>Returns the gifts received and owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
 <table class="table">
 <thead>
@@ -14311,7 +14434,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getusergifts" href="#getusergifts"><i class="anchor-icon"></i></a>getUserGifts</h4>
+export interface ApiMethods {
+  getUserGifts(args: {
 <p>Returns the gifts owned and hosted by a user. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
 <table class="table">
 <thead>
@@ -14379,7 +14503,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getchatgifts" href="#getchatgifts"><i class="anchor-icon"></i></a>getChatGifts</h4>
+export interface ApiMethods {
+  getChatGifts(args: {
 <p>Returns the gifts owned by a chat. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
 <table class="table">
 <thead>
@@ -14459,7 +14584,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="convertgifttostars" href="#convertgifttostars"><i class="anchor-icon"></i></a>convertGiftToStars</h4>
+export interface ApiMethods {
+  convertGiftToStars(args: {
 <p>Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14485,7 +14611,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="upgradegift" href="#upgradegift"><i class="anchor-icon"></i></a>upgradeGift</h4>
+export interface ApiMethods {
+  upgradeGift(args: {
 <p>Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14523,7 +14650,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transfergift" href="#transfergift"><i class="anchor-icon"></i></a>transferGift</h4>
+export interface ApiMethods {
+  transferGift(args: {
 <p>Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14561,7 +14689,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="poststory" href="#poststory"><i class="anchor-icon"></i></a>postStory</h4>
+export interface ApiMethods {
+  postStory(args: {
 <p>Posts a story on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
@@ -14629,7 +14758,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="repoststory" href="#repoststory"><i class="anchor-icon"></i></a>repostStory</h4>
+export interface ApiMethods {
+  repostStory(args: {
 <p>Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the <em>can_manage_stories</em> business bot right for both business accounts. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
@@ -14679,7 +14809,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editstory" href="#editstory"><i class="anchor-icon"></i></a>editStory</h4>
+export interface ApiMethods {
+  editStory(args: {
 <p>Edits a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
@@ -14735,7 +14866,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletestory" href="#deletestory"><i class="anchor-icon"></i></a>deleteStory</h4>
+export interface ApiMethods {
+  deleteStory(args: {
 <p>Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -14761,7 +14893,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answerwebappquery" href="#answerwebappquery"><i class="anchor-icon"></i></a>answerWebAppQuery</h4>
+export interface ApiMethods {
+  answerWebAppQuery(args: {
 <p>Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.</p>
 <table class="table">
 <thead>
@@ -14787,7 +14920,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="savepreparedinlinemessage" href="#savepreparedinlinemessage"><i class="anchor-icon"></i></a>savePreparedInlineMessage</h4>
+export interface ApiMethods {
+  savePreparedInlineMessage(args: {
 <p>Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.</p>
 <table class="table">
 <thead>
@@ -14837,7 +14971,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="savepreparedkeyboardbutton" href="#savepreparedkeyboardbutton"><i class="anchor-icon"></i></a>savePreparedKeyboardButton</h4>
+export interface ApiMethods {
+  savePreparedKeyboardButton(args: {
 <p>Stores a keyboard button that can be used by a user within a Mini App. Returns a <a href="#preparedkeyboardbutton">PreparedKeyboardButton</a> object.</p>
 <table class="table">
 <thead>
@@ -14868,7 +15003,8 @@ pre-formatted fixed-width code block written in the Python programming language
 // === UPDATING MESSAGES
 <p>The following methods allow you to change an existing message in the message history instead of sending a new one with a result of an action. This is most useful for messages with <a href="/bots/features#inline-keyboards">inline keyboards</a> using callback queries, but can also help reduce clutter in conversations with regular chat bots.</p>
 <p>Please note, that it is currently only possible to edit messages without <em>reply_markup</em> or with <a href="/bots/features#inline-keyboards">inline keyboards</a>.</p>
-<h4><a class="anchor" name="editmessagetext" href="#editmessagetext"><i class="anchor-icon"></i></a>editMessageText</h4>
+export interface ApiMethods {
+  editMessageText(args: {
 <p>Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
@@ -14942,7 +15078,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editmessagecaption" href="#editmessagecaption"><i class="anchor-icon"></i></a>editMessageCaption</h4>
+export interface ApiMethods {
+  editMessageCaption(args: {
 <p>Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
@@ -15010,7 +15147,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editmessagemedia" href="#editmessagemedia"><i class="anchor-icon"></i></a>editMessageMedia</h4>
+export interface ApiMethods {
+  editMessageMedia(args: {
 <p>Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
@@ -15060,7 +15198,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editmessagelivelocation" href="#editmessagelivelocation"><i class="anchor-icon"></i></a>editMessageLiveLocation</h4>
+export interface ApiMethods {
+  editMessageLiveLocation(args: {
 <p>Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.</p>
 <table class="table">
 <thead>
@@ -15140,7 +15279,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="stopmessagelivelocation" href="#stopmessagelivelocation"><i class="anchor-icon"></i></a>stopMessageLiveLocation</h4>
+export interface ApiMethods {
+  stopMessageLiveLocation(args: {
 <p>Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.</p>
 <table class="table">
 <thead>
@@ -15184,7 +15324,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editmessagechecklist" href="#editmessagechecklist"><i class="anchor-icon"></i></a>editMessageChecklist</h4>
+export interface ApiMethods {
+  editMessageChecklist(args: {
 <p>Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -15228,7 +15369,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editmessagereplymarkup" href="#editmessagereplymarkup"><i class="anchor-icon"></i></a>editMessageReplyMarkup</h4>
+export interface ApiMethods {
+  editMessageReplyMarkup(args: {
 <p>Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
@@ -15272,7 +15414,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="stoppoll" href="#stoppoll"><i class="anchor-icon"></i></a>stopPoll</h4>
+export interface ApiMethods {
+  stopPoll(args: {
 <p>Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.</p>
 <table class="table">
 <thead>
@@ -15310,7 +15453,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editephemeralmessagetext" href="#editephemeralmessagetext"><i class="anchor-icon"></i></a>editEphemeralMessageText</h4>
+export interface ApiMethods {
+  editEphemeralMessageText(args: {
 <p>Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
@@ -15372,7 +15516,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editephemeralmessagemedia" href="#editephemeralmessagemedia"><i class="anchor-icon"></i></a>editEphemeralMessageMedia</h4>
+export interface ApiMethods {
+  editEphemeralMessageMedia(args: {
 <p>Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
@@ -15416,7 +15561,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editephemeralmessagecaption" href="#editephemeralmessagecaption"><i class="anchor-icon"></i></a>editEphemeralMessageCaption</h4>
+export interface ApiMethods {
+  editEphemeralMessageCaption(args: {
 <p>Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
@@ -15472,7 +15618,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="editephemeralmessagereplymarkup" href="#editephemeralmessagereplymarkup"><i class="anchor-icon"></i></a>editEphemeralMessageReplyMarkup</h4>
+export interface ApiMethods {
+  editEphemeralMessageReplyMarkup(args: {
 <p>Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
@@ -15510,7 +15657,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="approvesuggestedpost" href="#approvesuggestedpost"><i class="anchor-icon"></i></a>approveSuggestedPost</h4>
+export interface ApiMethods {
+  approveSuggestedPost(args: {
 <p>Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -15542,7 +15690,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="declinesuggestedpost" href="#declinesuggestedpost"><i class="anchor-icon"></i></a>declineSuggestedPost</h4>
+export interface ApiMethods {
+  declineSuggestedPost(args: {
 <p>Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -15574,7 +15723,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletemessage" href="#deletemessage"><i class="anchor-icon"></i></a>deleteMessage</h4>
+export interface ApiMethods {
+  deleteMessage(args: {
 <p>Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -15600,7 +15750,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletemessages" href="#deletemessages"><i class="anchor-icon"></i></a>deleteMessages</h4>
+export interface ApiMethods {
+  deleteMessages(args: {
 <p>Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -15626,7 +15777,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deleteephemeralmessage" href="#deleteephemeralmessage"><i class="anchor-icon"></i></a>deleteEphemeralMessage</h4>
+export interface ApiMethods {
+  deleteEphemeralMessage(args: {
 <p>Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -15658,7 +15810,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletemessagereaction" href="#deletemessagereaction"><i class="anchor-icon"></i></a>deleteMessageReaction</h4>
+export interface ApiMethods {
+  deleteMessageReaction(args: {
 <p>Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -15696,7 +15849,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deleteallmessagereactions" href="#deleteallmessagereactions"><i class="anchor-icon"></i></a>deleteAllMessageReactions</h4>
+export interface ApiMethods {
+  deleteAllMessageReactions(args: {
 <p>Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -15730,7 +15884,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </table>
 // === STICKERS
 <p>The following methods and objects allow your bot to handle stickers and sticker sets.</p>
-<h4><a class="anchor" name="sticker" href="#sticker"><i class="anchor-icon"></i></a>Sticker</h4>
+export interface Sticker = {
 <p>This object represents a sticker.</p>
 <table class="table">
 <thead>
@@ -15818,7 +15972,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="stickerset" href="#stickerset"><i class="anchor-icon"></i></a>StickerSet</h4>
+export interface StickerSet = {
 <p>This object represents a sticker set.</p>
 <table class="table">
 <thead>
@@ -15856,7 +16010,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="maskposition" href="#maskposition"><i class="anchor-icon"></i></a>MaskPosition</h4>
+export interface MaskPosition = {
 <p>This object describes the position on faces where a mask should be placed by default.</p>
 <table class="table">
 <thead>
@@ -15889,7 +16043,7 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputsticker" href="#inputsticker"><i class="anchor-icon"></i></a>InputSticker</h4>
+export interface InputSticker = {
 <p>This object describes a sticker to be added to a sticker set.</p>
 <table class="table">
 <thead>
@@ -15927,7 +16081,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendsticker" href="#sendsticker"><i class="anchor-icon"></i></a>sendSticker</h4>
+export interface ApiMethods {
+  sendSticker(args: {
 <p>Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -16031,7 +16186,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getstickerset" href="#getstickerset"><i class="anchor-icon"></i></a>getStickerSet</h4>
+export interface ApiMethods {
+  getStickerSet(args: {
 <p>Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.</p>
 <table class="table">
 <thead>
@@ -16051,7 +16207,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getcustomemojistickers" href="#getcustomemojistickers"><i class="anchor-icon"></i></a>getCustomEmojiStickers</h4>
+export interface ApiMethods {
+  getCustomEmojiStickers(args: {
 <p>Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
 <table class="table">
 <thead>
@@ -16071,7 +16228,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="uploadstickerfile" href="#uploadstickerfile"><i class="anchor-icon"></i></a>uploadStickerFile</h4>
+export interface ApiMethods {
+  uploadStickerFile(args: {
 <p>Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.</p>
 <table class="table">
 <thead>
@@ -16103,7 +16261,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="createnewstickerset" href="#createnewstickerset"><i class="anchor-icon"></i></a>createNewStickerSet</h4>
+export interface ApiMethods {
+  createNewStickerSet(args: {
 <p>Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16153,7 +16312,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="addstickertoset" href="#addstickertoset"><i class="anchor-icon"></i></a>addStickerToSet</h4>
+export interface ApiMethods {
+  addStickerToSet(args: {
 <p>Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16185,7 +16345,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setstickerpositioninset" href="#setstickerpositioninset"><i class="anchor-icon"></i></a>setStickerPositionInSet</h4>
+export interface ApiMethods {
+  setStickerPositionInSet(args: {
 <p>Use this method to move a sticker in a set created by the bot to a specific position. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16211,7 +16372,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletestickerfromset" href="#deletestickerfromset"><i class="anchor-icon"></i></a>deleteStickerFromSet</h4>
+export interface ApiMethods {
+  deleteStickerFromSet(args: {
 <p>Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16231,7 +16393,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="replacestickerinset" href="#replacestickerinset"><i class="anchor-icon"></i></a>replaceStickerInSet</h4>
+export interface ApiMethods {
+  replaceStickerInSet(args: {
 <p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16269,7 +16432,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setstickeremojilist" href="#setstickeremojilist"><i class="anchor-icon"></i></a>setStickerEmojiList</h4>
+export interface ApiMethods {
+  setStickerEmojiList(args: {
 <p>Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16295,7 +16459,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setstickerkeywords" href="#setstickerkeywords"><i class="anchor-icon"></i></a>setStickerKeywords</h4>
+export interface ApiMethods {
+  setStickerKeywords(args: {
 <p>Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16321,7 +16486,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setstickermaskposition" href="#setstickermaskposition"><i class="anchor-icon"></i></a>setStickerMaskPosition</h4>
+export interface ApiMethods {
+  setStickerMaskPosition(args: {
 <p>Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16347,7 +16513,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setstickersettitle" href="#setstickersettitle"><i class="anchor-icon"></i></a>setStickerSetTitle</h4>
+export interface ApiMethods {
+  setStickerSetTitle(args: {
 <p>Use this method to set the title of a created sticker set. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16373,7 +16540,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setstickersetthumbnail" href="#setstickersetthumbnail"><i class="anchor-icon"></i></a>setStickerSetThumbnail</h4>
+export interface ApiMethods {
+  setStickerSetThumbnail(args: {
 <p>Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16411,7 +16579,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setcustomemojistickersetthumbnail" href="#setcustomemojistickersetthumbnail"><i class="anchor-icon"></i></a>setCustomEmojiStickerSetThumbnail</h4>
+export interface ApiMethods {
+  setCustomEmojiStickerSetThumbnail(args: {
 <p>Use this method to set the thumbnail of a custom emoji sticker set. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16437,7 +16606,8 @@ pre-formatted fixed-width code block written in the Python programming language
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="deletestickerset" href="#deletestickerset"><i class="anchor-icon"></i></a>deleteStickerSet</h4>
+export interface ApiMethods {
+  deleteStickerSet(args: {
 <p>Use this method to delete a sticker set that was created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16725,7 +16895,7 @@ all the text above was on the same line
 <li>Formula source is treated as raw LaTeX.</li>
 <li>See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.</li>
 </ul>
-<h4><a class="anchor" name="richmessage" href="#richmessage"><i class="anchor-icon"></i></a>RichMessage</h4>
+export interface RichMessage = {
 <p>Rich formatted message.</p>
 <table class="table">
 <thead>
@@ -16748,7 +16918,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichmessage" href="#inputrichmessage"><i class="anchor-icon"></i></a>InputRichMessage</h4>
+export interface InputRichMessage = {
 <p>Describes a rich message to be sent. Exactly <strong>one</strong> of the fields <em>html</em>, <em>markdown</em>, or <em>blocks</em> must be used.</p>
 <table class="table">
 <thead>
@@ -16791,7 +16961,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichmessagemedia" href="#inputrichmessagemedia"><i class="anchor-icon"></i></a>InputRichMessageMedia</h4>
+export interface InputRichMessageMedia = {
 <p>Describes a media element embedded in an outgoing rich message.</p>
 <table class="table">
 <thead>
@@ -16814,7 +16984,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendrichmessage" href="#sendrichmessage"><i class="anchor-icon"></i></a>sendRichMessage</h4>
+export interface ApiMethods {
+  sendRichMessage(args: {
 <p>Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -16900,7 +17071,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="sendrichmessagedraft" href="#sendrichmessagedraft"><i class="anchor-icon"></i></a>sendRichMessageDraft</h4>
+export interface ApiMethods {
+  sendRichMessageDraft(args: {
 <p>Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -16938,7 +17110,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtext" href="#richtext"><i class="anchor-icon"></i></a>RichText</h4>
+export interface RichText = {
 <p>This object represents a rich formatted text. Currently, it can be either a String for plain text, an Array of <a href="#richtext">RichText</a>, or any of the following types:</p>
 <ul>
 <li><a href="#richtextbold">RichTextBold</a></li>
@@ -16967,7 +17139,7 @@ all the text above was on the same line
 <li><a href="#richtextreference">RichTextReference</a></li>
 <li><a href="#richtextreferencelink">RichTextReferenceLink</a></li>
 </ul>
-<h4><a class="anchor" name="richtextbold" href="#richtextbold"><i class="anchor-icon"></i></a>RichTextBold</h4>
+export interface RichTextBold = {
 <p>A bold text.</p>
 <table class="table">
 <thead>
@@ -16990,7 +17162,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextitalic" href="#richtextitalic"><i class="anchor-icon"></i></a>RichTextItalic</h4>
+export interface RichTextItalic = {
 <p>An italicized text.</p>
 <table class="table">
 <thead>
@@ -17013,7 +17185,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextunderline" href="#richtextunderline"><i class="anchor-icon"></i></a>RichTextUnderline</h4>
+export interface RichTextUnderline = {
 <p>An underlined text.</p>
 <table class="table">
 <thead>
@@ -17036,7 +17208,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextstrikethrough" href="#richtextstrikethrough"><i class="anchor-icon"></i></a>RichTextStrikethrough</h4>
+export interface RichTextStrikethrough = {
 <p>A strikethrough text.</p>
 <table class="table">
 <thead>
@@ -17059,7 +17231,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextspoiler" href="#richtextspoiler"><i class="anchor-icon"></i></a>RichTextSpoiler</h4>
+export interface RichTextSpoiler = {
 <p>A text covered by a spoiler.</p>
 <table class="table">
 <thead>
@@ -17082,7 +17254,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextdatetime" href="#richtextdatetime"><i class="anchor-icon"></i></a>RichTextDateTime</h4>
+export interface RichTextDateTime = {
 <p>Formatted date and time.</p>
 <table class="table">
 <thead>
@@ -17115,7 +17287,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtexttextmention" href="#richtexttextmention"><i class="anchor-icon"></i></a>RichTextTextMention</h4>
+export interface RichTextTextMention = {
 <p>A mention of a Telegram user by their identifier.</p>
 <table class="table">
 <thead>
@@ -17143,7 +17315,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextsubscript" href="#richtextsubscript"><i class="anchor-icon"></i></a>RichTextSubscript</h4>
+export interface RichTextSubscript = {
 <p>A subscript text.</p>
 <table class="table">
 <thead>
@@ -17166,7 +17338,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextsuperscript" href="#richtextsuperscript"><i class="anchor-icon"></i></a>RichTextSuperscript</h4>
+export interface RichTextSuperscript = {
 <p>A superscript text.</p>
 <table class="table">
 <thead>
@@ -17189,7 +17361,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextmarked" href="#richtextmarked"><i class="anchor-icon"></i></a>RichTextMarked</h4>
+export interface RichTextMarked = {
 <p>A marked text.</p>
 <table class="table">
 <thead>
@@ -17212,7 +17384,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextcode" href="#richtextcode"><i class="anchor-icon"></i></a>RichTextCode</h4>
+export interface RichTextCode = {
 <p>A monowidth text.</p>
 <table class="table">
 <thead>
@@ -17235,7 +17407,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextcustomemoji" href="#richtextcustomemoji"><i class="anchor-icon"></i></a>RichTextCustomEmoji</h4>
+export interface RichTextCustomEmoji = {
 <p>A custom emoji.</p>
 <table class="table">
 <thead>
@@ -17263,7 +17435,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextmathematicalexpression" href="#richtextmathematicalexpression"><i class="anchor-icon"></i></a>RichTextMathematicalExpression</h4>
+export interface RichTextMathematicalExpression = {
 <p>A mathematical expression.</p>
 <table class="table">
 <thead>
@@ -17286,7 +17458,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtexturl" href="#richtexturl"><i class="anchor-icon"></i></a>RichTextUrl</h4>
+export interface RichTextUrl = {
 <p>A text with a link.</p>
 <table class="table">
 <thead>
@@ -17314,7 +17486,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextemailaddress" href="#richtextemailaddress"><i class="anchor-icon"></i></a>RichTextEmailAddress</h4>
+export interface RichTextEmailAddress = {
 <p>A text with an email address.</p>
 <table class="table">
 <thead>
@@ -17342,7 +17514,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextphonenumber" href="#richtextphonenumber"><i class="anchor-icon"></i></a>RichTextPhoneNumber</h4>
+export interface RichTextPhoneNumber = {
 <p>A text with a phone number.</p>
 <table class="table">
 <thead>
@@ -17370,7 +17542,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextbankcardnumber" href="#richtextbankcardnumber"><i class="anchor-icon"></i></a>RichTextBankCardNumber</h4>
+export interface RichTextBankCardNumber = {
 <p>A text with a bank card number.</p>
 <table class="table">
 <thead>
@@ -17398,7 +17570,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextmention" href="#richtextmention"><i class="anchor-icon"></i></a>RichTextMention</h4>
+export interface RichTextMention = {
 <p>A mention by a username.</p>
 <table class="table">
 <thead>
@@ -17426,7 +17598,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtexthashtag" href="#richtexthashtag"><i class="anchor-icon"></i></a>RichTextHashtag</h4>
+export interface RichTextHashtag = {
 <p>A hashtag.</p>
 <table class="table">
 <thead>
@@ -17454,7 +17626,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextcashtag" href="#richtextcashtag"><i class="anchor-icon"></i></a>RichTextCashtag</h4>
+export interface RichTextCashtag = {
 <p>A cashtag.</p>
 <table class="table">
 <thead>
@@ -17482,7 +17654,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextbotcommand" href="#richtextbotcommand"><i class="anchor-icon"></i></a>RichTextBotCommand</h4>
+export interface RichTextBotCommand = {
 <p>A bot command.</p>
 <table class="table">
 <thead>
@@ -17510,7 +17682,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextanchor" href="#richtextanchor"><i class="anchor-icon"></i></a>RichTextAnchor</h4>
+export interface RichTextAnchor = {
 <p>An anchor.</p>
 <table class="table">
 <thead>
@@ -17533,7 +17705,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextanchorlink" href="#richtextanchorlink"><i class="anchor-icon"></i></a>RichTextAnchorLink</h4>
+export interface RichTextAnchorLink = {
 <p>A link to an anchor.</p>
 <table class="table">
 <thead>
@@ -17561,7 +17733,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextreference" href="#richtextreference"><i class="anchor-icon"></i></a>RichTextReference</h4>
+export interface RichTextReference = {
 <p>A reference.</p>
 <table class="table">
 <thead>
@@ -17589,7 +17761,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richtextreferencelink" href="#richtextreferencelink"><i class="anchor-icon"></i></a>RichTextReferenceLink</h4>
+export interface RichTextReferenceLink = {
 <p>A link to a reference.</p>
 <table class="table">
 <thead>
@@ -17617,7 +17789,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockcaption" href="#richblockcaption"><i class="anchor-icon"></i></a>RichBlockCaption</h4>
+export interface RichBlockCaption = {
 <p>Caption of a rich formatted block.</p>
 <table class="table">
 <thead>
@@ -17640,7 +17812,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblocktablecell" href="#richblocktablecell"><i class="anchor-icon"></i></a>RichBlockTableCell</h4>
+export interface RichBlockTableCell = {
 <p>Cell in a table.</p>
 <table class="table">
 <thead>
@@ -17683,7 +17855,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblocklistitem" href="#richblocklistitem"><i class="anchor-icon"></i></a>RichBlockListItem</h4>
+export interface RichBlockListItem = {
 <p>An item of a list.</p>
 <table class="table">
 <thead>
@@ -17726,7 +17898,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblock" href="#richblock"><i class="anchor-icon"></i></a>RichBlock</h4>
+export interface RichBlock = {
 <p>This object represents a block in a rich formatted message. Currently, it can be any of the following types:</p>
 <ul>
 <li><a href="#richblockparagraph">RichBlockParagraph</a></li>
@@ -17751,7 +17923,7 @@ all the text above was on the same line
 <li><a href="#richblockvoicenote">RichBlockVoiceNote</a></li>
 <li><a href="#richblockthinking">RichBlockThinking</a></li>
 </ul>
-<h4><a class="anchor" name="richblockparagraph" href="#richblockparagraph"><i class="anchor-icon"></i></a>RichBlockParagraph</h4>
+export interface RichBlockParagraph = {
 <p>A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17774,7 +17946,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblocksectionheading" href="#richblocksectionheading"><i class="anchor-icon"></i></a>RichBlockSectionHeading</h4>
+export interface RichBlockSectionHeading = {
 <p>A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17802,7 +17974,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockpreformatted" href="#richblockpreformatted"><i class="anchor-icon"></i></a>RichBlockPreformatted</h4>
+export interface RichBlockPreformatted = {
 <p>A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17830,7 +18002,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockfooter" href="#richblockfooter"><i class="anchor-icon"></i></a>RichBlockFooter</h4>
+export interface RichBlockFooter = {
 <p>A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17853,7 +18025,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockdivider" href="#richblockdivider"><i class="anchor-icon"></i></a>RichBlockDivider</h4>
+export interface RichBlockDivider = {
 <p>A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17871,7 +18043,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockmathematicalexpression" href="#richblockmathematicalexpression"><i class="anchor-icon"></i></a>RichBlockMathematicalExpression</h4>
+export interface RichBlockMathematicalExpression = {
 <p>A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17894,7 +18066,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockanchor" href="#richblockanchor"><i class="anchor-icon"></i></a>RichBlockAnchor</h4>
+export interface RichBlockAnchor = {
 <p>A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.</p>
 <table class="table">
 <thead>
@@ -17917,7 +18089,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblocklist" href="#richblocklist"><i class="anchor-icon"></i></a>RichBlockList</h4>
+export interface RichBlockList = {
 <p>A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17940,7 +18112,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockblockquotation" href="#richblockblockquotation"><i class="anchor-icon"></i></a>RichBlockBlockQuotation</h4>
+export interface RichBlockBlockQuotation = {
 <p>A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17968,7 +18140,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockpullquotation" href="#richblockpullquotation"><i class="anchor-icon"></i></a>RichBlockPullQuotation</h4>
+export interface RichBlockPullQuotation = {
 <p>A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -17996,7 +18168,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockcollage" href="#richblockcollage"><i class="anchor-icon"></i></a>RichBlockCollage</h4>
+export interface RichBlockCollage = {
 <p>A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18024,7 +18196,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockslideshow" href="#richblockslideshow"><i class="anchor-icon"></i></a>RichBlockSlideshow</h4>
+export interface RichBlockSlideshow = {
 <p>A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18052,7 +18224,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblocktable" href="#richblocktable"><i class="anchor-icon"></i></a>RichBlockTable</h4>
+export interface RichBlockTable = {
 <p>A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18090,7 +18262,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockdetails" href="#richblockdetails"><i class="anchor-icon"></i></a>RichBlockDetails</h4>
+export interface RichBlockDetails = {
 <p>An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18123,7 +18295,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockmap" href="#richblockmap"><i class="anchor-icon"></i></a>RichBlockMap</h4>
+export interface RichBlockMap = {
 <p>A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18166,7 +18338,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockanimation" href="#richblockanimation"><i class="anchor-icon"></i></a>RichBlockAnimation</h4>
+export interface RichBlockAnimation = {
 <p>A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18199,7 +18371,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockaudio" href="#richblockaudio"><i class="anchor-icon"></i></a>RichBlockAudio</h4>
+export interface RichBlockAudio = {
 <p>A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18227,7 +18399,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockphoto" href="#richblockphoto"><i class="anchor-icon"></i></a>RichBlockPhoto</h4>
+export interface RichBlockPhoto = {
 <p>A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18260,7 +18432,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockvideo" href="#richblockvideo"><i class="anchor-icon"></i></a>RichBlockVideo</h4>
+export interface RichBlockVideo = {
 <p>A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18293,7 +18465,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockvoicenote" href="#richblockvoicenote"><i class="anchor-icon"></i></a>RichBlockVoiceNote</h4>
+export interface RichBlockVoiceNote = {
 <p>A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18321,7 +18493,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="richblockthinking" href="#richblockthinking"><i class="anchor-icon"></i></a>RichBlockThinking</h4>
+export interface RichBlockThinking = {
 <p>A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.</p>
 <table class="table">
 <thead>
@@ -18344,7 +18516,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblocklistitem" href="#inputrichblocklistitem"><i class="anchor-icon"></i></a>InputRichBlockListItem</h4>
+export interface InputRichBlockListItem = {
 <p>An item of a list to be sent.</p>
 <table class="table">
 <thead>
@@ -18382,7 +18554,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblock" href="#inputrichblock"><i class="anchor-icon"></i></a>InputRichBlock</h4>
+export interface InputRichBlock = {
 <p>This object represents a block in a rich formatted message to be sent. Currently, it can be any of the following types:</p>
 <ul>
 <li><a href="#inputrichblockparagraph">InputRichBlockParagraph</a></li>
@@ -18407,7 +18579,7 @@ all the text above was on the same line
 <li><a href="#inputrichblockvoicenote">InputRichBlockVoiceNote</a></li>
 <li><a href="#inputrichblockthinking">InputRichBlockThinking</a></li>
 </ul>
-<h4><a class="anchor" name="inputrichblockparagraph" href="#inputrichblockparagraph"><i class="anchor-icon"></i></a>InputRichBlockParagraph</h4>
+export interface InputRichBlockParagraph = {
 <p>A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18430,7 +18602,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblocksectionheading" href="#inputrichblocksectionheading"><i class="anchor-icon"></i></a>InputRichBlockSectionHeading</h4>
+export interface InputRichBlockSectionHeading = {
 <p>A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18458,7 +18630,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockpreformatted" href="#inputrichblockpreformatted"><i class="anchor-icon"></i></a>InputRichBlockPreformatted</h4>
+export interface InputRichBlockPreformatted = {
 <p>A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18486,7 +18658,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockfooter" href="#inputrichblockfooter"><i class="anchor-icon"></i></a>InputRichBlockFooter</h4>
+export interface InputRichBlockFooter = {
 <p>A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18509,7 +18681,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockdivider" href="#inputrichblockdivider"><i class="anchor-icon"></i></a>InputRichBlockDivider</h4>
+export interface InputRichBlockDivider = {
 <p>A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18527,7 +18699,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockmathematicalexpression" href="#inputrichblockmathematicalexpression"><i class="anchor-icon"></i></a>InputRichBlockMathematicalExpression</h4>
+export interface InputRichBlockMathematicalExpression = {
 <p>A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18550,7 +18722,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockanchor" href="#inputrichblockanchor"><i class="anchor-icon"></i></a>InputRichBlockAnchor</h4>
+export interface InputRichBlockAnchor = {
 <p>A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.</p>
 <table class="table">
 <thead>
@@ -18573,7 +18745,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblocklist" href="#inputrichblocklist"><i class="anchor-icon"></i></a>InputRichBlockList</h4>
+export interface InputRichBlockList = {
 <p>A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18596,7 +18768,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockblockquotation" href="#inputrichblockblockquotation"><i class="anchor-icon"></i></a>InputRichBlockBlockQuotation</h4>
+export interface InputRichBlockBlockQuotation = {
 <p>A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18624,7 +18796,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockpullquotation" href="#inputrichblockpullquotation"><i class="anchor-icon"></i></a>InputRichBlockPullQuotation</h4>
+export interface InputRichBlockPullQuotation = {
 <p>A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18652,7 +18824,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockcollage" href="#inputrichblockcollage"><i class="anchor-icon"></i></a>InputRichBlockCollage</h4>
+export interface InputRichBlockCollage = {
 <p>A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18680,7 +18852,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockslideshow" href="#inputrichblockslideshow"><i class="anchor-icon"></i></a>InputRichBlockSlideshow</h4>
+export interface InputRichBlockSlideshow = {
 <p>A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18708,7 +18880,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblocktable" href="#inputrichblocktable"><i class="anchor-icon"></i></a>InputRichBlockTable</h4>
+export interface InputRichBlockTable = {
 <p>A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18746,7 +18918,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockdetails" href="#inputrichblockdetails"><i class="anchor-icon"></i></a>InputRichBlockDetails</h4>
+export interface InputRichBlockDetails = {
 <p>An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18779,7 +18951,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockmap" href="#inputrichblockmap"><i class="anchor-icon"></i></a>InputRichBlockMap</h4>
+export interface InputRichBlockMap = {
 <p>A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>. The map&#39;s width and height must not exceed 10000 in total. The width and height ratio must be at most 20.</p>
 <table class="table">
 <thead>
@@ -18822,7 +18994,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockanimation" href="#inputrichblockanimation"><i class="anchor-icon"></i></a>InputRichBlockAnimation</h4>
+export interface InputRichBlockAnimation = {
 <p>A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18850,7 +19022,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockaudio" href="#inputrichblockaudio"><i class="anchor-icon"></i></a>InputRichBlockAudio</h4>
+export interface InputRichBlockAudio = {
 <p>A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18878,7 +19050,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockphoto" href="#inputrichblockphoto"><i class="anchor-icon"></i></a>InputRichBlockPhoto</h4>
+export interface InputRichBlockPhoto = {
 <p>A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18906,7 +19078,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockvideo" href="#inputrichblockvideo"><i class="anchor-icon"></i></a>InputRichBlockVideo</h4>
+export interface InputRichBlockVideo = {
 <p>A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18934,7 +19106,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockvoicenote" href="#inputrichblockvoicenote"><i class="anchor-icon"></i></a>InputRichBlockVoiceNote</h4>
+export interface InputRichBlockVoiceNote = {
 <p>A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.</p>
 <table class="table">
 <thead>
@@ -18962,7 +19134,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichblockthinking" href="#inputrichblockthinking"><i class="anchor-icon"></i></a>InputRichBlockThinking</h4>
+export interface InputRichBlockThinking = {
 <p>A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.</p>
 <table class="table">
 <thead>
@@ -18988,7 +19160,7 @@ all the text above was on the same line
 // === INLINE MODE
 <p>The following methods and objects allow your bot to work in <a href="/bots/inline">inline mode</a>.<br>Please see our <a href="/bots/inline">Introduction to Inline bots</a> for more details.</p>
 <p>To enable this option, send the <code>/setinline</code> command to <a href="https://t.me/botfather">@BotFather</a> and provide the placeholder text that the user will see in the input field after typing your bot&#39;s name.</p>
-<h4><a class="anchor" name="inlinequery" href="#inlinequery"><i class="anchor-icon"></i></a>InlineQuery</h4>
+export interface InlineQuery = {
 <p>This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.</p>
 <table class="table">
 <thead>
@@ -19031,7 +19203,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answerinlinequery" href="#answerinlinequery"><i class="anchor-icon"></i></a>answerInlineQuery</h4>
+export interface ApiMethods {
+  answerInlineQuery(args: {
 <p>Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than <strong>50</strong> results per query are allowed.</p>
 <table class="table">
 <thead>
@@ -19081,7 +19254,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultsbutton" href="#inlinequeryresultsbutton"><i class="anchor-icon"></i></a>InlineQueryResultsButton</h4>
+export interface InlineQueryResultsButton = {
 <p>This object represents a button to be shown above inline query results. You <strong>must</strong> use exactly one of the optional fields.</p>
 <table class="table">
 <thead>
@@ -19109,7 +19282,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresult" href="#inlinequeryresult"><i class="anchor-icon"></i></a>InlineQueryResult</h4>
+export interface InlineQueryResult = {
 <p>This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:</p>
 <ul>
 <li><a href="#inlinequeryresultcachedaudio">InlineQueryResultCachedAudio</a></li>
@@ -19134,7 +19307,7 @@ all the text above was on the same line
 <li><a href="#inlinequeryresultvoice">InlineQueryResultVoice</a></li>
 </ul>
 <p><strong>Note:</strong> All URLs passed in inline query results will be available to end users and therefore must be assumed to be <strong>public</strong>.</p>
-<h4><a class="anchor" name="inlinequeryresultarticle" href="#inlinequeryresultarticle"><i class="anchor-icon"></i></a>InlineQueryResultArticle</h4>
+export interface InlineQueryResultArticle = {
 <p>Represents a link to an article or web page.</p>
 <table class="table">
 <thead>
@@ -19197,7 +19370,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultphoto" href="#inlinequeryresultphoto"><i class="anchor-icon"></i></a>InlineQueryResultPhoto</h4>
+export interface InlineQueryResultPhoto = {
 <p>Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.</p>
 <table class="table">
 <thead>
@@ -19280,7 +19453,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultgif" href="#inlinequeryresultgif"><i class="anchor-icon"></i></a>InlineQueryResultGif</h4>
+export interface InlineQueryResultGif = {
 <p>Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.</p>
 <table class="table">
 <thead>
@@ -19368,7 +19541,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultmpeg4gif" href="#inlinequeryresultmpeg4gif"><i class="anchor-icon"></i></a>InlineQueryResultMpeg4Gif</h4>
+export interface InlineQueryResultMpeg4Gif = {
 <p>Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.</p>
 <table class="table">
 <thead>
@@ -19456,7 +19629,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultvideo" href="#inlinequeryresultvideo"><i class="anchor-icon"></i></a>InlineQueryResultVideo</h4>
+export interface InlineQueryResultVideo = {
 <p>Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.</p>
 <blockquote>
 <p>If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you <strong>must</strong> replace its content using <em>input_message_content</em>.</p>
@@ -19552,7 +19725,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultaudio" href="#inlinequeryresultaudio"><i class="anchor-icon"></i></a>InlineQueryResultAudio</h4>
+export interface InlineQueryResultAudio = {
 <p>Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.</p>
 <table class="table">
 <thead>
@@ -19620,7 +19793,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultvoice" href="#inlinequeryresultvoice"><i class="anchor-icon"></i></a>InlineQueryResultVoice</h4>
+export interface InlineQueryResultVoice = {
 <p>Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the the voice message.</p>
 <table class="table">
 <thead>
@@ -19683,7 +19856,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultdocument" href="#inlinequeryresultdocument"><i class="anchor-icon"></i></a>InlineQueryResultDocument</h4>
+export interface InlineQueryResultDocument = {
 <p>Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file. Currently, only <strong>.PDF</strong> and <strong>.ZIP</strong> files can be sent using this method.</p>
 <table class="table">
 <thead>
@@ -19766,7 +19939,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultlocation" href="#inlinequeryresultlocation"><i class="anchor-icon"></i></a>InlineQueryResultLocation</h4>
+export interface InlineQueryResultLocation = {
 <p>Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the location.</p>
 <table class="table">
 <thead>
@@ -19849,7 +20022,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultvenue" href="#inlinequeryresultvenue"><i class="anchor-icon"></i></a>InlineQueryResultVenue</h4>
+export interface InlineQueryResultVenue = {
 <p>Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the venue.</p>
 <table class="table">
 <thead>
@@ -19937,7 +20110,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcontact" href="#inlinequeryresultcontact"><i class="anchor-icon"></i></a>InlineQueryResultContact</h4>
+export interface InlineQueryResultContact = {
 <p>Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the contact.</p>
 <table class="table">
 <thead>
@@ -20005,7 +20178,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultgame" href="#inlinequeryresultgame"><i class="anchor-icon"></i></a>InlineQueryResultGame</h4>
+export interface InlineQueryResultGame = {
 <p>Represents a <a href="#games">Game</a>.</p>
 <table class="table">
 <thead>
@@ -20038,7 +20211,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcachedphoto" href="#inlinequeryresultcachedphoto"><i class="anchor-icon"></i></a>InlineQueryResultCachedPhoto</h4>
+export interface InlineQueryResultCachedPhoto = {
 <p>Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.</p>
 <table class="table">
 <thead>
@@ -20106,7 +20279,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcachedgif" href="#inlinequeryresultcachedgif"><i class="anchor-icon"></i></a>InlineQueryResultCachedGif</h4>
+export interface InlineQueryResultCachedGif = {
 <p>Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with specified content instead of the animation.</p>
 <table class="table">
 <thead>
@@ -20169,7 +20342,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcachedmpeg4gif" href="#inlinequeryresultcachedmpeg4gif"><i class="anchor-icon"></i></a>InlineQueryResultCachedMpeg4Gif</h4>
+export interface InlineQueryResultCachedMpeg4Gif = {
 <p>Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.</p>
 <table class="table">
 <thead>
@@ -20232,7 +20405,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcachedsticker" href="#inlinequeryresultcachedsticker"><i class="anchor-icon"></i></a>InlineQueryResultCachedSticker</h4>
+export interface InlineQueryResultCachedSticker = {
 <p>Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the sticker.</p>
 <table class="table">
 <thead>
@@ -20270,7 +20443,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcacheddocument" href="#inlinequeryresultcacheddocument"><i class="anchor-icon"></i></a>InlineQueryResultCachedDocument</h4>
+export interface InlineQueryResultCachedDocument = {
 <p>Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file.</p>
 <table class="table">
 <thead>
@@ -20333,7 +20506,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcachedvideo" href="#inlinequeryresultcachedvideo"><i class="anchor-icon"></i></a>InlineQueryResultCachedVideo</h4>
+export interface InlineQueryResultCachedVideo = {
 <p>Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.</p>
 <table class="table">
 <thead>
@@ -20401,7 +20574,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcachedvoice" href="#inlinequeryresultcachedvoice"><i class="anchor-icon"></i></a>InlineQueryResultCachedVoice</h4>
+export interface InlineQueryResultCachedVoice = {
 <p>Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the voice message.</p>
 <table class="table">
 <thead>
@@ -20459,7 +20632,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inlinequeryresultcachedaudio" href="#inlinequeryresultcachedaudio"><i class="anchor-icon"></i></a>InlineQueryResultCachedAudio</h4>
+export interface InlineQueryResultCachedAudio = {
 <p>Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.</p>
 <table class="table">
 <thead>
@@ -20512,7 +20685,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputmessagecontent" href="#inputmessagecontent"><i class="anchor-icon"></i></a>InputMessageContent</h4>
+export interface InputMessageContent = {
 <p>This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following types:</p>
 <ul>
 <li><a href="#inputtextmessagecontent">InputTextMessageContent</a></li>
@@ -20522,7 +20695,7 @@ all the text above was on the same line
 <li><a href="#inputcontactmessagecontent">InputContactMessageContent</a></li>
 <li><a href="#inputinvoicemessagecontent">InputInvoiceMessageContent</a></li>
 </ul>
-<h4><a class="anchor" name="inputtextmessagecontent" href="#inputtextmessagecontent"><i class="anchor-icon"></i></a>InputTextMessageContent</h4>
+export interface InputTextMessageContent = {
 <p>Represents the <a href="#inputmessagecontent">content</a> of a text message to be sent as the result of an inline query.</p>
 <table class="table">
 <thead>
@@ -20555,7 +20728,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputrichmessagecontent" href="#inputrichmessagecontent"><i class="anchor-icon"></i></a>InputRichMessageContent</h4>
+export interface InputRichMessageContent = {
 <p>Represents the <a href="#inputmessagecontent">content</a> of a rich message to be sent as the result of an inline query.</p>
 <table class="table">
 <thead>
@@ -20573,7 +20746,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputlocationmessagecontent" href="#inputlocationmessagecontent"><i class="anchor-icon"></i></a>InputLocationMessageContent</h4>
+export interface InputLocationMessageContent = {
 <p>Represents the <a href="#inputmessagecontent">content</a> of a location message to be sent as the result of an inline query.</p>
 <table class="table">
 <thead>
@@ -20616,7 +20789,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputvenuemessagecontent" href="#inputvenuemessagecontent"><i class="anchor-icon"></i></a>InputVenueMessageContent</h4>
+export interface InputVenueMessageContent = {
 <p>Represents the <a href="#inputmessagecontent">content</a> of a venue message to be sent as the result of an inline query.</p>
 <table class="table">
 <thead>
@@ -20669,7 +20842,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputcontactmessagecontent" href="#inputcontactmessagecontent"><i class="anchor-icon"></i></a>InputContactMessageContent</h4>
+export interface InputContactMessageContent = {
 <p>Represents the <a href="#inputmessagecontent">content</a> of a contact message to be sent as the result of an inline query.</p>
 <table class="table">
 <thead>
@@ -20702,7 +20875,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="inputinvoicemessagecontent" href="#inputinvoicemessagecontent"><i class="anchor-icon"></i></a>InputInvoiceMessageContent</h4>
+export interface InputInvoiceMessageContent = {
 <p>Represents the <a href="#inputmessagecontent">content</a> of an invoice message to be sent as the result of an inline query.</p>
 <table class="table">
 <thead>
@@ -20815,7 +20988,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="choseninlineresult" href="#choseninlineresult"><i class="anchor-icon"></i></a>ChosenInlineResult</h4>
+export interface ChosenInlineResult = {
 <p>Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.</p>
 <table class="table">
 <thead>
@@ -20856,7 +21029,8 @@ all the text above was on the same line
 <p><strong>Note:</strong> It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.</p>
 // === PAYMENTS
 <p>Your bot can accept payments from Telegram users. Please see the <a href="/bots/payments">introduction to payments</a> for more details on the process and how to set up payments for your bot.</p>
-<h4><a class="anchor" name="sendinvoice" href="#sendinvoice"><i class="anchor-icon"></i></a>sendInvoice</h4>
+export interface ApiMethods {
+  sendInvoice(args: {
 <p>Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -21056,7 +21230,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="createinvoicelink" href="#createinvoicelink"><i class="anchor-icon"></i></a>createInvoiceLink</h4>
+export interface ApiMethods {
+  createInvoiceLink(args: {
 <p>Use this method to create a link for an invoice. Returns the created invoice link as <em>String</em> on success.</p>
 <table class="table">
 <thead>
@@ -21202,7 +21377,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answershippingquery" href="#answershippingquery"><i class="anchor-icon"></i></a>answerShippingQuery</h4>
+export interface ApiMethods {
+  answerShippingQuery(args: {
 <p>If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
@@ -21240,7 +21416,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="answerprecheckoutquery" href="#answerprecheckoutquery"><i class="anchor-icon"></i></a>answerPreCheckoutQuery</h4>
+export interface ApiMethods {
+  answerPreCheckoutQuery(args: {
 <p>Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, <em>True</em> is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.</p>
 <table class="table">
 <thead>
@@ -21272,9 +21449,11 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getmystarbalance" href="#getmystarbalance"><i class="anchor-icon"></i></a>getMyStarBalance</h4>
+export interface ApiMethods {
+  getMyStarBalance(args: {
 <p>A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.</p>
-<h4><a class="anchor" name="getstartransactions" href="#getstartransactions"><i class="anchor-icon"></i></a>getStarTransactions</h4>
+export interface ApiMethods {
+  getStarTransactions(args: {
 <p>Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.</p>
 <table class="table">
 <thead>
@@ -21300,7 +21479,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="refundstarpayment" href="#refundstarpayment"><i class="anchor-icon"></i></a>refundStarPayment</h4>
+export interface ApiMethods {
+  refundStarPayment(args: {
 <p>Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -21326,7 +21506,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="edituserstarsubscription" href="#edituserstarsubscription"><i class="anchor-icon"></i></a>editUserStarSubscription</h4>
+export interface ApiMethods {
+  editUserStarSubscription(args: {
 <p>Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
@@ -21358,7 +21539,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="labeledprice" href="#labeledprice"><i class="anchor-icon"></i></a>LabeledPrice</h4>
+export interface LabeledPrice = {
 <p>This object represents a portion of the price for goods or services.</p>
 <table class="table">
 <thead>
@@ -21381,7 +21562,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="invoice" href="#invoice"><i class="anchor-icon"></i></a>Invoice</h4>
+export interface Invoice = {
 <p>This object contains basic information about an invoice.</p>
 <table class="table">
 <thead>
@@ -21419,7 +21600,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="shippingaddress" href="#shippingaddress"><i class="anchor-icon"></i></a>ShippingAddress</h4>
+export interface ShippingAddress = {
 <p>This object represents a shipping address.</p>
 <table class="table">
 <thead>
@@ -21462,7 +21643,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="orderinfo" href="#orderinfo"><i class="anchor-icon"></i></a>OrderInfo</h4>
+export interface OrderInfo = {
 <p>This object represents information about an order.</p>
 <table class="table">
 <thead>
@@ -21495,7 +21676,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="shippingoption" href="#shippingoption"><i class="anchor-icon"></i></a>ShippingOption</h4>
+export interface ShippingOption = {
 <p>This object represents one shipping option.</p>
 <table class="table">
 <thead>
@@ -21523,7 +21704,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="successfulpayment" href="#successfulpayment"><i class="anchor-icon"></i></a>SuccessfulPayment</h4>
+export interface SuccessfulPayment = {
 <p>This object contains basic information about a successful payment. Note that if the buyer initiates a chargeback with the relevant payment provider following this transaction, the funds may be debited from your balance. This is outside of Telegram&#39;s control.</p>
 <table class="table">
 <thead>
@@ -21586,7 +21767,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="refundedpayment" href="#refundedpayment"><i class="anchor-icon"></i></a>RefundedPayment</h4>
+export interface RefundedPayment = {
 <p>This object contains basic information about a refunded payment.</p>
 <table class="table">
 <thead>
@@ -21624,7 +21805,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="shippingquery" href="#shippingquery"><i class="anchor-icon"></i></a>ShippingQuery</h4>
+export interface ShippingQuery = {
 <p>This object contains information about an incoming shipping query.</p>
 <table class="table">
 <thead>
@@ -21657,7 +21838,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="precheckoutquery" href="#precheckoutquery"><i class="anchor-icon"></i></a>PreCheckoutQuery</h4>
+export interface PreCheckoutQuery = {
 <p>This object contains information about an incoming pre-checkout query.</p>
 <table class="table">
 <thead>
@@ -21705,7 +21886,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="paidmediapurchased" href="#paidmediapurchased"><i class="anchor-icon"></i></a>PaidMediaPurchased</h4>
+export interface PaidMediaPurchased = {
 <p>This object contains information about a paid media purchase.</p>
 <table class="table">
 <thead>
@@ -21728,14 +21909,14 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="revenuewithdrawalstate" href="#revenuewithdrawalstate"><i class="anchor-icon"></i></a>RevenueWithdrawalState</h4>
+export interface RevenueWithdrawalState = {
 <p>This object describes the state of a revenue withdrawal operation. Currently, it can be one of</p>
 <ul>
 <li><a href="#revenuewithdrawalstatepending">RevenueWithdrawalStatePending</a></li>
 <li><a href="#revenuewithdrawalstatesucceeded">RevenueWithdrawalStateSucceeded</a></li>
 <li><a href="#revenuewithdrawalstatefailed">RevenueWithdrawalStateFailed</a></li>
 </ul>
-<h4><a class="anchor" name="revenuewithdrawalstatepending" href="#revenuewithdrawalstatepending"><i class="anchor-icon"></i></a>RevenueWithdrawalStatePending</h4>
+export interface RevenueWithdrawalStatePending = {
 <p>The withdrawal is in progress.</p>
 <table class="table">
 <thead>
@@ -21753,7 +21934,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="revenuewithdrawalstatesucceeded" href="#revenuewithdrawalstatesucceeded"><i class="anchor-icon"></i></a>RevenueWithdrawalStateSucceeded</h4>
+export interface RevenueWithdrawalStateSucceeded = {
 <p>The withdrawal succeeded.</p>
 <table class="table">
 <thead>
@@ -21781,7 +21962,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="revenuewithdrawalstatefailed" href="#revenuewithdrawalstatefailed"><i class="anchor-icon"></i></a>RevenueWithdrawalStateFailed</h4>
+export interface RevenueWithdrawalStateFailed = {
 <p>The withdrawal failed and the transaction was refunded.</p>
 <table class="table">
 <thead>
@@ -21799,7 +21980,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="affiliateinfo" href="#affiliateinfo"><i class="anchor-icon"></i></a>AffiliateInfo</h4>
+export interface AffiliateInfo = {
 <p>Contains information about the affiliate that received a commission via this transaction.</p>
 <table class="table">
 <thead>
@@ -21837,7 +22018,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartner" href="#transactionpartner"><i class="anchor-icon"></i></a>TransactionPartner</h4>
+export interface TransactionPartner = {
 <p>This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of</p>
 <ul>
 <li><a href="#transactionpartneruser">TransactionPartnerUser</a></li>
@@ -21848,7 +22029,7 @@ all the text above was on the same line
 <li><a href="#transactionpartnertelegramapi">TransactionPartnerTelegramApi</a></li>
 <li><a href="#transactionpartnerother">TransactionPartnerOther</a></li>
 </ul>
-<h4><a class="anchor" name="transactionpartneruser" href="#transactionpartneruser"><i class="anchor-icon"></i></a>TransactionPartnerUser</h4>
+export interface TransactionPartnerUser = {
 <p>Describes a transaction with a user.</p>
 <table class="table">
 <thead>
@@ -21911,7 +22092,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartnerchat" href="#transactionpartnerchat"><i class="anchor-icon"></i></a>TransactionPartnerChat</h4>
+export interface TransactionPartnerChat = {
 <p>Describes a transaction with a chat.</p>
 <table class="table">
 <thead>
@@ -21939,7 +22120,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartneraffiliateprogram" href="#transactionpartneraffiliateprogram"><i class="anchor-icon"></i></a>TransactionPartnerAffiliateProgram</h4>
+export interface TransactionPartnerAffiliateProgram = {
 <p>Describes the affiliate program that issued the affiliate commission received via this transaction.</p>
 <table class="table">
 <thead>
@@ -21967,7 +22148,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartnerfragment" href="#transactionpartnerfragment"><i class="anchor-icon"></i></a>TransactionPartnerFragment</h4>
+export interface TransactionPartnerFragment = {
 <p>Describes a withdrawal transaction with Fragment.</p>
 <table class="table">
 <thead>
@@ -21990,7 +22171,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartnertelegramads" href="#transactionpartnertelegramads"><i class="anchor-icon"></i></a>TransactionPartnerTelegramAds</h4>
+export interface TransactionPartnerTelegramAds = {
 <p>Describes a withdrawal transaction to the Telegram Ads platform.</p>
 <table class="table">
 <thead>
@@ -22008,7 +22189,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartnertelegramapi" href="#transactionpartnertelegramapi"><i class="anchor-icon"></i></a>TransactionPartnerTelegramApi</h4>
+export interface TransactionPartnerTelegramApi = {
 <p>Describes a transaction with payment for <a href="#paid-broadcasts">paid broadcasting</a>.</p>
 <table class="table">
 <thead>
@@ -22031,7 +22212,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="transactionpartnerother" href="#transactionpartnerother"><i class="anchor-icon"></i></a>TransactionPartnerOther</h4>
+export interface TransactionPartnerOther = {
 <p>Describes a transaction with an unknown source or recipient.</p>
 <table class="table">
 <thead>
@@ -22049,7 +22230,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="startransaction" href="#startransaction"><i class="anchor-icon"></i></a>StarTransaction</h4>
+export interface StarTransaction = {
 <p>Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted from the bot&#39;s balance. This is outside of Telegram&#39;s control.</p>
 <table class="table">
 <thead>
@@ -22092,7 +22273,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="startransactions" href="#startransactions"><i class="anchor-icon"></i></a>StarTransactions</h4>
+export interface StarTransactions = {
 <p>Contains a list of Telegram Star transactions.</p>
 <table class="table">
 <thead>
@@ -22112,7 +22293,7 @@ all the text above was on the same line
 </table>
 // === TELEGRAM PASSPORT
 <p><strong>Telegram Passport</strong> is a unified authorization method for services that require personal identification. Users can upload their documents once, then instantly share their data with services that require real-world ID (finance, ICOs, etc.). Please see the <a href="/passport">manual</a> for details.</p>
-<h4><a class="anchor" name="passportdata" href="#passportdata"><i class="anchor-icon"></i></a>PassportData</h4>
+export interface PassportData = {
 <p>Describes Telegram Passport data shared with the bot by the user.</p>
 <table class="table">
 <thead>
@@ -22135,7 +22316,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportfile" href="#passportfile"><i class="anchor-icon"></i></a>PassportFile</h4>
+export interface PassportFile = {
 <p>This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format when decrypted and don&#39;t exceed 10MB.</p>
 <table class="table">
 <thead>
@@ -22168,7 +22349,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="encryptedpassportelement" href="#encryptedpassportelement"><i class="anchor-icon"></i></a>EncryptedPassportElement</h4>
+export interface EncryptedPassportElement = {
 <p>Describes documents or other Telegram Passport elements shared with the bot by the user.</p>
 <table class="table">
 <thead>
@@ -22231,7 +22412,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="encryptedcredentials" href="#encryptedcredentials"><i class="anchor-icon"></i></a>EncryptedCredentials</h4>
+export interface EncryptedCredentials = {
 <p>Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the <a href="/passport#receiving-information">Telegram Passport Documentation</a> for a complete description of the data decryption and authentication processes.</p>
 <table class="table">
 <thead>
@@ -22259,7 +22440,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="setpassportdataerrors" href="#setpassportdataerrors"><i class="anchor-icon"></i></a>setPassportDataErrors</h4>
+export interface ApiMethods {
+  setPassportDataErrors(args: {
 <p>Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns <em>True</em> on success.</p>
 <p>Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.</p>
 <table class="table">
@@ -22286,7 +22468,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerror" href="#passportelementerror"><i class="anchor-icon"></i></a>PassportElementError</h4>
+export interface PassportElementError = {
 <p>This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:</p>
 <ul>
 <li><a href="#passportelementerrordatafield">PassportElementErrorDataField</a></li>
@@ -22299,7 +22481,7 @@ all the text above was on the same line
 <li><a href="#passportelementerrortranslationfiles">PassportElementErrorTranslationFiles</a></li>
 <li><a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a></li>
 </ul>
-<h4><a class="anchor" name="passportelementerrordatafield" href="#passportelementerrordatafield"><i class="anchor-icon"></i></a>PassportElementErrorDataField</h4>
+export interface PassportElementErrorDataField = {
 <p>Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field&#39;s value changes.</p>
 <table class="table">
 <thead>
@@ -22337,7 +22519,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrorfrontside" href="#passportelementerrorfrontside"><i class="anchor-icon"></i></a>PassportElementErrorFrontSide</h4>
+export interface PassportElementErrorFrontSide = {
 <p>Represents an issue with the front side of a document. The error is considered resolved when the file with the front side of the document changes.</p>
 <table class="table">
 <thead>
@@ -22370,7 +22552,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrorreverseside" href="#passportelementerrorreverseside"><i class="anchor-icon"></i></a>PassportElementErrorReverseSide</h4>
+export interface PassportElementErrorReverseSide = {
 <p>Represents an issue with the reverse side of a document. The error is considered resolved when the file with reverse side of the document changes.</p>
 <table class="table">
 <thead>
@@ -22403,7 +22585,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrorselfie" href="#passportelementerrorselfie"><i class="anchor-icon"></i></a>PassportElementErrorSelfie</h4>
+export interface PassportElementErrorSelfie = {
 <p>Represents an issue with the selfie with a document. The error is considered resolved when the file with the selfie changes.</p>
 <table class="table">
 <thead>
@@ -22436,7 +22618,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrorfile" href="#passportelementerrorfile"><i class="anchor-icon"></i></a>PassportElementErrorFile</h4>
+export interface PassportElementErrorFile = {
 <p>Represents an issue with a document scan. The error is considered resolved when the file with the document scan changes.</p>
 <table class="table">
 <thead>
@@ -22469,7 +22651,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrorfiles" href="#passportelementerrorfiles"><i class="anchor-icon"></i></a>PassportElementErrorFiles</h4>
+export interface PassportElementErrorFiles = {
 <p>Represents an issue with a list of scans. The error is considered resolved when the list of files containing the scans changes.</p>
 <table class="table">
 <thead>
@@ -22502,7 +22684,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrortranslationfile" href="#passportelementerrortranslationfile"><i class="anchor-icon"></i></a>PassportElementErrorTranslationFile</h4>
+export interface PassportElementErrorTranslationFile = {
 <p>Represents an issue with one of the files that constitute the translation of a document. The error is considered resolved when the file changes.</p>
 <table class="table">
 <thead>
@@ -22535,7 +22717,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrortranslationfiles" href="#passportelementerrortranslationfiles"><i class="anchor-icon"></i></a>PassportElementErrorTranslationFiles</h4>
+export interface PassportElementErrorTranslationFiles = {
 <p>Represents an issue with the translated version of a document. The error is considered resolved when a file with the document translation change.</p>
 <table class="table">
 <thead>
@@ -22568,7 +22750,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="passportelementerrorunspecified" href="#passportelementerrorunspecified"><i class="anchor-icon"></i></a>PassportElementErrorUnspecified</h4>
+export interface PassportElementErrorUnspecified = {
 <p>Represents an issue in an unspecified place. The error is considered resolved when new data is added.</p>
 <table class="table">
 <thead>
@@ -22614,7 +22796,8 @@ all the text above was on the same line
 <li>You can also add an extra <a href="/bots/games#sharing-your-game-to-telegram-chats">sharing button</a> for users to share their best score to different chats.</li>
 <li>For examples of what can be done using this new stuff, check the <a href="https://t.me/gamebot">@gamebot</a> and <a href="https://t.me/gamee">@gamee</a> bots.</li>
 </ul>
-<h4><a class="anchor" name="sendgame" href="#sendgame"><i class="anchor-icon"></i></a>sendGame</h4>
+export interface ApiMethods {
+  sendGame(args: {
 <p>Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
@@ -22688,7 +22871,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="game" href="#game"><i class="anchor-icon"></i></a>Game</h4>
+export interface Game = {
 <p>This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.</p>
 <table class="table">
 <thead>
@@ -22731,9 +22914,10 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="callbackgame" href="#callbackgame"><i class="anchor-icon"></i></a>CallbackGame</h4>
+export interface CallbackGame = {
 <p>A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.</p>
-<h4><a class="anchor" name="setgamescore" href="#setgamescore"><i class="anchor-icon"></i></a>setGameScore</h4>
+export interface ApiMethods {
+  setGameScore(args: {
 <p>Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.</p>
 <table class="table">
 <thead>
@@ -22789,7 +22973,8 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="getgamehighscores" href="#getgamehighscores"><i class="anchor-icon"></i></a>getGameHighScores</h4>
+export interface ApiMethods {
+  getGameHighScores(args: {
 <p>Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of <a href="#gamehighscore">GameHighScore</a> objects.</p>
 <blockquote>
 <p>This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.</p>
@@ -22830,7 +23015,7 @@ all the text above was on the same line
 </tr>
 </tbody>
 </table>
-<h4><a class="anchor" name="gamehighscore" href="#gamehighscore"><i class="anchor-icon"></i></a>GameHighScore</h4>
+export interface GameHighScore = {
 <p>This object represents one row of the high scores table for a game.</p>
 <table class="table">
 <thead>
