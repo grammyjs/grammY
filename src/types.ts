@@ -6295,130 +6295,154 @@ export interface ApiMethods {
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
 }
-<h4><a class="anchor" name="formatting-options" href="#formatting-options"><i class="anchor-icon"></i></a>Formatting options</h4>
-<p>The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.</p>
-<p>Note that Telegram clients will display an <strong>alert</strong> to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).</p>
-<p>Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, and <em>spoiler</em> entities can contain and can be part of any other entities, except <em>pre</em> and <em>code</em>.<br>- <em>blockquote</em> and <em>expandable_blockquote</em> entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.</p>
-<p>Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username. Please note:</p>
-<ul>
-<li>These links will work <strong>only</strong> if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.</li>
-<li>Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.</li>
-</ul>
-<p>You can find the list of programming and markup languages for which syntax highlighting is supported at <a href="https://github.com/TelegramMessenger/libprisma#supported-languages">libprisma#supported-languages</a>.</p>
-<h6><a class="anchor" name="date-time-entity-formatting" href="#date-time-entity-formatting"><i class="anchor-icon"></i></a>Date-time entity formatting</h6>
-<p>Date-time entity formatting is specified by a format string, which must adhere to the following regular expression: <code>r|w?[dD]?[tT]?</code>.</p>
-<p>If the format string is empty, the underlying text is displayed as-is; however, the user can still receive the underlying date in their local format. When populated, the format string determines the output based on the presence of the following control characters:</p>
-<ul>
-<li><strong><code>r</code></strong>: Displays the time relative to the current time. Cannot be combined with any other control characters.</li>
-<li><strong><code>w</code></strong>: Displays the day of the week in the user&#39;s localized language.</li>
-<li><strong><code>d</code></strong>: Displays the date in short form (e.g., “17.03.22”).</li>
-<li><strong><code>D</code></strong>: Displays the date in long form (e.g., “March 17, 2022”).</li>
-<li><strong><code>t</code></strong>: Displays the time in short form (e.g., “22:45”).</li>
-<li><strong><code>T</code></strong>: Displays the time in long form (e.g., “22:45:00”).</li>
-</ul>
-<h6><a class="anchor" name="markdownv2-style" href="#markdownv2-style"><i class="anchor-icon"></i></a>MarkdownV2 style</h6>
-<p>To use this mode, pass <em>MarkdownV2</em> in the <em>parse_mode</em> field. Use the following syntax in your message:</p>
-<pre><code>*bold \*text*
-_italic \*text_
-__underline__
-~strikethrough~
-||spoiler||
-*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
-[inline URL](http://www.example.com/)
-[inline mention of a user](tg://user?id=123456789)
-![<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />](tg://emoji?id=5368324170671202286)
-![22:45 tomorrow](tg://time?unix=1647531900&amp;format=wDT)
-![22:45 tomorrow](tg://time?unix=1647531900&amp;format=t)
-![22:45 tomorrow](tg://time?unix=1647531900&amp;format=r)
-![22:45 tomorrow](tg://time?unix=1647531900)
-`inline fixed-width code`
-```
-pre-formatted fixed-width code block
-```
-```python
-pre-formatted fixed-width code block written in the Python programming language
-```
-&gt;Block quotation started
-&gt;Block quotation continued
-&gt;Block quotation continued
-&gt;Block quotation continued
-&gt;The last line of the block quotation
-**&gt;The expandable block quotation started right after the previous block quotation
-&gt;It is separated from the previous block quotation by an empty bold entity
-&gt;Expandable block quotation continued
-&gt;Hidden by default part of the expandable block quotation started
-&gt;Expandable block quotation continued
-&gt;The last line of the expandable block quotation with the expandability mark||</code></pre>
-<p>Please note:</p>
-<ul>
-<li>Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding &#39;\&#39; character, in which case it is treated as an ordinary character and not a part of the markup. This implies that &#39;\&#39; character usually must be escaped with a preceding &#39;\&#39; character.</li>
-<li>Inside <code>pre</code> and <code>code</code> entities, all &#39;`&#39; and &#39;\&#39; characters must be escaped with a preceding &#39;\&#39; character.</li>
-<li>Inside the <code>(...)</code> part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.</li>
-<li>In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.</li>
-<li>In case of ambiguity between <code>italic</code> and <code>underline</code> entities <code>__</code> is always greedily treated from left to right as beginning or end of an <code>underline</code> entity, so instead of <code>___italic underline___</code> use <code>___italic underline_**__</code>, adding an empty bold entity as a separator.</li>
-<li>A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.</li>
-<li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.</li>
-<li>See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.</li>
-</ul>
-<h6><a class="anchor" name="html-style" href="#html-style"><i class="anchor-icon"></i></a>HTML style</h6>
-<p>To use this mode, pass <em>HTML</em> in the <em>parse_mode</em> field. The following tags are currently supported:</p>
-<pre><code>&lt;b&gt;bold&lt;/b&gt;, &lt;strong&gt;bold&lt;/strong&gt;
-&lt;i&gt;italic&lt;/i&gt;, &lt;em&gt;italic&lt;/em&gt;
-&lt;u&gt;underline&lt;/u&gt;, &lt;ins&gt;underline&lt;/ins&gt;
-&lt;s&gt;strikethrough&lt;/s&gt;, &lt;strike&gt;strikethrough&lt;/strike&gt;, &lt;del&gt;strikethrough&lt;/del&gt;
-&lt;span class=&quot;tg-spoiler&quot;&gt;spoiler&lt;/span&gt;, &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
-&lt;b&gt;bold &lt;i&gt;italic bold &lt;s&gt;italic bold strikethrough &lt;span class=&quot;tg-spoiler&quot;&gt;italic bold strikethrough spoiler&lt;/span&gt;&lt;/s&gt; &lt;u&gt;underline italic bold&lt;/u&gt;&lt;/i&gt; bold&lt;/b&gt;
-&lt;a href=&quot;http://www.example.com/&quot;&gt;inline URL&lt;/a&gt;
-&lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
-&lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&lt;/tg-emoji&gt;
-&lt;tg-time unix=&quot;1647531900&quot; format=&quot;wDT&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
-&lt;tg-time unix=&quot;1647531900&quot; format=&quot;t&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
-&lt;tg-time unix=&quot;1647531900&quot; format=&quot;r&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
-&lt;tg-time unix=&quot;1647531900&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
-&lt;code&gt;inline fixed-width code&lt;/code&gt;
-&lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;pre-formatted fixed-width code block written in the Python programming language&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;Block quotation started
-Block quotation continued
-The last line of the block quotation&lt;/blockquote&gt;
-&lt;blockquote expandable&gt;Expandable block quotation started
-Expandable block quotation continued
-Expandable block quotation continued
-Hidden by default part of the block quotation started
-Expandable block quotation continued
-The last line of the block quotation&lt;/blockquote&gt;</code></pre>
-<p>Please note:</p>
-<ul>
-<li>Only the tags mentioned above are currently supported.</li>
-<li>All <code>&lt;</code>, <code>&gt;</code> and <code>&amp;</code> symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (<code>&lt;</code> with <code>&amp;lt;</code>, <code>&gt;</code> with <code>&amp;gt;</code> and <code>&amp;</code> with <code>&amp;amp;</code>).</li>
-<li>All numerical HTML entities are supported.</li>
-<li>The API currently supports only the following named HTML entities: <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code> and <code>&amp;quot;</code>.</li>
-<li>Use nested <code>pre</code> and <code>code</code> tags, to define programming language for <code>pre</code> entity.</li>
-<li>Programming language can&#39;t be specified for standalone <code>code</code> tags.</li>
-<li>A valid emoji must be used as the content of the <code>tg-emoji</code> tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.</li>
-<li>Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.</li>
-<li>See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.</li>
-</ul>
-<h6><a class="anchor" name="markdown-style" href="#markdown-style"><i class="anchor-icon"></i></a>Markdown style</h6>
-<p>This is a legacy mode, retained for backward compatibility. To use this mode, pass <em>Markdown</em> in the <em>parse_mode</em> field. Use the following syntax in your message:</p>
-<pre><code>*bold text*
-_italic text_
-[inline URL](http://www.example.com/)
-[inline mention of a user](tg://user?id=123456789)
-`inline fixed-width code`
-```
-pre-formatted fixed-width code block
-```
-```python
-pre-formatted fixed-width code block written in the Python programming language
-```</code></pre>
-<p>Please note:</p>
-<ul>
-<li>Entities must not be nested, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.</li>
-<li>There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote”, “custom_emoji”, and “date_time” entities, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.</li>
-<li>To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the character &#39;\&#39; before them.</li>
-<li>Escaping inside entities is not allowed, so entity must be closed first and reopened again: use <code>_snake_\__case_</code> for italic <code>snake_case</code> and <code>*2*\**2=4*</code> for bold <code>2*2=4</code>.</li>
-</ul>
+/**
+ * #### Formatting options
+ *
+ * The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
+  
+ * Note that Telegram clients will display an <strong>alert</strong> to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
+ *
+ * Message entities can be nested, providing following restrictions are met:<br>- If two entities have common characters, then one of them is fully contained inside another.<br>- <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, and <em>spoiler</em> entities can contain and can be part of any other entities, except <em>pre</em> and <em>code</em>.<br>- <em>blockquote</em> and <em>expandable_blockquote</em> entities can&#39;t be nested.<br>- All other entities can&#39;t contain each other.
+ *
+ * Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username. Please note:
+ *
+ * - These links will work <strong>only</strong> if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
+ * - Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.
+ *
+ * You can find the list of programming and markup languages for which syntax highlighting is supported at <a href="https://github.com/TelegramMessenger/libprisma#supported-languages">libprisma#supported-languages</a>.
+ *
+ * ##### Date-time entity formatting
+ *
+ * Date-time entity formatting is specified by a format string, which must adhere to the following regular expression: <code>r|w?[dD]?[tT]?</code>.
+ *
+ * If the format string is empty, the underlying text is displayed as-is; however, the user can still receive the underlying date in their local format. When populated, the format string determines the output based on the presence of the following control characters:
+ *
+ * - <strong><code>r</code></strong>: Displays the time relative to the current time. Cannot be combined with any other control characters.
+ * - <strong><code>w</code></strong>: Displays the day of the week in the user&#39;s localized language.
+ * - <strong><code>d</code></strong>: Displays the date in short form (e.g., “17.03.22”).
+ * - <strong><code>D</code></strong>: Displays the date in long form (e.g., “March 17, 2022”).
+ * - <strong><code>t</code></strong>: Displays the time in short form (e.g., “22:45”).
+ * - <strong><code>T</code></strong>: Displays the time in long form (e.g., “22:45:00”).
+ *
+ * ##### MarkdownV2 style
+ *
+ * To use this mode, pass <em>MarkdownV2</em> in the <em>parse_mode</em> field. Use the following syntax in your message:
+ *
+ * ````markdown
+ * *bold \*text*
+ * _italic \*text_
+ * __underline__
+ * ~strikethrough~
+ * ||spoiler||
+ * *bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+ * [inline URL](http://www.example.com/)
+ * [inline mention of a user](tg://user?id=123456789)
+ * ![<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />](tg://emoji?id=5368324170671202286)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=wDT)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=t)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=r)
+ * ![22:45 tomorrow](tg://time?unix=1647531900)
+ * `inline fixed-width code`
+ * ```
+ * pre-formatted fixed-width code block
+ * ```
+ * ```python
+ * pre-formatted fixed-width code block written in the Python programming language
+ * ```
+ * &gt;Block quotation started
+ * &gt;Block quotation continued
+ * &gt;Block quotation continued
+ * &gt;Block quotation continued
+ * &gt;The last line of the block quotation
+ * **&gt;The expandable block quotation started right after the previous block quotation
+ * &gt;It is separated from the previous block quotation by an empty bold entity
+ * &gt;Expandable block quotation continued
+ * &gt;Hidden by default part of the expandable block quotation started
+ * &gt;Expandable block quotation continued
+ * &gt;The last line of the expandable block quotation with the expandability mark||
+ * ````
+ * 
+ * Please note:
+ *
+ * - Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding &#39;\&#39; character, in which case it is treated as an ordinary character and not a part of the markup. This implies that &#39;\&#39; character usually must be escaped with a preceding &#39;\&#39; character.
+ * - Inside <code>pre</code> and <code>code</code> entities, all &#39;`&#39; and &#39;\&#39; characters must be escaped with a preceding &#39;\&#39; character.
+ * - Inside the <code>(...)</code> part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.
+ * - In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.
+ * - In case of ambiguity between <code>italic</code> and <code>underline</code> entities <code>__</code> is always greedily treated from left to right as beginning or end of an <code>underline</code> entity, so instead of <code>___italic underline___</code> use <code>___italic underline_**__</code>, adding an empty bold entity as a separator.
+ * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.
+ * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+ * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ *
+ * ##### HTML style
+ *
+ * To use this mode, pass <em>HTML</em> in the <em>parse_mode</em> field. The following tags are currently supported:
+ * 
+ * ```html
+ * &lt;b&gt;bold&lt;/b&gt;, &lt;strong&gt;bold&lt;/strong&gt;
+ * &lt;i&gt;italic&lt;/i&gt;, &lt;em&gt;italic&lt;/em&gt;
+ * &lt;u&gt;underline&lt;/u&gt;, &lt;ins&gt;underline&lt;/ins&gt;
+ * &lt;s&gt;strikethrough&lt;/s&gt;, &lt;strike&gt;strikethrough&lt;/strike&gt;, &lt;del&gt;strikethrough&lt;/del&gt;
+ * &lt;span class=&quot;tg-spoiler&quot;&gt;spoiler&lt;/span&gt;, &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
+ * &lt;b&gt;bold &lt;i&gt;italic bold &lt;s&gt;italic bold strikethrough &lt;span class=&quot;tg-spoiler&quot;&gt;italic bold strikethrough spoiler&lt;/span&gt;&lt;/s&gt; &lt;u&gt;underline italic bold&lt;/u&gt;&lt;/i&gt; bold&lt;/b&gt;
+ * &lt;a href=&quot;http://www.example.com/&quot;&gt;inline URL&lt;/a&gt;
+ * &lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
+ * &lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&lt;/tg-emoji&gt;
+ * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;wDT&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
+ * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;t&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
+ * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;r&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
+ * &lt;tg-time unix=&quot;1647531900&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
+ * &lt;code&gt;inline fixed-width code&lt;/code&gt;
+ * &lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
+ * &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;pre-formatted fixed-width code block written in the Python programming language&lt;/code&gt;&lt;/pre&gt;
+ * &lt;blockquote&gt;Block quotation started
+ * Block quotation continued
+ * The last line of the block quotation&lt;/blockquote&gt;
+ * &lt;blockquote expandable&gt;Expandable block quotation started
+ * Expandable block quotation continued
+ * Expandable block quotation continued
+ * Hidden by default part of the block quotation started
+ * Expandable block quotation continued
+ * The last line of the block quotation&lt;/blockquote&gt;
+ * ```
+ * 
+ * Please note:
+ *
+ * - Only the tags mentioned above are currently supported.
+ * - All <code>&lt;</code>, <code>&gt;</code> and <code>&amp;</code> symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (<code>&lt;</code> with <code>&amp;lt;</code>, <code>&gt;</code> with <code>&amp;gt;</code> and <code>&amp;</code> with <code>&amp;amp;</code>).
+ * - All numerical HTML entities are supported.
+ * - The API currently supports only the following named HTML entities: <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code> and <code>&amp;quot;</code>.
+ * - Use nested <code>pre</code> and <code>code</code> tags, to define programming language for <code>pre</code> entity.
+ * - Programming language can&#39;t be specified for standalone <code>code</code> tags.
+ * - A valid emoji must be used as the content of the <code>tg-emoji</code> tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the <strong>emoji</strong> field of the custom emoji <a href="#sticker">sticker</a>.
+ * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+ * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ *
+ * ##### Markdown style
+ *
+ * This is a legacy mode, retained for backward compatibility. To use this mode, pass <em>Markdown</em> in the <em>parse_mode</em> field. Use the following syntax in your message:
+ *
+ * ````markdown
+ * *bold text*
+ * _italic text_
+ * [inline URL](http://www.example.com/)
+ * [inline mention of a user](tg://user?id=123456789)
+ * `inline fixed-width code`
+ * ```
+ * pre-formatted fixed-width code block
+ * ```
+ * ```python
+ * pre-formatted fixed-width code block written in the Python programming language
+ * ```
+ * ````
+ *
+ * Please note:
+ *
+ * - Entities must not be nested, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
+ * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote”, “custom_emoji”, and “date_time” entities, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
+ * - To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the character &#39;\&#39; before them.
+ * - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use <code>_snake_\__case_</code> for italic <code>snake_case</code> and <code>*2*\**2=4*</code> for bold <code>2*2=4</code>.
+ */
+export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 export interface ApiMethods {
   /**
    * Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.
@@ -7989,6 +8013,8 @@ export interface ApiMethods {
      * Type of action to broadcast. Choose one, depending on what the user is about to receive: <em>typing</em> for <a href="#sendmessage">text messages</a>, <em>upload_photo</em> for <a href="#sendphoto">photos</a>, <em>record_video</em> or <em>upload_video</em> for <a href="#sendvideo">videos</a>, <em>record_voice</em> or <em>upload_voice</em> for <a href="#sendvoice">voice notes</a>, <em>upload_document</em> for <a href="#senddocument">general files</a>, <em>choose_sticker</em> for <a href="#sendsticker">stickers</a>, <em>find_location</em> for <a href="#sendlocation">location data</a>, <em>record_video_note</em> or <em>upload_video_note</em> for <a href="#sendvideonote">video notes</a>.
      */
     action: string;
+  }): never;
+}
 export interface ApiMethods {
   /**
    * Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.
@@ -10883,273 +10909,302 @@ export interface ApiMethods {
   }): never;
 }
 // === RICH MESSAGES
-<p>The following methods and objects allow your bot to handle and send rich messages.</p>
-<h4><a class="anchor" name="rich-message-formatting-options" href="#rich-message-formatting-options"><i class="anchor-icon"></i></a>Rich Message Formatting Options</h4>
-<p><a href="#inputrichmessage">Rich messages</a> support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting, or explicit <a href="#inputrichblock">blocks</a>.</p>
-<p>Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass <em>True</em> in the <em>skip_entity_detection</em> field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).</p>
-<p>When <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting is used, you can use links in the form <code>tg://photo?id=...</code>, <code>tg://video?id=...</code>, and <code>tg://audio?id=...</code> instead of an HTTP URL to reuse previously uploaded files or upload a new file.</p>
-<h6><a class="anchor" name="rich-message-limits" href="#rich-message-limits"><i class="anchor-icon"></i></a>Rich Message Limits</h6>
-<p>Rich messages are subject to the following limits:</p>
-<ul>
-<li>Up to <strong>32768 UTF-8 characters</strong> in the rich message text, including custom emoji alternative text and formula source.</li>
-<li>Up to <strong>500 blocks</strong>, including nested blocks, list items, ordered list items, table rows, quotation blocks, and details blocks.</li>
-<li>Up to <strong>16 levels</strong> of nested formatting and blocks.</li>
-<li>Up to <strong>50 media attachments</strong> in total, including photos, videos, and audio files.</li>
-<li>Up to <strong>20 columns</strong> in a table.</li>
-</ul>
-<h6><a class="anchor" name="rich-markdown-style" href="#rich-markdown-style"><i class="anchor-icon"></i></a>Rich Markdown style</h6>
-<p>To use this mode, pass rich message content in the <em>markdown</em> field. Use the following syntax in your message:</p>
-<pre><code>**bold text**
-__bold text__
-*italic text*
-_italic text_
-~~strikethrough text~~
-`inline fixed-width code`
-==marked text==
-||spoiler||
-
-[inline URL](https://t.me/)
-[inline e-mail](mailto:user@example.com)
-[inline phone number](tel:+123456789)
-[inline mention of a user](tg://user?id=123456789)
-![<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />](tg://emoji?id=5368324170671202286)
-![22:45 tomorrow](tg://time?unix=1647531900&amp;format=wDT)
-$x^2 + y^2$
-\#hashtag $USD +12345678901, card: 4242 4242 4242 4242, https://t.me t.me a@t.me /command @username
-all the text above was on the same line
-
-# Heading 1
-## Heading 2
-### Heading 3
-#### Heading 4
-##### Heading 5
-###### Heading 6
-
-Paragraph text
-
-```python
-  print(&#39;pre-formatted fixed-width code block written in the Python programming language&#39;)
-```
-
----
-
-- unordered list item
-* unordered list item
-+ unordered list item
-
-1. ordered list item
-2. ordered list item
-
-- [ ] task list item
-- [x] completed task list item
-
-&gt;Block quotation started
-&gt;
-&gt;Block quotation continued on the next line
-&gt;Block quotation continued on the same line
-&gt;
-&gt;The last line of the block quotation
-
-![](https://telegram.org/example/photo.jpg)
-![](https://telegram.org/example/video.mp4)
-![](https://telegram.org/example/audio.mp3)
-![](https://telegram.org/example/audio.ogg)
-![](https://telegram.org/example/animation.gif)
-
-![](https://telegram.org/example/photo.jpg &quot;Photo caption&quot;)
-![](https://telegram.org/example/video.mp4 &quot;Video caption&quot;)
-![](https://telegram.org/example/audio.mp3 &quot;Audio caption&quot;)
-![](https://telegram.org/example/audio.ogg &quot;Voice note caption&quot;)
-![](https://telegram.org/example/animation.gif &quot;Animation caption&quot;)
-
-| Header 1 | Header 2 |
-|:---------|:--------:|
-| left     | center   |
-
-Text with a reference[^id1] and another one[^id2].
-
-[^id1]: Definition of the first footnote.
-[^id2]: Definition of the second footnote.
-
-$$E = mc^2$$
-
-```math
-E = mc^2
-```
-
-## Example Nested Syntax Report for _Q1_
-Intro with &lt;u&gt;underlined text&lt;/u&gt;, ==marked text==, and $x^2 + y^2$.
-**Bold _italic &lt;u&gt;underlined italic bold&lt;/u&gt; italic_ bold**
-&lt;u&gt;In inline tags, nested **markdown** is parsed&lt;/u&gt;
-&gt;Quote with **bold text, ~~strikethrough, and &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;~~**, plus [a link](https://t.me/).
-
-- List item with `code`, &lt;sup&gt;superscript&lt;/sup&gt;, &lt;sub&gt;subscript&lt;/sub&gt;, and a footnote[^note]
-- Another item with **bold &lt;tg-spoiler&gt;&lt;code&gt;spoiler code&lt;/code&gt;&lt;/tg-spoiler&gt;**
-- Another item with ~~strikethrough and &lt;ins&gt;inserted text&lt;/ins&gt;~~
-
-| Metric | Value |
-|:-------|------:|
-| Speed  | **42** &lt;sup&gt;ms&lt;/sup&gt; |
-| Status | &lt;tg-spoiler&gt;ready&lt;/tg-spoiler&gt; |
-
-[^note]: Footnote with _italic text_ and &lt;u&gt;HTML underline&lt;/u&gt;.
-
----
-
-# Details blocks can contain Markdown content:
-
-&lt;details open&gt;&lt;summary&gt;Summary with **bold text**&lt;/summary&gt;
-
-### Details heading
-- List item with _italic text_
-- List item with &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
-
-&lt;/details&gt;
-
-# Collages and slideshows can contain Markdown media blocks:
-
-&lt;tg-collage&gt;
-
-![](https://telegram.org/example/photo.jpg)
-![](https://telegram.org/example/video.mp4)
-
-&lt;/tg-collage&gt;
-
-&lt;tg-slideshow&gt;
-
-![](https://telegram.org/example/photo.jpg)
-![](https://telegram.org/example/video.mp4)
-
-&lt;/tg-slideshow&gt;</code></pre>
-<p>For formatting features that don&#39;t have Markdown syntax, use <a href="#rich-html-style">HTML tags</a>:</p>
-<pre><code>&lt;u&gt;underlined text&lt;/u&gt;, &lt;ins&gt;underlined text&lt;/ins&gt;
-&lt;sub&gt;subscript text&lt;/sub&gt;
-&lt;sup&gt;superscript text&lt;/sup&gt;
-&lt;a name=&quot;chapter-1&quot;&gt;&lt;/a&gt;
-&lt;aside&gt;Pull quote&lt;cite&gt;The Author&lt;/cite&gt;&lt;/aside&gt;
-&lt;details open&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
-&lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;
-&lt;tg-collage&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Caption&lt;cite&gt;The Author&lt;/cite&gt;&lt;/figcaption&gt;&lt;/tg-collage&gt;
-&lt;tg-slideshow&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;figcaption&gt;Slideshow caption&lt;cite&gt;The Author&lt;/cite&gt;&lt;/figcaption&gt;&lt;/tg-slideshow&gt;</code></pre>
-<p>Additionally, you can use the following tag in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>:</p>
-<pre><code>&lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;</code></pre>
-<p>Please note:</p>
-<ul>
-<li>Rich Markdown is compatible with GitHub Flavored Markdown where possible and can contain arbitrary HTML. Supported rich message HTML tags are parsed as described in <a href="#rich-html-style">Rich HTML style</a>.</li>
-<li>Media can be specified only as a separate block.</li>
-<li>Media blocks support only HTTP and HTTPS URLs.</li>
-<li>Media type is determined by the MIME type and the URL of the media.</li>
-<li>In media syntax, the optional title after the URL is used as the caption; for example, <img class="icon" src="url" alt="" title="Photo caption"> displays “Photo caption” under the media.</li>
-<li>Table cells can contain only inline formatting.</li>
-<li>Formula source is treated as raw LaTeX.</li>
-<li>Markdown isn&#39;t parsed inside block HTML tags other than &lt;details&gt;, &lt;tg-collage&gt; and &lt;tg-slideshow&gt;, therefore only HTML tags can be used there.</li>
-<li>See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.</li>
-</ul>
-<h6><a class="anchor" name="rich-html-style" href="#rich-html-style"><i class="anchor-icon"></i></a>Rich HTML style</h6>
-<p>To use this mode, pass rich message content in the <em>html</em> field. The following tags are currently supported:</p>
-<pre><code>&lt;a name=&quot;chapter-0&quot;&gt;&lt;/a&gt;
-&lt;b&gt;bold text&lt;/b&gt;, &lt;strong&gt;bold text&lt;/strong&gt;
-&lt;i&gt;italic text&lt;/i&gt;, &lt;em&gt;italic text&lt;/em&gt;
-&lt;u&gt;underlined text&lt;/u&gt;, &lt;ins&gt;underlined text&lt;/ins&gt;
-&lt;s&gt;strikethrough text&lt;/s&gt;, &lt;strike&gt;strikethrough text&lt;/strike&gt;, &lt;del&gt;strikethrough text&lt;/del&gt;
-&lt;code&gt;inline fixed-width code&lt;/code&gt;
-&lt;mark&gt;marked text&lt;/mark&gt;
-&lt;sub&gt;subscript text&lt;/sub&gt;
-&lt;sup&gt;superscript text&lt;/sup&gt;
-&lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
-
-&lt;a href=&quot;#note-1&quot;&gt;Reference&lt;/a&gt;
-&lt;a href=&quot;https://t.me/&quot;&gt;inline URL&lt;/a&gt;
-&lt;a href=&quot;mailto:user@example.com&quot;&gt;inline e-mail&lt;/a&gt;
-&lt;a href=&quot;tel:+123456789&quot;&gt;inline phone number&lt;/a&gt;
-&lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
-&lt;a href=&quot;#chapter-1&quot;&gt;in-document link&lt;/a&gt;
-&lt;a name=&quot;chapter-1&quot;&gt;&lt;/a&gt;
-
-&lt;tg-reference name=&quot;note-1&quot;&gt;Referenced text&lt;/tg-reference&gt;
-&lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&lt;/tg-emoji&gt;
-&lt;img src=&quot;tg://emoji?id=5368324170671202286&quot; alt=&quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&quot;/&gt;
-&lt;tg-time unix=&quot;1647531900&quot; format=&quot;wDT&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
-&lt;tg-math&gt;x^2 + y^2&lt;/tg-math&gt;
-
-#hashtag $USD +12345678901, card: 4242 4242 4242 4242, https://t.me t.me a@t.me /command @username
-
-all the text above was on the same line
-
-&lt;h1&gt;Heading 1&lt;/h1&gt;
-&lt;h2&gt;Heading 2&lt;/h2&gt;
-&lt;h3&gt;Heading 3&lt;/h3&gt;
-&lt;h4&gt;Heading 4&lt;/h4&gt;
-&lt;h5&gt;Heading 5&lt;/h5&gt;
-&lt;h6&gt;Heading 6&lt;/h6&gt;
-
-&lt;a name=&quot;chapter-2&quot;&gt;&lt;/a&gt;
-
-&lt;p&gt;Paragraph text&lt;/p&gt;
-&lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
-&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  print(&#39;pre-formatted fixed-width code block written in the Python programming language&#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;footer&gt;Footer text&lt;/footer&gt;
-&lt;hr/&gt;
-&lt;ul&gt;&lt;li&gt;unordered list item&lt;/li&gt;&lt;/ul&gt;
-&lt;ol&gt;&lt;li&gt;ordered list item&lt;/li&gt;&lt;/ol&gt;
-&lt;ol start=&quot;3&quot; type=&quot;a&quot; reversed&gt;&lt;li&gt;ordered list item&lt;/li&gt;&lt;/ol&gt;
-&lt;ol&gt;&lt;li value=&quot;7&quot; type=&quot;i&quot;&gt;ordered list item with explicit number&lt;/li&gt;&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;input type=&quot;checkbox&quot; checked&gt;Checked checkbox&lt;/li&gt;
-&lt;li&gt;&lt;input type=&quot;checkbox&quot;&gt;Unchecked checkbox&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;Block quotation started&lt;br&gt;Block quotation continued&lt;br&gt;The last line of the block quotation&lt;cite&gt;The Author&lt;/cite&gt;&lt;/blockquote&gt;
-&lt;aside&gt;Pull quote&lt;cite&gt;The Author&lt;/cite&gt;&lt;/aside&gt;
-
-&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;
-&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;&gt;&lt;/video&gt;
-&lt;audio src=&quot;https://telegram.org/example/audio.mp3&quot;&gt;&lt;/audio&gt;
-&lt;audio src=&quot;https://telegram.org/example/audio.ogg&quot;&gt;&lt;/audio&gt;
-&lt;video src=&quot;https://telegram.org/example/animation.gif&quot;&gt;&lt;/video&gt;
-
-&lt;figure&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot; tg-spoiler/&gt;&lt;figcaption&gt;Photo caption&lt;cite&gt;Photo credit&lt;/cite&gt;&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;figure&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot; tg-spoiler&gt;&lt;/video&gt;&lt;figcaption&gt;Video caption&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;figure&gt;&lt;audio src=&quot;https://telegram.org/example/audio.mp3&quot;&gt;&lt;/audio&gt;&lt;figcaption&gt;Audio caption&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;figure&gt;&lt;audio src=&quot;https://telegram.org/example/audio.ogg&quot;&gt;&lt;/audio&gt;&lt;figcaption&gt;Voice note caption&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;figure&gt;&lt;video src=&quot;https://telegram.org/example/animation.gif&quot; tg-spoiler&gt;&lt;/video&gt;&lt;figcaption&gt;Animation caption&lt;/figcaption&gt;&lt;/figure&gt;
-
-&lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;
-&lt;figure&gt;&lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;&lt;figcaption&gt;Map caption&lt;/figcaption&gt;&lt;/figure&gt;
-
-&lt;tg-collage&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;/tg-collage&gt;
-&lt;tg-collage&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Collage caption&lt;/figcaption&gt;&lt;/tg-collage&gt;
-&lt;tg-slideshow&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;/tg-slideshow&gt;
-&lt;tg-slideshow&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Slideshow caption&lt;/figcaption&gt;&lt;/tg-slideshow&gt;
-
-&lt;table&gt;&lt;tr&gt;&lt;th&gt;Header 1&lt;/th&gt;&lt;th&gt;Header 2&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Value 1&lt;/td&gt;&lt;td&gt;Value 2&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;table bordered striped&gt;&lt;caption&gt;Table caption&lt;/caption&gt;
-&lt;tr&gt;&lt;td colspan=&quot;2&quot; rowspan=&quot;2&quot; align=&quot;left&quot;&gt;Value&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;Value2&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;Value3&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Value4&lt;/td&gt;&lt;td valign=&quot;middle&quot;&gt;Value5&lt;/td&gt;&lt;td valign=&quot;bottom&quot;&gt;Value6&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Value7&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
-&lt;details&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
-&lt;details open&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
-&lt;tg-math-block&gt;E = mc^2&lt;/tg-math-block&gt;</code></pre>
-<p>Additionally, you can use the following tag in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>:</p>
-<pre><code>&lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;</code></pre>
-<p>Please note:</p>
-<ul>
-<li>Only the tags mentioned above are currently supported.</li>
-<li>All numerical HTML entities are supported.</li>
-<li>The API currently supports only the following named HTML entities: <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code>, <code>&amp;apos;</code>, <code>&amp;nbsp;</code>, <code>&amp;hellip;</code>, <code>&amp;mdash;</code>, <code>&amp;ndash;</code>, <code>&amp;lsquo;</code>, <code>&amp;rsquo;</code>, <code>&amp;ldquo;</code> and <code>&amp;rdquo;</code>.</li>
-<li>Use nested <code>pre</code> and <code>code</code> tags to define the programming language for a pre-formatted block.</li>
-<li>Programming language can&#39;t be specified for standalone <code>code</code> tags.</li>
-<li>Links <code>mailto:...</code>, <code>tel:...</code>, and <code>tg://user?id=...</code> are rendered as e-mail links, phone links, and inline mentions respectively. Other supported links are rendered as regular inline links.</li>
-<li>Images, videos, and audio files can be specified only as separate media blocks.</li>
-<li>Media blocks support only HTTP and HTTPS URLs.</li>
-<li>An empty <code>&lt;a name=&quot;...&quot;&gt;&lt;/a&gt;</code> on its own creates an anchor that can be linked to with <code>&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;</code>.</li>
-<li>In <code>&lt;figcaption&gt;</code>, you can use <code>&lt;cite&gt;</code> tags to specify caption credit.</li>
-<li>Use <code>&lt;tg-reference name=&quot;...&quot;&gt;...&lt;/tg-reference&gt;</code> to define referenced text that can be linked to with <code>&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;</code>.</li>
-<li>The body of a <code>&lt;details&gt;</code> tag can contain rich message content. If the <code>open</code> attribute is specified, the block is expanded by default.</li>
-<li>Formula source is treated as raw LaTeX.</li>
-<li>See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.</li>
-</ul>
+/**
+ * The following methods and objects allow your bot to handle and send rich messages.
+ *
+ * #### Rich Message Formatting Options
+ * 
+ * <a href="#inputrichmessage">Rich messages</a> support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting, or explicit <a href="#inputrichblock">blocks</a>.
+ * 
+ * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass <em>True</em> in the <em>skip_entity_detection</em> field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
+ *
+ * When <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting is used, you can use links in the form <code>tg://photo?id=...</code>, <code>tg://video?id=...</code>, and <code>tg://audio?id=...</code> instead of an HTTP URL to reuse previously uploaded files or upload a new file.
+ *
+ * ##### Rich Message Limits
+ *
+ * Rich messages are subject to the following limits:
+ *
+ * - Up to <strong>32768 UTF-8 characters</strong> in the rich message text, including custom emoji alternative text and formula source.
+ * - Up to <strong>500 blocks</strong>, including nested blocks, list items, ordered list items, table rows, quotation blocks, and details blocks.
+ * - Up to <strong>16 levels</strong> of nested formatting and blocks.
+ * - Up to <strong>50 media attachments</strong> in total, including photos, videos, and audio files.
+ * - Up to <strong>20 columns</strong> in a table.
+ *
+ * ##### Rich Markdown style
+ *
+ * To use this mode, pass rich message content in the <em>markdown</em> field. Use the following syntax in your message:
+ *
+ * ````markdown
+ * **bold text**
+ * __bold text__
+ * *italic text*
+ * _italic text_
+ * ~~strikethrough text~~
+ * `inline fixed-width code`
+ * ==marked text==
+ * ||spoiler||
+ * 
+ * [inline URL](https://t.me/)
+ * [inline e-mail](mailto:user@example.com)
+ * [inline phone number](tel:+123456789)
+ * [inline mention of a user](tg://user?id=123456789)
+ * ![<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />](tg://emoji?id=5368324170671202286)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=wDT)
+ * $x^2 + y^2$
+ * \#hashtag $USD +12345678901, card: 4242 4242 4242 4242, https://t.me t.me a@t.me /command @username
+ * all the text above was on the same line
+ * 
+ * # Heading 1
+ * ## Heading 2
+ * ### Heading 3
+ * #### Heading 4
+ * ##### Heading 5
+ * ###### Heading 6
+ * 
+ * Paragraph text
+ * 
+ * ```python
+ * print(&#39;pre-formatted fixed-width code block written in the Python programming language&#39;)
+ * ```
+ * 
+ * ---
+ * 
+ * - unordered list item
+ * * unordered list item
+ * + unordered list item
+ * 
+ * 1. ordered list item
+ * 2. ordered list item
+ * 
+ * - [ ] task list item
+ * - [x] completed task list item
+ * 
+ * &gt;Block quotation started
+ * &gt;
+ * &gt;Block quotation continued on the next line
+ * &gt;Block quotation continued on the same line
+ * &gt;
+ * &gt;The last line of the block quotation
+ * 
+ * ![](https://telegram.org/example/photo.jpg)
+ * ![](https://telegram.org/example/video.mp4)
+ * ![](https://telegram.org/example/audio.mp3)
+ * ![](https://telegram.org/example/audio.ogg)
+ * ![](https://telegram.org/example/animation.gif)
+ * 
+ * ![](https://telegram.org/example/photo.jpg &quot;Photo caption&quot;)
+ * ![](https://telegram.org/example/video.mp4 &quot;Video caption&quot;)
+ * ![](https://telegram.org/example/audio.mp3 &quot;Audio caption&quot;)
+ * ![](https://telegram.org/example/audio.ogg &quot;Voice note caption&quot;)
+ * ![](https://telegram.org/example/animation.gif &quot;Animation caption&quot;)
+ * 
+ * | Header 1 | Header 2 |
+ * |:---------|:--------:|
+ * | left     | center   |
+ * 
+ * Text with a reference[^id1] and another one[^id2].
+ * 
+ * [^id1]: Definition of the first footnote.
+ * [^id2]: Definition of the second footnote.
+ * 
+ * $$E = mc^2$$
+ * 
+ * ```math
+ * E = mc^2
+ * ```
+ * 
+ * ## Example Nested Syntax Report for _Q1_
+ * Intro with &lt;u&gt;underlined text&lt;/u&gt;, ==marked text==, and $x^2 + y^2$.
+ * **Bold _italic &lt;u&gt;underlined italic bold&lt;/u&gt; italic_ bold**
+ * &lt;u&gt;In inline tags, nested **markdown** is parsed&lt;/u&gt;
+ * &gt;Quote with **bold text, ~~strikethrough, and &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;~~**, plus [a link](https://t.me/).
+ * 
+ * - List item with `code`, &lt;sup&gt;superscript&lt;/sup&gt;, &lt;sub&gt;subscript&lt;/sub&gt;, and a footnote[^note]
+ * - Another item with **bold &lt;tg-spoiler&gt;&lt;code&gt;spoiler code&lt;/code&gt;&lt;/tg-spoiler&gt;**
+ * - Another item with ~~strikethrough and &lt;ins&gt;inserted text&lt;/ins&gt;~~
+ * 
+ * | Metric | Value |
+ * |:-------|------:|
+ * | Speed  | **42** &lt;sup&gt;ms&lt;/sup&gt; |
+ * | Status | &lt;tg-spoiler&gt;ready&lt;/tg-spoiler&gt; |
+ * 
+ * [^note]: Footnote with _italic text_ and &lt;u&gt;HTML underline&lt;/u&gt;.
+ * 
+ * ---
+ * 
+ * # Details blocks can contain Markdown content:
+ * 
+ * &lt;details open&gt;&lt;summary&gt;Summary with **bold text**&lt;/summary&gt;
+ * 
+ * ### Details heading
+ * - List item with _italic text_
+ * - List item with &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
+ * 
+ * &lt;/details&gt;
+ * 
+ * # Collages and slideshows can contain Markdown media blocks:
+ * 
+ * &lt;tg-collage&gt;
+ * 
+ * ![](https://telegram.org/example/photo.jpg)
+ * ![](https://telegram.org/example/video.mp4)
+ * 
+ * &lt;/tg-collage&gt;
+ * 
+ * &lt;tg-slideshow&gt;
+ * 
+ * ![](https://telegram.org/example/photo.jpg)
+ * ![](https://telegram.org/example/video.mp4)
+ * 
+ * &lt;/tg-slideshow&gt;
+ * ````
+ * 
+ * For formatting features that don&#39;t have Markdown syntax, use <a href="#rich-html-style">HTML tags</a>:
+ * 
+ * ```html
+ * &lt;u&gt;underlined text&lt;/u&gt;, &lt;ins&gt;underlined text&lt;/ins&gt;
+ * &lt;sub&gt;subscript text&lt;/sub&gt;
+ * &lt;sup&gt;superscript text&lt;/sup&gt;
+ * &lt;a name=&quot;chapter-1&quot;&gt;&lt;/a&gt;
+ * &lt;aside&gt;Pull quote&lt;cite&gt;The Author&lt;/cite&gt;&lt;/aside&gt;
+ * &lt;details open&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
+ * &lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;
+ * &lt;tg-collage&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Caption&lt;cite&gt;The Author&lt;/cite&gt;&lt;/figcaption&gt;&lt;/tg-collage&gt;
+ * &lt;tg-slideshow&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;figcaption&gt;Slideshow caption&lt;cite&gt;The Author&lt;/cite&gt;&lt;/figcaption&gt;&lt;/tg-slideshow&gt;
+ * ```
+ * 
+ * Additionally, you can use the following tag in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>:
+ * 
+ * ```html
+ * &lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;
+ * ```
+ * 
+ * Please note:
+ * 
+ * - Rich Markdown is compatible with GitHub Flavored Markdown where possible and can contain arbitrary HTML. Supported rich message HTML tags are parsed as described in <a href="#rich-html-style">Rich HTML style</a>.
+ * - Media can be specified only as a separate block.
+ * - Media blocks support only HTTP and HTTPS URLs.
+ * - Media type is determined by the MIME type and the URL of the media.
+ * - In media syntax, the optional title after the URL is used as the caption; for example, <img class="icon" src="url" alt="" title="Photo caption"> displays “Photo caption” under the media.
+ * - Table cells can contain only inline formatting.
+ * - Formula source is treated as raw LaTeX.
+ * - Markdown isn&#39;t parsed inside block HTML tags other than &lt;details&gt;, &lt;tg-collage&gt; and &lt;tg-slideshow&gt;, therefore only HTML tags can be used there.
+ * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ *
+ * ##### Rich HTML style
+ *
+ * To use this mode, pass rich message content in the <em>html</em> field. The following tags are currently supported:
+ * 
+ * ```html
+ * &lt;a name=&quot;chapter-0&quot;&gt;&lt;/a&gt;
+ * &lt;b&gt;bold text&lt;/b&gt;, &lt;strong&gt;bold text&lt;/strong&gt;
+ * &lt;i&gt;italic text&lt;/i&gt;, &lt;em&gt;italic text&lt;/em&gt;
+ * &lt;u&gt;underlined text&lt;/u&gt;, &lt;ins&gt;underlined text&lt;/ins&gt;
+ * &lt;s&gt;strikethrough text&lt;/s&gt;, &lt;strike&gt;strikethrough text&lt;/strike&gt;, &lt;del&gt;strikethrough text&lt;/del&gt;
+ * &lt;code&gt;inline fixed-width code&lt;/code&gt;
+ * &lt;mark&gt;marked text&lt;/mark&gt;
+ * &lt;sub&gt;subscript text&lt;/sub&gt;
+ * &lt;sup&gt;superscript text&lt;/sup&gt;
+ * &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
+ * 
+ * &lt;a href=&quot;#note-1&quot;&gt;Reference&lt;/a&gt;
+ * &lt;a href=&quot;https://t.me/&quot;&gt;inline URL&lt;/a&gt;
+ * &lt;a href=&quot;mailto:user@example.com&quot;&gt;inline e-mail&lt;/a&gt;
+ * &lt;a href=&quot;tel:+123456789&quot;&gt;inline phone number&lt;/a&gt;
+ * &lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
+ * &lt;a href=&quot;#chapter-1&quot;&gt;in-document link&lt;/a&gt;
+ * &lt;a name=&quot;chapter-1&quot;&gt;&lt;/a&gt;
+ * 
+ * &lt;tg-reference name=&quot;note-1&quot;&gt;Referenced text&lt;/tg-reference&gt;
+ * &lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&lt;/tg-emoji&gt;
+ * &lt;img src=&quot;tg://emoji?id=5368324170671202286&quot; alt=&quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&quot;/&gt;
+ * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;wDT&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
+ * &lt;tg-math&gt;x^2 + y^2&lt;/tg-math&gt;
+ * 
+ * #hashtag $USD +12345678901, card: 4242 4242 4242 4242, https://t.me t.me a@t.me /command @username
+ * 
+ * all the text above was on the same line
+ * 
+ * &lt;h1&gt;Heading 1&lt;/h1&gt;
+ * &lt;h2&gt;Heading 2&lt;/h2&gt;
+ * &lt;h3&gt;Heading 3&lt;/h3&gt;
+ * &lt;h4&gt;Heading 4&lt;/h4&gt;
+ * &lt;h5&gt;Heading 5&lt;/h5&gt;
+ * &lt;h6&gt;Heading 6&lt;/h6&gt;
+ * 
+ * &lt;a name=&quot;chapter-2&quot;&gt;&lt;/a&gt;
+ * 
+ * &lt;p&gt;Paragraph text&lt;/p&gt;
+ * &lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
+ * &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  print(&#39;pre-formatted fixed-width code block written in the Python programming language&#39;)&lt;/code&gt;&lt;/pre&gt;
+ * &lt;footer&gt;Footer text&lt;/footer&gt;
+ * &lt;hr/&gt;
+ * &lt;ul&gt;&lt;li&gt;unordered list item&lt;/li&gt;&lt;/ul&gt;
+ * &lt;ol&gt;&lt;li&gt;ordered list item&lt;/li&gt;&lt;/ol&gt;
+ * &lt;ol start=&quot;3&quot; type=&quot;a&quot; reversed&gt;&lt;li&gt;ordered list item&lt;/li&gt;&lt;/ol&gt;
+ * &lt;ol&gt;&lt;li value=&quot;7&quot; type=&quot;i&quot;&gt;ordered list item with explicit number&lt;/li&gt;&lt;/ol&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;input type=&quot;checkbox&quot; checked&gt;Checked checkbox&lt;/li&gt;
+ * &lt;li&gt;&lt;input type=&quot;checkbox&quot;&gt;Unchecked checkbox&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * &lt;blockquote&gt;Block quotation started&lt;br&gt;Block quotation continued&lt;br&gt;The last line of the block quotation&lt;cite&gt;The Author&lt;/cite&gt;&lt;/blockquote&gt;
+ * &lt;aside&gt;Pull quote&lt;cite&gt;The Author&lt;/cite&gt;&lt;/aside&gt;
+ * 
+ * &lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;
+ * &lt;video src=&quot;https://telegram.org/example/video.mp4&quot;&gt;&lt;/video&gt;
+ * &lt;audio src=&quot;https://telegram.org/example/audio.mp3&quot;&gt;&lt;/audio&gt;
+ * &lt;audio src=&quot;https://telegram.org/example/audio.ogg&quot;&gt;&lt;/audio&gt;
+ * &lt;video src=&quot;https://telegram.org/example/animation.gif&quot;&gt;&lt;/video&gt;
+ * 
+ * &lt;figure&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot; tg-spoiler/&gt;&lt;figcaption&gt;Photo caption&lt;cite&gt;Photo credit&lt;/cite&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+ * &lt;figure&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot; tg-spoiler&gt;&lt;/video&gt;&lt;figcaption&gt;Video caption&lt;/figcaption&gt;&lt;/figure&gt;
+ * &lt;figure&gt;&lt;audio src=&quot;https://telegram.org/example/audio.mp3&quot;&gt;&lt;/audio&gt;&lt;figcaption&gt;Audio caption&lt;/figcaption&gt;&lt;/figure&gt;
+ * &lt;figure&gt;&lt;audio src=&quot;https://telegram.org/example/audio.ogg&quot;&gt;&lt;/audio&gt;&lt;figcaption&gt;Voice note caption&lt;/figcaption&gt;&lt;/figure&gt;
+ * &lt;figure&gt;&lt;video src=&quot;https://telegram.org/example/animation.gif&quot; tg-spoiler&gt;&lt;/video&gt;&lt;figcaption&gt;Animation caption&lt;/figcaption&gt;&lt;/figure&gt;
+ * 
+ * &lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;
+ * &lt;figure&gt;&lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;&lt;figcaption&gt;Map caption&lt;/figcaption&gt;&lt;/figure&gt;
+ * 
+ * &lt;tg-collage&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;/tg-collage&gt;
+ * &lt;tg-collage&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Collage caption&lt;/figcaption&gt;&lt;/tg-collage&gt;
+ * &lt;tg-slideshow&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;/tg-slideshow&gt;
+ * &lt;tg-slideshow&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Slideshow caption&lt;/figcaption&gt;&lt;/tg-slideshow&gt;
+ * 
+ * &lt;table&gt;&lt;tr&gt;&lt;th&gt;Header 1&lt;/th&gt;&lt;th&gt;Header 2&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Value 1&lt;/td&gt;&lt;td&gt;Value 2&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+ * &lt;table bordered striped&gt;&lt;caption&gt;Table caption&lt;/caption&gt;
+ * &lt;tr&gt;&lt;td colspan=&quot;2&quot; rowspan=&quot;2&quot; align=&quot;left&quot;&gt;Value&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;Value2&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;Value3&lt;/td&gt;&lt;/tr&gt;
+ * &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Value4&lt;/td&gt;&lt;td valign=&quot;middle&quot;&gt;Value5&lt;/td&gt;&lt;td valign=&quot;bottom&quot;&gt;Value6&lt;/td&gt;&lt;/tr&gt;
+ * &lt;tr&gt;&lt;td&gt;Value7&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+ * 
+ * &lt;details&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
+ * &lt;details open&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
+ * &lt;tg-math-block&gt;E = mc^2&lt;/tg-math-block&gt;
+ * ```
+ * 
+ * Additionally, you can use the following tag in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>:
+ * 
+ * ```html
+ * &lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;
+ * ```
+ *
+ * Please note:
+ *
+ * - Only the tags mentioned above are currently supported.
+ * - All numerical HTML entities are supported.
+ * - The API currently supports only the following named HTML entities: <code>&amp;lt;</code>, <code>&amp;gt;</code>, <code>&amp;amp;</code>, <code>&amp;quot;</code>, <code>&amp;apos;</code>, <code>&amp;nbsp;</code>, <code>&amp;hellip;</code>, <code>&amp;mdash;</code>, <code>&amp;ndash;</code>, <code>&amp;lsquo;</code>, <code>&amp;rsquo;</code>, <code>&amp;ldquo;</code> and <code>&amp;rdquo;</code>.
+ * - Use nested <code>pre</code> and <code>code</code> tags to define the programming language for a pre-formatted block.
+ * - Programming language can&#39;t be specified for standalone <code>code</code> tags.
+ * - Links <code>mailto:...</code>, <code>tel:...</code>, and <code>tg://user?id=...</code> are rendered as e-mail links, phone links, and inline mentions respectively. Other supported links are rendered as regular inline links.
+ * - Images, videos, and audio files can be specified only as separate media blocks.
+ * - Media blocks support only HTTP and HTTPS URLs.
+ * - An empty <code>&lt;a name=&quot;...&quot;&gt;&lt;/a&gt;</code> on its own creates an anchor that can be linked to with <code>&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;</code>.
+ * - In <code>&lt;figcaption&gt;</code>, you can use <code>&lt;cite&gt;</code> tags to specify caption credit.
+ * - Use <code>&lt;tg-reference name=&quot;...&quot;&gt;...&lt;/tg-reference&gt;</code> to define referenced text that can be linked to with <code>&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;</code>.
+ * - The body of a <code>&lt;details&gt;</code> tag can contain rich message content. If the <code>open</code> attribute is specified, the block is expanded by default.
+ * - Formula source is treated as raw LaTeX.
+ * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ */
 /**
  * Rich formatted message.
  */
