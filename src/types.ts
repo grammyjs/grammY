@@ -195,7 +195,7 @@ export interface ApiMethods {
          * Please note that this parameter doesn't affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
          */
         allowed_updates?: string[];
-    }): never;
+    }): Update[];
 }
 export interface ApiMethods {
     /**
@@ -244,7 +244,7 @@ export interface ApiMethods {
          * A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed. The header is useful to ensure that the request comes from a webhook set by you.
          */
         secret_token?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -257,7 +257,7 @@ export interface ApiMethods {
          * Pass `true` to drop all pending updates
          */
         drop_pending_updates?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -265,7 +265,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#getwebhookinfo}
      */
-    getWebhookInfo(args: Empty): never;
+    getWebhookInfo(args: Empty): WebhookInfo;
 }
 /**
  * Describes the current status of a webhook.
@@ -6721,7 +6721,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#getme}
      */
-    getMe(args: Empty): never;
+    getMe(args: Empty): User;
 }
 export interface ApiMethods {
     /**
@@ -6729,7 +6729,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#logout}
      */
-    logOut(args: Empty): never;
+    logOut(args: Empty): true;
 }
 export interface ApiMethods {
     /**
@@ -6737,7 +6737,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#close}
      */
-    close(args: Empty): never;
+    close(args: Empty): true;
 }
 export interface ApiMethods {
     /**
@@ -6818,7 +6818,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 /**
  * #### Formatting options
@@ -7022,7 +7022,7 @@ export interface ApiMethods {
          * Message identifier in the chat specified in _from_chat_id_
          */
         message_id: number;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7059,7 +7059,7 @@ export interface ApiMethods {
          * Protects the contents of the forwarded messages from forwarding and saving
          */
         protect_content?: boolean;
-    }): never;
+    }): MessageId[];
 }
 export interface ApiMethods {
     /**
@@ -7140,7 +7140,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): MessageId;
 }
 export interface ApiMethods {
     /**
@@ -7181,7 +7181,7 @@ export interface ApiMethods {
          * Pass `true` to copy the messages without their captions
          */
         remove_caption?: boolean;
-    }): never;
+    }): MessageId[];
 }
 export interface ApiMethods {
     /**
@@ -7270,7 +7270,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7363,7 +7363,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7462,7 +7462,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7551,7 +7551,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7668,7 +7668,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7773,7 +7773,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7858,7 +7858,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -7939,7 +7939,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8020,7 +8020,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8075,7 +8075,7 @@ export interface ApiMethods {
          * Description of the message to reply to
          */
         reply_parameters?: ReplyParameters;
-    }): never;
+    }): Message[];
 }
 export interface ApiMethods {
     /**
@@ -8164,7 +8164,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8261,7 +8261,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8342,7 +8342,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8491,7 +8491,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8532,7 +8532,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8593,7 +8593,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -8626,7 +8626,7 @@ export interface ApiMethods {
          * A JSON-serialized list of special entities that appear in message text, which can be specified instead of _parse_mode_
          */
         entities?: MessageEntity[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8655,7 +8655,7 @@ export interface ApiMethods {
          * Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link ApiMethods.sendMessage | text messages}, _upload_photo_ for {@link ApiMethods.sendPhoto | photos}, _record_video_ or _upload_video_ for {@link ApiMethods.sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link ApiMethods.sendVoice | voice notes}, _upload_document_ for {@link ApiMethods.sendDocument | general files}, _choose_sticker_ for {@link ApiMethods.sendSticker | stickers}, _find_location_ for {@link ApiMethods.sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link ApiMethods.sendVideoNote | video notes}.
          */
         action: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8680,7 +8680,7 @@ export interface ApiMethods {
          * Pass `true` to set the reaction with a big animation
          */
         is_big?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8701,7 +8701,7 @@ export interface ApiMethods {
          * Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
          */
         limit?: number;
-    }): never;
+    }): UserProfilePhotos;
 }
 export interface ApiMethods {
     /**
@@ -8722,7 +8722,7 @@ export interface ApiMethods {
          * Limits the number of audios to be retrieved. Values between 1-100 are accepted. Defaults to 100.
          */
         limit?: number;
-    }): never;
+    }): UserProfileAudios;
 }
 export interface ApiMethods {
     /**
@@ -8743,7 +8743,7 @@ export interface ApiMethods {
          * Expiration date of the emoji status, if any
          */
         emoji_status_expiration_date?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8758,7 +8758,7 @@ export interface ApiMethods {
          * File identifier to get information about
          */
         file_id: string;
-    }): never;
+    }): File;
 }
 export interface ApiMethods {
     /**
@@ -8783,7 +8783,7 @@ export interface ApiMethods {
          * Pass `true` to delete all messages from the chat for the user that is being removed. If `false`, the user will be able to see messages in the group that were sent before the user was removed. Always `true` for supergroups and channels.
          */
         revoke_messages?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8804,7 +8804,7 @@ export interface ApiMethods {
          * Do nothing if the user is not banned
          */
         only_if_banned?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8833,7 +8833,7 @@ export interface ApiMethods {
          * Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.
          */
         until_date?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8918,7 +8918,7 @@ export interface ApiMethods {
          * Pass `true` if the administrator can edit the tags of regular members; for groups and supergroups only
          */
         can_manage_tags?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8939,7 +8939,7 @@ export interface ApiMethods {
          * New custom title for the administrator; 0-16 characters, emoji are not allowed
          */
         custom_title: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8960,7 +8960,7 @@ export interface ApiMethods {
          * New tag for the member; 0-16 characters, emoji are not allowed
          */
         tag?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8977,7 +8977,7 @@ export interface ApiMethods {
          * Unique identifier of the target sender chat
          */
         sender_chat_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -8994,7 +8994,7 @@ export interface ApiMethods {
          * Unique identifier of the target sender chat
          */
         sender_chat_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9015,7 +9015,7 @@ export interface ApiMethods {
          * Pass `true` if chat permissions are set independently. Otherwise, the _can_send_other_messages_ and _can_add_web_page_previews_ permissions will imply the _can_send_messages_, _can_send_audios_, _can_send_documents_, _can_send_photos_, _can_send_videos_, _can_send_video_notes_, and _can_send_voice_notes_ permissions; the _can_send_polls_ permission will imply the _can_send_messages_ permission.
          */
         use_independent_chat_permissions?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9030,7 +9030,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target channel in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): string;
 }
 export interface ApiMethods {
     /**
@@ -9059,7 +9059,7 @@ export interface ApiMethods {
          * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, _member_limit_ can't be specified.
          */
         creates_join_request?: boolean;
-    }): never;
+    }): ChatInviteLink;
 }
 export interface ApiMethods {
     /**
@@ -9092,7 +9092,7 @@ export interface ApiMethods {
          * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, _member_limit_ can't be specified.
          */
         creates_join_request?: boolean;
-    }): never;
+    }): ChatInviteLink;
 }
 export interface ApiMethods {
     /**
@@ -9117,7 +9117,7 @@ export interface ApiMethods {
          * The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000
          */
         subscription_price: number;
-    }): never;
+    }): ChatInviteLink;
 }
 export interface ApiMethods {
     /**
@@ -9138,7 +9138,7 @@ export interface ApiMethods {
          * Invite link name; 0-32 characters
          */
         name?: string;
-    }): never;
+    }): ChatInviteLink;
 }
 export interface ApiMethods {
     /**
@@ -9155,7 +9155,7 @@ export interface ApiMethods {
          * The invite link to revoke
          */
         invite_link: string;
-    }): never;
+    }): ChatInviteLink;
 }
 export interface ApiMethods {
     /**
@@ -9172,7 +9172,7 @@ export interface ApiMethods {
          * Unique identifier of the target user
          */
         user_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9189,7 +9189,7 @@ export interface ApiMethods {
          * Unique identifier of the target user
          */
         user_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9206,7 +9206,7 @@ export interface ApiMethods {
          * Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.
          */
         result: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9223,7 +9223,7 @@ export interface ApiMethods {
          * An HTTPS URL of a Web App to be opened with additional data as specified in {@link https://core.telegram.org/bots/webapps#initializing-mini-apps | Initializing Web Apps}
          */
         web_app_url: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9240,7 +9240,7 @@ export interface ApiMethods {
          * New chat photo, uploaded using multipart/form-data
          */
         photo: InputFile;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9253,7 +9253,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target channel in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9270,7 +9270,7 @@ export interface ApiMethods {
          * New chat title, 1-128 characters
          */
         title: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9287,7 +9287,7 @@ export interface ApiMethods {
          * New chat description, 0-255 characters
          */
         description?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9312,7 +9312,7 @@ export interface ApiMethods {
          * Pass `true` if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
          */
         disable_notification?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9333,7 +9333,7 @@ export interface ApiMethods {
          * Identifier of the message to unpin. Required if _business_connection_id_ is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
          */
         message_id?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9346,7 +9346,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target channel in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9359,7 +9359,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`. Channel direct messages chats aren't supported; leave the corresponding channel instead.
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9372,7 +9372,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): ChatFullInfo;
 }
 export interface ApiMethods {
     /**
@@ -9389,7 +9389,7 @@ export interface ApiMethods {
          * Pass `true` to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.
          */
         return_bots?: boolean;
-    }): never;
+    }): ChatMember[];
 }
 export interface ApiMethods {
     /**
@@ -9402,7 +9402,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): number;
 }
 export interface ApiMethods {
     /**
@@ -9419,7 +9419,7 @@ export interface ApiMethods {
          * Unique identifier of the target user
          */
         user_id: number;
-    }): never;
+    }): ChatMember;
 }
 export interface ApiMethods {
     /**
@@ -9436,7 +9436,7 @@ export interface ApiMethods {
          * The maximum number of messages to return; 1-20
          */
         limit: number;
-    }): never;
+    }): Message[];
 }
 export interface ApiMethods {
     /**
@@ -9453,7 +9453,7 @@ export interface ApiMethods {
          * Name of the sticker set to be set as the group sticker set
          */
         sticker_set_name: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9466,7 +9466,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9474,7 +9474,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#getforumtopiciconstickers}
      */
-    getForumTopicIconStickers(args: Empty): never;
+    getForumTopicIconStickers(args: Empty): Sticker[];
 }
 export interface ApiMethods {
     /**
@@ -9499,7 +9499,7 @@ export interface ApiMethods {
          * Unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers.
          */
         icon_custom_emoji_id?: string;
-    }): never;
+    }): ForumTopic;
 }
 export interface ApiMethods {
     /**
@@ -9524,7 +9524,7 @@ export interface ApiMethods {
          * New unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept.
          */
         icon_custom_emoji_id?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9541,7 +9541,7 @@ export interface ApiMethods {
          * Unique identifier for the target message thread of the forum topic
          */
         message_thread_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9558,7 +9558,7 @@ export interface ApiMethods {
          * Unique identifier for the target message thread of the forum topic
          */
         message_thread_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9575,7 +9575,7 @@ export interface ApiMethods {
          * Unique identifier for the target message thread of the forum topic
          */
         message_thread_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9592,7 +9592,7 @@ export interface ApiMethods {
          * Unique identifier for the target message thread of the forum topic
          */
         message_thread_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9609,7 +9609,7 @@ export interface ApiMethods {
          * New topic name, 1-128 characters
          */
         name: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9622,7 +9622,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9635,7 +9635,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9648,7 +9648,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9661,7 +9661,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9674,7 +9674,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target supergroup in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9707,7 +9707,7 @@ export interface ApiMethods {
          * The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
          */
         cache_time?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9724,7 +9724,7 @@ export interface ApiMethods {
          * A JSON-serialized object describing the message to be sent
          */
         result: InlineQueryResult;
-    }): never;
+    }): SentGuestMessage;
 }
 export interface ApiMethods {
     /**
@@ -9741,7 +9741,7 @@ export interface ApiMethods {
          * Unique identifier of the target user
          */
         user_id: number;
-    }): never;
+    }): UserChatBoosts;
 }
 export interface ApiMethods {
     /**
@@ -9754,7 +9754,7 @@ export interface ApiMethods {
          * Unique identifier of the business connection
          */
         business_connection_id: string;
-    }): never;
+    }): BusinessConnection;
 }
 export interface ApiMethods {
     /**
@@ -9767,7 +9767,7 @@ export interface ApiMethods {
          * User identifier of the managed bot whose token will be returned
          */
         user_id: number;
-    }): never;
+    }): string;
 }
 export interface ApiMethods {
     /**
@@ -9780,7 +9780,7 @@ export interface ApiMethods {
          * User identifier of the managed bot whose token will be replaced
          */
         user_id: number;
-    }): never;
+    }): string;
 }
 export interface ApiMethods {
     /**
@@ -9793,7 +9793,7 @@ export interface ApiMethods {
          * User identifier of the managed bot whose access settings will be returned
          */
         user_id: number;
-    }): never;
+    }): BotAccessSettings;
 }
 export interface ApiMethods {
     /**
@@ -9814,7 +9814,7 @@ export interface ApiMethods {
          * A JSON-serialized list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if _is_access_restricted_ is `false`.
          */
         added_user_ids?: number[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9835,7 +9835,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
          */
         language_code?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9852,7 +9852,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
          */
         language_code?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9869,7 +9869,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code or an empty string
          */
         language_code?: string;
-    }): never;
+    }): BotCommand[];
 }
 export interface ApiMethods {
     /**
@@ -9886,7 +9886,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name.
          */
         language_code?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9899,7 +9899,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code or an empty string
          */
         language_code?: string;
-    }): never;
+    }): BotName;
 }
 export interface ApiMethods {
     /**
@@ -9916,7 +9916,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.
          */
         language_code?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9929,7 +9929,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code or an empty string
          */
         language_code?: string;
-    }): never;
+    }): BotDescription;
 }
 export interface ApiMethods {
     /**
@@ -9946,7 +9946,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.
          */
         language_code?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9959,7 +9959,7 @@ export interface ApiMethods {
          * A two-letter ISO 639-1 language code or an empty string
          */
         language_code?: string;
-    }): never;
+    }): BotShortDescription;
 }
 export interface ApiMethods {
     /**
@@ -9972,7 +9972,7 @@ export interface ApiMethods {
          * The new profile photo to set
          */
         photo: InputProfilePhoto;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -9980,7 +9980,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#removemyprofilephoto}
      */
-    removeMyProfilePhoto(args: Empty): never;
+    removeMyProfilePhoto(args: Empty): true;
 }
 export interface ApiMethods {
     /**
@@ -9997,7 +9997,7 @@ export interface ApiMethods {
          * A JSON-serialized object for the bot's new menu button. Defaults to {@link MenuButtonDefault}.
          */
         menu_button?: MenuButton;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10010,7 +10010,7 @@ export interface ApiMethods {
          * Unique identifier for the target private chat. If not specified, the bot's default menu button will be returned.
          */
         chat_id?: number;
-    }): never;
+    }): MenuButton;
 }
 export interface ApiMethods {
     /**
@@ -10027,7 +10027,7 @@ export interface ApiMethods {
          * Pass `true` to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
          */
         for_channels?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10040,7 +10040,7 @@ export interface ApiMethods {
          * Pass `true` to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
          */
         for_channels?: boolean;
-    }): never;
+    }): ChatAdministratorRights;
 }
 export interface ApiMethods {
     /**
@@ -10048,7 +10048,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#getavailablegifts}
      */
-    getAvailableGifts(args: Empty): never;
+    getAvailableGifts(args: Empty): Gifts;
 }
 export interface ApiMethods {
     /**
@@ -10085,7 +10085,7 @@ export interface ApiMethods {
          * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
          */
         text_entities?: MessageEntity[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10118,7 +10118,7 @@ export interface ApiMethods {
          * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of _text_parse_mode_. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
          */
         text_entities?: MessageEntity[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10135,7 +10135,7 @@ export interface ApiMethods {
          * Custom description for the verification; 0-70 characters. Must be empty if the organization isn't allowed to provide a custom verification description.
          */
         custom_description?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10152,7 +10152,7 @@ export interface ApiMethods {
          * Custom description for the verification; 0-70 characters. Must be empty if the organization isn't allowed to provide a custom verification description.
          */
         custom_description?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10165,7 +10165,7 @@ export interface ApiMethods {
          * Unique identifier of the target user
          */
         user_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10178,7 +10178,7 @@ export interface ApiMethods {
          * Unique identifier for the target chat or username of the target bot or channel in the format `@username`
          */
         chat_id: number | string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10199,7 +10199,7 @@ export interface ApiMethods {
          * Unique identifier of the message to mark as read
          */
         message_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10216,7 +10216,7 @@ export interface ApiMethods {
          * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted.
          */
         message_ids: number[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10237,7 +10237,7 @@ export interface ApiMethods {
          * The new value of the last name for the business account; 0-64 characters
          */
         last_name?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10254,7 +10254,7 @@ export interface ApiMethods {
          * The new value of the username for the business account; 0-32 characters
          */
         username?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10271,7 +10271,7 @@ export interface ApiMethods {
          * The new value of the bio for the business account; 0-140 characters
          */
         bio?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10292,7 +10292,7 @@ export interface ApiMethods {
          * Pass `true` to set the public photo, which will be visible even if the main photo is hidden by the business account's privacy settings. An account can have only one public photo.
          */
         is_public?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10309,7 +10309,7 @@ export interface ApiMethods {
          * Pass `true` to remove the public photo, which is visible even if the main photo is hidden by the business account's privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.
          */
         is_public?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10330,7 +10330,7 @@ export interface ApiMethods {
          * Types of gifts accepted by the business account
          */
         accepted_gift_types: AcceptedGiftTypes;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10343,7 +10343,7 @@ export interface ApiMethods {
          * Unique identifier of the business connection
          */
         business_connection_id: string;
-    }): never;
+    }): StarAmount;
 }
 export interface ApiMethods {
     /**
@@ -10360,7 +10360,7 @@ export interface ApiMethods {
          * Number of Telegram Stars to transfer; 1-10000
          */
         star_count: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10413,7 +10413,7 @@ export interface ApiMethods {
          * The maximum number of gifts to be returned; 1-100. Defaults to 100.
          */
         limit?: number;
-    }): never;
+    }): OwnedGifts;
 }
 export interface ApiMethods {
     /**
@@ -10458,7 +10458,7 @@ export interface ApiMethods {
          * The maximum number of gifts to be returned; 1-100. Defaults to 100.
          */
         limit?: number;
-    }): never;
+    }): OwnedGifts;
 }
 export interface ApiMethods {
     /**
@@ -10511,7 +10511,7 @@ export interface ApiMethods {
          * The maximum number of gifts to be returned; 1-100. Defaults to 100.
          */
         limit?: number;
-    }): never;
+    }): OwnedGifts;
 }
 export interface ApiMethods {
     /**
@@ -10528,7 +10528,7 @@ export interface ApiMethods {
          * Unique identifier of the regular gift that should be converted to Telegram Stars
          */
         owned_gift_id: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10553,7 +10553,7 @@ export interface ApiMethods {
          * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If `gift.prepaid_upgrade_star_count > 0`, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and `gift.upgrade_star_count` must be passed.
          */
         star_count?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10578,7 +10578,7 @@ export interface ApiMethods {
          * The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the _can_transfer_stars_ business bot right is required.
          */
         star_count?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10623,7 +10623,7 @@ export interface ApiMethods {
          * Pass `true` if the content of the story must be protected from forwarding and screenshotting
          */
         protect_content?: boolean;
-    }): never;
+    }): Story;
 }
 export interface ApiMethods {
     /**
@@ -10656,7 +10656,7 @@ export interface ApiMethods {
          * Pass `true` if the content of the story must be protected from forwarding and screenshotting
          */
         protect_content?: boolean;
-    }): never;
+    }): Story;
 }
 export interface ApiMethods {
     /**
@@ -10693,7 +10693,7 @@ export interface ApiMethods {
          * A JSON-serialized list of clickable areas to be shown on the story
          */
         areas?: StoryArea[];
-    }): never;
+    }): Story;
 }
 export interface ApiMethods {
     /**
@@ -10710,7 +10710,7 @@ export interface ApiMethods {
          * Unique identifier of the story to delete
          */
         story_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -10727,7 +10727,7 @@ export interface ApiMethods {
          * A JSON-serialized object describing the message to be sent
          */
         result: InlineQueryResult;
-    }): never;
+    }): SentWebAppMessage;
 }
 export interface ApiMethods {
     /**
@@ -10760,7 +10760,7 @@ export interface ApiMethods {
          * Pass `true` if the message can be sent to channel chats
          */
         allow_channel_chats?: boolean;
-    }): never;
+    }): PreparedInlineMessage;
 }
 export interface ApiMethods {
     /**
@@ -10777,7 +10777,7 @@ export interface ApiMethods {
          * A JSON-serialized object describing the button to be saved. The button must be of the type _request_users_, _request_chat_, or _request_managed_bot_.
          */
         button: KeyboardButton;
-    }): never;
+    }): PreparedKeyboardButton;
 }
 // === UPDATING MESSAGES
 export interface ApiMethods {
@@ -10827,7 +10827,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true | Message;
 }
 export interface ApiMethods {
     /**
@@ -10872,7 +10872,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true | Message;
 }
 export interface ApiMethods {
     /**
@@ -10905,7 +10905,7 @@ export interface ApiMethods {
          * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true | Message;
 }
 export interface ApiMethods {
     /**
@@ -10958,7 +10958,7 @@ export interface ApiMethods {
          * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true | Message;
 }
 export interface ApiMethods {
     /**
@@ -10987,7 +10987,7 @@ export interface ApiMethods {
          * A JSON-serialized object for a new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true | Message;
 }
 export interface ApiMethods {
     /**
@@ -11016,7 +11016,7 @@ export interface ApiMethods {
          * A JSON-serialized object for the new {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard} for the message
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -11045,7 +11045,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true | Message;
 }
 export interface ApiMethods {
     /**
@@ -11070,7 +11070,7 @@ export interface ApiMethods {
          * A JSON-serialized object for a new message {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): Poll;
 }
 export interface ApiMethods {
     /**
@@ -11111,7 +11111,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11140,7 +11140,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11177,7 +11177,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11202,7 +11202,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11223,7 +11223,7 @@ export interface ApiMethods {
          * Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future.
          */
         send_date?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11244,7 +11244,7 @@ export interface ApiMethods {
          * Comment for the creator of the suggested post; 0-128 characters
          */
         comment?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11273,7 +11273,7 @@ export interface ApiMethods {
          * Identifier of the message to delete
          */
         message_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11290,7 +11290,7 @@ export interface ApiMethods {
          * A JSON-serialized list of 1-100 identifiers of messages to delete. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted.
          */
         message_ids: number[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11311,7 +11311,7 @@ export interface ApiMethods {
          * Identifier of the ephemeral message to delete
          */
         ephemeral_message_id: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11336,7 +11336,7 @@ export interface ApiMethods {
          * Identifier of the chat whose reaction will be removed, if the reaction was added by a chat
          */
         actor_chat_id?: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11357,7 +11357,7 @@ export interface ApiMethods {
          * Identifier of the chat whose reactions will be removed, if the reactions were added by a chat
          */
         actor_chat_id?: number;
-    }): never;
+    }): true;
 }
 // === STICKERS
 /**
@@ -11575,7 +11575,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -11588,7 +11588,7 @@ export interface ApiMethods {
          * Name of the sticker set
          */
         name: string;
-    }): never;
+    }): StickerSet;
 }
 export interface ApiMethods {
     /**
@@ -11601,7 +11601,7 @@ export interface ApiMethods {
          * A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
          */
         custom_emoji_ids: string[];
-    }): never;
+    }): Sticker[];
 }
 export interface ApiMethods {
     /**
@@ -11622,7 +11622,7 @@ export interface ApiMethods {
          * Format of the sticker, must be one of “static”, “animated”, “video”
          */
         sticker_format: string;
-    }): never;
+    }): File;
 }
 export interface ApiMethods {
     /**
@@ -11655,7 +11655,7 @@ export interface ApiMethods {
          * Pass `true` if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
          */
         needs_repainting?: boolean;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11676,7 +11676,7 @@ export interface ApiMethods {
          * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.
          */
         sticker: InputSticker;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11693,7 +11693,7 @@ export interface ApiMethods {
          * New sticker position in the set, zero-based
          */
         position: number;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11706,7 +11706,7 @@ export interface ApiMethods {
          * File identifier of the sticker
          */
         sticker: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11731,7 +11731,7 @@ export interface ApiMethods {
          * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.
          */
         sticker: InputSticker;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11748,7 +11748,7 @@ export interface ApiMethods {
          * A JSON-serialized list of 1-20 emoji associated with the sticker
          */
         emoji_list: string[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11765,7 +11765,7 @@ export interface ApiMethods {
          * A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters
          */
         keywords?: string[];
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11782,7 +11782,7 @@ export interface ApiMethods {
          * A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
          */
         mask_position?: MaskPosition;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11799,7 +11799,7 @@ export interface ApiMethods {
          * Sticker set title, 1-64 characters
          */
         title: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11824,7 +11824,7 @@ export interface ApiMethods {
          * Format of the thumbnail, must be one of “static” for a **.WEBP** or **.PNG** image, “animated” for a **.TGS** animation, or “video” for a **.WEBM** video
          */
         format: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11841,7 +11841,7 @@ export interface ApiMethods {
          * Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail
          */
         custom_emoji_id?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -11854,7 +11854,7 @@ export interface ApiMethods {
          * Sticker set name
          */
         name: string;
-    }): never;
+    }): true;
 }
 // === RICH MESSAGES
 /**
@@ -12278,7 +12278,7 @@ export interface ApiMethods {
             | ReplyKeyboardMarkup
             | ReplyKeyboardRemove
             | ForceReply;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -12303,7 +12303,7 @@ export interface ApiMethods {
          * The partial message to be streamed. Direct upload of new files isn't supported.
          */
         rich_message: InputRichMessage;
-    }): never;
+    }): true;
 }
 /**
  * This object represents a rich formatted text. Currently, it can be either a String for plain text, an Array of {@link RichText}, or any of the following types:
@@ -13858,7 +13858,7 @@ export interface ApiMethods {
          * A JSON-serialized object describing a button to be shown above inline query results
          */
         button?: InlineQueryResultsButton;
-    }): never;
+    }): true;
 }
 /**
  * This object represents a button to be shown above inline query results. You **must** use exactly one of the optional fields.
@@ -15358,7 +15358,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Pay `total price`' button will be shown. If not empty, the first button must be a Pay button.
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): Message;
 }
 export interface ApiMethods {
     /**
@@ -15455,7 +15455,7 @@ export interface ApiMethods {
          * Pass `true` if the final price depends on the shipping method. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
          */
         is_flexible?: boolean;
-    }): never;
+    }): string;
 }
 export interface ApiMethods {
     /**
@@ -15480,7 +15480,7 @@ export interface ApiMethods {
          * Required if _ok_ is `false`. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
          */
         error_message?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -15501,7 +15501,7 @@ export interface ApiMethods {
          * Required if _ok_ is `false`. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
          */
         error_message?: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -15509,7 +15509,7 @@ export interface ApiMethods {
      *
      * @see {@link https://core.telegram.org/bots/api#getmystarbalance}
      */
-    getMyStarBalance(args: Empty): never;
+    getMyStarBalance(args: Empty): StarAmount;
 }
 export interface ApiMethods {
     /**
@@ -15526,7 +15526,7 @@ export interface ApiMethods {
          * The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100.
          */
         limit?: number;
-    }): never;
+    }): StarTransactions;
 }
 export interface ApiMethods {
     /**
@@ -15543,7 +15543,7 @@ export interface ApiMethods {
          * Telegram payment identifier
          */
         telegram_payment_charge_id: string;
-    }): never;
+    }): true;
 }
 export interface ApiMethods {
     /**
@@ -15564,7 +15564,7 @@ export interface ApiMethods {
          * Pass `true` to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass `false` to allow the user to re-enable a subscription that was previously canceled by the bot.
          */
         is_canceled: boolean;
-    }): never;
+    }): true;
 }
 /**
  * This object represents a portion of the price for goods or services.
@@ -16231,7 +16231,7 @@ export interface ApiMethods {
          * A JSON-serialized Array describing the errors
          */
         errors: PassportElementError[];
-    }): never;
+    }): true;
 }
 /**
  * This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:
@@ -16517,7 +16517,7 @@ export interface ApiMethods {
          * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.
          */
         reply_markup?: InlineKeyboardMarkup;
-    }): never;
+    }): Message;
 }
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
@@ -16591,7 +16591,7 @@ export interface ApiMethods {
          * Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
          */
         inline_message_id?: string;
-    }): never;
+    }): true | Message;
 }
 export interface ApiMethods {
     /**
@@ -16618,7 +16618,7 @@ export interface ApiMethods {
          * Required if _chat_id_ and _message_id_ are not specified. Identifier of the inline message.
          */
         inline_message_id?: string;
-    }): never;
+    }): GameHighScore[];
 }
 /**
  * This object represents one row of the high scores table for a game.
