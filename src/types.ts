@@ -11858,7 +11858,22 @@ export interface ApiMethods {
 }
 // === RICH MESSAGES
 /**
- * The following methods and objects allow your bot to handle and send rich messages.
+ * Rich formatted message.
+ *
+ * @see {@link https://core.telegram.org/bots/api#richmessage}
+ */
+export interface RichMessage {
+    /**
+     * Content of the message
+     */
+    blocks: RichBlock[];
+    /**
+     * `true`, if the rich message must be shown right-to-left
+     */
+    is_rtl?: boolean;
+}
+/**
+ * Describes a rich message to be sent. Exactly **one** of the fields _html_, _markdown_, or _blocks_ must be used.
  *
  * #### Rich Message Formatting Options
  *
@@ -12152,24 +12167,6 @@ export interface ApiMethods {
  * - The body of a `<details>` tag can contain rich message content. If the `open` attribute is specified, the block is expanded by default.
  * - Formula source is treated as raw LaTeX.
  * - See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details about supported date-time formats.
- */
-/**
- * Rich formatted message.
- *
- * @see {@link https://core.telegram.org/bots/api#richmessage}
- */
-export interface RichMessage {
-    /**
-     * Content of the message
-     */
-    blocks: RichBlock[];
-    /**
-     * `true`, if the rich message must be shown right-to-left
-     */
-    is_rtl?: boolean;
-}
-/**
- * Describes a rich message to be sent. Exactly **one** of the fields _html_, _markdown_, or _blocks_ must be used.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichmessage}
  */
