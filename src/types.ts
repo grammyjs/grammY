@@ -12891,12 +12891,10 @@ export interface ApiMethods {
      * Required if <em>chat_id</em> is not specified. Unique identifier of the target user who will receive the gift.
      */
     user_id?: number;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Optional</td>
-<td>Required if <em>user_id</em> is not specified. Unique identifier for the chat or username of the channel (in the format <code>@username</code>) that will receive the gift.</td>
-</tr>
+    /**
+     * Required if <em>user_id</em> is not specified. Unique identifier for the chat or username of the channel (in the format <code>@username</code>) that will receive the gift.
+     */
+    chat_id?: number | string;
     /**
      * Identifier of the gift; limited gifts can&#39;t be sent to channel chats
      */
@@ -13923,12 +13921,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     */
+    chat_id?: number | string;
     /**
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
@@ -13984,12 +13980,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     */
+    chat_id?: number | string;
     /**
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
@@ -14041,12 +14035,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     */
+    chat_id?: number | string;
     /**
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
@@ -14086,12 +14078,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     */
+    chat_id?: number | string;
     /**
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
@@ -14151,12 +14141,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     */
+    chat_id?: number | string;
     /**
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message with live location to stop.
      */
@@ -14233,12 +14221,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.
+     */
+    chat_id?: number | string;
     /**
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
