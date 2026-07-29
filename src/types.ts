@@ -2729,11 +2729,10 @@ export interface PollAnswer {
 <td>Array of Integer</td>
 <td>0-based identifiers of chosen answer options. May be empty if the vote was retracted.</td>
 </tr>
-<tr>
-<td>option_persistent_ids</td>
-<td>Array of String</td>
-<td>Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.</td>
-</tr>
+  /**
+   * Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.
+   */
+  option_persistent_ids: string[];
 </tbody>
 </table>
 }
@@ -16582,11 +16581,10 @@ export interface InputSticker {
    * Format of the added sticker, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, “video” for a <strong>.WEBM</strong> video
    */
   format: string;
-<tr>
-<td>emoji_list</td>
-<td>Array of String</td>
-<td>List of 1-20 emoji associated with the sticker</td>
-</tr>
+  /**
+   * List of 1-20 emoji associated with the sticker
+   */
+  emoji_list: string[];
 <tr>
 <td>mask_position</td>
 <td><a href="#maskposition">MaskPosition</a></td>
@@ -23384,11 +23382,10 @@ export interface PassportElementErrorFiles {
    * The section of the user&#39;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
    */
   type: string;
-<tr>
-<td>file_hashes</td>
-<td>Array of String</td>
-<td>List of base64-encoded file hashes</td>
-</tr>
+  /**
+   * List of base64-encoded file hashes
+   */
+  file_hashes: string[];
   /**
    * Error message
    */
@@ -23449,11 +23446,10 @@ export interface PassportElementErrorTranslationFiles {
    * Type of element of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
    */
   type: string;
-<tr>
-<td>file_hashes</td>
-<td>Array of String</td>
-<td>List of base64-encoded file hashes</td>
-</tr>
+  /**
+   * List of base64-encoded file hashes
+   */
+  file_hashes: string[];
   /**
    * Error message
    */
