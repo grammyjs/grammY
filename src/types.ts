@@ -360,20 +360,18 @@ export interface WebhookInfo {
    * Number of updates awaiting delivery
    */
   pending_update_count: number;
-<tr>
-<td>ip_address</td>
-<td>String</td>
-<td><em>Optional</em>. Currently used webhook IP address</td>
-</tr>
+  /**
+   * Currently used webhook IP address
+   */
+  ip_address?: string;
   /**
    * Unix time for the most recent error that happened when trying to deliver an update via webhook
    */
   last_error_date?: number;
-<tr>
-<td>last_error_message</td>
-<td>String</td>
-<td><em>Optional</em>. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook</td>
-</tr>
+  /**
+   * Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
+   */
+  last_error_message?: string;
   /**
    * Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters
    */
@@ -423,21 +421,18 @@ export interface User {
 <td>String</td>
 <td>User&#39;s or bot&#39;s first name</td>
 </tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td><em>Optional</em>. User&#39;s or bot&#39;s last name</td>
-</tr>
-<tr>
-<td>username</td>
-<td>String</td>
-<td><em>Optional</em>. User&#39;s or bot&#39;s username</td>
-</tr>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td><em>Optional</em>. <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language</td>
-</tr>
+  /**
+   * User&#39;s or bot&#39;s last name
+   */
+  last_name?: string;
+  /**
+   * User&#39;s or bot&#39;s username
+   */
+  username?: string;
+  /**
+   * <a href="https://en.wikipedia.org/wiki/IETF_language_tag">IETF language tag</a> of the user&#39;s language
+   */
+  language_code?: string;
 <tr>
 <td>is_premium</td>
 <td>True</td>
@@ -523,26 +518,22 @@ export interface Chat {
 <td>String</td>
 <td>Type of the chat, can be either “private”, “group”, “supergroup” or “channel”</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title, for supergroups, channels and group chats</td>
-</tr>
-<tr>
-<td>username</td>
-<td>String</td>
-<td><em>Optional</em>. Username, for private chats, supergroups and channels if available</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td><em>Optional</em>. First name of the other party in a private chat</td>
-</tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td><em>Optional</em>. Last name of the other party in a private chat</td>
-</tr>
+  /**
+   * Title, for supergroups, channels and group chats
+   */
+  title?: string;
+  /**
+   * Username, for private chats, supergroups and channels if available
+   */
+  username?: string;
+  /**
+   * First name of the other party in a private chat
+   */
+  first_name?: string;
+  /**
+   * Last name of the other party in a private chat
+   */
+  last_name?: string;
 <tr>
 <td>is_forum</td>
 <td>True</td>
@@ -578,26 +569,22 @@ export interface ChatFullInfo {
 <td>String</td>
 <td>Type of the chat, can be either “private”, “group”, “supergroup” or “channel”</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title, for supergroups, channels and group chats</td>
-</tr>
-<tr>
-<td>username</td>
-<td>String</td>
-<td><em>Optional</em>. Username, for private chats, supergroups and channels if available</td>
-</tr>
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td><em>Optional</em>. First name of the other party in a private chat</td>
-</tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td><em>Optional</em>. Last name of the other party in a private chat</td>
-</tr>
+  /**
+   * Title, for supergroups, channels and group chats
+   */
+  title?: string;
+  /**
+   * Username, for private chats, supergroups and channels if available
+   */
+  username?: string;
+  /**
+   * First name of the other party in a private chat
+   */
+  first_name?: string;
+  /**
+   * Last name of the other party in a private chat
+   */
+  last_name?: string;
 <tr>
 <td>is_forum</td>
 <td>True</td>
@@ -661,34 +648,30 @@ export interface ChatFullInfo {
 <td>Array of <a href="#reactiontype">ReactionType</a></td>
 <td><em>Optional</em>. List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.</td>
 </tr>
-<tr>
-<td>background_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background</td>
-</tr>
+  /**
+   * Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background
+   */
+  background_custom_emoji_id?: string;
   /**
    * Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.
    */
   profile_accent_color_id?: number;
-<tr>
-<td>profile_background_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. Custom emoji identifier of the emoji chosen by the chat for its profile background</td>
-</tr>
-<tr>
-<td>emoji_status_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. Custom emoji identifier of the emoji status of the chat or the other party in a private chat</td>
-</tr>
+  /**
+   * Custom emoji identifier of the emoji chosen by the chat for its profile background
+   */
+  profile_background_custom_emoji_id?: string;
+  /**
+   * Custom emoji identifier of the emoji status of the chat or the other party in a private chat
+   */
+  emoji_status_custom_emoji_id?: string;
   /**
    * Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any
    */
   emoji_status_expiration_date?: number;
-<tr>
-<td>bio</td>
-<td>String</td>
-<td><em>Optional</em>. Bio of the other party in a private chat</td>
-</tr>
+  /**
+   * Bio of the other party in a private chat
+   */
+  bio?: string;
 <tr>
 <td>has_private_forwards</td>
 <td>True</td>
@@ -709,16 +692,14 @@ export interface ChatFullInfo {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if all users directly joining the supergroup without using an invite link need to be approved by supergroup administrators</td>
 </tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Description, for groups, supergroups and channel chats</td>
-</tr>
-<tr>
-<td>invite_link</td>
-<td>String</td>
-<td><em>Optional</em>. Primary invite link, for groups, supergroups and channel chats</td>
-</tr>
+  /**
+   * Description, for groups, supergroups and channel chats
+   */
+  description?: string;
+  /**
+   * Primary invite link, for groups, supergroups and channel chats
+   */
+  invite_link?: string;
 <tr>
 <td>pinned_message</td>
 <td><a href="#message">Message</a></td>
@@ -771,21 +752,19 @@ export interface ChatFullInfo {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if new chat members will have access to old messages; available only to chat administrators</td>
 </tr>
-<tr>
-<td>sticker_set_name</td>
-<td>String</td>
-<td><em>Optional</em>. For supergroups, name of the group sticker set</td>
-</tr>
+  /**
+   * For supergroups, name of the group sticker set
+   */
+  sticker_set_name?: string;
 <tr>
 <td>can_set_sticker_set</td>
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the bot can change the group sticker set</td>
 </tr>
-<tr>
-<td>custom_emoji_sticker_set_name</td>
-<td>String</td>
-<td><em>Optional</em>. For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.</td>
-</tr>
+  /**
+   * For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.
+   */
+  custom_emoji_sticker_set_name?: string;
   /**
    * Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -872,11 +851,10 @@ export interface Message {
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.</td>
 </tr>
-<tr>
-<td>sender_tag</td>
-<td>String</td>
-<td><em>Optional</em>. Tag or custom title of the sender of the message; for supergroups only</td>
-</tr>
+  /**
+   * Tag or custom title of the sender of the message; for supergroups only
+   */
+  sender_tag?: string;
 <tr>
 <td>receiver_user</td>
 <td><a href="#user">User</a></td>
@@ -890,16 +868,14 @@ export interface Message {
    * Date the message was sent in Unix time. It is always a positive number, representing a valid date.
    */
   date: number;
-<tr>
-<td>guest_query_id</td>
-<td>String</td>
-<td><em>Optional</em>. The unique identifier for the guest query. Use this identifier with the method <a href="#answerguestquery">answerGuestQuery</a> to send a response message. If non-empty, the message belongs to the chat where the guest bot was summoned, which may not coincide with other existing bot chats sharing the same identifier.</td>
-</tr>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.</td>
-</tr>
+  /**
+   * The unique identifier for the guest query. Use this identifier with the method <a href="#answerguestquery">answerGuestQuery</a> to send a response message. If non-empty, the message belongs to the chat where the guest bot was summoned, which may not coincide with other existing bot chats sharing the same identifier.
+   */
+  guest_query_id?: string;
+  /**
+   * Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
+   */
+  business_connection_id?: string;
 <tr>
 <td>chat</td>
 <td><a href="#chat">Chat</a></td>
@@ -944,11 +920,10 @@ export interface Message {
    * Identifier of the specific checklist task that is being replied to
    */
   reply_to_checklist_task_id?: number;
-<tr>
-<td>reply_to_poll_option_id</td>
-<td>String</td>
-<td><em>Optional</em>. Persistent identifier of the specific poll option that is being replied to</td>
-</tr>
+  /**
+   * Persistent identifier of the specific poll option that is being replied to
+   */
+  reply_to_poll_option_id?: string;
 <tr>
 <td>via_bot</td>
 <td><a href="#user">User</a></td>
@@ -983,25 +958,22 @@ export interface Message {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.</td>
 </tr>
-<tr>
-<td>media_group_id</td>
-<td>String</td>
-<td><em>Optional</em>. The unique identifier inside this chat of a media message group this message belongs to</td>
-</tr>
-<tr>
-<td>author_signature</td>
-<td>String</td>
-<td><em>Optional</em>. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator</td>
-</tr>
+  /**
+   * The unique identifier inside this chat of a media message group this message belongs to
+   */
+  media_group_id?: string;
+  /**
+   * Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
+   */
+  author_signature?: string;
   /**
    * The number of Telegram Stars that were paid by the sender of the message to send it
    */
   paid_star_count?: number;
-<tr>
-<td>text</td>
-<td>String</td>
-<td><em>Optional</em>. For text messages, the actual UTF-8 text of the message</td>
-</tr>
+  /**
+   * For text messages, the actual UTF-8 text of the message
+   */
+  text?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -1017,11 +989,10 @@ export interface Message {
 <td><a href="#suggestedpostinfo">SuggestedPostInfo</a></td>
 <td><em>Optional</em>. Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.</td>
 </tr>
-<tr>
-<td>effect_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the message effect added to the message</td>
-</tr>
+  /**
+   * Unique identifier of the message effect added to the message
+   */
+  effect_id?: string;
 <tr>
 <td>rich_message</td>
 <td><a href="#richmessage">RichMessage</a></td>
@@ -1082,11 +1053,10 @@ export interface Message {
 <td><a href="#voice">Voice</a></td>
 <td><em>Optional</em>. Message is a voice message, information about the file</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption for the animation, audio, document, paid media, photo, video or voice</td>
-</tr>
+  /**
+   * Caption for the animation, audio, document, paid media, photo, video or voice
+   */
+  caption?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -1157,11 +1127,10 @@ export interface Message {
 <td><a href="#chatownerchanged">ChatOwnerChanged</a></td>
 <td><em>Optional</em>. Service message: chat owner has changed</td>
 </tr>
-<tr>
-<td>new_chat_title</td>
-<td>String</td>
-<td><em>Optional</em>. A chat title was changed to this value</td>
-</tr>
+  /**
+   * A chat title was changed to this value
+   */
+  new_chat_title?: string;
 <tr>
 <td>new_chat_photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
@@ -1245,11 +1214,10 @@ export interface Message {
 <td><a href="#giftinfo">GiftInfo</a></td>
 <td><em>Optional</em>. Service message: upgrade of a gift was purchased after the gift was sent</td>
 </tr>
-<tr>
-<td>connected_website</td>
-<td>String</td>
-<td><em>Optional</em>. The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a></td>
-</tr>
+  /**
+   * The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a>
+   */
+  connected_website?: string;
 <tr>
 <td>write_access_allowed</td>
 <td><a href="#writeaccessallowed">WriteAccessAllowed</a></td>
@@ -1512,35 +1480,31 @@ export interface MessageEntity {
    * Length of the entity in <a href="/api/entities#entity-length">UTF-16 code units</a>
    */
   length: number;
-<tr>
-<td>url</td>
-<td>String</td>
-<td><em>Optional</em>. For “text_link” only, URL that will be opened after user taps on the text</td>
-</tr>
+  /**
+   * For “text_link” only, URL that will be opened after user taps on the text
+   */
+  url?: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
 <td><em>Optional</em>. For “text_mention” only, the mentioned user</td>
 </tr>
-<tr>
-<td>language</td>
-<td>String</td>
-<td><em>Optional</em>. For “pre” only, the programming language of the entity text</td>
-</tr>
-<tr>
-<td>custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker.</td>
-</tr>
+  /**
+   * For “pre” only, the programming language of the entity text
+   */
+  language?: string;
+  /**
+   * For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker.
+   */
+  custom_emoji_id?: string;
   /**
    * For “date_time” only, the Unix time associated with the entity
    */
   unix_time?: number;
-<tr>
-<td>date_time_format</td>
-<td>String</td>
-<td><em>Optional</em>. For “date_time” only, the string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.</td>
-</tr>
+  /**
+   * For “date_time” only, the string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.
+   */
+  date_time_format?: string;
 </tbody>
 </table>
 }
@@ -1755,16 +1719,14 @@ export interface ReplyParameters {
 <td>Boolean</td>
 <td><em>Optional</em>. Pass <em>True</em> if the message should be sent even if the specified message to be replied to is not found. Always <em>False</em> for replies in another chat or forum topic, and sent ephemeral messages. Always <em>True</em> for messages sent on behalf of a business account.</td>
 </tr>
-<tr>
-<td>quote</td>
-<td>String</td>
-<td><em>Optional</em>. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities. The message will fail to send if the quote isn&#39;t found in the original message. Ignored for ephemeral messages.</td>
-</tr>
-<tr>
-<td>quote_parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities. The message will fail to send if the quote isn&#39;t found in the original message. Ignored for ephemeral messages.
+   */
+  quote?: string;
+  /**
+   * Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  quote_parse_mode?: string;
 <tr>
 <td>quote_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -1778,11 +1740,10 @@ export interface ReplyParameters {
    * Identifier of the specific checklist task to be replied to
    */
   checklist_task_id?: number;
-<tr>
-<td>poll_option_id</td>
-<td>String</td>
-<td><em>Optional</em>. Persistent identifier of the specific poll option to be replied to</td>
-</tr>
+  /**
+   * Persistent identifier of the specific poll option to be replied to
+   */
+  poll_option_id?: string;
 </tbody>
 </table>
 }
@@ -1886,11 +1847,10 @@ export interface MessageOriginChat {
 <td><a href="#chat">Chat</a></td>
 <td>Chat that sent the message originally</td>
 </tr>
-<tr>
-<td>author_signature</td>
-<td>String</td>
-<td><em>Optional</em>. For messages originally sent by an anonymous chat administrator, original message author signature</td>
-</tr>
+  /**
+   * For messages originally sent by an anonymous chat administrator, original message author signature
+   */
+  author_signature?: string;
 </tbody>
 </table>
 }
@@ -1925,11 +1885,10 @@ export interface MessageOriginChannel {
    * Unique message identifier inside the chat
    */
   message_id: number;
-<tr>
-<td>author_signature</td>
-<td>String</td>
-<td><em>Optional</em>. Signature of the original post author</td>
-</tr>
+  /**
+   * Signature of the original post author
+   */
+  author_signature?: string;
 </tbody>
 </table>
 }
@@ -2011,16 +1970,14 @@ export interface Animation {
 <td><a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Animation thumbnail as defined by the sender</td>
 </tr>
-<tr>
-<td>file_name</td>
-<td>String</td>
-<td><em>Optional</em>. Original animation filename as defined by the sender</td>
-</tr>
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
-</tr>
+  /**
+   * Original animation filename as defined by the sender
+   */
+  file_name?: string;
+  /**
+   * MIME type of the file as defined by the sender
+   */
+  mime_type?: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -2055,26 +2012,22 @@ export interface Audio {
    * Duration of the audio in seconds as defined by the sender
    */
   duration: number;
-<tr>
-<td>performer</td>
-<td>String</td>
-<td><em>Optional</em>. Performer of the audio as defined by the sender or by audio tags</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title of the audio as defined by the sender or by audio tags</td>
-</tr>
-<tr>
-<td>file_name</td>
-<td>String</td>
-<td><em>Optional</em>. Original filename as defined by the sender</td>
-</tr>
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
-</tr>
+  /**
+   * Performer of the audio as defined by the sender or by audio tags
+   */
+  performer?: string;
+  /**
+   * Title of the audio as defined by the sender or by audio tags
+   */
+  title?: string;
+  /**
+   * Original filename as defined by the sender
+   */
+  file_name?: string;
+  /**
+   * MIME type of the file as defined by the sender
+   */
+  mime_type?: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -2115,16 +2068,14 @@ export interface Document {
 <td><a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Document thumbnail as defined by the sender</td>
 </tr>
-<tr>
-<td>file_name</td>
-<td>String</td>
-<td><em>Optional</em>. Original filename as defined by the sender</td>
-</tr>
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
-</tr>
+  /**
+   * Original filename as defined by the sender
+   */
+  file_name?: string;
+  /**
+   * MIME type of the file as defined by the sender
+   */
+  mime_type?: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -2172,11 +2123,10 @@ export interface LivePhoto {
    * Duration of the video in seconds as defined by the sender
    */
   duration: number;
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
-</tr>
+  /**
+   * MIME type of the file as defined by the sender
+   */
+  mime_type?: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -2306,16 +2256,14 @@ export interface Video {
 <td>Array of <a href="#videoquality">VideoQuality</a></td>
 <td><em>Optional</em>. List of available qualities of the video</td>
 </tr>
-<tr>
-<td>file_name</td>
-<td>String</td>
-<td><em>Optional</em>. Original filename as defined by the sender</td>
-</tr>
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
-</tr>
+  /**
+   * Original filename as defined by the sender
+   */
+  file_name?: string;
+  /**
+   * MIME type of the file as defined by the sender
+   */
+  mime_type?: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -2393,11 +2341,10 @@ export interface Voice {
    * Duration of the audio in seconds as defined by the sender
    */
   duration: number;
-<tr>
-<td>mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the file as defined by the sender</td>
-</tr>
+  /**
+   * MIME type of the file as defined by the sender
+   */
+  mime_type?: string;
   /**
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
@@ -2577,20 +2524,18 @@ export interface Contact {
 <td>String</td>
 <td>Contact&#39;s first name</td>
 </tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td><em>Optional</em>. Contact&#39;s last name</td>
-</tr>
+  /**
+   * Contact&#39;s last name
+   */
+  last_name?: string;
   /**
    * Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   user_id?: number;
-<tr>
-<td>vcard</td>
-<td>String</td>
-<td><em>Optional</em>. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a></td>
-</tr>
+  /**
+   * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>
+   */
+  vcard?: string;
 </tbody>
 </table>
 }
@@ -2820,11 +2765,10 @@ export interface InputPollOption {
 <td>String</td>
 <td>Option text, 1-100 characters</td>
 </tr>
-<tr>
-<td>text_parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.</td>
-</tr>
+  /**
+   * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
+   */
+  text_parse_mode?: string;
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -2956,11 +2900,10 @@ export interface Poll {
 <td>Array of Integer</td>
 <td><em>Optional</em>. Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.</td>
 </tr>
-<tr>
-<td>explanation</td>
-<td>String</td>
-<td><em>Optional</em>. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters</td>
-</tr>
+  /**
+   * Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
+   */
+  explanation?: string;
 <tr>
 <td>explanation_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -2979,11 +2922,10 @@ export interface Poll {
    * Point in time (Unix timestamp) when the poll will be automatically closed
    */
   close_date?: number;
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Description of the poll; for polls inside the <a href="#message">Message</a> object only</td>
-</tr>
+  /**
+   * Description of the poll; for polls inside the <a href="#message">Message</a> object only
+   */
+  description?: string;
 <tr>
 <td>description_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -3104,11 +3046,10 @@ export interface InputChecklistTask {
 <td>String</td>
 <td>Text of the task; 1-100 characters after entities parsing</td>
 </tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -3135,11 +3076,10 @@ export interface InputChecklist {
 <td>String</td>
 <td>Title of the checklist; 1-255 characters after entities parsing</td>
 </tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the title. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Mode for parsing entities in the title. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>title_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -3234,26 +3174,22 @@ export interface Venue {
 <td>String</td>
 <td>Address of the venue</td>
 </tr>
-<tr>
-<td>foursquare_id</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare identifier of the venue</td>
-</tr>
-<tr>
-<td>foursquare_type</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
-</tr>
-<tr>
-<td>google_place_id</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places identifier of the venue</td>
-</tr>
-<tr>
-<td>google_place_type</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
-</tr>
+  /**
+   * Foursquare identifier of the venue
+   */
+  foursquare_id?: string;
+  /**
+   * Foursquare type of the venue. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+   */
+  foursquare_type?: string;
+  /**
+   * Google Places identifier of the venue
+   */
+  google_place_id?: string;
+  /**
+   * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+   */
+  google_place_type?: string;
 </tbody>
 </table>
 }
@@ -3877,11 +3813,10 @@ export interface ForumTopicCreated {
    * Color of the topic icon in RGB format
    */
   icon_color: number;
-<tr>
-<td>icon_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the custom emoji shown as the topic icon</td>
-</tr>
+  /**
+   * Unique identifier of the custom emoji shown as the topic icon
+   */
+  icon_custom_emoji_id?: string;
 <tr>
 <td>is_name_implicit</td>
 <td>True</td>
@@ -3907,16 +3842,14 @@ export interface ForumTopicEdited {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td><em>Optional</em>. New name of the topic, if it was edited</td>
-</tr>
-<tr>
-<td>icon_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed</td>
-</tr>
+  /**
+   * New name of the topic, if it was edited
+   */
+  name?: string;
+  /**
+   * New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed
+   */
+  icon_custom_emoji_id?: string;
 </tbody>
 </table>
 }
@@ -3949,21 +3882,18 @@ export interface SharedUser {
    * Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.
    */
   user_id: number;
-<tr>
-<td>first_name</td>
-<td>String</td>
-<td><em>Optional</em>. First name of the user, if the name was requested by the bot</td>
-</tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td><em>Optional</em>. Last name of the user, if the name was requested by the bot</td>
-</tr>
-<tr>
-<td>username</td>
-<td>String</td>
-<td><em>Optional</em>. Username of the user, if the username was requested by the bot</td>
-</tr>
+  /**
+   * First name of the user, if the name was requested by the bot
+   */
+  first_name?: string;
+  /**
+   * Last name of the user, if the name was requested by the bot
+   */
+  last_name?: string;
+  /**
+   * Username of the user, if the username was requested by the bot
+   */
+  username?: string;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
@@ -4018,16 +3948,14 @@ export interface ChatShared {
    * Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means.
    */
   chat_id: number;
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title of the chat, if the title was requested by the bot</td>
-</tr>
-<tr>
-<td>username</td>
-<td>String</td>
-<td><em>Optional</em>. Username of the chat, if the username was requested by the bot and available</td>
-</tr>
+  /**
+   * Title of the chat, if the title was requested by the bot
+   */
+  title?: string;
+  /**
+   * Username of the chat, if the username was requested by the bot and available
+   */
+  username?: string;
 <tr>
 <td>photo</td>
 <td>Array of <a href="#photosize">PhotoSize</a></td>
@@ -4054,11 +3982,10 @@ export interface WriteAccessAllowed {
 <td>Boolean</td>
 <td><em>Optional</em>. <em>True</em>, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a></td>
 </tr>
-<tr>
-<td>web_app_name</td>
-<td>String</td>
-<td><em>Optional</em>. Name of the Web App, if the access was granted when the Web App was launched from a link</td>
-</tr>
+  /**
+   * Name of the Web App, if the access was granted when the Web App was launched from a link
+   */
+  web_app_name?: string;
 <tr>
 <td>from_attachment_menu</td>
 <td>Boolean</td>
@@ -4251,11 +4178,10 @@ export interface SuggestedPostDeclined {
 <td><a href="#message">Message</a></td>
 <td><em>Optional</em>. Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
 </tr>
-<tr>
-<td>comment</td>
-<td>String</td>
-<td><em>Optional</em>. Comment with which the post was declined</td>
-</tr>
+  /**
+   * Comment with which the post was declined
+   */
+  comment?: string;
 </tbody>
 </table>
 }
@@ -4376,11 +4302,10 @@ export interface Giveaway {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the list of giveaway winners will be visible to everyone</td>
 </tr>
-<tr>
-<td>prize_description</td>
-<td>String</td>
-<td><em>Optional</em>. Description of additional giveaway prize</td>
-</tr>
+  /**
+   * Description of additional giveaway prize
+   */
+  prize_description?: string;
 <tr>
 <td>country_codes</td>
 <td>Array of String</td>
@@ -4458,11 +4383,10 @@ export interface GiveawayWinners {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the giveaway was canceled because the payment for it was refunded</td>
 </tr>
-<tr>
-<td>prize_description</td>
-<td>String</td>
-<td><em>Optional</em>. Description of additional giveaway prize</td>
-</tr>
+  /**
+   * Description of additional giveaway prize
+   */
+  prize_description?: string;
 </tbody>
 </table>
 }
@@ -4518,11 +4442,10 @@ export interface LinkPreviewOptions {
 <td>Boolean</td>
 <td><em>Optional</em>. <em>True</em>, if the link preview is disabled</td>
 </tr>
-<tr>
-<td>url</td>
-<td>String</td>
-<td><em>Optional</em>. URL to use for the link preview. If empty, then the first URL found in the message text will be used.</td>
-</tr>
+  /**
+   * URL to use for the link preview. If empty, then the first URL found in the message text will be used.
+   */
+  url?: string;
 <tr>
 <td>prefer_small_media</td>
 <td>Boolean</td>
@@ -4725,11 +4648,10 @@ export interface File {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-<tr>
-<td>file_path</td>
-<td>String</td>
-<td><em>Optional</em>. File path. Use <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code> to get the file.</td>
-</tr>
+  /**
+   * File path. Use <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code> to get the file.
+   */
+  file_path?: string;
 </tbody>
 </table>
 }
@@ -4787,11 +4709,10 @@ export interface ReplyKeyboardMarkup {
 <td>Boolean</td>
 <td><em>Optional</em>. Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to <em>False</em>.</td>
 </tr>
-<tr>
-<td>input_field_placeholder</td>
-<td>String</td>
-<td><em>Optional</em>. The placeholder to be shown in the input field when the keyboard is active; 1-64 characters</td>
-</tr>
+  /**
+   * The placeholder to be shown in the input field when the keyboard is active; 1-64 characters
+   */
+  input_field_placeholder?: string;
 <tr>
 <td>selective</td>
 <td>Boolean</td>
@@ -4818,16 +4739,14 @@ export interface KeyboardButton {
 <td>String</td>
 <td>Text of the button. If none of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> are used, it will be sent as a message when the button is pressed.</td>
 </tr>
-<tr>
-<td>icon_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.</td>
-</tr>
-<tr>
-<td>style</td>
-<td>String</td>
-<td><em>Optional</em>. Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.</td>
-</tr>
+  /**
+   * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+   */
+  icon_custom_emoji_id?: string;
+  /**
+   * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+   */
+  style?: string;
 <tr>
 <td>request_users</td>
 <td><a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a></td>
@@ -5002,16 +4921,14 @@ export interface KeyboardButtonRequestManagedBot {
    * Signed 32-bit identifier of the request. Must be unique within the message.
    */
   request_id: number;
-<tr>
-<td>suggested_name</td>
-<td>String</td>
-<td><em>Optional</em>. Suggested name for the bot</td>
-</tr>
-<tr>
-<td>suggested_username</td>
-<td>String</td>
-<td><em>Optional</em>. Suggested username for the bot</td>
-</tr>
+  /**
+   * Suggested name for the bot
+   */
+  suggested_name?: string;
+  /**
+   * Suggested username for the bot
+   */
+  suggested_username?: string;
 </tbody>
 </table>
 }
@@ -5028,11 +4945,10 @@ export interface KeyboardButtonPollType {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td>String</td>
-<td><em>Optional</em>. If <em>quiz</em> is passed, the user will be allowed to create only polls in the quiz mode. If <em>regular</em> is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.</td>
-</tr>
+  /**
+   * If <em>quiz</em> is passed, the user will be allowed to create only polls in the quiz mode. If <em>regular</em> is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.
+   */
+  type?: string;
 </tbody>
 </table>
 }
@@ -5101,26 +5017,22 @@ export interface InlineKeyboardButton {
 <td>String</td>
 <td>Label text on the button</td>
 </tr>
-<tr>
-<td>icon_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.</td>
-</tr>
-<tr>
-<td>style</td>
-<td>String</td>
-<td><em>Optional</em>. Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.</td>
-</tr>
-<tr>
-<td>url</td>
-<td>String</td>
-<td><em>Optional</em>. HTTP or tg:// URL to be opened when the button is pressed. Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.</td>
-</tr>
-<tr>
-<td>callback_data</td>
-<td>String</td>
-<td><em>Optional</em>. Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes</td>
-</tr>
+  /**
+   * Unique identifier of the custom emoji shown before the text of the button. Can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
+   */
+  icon_custom_emoji_id?: string;
+  /**
+   * Style of the button. Must be one of “danger” (red), “success” (green) or “primary” (blue). If omitted, then an app-specific style is used.
+   */
+  style?: string;
+  /**
+   * HTTP or tg:// URL to be opened when the button is pressed. Links <code>tg://user?id=&lt;user_id&gt;</code> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
+   */
+  url?: string;
+  /**
+   * Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes
+   */
+  callback_data?: string;
 <tr>
 <td>web_app</td>
 <td><a href="#webappinfo">WebAppInfo</a></td>
@@ -5131,16 +5043,14 @@ export interface InlineKeyboardButton {
 <td><a href="#loginurl">LoginUrl</a></td>
 <td><em>Optional</em>. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.</td>
 </tr>
-<tr>
-<td>switch_inline_query</td>
-<td>String</td>
-<td><em>Optional</em>. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.</td>
-</tr>
-<tr>
-<td>switch_inline_query_current_chat</td>
-<td>String</td>
-<td><em>Optional</em>. If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.</td>
-</tr>
+  /**
+   * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
+   */
+  switch_inline_query?: string;
+  /**
+   * If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.<br><br>This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.
+   */
+  switch_inline_query_current_chat?: string;
 <tr>
 <td>switch_inline_query_chosen_chat</td>
 <td><a href="#switchinlinequerychosenchat">SwitchInlineQueryChosenChat</a></td>
@@ -5188,16 +5098,14 @@ export interface LoginUrl {
 <td>String</td>
 <td>An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.</td>
 </tr>
-<tr>
-<td>forward_text</td>
-<td>String</td>
-<td><em>Optional</em>. New text of the button in forwarded messages</td>
-</tr>
-<tr>
-<td>bot_username</td>
-<td>String</td>
-<td><em>Optional</em>. Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The <em>url</em>&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.</td>
-</tr>
+  /**
+   * New text of the button in forwarded messages
+   */
+  forward_text?: string;
+  /**
+   * Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The <em>url</em>&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.
+   */
+  bot_username?: string;
 <tr>
 <td>request_write_access</td>
 <td>Boolean</td>
@@ -5219,11 +5127,10 @@ export interface SwitchInlineQueryChosenChat {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>query</td>
-<td>String</td>
-<td><em>Optional</em>. The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted.</td>
-</tr>
+  /**
+   * The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted.
+   */
+  query?: string;
 <tr>
 <td>allow_user_chats</td>
 <td>Boolean</td>
@@ -5298,26 +5205,23 @@ export interface CallbackQuery {
 <td><a href="#maybeinaccessiblemessage">MaybeInaccessibleMessage</a></td>
 <td><em>Optional</em>. Message sent by the bot with the callback button that originated the query</td>
 </tr>
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td><em>Optional</em>. Identifier of the message sent via the bot in inline mode, that originated the query</td>
-</tr>
+  /**
+   * Identifier of the message sent via the bot in inline mode, that originated the query
+   */
+  inline_message_id?: string;
 <tr>
 <td>chat_instance</td>
 <td>String</td>
 <td>Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in <a href="#games">games</a>.</td>
 </tr>
-<tr>
-<td>data</td>
-<td>String</td>
-<td><em>Optional</em>. Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.</td>
-</tr>
-<tr>
-<td>game_short_name</td>
-<td>String</td>
-<td><em>Optional</em>. Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game</td>
-</tr>
+  /**
+   * Data associated with the callback button. Be aware that the message originated the query can contain no callback buttons with this data.
+   */
+  data?: string;
+  /**
+   * Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game
+   */
+  game_short_name?: string;
 </tbody>
 </table>
 }
@@ -5346,11 +5250,10 @@ export interface ForceReply {
 <td>True</td>
 <td>Shows reply interface to the user, as if they manually selected the bot&#39;s message and tapped &#39;Reply&#39;</td>
 </tr>
-<tr>
-<td>input_field_placeholder</td>
-<td>String</td>
-<td><em>Optional</em>. The placeholder to be shown in the input field when the reply is active; 1-64 characters</td>
-</tr>
+  /**
+   * The placeholder to be shown in the input field when the reply is active; 1-64 characters
+   */
+  input_field_placeholder?: string;
 <tr>
 <td>selective</td>
 <td>Boolean</td>
@@ -5458,11 +5361,10 @@ export interface ChatInviteLink {
 <td>Boolean</td>
 <td><em>True</em>, if the link is revoked</td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td><em>Optional</em>. Invite link name</td>
-</tr>
+  /**
+   * Invite link name
+   */
+  name?: string;
   /**
    * Point in time (Unix timestamp) when the link will expire or has been expired
    */
@@ -5687,11 +5589,10 @@ export interface ChatMemberOwner {
 <td>Boolean</td>
 <td><em>True</em>, if the user&#39;s presence in the chat is hidden</td>
 </tr>
-<tr>
-<td>custom_title</td>
-<td>String</td>
-<td><em>Optional</em>. Custom title for this user</td>
-</tr>
+  /**
+   * Custom title for this user
+   */
+  custom_title?: string;
 </tbody>
 </table>
 }
@@ -5808,11 +5709,10 @@ export interface ChatMemberAdministrator {
 <td>Boolean</td>
 <td><em>Optional</em>. <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.</td>
 </tr>
-<tr>
-<td>custom_title</td>
-<td>String</td>
-<td><em>Optional</em>. Custom title for this user</td>
-</tr>
+  /**
+   * Custom title for this user
+   */
+  custom_title?: string;
 </tbody>
 </table>
 }
@@ -5834,11 +5734,10 @@ export interface ChatMemberMember {
 <td>String</td>
 <td>The member&#39;s status in the chat, always “member”</td>
 </tr>
-<tr>
-<td>tag</td>
-<td>String</td>
-<td><em>Optional</em>. Tag of the member</td>
-</tr>
+  /**
+   * Tag of the member
+   */
+  tag?: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -5869,11 +5768,10 @@ export interface ChatMemberRestricted {
 <td>String</td>
 <td>The member&#39;s status in the chat, always “restricted”</td>
 </tr>
-<tr>
-<td>tag</td>
-<td>String</td>
-<td><em>Optional</em>. Tag of the member</td>
-</tr>
+  /**
+   * Tag of the member
+   */
+  tag?: string;
 <tr>
 <td>user</td>
 <td><a href="#user">User</a></td>
@@ -6058,21 +5956,19 @@ export interface ChatJoinRequest {
    * Date the request was sent in Unix time
    */
   date: number;
-<tr>
-<td>bio</td>
-<td>String</td>
-<td><em>Optional</em>. Bio of the user</td>
-</tr>
+  /**
+   * Bio of the user
+   */
+  bio?: string;
 <tr>
 <td>invite_link</td>
 <td><a href="#chatinvitelink">ChatInviteLink</a></td>
 <td><em>Optional</em>. Chat invite link that was used by the user to send the join request</td>
 </tr>
-<tr>
-<td>query_id</td>
-<td>String</td>
-<td><em>Optional</em>. Identifier of the join request query; for bots assigned to process join requests only. If present, then the bot must call <a href="#sendchatjoinrequestwebapp">sendChatJoinRequestWebApp</a> or directly call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> within 10 seconds.</td>
-</tr>
+  /**
+   * Identifier of the join request query; for bots assigned to process join requests only. If present, then the bot must call <a href="#sendchatjoinrequestwebapp">sendChatJoinRequestWebApp</a> or directly call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> within 10 seconds.
+   */
+  query_id?: string;
 </tbody>
 </table>
 }
@@ -6213,16 +6109,14 @@ export interface BusinessIntro {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title text of the business intro</td>
-</tr>
-<tr>
-<td>message</td>
-<td>String</td>
-<td><em>Optional</em>. Message text of the business intro</td>
-</tr>
+  /**
+   * Title text of the business intro
+   */
+  title?: string;
+  /**
+   * Message text of the business intro
+   */
+  message?: string;
 <tr>
 <td>sticker</td>
 <td><a href="#sticker">Sticker</a></td>
@@ -6403,21 +6297,18 @@ export interface LocationAddress {
 <td>String</td>
 <td>The two-letter ISO 3166-1 alpha-2 country code of the country where the location is located</td>
 </tr>
-<tr>
-<td>state</td>
-<td>String</td>
-<td><em>Optional</em>. State of the location</td>
-</tr>
-<tr>
-<td>city</td>
-<td>String</td>
-<td><em>Optional</em>. City of the location</td>
-</tr>
-<tr>
-<td>street</td>
-<td>String</td>
-<td><em>Optional</em>. Street address of the location</td>
-</tr>
+  /**
+   * State of the location
+   */
+  state?: string;
+  /**
+   * City of the location
+   */
+  city?: string;
+  /**
+   * Street address of the location
+   */
+  street?: string;
 </tbody>
 </table>
 }
@@ -6865,11 +6756,10 @@ export interface ForumTopic {
    * Color of the topic icon in RGB format
    */
   icon_color: number;
-<tr>
-<td>icon_custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the custom emoji shown as the topic icon</td>
-</tr>
+  /**
+   * Unique identifier of the custom emoji shown as the topic icon
+   */
+  icon_custom_emoji_id?: string;
 <tr>
 <td>is_name_implicit</td>
 <td>True</td>
@@ -7028,11 +6918,10 @@ export interface UniqueGiftModel {
    * The number of unique gifts that receive this model for every 1000 gift upgrades. Always 0 for crafted gifts.
    */
   rarity_per_mille: number;
-<tr>
-<td>rarity</td>
-<td>String</td>
-<td><em>Optional</em>. Rarity of the model if it is a crafted model. Currently, can be “uncommon”, “rare”, “epic”, or “legendary”.</td>
-</tr>
+  /**
+   * Rarity of the model if it is a crafted model. Currently, can be “uncommon”, “rare”, “epic”, or “legendary”.
+   */
+  rarity?: string;
 </tbody>
 </table>
 }
@@ -7265,11 +7154,10 @@ export interface GiftInfo {
 <td><a href="#gift">Gift</a></td>
 <td>Information about the gift</td>
 </tr>
-<tr>
-<td>owned_gift_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
-</tr>
+  /**
+   * Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts
+   */
+  owned_gift_id?: string;
   /**
    * Number of Telegram Stars that can be claimed by the receiver by converting the gift; omitted if conversion to Telegram Stars is impossible
    */
@@ -7288,11 +7176,10 @@ export interface GiftInfo {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the gift can be upgraded to a unique gift</td>
 </tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td><em>Optional</em>. Text of the message that was added to the gift</td>
-</tr>
+  /**
+   * Text of the message that was added to the gift
+   */
+  text?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -7333,20 +7220,18 @@ export interface UniqueGiftInfo {
 <td>String</td>
 <td>Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers.</td>
 </tr>
-<tr>
-<td>last_resale_currency</td>
-<td>String</td>
-<td><em>Optional</em>. For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.</td>
-</tr>
+  /**
+   * For gifts bought from other users, the currency in which the payment for the gift was done. Currently, one of “XTR” for Telegram Stars or “TON” for TON grams.
+   */
+  last_resale_currency?: string;
   /**
    * For gifts bought from other users, the price paid for the gift in either Telegram Stars or nanograms
    */
   last_resale_amount?: number;
-<tr>
-<td>owned_gift_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts</td>
-</tr>
+  /**
+   * Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts
+   */
+  owned_gift_id?: string;
   /**
    * Number of Telegram Stars that must be paid to transfer the gift; omitted if the bot cannot transfer the gift
    */
@@ -7390,11 +7275,10 @@ export interface OwnedGiftRegular {
 <td><a href="#gift">Gift</a></td>
 <td>Information about the regular gift</td>
 </tr>
-<tr>
-<td>owned_gift_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only</td>
-</tr>
+  /**
+   * Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only
+   */
+  owned_gift_id?: string;
 <tr>
 <td>sender_user</td>
 <td><a href="#user">User</a></td>
@@ -7404,11 +7288,10 @@ export interface OwnedGiftRegular {
    * Date the gift was sent in Unix time
    */
   send_date: number;
-<tr>
-<td>text</td>
-<td>String</td>
-<td><em>Optional</em>. Text of the message that was added to the gift</td>
-</tr>
+  /**
+   * Text of the message that was added to the gift
+   */
+  text?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -7477,11 +7360,10 @@ export interface OwnedGiftUnique {
 <td><a href="#uniquegift">UniqueGift</a></td>
 <td>Information about the unique gift</td>
 </tr>
-<tr>
-<td>owned_gift_id</td>
-<td>String</td>
-<td><em>Optional</em>. Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only</td>
-</tr>
+  /**
+   * Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only
+   */
+  owned_gift_id?: string;
 <tr>
 <td>sender_user</td>
 <td><a href="#user">User</a></td>
@@ -7534,11 +7416,10 @@ export interface OwnedGifts {
 <td>Array of <a href="#ownedgift">OwnedGift</a></td>
 <td>The list of gifts</td>
 </tr>
-<tr>
-<td>next_offset</td>
-<td>String</td>
-<td><em>Optional</em>. Offset for the next request. If empty, then there are no more results.</td>
-</tr>
+  /**
+   * Offset for the next request. If empty, then there are no more results.
+   */
+  next_offset?: string;
 </tbody>
 </table>
 }
@@ -8457,11 +8338,10 @@ export interface SentWebAppMessage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td><em>Optional</em>. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.</td>
-</tr>
+  /**
+   * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.
+   */
+  inline_message_id?: string;
 </tbody>
 </table>
 }
@@ -8596,21 +8476,18 @@ export interface InputMediaAnimation {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>thumbnail</td>
-<td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the animation to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  thumbnail?: string;
+  /**
+   * Caption of the animation to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -8664,21 +8541,18 @@ export interface InputMediaAudio {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>thumbnail</td>
-<td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the audio to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  thumbnail?: string;
+  /**
+   * Caption of the audio to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -8688,16 +8562,14 @@ export interface InputMediaAudio {
    * Duration of the audio in seconds
    */
   duration?: number;
-<tr>
-<td>performer</td>
-<td>String</td>
-<td><em>Optional</em>. Performer of the audio</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title of the audio</td>
-</tr>
+  /**
+   * Performer of the audio
+   */
+  performer?: string;
+  /**
+   * Title of the audio
+   */
+  title?: string;
 </tbody>
 </table>
 }
@@ -8724,21 +8596,18 @@ export interface InputMediaDocument {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>thumbnail</td>
-<td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  thumbnail?: string;
+  /**
+   * Caption of the document to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -8806,16 +8675,14 @@ export interface InputMediaLivePhoto {
 <td>String</td>
 <td>The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the live photo to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the live photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption of the live photo to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the live photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -8893,16 +8760,14 @@ export interface InputMediaPhoto {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption of the photo to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -8944,11 +8809,10 @@ export interface InputMediaSticker {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>emoji</td>
-<td>String</td>
-<td><em>Optional</em>. Emoji associated with the sticker; only for just uploaded stickers</td>
-</tr>
+  /**
+   * Emoji associated with the sticker; only for just uploaded stickers
+   */
+  emoji?: string;
 </tbody>
 </table>
 }
@@ -8990,26 +8854,22 @@ export interface InputMediaVenue {
 <td>String</td>
 <td>Address of the venue</td>
 </tr>
-<tr>
-<td>foursquare_id</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare identifier of the venue</td>
-</tr>
-<tr>
-<td>foursquare_type</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
-</tr>
-<tr>
-<td>google_place_id</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places identifier of the venue</td>
-</tr>
-<tr>
-<td>google_place_type</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
-</tr>
+  /**
+   * Foursquare identifier of the venue
+   */
+  foursquare_id?: string;
+  /**
+   * Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+   */
+  foursquare_type?: string;
+  /**
+   * Google Places identifier of the venue
+   */
+  google_place_id?: string;
+  /**
+   * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+   */
+  google_place_type?: string;
 </tbody>
 </table>
 }
@@ -9036,30 +8896,26 @@ export interface InputMediaVideo {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>thumbnail</td>
-<td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
-<tr>
-<td>cover</td>
-<td>String</td>
-<td><em>Optional</em>. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  thumbnail?: string;
+  /**
+   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  cover?: string;
   /**
    * Start timestamp for the video in the message
    */
   start_timestamp?: number;
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption of the video to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9118,16 +8974,14 @@ export interface InputMediaVoiceNote {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass &quot;attach://&lt;file_attach_name&gt;&quot; to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the voice message to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption of the voice message to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9235,16 +9089,14 @@ export interface InputPaidMediaVideo {
 <td>String</td>
 <td>File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>thumbnail</td>
-<td>String</td>
-<td><em>Optional</em>. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
-<tr>
-<td>cover</td>
-<td>String</td>
-<td><em>Optional</em>. Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+  /**
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  thumbnail?: string;
+  /**
+   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   */
+  cover?: string;
   /**
    * Start timestamp for the video in the message
    */
@@ -17046,16 +16898,14 @@ export interface Sticker {
 <td><a href="#photosize">PhotoSize</a></td>
 <td><em>Optional</em>. Sticker thumbnail in the .WEBP or .JPG format</td>
 </tr>
-<tr>
-<td>emoji</td>
-<td>String</td>
-<td><em>Optional</em>. Emoji associated with the sticker</td>
-</tr>
-<tr>
-<td>set_name</td>
-<td>String</td>
-<td><em>Optional</em>. Name of the sticker set to which the sticker belongs</td>
-</tr>
+  /**
+   * Emoji associated with the sticker
+   */
+  emoji?: string;
+  /**
+   * Name of the sticker set to which the sticker belongs
+   */
+  set_name?: string;
 <tr>
 <td>premium_animation</td>
 <td><a href="#file">File</a></td>
@@ -17066,11 +16916,10 @@ export interface Sticker {
 <td><a href="#maskposition">MaskPosition</a></td>
 <td><em>Optional</em>. For mask stickers, the position where the mask should be placed</td>
 </tr>
-<tr>
-<td>custom_emoji_id</td>
-<td>String</td>
-<td><em>Optional</em>. For custom emoji stickers, unique identifier of the custom emoji</td>
-</tr>
+  /**
+   * For custom emoji stickers, unique identifier of the custom emoji
+   */
+  custom_emoji_id?: string;
 <tr>
 <td>needs_repainting</td>
 <td>True</td>
@@ -18123,16 +17972,14 @@ export interface InputRichMessage {
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
 <td><em>Optional</em>. Content of the rich message to send described as a list of blocks</td>
 </tr>
-<tr>
-<td>html</td>
-<td>String</td>
-<td><em>Optional</em>. Content of the rich message to send described using HTML formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use <em>media</em> field to specify the media used in the message.</td>
-</tr>
-<tr>
-<td>markdown</td>
-<td>String</td>
-<td><em>Optional</em>. Content of the rich message to send described using Markdown formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use <em>media</em> field to specify the media used in the message.</td>
-</tr>
+  /**
+   * Content of the rich message to send described using HTML formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use <em>media</em> field to specify the media used in the message.
+   */
+  html?: string;
+  /**
+   * Content of the rich message to send described using Markdown formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use <em>media</em> field to specify the media used in the message.
+   */
+  markdown?: string;
 <tr>
 <td>media</td>
 <td>Array of <a href="#inputrichmessagemedia">InputRichMessageMedia</a></td>
@@ -19197,11 +19044,10 @@ export interface RichBlockListItem {
    * For ordered lists, the numeric value of the item label
    */
   value?: number;
-<tr>
-<td>type</td>
-<td>String</td>
-<td><em>Optional</em>. For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers</td>
-</tr>
+  /**
+   * For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers
+   */
+  type?: string;
 </tbody>
 </table>
 }
@@ -19331,11 +19177,10 @@ export interface RichBlockPreformatted {
 <td><a href="#richtext">RichText</a></td>
 <td>Text of the block</td>
 </tr>
-<tr>
-<td>language</td>
-<td>String</td>
-<td><em>Optional</em>. The programming language of the text</td>
-</tr>
+  /**
+   * The programming language of the text
+   */
+  language?: string;
 </tbody>
 </table>
 }
@@ -19936,11 +19781,10 @@ export interface InputRichBlockListItem {
    * For ordered lists, the numeric value of the item label
    */
   value?: number;
-<tr>
-<td>type</td>
-<td>String</td>
-<td><em>Optional</em>. For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers</td>
-</tr>
+  /**
+   * For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers
+   */
+  type?: string;
 </tbody>
 </table>
 }
@@ -20070,11 +19914,10 @@ export interface InputRichBlockPreformatted {
 <td><a href="#richtext">RichText</a></td>
 <td>Text of the block</td>
 </tr>
-<tr>
-<td>language</td>
-<td>String</td>
-<td><em>Optional</em>. The programming language of the text</td>
-</tr>
+  /**
+   * The programming language of the text
+   */
+  language?: string;
 </tbody>
 </table>
 }
@@ -20664,11 +20507,10 @@ export interface InlineQuery {
 <td>String</td>
 <td>Offset of the results to be returned, can be controlled by the bot</td>
 </tr>
-<tr>
-<td>chat_type</td>
-<td>String</td>
-<td><em>Optional</em>. Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat.</td>
-</tr>
+  /**
+   * Type of the chat from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat.
+   */
+  chat_type?: string;
 <tr>
 <td>location</td>
 <td><a href="#location">Location</a></td>
@@ -20755,11 +20597,10 @@ export interface InlineQueryResultsButton {
 <td><a href="#webappinfo">WebAppInfo</a></td>
 <td><em>Optional</em>. Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.</td>
 </tr>
-<tr>
-<td>start_parameter</td>
-<td>String</td>
-<td><em>Optional</em>. <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.<br><br><em>Example:</em> An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.</td>
-</tr>
+  /**
+   * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.<br><br><em>Example:</em> An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
+   */
+  start_parameter?: string;
 </tbody>
 </table>
 }
@@ -20847,21 +20688,18 @@ export interface InlineQueryResultArticle {
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
 <td><em>Optional</em>. <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message</td>
 </tr>
-<tr>
-<td>url</td>
-<td>String</td>
-<td><em>Optional</em>. URL of the result</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
-</tr>
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
-</tr>
+  /**
+   * URL of the result
+   */
+  url?: string;
+  /**
+   * Short description of the result
+   */
+  description?: string;
+  /**
+   * Url of the thumbnail for the result
+   */
+  thumbnail_url?: string;
   /**
    * Thumbnail width
    */
@@ -20914,26 +20752,22 @@ export interface InlineQueryResultPhoto {
    * Height of the photo
    */
   photo_height?: number;
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title for the result</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Title for the result
+   */
+  title?: string;
+  /**
+   * Short description of the result
+   */
+  description?: string;
+  /**
+   * Caption of the photo to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21002,26 +20836,22 @@ export interface InlineQueryResultGif {
 <td>String</td>
 <td>URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result</td>
 </tr>
-<tr>
-<td>thumbnail_mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title for the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.
+   */
+  thumbnail_mime_type?: string;
+  /**
+   * Title for the result
+   */
+  title?: string;
+  /**
+   * Caption of the GIF file to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21090,26 +20920,22 @@ export interface InlineQueryResultMpeg4Gif {
 <td>String</td>
 <td>URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result</td>
 </tr>
-<tr>
-<td>thumbnail_mime_type</td>
-<td>String</td>
-<td><em>Optional</em>. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title for the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”.
+   */
+  thumbnail_mime_type?: string;
+  /**
+   * Title for the result
+   */
+  title?: string;
+  /**
+   * Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21178,16 +21004,14 @@ export interface InlineQueryResultVideo {
 <td>String</td>
 <td>Title for the result</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption of the video to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21210,11 +21034,10 @@ export interface InlineQueryResultVideo {
    * Video duration in seconds
    */
   video_duration?: number;
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
-</tr>
+  /**
+   * Short description of the result
+   */
+  description?: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21261,26 +21084,23 @@ export interface InlineQueryResultAudio {
 <td>String</td>
 <td>Title</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
 <td><em>Optional</em>. List of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>performer</td>
-<td>String</td>
-<td><em>Optional</em>. Performer</td>
-</tr>
+  /**
+   * Performer
+   */
+  performer?: string;
   /**
    * Audio duration in seconds
    */
@@ -21331,16 +21151,14 @@ export interface InlineQueryResultVoice {
 <td>String</td>
 <td>Recording title</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21391,16 +21209,14 @@ export interface InlineQueryResultDocument {
 <td>String</td>
 <td>Title for the result</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption of the document to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21416,11 +21232,10 @@ export interface InlineQueryResultDocument {
 <td>String</td>
 <td>MIME type of the content of the file, either “application/pdf” or “application/zip”</td>
 </tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
-</tr>
+  /**
+   * Short description of the result
+   */
+  description?: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21431,11 +21246,10 @@ export interface InlineQueryResultDocument {
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
 <td><em>Optional</em>. Content of the message to be sent instead of the file</td>
 </tr>
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td><em>Optional</em>. URL of the thumbnail (JPEG only) for the file</td>
-</tr>
+  /**
+   * URL of the thumbnail (JPEG only) for the file
+   */
+  thumbnail_url?: string;
   /**
    * Thumbnail width
    */
@@ -21512,11 +21326,10 @@ export interface InlineQueryResultLocation {
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
 <td><em>Optional</em>. Content of the message to be sent instead of the location</td>
 </tr>
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
-</tr>
+  /**
+   * Url of the thumbnail for the result
+   */
+  thumbnail_url?: string;
   /**
    * Thumbnail width
    */
@@ -21571,26 +21384,22 @@ export interface InlineQueryResultVenue {
 <td>String</td>
 <td>Address of the venue</td>
 </tr>
-<tr>
-<td>foursquare_id</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare identifier of the venue if known</td>
-</tr>
-<tr>
-<td>foursquare_type</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
-</tr>
-<tr>
-<td>google_place_id</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places identifier of the venue</td>
-</tr>
-<tr>
-<td>google_place_type</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
-</tr>
+  /**
+   * Foursquare identifier of the venue if known
+   */
+  foursquare_id?: string;
+  /**
+   * Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+   */
+  foursquare_type?: string;
+  /**
+   * Google Places identifier of the venue
+   */
+  google_place_id?: string;
+  /**
+   * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+   */
+  google_place_type?: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21601,11 +21410,10 @@ export interface InlineQueryResultVenue {
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
 <td><em>Optional</em>. Content of the message to be sent instead of the venue</td>
 </tr>
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
-</tr>
+  /**
+   * Url of the thumbnail for the result
+   */
+  thumbnail_url?: string;
   /**
    * Thumbnail width
    */
@@ -21650,16 +21458,14 @@ export interface InlineQueryResultContact {
 <td>String</td>
 <td>Contact&#39;s first name</td>
 </tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td><em>Optional</em>. Contact&#39;s last name</td>
-</tr>
-<tr>
-<td>vcard</td>
-<td>String</td>
-<td><em>Optional</em>. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
-</tr>
+  /**
+   * Contact&#39;s last name
+   */
+  last_name?: string;
+  /**
+   * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
+   */
+  vcard?: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -21670,11 +21476,10 @@ export interface InlineQueryResultContact {
 <td><a href="#inputmessagecontent">InputMessageContent</a></td>
 <td><em>Optional</em>. Content of the message to be sent instead of the contact</td>
 </tr>
-<tr>
-<td>thumbnail_url</td>
-<td>String</td>
-<td><em>Optional</em>. Url of the thumbnail for the result</td>
-</tr>
+  /**
+   * Url of the thumbnail for the result
+   */
+  thumbnail_url?: string;
   /**
    * Thumbnail width
    */
@@ -21750,26 +21555,22 @@ export interface InlineQueryResultCachedPhoto {
 <td>String</td>
 <td>A valid file identifier of the photo</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title for the result</td>
-</tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the photo to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Title for the result
+   */
+  title?: string;
+  /**
+   * Short description of the result
+   */
+  description?: string;
+  /**
+   * Caption of the photo to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21821,21 +21622,18 @@ export interface InlineQueryResultCachedGif {
 <td>String</td>
 <td>A valid file identifier for the GIF file</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title for the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the GIF file to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Title for the result
+   */
+  title?: string;
+  /**
+   * Caption of the GIF file to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21887,21 +21685,18 @@ export interface InlineQueryResultCachedMpeg4Gif {
 <td>String</td>
 <td>A valid file identifier for the MPEG4 file</td>
 </tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td><em>Optional</em>. Title for the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Title for the result
+   */
+  title?: string;
+  /**
+   * Caption of the MPEG-4 file to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -21999,21 +21794,18 @@ export interface InlineQueryResultCachedDocument {
 <td>String</td>
 <td>A valid file identifier for the file</td>
 </tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the document to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Short description of the result
+   */
+  description?: string;
+  /**
+   * Caption of the document to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -22065,21 +21857,18 @@ export interface InlineQueryResultCachedVideo {
 <td>String</td>
 <td>Title for the result</td>
 </tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td><em>Optional</em>. Short description of the result</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption of the video to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Short description of the result
+   */
+  description?: string;
+  /**
+   * Caption of the video to be sent, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -22136,16 +21925,14 @@ export interface InlineQueryResultCachedVoice {
 <td>String</td>
 <td>Voice message title</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -22192,16 +21979,14 @@ export interface InlineQueryResultCachedAudio {
 <td>String</td>
 <td>A valid file identifier for the audio file</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td><em>Optional</em>. Caption, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Caption, 0-1024 characters after entities parsing
+   */
+  caption?: string;
+  /**
+   * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -22255,11 +22040,10 @@ export interface InputTextMessageContent {
 <td>String</td>
 <td>Text of the message to be sent, 1-4096 characters</td>
 </tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td><em>Optional</em>. Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+  /**
+   * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+   */
+  parse_mode?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -22370,26 +22154,22 @@ export interface InputVenueMessageContent {
 <td>String</td>
 <td>Address of the venue</td>
 </tr>
-<tr>
-<td>foursquare_id</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare identifier of the venue, if known</td>
-</tr>
-<tr>
-<td>foursquare_type</td>
-<td>String</td>
-<td><em>Optional</em>. Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
-</tr>
-<tr>
-<td>google_place_id</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places identifier of the venue</td>
-</tr>
-<tr>
-<td>google_place_type</td>
-<td>String</td>
-<td><em>Optional</em>. Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
-</tr>
+  /**
+   * Foursquare identifier of the venue, if known
+   */
+  foursquare_id?: string;
+  /**
+   * Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+   */
+  foursquare_type?: string;
+  /**
+   * Google Places identifier of the venue
+   */
+  google_place_id?: string;
+  /**
+   * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+   */
+  google_place_type?: string;
 </tbody>
 </table>
 }
@@ -22416,16 +22196,14 @@ export interface InputContactMessageContent {
 <td>String</td>
 <td>Contact&#39;s first name</td>
 </tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td><em>Optional</em>. Contact&#39;s last name</td>
-</tr>
-<tr>
-<td>vcard</td>
-<td>String</td>
-<td><em>Optional</em>. Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
-</tr>
+  /**
+   * Contact&#39;s last name
+   */
+  last_name?: string;
+  /**
+   * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
+   */
+  vcard?: string;
 </tbody>
 </table>
 }
@@ -22457,11 +22235,10 @@ export interface InputInvoiceMessageContent {
 <td>String</td>
 <td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
 </tr>
-<tr>
-<td>provider_token</td>
-<td>String</td>
-<td><em>Optional</em>. Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+  /**
+   * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   */
+  provider_token?: string;
 <tr>
 <td>currency</td>
 <td>String</td>
@@ -22481,16 +22258,14 @@ export interface InputInvoiceMessageContent {
 <td>Array of Integer</td>
 <td><em>Optional</em>. A JSON-serialized Array of suggested amounts of tip in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.</td>
 </tr>
-<tr>
-<td>provider_data</td>
-<td>String</td>
-<td><em>Optional</em>. A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.</td>
-</tr>
-<tr>
-<td>photo_url</td>
-<td>String</td>
-<td><em>Optional</em>. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
-</tr>
+  /**
+   * A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.
+   */
+  provider_data?: string;
+  /**
+   * URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.
+   */
+  photo_url?: string;
   /**
    * Photo size in bytes
    */
@@ -22571,11 +22346,10 @@ export interface ChosenInlineResult {
 <td><a href="#location">Location</a></td>
 <td><em>Optional</em>. Sender location, only for bots that require user location</td>
 </tr>
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td><em>Optional</em>. Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.</td>
-</tr>
+  /**
+   * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.
+   */
+  inline_message_id?: string;
 <tr>
 <td>query</td>
 <td>String</td>
@@ -23251,21 +23025,18 @@ export interface OrderInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td><em>Optional</em>. User name</td>
-</tr>
-<tr>
-<td>phone_number</td>
-<td>String</td>
-<td><em>Optional</em>. User&#39;s phone number</td>
-</tr>
-<tr>
-<td>email</td>
-<td>String</td>
-<td><em>Optional</em>. User email</td>
-</tr>
+  /**
+   * User name
+   */
+  name?: string;
+  /**
+   * User&#39;s phone number
+   */
+  phone_number?: string;
+  /**
+   * User email
+   */
+  email?: string;
 <tr>
 <td>shipping_address</td>
 <td><a href="#shippingaddress">ShippingAddress</a></td>
@@ -23346,11 +23117,10 @@ export interface SuccessfulPayment {
 <td>True</td>
 <td><em>Optional</em>. <em>True</em>, if the payment is the first payment for a subscription</td>
 </tr>
-<tr>
-<td>shipping_option_id</td>
-<td>String</td>
-<td><em>Optional</em>. Identifier of the shipping option chosen by the user</td>
-</tr>
+  /**
+   * Identifier of the shipping option chosen by the user
+   */
+  shipping_option_id?: string;
 <tr>
 <td>order_info</td>
 <td><a href="#orderinfo">OrderInfo</a></td>
@@ -23401,11 +23171,10 @@ export interface RefundedPayment {
 <td>String</td>
 <td>Telegram payment identifier</td>
 </tr>
-<tr>
-<td>provider_payment_charge_id</td>
-<td>String</td>
-<td><em>Optional</em>. Provider payment identifier</td>
-</tr>
+  /**
+   * Provider payment identifier
+   */
+  provider_payment_charge_id?: string;
 </tbody>
 </table>
 }
@@ -23482,11 +23251,10 @@ export interface PreCheckoutQuery {
 <td>String</td>
 <td>Bot-specified invoice payload</td>
 </tr>
-<tr>
-<td>shipping_option_id</td>
-<td>String</td>
-<td><em>Optional</em>. Identifier of the shipping option chosen by the user</td>
-</tr>
+  /**
+   * Identifier of the shipping option chosen by the user
+   */
+  shipping_option_id?: string;
 <tr>
 <td>order_info</td>
 <td><a href="#orderinfo">OrderInfo</a></td>
@@ -23694,11 +23462,10 @@ export interface TransactionPartnerUser {
 <td><a href="#affiliateinfo">AffiliateInfo</a></td>
 <td><em>Optional</em>. Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.</td>
 </tr>
-<tr>
-<td>invoice_payload</td>
-<td>String</td>
-<td><em>Optional</em>. Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.</td>
-</tr>
+  /**
+   * Bot-specified invoice payload. Can be available only for “invoice_payment” transactions.
+   */
+  invoice_payload?: string;
   /**
    * The duration of the paid subscription. Can be available only for “invoice_payment” transactions.
    */
@@ -23708,11 +23475,10 @@ export interface TransactionPartnerUser {
 <td>Array of <a href="#paidmedia">PaidMedia</a></td>
 <td><em>Optional</em>. Information about the paid media bought by the user; for “paid_media_payment” transactions only</td>
 </tr>
-<tr>
-<td>paid_media_payload</td>
-<td>String</td>
-<td><em>Optional</em>. Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.</td>
-</tr>
+  /**
+   * Bot-specified paid media payload. Can be available only for “paid_media_payment” transactions.
+   */
+  paid_media_payload?: string;
 <tr>
 <td>gift</td>
 <td><a href="#gift">Gift</a></td>
@@ -24023,21 +23789,18 @@ export interface EncryptedPassportElement {
 <td>String</td>
 <td>Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.</td>
 </tr>
-<tr>
-<td>data</td>
-<td>String</td>
-<td><em>Optional</em>. Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.</td>
-</tr>
-<tr>
-<td>phone_number</td>
-<td>String</td>
-<td><em>Optional</em>. User&#39;s verified phone number; available only for “phone_number” type</td>
-</tr>
-<tr>
-<td>email</td>
-<td>String</td>
-<td><em>Optional</em>. User&#39;s verified email address; available only for “email” type</td>
-</tr>
+  /**
+   * Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   */
+  data?: string;
+  /**
+   * User&#39;s verified phone number; available only for “phone_number” type
+   */
+  phone_number?: string;
+  /**
+   * User&#39;s verified email address; available only for “email” type
+   */
+  email?: string;
 <tr>
 <td>files</td>
 <td>Array of <a href="#passportfile">PassportFile</a></td>
@@ -24607,11 +24370,10 @@ export interface Game {
 <td>Array of <a href="#photosize">PhotoSize</a></td>
 <td>Photo that will be displayed in the game message in chats</td>
 </tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td><em>Optional</em>. Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.</td>
-</tr>
+  /**
+   * Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.
+   */
+  text?: string;
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
