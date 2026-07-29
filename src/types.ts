@@ -10193,18 +10193,14 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Yes</td>
-<td>Latitude of the location</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Yes</td>
-<td>Longitude of the location</td>
-</tr>
+    /**
+     * Latitude of the location
+     */
+    latitude: number;
+    /**
+     * Longitude of the location
+     */
+    longitude: number;
     /**
      * The radius of uncertainty for the location, measured in meters; 0-1500
      */
@@ -10300,18 +10296,14 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Yes</td>
-<td>Latitude of the venue</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Yes</td>
-<td>Longitude of the venue</td>
-</tr>
+    /**
+     * Latitude of the venue
+     */
+    latitude: number;
+    /**
+     * Longitude of the venue
+     */
+    longitude: number;
     /**
      * Name of the venue
      */
@@ -14366,18 +14358,14 @@ export interface ApiMethods {
      * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
      */
     inline_message_id?: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Yes</td>
-<td>Latitude of new location</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Yes</td>
-<td>Longitude of new location</td>
-</tr>
+    /**
+     * Latitude of new location
+     */
+    latitude: number;
+    /**
+     * Longitude of new location
+     */
+    longitude: number;
     /**
      * New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current <em>live_period</em> by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then <em>live_period</em> remains unchanged.
      */
