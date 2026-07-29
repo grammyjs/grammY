@@ -7,7 +7,7 @@ export type Empty = Record<string, never>;
 /**
  * Structure of an HTTP response body from the Bot API.
  * 
- * The response contains a JSON object, which always has a Boolean field &#39;ok&#39; and may have an optional String field &#39;description&#39; with a human-readable description of the result. If &#39;ok&#39; equals `true`, the request was successful and the result of the query can be found in the &#39;result&#39; field. In case of an unsuccessful request, &#39;ok&#39; equals `false` and the error is explained in the &#39;description&#39;. An Integer &#39;error_code&#39; field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field &#39;parameters&#39; of the type {@link ResponseParameters}, which can help to automatically handle the error.
+ * The response contains a JSON object, which always has a Boolean field 'ok' and may have an optional String field 'description' with a human-readable description of the result. If 'ok' equals `true`, the request was successful and the result of the query can be found in the 'result' field. In case of an unsuccessful request, 'ok' equals `false` and the error is explained in the 'description'. An Integer 'error_code' field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field 'parameters' of the type {@link ResponseParameters}, which can help to automatically handle the error.
  */
 export type ApiResponse<T> = ApiError | ApiSuccess<T>
 /**
@@ -54,7 +54,7 @@ export interface ApiSuccess<T> {
  */
 export interface Update {
   /**
-   * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using {@link ApiMethods.setWebhook | webhooks}, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+   * The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you're using {@link ApiMethods.setWebhook | webhooks}, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
    */
   update_id: number;
   /**
@@ -94,11 +94,11 @@ export interface Update {
    */
   guest_message?: Message;
   /**
-   * A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction&quot;` in the list of _allowed_updates_ to receive these updates. The update isn&#39;t received for reactions set by bots.
+   * A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify `"message_reaction"` in the list of _allowed_updates_ to receive these updates. The update isn't received for reactions set by bots.
    */
   message_reaction?: MessageReactionUpdated;
   /**
-   * Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify `&quot;message_reaction_count&quot;` in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
+   * Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify `"message_reaction_count"` in the list of _allowed_updates_ to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
    */
   message_reaction_count?: MessageReactionCountUpdated;
   /**
@@ -134,11 +134,11 @@ export interface Update {
    */
   poll_answer?: PollAnswer;
   /**
-   * The bot&#39;s chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
+   * The bot's chat member status was updated in a chat. For private chats, this update is received only when the bot is blocked or unblocked by the user.
    */
   my_chat_member?: ChatMemberUpdated;
   /**
-   * A chat member&#39;s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify `&quot;chat_member&quot;` in the list of _allowed_updates_ to receive these updates.
+   * A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify `"chat_member"` in the list of _allowed_updates_ to receive these updates.
    */
   chat_member?: ChatMemberUpdated;
   /**
@@ -190,9 +190,9 @@ export interface ApiMethods {
      */
     timeout?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive updates of these types. See {@link Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
      *
-     * Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
+     * Please note that this parameter doesn't affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
      */
     allowed_updates?: string[];
   }): never;
@@ -201,7 +201,7 @@ export interface ApiMethods {
   /**
    * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized {@link Update}. In case of an unsuccessful request (a request with response {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes | HTTP status code} different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns `true` on success.
    *
-   * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
+   * If you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
    * 
    * > **Notes**
    * >
@@ -209,7 +209,7 @@ export interface ApiMethods {
    * > 2. To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
    * > 3. Ports currently supported _for webhooks_: **443, 80, 88, 8443**.
    *
-   * > If you&#39;re having any trouble setting up webhooks, please check out this {@link https://core.telegram.org/bots/webhooks | amazing guide to webhooks}.
+   * > If you're having any trouble setting up webhooks, please check out this {@link https://core.telegram.org/bots/webhooks | amazing guide to webhooks}.
    *
    * @see {@link https://core.telegram.org/bots/api#setwebhook}
    */
@@ -227,13 +227,13 @@ export interface ApiMethods {
      */
     ip_address?: string;
     /**
-     * The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to _40_. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.
+     * The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to _40_. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.
      */
     max_connections?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive updates of these types. See {@link Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
      *
-     * Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+     * Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
      */
     allowed_updates?: string[];
     /**
@@ -326,19 +326,19 @@ export interface User {
    */
   is_bot: boolean;
   /**
-   * User&#39;s or bot&#39;s first name
+   * User's or bot's first name
    */
   first_name: string;
   /**
-   * User&#39;s or bot&#39;s last name
+   * User's or bot's last name
    */
   last_name?: string;
   /**
-   * User&#39;s or bot&#39;s username
+   * User's or bot's username
    */
   username?: string;
   /**
-   * {@link https://en.wikipedia.org/wiki/IETF_language_tag | IETF language tag} of the user&#39;s language
+   * {@link https://en.wikipedia.org/wiki/IETF_language_tag | IETF language tag} of the user's language
    */
   language_code?: string;
   /**
@@ -516,7 +516,7 @@ export interface ChatFullInfo {
    */
   background_custom_emoji_id?: string;
   /**
-   * Identifier of the accent color for the chat&#39;s profile background. See {@link https://core.telegram.org/bots/api#profile-accent-colors | profile accent colors} for more details.
+   * Identifier of the accent color for the chat's profile background. See {@link https://core.telegram.org/bots/api#profile-accent-colors | profile accent colors} for more details.
    */
   profile_accent_color_id?: number;
   /**
@@ -536,7 +536,7 @@ export interface ChatFullInfo {
    */
   bio?: string;
   /**
-   * `true`, if privacy settings of the other party in the private chat allows to use `tg://user?id=&lt;user_id&gt;` links only in chats with the user
+   * `true`, if privacy settings of the other party in the private chat allows to use `tg://user?id=<user_id>` links only in chats with the user
    */
   has_private_forwards?: true;
   /**
@@ -596,7 +596,7 @@ export interface ChatFullInfo {
    */
   has_hidden_members?: true;
   /**
-   * `true`, if messages from the chat can&#39;t be forwarded to other chats
+   * `true`, if messages from the chat can't be forwarded to other chats
    */
   has_protected_content?: true;
   /**
@@ -612,7 +612,7 @@ export interface ChatFullInfo {
    */
   can_set_sticker_set?: true;
   /**
-   * For supergroups, the name of the group&#39;s custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.
+   * For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group.
    */
   custom_emoji_sticker_set_name?: string;
   /**
@@ -632,7 +632,7 @@ export interface ChatFullInfo {
    */
   first_profile_audio?: Audio;
   /**
-   * The color scheme based on a unique gift that must be used for the chat&#39;s name, message replies and link previews
+   * The color scheme based on a unique gift that must be used for the chat's name, message replies and link previews
    */
   unique_gift_colors?: UniqueGiftColors;
   /**
@@ -671,7 +671,7 @@ export interface Message {
    */
   from?: User;
   /**
-   * Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel&#39;s discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field _from_ contains a fake sender user in non-channel chats.
+   * Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field _from_ contains a fake sender user in non-channel chats.
    */
   sender_chat?: Chat;
   /**
@@ -751,11 +751,11 @@ export interface Message {
    */
   via_bot?: User;
   /**
-   * For a message sent by a guest bot, this is the user whose original message triggered the bot&#39;s response
+   * For a message sent by a guest bot, this is the user whose original message triggered the bot's response
    */
   guest_bot_caller_user?: User;
   /**
-   * For a message sent by a guest bot, this is the chat whose original message triggered the bot&#39;s response
+   * For a message sent by a guest bot, this is the chat whose original message triggered the bot's response
    */
   guest_bot_caller_chat?: Chat;
   /**
@@ -763,7 +763,7 @@ export interface Message {
    */
   edit_date?: number;
   /**
-   * `true`, if the message can&#39;t be forwarded
+   * `true`, if the message can't be forwarded
    */
   has_protected_content?: true;
   /**
@@ -771,7 +771,7 @@ export interface Message {
    */
   is_from_offline?: true;
   /**
-   * `true`, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can&#39;t be edited.
+   * `true`, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive the payment and can't be edited.
    */
   is_paid_post?: true;
   /**
@@ -799,7 +799,7 @@ export interface Message {
    */
   link_preview_options?: LinkPreviewOptions;
   /**
-   * Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can&#39;t be edited.
+   * Information about suggested post parameters if the message is a suggested post in a channel direct messages chat. If the message is an approved or declined suggested post, then it can't be edited.
    */
   suggested_post_info?: SuggestedPostInfo;
   /**
@@ -931,11 +931,11 @@ export interface Message {
    */
   group_chat_created?: true;
   /**
-   * Service message: the supergroup has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
+   * Service message: the supergroup has been created. This field can't be received in a message coming through updates, because bot can't be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.
    */
   supergroup_chat_created?: true;
   /**
-   * Service message: the channel has been created. This field can&#39;t be received in a message coming through updates, because bot can&#39;t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
+   * Service message: the channel has been created. This field can't be received in a message coming through updates, because bot can't be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.
    */
   channel_chat_created?: true;
   /**
@@ -999,7 +999,7 @@ export interface Message {
    */
   passport_data?: PassportData;
   /**
-   * Service message: a user in the chat triggered another user&#39;s proximity alert while sharing Live Location
+   * Service message: a user in the chat triggered another user's proximity alert while sharing Live Location
    */
   proximity_alert_triggered?: ProximityAlertTriggered;
   /**
@@ -1047,11 +1047,11 @@ export interface Message {
    */
   forum_topic_reopened?: ForumTopicReopened;
   /**
-   * Service message: the &#39;General&#39; forum topic hidden
+   * Service message: the 'General' forum topic hidden
    */
   general_forum_topic_hidden?: GeneralForumTopicHidden;
   /**
-   * Service message: the &#39;General&#39; forum topic unhidden
+   * Service message: the 'General' forum topic unhidden
    */
   general_forum_topic_unhidden?: GeneralForumTopicUnhidden;
   /**
@@ -1356,7 +1356,7 @@ export interface ExternalReplyInfo {
  */
 export interface ReplyParameters {
   /**
-   * Identifier of the message that will be replied to in the current chat, or in the chat _chat_id_ if it is specified. Required if _ephemeral_message_id_ isn&#39;t specified.
+   * Identifier of the message that will be replied to in the current chat, or in the chat _chat_id_ if it is specified. Required if _ephemeral_message_id_ isn't specified.
    */
   message_id?: number;
   /**
@@ -1364,7 +1364,7 @@ export interface ReplyParameters {
    */
   chat_id?: number | string;
   /**
-   * Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if _message_id_ isn&#39;t specified.
+   * Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if _message_id_ isn't specified.
    */
   ephemeral_message_id?: number;
   /**
@@ -1372,7 +1372,7 @@ export interface ReplyParameters {
    */
   allow_sending_without_reply?: boolean;
   /**
-   * Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, _custom_emoji_, and _date_time_ entities. The message will fail to send if the quote isn&#39;t found in the original message. Ignored for ephemeral messages.
+   * Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including _bold_, _italic_, _underline_, _strikethrough_, _spoiler_, _custom_emoji_, and _date_time_ entities. The message will fail to send if the quote isn't found in the original message. Ignored for ephemeral messages.
    */
   quote?: string;
   /**
@@ -1510,7 +1510,7 @@ export interface PhotoSize {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1537,7 +1537,7 @@ export interface Animation {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1580,7 +1580,7 @@ export interface Audio {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1623,7 +1623,7 @@ export interface Document {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1658,7 +1658,7 @@ export interface LivePhoto {
    */
   file_id: string;
   /**
-   * Unique identifier for the video file which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for the video file which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1708,7 +1708,7 @@ export interface VideoQuality {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1739,7 +1739,7 @@ export interface Video {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1794,7 +1794,7 @@ export interface VideoNote {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1825,7 +1825,7 @@ export interface Voice {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -1902,7 +1902,7 @@ export interface PaidMediaPhoto {
   photo: PhotoSize[];
 }
 /**
- * The paid media isn&#39;t available before the payment.
+ * The paid media isn't available before the payment.
  *
  * @see {@link https://core.telegram.org/bots/api#paidmediapreview}
  */
@@ -1946,19 +1946,19 @@ export interface PaidMediaVideo {
  */
 export interface Contact {
   /**
-   * Contact&#39;s phone number
+   * Contact's phone number
    */
   phone_number: string;
   /**
-   * Contact&#39;s first name
+   * Contact's first name
    */
   first_name: string;
   /**
-   * Contact&#39;s last name
+   * Contact's last name
    */
   last_name?: string;
   /**
-   * Contact&#39;s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
+   * Contact's user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
    */
   user_id?: number;
   /**
@@ -2003,11 +2003,11 @@ export interface PollMedia {
    */
   animation?: Animation;
   /**
-   * Media is an audio file, information about the file; currently, can&#39;t be received in a poll option
+   * Media is an audio file, information about the file; currently, can't be received in a poll option
    */
   audio?: Audio;
   /**
-   * Media is a general file, information about the file; currently, can&#39;t be received in a poll option
+   * Media is a general file, information about the file; currently, can't be received in a poll option
    */
   document?: Document;
   /**
@@ -2112,11 +2112,11 @@ export interface PollOption {
    */
   voter_count: number;
   /**
-   * User who added the option; omitted if the option wasn&#39;t added by a user after poll creation
+   * User who added the option; omitted if the option wasn't added by a user after poll creation
    */
   added_by_user?: User;
   /**
-   * Chat that added the option; omitted if the option wasn&#39;t added by a chat after poll creation
+   * Chat that added the option; omitted if the option wasn't added by a chat after poll creation
    */
   added_by_chat?: Chat;
   /**
@@ -2162,7 +2162,7 @@ export interface PollAnswer {
    */
   voter_chat?: Chat;
   /**
-   * The user that changed the answer to the poll, if the voter isn&#39;t anonymous
+   * The user that changed the answer to the poll, if the voter isn't anonymous
    */
   user?: User;
   /**
@@ -2284,15 +2284,15 @@ export interface ChecklistTask {
    */
   text_entities?: MessageEntity[];
   /**
-   * User that completed the task; omitted if the task wasn&#39;t completed by a user
+   * User that completed the task; omitted if the task wasn't completed by a user
    */
   completed_by_user?: User;
   /**
-   * Chat that completed the task; omitted if the task wasn&#39;t completed by a chat
+   * Chat that completed the task; omitted if the task wasn't completed by a chat
    */
   completed_by_chat?: Chat;
   /**
-   * Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed
+   * Point in time (Unix timestamp) when the task was completed; 0 if the task wasn't completed
    */
   completion_date?: number;
 }
@@ -2415,7 +2415,7 @@ export interface Location {
  */
 export interface Venue {
   /**
-   * Venue location. Can&#39;t be a live location.
+   * Venue location. Can't be a live location.
    */
   location: Location;
   /**
@@ -2495,7 +2495,7 @@ export interface MessageAutoDeleteTimerChanged {
  */
 export interface ManagedBotCreated {
   /**
-   * Information about the bot. The bot&#39;s token can be fetched using the method {@link ApiMethods.getManagedBotToken | getManagedBotToken}.
+   * Information about the bot. The bot's token can be fetched using the method {@link ApiMethods.getManagedBotToken | getManagedBotToken}.
    */
   bot: User;
 }
@@ -2844,7 +2844,7 @@ export interface ForumTopicCreated {
    */
   icon_custom_emoji_id?: string;
   /**
-   * `true`, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
+   * `true`, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot
    */
   is_name_implicit?: true;
 }
@@ -3251,7 +3251,7 @@ export interface GiveawayCompleted {
    */
   unclaimed_prize_count?: number;
   /**
-   * Message with the giveaway that was completed, if it wasn&#39;t deleted
+   * Message with the giveaway that was completed, if it wasn't deleted
    */
   giveaway_message?: Message;
   /**
@@ -3274,11 +3274,11 @@ export interface LinkPreviewOptions {
    */
   url?: string;
   /**
-   * `true`, if the media in the link preview is supposed to be shrunk; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
+   * `true`, if the media in the link preview is supposed to be shrunk; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview
    */
   prefer_small_media?: boolean;
   /**
-   * `true`, if the media in the link preview is supposed to be enlarged; ignored if the URL isn&#39;t explicitly specified or media size change isn&#39;t supported for the preview
+   * `true`, if the media in the link preview is supposed to be enlarged; ignored if the URL isn't explicitly specified or media size change isn't supported for the preview
    */
   prefer_large_media?: boolean;
   /**
@@ -3351,7 +3351,7 @@ export interface DirectMessagesTopic {
   user?: User;
 }
 /**
- * This object represent a user&#39;s profile pictures.
+ * This object represent a user's profile pictures.
  *
  * @see {@link https://core.telegram.org/bots/api#userprofilephotos}
  */
@@ -3366,7 +3366,7 @@ export interface UserProfilePhotos {
   photos: PhotoSize[][];
 }
 /**
- * This object represents the audios displayed on a user&#39;s profile.
+ * This object represents the audios displayed on a user's profile.
  *
  * @see {@link https://core.telegram.org/bots/api#userprofileaudios}
  */
@@ -3381,7 +3381,7 @@ export interface UserProfileAudios {
   audios: Audio[];
 }
 /**
- * This object represents a file ready to be downloaded. The file can be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile}.
+ * This object represents a file ready to be downloaded. The file can be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile}.
  *
  * > The maximum file size to download is 20 MB
  *
@@ -3393,7 +3393,7 @@ export interface File {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -3401,7 +3401,7 @@ export interface File {
    */
   file_size?: number;
   /**
-   * File path. Use `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;` to get the file.
+   * File path. Use `https://api.telegram.org/file/bot<token>/<file_path>` to get the file.
    */
   file_path?: string;
 }
@@ -3431,11 +3431,11 @@ export interface ReplyKeyboardMarkup {
    */
   is_persistent?: boolean;
   /**
-   * Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to `false`, in which case the custom keyboard is always of the same height as the app&#39;s standard keyboard.
+   * Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to `false`, in which case the custom keyboard is always of the same height as the app's standard keyboard.
    */
   resize_keyboard?: boolean;
   /**
-   * Requests clients to hide the keyboard as soon as it&#39;s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to `false`.
+   * Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to `false`.
    */
   one_time_keyboard?: boolean;
   /**
@@ -3443,9 +3443,9 @@ export interface ReplyKeyboardMarkup {
    */
   input_field_placeholder?: string;
   /**
-   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the _text_ of the {@link Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the _text_ of the {@link Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
    *
-   * _Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
+   * _Example:_ A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
    */
   selective?: boolean;
 }
@@ -3480,11 +3480,11 @@ export interface KeyboardButton {
    */
   request_managed_bot?: KeyboardButtonRequestManagedBot;
   /**
-   * If `true`, the user&#39;s phone number will be sent as a contact when the button is pressed. Available in private chats only.
+   * If `true`, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only.
    */
   request_contact?: boolean;
   /**
-   * If `true`, the user&#39;s current location will be sent when the button is pressed. Available in private chats only.
+   * If `true`, the user's current location will be sent when the button is pressed. Available in private chats only.
    */
   request_location?: boolean;
   /**
@@ -3519,15 +3519,15 @@ export interface KeyboardButtonRequestUsers {
    */
   max_quantity?: number;
   /**
-   * Pass `true` to request the users&#39; first and last names
+   * Pass `true` to request the users' first and last names
    */
   request_name?: boolean;
   /**
-   * Pass `true` to request the users&#39; usernames
+   * Pass `true` to request the users' usernames
    */
   request_username?: boolean;
   /**
-   * Pass `true` to request the users&#39; photos
+   * Pass `true` to request the users' photos
    */
   request_photo?: boolean;
 }
@@ -3570,15 +3570,15 @@ export interface KeyboardButtonRequestChat {
    */
   bot_is_member?: boolean;
   /**
-   * Pass `true` to request the chat&#39;s title
+   * Pass `true` to request the chat's title
    */
   request_title?: boolean;
   /**
-   * Pass `true` to request the chat&#39;s username
+   * Pass `true` to request the chat's username
    */
   request_username?: boolean;
   /**
-   * Pass `true` to request the chat&#39;s photo
+   * Pass `true` to request the chat's photo
    */
   request_photo?: boolean;
 }
@@ -3623,9 +3623,9 @@ export interface ReplyKeyboardRemove {
    */
   remove_keyboard: true;
   /**
-   * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
    *
-   * _Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
+   * _Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven't voted yet.
    */
   selective?: boolean;
 }
@@ -3659,7 +3659,7 @@ export interface InlineKeyboardButton {
    */
   style?: string;
   /**
-   * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
+   * HTTP or tg:// URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
    */
   url?: string;
   /**
@@ -3675,17 +3675,17 @@ export interface InlineKeyboardButton {
    */
   login_url?: LoginUrl;
   /**
-   * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot&#39;s username and the specified inline query in the input field. May be empty, in which case just the bot&#39;s username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
+   * If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
    */
   switch_inline_query?: string;
   /**
-   * If set, pressing the button will insert the bot&#39;s username and the specified inline query in the current chat&#39;s input field. May be empty, in which case only the bot&#39;s username will be inserted.
+   * If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
    *
    * This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent in channel direct messages chats and on behalf of a business account.
    */
   switch_inline_query_current_chat?: string;
   /**
-   * If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot&#39;s username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
+   * If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent in channel direct messages chats and on behalf of a business account.
    */
   switch_inline_query_chosen_chat?: SwitchInlineQueryChosenChat;
   /**
@@ -3699,7 +3699,7 @@ export interface InlineKeyboardButton {
    */
   callback_game?: CallbackGame;
   /**
-   * Specify `true`, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.
+   * Specify `true`, to send a {@link https://core.telegram.org/bots/api#payments | Pay button}. Substrings “⭐” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.
    *
    * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
    */
@@ -3728,7 +3728,7 @@ export interface LoginUrl {
    */
   forward_text?: string;
   /**
-   * Username of a bot, which will be used for user authorization. See {@link https://core.telegram.org/widgets/login#setting-up-a-bot | Setting up a bot} for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See {@link https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot | Linking your domain to the bot} for more details.
+   * Username of a bot, which will be used for user authorization. See {@link https://core.telegram.org/widgets/login#setting-up-a-bot | Setting up a bot} for more details. If not specified, the current bot's username will be assumed. The _url_'s domain must be the same as the domain linked with the bot. See {@link https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot | Linking your domain to the bot} for more details.
    */
   bot_username?: string;
   /**
@@ -3743,7 +3743,7 @@ export interface LoginUrl {
  */
 export interface SwitchInlineQueryChosenChat {
   /**
-   * The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted.
+   * The default inline query to be inserted in the input field. If left empty, only the bot's username will be inserted.
    */
   query?: string;
   /**
@@ -3812,20 +3812,20 @@ export interface CallbackQuery {
   game_short_name?: string;
 }
 /**
- * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode}. Not supported in channels and for messages sent on behalf of a user account.
+ * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode}. Not supported in channels and for messages sent on behalf of a user account.
  * 
  * > **Example:** A {@link https://t.me/PollBot | poll bot} for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
  * >
  * > - Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.
- * > - Guide the user through a step-by-step process. &#39;Please send me your question&#39;, &#39;Cool, now let&#39;s add the first answer option&#39;, &#39;Great. Keep adding answer options, then send /done when you&#39;re ready&#39;.
+ * > - Guide the user through a step-by-step process. 'Please send me your question', 'Cool, now let's add the first answer option', 'Great. Keep adding answer options, then send /done when you're ready'.
  * >
- * > The last option is definitely more attractive. And if you use {@link ForceReply} in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.
+ * > The last option is definitely more attractive. And if you use {@link ForceReply} in your bot's questions, it will receive the user's answers even if it only receives replies, commands and mentions - without any extra work for the user.
  *
  * @see {@link https://core.telegram.org/bots/api#forcereply}
  */
 export interface ForceReply {
   /**
-   * Shows reply interface to the user, as if they manually selected the bot&#39;s message and tapped &#39;Reply&#39;
+   * Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
    */
   force_reply: true;
   /**
@@ -3833,7 +3833,7 @@ export interface ForceReply {
    */
   input_field_placeholder?: string;
   /**
-   * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message} object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
    */
   selective?: boolean;
 }
@@ -3863,7 +3863,7 @@ export interface ChatPhoto {
    */
   small_file_id: string;
   /**
-   * Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   small_file_unique_id: string;
   /**
@@ -3871,7 +3871,7 @@ export interface ChatPhoto {
    */
   big_file_id: string;
   /**
-   * Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   big_file_unique_id: string;
 }
@@ -3933,7 +3933,7 @@ export interface ChatInviteLink {
  */
 export interface ChatAdministratorRights {
   /**
-   * `true`, if the user&#39;s presence in the chat is hidden
+   * `true`, if the user's presence in the chat is hidden
    */
   is_anonymous: boolean;
   /**
@@ -3969,7 +3969,7 @@ export interface ChatAdministratorRights {
    */
   can_post_stories: boolean;
   /**
-   * `true`, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+   * `true`, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive
    */
   can_edit_stories: boolean;
   /**
@@ -4066,7 +4066,7 @@ export type ChatMember =
  */
 export interface ChatMemberOwner {
   /**
-   * The member&#39;s status in the chat, always “creator”
+   * The member's status in the chat, always “creator”
    */
   status: string;
   /**
@@ -4074,7 +4074,7 @@ export interface ChatMemberOwner {
    */
   user: User;
   /**
-   * `true`, if the user&#39;s presence in the chat is hidden
+   * `true`, if the user's presence in the chat is hidden
    */
   is_anonymous: boolean;
   /**
@@ -4089,7 +4089,7 @@ export interface ChatMemberOwner {
  */
 export interface ChatMemberAdministrator {
   /**
-   * The member&#39;s status in the chat, always “administrator”
+   * The member's status in the chat, always “administrator”
    */
   status: string;
   /**
@@ -4101,7 +4101,7 @@ export interface ChatMemberAdministrator {
    */
   can_be_edited: boolean;
   /**
-   * `true`, if the user&#39;s presence in the chat is hidden
+   * `true`, if the user's presence in the chat is hidden
    */
   is_anonymous: boolean;
   /**
@@ -4137,7 +4137,7 @@ export interface ChatMemberAdministrator {
    */
   can_post_stories: boolean;
   /**
-   * `true`, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+   * `true`, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive
    */
   can_edit_stories: boolean;
   /**
@@ -4180,7 +4180,7 @@ export interface ChatMemberAdministrator {
  */
 export interface ChatMemberMember {
   /**
-   * The member&#39;s status in the chat, always “member”
+   * The member's status in the chat, always “member”
    */
   status: string;
   /**
@@ -4192,7 +4192,7 @@ export interface ChatMemberMember {
    */
   user: User;
   /**
-   * Date when the user&#39;s subscription will expire; Unix time
+   * Date when the user's subscription will expire; Unix time
    */
   until_date?: number;
 }
@@ -4203,7 +4203,7 @@ export interface ChatMemberMember {
  */
 export interface ChatMemberRestricted {
   /**
-   * The member&#39;s status in the chat, always “restricted”
+   * The member's status in the chat, always “restricted”
    */
   status: string;
   /**
@@ -4288,13 +4288,13 @@ export interface ChatMemberRestricted {
   until_date: number;
 }
 /**
- * Represents a {@link ChatMember | chat member} that isn&#39;t currently a member of the chat, but may join it themselves.
+ * Represents a {@link ChatMember | chat member} that isn't currently a member of the chat, but may join it themselves.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmemberleft}
  */
 export interface ChatMemberLeft {
   /**
-   * The member&#39;s status in the chat, always “left”
+   * The member's status in the chat, always “left”
    */
   status: string;
   /**
@@ -4303,13 +4303,13 @@ export interface ChatMemberLeft {
   user: User;
 }
 /**
- * Represents a {@link ChatMember | chat member} that was banned in the chat and can&#39;t return to the chat or view chat messages.
+ * Represents a {@link ChatMember | chat member} that was banned in the chat and can't return to the chat or view chat messages.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmemberbanned}
  */
 export interface ChatMemberBanned {
   /**
-   * The member&#39;s status in the chat, always “kicked”
+   * The member's status in the chat, always “kicked”
    */
   status: string;
   /**
@@ -4434,15 +4434,15 @@ export interface ChatPermissions {
  */
 export interface Birthdate {
   /**
-   * Day of the user&#39;s birth; 1-31
+   * Day of the user's birth; 1-31
    */
   day: number;
   /**
-   * Month of the user&#39;s birth; 1-12
+   * Month of the user's birth; 1-12
    */
   month: number;
   /**
-   * Year of the user&#39;s birth
+   * Year of the user's birth
    */
   year?: number;
 }
@@ -4487,11 +4487,11 @@ export interface BusinessLocation {
  */
 export interface BusinessOpeningHoursInterval {
   /**
-   * The minute&#39;s sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7 * 24 * 60
+   * The minute's sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7 * 24 * 60
    */
   opening_minute: number;
   /**
-   * The minute&#39;s sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8 * 24 * 60
+   * The minute's sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8 * 24 * 60
    */
   closing_minute: number;
 }
@@ -4521,7 +4521,7 @@ export interface UserRating {
    */
   level: number;
   /**
-   * Numerical value of the user&#39;s rating; the higher the rating, the better
+   * Numerical value of the user's rating; the higher the rating, the better
    */
   rating: number;
   /**
@@ -4540,19 +4540,19 @@ export interface UserRating {
  */
 export interface StoryAreaPosition {
   /**
-   * The abscissa of the area&#39;s center, as a percentage of the media width
+   * The abscissa of the area's center, as a percentage of the media width
    */
   x_percentage: number;
   /**
-   * The ordinate of the area&#39;s center, as a percentage of the media height
+   * The ordinate of the area's center, as a percentage of the media height
    */
   y_percentage: number;
   /**
-   * The width of the area&#39;s rectangle, as a percentage of the media width
+   * The width of the area's rectangle, as a percentage of the media width
    */
   width_percentage: number;
   /**
-   * The height of the area&#39;s rectangle, as a percentage of the media height
+   * The height of the area's rectangle, as a percentage of the media height
    */
   height_percentage: number;
   /**
@@ -4725,7 +4725,7 @@ export interface StoryArea {
  */
 export interface ChatLocation {
   /**
-   * The location to which the supergroup is connected. Can&#39;t be a live location.
+   * The location to which the supergroup is connected. Can't be a live location.
    */
   location: Location;
   /**
@@ -4757,7 +4757,7 @@ export interface ReactionTypeEmoji {
    */
   type: string;
   /**
-   * Reaction emoji. Currently, it can be one of &quot;❤&quot;, &quot;👍&quot;, &quot;👎&quot;, &quot;🔥&quot;, &quot;🥰&quot;, &quot;👏&quot;, &quot;😁&quot;, &quot;🤔&quot;, &quot;🤯&quot;, &quot;😱&quot;, &quot;🤬&quot;, &quot;😢&quot;, &quot;🎉&quot;, &quot;🤩&quot;, &quot;🤮&quot;, &quot;💩&quot;, &quot;🙏&quot;, &quot;👌&quot;, &quot;🕊&quot;, &quot;🤡&quot;, &quot;🥱&quot;, &quot;🥴&quot;, &quot;😍&quot;, &quot;🐳&quot;, &quot;❤&quot;, &quot;🌚&quot;, &quot;🌭&quot;, &quot;💯&quot;, &quot;🤣&quot;, &quot;⚡&quot;, &quot;🍌&quot;, &quot;🏆&quot;, &quot;💔&quot;, &quot;🤨&quot;, &quot;😐&quot;, &quot;🍓&quot;, &quot;🍾&quot;, &quot;💋&quot;, &quot;🖕&quot;, &quot;😈&quot;, &quot;😴&quot;, &quot;😭&quot;, &quot;🤓&quot;, &quot;👻&quot;, &quot;👨&quot;, &quot;👀&quot;, &quot;🎃&quot;, &quot;🙈&quot;, &quot;😇&quot;, &quot;😨&quot;, &quot;🤝&quot;, &quot;✍&quot;, &quot;🤗&quot;, &quot;🫡&quot;, &quot;🎅&quot;, &quot;🎄&quot;, &quot;☃&quot;, &quot;💅&quot;, &quot;🤪&quot;, &quot;🗿&quot;, &quot;🆒&quot;, &quot;💘&quot;, &quot;🙉&quot;, &quot;🦄&quot;, &quot;😘&quot;, &quot;💊&quot;, &quot;🙊&quot;, &quot;😎&quot;, &quot;👾&quot;, &quot;🤷&quot;, &quot;🤷&quot;, &quot;🤷&quot;, &quot;😡&quot;.
+   * Reaction emoji. Currently, it can be one of "❤", "👍", "👎", "🔥", "🥰", "👏", "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏", "👌", "🕊", "🤡", "🥱", "🥴", "😍", "🐳", "❤", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆", "💔", "🤨", "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨", "👀", "🎃", "🙈", "😇", "😨", "🤝", "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅", "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾", "🤷", "🤷", "🤷", "😡".
    */
   emoji: string;
 }
@@ -4817,7 +4817,7 @@ export interface MessageReactionUpdated {
    */
   message_id: number;
   /**
-   * The user that changed the reaction, if the user isn&#39;t anonymous
+   * The user that changed the reaction, if the user isn't anonymous
    */
   user?: User;
   /**
@@ -4883,7 +4883,7 @@ export interface ForumTopic {
    */
   icon_custom_emoji_id?: string;
   /**
-   * `true`, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
+   * `true`, if the name of the topic wasn't specified explicitly by its creator and likely needs to be changed by the bot
    */
   is_name_implicit?: true;
 }
@@ -4933,7 +4933,7 @@ export interface Gift {
    */
   is_premium?: true;
   /**
-   * `true`, if the gift can be used (after being upgraded) to customize a user&#39;s appearance
+   * `true`, if the gift can be used (after being upgraded) to customize a user's appearance
    */
   has_colors?: true;
   /**
@@ -5061,17 +5061,17 @@ export interface UniqueGiftBackdrop {
   rarity_per_mille: number;
 }
 /**
- * This object contains information about the color scheme for a user&#39;s name, message replies and link previews based on a unique gift.
+ * This object contains information about the color scheme for a user's name, message replies and link previews based on a unique gift.
  *
  * @see {@link https://core.telegram.org/bots/api#uniquegiftcolors}
  */
 export interface UniqueGiftColors {
   /**
-   * Custom emoji identifier of the unique gift&#39;s model
+   * Custom emoji identifier of the unique gift's model
    */
   model_custom_emoji_id: string;
   /**
-   * Custom emoji identifier of the unique gift&#39;s symbol
+   * Custom emoji identifier of the unique gift's symbol
    */
   symbol_custom_emoji_id: string;
   /**
@@ -5130,15 +5130,15 @@ export interface UniqueGift {
    */
   is_premium?: true;
   /**
-   * `true`, if the gift was used to craft another gift and isn&#39;t available anymore
+   * `true`, if the gift was used to craft another gift and isn't available anymore
    */
   is_burned?: true;
   /**
-   * `true`, if the gift is assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+   * `true`, if the gift is assigned from the TON blockchain and can't be resold or transferred in Telegram
    */
   is_from_blockchain?: true;
   /**
-   * The color scheme that can be used by the gift&#39;s owner for the chat&#39;s name, replies to messages and link previews; for business account gifts and gifts that are currently on sale only
+   * The color scheme that can be used by the gift's owner for the chat's name, replies to messages and link previews; for business account gifts and gifts that are currently on sale only
    */
   colors?: UniqueGiftColors;
   /**
@@ -5169,7 +5169,7 @@ export interface GiftInfo {
    */
   prepaid_upgrade_star_count?: number;
   /**
-   * `true`, if the gift&#39;s upgrade was purchased after the gift was sent
+   * `true`, if the gift's upgrade was purchased after the gift was sent
    */
   is_upgrade_separate?: true;
   /**
@@ -5278,7 +5278,7 @@ export interface OwnedGiftRegular {
    */
   is_private?: true;
   /**
-   * `true`, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
+   * `true`, if the gift is displayed on the account's profile page; for gifts received on behalf of business accounts only
    */
   is_saved?: true;
   /**
@@ -5286,7 +5286,7 @@ export interface OwnedGiftRegular {
    */
   can_be_upgraded?: true;
   /**
-   * `true`, if the gift was refunded and isn&#39;t available anymore
+   * `true`, if the gift was refunded and isn't available anymore
    */
   was_refunded?: true;
   /**
@@ -5298,7 +5298,7 @@ export interface OwnedGiftRegular {
    */
   prepaid_upgrade_star_count?: number;
   /**
-   * `true`, if the gift&#39;s upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only
+   * `true`, if the gift's upgrade was purchased after the gift was sent; for gifts received on behalf of business accounts only
    */
   is_upgrade_separate?: true;
   /**
@@ -5333,7 +5333,7 @@ export interface OwnedGiftUnique {
    */
   send_date: number;
   /**
-   * `true`, if the gift is displayed on the account&#39;s profile page; for gifts received on behalf of business accounts only
+   * `true`, if the gift is displayed on the account's profile page; for gifts received on behalf of business accounts only
    */
   is_saved?: true;
   /**
@@ -5375,7 +5375,7 @@ export interface OwnedGifts {
  */
 export interface BotAccessSettings {
   /**
-   * `true`, if only selected users can access the bot. The bot&#39;s owner can always access it.
+   * `true`, if only selected users can access the bot. The bot's owner can always access it.
    */
   is_access_restricted: boolean;
   /**
@@ -5548,7 +5548,7 @@ export interface BotCommandScopeChat {
    */
   type: string;
   /**
-   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren&#39;t supported.
+   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren't supported.
    */
   chat_id: number | string;
 }
@@ -5563,7 +5563,7 @@ export interface BotCommandScopeChatAdministrators {
    */
   type: string;
   /**
-   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren&#39;t supported.
+   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren't supported.
    */
   chat_id: number | string;
 }
@@ -5578,7 +5578,7 @@ export interface BotCommandScopeChatMember {
    */
   type: string;
   /**
-   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren&#39;t supported.
+   * Unique identifier for the target chat or username of the target supergroup in the format `@username`. Channel direct messages chats and channel chats aren't supported.
    */
   chat_id: number | string;
   /**
@@ -5587,40 +5587,40 @@ export interface BotCommandScopeChatMember {
   user_id: number;
 }
 /**
- * This object represents the bot&#39;s name.
+ * This object represents the bot's name.
  *
  * @see {@link https://core.telegram.org/bots/api#botname}
  */
 export interface BotName {
   /**
-   * The bot&#39;s name
+   * The bot's name
    */
   name: string;
 }
 /**
- * This object represents the bot&#39;s description.
+ * This object represents the bot's description.
  *
  * @see {@link https://core.telegram.org/bots/api#botdescription}
  */
 export interface BotDescription {
   /**
-   * The bot&#39;s description
+   * The bot's description
    */
   description: string;
 }
 /**
- * This object represents the bot&#39;s short description.
+ * This object represents the bot's short description.
  *
  * @see {@link https://core.telegram.org/bots/api#botshortdescription}
  */
 export interface BotShortDescription {
   /**
-   * The bot&#39;s short description
+   * The bot's short description
    */
   short_description: string;
 }
 /**
- * This object describes the bot&#39;s menu button in a private chat. It should be one of
+ * This object describes the bot's menu button in a private chat. It should be one of
  *
  * - {@link MenuButtonCommands}
  * - {@link MenuButtonWebApp}
@@ -5635,7 +5635,7 @@ export type MenuButton =
  | MenuButtonWebApp
  | MenuButtonDefault
 /**
- * Represents a menu button, which opens the bot&#39;s list of commands.
+ * Represents a menu button, which opens the bot's list of commands.
  *
  * @see {@link https://core.telegram.org/bots/api#menubuttoncommands}
  */
@@ -5660,7 +5660,7 @@ export interface MenuButtonWebApp {
    */
   text: string;
   /**
-   * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Alternatively, a `t.me` link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
+   * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Alternatively, a `t.me` link to a Web App of the bot can be specified in the object instead of the Web App's URL, in which case the Web App will be opened as if the user pressed the link.
    */
   web_app: WebAppInfo;
 }
@@ -5729,7 +5729,7 @@ export interface ChatBoostSourceGiveaway {
    */
   source: string;
   /**
-   * Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn&#39;t sent yet.
+   * Identifier of a message in the chat with the giveaway; the message could have been deleted already. May be 0 if the message isn't sent yet.
    */
   giveaway_message_id: number;
   /**
@@ -5760,7 +5760,7 @@ export interface ChatBoost {
    */
   add_date: number;
   /**
-   * Point in time (Unix timestamp) when the boost will automatically expire, unless the booster&#39;s Telegram Premium subscription is prolonged
+   * Point in time (Unix timestamp) when the boost will automatically expire, unless the booster's Telegram Premium subscription is prolonged
    */
   expiration_date: number;
   /**
@@ -6045,11 +6045,11 @@ export interface InputMediaAnimation {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   thumbnail?: string;
   /**
@@ -6096,11 +6096,11 @@ export interface InputMediaAudio {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   thumbnail?: string;
   /**
@@ -6139,11 +6139,11 @@ export interface InputMediaDocument {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   thumbnail?: string;
   /**
@@ -6189,11 +6189,11 @@ export interface InputMediaLivePhoto {
    */
   type: string;
   /**
-   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
+   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
    */
   media: string;
   /**
-   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
+   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
    */
   photo: string;
   /**
@@ -6251,7 +6251,7 @@ export interface InputMediaPhoto {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
@@ -6286,7 +6286,7 @@ export interface InputMediaSticker {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://\<file_attach_name>” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
@@ -6348,15 +6348,15 @@ export interface InputMediaVideo {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   thumbnail?: string;
   /**
-   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   cover?: string;
   /**
@@ -6411,7 +6411,7 @@ export interface InputMediaVoiceNote {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass &quot;attach://&lt;file_attach_name&gt;&quot; to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass "attach://\<file_attach_name>" to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
@@ -6461,11 +6461,11 @@ export interface InputPaidMediaLivePhoto {
    */
   type: string;
   /**
-   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
+   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
    */
   media: string;
   /**
-   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
+   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Sending live photos by a URL is currently unsupported.
    */
   photo: string;
 }
@@ -6480,7 +6480,7 @@ export interface InputPaidMediaPhoto {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
 }
@@ -6495,15 +6495,15 @@ export interface InputPaidMediaVideo {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   thumbnail?: string;
   /**
-   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   cover?: string;
   /**
@@ -6549,7 +6549,7 @@ export interface InputProfilePhotoStatic {
    */
   type: string;
   /**
-   * The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * The static profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the photo was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   photo: string;
 }
@@ -6564,7 +6564,7 @@ export interface InputProfilePhotoAnimated {
    */
   type: string;
   /**
-   * The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * The animated profile photo. Profile photos can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the photo was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   animation: string;
   /**
@@ -6594,7 +6594,7 @@ export interface InputStoryContentPhoto {
    */
   type: string;
   /**
-   * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the photo was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   photo: string;
 }
@@ -6609,7 +6609,7 @@ export interface InputStoryContentVideo {
    */
   type: string;
   /**
-   * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can't be reused and can only be uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the video was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   video: string;
   /**
@@ -6717,7 +6717,7 @@ export type ProfileAccentColorId =
 // === AVAILABLE METHODS
 export interface ApiMethods {
   /**
-   * A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a {@link User} object.
+   * A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a {@link User} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getme}
    */
@@ -6733,7 +6733,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns `true` on success. Requires no parameters.
+   * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn't launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns `true` on success. Requires no parameters.
    *
    * @see {@link https://core.telegram.org/bots/api#close}
    */
@@ -6795,7 +6795,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -6819,21 +6819,21 @@ export interface ApiMethods {
 /**
  * #### Formatting options
  *
- * The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots&#39; messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
+ * The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
   
- * Note that Telegram clients will display an **alert** to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
+ * Note that Telegram clients will display an **alert** to the user before opening an inline link ('Open this link?' together with the full URL).
  *
  * Message entities can be nested, providing following restrictions are met:
  *
  * - If two entities have common characters, then one of them is fully contained inside another.
  * - _bold_, _italic_, _underline_, _strikethrough_, and _spoiler_ entities can contain and can be part of any other entities, except _pre_ and _code_.
- * - _blockquote_ and _expandable_blockquote_ entities can&#39;t be nested.
- * - All other entities can&#39;t contain each other.
+ * - _blockquote_ and _expandable_blockquote_ entities can't be nested.
+ * - All other entities can't contain each other.
  *
- * Links `tg://user?id=&lt;user_id&gt;` can be used to mention a user by their identifier without using a username. Please note:
+ * Links `tg://user?id=<user_id>` can be used to mention a user by their identifier without using a username. Please note:
  *
  * - These links will work **only** if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
- * - Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn&#39;t have Forwarded Messages privacy enabled for the bot.
+ * - Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn't have Forwarded Messages privacy enabled for the bot.
  *
  * You can find the list of programming and markup languages for which syntax highlighting is supported at {@link https://github.com/TelegramMessenger/libprisma#supported-languages | libprisma#supported-languages}.
  *
@@ -6844,7 +6844,7 @@ export interface ApiMethods {
  * If the format string is empty, the underlying text is displayed as-is; however, the user can still receive the underlying date in their local format. When populated, the format string determines the output based on the presence of the following control characters:
  *
  * - **`r`**: Displays the time relative to the current time. Cannot be combined with any other control characters.
- * - **`w`**: Displays the day of the week in the user&#39;s localized language.
+ * - **`w`**: Displays the day of the week in the user's localized language.
  * - **`d`**: Displays the date in short form (e.g., “17.03.22”).
  * - **`D`**: Displays the date in long form (e.g., “March 17, 2022”).
  * - **`t`**: Displays the time in short form (e.g., “22:45”).
@@ -6864,9 +6864,9 @@ export interface ApiMethods {
  * [inline URL](http://www.example.com/)
  * [inline mention of a user](tg://user?id=123456789)
  * ![👍](tg://emoji?id=5368324170671202286)
- * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=wDT)
- * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=t)
- * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=r)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&format=wDT)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&format=t)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&format=r)
  * ![22:45 tomorrow](tg://time?unix=1647531900)
  * `inline fixed-width code`
  * ```
@@ -6875,25 +6875,25 @@ export interface ApiMethods {
  * ```python
  * pre-formatted fixed-width code block written in the Python programming language
  * ```
- * &gt;Block quotation started
- * &gt;Block quotation continued
- * &gt;Block quotation continued
- * &gt;Block quotation continued
- * &gt;The last line of the block quotation
- * **&gt;The expandable block quotation started right after the previous block quotation
- * &gt;It is separated from the previous block quotation by an empty bold entity
- * &gt;Expandable block quotation continued
- * &gt;Hidden by default part of the expandable block quotation started
- * &gt;Expandable block quotation continued
- * &gt;The last line of the expandable block quotation with the expandability mark||
+ * >Block quotation started
+ * >Block quotation continued
+ * >Block quotation continued
+ * >Block quotation continued
+ * >The last line of the block quotation
+ * **>The expandable block quotation started right after the previous block quotation
+ * >It is separated from the previous block quotation by an empty bold entity
+ * >Expandable block quotation continued
+ * >Hidden by default part of the expandable block quotation started
+ * >Expandable block quotation continued
+ * >The last line of the expandable block quotation with the expandability mark||
  * ````
  * 
  * Please note:
  *
- * - Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding &#39;\&#39; character, in which case it is treated as an ordinary character and not a part of the markup. This implies that &#39;\&#39; character usually must be escaped with a preceding &#39;\&#39; character.
- * - Inside `pre` and `code` entities, all &#39;`&#39; and &#39;\&#39; characters must be escaped with a preceding &#39;\&#39; character.
- * - Inside the `(...)` part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.
- * - In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.
+ * - Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding '\' character, in which case it is treated as an ordinary character and not a part of the markup. This implies that '\' character usually must be escaped with a preceding '\' character.
+ * - Inside `pre` and `code` entities, all '`' and '\' characters must be escaped with a preceding '\' character.
+ * - Inside the `(...)` part of the inline link and custom emoji definition, all ')' and '\' must be escaped with a preceding '\' character.
+ * - In all other places characters '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' must be escaped with the preceding character '\'.
  * - In case of ambiguity between `italic` and `underline` entities `__` is always greedily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
  * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji {@link Sticker | sticker}.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
@@ -6904,41 +6904,41 @@ export interface ApiMethods {
  * To use this mode, pass _HTML_ in the _parse_mode_ field. The following tags are currently supported:
  * 
  * ```html
- * &lt;b&gt;bold&lt;/b&gt;, &lt;strong&gt;bold&lt;/strong&gt;
- * &lt;i&gt;italic&lt;/i&gt;, &lt;em&gt;italic&lt;/em&gt;
- * &lt;u&gt;underline&lt;/u&gt;, &lt;ins&gt;underline&lt;/ins&gt;
- * &lt;s&gt;strikethrough&lt;/s&gt;, &lt;strike&gt;strikethrough&lt;/strike&gt;, &lt;del&gt;strikethrough&lt;/del&gt;
- * &lt;span class=&quot;tg-spoiler&quot;&gt;spoiler&lt;/span&gt;, &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
- * &lt;b&gt;bold &lt;i&gt;italic bold &lt;s&gt;italic bold strikethrough &lt;span class=&quot;tg-spoiler&quot;&gt;italic bold strikethrough spoiler&lt;/span&gt;&lt;/s&gt; &lt;u&gt;underline italic bold&lt;/u&gt;&lt;/i&gt; bold&lt;/b&gt;
- * &lt;a href=&quot;http://www.example.com/&quot;&gt;inline URL&lt;/a&gt;
- * &lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
- * &lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;👍&lt;/tg-emoji&gt;
- * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;wDT&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
- * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;t&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
- * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;r&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
- * &lt;tg-time unix=&quot;1647531900&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
- * &lt;code&gt;inline fixed-width code&lt;/code&gt;
- * &lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
- * &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;pre-formatted fixed-width code block written in the Python programming language&lt;/code&gt;&lt;/pre&gt;
- * &lt;blockquote&gt;Block quotation started
+ * <b>bold</b>, <strong>bold</strong>
+ * <i>italic</i>, <em>italic</em>
+ * <u>underline</u>, <ins>underline</ins>
+ * <s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
+ * <span class="tg-spoiler">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>
+ * <b>bold <i>italic bold <s>italic bold strikethrough <span class="tg-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
+ * <a href="http://www.example.com/">inline URL</a>
+ * <a href="tg://user?id=123456789">inline mention of a user</a>
+ * <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji>
+ * <tg-time unix="1647531900" format="wDT">22:45 tomorrow</tg-time>
+ * <tg-time unix="1647531900" format="t">22:45 tomorrow</tg-time>
+ * <tg-time unix="1647531900" format="r">22:45 tomorrow</tg-time>
+ * <tg-time unix="1647531900">22:45 tomorrow</tg-time>
+ * <code>inline fixed-width code</code>
+ * <pre>pre-formatted fixed-width code block</pre>
+ * <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
+ * <blockquote>Block quotation started
  * Block quotation continued
- * The last line of the block quotation&lt;/blockquote&gt;
- * &lt;blockquote expandable&gt;Expandable block quotation started
+ * The last line of the block quotation</blockquote>
+ * <blockquote expandable>Expandable block quotation started
  * Expandable block quotation continued
  * Expandable block quotation continued
  * Hidden by default part of the block quotation started
  * Expandable block quotation continued
- * The last line of the block quotation&lt;/blockquote&gt;
+ * The last line of the block quotation</blockquote>
  * ```
  * 
  * Please note:
  *
  * - Only the tags mentioned above are currently supported.
- * - All `&lt;`, `&gt;` and `&amp;` symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (`&lt;` with `&amp;lt;`, `&gt;` with `&amp;gt;` and `&amp;` with `&amp;amp;`).
+ * - All `<`, `>` and `&` symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (`<` with `&lt;`, `>` with `&gt;` and `&` with `&amp;`).
  * - All numerical HTML entities are supported.
- * - The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;` and `&amp;quot;`.
+ * - The API currently supports only the following named HTML entities: `&lt;`, `&gt;`, `&amp;` and `&quot;`.
  * - Use nested `pre` and `code` tags, to define programming language for `pre` entity.
- * - Programming language can&#39;t be specified for standalone `code` tags.
+ * - Programming language can't be specified for standalone `code` tags.
  * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji {@link Sticker | sticker}.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
  * - See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details about supported date-time formats.
@@ -6965,7 +6965,7 @@ export interface ApiMethods {
  *
  * - Entities must not be nested, use parse mode {@link https://core.telegram.org/bots/api#markdownv2-style | MarkdownV2} instead.
  * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote”, “custom_emoji”, and “date_time” entities, use parse mode {@link https://core.telegram.org/bots/api#markdownv2-style | MarkdownV2} instead.
- * - To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the character &#39;\&#39; before them.
+ * - To escape characters '_', '*', '`', '[' outside of an entity, prepend the character '\' before them.
  * - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.
  *
  * @see {@link https://core.telegram.org/bots/api#parsemode}
@@ -6973,7 +6973,7 @@ export interface ApiMethods {
 export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 export interface ApiMethods {
   /**
-   * Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent {@link Message} is returned.
+   * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#forwardmessage}
    */
@@ -7022,7 +7022,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of {@link MessageId} of the sent messages is returned.
+   * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an Array of {@link MessageId} of the sent messages is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#forwardmessages}
    */
@@ -7059,7 +7059,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessage | forwardMessage}, but the copied message doesn&#39;t have a link to the original message. Returns the {@link MessageId} of the sent message on success.
+   * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessage | forwardMessage}, but the copied message doesn't have a link to the original message. Returns the {@link MessageId} of the sent message on success.
    *
    * @see {@link https://core.telegram.org/bots/api#copymessage}
    */
@@ -7101,7 +7101,7 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * Pass `true` if the caption must be shown above the message media. Ignored if a new caption isn&#39;t specified.
+     * Pass `true` if the caption must be shown above the message media. Ignored if a new caption isn't specified.
      */
     show_caption_above_media?: boolean;
     /**
@@ -7113,7 +7113,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7136,7 +7136,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of {@link MessageId} of the sent messages is returned.
+   * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an Array of {@link MessageId} of the sent messages is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#copymessages}
    */
@@ -7207,7 +7207,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+     * Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     photo: InputFile | string;
     /**
@@ -7239,7 +7239,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7328,7 +7328,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7411,7 +7411,7 @@ export interface ApiMethods {
      */
     title?: string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: InputFile | string;
     /**
@@ -7423,7 +7423,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7480,7 +7480,7 @@ export interface ApiMethods {
      */
     document: InputFile | string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: InputFile | string;
     /**
@@ -7508,7 +7508,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7577,11 +7577,11 @@ export interface ApiMethods {
      */
     height?: number;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: InputFile | string;
     /**
-     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new one using multipart/form-data under \<file_attach_name> name. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     cover?: InputFile | string;
     /**
@@ -7621,7 +7621,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7690,7 +7690,7 @@ export interface ApiMethods {
      */
     height?: number;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: InputFile | string;
     /**
@@ -7722,7 +7722,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7803,7 +7803,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7868,7 +7868,7 @@ export interface ApiMethods {
      */
     length?: number;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://\<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under \<file_attach_name>. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
      */
     thumbnail?: InputFile | string;
     /**
@@ -7880,7 +7880,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -7913,7 +7913,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat&#39;s balance. Otherwise, they will be credited to the bot&#39;s balance.
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance.
      */
     chat_id: number | string;
     /**
@@ -7961,7 +7961,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8014,7 +8014,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8091,7 +8091,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8184,7 +8184,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8237,15 +8237,15 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Contact&#39;s phone number
+     * Contact's phone number
      */
     phone_number: string;
     /**
-     * Contact&#39;s first name
+     * Contact's first name
      */
     first_name: string;
     /**
-     * Contact&#39;s last name
+     * Contact's last name
      */
     last_name?: string;
     /**
@@ -8261,7 +8261,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8294,7 +8294,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. Polls can&#39;t be sent to channel direct messages chats.
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. Polls can't be sent to channel direct messages chats.
      */
     chat_id: number | string;
     /**
@@ -8374,11 +8374,11 @@ export interface ApiMethods {
      */
     explanation_media?: InputPollMedia;
     /**
-     * Amount of time in seconds the poll will be active after creation, 5-2628000. Can&#39;t be used together with _close_date_.
+     * Amount of time in seconds the poll will be active after creation, 5-2628000. Can't be used together with _close_date_.
      */
     open_period?: number;
     /**
-     * Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can&#39;t be used together with _open_period_.
+     * Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can't be used together with _open_period_.
      */
     close_date?: number;
     /**
@@ -8410,7 +8410,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8504,7 +8504,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -8527,7 +8527,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendMessage | sendMessage} with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
+   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendMessage | sendMessage} with the complete message to persist it in the user's chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
    */
@@ -8560,7 +8560,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns `true` on success.
+   * Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns `true` on success.
    *
    * > Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use {@link ApiMethods.sendChatAction | sendChatAction} with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.
    * 
@@ -8574,7 +8574,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot or supergroup in the format `@username`. Channel chats and channel direct messages chats aren&#39;t supported.
+     * Unique identifier for the target chat or username of the target bot or supergroup in the format `@username`. Channel chats and channel direct messages chats aren't supported.
      */
     chat_id: number | string;
     /**
@@ -8589,7 +8589,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns `true` on success.
+   * Use this method to change the chosen reactions on a message. Service messages of some types can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmessagereaction}
    */
@@ -8603,7 +8603,7 @@ export interface ApiMethods {
      */
     message_id: number;
     /**
-     * A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can&#39;t be used by bots.
+     * A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      */
     reaction?: ReactionType[];
     /**
@@ -8677,9 +8677,9 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a {@link File} object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile} again.
+   * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a {@link File} object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`, where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile} again.
    * 
-   * **Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.
+   * **Note:** This function may not preserve the original file name and MIME type. You should save the file's MIME type and name (if available) when the File object is received.
    *
    * @see {@link https://core.telegram.org/bots/api#getfile}
    */
@@ -8717,7 +8717,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don&#39;t want this, use the parameter _only_if_banned_. Returns `true` on success.
+   * Use this method to unban a previously banned user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat. If you don't want this, use the parameter _only_if_banned_. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unbanchatmember}
    */
@@ -8781,7 +8781,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Pass `true` if the administrator&#39;s presence in the chat is hidden
+     * Pass `true` if the administrator's presence in the chat is hidden
      */
     is_anonymous?: boolean;
     /**
@@ -8817,7 +8817,7 @@ export interface ApiMethods {
      */
     can_post_stories?: boolean;
     /**
-     * Pass `true` if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat&#39;s story archive
+     * Pass `true` if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive
      */
     can_edit_stories?: boolean;
     /**
@@ -8894,7 +8894,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
+   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won't be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
    */
@@ -8951,7 +8951,7 @@ export interface ApiMethods {
   /**
    * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as `string` on success.
    * 
-   * > Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} or by calling the {@link ApiMethods.getChat | getChat} method. If your bot needs to generate a new primary invite link replacing its previous one, use {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} again.
+   * > Note: Each administrator in a chat generates their own invite links. Bots can't use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} or by calling the {@link ApiMethods.getChat | getChat} method. If your bot needs to generate a new primary invite link replacing its previous one, use {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} again.
    *
    * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
    */
@@ -8986,7 +8986,7 @@ export interface ApiMethods {
      */
     member_limit?: number;
     /**
-     * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, _member_limit_ can&#39;t be specified.
+     * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, _member_limit_ can't be specified.
      */
     creates_join_request?: boolean;
   }): never;
@@ -9019,7 +9019,7 @@ export interface ApiMethods {
      */
     member_limit?: number;
     /**
-     * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, _member_limit_ can&#39;t be specified.
+     * `true`, if users joining the chat via the link need to be approved by chat administrators. If `true`, _member_limit_ can't be specified.
      */
     creates_join_request?: boolean;
   }): never;
@@ -9157,7 +9157,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
+   * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatphoto}
    */
@@ -9174,7 +9174,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
+   * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletechatphoto}
    */
@@ -9187,7 +9187,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
+   * Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchattitle}
    */
@@ -9221,7 +9221,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns `true` on success.
+   * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to pin messages in groups and channels respectively. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#pinchatmessage}
    */
@@ -9246,7 +9246,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns `true` on success.
+   * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin messages in groups and channels respectively. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unpinchatmessage}
    */
@@ -9267,7 +9267,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns `true` on success.
+   * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the 'can_pin_messages' right or the 'can_edit_messages' right to unpin all pinned messages in groups and channels respectively. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unpinallchatmessages}
    */
@@ -9286,7 +9286,7 @@ export interface ApiMethods {
    */
   leaveChat(args: {
     /**
-     * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`. Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format `@username`. Channel direct messages chats aren't supported; leave the corresponding channel instead.
      */
     chat_id: number | string;
   }): never;
@@ -9526,7 +9526,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns `true` on success.
+   * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#editgeneralforumtopic}
    */
@@ -9543,7 +9543,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns `true` on success.
+   * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#closegeneralforumtopic}
    */
@@ -9556,7 +9556,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically unhidden if it was hidden. Returns `true` on success.
+   * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically unhidden if it was hidden. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#reopengeneralforumtopic}
    */
@@ -9569,7 +9569,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically closed if it was open. Returns `true` on success.
+   * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. The topic will be automatically closed if it was open. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#hidegeneralforumtopic}
    */
@@ -9582,7 +9582,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns `true` on success.
+   * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#unhidegeneralforumtopic}
    */
@@ -9628,7 +9628,7 @@ export interface ApiMethods {
      */
     show_alert?: boolean;
     /**
-     * URL that will be opened by the user&#39;s client. If you have created a {@link Game} and accepted the conditions via {@link https://t.me/botfather | \@BotFather}, specify the URL that opens your game - note that this will only work if the query comes from a {@link InlineKeyboardButton | _callback_game_} button.
+     * URL that will be opened by the user's client. If you have created a {@link Game} and accepted the conditions via {@link https://t.me/botfather | \@BotFather}, specify the URL that opens your game - note that this will only work if the query comes from a {@link InlineKeyboardButton | _callback_game_} button.
      *
      * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
      */
@@ -9737,7 +9737,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Pass `true` if only selected users can access the bot. The bot&#39;s owner can always access it.
+     * Pass `true` if only selected users can access the bot. The bot's owner can always access it.
      */
     is_access_restricted: boolean;
     /**
@@ -9748,13 +9748,13 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the list of the bot&#39;s commands. See {@link https://core.telegram.org/bots/features#commands | this manual} for more details about bot commands. Returns `true` on success.
+   * Use this method to change the list of the bot's commands. See {@link https://core.telegram.org/bots/features#commands | this manual} for more details about bot commands. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmycommands}
    */
   setMyCommands(args: {
     /**
-     * A JSON-serialized list of bot commands to be set as the list of the bot&#39;s commands. At most 100 commands can be specified.
+     * A JSON-serialized list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
      */
     commands: BotCommand[];
     /**
@@ -9769,7 +9769,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, {@link https://core.telegram.org/bots/api#determining-list-of-commands | higher level commands} will be shown to affected users. Returns `true` on success.
+   * Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, {@link https://core.telegram.org/bots/api#determining-list-of-commands | higher level commands} will be shown to affected users. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemycommands}
    */
@@ -9786,7 +9786,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of {@link BotCommand} objects. If commands aren&#39;t set, an empty list is returned.
+   * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of {@link BotCommand} objects. If commands aren't set, an empty list is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#getmycommands}
    */
@@ -9803,7 +9803,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s name. Returns `true` on success.
+   * Use this method to change the bot's name. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmyname}
    */
@@ -9833,7 +9833,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns `true` on success.
+   * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmydescription}
    */
@@ -9863,7 +9863,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns `true` on success.
+   * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmyshortdescription}
    */
@@ -9914,37 +9914,37 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns `true` on success.
+   * Use this method to change the bot's menu button in a private chat, or the default menu button. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatmenubutton}
    */
   setChatMenuButton(args: {
     /**
-     * Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be changed.
+     * Unique identifier for the target private chat. If not specified, the bot's default menu button will be changed.
      */
     chat_id?: number;
     /**
-     * A JSON-serialized object for the bot&#39;s new menu button. Defaults to {@link MenuButtonDefault}.
+     * A JSON-serialized object for the bot's new menu button. Defaults to {@link MenuButtonDefault}.
      */
     menu_button?: MenuButton;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns {@link MenuButton} on success.
+   * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns {@link MenuButton} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getchatmenubutton}
    */
   getChatMenuButton(args: {
     /**
-     * Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be returned.
+     * Unique identifier for the target private chat. If not specified, the bot's default menu button will be returned.
      */
     chat_id?: number;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns `true` on success.
+   * Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmydefaultadministratorrights}
    */
@@ -9982,7 +9982,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns `true` on success.
+   * Sends a gift to the given user or channel chat. The gift can't be converted to Telegram Stars by the receiver. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendgift}
    */
@@ -9996,11 +9996,11 @@ export interface ApiMethods {
      */
     chat_id?: number | string;
     /**
-     * Identifier of the gift; limited gifts can&#39;t be sent to channel chats
+     * Identifier of the gift; limited gifts can't be sent to channel chats
      */
     gift_id: string;
     /**
-     * Pass `true` to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver
+     * Pass `true` to pay for the gift upgrade from the bot's balance, thereby making the upgrade free for the receiver
      */
     pay_for_upgrade?: boolean;
     /**
@@ -10062,7 +10062,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.
+     * Custom description for the verification; 0-70 characters. Must be empty if the organization isn't allowed to provide a custom verification description.
      */
     custom_description?: string;
   }): never;
@@ -10075,11 +10075,11 @@ export interface ApiMethods {
    */
   verifyChat(args: {
     /**
-     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. Channel direct messages chats can&#39;t be verified.
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format `@username`. Channel direct messages chats can't be verified.
      */
     chat_id: number | string;
     /**
-     * Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.
+     * Custom description for the verification; 0-70 characters. Must be empty if the organization isn't allowed to provide a custom verification description.
      */
     custom_description?: string;
   }): never;
@@ -10219,7 +10219,7 @@ export interface ApiMethods {
      */
     photo: InputProfilePhoto;
     /**
-     * Pass `true` to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.
+     * Pass `true` to set the public photo, which will be visible even if the main photo is hidden by the business account's privacy settings. An account can have only one public photo.
      */
     is_public?: boolean;
   }): never;
@@ -10236,7 +10236,7 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * Pass `true` to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.
+     * Pass `true` to remove the public photo, which is visible even if the main photo is hidden by the business account's privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.
      */
     is_public?: boolean;
   }): never;
@@ -10277,7 +10277,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the _can_transfer_stars_ business bot right. Returns `true` on success.
+   * Transfers Telegram Stars from the business account balance to the bot's balance. Requires the _can_transfer_stars_ business bot right. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#transferbusinessaccountstars}
    */
@@ -10304,11 +10304,11 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * Pass `true` to exclude gifts that aren&#39;t saved to the account&#39;s profile page
+     * Pass `true` to exclude gifts that aren't saved to the account's profile page
      */
     exclude_unsaved?: boolean;
     /**
-     * Pass `true` to exclude gifts that are saved to the account&#39;s profile page
+     * Pass `true` to exclude gifts that are saved to the account's profile page
      */
     exclude_saved?: boolean;
     /**
@@ -10320,7 +10320,7 @@ export interface ApiMethods {
      */
     exclude_limited_upgradable?: boolean;
     /**
-     * Pass `true` to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique
      */
     exclude_limited_non_upgradable?: boolean;
     /**
@@ -10328,7 +10328,7 @@ export interface ApiMethods {
      */
     exclude_unique?: boolean;
     /**
-     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram
      */
     exclude_from_blockchain?: boolean;
     /**
@@ -10365,11 +10365,11 @@ export interface ApiMethods {
      */
     exclude_limited_upgradable?: boolean;
     /**
-     * Pass `true` to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique
      */
     exclude_limited_non_upgradable?: boolean;
     /**
-     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram
      */
     exclude_from_blockchain?: boolean;
     /**
@@ -10402,11 +10402,11 @@ export interface ApiMethods {
      */
     chat_id: number | string;
     /**
-     * Pass `true` to exclude gifts that aren&#39;t saved to the chat&#39;s profile page. Always `true`, unless the bot has the _can_post_messages_ administrator right in the channel.
+     * Pass `true` to exclude gifts that aren't saved to the chat's profile page. Always `true`, unless the bot has the _can_post_messages_ administrator right in the channel.
      */
     exclude_unsaved?: boolean;
     /**
-     * Pass `true` to exclude gifts that are saved to the chat&#39;s profile page. Always `false`, unless the bot has the _can_post_messages_ administrator right in the channel.
+     * Pass `true` to exclude gifts that are saved to the chat's profile page. Always `false`, unless the bot has the _can_post_messages_ administrator right in the channel.
      */
     exclude_saved?: boolean;
     /**
@@ -10418,11 +10418,11 @@ export interface ApiMethods {
      */
     exclude_limited_upgradable?: boolean;
     /**
-     * Pass `true` to exclude gifts that can be purchased a limited number of times and can&#39;t be upgraded to unique
+     * Pass `true` to exclude gifts that can be purchased a limited number of times and can't be upgraded to unique
      */
     exclude_limited_non_upgradable?: boolean;
     /**
-     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can&#39;t be resold or transferred in Telegram
+     * Pass `true` to exclude gifts that were assigned from the TON blockchain and can't be resold or transferred in Telegram
      */
     exclude_from_blockchain?: boolean;
     /**
@@ -10480,7 +10480,7 @@ export interface ApiMethods {
      */
     keep_original_details?: boolean;
     /**
-     * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If `gift.prepaid_upgrade_star_count &gt; 0`, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and `gift.upgrade_star_count` must be passed.
+     * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If `gift.prepaid_upgrade_star_count > 0`, then pass 0, otherwise, the _can_transfer_stars_ business bot right is required and `gift.upgrade_star_count` must be passed.
      */
     star_count?: number;
   }): never;
@@ -10734,7 +10734,7 @@ export interface ApiMethods {
      */
     inline_message_id?: string;
     /**
-     * New text of the message, 1-4096 characters after entity parsing; required if _rich_message_ isn&#39;t specified
+     * New text of the message, 1-4096 characters after entity parsing; required if _rich_message_ isn't specified
      */
     text?: string;
     /**
@@ -10750,7 +10750,7 @@ export interface ApiMethods {
      */
     link_preview_options?: LinkPreviewOptions;
     /**
-     * New rich content of the message; required if _text_ isn&#39;t specified. Direct upload of new files isn&#39;t supported when an inline message is edited.
+     * New rich content of the message; required if _text_ isn't specified. Direct upload of new files isn't supported when an inline message is edited.
      */
     rich_message?: InputRichMessage;
     /**
@@ -10806,7 +10806,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
    */
@@ -11063,7 +11063,7 @@ export interface ApiMethods {
      */
     ephemeral_message_id: number;
     /**
-     * A JSON-serialized object for the new media content of the message. A new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL.
+     * A JSON-serialized object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL.
      */
     media: InputMedia;
     /**
@@ -11136,7 +11136,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns `true` on success.
+   * Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#approvesuggestedpost}
    */
@@ -11157,7 +11157,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns `true` on success.
+   * Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#declinesuggestedpost}
    */
@@ -11181,7 +11181,7 @@ export interface ApiMethods {
    * Use this method to delete a message, including service messages, with the following limitations:
    *
    * - A message can only be deleted if it was sent less than 48 hours ago.
-   * - Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.
+   * - Service messages about a supergroup, channel, or forum topic creation can't be deleted.
    * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
    * - Bots can delete outgoing messages in private chats, groups, and supergroups.
    * - Bots can delete incoming messages in private chats.
@@ -11207,7 +11207,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns `true` on success.
+   * Use this method to delete multiple messages simultaneously. If some of the specified messages can't be found, they are skipped. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemessages}
    */
@@ -11245,7 +11245,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns `true` on success.
+   * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemessagereaction}
    */
@@ -11270,7 +11270,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns `true` on success.
+   * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the 'can_delete_messages' administrator right in the chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deleteallmessagereactions}
    */
@@ -11301,7 +11301,7 @@ export interface Sticker {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -11414,7 +11414,7 @@ export interface MaskPosition {
  */
 export interface InputSticker {
   /**
-   * The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
+   * The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://\<file_attach_name>” to upload a new file using multipart/form-data under \<file_attach_name> name. Animated and video stickers can't be uploaded via HTTP URL. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}
    */
   sticker: string;
   /**
@@ -11466,7 +11466,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Video and animated stickers can&#39;t be sent via an HTTP URL.
+     * Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Video and animated stickers can't be sent via an HTTP URL.
      */
     sticker: InputFile | string;
     /**
@@ -11482,7 +11482,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -11562,7 +11562,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., _animals_). Can contain only English letters, digits and underscores. Must begin with a letter, can&#39;t contain consecutive underscores and must end in `&quot;_by_&lt;bot_username&gt;&quot;`. `&lt;bot_username&gt;` is case insensitive. 1-64 characters.
+     * Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., _animals_). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in `"_by_<bot_username>"`. `<bot_username>` is case insensitive. 1-64 characters.
      */
     name: string;
     /**
@@ -11599,7 +11599,7 @@ export interface ApiMethods {
      */
     name: string;
     /**
-     * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn&#39;t changed.
+     * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.
      */
     sticker: InputSticker;
   }): never;
@@ -11743,7 +11743,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see {@link https://core.telegram.org/stickers#animation-requirements | https://core.telegram.org/stickers#animation-requirements} for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see {@link https://core.telegram.org/stickers#video-requirements | https://core.telegram.org/stickers#video-requirements} for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+     * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see {@link https://core.telegram.org/stickers#animation-requirements | https://core.telegram.org/stickers#animation-requirements} for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see {@link https://core.telegram.org/stickers#video-requirements | https://core.telegram.org/stickers#video-requirements} for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. {@link https://core.telegram.org/bots/api#sending-files | More information on Sending Files »}. Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
      */
     thumbnail?: InputFile | string;
     /**
@@ -11790,7 +11790,7 @@ export interface ApiMethods {
  * 
  * {@link InputRichMessage | Rich messages} support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using {@link https://core.telegram.org/bots/api#rich-markdown-style | Markdown-style} or {@link https://core.telegram.org/bots/api#rich-html-style | HTML-style} formatting, or explicit {@link InputRichBlock | blocks}.
  * 
- * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass `true` in the _skip_entity_detection_ field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
+ * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass `true` in the _skip_entity_detection_ field. Note that Telegram clients will display an alert to the user before opening an inline link ('Open this link?' together with the full URL).
  *
  * When {@link https://core.telegram.org/bots/api#rich-markdown-style | Markdown-style} or {@link https://core.telegram.org/bots/api#rich-html-style | HTML-style} formatting is used, you can use links in the form `tg://photo?id=...`, `tg://video?id=...`, and `tg://audio?id=...` instead of an HTTP URL to reuse previously uploaded files or upload a new file.
  *
@@ -11823,7 +11823,7 @@ export interface ApiMethods {
  * [inline phone number](tel:+123456789)
  * [inline mention of a user](tg://user?id=123456789)
  * ![👍](tg://emoji?id=5368324170671202286)
- * ![22:45 tomorrow](tg://time?unix=1647531900&amp;format=wDT)
+ * ![22:45 tomorrow](tg://time?unix=1647531900&format=wDT)
  * $x^2 + y^2$
  * \#hashtag $USD +12345678901, card: 4242 4242 4242 4242, https://t.me t.me a@t.me /command @username
  * all the text above was on the same line
@@ -11838,7 +11838,7 @@ export interface ApiMethods {
  * Paragraph text
  * 
  * ```python
- * print(&#39;pre-formatted fixed-width code block written in the Python programming language&#39;)
+ * print('pre-formatted fixed-width code block written in the Python programming language')
  * ```
  * 
  * ---
@@ -11853,12 +11853,12 @@ export interface ApiMethods {
  * - [ ] task list item
  * - [x] completed task list item
  * 
- * &gt;Block quotation started
- * &gt;
- * &gt;Block quotation continued on the next line
- * &gt;Block quotation continued on the same line
- * &gt;
- * &gt;The last line of the block quotation
+ * >Block quotation started
+ * >
+ * >Block quotation continued on the next line
+ * >Block quotation continued on the same line
+ * >
+ * >The last line of the block quotation
  * 
  * ![](https://telegram.org/example/photo.jpg)
  * ![](https://telegram.org/example/video.mp4)
@@ -11866,11 +11866,11 @@ export interface ApiMethods {
  * ![](https://telegram.org/example/audio.ogg)
  * ![](https://telegram.org/example/animation.gif)
  * 
- * ![](https://telegram.org/example/photo.jpg &quot;Photo caption&quot;)
- * ![](https://telegram.org/example/video.mp4 &quot;Video caption&quot;)
- * ![](https://telegram.org/example/audio.mp3 &quot;Audio caption&quot;)
- * ![](https://telegram.org/example/audio.ogg &quot;Voice note caption&quot;)
- * ![](https://telegram.org/example/animation.gif &quot;Animation caption&quot;)
+ * ![](https://telegram.org/example/photo.jpg "Photo caption")
+ * ![](https://telegram.org/example/video.mp4 "Video caption")
+ * ![](https://telegram.org/example/audio.mp3 "Audio caption")
+ * ![](https://telegram.org/example/audio.ogg "Voice note caption")
+ * ![](https://telegram.org/example/animation.gif "Animation caption")
  * 
  * | Header 1 | Header 2 |
  * |:---------|:--------:|
@@ -11888,69 +11888,69 @@ export interface ApiMethods {
  * ```
  * 
  * ## Example Nested Syntax Report for _Q1_
- * Intro with &lt;u&gt;underlined text&lt;/u&gt;, ==marked text==, and $x^2 + y^2$.
- * **Bold _italic &lt;u&gt;underlined italic bold&lt;/u&gt; italic_ bold**
- * &lt;u&gt;In inline tags, nested **markdown** is parsed&lt;/u&gt;
- * &gt;Quote with **bold text, ~~strikethrough, and &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;~~**, plus [a link](https://t.me/).
+ * Intro with <u>underlined text</u>, ==marked text==, and $x^2 + y^2$.
+ * **Bold _italic <u>underlined italic bold</u> italic_ bold**
+ * <u>In inline tags, nested **markdown** is parsed</u>
+ * >Quote with **bold text, ~~strikethrough, and <tg-spoiler>spoiler</tg-spoiler>~~**, plus [a link](https://t.me/).
  * 
- * - List item with `code`, &lt;sup&gt;superscript&lt;/sup&gt;, &lt;sub&gt;subscript&lt;/sub&gt;, and a footnote[^note]
- * - Another item with **bold &lt;tg-spoiler&gt;&lt;code&gt;spoiler code&lt;/code&gt;&lt;/tg-spoiler&gt;**
- * - Another item with ~~strikethrough and &lt;ins&gt;inserted text&lt;/ins&gt;~~
+ * - List item with `code`, <sup>superscript</sup>, <sub>subscript</sub>, and a footnote[^note]
+ * - Another item with **bold <tg-spoiler><code>spoiler code</code></tg-spoiler>**
+ * - Another item with ~~strikethrough and <ins>inserted text</ins>~~
  * 
  * | Metric | Value |
  * |:-------|------:|
- * | Speed  | **42** &lt;sup&gt;ms&lt;/sup&gt; |
- * | Status | &lt;tg-spoiler&gt;ready&lt;/tg-spoiler&gt; |
+ * | Speed  | **42** <sup>ms</sup> |
+ * | Status | <tg-spoiler>ready</tg-spoiler> |
  * 
- * [^note]: Footnote with _italic text_ and &lt;u&gt;HTML underline&lt;/u&gt;.
+ * [^note]: Footnote with _italic text_ and <u>HTML underline</u>.
  * 
  * ---
  * 
  * # Details blocks can contain Markdown content:
  * 
- * &lt;details open&gt;&lt;summary&gt;Summary with **bold text**&lt;/summary&gt;
+ * <details open><summary>Summary with **bold text**</summary>
  * 
  * ### Details heading
  * - List item with _italic text_
- * - List item with &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
+ * - List item with <tg-spoiler>spoiler</tg-spoiler>
  * 
- * &lt;/details&gt;
+ * </details>
  * 
  * # Collages and slideshows can contain Markdown media blocks:
  * 
- * &lt;tg-collage&gt;
+ * <tg-collage>
  * 
  * ![](https://telegram.org/example/photo.jpg)
  * ![](https://telegram.org/example/video.mp4)
  * 
- * &lt;/tg-collage&gt;
+ * </tg-collage>
  * 
- * &lt;tg-slideshow&gt;
+ * <tg-slideshow>
  * 
  * ![](https://telegram.org/example/photo.jpg)
  * ![](https://telegram.org/example/video.mp4)
  * 
- * &lt;/tg-slideshow&gt;
+ * </tg-slideshow>
  * ````
  * 
- * For formatting features that don&#39;t have Markdown syntax, use {@link https://core.telegram.org/bots/api#rich-html-style | HTML tags}:
+ * For formatting features that don't have Markdown syntax, use {@link https://core.telegram.org/bots/api#rich-html-style | HTML tags}:
  * 
  * ```html
- * &lt;u&gt;underlined text&lt;/u&gt;, &lt;ins&gt;underlined text&lt;/ins&gt;
- * &lt;sub&gt;subscript text&lt;/sub&gt;
- * &lt;sup&gt;superscript text&lt;/sup&gt;
- * &lt;a name=&quot;chapter-1&quot;&gt;&lt;/a&gt;
- * &lt;aside&gt;Pull quote&lt;cite&gt;The Author&lt;/cite&gt;&lt;/aside&gt;
- * &lt;details open&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
- * &lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;
- * &lt;tg-collage&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Caption&lt;cite&gt;The Author&lt;/cite&gt;&lt;/figcaption&gt;&lt;/tg-collage&gt;
- * &lt;tg-slideshow&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;figcaption&gt;Slideshow caption&lt;cite&gt;The Author&lt;/cite&gt;&lt;/figcaption&gt;&lt;/tg-slideshow&gt;
+ * <u>underlined text</u>, <ins>underlined text</ins>
+ * <sub>subscript text</sub>
+ * <sup>superscript text</sup>
+ * <a name="chapter-1"></a>
+ * <aside>Pull quote<cite>The Author</cite></aside>
+ * <details open><summary>Title</summary>Content</details>
+ * <tg-map lat="41.9" long="12.5" zoom="14"/>
+ * <tg-collage><img src="https://telegram.org/example/photo.jpg"/><figcaption>Caption<cite>The Author</cite></figcaption></tg-collage>
+ * <tg-slideshow><img src="https://telegram.org/example/photo.jpg"/><video src="https://telegram.org/example/video.mp4"/><figcaption>Slideshow caption<cite>The Author</cite></figcaption></tg-slideshow>
  * ```
  * 
  * Additionally, you can use the following tag in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}:
  * 
  * ```html
- * &lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;
+ * <tg-thinking>Thinking...</tg-thinking>
  * ```
  * 
  * Please note:
@@ -11962,7 +11962,7 @@ export interface ApiMethods {
  * - In media syntax, the optional title after the URL is used as the caption; for example,  displays “Photo caption” under the media.
  * - Table cells can contain only inline formatting.
  * - Formula source is treated as raw LaTeX.
- * - Markdown isn&#39;t parsed inside block HTML tags other than &lt;details&gt;, &lt;tg-collage&gt; and &lt;tg-slideshow&gt;, therefore only HTML tags can be used there.
+ * - Markdown isn't parsed inside block HTML tags other than \<details>, \<tg-collage> and \<tg-slideshow>, therefore only HTML tags can be used there.
  * - See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details about supported date-time formats.
  *
  * ##### Rich HTML style
@@ -11970,112 +11970,112 @@ export interface ApiMethods {
  * To use this mode, pass rich message content in the _html_ field. The following tags are currently supported:
  * 
  * ```html
- * &lt;a name=&quot;chapter-0&quot;&gt;&lt;/a&gt;
- * &lt;b&gt;bold text&lt;/b&gt;, &lt;strong&gt;bold text&lt;/strong&gt;
- * &lt;i&gt;italic text&lt;/i&gt;, &lt;em&gt;italic text&lt;/em&gt;
- * &lt;u&gt;underlined text&lt;/u&gt;, &lt;ins&gt;underlined text&lt;/ins&gt;
- * &lt;s&gt;strikethrough text&lt;/s&gt;, &lt;strike&gt;strikethrough text&lt;/strike&gt;, &lt;del&gt;strikethrough text&lt;/del&gt;
- * &lt;code&gt;inline fixed-width code&lt;/code&gt;
- * &lt;mark&gt;marked text&lt;/mark&gt;
- * &lt;sub&gt;subscript text&lt;/sub&gt;
- * &lt;sup&gt;superscript text&lt;/sup&gt;
- * &lt;tg-spoiler&gt;spoiler&lt;/tg-spoiler&gt;
+ * <a name="chapter-0"></a>
+ * <b>bold text</b>, <strong>bold text</strong>
+ * <i>italic text</i>, <em>italic text</em>
+ * <u>underlined text</u>, <ins>underlined text</ins>
+ * <s>strikethrough text</s>, <strike>strikethrough text</strike>, <del>strikethrough text</del>
+ * <code>inline fixed-width code</code>
+ * <mark>marked text</mark>
+ * <sub>subscript text</sub>
+ * <sup>superscript text</sup>
+ * <tg-spoiler>spoiler</tg-spoiler>
  * 
- * &lt;a href=&quot;#note-1&quot;&gt;Reference&lt;/a&gt;
- * &lt;a href=&quot;https://t.me/&quot;&gt;inline URL&lt;/a&gt;
- * &lt;a href=&quot;mailto:user@example.com&quot;&gt;inline e-mail&lt;/a&gt;
- * &lt;a href=&quot;tel:+123456789&quot;&gt;inline phone number&lt;/a&gt;
- * &lt;a href=&quot;tg://user?id=123456789&quot;&gt;inline mention of a user&lt;/a&gt;
- * &lt;a href=&quot;#chapter-1&quot;&gt;in-document link&lt;/a&gt;
- * &lt;a name=&quot;chapter-1&quot;&gt;&lt;/a&gt;
+ * <a href="#note-1">Reference</a>
+ * <a href="https://t.me/">inline URL</a>
+ * <a href="mailto:user@example.com">inline e-mail</a>
+ * <a href="tel:+123456789">inline phone number</a>
+ * <a href="tg://user?id=123456789">inline mention of a user</a>
+ * <a href="#chapter-1">in-document link</a>
+ * <a name="chapter-1"></a>
  * 
- * &lt;tg-reference name=&quot;note-1&quot;&gt;Referenced text&lt;/tg-reference&gt;
- * &lt;tg-emoji emoji-id=&quot;5368324170671202286&quot;&gt;👍&lt;/tg-emoji&gt;
- * &lt;img src=&quot;tg://emoji?id=5368324170671202286&quot; alt=&quot;img class="&quot;/&gt;
- * &lt;tg-time unix=&quot;1647531900&quot; format=&quot;wDT&quot;&gt;22:45 tomorrow&lt;/tg-time&gt;
- * &lt;tg-math&gt;x^2 + y^2&lt;/tg-math&gt;
+ * <tg-reference name="note-1">Referenced text</tg-reference>
+ * <tg-emoji emoji-id="5368324170671202286">👍</tg-emoji>
+ * <img src="tg://emoji?id=5368324170671202286" alt="img class=""/>
+ * <tg-time unix="1647531900" format="wDT">22:45 tomorrow</tg-time>
+ * <tg-math>x^2 + y^2</tg-math>
  * 
  * #hashtag $USD +12345678901, card: 4242 4242 4242 4242, https://t.me t.me a@t.me /command @username
  * 
  * all the text above was on the same line
  * 
- * &lt;h1&gt;Heading 1&lt;/h1&gt;
- * &lt;h2&gt;Heading 2&lt;/h2&gt;
- * &lt;h3&gt;Heading 3&lt;/h3&gt;
- * &lt;h4&gt;Heading 4&lt;/h4&gt;
- * &lt;h5&gt;Heading 5&lt;/h5&gt;
- * &lt;h6&gt;Heading 6&lt;/h6&gt;
+ * <h1>Heading 1</h1>
+ * <h2>Heading 2</h2>
+ * <h3>Heading 3</h3>
+ * <h4>Heading 4</h4>
+ * <h5>Heading 5</h5>
+ * <h6>Heading 6</h6>
  * 
- * &lt;a name=&quot;chapter-2&quot;&gt;&lt;/a&gt;
+ * <a name="chapter-2"></a>
  * 
- * &lt;p&gt;Paragraph text&lt;/p&gt;
- * &lt;pre&gt;pre-formatted fixed-width code block&lt;/pre&gt;
- * &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;  print(&#39;pre-formatted fixed-width code block written in the Python programming language&#39;)&lt;/code&gt;&lt;/pre&gt;
- * &lt;footer&gt;Footer text&lt;/footer&gt;
- * &lt;hr/&gt;
- * &lt;ul&gt;&lt;li&gt;unordered list item&lt;/li&gt;&lt;/ul&gt;
- * &lt;ol&gt;&lt;li&gt;ordered list item&lt;/li&gt;&lt;/ol&gt;
- * &lt;ol start=&quot;3&quot; type=&quot;a&quot; reversed&gt;&lt;li&gt;ordered list item&lt;/li&gt;&lt;/ol&gt;
- * &lt;ol&gt;&lt;li value=&quot;7&quot; type=&quot;i&quot;&gt;ordered list item with explicit number&lt;/li&gt;&lt;/ol&gt;
- * &lt;ul&gt;
- * &lt;li&gt;&lt;input type=&quot;checkbox&quot; checked&gt;Checked checkbox&lt;/li&gt;
- * &lt;li&gt;&lt;input type=&quot;checkbox&quot;&gt;Unchecked checkbox&lt;/li&gt;
- * &lt;/ul&gt;
+ * <p>Paragraph text</p>
+ * <pre>pre-formatted fixed-width code block</pre>
+ * <pre><code class="language-python">  print('pre-formatted fixed-width code block written in the Python programming language')</code></pre>
+ * <footer>Footer text</footer>
+ * <hr/>
+ * <ul><li>unordered list item</li></ul>
+ * <ol><li>ordered list item</li></ol>
+ * <ol start="3" type="a" reversed><li>ordered list item</li></ol>
+ * <ol><li value="7" type="i">ordered list item with explicit number</li></ol>
+ * <ul>
+ * <li><input type="checkbox" checked>Checked checkbox</li>
+ * <li><input type="checkbox">Unchecked checkbox</li>
+ * </ul>
  * 
- * &lt;blockquote&gt;Block quotation started&lt;br&gt;Block quotation continued&lt;br&gt;The last line of the block quotation&lt;cite&gt;The Author&lt;/cite&gt;&lt;/blockquote&gt;
- * &lt;aside&gt;Pull quote&lt;cite&gt;The Author&lt;/cite&gt;&lt;/aside&gt;
+ * <blockquote>Block quotation started<br>Block quotation continued<br>The last line of the block quotation<cite>The Author</cite></blockquote>
+ * <aside>Pull quote<cite>The Author</cite></aside>
  * 
- * &lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;
- * &lt;video src=&quot;https://telegram.org/example/video.mp4&quot;&gt;&lt;/video&gt;
- * &lt;audio src=&quot;https://telegram.org/example/audio.mp3&quot;&gt;&lt;/audio&gt;
- * &lt;audio src=&quot;https://telegram.org/example/audio.ogg&quot;&gt;&lt;/audio&gt;
- * &lt;video src=&quot;https://telegram.org/example/animation.gif&quot;&gt;&lt;/video&gt;
+ * <img src="https://telegram.org/example/photo.jpg"/>
+ * <video src="https://telegram.org/example/video.mp4"></video>
+ * <audio src="https://telegram.org/example/audio.mp3"></audio>
+ * <audio src="https://telegram.org/example/audio.ogg"></audio>
+ * <video src="https://telegram.org/example/animation.gif"></video>
  * 
- * &lt;figure&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot; tg-spoiler/&gt;&lt;figcaption&gt;Photo caption&lt;cite&gt;Photo credit&lt;/cite&gt;&lt;/figcaption&gt;&lt;/figure&gt;
- * &lt;figure&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot; tg-spoiler&gt;&lt;/video&gt;&lt;figcaption&gt;Video caption&lt;/figcaption&gt;&lt;/figure&gt;
- * &lt;figure&gt;&lt;audio src=&quot;https://telegram.org/example/audio.mp3&quot;&gt;&lt;/audio&gt;&lt;figcaption&gt;Audio caption&lt;/figcaption&gt;&lt;/figure&gt;
- * &lt;figure&gt;&lt;audio src=&quot;https://telegram.org/example/audio.ogg&quot;&gt;&lt;/audio&gt;&lt;figcaption&gt;Voice note caption&lt;/figcaption&gt;&lt;/figure&gt;
- * &lt;figure&gt;&lt;video src=&quot;https://telegram.org/example/animation.gif&quot; tg-spoiler&gt;&lt;/video&gt;&lt;figcaption&gt;Animation caption&lt;/figcaption&gt;&lt;/figure&gt;
+ * <figure><img src="https://telegram.org/example/photo.jpg" tg-spoiler/><figcaption>Photo caption<cite>Photo credit</cite></figcaption></figure>
+ * <figure><video src="https://telegram.org/example/video.mp4" tg-spoiler></video><figcaption>Video caption</figcaption></figure>
+ * <figure><audio src="https://telegram.org/example/audio.mp3"></audio><figcaption>Audio caption</figcaption></figure>
+ * <figure><audio src="https://telegram.org/example/audio.ogg"></audio><figcaption>Voice note caption</figcaption></figure>
+ * <figure><video src="https://telegram.org/example/animation.gif" tg-spoiler></video><figcaption>Animation caption</figcaption></figure>
  * 
- * &lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;
- * &lt;figure&gt;&lt;tg-map lat=&quot;41.9&quot; long=&quot;12.5&quot; zoom=&quot;14&quot;/&gt;&lt;figcaption&gt;Map caption&lt;/figcaption&gt;&lt;/figure&gt;
+ * <tg-map lat="41.9" long="12.5" zoom="14"/>
+ * <figure><tg-map lat="41.9" long="12.5" zoom="14"/><figcaption>Map caption</figcaption></figure>
  * 
- * &lt;tg-collage&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;/tg-collage&gt;
- * &lt;tg-collage&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Collage caption&lt;/figcaption&gt;&lt;/tg-collage&gt;
- * &lt;tg-slideshow&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;/tg-slideshow&gt;
- * &lt;tg-slideshow&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;figcaption&gt;Slideshow caption&lt;/figcaption&gt;&lt;/tg-slideshow&gt;
+ * <tg-collage><img src="https://telegram.org/example/photo.jpg"/><video src="https://telegram.org/example/video.mp4"/></tg-collage>
+ * <tg-collage><video src="https://telegram.org/example/video.mp4"/><img src="https://telegram.org/example/photo.jpg"/><figcaption>Collage caption</figcaption></tg-collage>
+ * <tg-slideshow><img src="https://telegram.org/example/photo.jpg"/><video src="https://telegram.org/example/video.mp4"/></tg-slideshow>
+ * <tg-slideshow><video src="https://telegram.org/example/video.mp4"/><img src="https://telegram.org/example/photo.jpg"/><figcaption>Slideshow caption</figcaption></tg-slideshow>
  * 
- * &lt;table&gt;&lt;tr&gt;&lt;th&gt;Header 1&lt;/th&gt;&lt;th&gt;Header 2&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Value 1&lt;/td&gt;&lt;td&gt;Value 2&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
- * &lt;table bordered striped&gt;&lt;caption&gt;Table caption&lt;/caption&gt;
- * &lt;tr&gt;&lt;td colspan=&quot;2&quot; rowspan=&quot;2&quot; align=&quot;left&quot;&gt;Value&lt;/td&gt;&lt;td align=&quot;center&quot;&gt;Value2&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;Value3&lt;/td&gt;&lt;/tr&gt;
- * &lt;tr&gt;&lt;td valign=&quot;top&quot;&gt;Value4&lt;/td&gt;&lt;td valign=&quot;middle&quot;&gt;Value5&lt;/td&gt;&lt;td valign=&quot;bottom&quot;&gt;Value6&lt;/td&gt;&lt;/tr&gt;
- * &lt;tr&gt;&lt;td&gt;Value7&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+ * <table><tr><th>Header 1</th><th>Header 2</th></tr><tr><td>Value 1</td><td>Value 2</td></tr></table>
+ * <table bordered striped><caption>Table caption</caption>
+ * <tr><td colspan="2" rowspan="2" align="left">Value</td><td align="center">Value2</td><td align="right">Value3</td></tr>
+ * <tr><td valign="top">Value4</td><td valign="middle">Value5</td><td valign="bottom">Value6</td></tr>
+ * <tr><td>Value7</td></tr></table>
  * 
- * &lt;details&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
- * &lt;details open&gt;&lt;summary&gt;Title&lt;/summary&gt;Content&lt;/details&gt;
- * &lt;tg-math-block&gt;E = mc^2&lt;/tg-math-block&gt;
+ * <details><summary>Title</summary>Content</details>
+ * <details open><summary>Title</summary>Content</details>
+ * <tg-math-block>E = mc^2</tg-math-block>
  * ```
  * 
  * Additionally, you can use the following tag in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}:
  * 
  * ```html
- * &lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;
+ * <tg-thinking>Thinking...</tg-thinking>
  * ```
  *
  * Please note:
  *
  * - Only the tags mentioned above are currently supported.
  * - All numerical HTML entities are supported.
- * - The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;`, `&amp;quot;`, `&amp;apos;`, `&amp;nbsp;`, `&amp;hellip;`, `&amp;mdash;`, `&amp;ndash;`, `&amp;lsquo;`, `&amp;rsquo;`, `&amp;ldquo;` and `&amp;rdquo;`.
+ * - The API currently supports only the following named HTML entities: `&lt;`, `&gt;`, `&amp;`, `&quot;`, `&apos;`, `&nbsp;`, `&hellip;`, `&mdash;`, `&ndash;`, `&lsquo;`, `&rsquo;`, `&ldquo;` and `&rdquo;`.
  * - Use nested `pre` and `code` tags to define the programming language for a pre-formatted block.
- * - Programming language can&#39;t be specified for standalone `code` tags.
+ * - Programming language can't be specified for standalone `code` tags.
  * - Links `mailto:...`, `tel:...`, and `tg://user?id=...` are rendered as e-mail links, phone links, and inline mentions respectively. Other supported links are rendered as regular inline links.
  * - Images, videos, and audio files can be specified only as separate media blocks.
  * - Media blocks support only HTTP and HTTPS URLs.
- * - An empty `&lt;a name=&quot;...&quot;&gt;&lt;/a&gt;` on its own creates an anchor that can be linked to with `&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;`.
- * - In `&lt;figcaption&gt;`, you can use `&lt;cite&gt;` tags to specify caption credit.
- * - Use `&lt;tg-reference name=&quot;...&quot;&gt;...&lt;/tg-reference&gt;` to define referenced text that can be linked to with `&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;`.
- * - The body of a `&lt;details&gt;` tag can contain rich message content. If the `open` attribute is specified, the block is expanded by default.
+ * - An empty `<a name="..."></a>` on its own creates an anchor that can be linked to with `<a href="#...">...</a>`.
+ * - In `<figcaption>`, you can use `<cite>` tags to specify caption credit.
+ * - Use `<tg-reference name="...">...</tg-reference>` to define referenced text that can be linked to with `<a href="#...">...</a>`.
+ * - The body of a `<details>` tag can contain rich message content. If the `open` attribute is specified, the block is expanded by default.
  * - Formula source is treated as raw LaTeX.
  * - See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details about supported date-time formats.
  */
@@ -12176,7 +12176,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -12199,7 +12199,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendRichMessage | sendRichMessage} with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
+   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendRichMessage | sendRichMessage} with the complete message to persist it in the user's chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendrichmessagedraft}
    */
@@ -12217,7 +12217,7 @@ export interface ApiMethods {
      */
     draft_id: number;
     /**
-     * The partial message to be streamed. Direct upload of new files isn&#39;t supported.
+     * The partial message to be streamed. Direct upload of new files isn't supported.
      */
     rich_message: InputRichMessage;
   }): never;
@@ -12725,7 +12725,7 @@ export interface RichBlockCaption {
    */
   text: RichText;
   /**
-   * Block credit which corresponds to the HTML tag &lt;cite&gt;
+   * Block credit which corresponds to the HTML tag \<cite>
    */
   credit?: RichText;
 }
@@ -12841,7 +12841,7 @@ export type RichBlock =
  | RichBlockVoiceNote
  | RichBlockThinking
 /**
- * A text paragraph, corresponding to the HTML tag `&lt;p&gt;`.
+ * A text paragraph, corresponding to the HTML tag `<p>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockparagraph}
  */
@@ -12856,7 +12856,7 @@ export interface RichBlockParagraph {
   text: RichText;
 }
 /**
- * A section heading, corresponding to the HTML tags `&lt;h1&gt;`, `&lt;h2&gt;`, `&lt;h3&gt;`, `&lt;h4&gt;`, `&lt;h5&gt;`, or `&lt;h6&gt;`.
+ * A section heading, corresponding to the HTML tags `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, or `<h6>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblocksectionheading}
  */
@@ -12875,7 +12875,7 @@ export interface RichBlockSectionHeading {
   size: number;
 }
 /**
- * A preformatted text block, corresponding to the nested HTML tags `&lt;pre&gt;` and `&lt;code&gt;`.
+ * A preformatted text block, corresponding to the nested HTML tags `<pre>` and `<code>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockpreformatted}
  */
@@ -12894,7 +12894,7 @@ export interface RichBlockPreformatted {
   language?: string;
 }
 /**
- * A footer, corresponding to the HTML tag `&lt;footer&gt;`.
+ * A footer, corresponding to the HTML tag `<footer>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockfooter}
  */
@@ -12909,7 +12909,7 @@ export interface RichBlockFooter {
   text: RichText;
 }
 /**
- * A divider, corresponding to the HTML tag `&lt;hr/&gt;`.
+ * A divider, corresponding to the HTML tag `<hr/>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockdivider}
  */
@@ -12920,7 +12920,7 @@ export interface RichBlockDivider {
   type: string;
 }
 /**
- * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `&lt;tg-math-block&gt;`.
+ * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `<tg-math-block>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockmathematicalexpression}
  */
@@ -12935,7 +12935,7 @@ export interface RichBlockMathematicalExpression {
   expression: string;
 }
 /**
- * A block with an anchor, corresponding to the HTML tag `&lt;a&gt;` with the attribute `name`.
+ * A block with an anchor, corresponding to the HTML tag `<a>` with the attribute `name`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockanchor}
  */
@@ -12950,7 +12950,7 @@ export interface RichBlockAnchor {
   name: string;
 }
 /**
- * A list of blocks, corresponding to the HTML tag `&lt;ul&gt;` or `&lt;ol&gt;` with multiple nested tags `&lt;li&gt;`.
+ * A list of blocks, corresponding to the HTML tag `<ul>` or `<ol>` with multiple nested tags `<li>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblocklist}
  */
@@ -12965,7 +12965,7 @@ export interface RichBlockList {
   items: RichBlockListItem[];
 }
 /**
- * A block quotation, corresponding to the HTML tag `&lt;blockquote&gt;`.
+ * A block quotation, corresponding to the HTML tag `<blockquote>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockblockquotation}
  */
@@ -12984,7 +12984,7 @@ export interface RichBlockBlockQuotation {
   credit?: RichText;
 }
 /**
- * A quotation with centered text, loosely corresponding to the HTML tag `&lt;aside&gt;`.
+ * A quotation with centered text, loosely corresponding to the HTML tag `<aside>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockpullquotation}
  */
@@ -13003,7 +13003,7 @@ export interface RichBlockPullQuotation {
   credit?: RichText;
 }
 /**
- * A collage, corresponding to the custom HTML tag `&lt;tg-collage&gt;`.
+ * A collage, corresponding to the custom HTML tag `<tg-collage>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockcollage}
  */
@@ -13022,7 +13022,7 @@ export interface RichBlockCollage {
   caption?: RichBlockCaption;
 }
 /**
- * A slideshow, corresponding to the custom HTML tag `&lt;tg-slideshow&gt;`.
+ * A slideshow, corresponding to the custom HTML tag `<tg-slideshow>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockslideshow}
  */
@@ -13041,7 +13041,7 @@ export interface RichBlockSlideshow {
   caption?: RichBlockCaption;
 }
 /**
- * A table, corresponding to the HTML tag `&lt;table&gt;`.
+ * A table, corresponding to the HTML tag `<table>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblocktable}
  */
@@ -13068,7 +13068,7 @@ export interface RichBlockTable {
   caption?: RichText;
 }
 /**
- * An expandable block for details disclosure, corresponding to the HTML tag `&lt;details&gt;`.
+ * An expandable block for details disclosure, corresponding to the HTML tag `<details>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockdetails}
  */
@@ -13091,7 +13091,7 @@ export interface RichBlockDetails {
   is_open?: true;
 }
 /**
- * A block with a map, corresponding to the custom HTML tag `&lt;tg-map&gt;`.
+ * A block with a map, corresponding to the custom HTML tag `<tg-map>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockmap}
  */
@@ -13122,7 +13122,7 @@ export interface RichBlockMap {
   caption?: RichBlockCaption;
 }
 /**
- * A block with an animation, corresponding to the HTML tag `&lt;video&gt;`.
+ * A block with an animation, corresponding to the HTML tag `<video>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockanimation}
  */
@@ -13145,7 +13145,7 @@ export interface RichBlockAnimation {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a music file, corresponding to the HTML tag `&lt;audio&gt;`.
+ * A block with a music file, corresponding to the HTML tag `<audio>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockaudio}
  */
@@ -13164,7 +13164,7 @@ export interface RichBlockAudio {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a photo, corresponding to the HTML tag `&lt;img&gt;`.
+ * A block with a photo, corresponding to the HTML tag `<img>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockphoto}
  */
@@ -13187,7 +13187,7 @@ export interface RichBlockPhoto {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a video, corresponding to the HTML tag `&lt;video&gt;`.
+ * A block with a video, corresponding to the HTML tag `<video>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockvideo}
  */
@@ -13210,7 +13210,7 @@ export interface RichBlockVideo {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a voice note, corresponding to the HTML tag `&lt;audio&gt;`.
+ * A block with a voice note, corresponding to the HTML tag `<audio>`.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockvoicenote}
  */
@@ -13229,7 +13229,7 @@ export interface RichBlockVoiceNote {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}, therefore it can&#39;t be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
+ * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `<tg-thinking>`. The block may be used only in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}, therefore it can't be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockthinking}
  */
@@ -13320,7 +13320,7 @@ export type InputRichBlock =
  | InputRichBlockVoiceNote
  | InputRichBlockThinking
 /**
- * A text paragraph, corresponding to the HTML tag `&lt;p&gt;`.
+ * A text paragraph, corresponding to the HTML tag `<p>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockparagraph}
  */
@@ -13335,7 +13335,7 @@ export interface InputRichBlockParagraph {
   text: RichText;
 }
 /**
- * A section heading, corresponding to the HTML tags `&lt;h1&gt;`, `&lt;h2&gt;`, `&lt;h3&gt;`, `&lt;h4&gt;`, `&lt;h5&gt;`, or `&lt;h6&gt;`.
+ * A section heading, corresponding to the HTML tags `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, or `<h6>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblocksectionheading}
  */
@@ -13354,7 +13354,7 @@ export interface InputRichBlockSectionHeading {
   size: number;
 }
 /**
- * A preformatted text block, corresponding to the nested HTML tags `&lt;pre&gt;` and `&lt;code&gt;`.
+ * A preformatted text block, corresponding to the nested HTML tags `<pre>` and `<code>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockpreformatted}
  */
@@ -13373,7 +13373,7 @@ export interface InputRichBlockPreformatted {
   language?: string;
 }
 /**
- * A footer, corresponding to the HTML tag `&lt;footer&gt;`.
+ * A footer, corresponding to the HTML tag `<footer>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockfooter}
  */
@@ -13388,7 +13388,7 @@ export interface InputRichBlockFooter {
   text: RichText;
 }
 /**
- * A divider, corresponding to the HTML tag `&lt;hr/&gt;`.
+ * A divider, corresponding to the HTML tag `<hr/>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockdivider}
  */
@@ -13399,7 +13399,7 @@ export interface InputRichBlockDivider {
   type: string;
 }
 /**
- * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `&lt;tg-math-block&gt;`.
+ * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag `<tg-math-block>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockmathematicalexpression}
  */
@@ -13414,7 +13414,7 @@ export interface InputRichBlockMathematicalExpression {
   expression: string;
 }
 /**
- * A block with an anchor, corresponding to the HTML tag `&lt;a&gt;` with the attribute `name`.
+ * A block with an anchor, corresponding to the HTML tag `<a>` with the attribute `name`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockanchor}
  */
@@ -13429,7 +13429,7 @@ export interface InputRichBlockAnchor {
   name: string;
 }
 /**
- * A list of blocks, corresponding to the HTML tag `&lt;ul&gt;` or `&lt;ol&gt;` with multiple nested tags `&lt;li&gt;`.
+ * A list of blocks, corresponding to the HTML tag `<ul>` or `<ol>` with multiple nested tags `<li>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblocklist}
  */
@@ -13444,7 +13444,7 @@ export interface InputRichBlockList {
   items: InputRichBlockListItem[];
 }
 /**
- * A block quotation, corresponding to the HTML tag `&lt;blockquote&gt;`.
+ * A block quotation, corresponding to the HTML tag `<blockquote>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockblockquotation}
  */
@@ -13463,7 +13463,7 @@ export interface InputRichBlockBlockQuotation {
   credit?: RichText;
 }
 /**
- * A quotation with centered text, loosely corresponding to the HTML tag `&lt;aside&gt;`.
+ * A quotation with centered text, loosely corresponding to the HTML tag `<aside>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockpullquotation}
  */
@@ -13482,7 +13482,7 @@ export interface InputRichBlockPullQuotation {
   credit?: RichText;
 }
 /**
- * A collage, corresponding to the custom HTML tag `&lt;tg-collage&gt;`.
+ * A collage, corresponding to the custom HTML tag `<tg-collage>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockcollage}
  */
@@ -13501,7 +13501,7 @@ export interface InputRichBlockCollage {
   caption?: RichBlockCaption;
 }
 /**
- * A slideshow, corresponding to the custom HTML tag `&lt;tg-slideshow&gt;`.
+ * A slideshow, corresponding to the custom HTML tag `<tg-slideshow>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockslideshow}
  */
@@ -13520,7 +13520,7 @@ export interface InputRichBlockSlideshow {
   caption?: RichBlockCaption;
 }
 /**
- * A table, corresponding to the HTML tag `&lt;table&gt;`.
+ * A table, corresponding to the HTML tag `<table>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblocktable}
  */
@@ -13547,7 +13547,7 @@ export interface InputRichBlockTable {
   caption?: RichText;
 }
 /**
- * An expandable block for details disclosure, corresponding to the HTML tag `&lt;details&gt;`.
+ * An expandable block for details disclosure, corresponding to the HTML tag `<details>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockdetails}
  */
@@ -13570,7 +13570,7 @@ export interface InputRichBlockDetails {
   is_open?: true;
 }
 /**
- * A block with a map, corresponding to the custom HTML tag `&lt;tg-map&gt;`. The map&#39;s width and height must not exceed 10000 in total. The width and height ratio must be at most 20.
+ * A block with a map, corresponding to the custom HTML tag `<tg-map>`. The map's width and height must not exceed 10000 in total. The width and height ratio must be at most 20.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockmap}
  */
@@ -13601,7 +13601,7 @@ export interface InputRichBlockMap {
   caption?: RichBlockCaption;
 }
 /**
- * A block with an animation, corresponding to the HTML tag `&lt;video&gt;`.
+ * A block with an animation, corresponding to the HTML tag `<video>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockanimation}
  */
@@ -13620,7 +13620,7 @@ export interface InputRichBlockAnimation {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a music file, corresponding to the HTML tag `&lt;audio&gt;`.
+ * A block with a music file, corresponding to the HTML tag `<audio>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockaudio}
  */
@@ -13639,7 +13639,7 @@ export interface InputRichBlockAudio {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a photo, corresponding to the HTML tag `&lt;img&gt;`.
+ * A block with a photo, corresponding to the HTML tag `<img>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockphoto}
  */
@@ -13658,7 +13658,7 @@ export interface InputRichBlockPhoto {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a video, corresponding to the HTML tag `&lt;video&gt;`.
+ * A block with a video, corresponding to the HTML tag `<video>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockvideo}
  */
@@ -13677,7 +13677,7 @@ export interface InputRichBlockVideo {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a voice note, corresponding to the HTML tag `&lt;audio&gt;`.
+ * A block with a voice note, corresponding to the HTML tag `<audio>`.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockvoicenote}
  */
@@ -13696,7 +13696,7 @@ export interface InputRichBlockVoiceNote {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}, therefore it can&#39;t be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
+ * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `<tg-thinking>`. The block may be used only in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}, therefore it can't be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockthinking}
  */
@@ -13768,7 +13768,7 @@ export interface ApiMethods {
      */
     is_personal?: boolean;
     /**
-     * Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don&#39;t support pagination. Offset length can&#39;t exceed 64 bytes.
+     * Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don't support pagination. Offset length can't exceed 64 bytes.
      */
     next_offset?: string;
     /**
@@ -13794,7 +13794,7 @@ export interface InlineQueryResultsButton {
   /**
    * {@link https://core.telegram.org/bots/features#deep-linking | Deep-linking} parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
    *
-   * _Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a {@link InlineKeyboardMarkup | _switch_inline_} button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
+   * _Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a {@link InlineKeyboardMarkup | _switch_inline_} button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities.
    */
   start_parameter?: string;
 }
@@ -14470,15 +14470,15 @@ export interface InlineQueryResultContact {
    */
   id: string;
   /**
-   * Contact&#39;s phone number
+   * Contact's phone number
    */
   phone_number: string;
   /**
-   * Contact&#39;s first name
+   * Contact's first name
    */
   first_name: string;
   /**
-   * Contact&#39;s last name
+   * Contact's last name
    */
   last_name?: string;
   /**
@@ -15011,15 +15011,15 @@ export interface InputVenueMessageContent {
  */
 export interface InputContactMessageContent {
   /**
-   * Contact&#39;s phone number
+   * Contact's phone number
    */
   phone_number: string;
   /**
-   * Contact&#39;s first name
+   * Contact's first name
    */
   first_name: string;
   /**
-   * Contact&#39;s last name
+   * Contact's last name
    */
   last_name?: string;
   /**
@@ -15086,27 +15086,27 @@ export interface InputInvoiceMessageContent {
    */
   photo_height?: number;
   /**
-   * Pass `true` if you require the user&#39;s full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+   * Pass `true` if you require the user's full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
    */
   need_name?: boolean;
   /**
-   * Pass `true` if you require the user&#39;s phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+   * Pass `true` if you require the user's phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
    */
   need_phone_number?: boolean;
   /**
-   * Pass `true` if you require the user&#39;s email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+   * Pass `true` if you require the user's email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
    */
   need_email?: boolean;
   /**
-   * Pass `true` if you require the user&#39;s shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+   * Pass `true` if you require the user's shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
    */
   need_shipping_address?: boolean;
   /**
-   * Pass `true` if the user&#39;s phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+   * Pass `true` if the user's phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
    */
   send_phone_number_to_provider?: boolean;
   /**
-   * Pass `true` if the user&#39;s email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+   * Pass `true` if the user's email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
    */
   send_email_to_provider?: boolean;
   /**
@@ -15220,27 +15220,27 @@ export interface ApiMethods {
      */
     photo_height?: number;
     /**
-     * Pass `true` if you require the user&#39;s full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_name?: boolean;
     /**
-     * Pass `true` if you require the user&#39;s phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_phone_number?: boolean;
     /**
-     * Pass `true` if you require the user&#39;s email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_email?: boolean;
     /**
-     * Pass `true` if you require the user&#39;s shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_shipping_address?: boolean;
     /**
-     * Pass `true` if the user&#39;s phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if the user's phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     send_phone_number_to_provider?: boolean;
     /**
-     * Pass `true` if the user&#39;s email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if the user's email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     send_email_to_provider?: boolean;
     /**
@@ -15256,7 +15256,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -15272,7 +15272,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.
+     * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Pay `total price`' button will be shown. If not empty, the first button must be a Pay button.
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -15345,27 +15345,27 @@ export interface ApiMethods {
      */
     photo_height?: number;
     /**
-     * Pass `true` if you require the user&#39;s full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's full name to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_name?: boolean;
     /**
-     * Pass `true` if you require the user&#39;s phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's phone number to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_phone_number?: boolean;
     /**
-     * Pass `true` if you require the user&#39;s email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's email address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_email?: boolean;
     /**
-     * Pass `true` if you require the user&#39;s shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if you require the user's shipping address to complete the order. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     need_shipping_address?: boolean;
     /**
-     * Pass `true` if the user&#39;s phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if the user's phone number should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     send_phone_number_to_provider?: boolean;
     /**
-     * Pass `true` if the user&#39;s email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
+     * Pass `true` if the user's email address should be sent to the provider. Ignored for payments in {@link https://t.me/BotNews/90 | Telegram Stars}.
      */
     send_email_to_provider?: boolean;
     /**
@@ -15415,7 +15415,7 @@ export interface ApiMethods {
      */
     ok: boolean;
     /**
-     * Required if _ok_ is `false`. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.
+     * Required if _ok_ is `false`. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.
      */
     error_message?: string;
   }): never;
@@ -15430,7 +15430,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a {@link StarTransactions} object.
+   * Returns the bot's Telegram Star transactions in chronological order. On success, returns a {@link StarTransactions} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getstartransactions}
    */
@@ -15567,7 +15567,7 @@ export interface OrderInfo {
    */
   name?: string;
   /**
-   * User&#39;s phone number
+   * User's phone number
    */
   phone_number?: string;
   /**
@@ -15599,7 +15599,7 @@ export interface ShippingOption {
   prices: LabeledPrice[];
 }
 /**
- * This object contains basic information about a successful payment. Note that if the buyer initiates a chargeback with the relevant payment provider following this transaction, the funds may be debited from your balance. This is outside of Telegram&#39;s control.
+ * This object contains basic information about a successful payment. Note that if the buyer initiates a chargeback with the relevant payment provider following this transaction, the funds may be debited from your balance. This is outside of Telegram's control.
  *
  * @see {@link https://core.telegram.org/bots/api#successfulpayment}
  */
@@ -15985,7 +15985,7 @@ export interface TransactionPartnerOther {
   type: string;
 }
 /**
- * Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted from the bot&#39;s balance. This is outside of Telegram&#39;s control.
+ * Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted from the bot's balance. This is outside of Telegram's control.
  *
  * @see {@link https://core.telegram.org/bots/api#startransaction}
  */
@@ -16043,7 +16043,7 @@ export interface PassportData {
   credentials: EncryptedCredentials;
 }
 /**
- * This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format when decrypted and don&#39;t exceed 10MB.
+ * This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format when decrypted and don't exceed 10MB.
  *
  * @see {@link https://core.telegram.org/bots/api#passportfile}
  */
@@ -16053,7 +16053,7 @@ export interface PassportFile {
    */
   file_id: string;
   /**
-   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
+   * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
    */
   file_unique_id: string;
   /**
@@ -16080,11 +16080,11 @@ export interface EncryptedPassportElement {
    */
   data?: string;
   /**
-   * User&#39;s verified phone number; available only for “phone_number” type
+   * User's verified phone number; available only for “phone_number” type
    */
   phone_number?: string;
   /**
-   * User&#39;s verified email address; available only for “email” type
+   * User's verified email address; available only for “email” type
    */
   email?: string;
   /**
@@ -16119,7 +16119,7 @@ export interface EncryptedPassportElement {
  */
 export interface EncryptedCredentials {
   /**
-   * Base64-encoded encrypted JSON-serialized data with unique user&#39;s payload, data hashes and secrets required for {@link EncryptedPassportElement} decryption and authentication
+   * Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and secrets required for {@link EncryptedPassportElement} decryption and authentication
    */
   data: string;
   /**
@@ -16127,7 +16127,7 @@ export interface EncryptedCredentials {
    */
   hash: string;
   /**
-   * Base64-encoded secret, encrypted with the bot&#39;s public RSA key, required for data decryption
+   * Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
    */
   secret: string;
 }
@@ -16135,7 +16135,7 @@ export interface ApiMethods {
   /**
    * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns `true` on success.
    *
-   * Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
+   * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
    *
    * @see {@link https://core.telegram.org/bots/api#setpassportdataerrors}
    */
@@ -16176,7 +16176,7 @@ export type PassportElementError =
  | PassportElementErrorTranslationFiles
  | PassportElementErrorUnspecified
 /**
- * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field&#39;s value changes.
+ * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field's value changes.
  *
  * @see {@link https://core.telegram.org/bots/api#passportelementerrordatafield}
  */
@@ -16186,7 +16186,7 @@ export interface PassportElementErrorDataField {
    */
   source: string;
   /**
-   * The section of the user&#39;s Telegram Passport which has the error, one of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”
+   * The section of the user's Telegram Passport which has the error, one of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”
    */
   type: string;
   /**
@@ -16213,7 +16213,7 @@ export interface PassportElementErrorFrontSide {
    */
   source: string;
   /**
-   * The section of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
+   * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
    */
   type: string;
   /**
@@ -16236,7 +16236,7 @@ export interface PassportElementErrorReverseSide {
    */
   source: string;
   /**
-   * The section of the user&#39;s Telegram Passport which has the issue, one of “driver_license”, “identity_card”
+   * The section of the user's Telegram Passport which has the issue, one of “driver_license”, “identity_card”
    */
   type: string;
   /**
@@ -16259,7 +16259,7 @@ export interface PassportElementErrorSelfie {
    */
   source: string;
   /**
-   * The section of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
+   * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”
    */
   type: string;
   /**
@@ -16282,7 +16282,7 @@ export interface PassportElementErrorFile {
    */
   source: string;
   /**
-   * The section of the user&#39;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
    */
   type: string;
   /**
@@ -16305,7 +16305,7 @@ export interface PassportElementErrorFiles {
    */
   source: string;
   /**
-   * The section of the user&#39;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
    */
   type: string;
   /**
@@ -16328,7 +16328,7 @@ export interface PassportElementErrorTranslationFile {
    */
   source: string;
   /**
-   * Type of element of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   * Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
    */
   type: string;
   /**
@@ -16351,7 +16351,7 @@ export interface PassportElementErrorTranslationFiles {
    */
   source: string;
   /**
-   * Type of element of the user&#39;s Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
+   * Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
    */
   type: string;
   /**
@@ -16374,7 +16374,7 @@ export interface PassportElementErrorUnspecified {
    */
   source: string;
   /**
-   * Type of element of the user&#39;s Telegram Passport which has the issue
+   * Type of element of the user's Telegram Passport which has the issue
    */
   type: string;
   /**
@@ -16399,7 +16399,7 @@ export interface ApiMethods {
      */
     business_connection_id?: string;
     /**
-     * Unique identifier for the target chat or username of the target bot in the format `@username`. Games can&#39;t be sent to channel direct messages chats and channel chats.
+     * Unique identifier for the target chat or username of the target bot in the format `@username`. Games can't be sent to channel direct messages chats and channel chats.
      */
     chat_id: number | string;
     /**
@@ -16419,7 +16419,7 @@ export interface ApiMethods {
      */
     protect_content?: boolean;
     /**
-     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.
+     * Pass `true` to allow up to 1000 messages per second, ignoring {@link https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once | broadcasting limits} for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance.
      */
     allow_paid_broadcast?: boolean;
     /**
@@ -16431,7 +16431,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.
+     * A JSON-serialized object for an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -16475,7 +16475,7 @@ export interface Game {
 export type CallbackGame = Empty;
 export interface ApiMethods {
   /**
-   * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the {@link Message} is returned, otherwise `true` is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and _force_ is `false`.
+   * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the {@link Message} is returned, otherwise `true` is returned. Returns an error, if the new score is not greater than the user's current score in the chat and _force_ is `false`.
    *
    * @see {@link https://core.telegram.org/bots/api#setgamescore}
    */
