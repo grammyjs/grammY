@@ -647,11 +647,10 @@ export interface ChatFullInfo {
    * Default chat member permissions, for groups and supergroups
    */
   permissions?: ChatPermissions;
-<tr>
-<td>accepted_gift_types</td>
-<td><a href="#acceptedgifttypes">AcceptedGiftTypes</a></td>
-<td>Information about types of gifts that are accepted by the chat or by the corresponding user for private chats</td>
-</tr>
+  /**
+   * Information about types of gifts that are accepted by the chat or by the corresponding user for private chats
+   */
+  accepted_gift_types: AcceptedGiftTypes;
   /**
    * <em>True</em>, if paid media messages can be sent or forwarded to the channel chat. The field is available only for channel chats.
    */
@@ -796,11 +795,10 @@ export interface Message {
    * Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
    */
   business_connection_id?: string;
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat the message belongs to</td>
-</tr>
+  /**
+   * Chat the message belongs to
+   */
+  chat: Chat;
   /**
    * Information about the original message for forwarded messages
    */
@@ -1262,11 +1260,10 @@ export interface InaccessibleMessage {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat the message belonged to</td>
-</tr>
+  /**
+   * Chat the message belonged to
+   */
+  chat: Chat;
   /**
    * Unique message identifier inside the chat
    */
@@ -1385,11 +1382,10 @@ export interface ExternalReplyInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>origin</td>
-<td><a href="#messageorigin">MessageOrigin</a></td>
-<td>Origin of the message replied to by the given message</td>
-</tr>
+  /**
+   * Origin of the message replied to by the given message
+   */
+  origin: MessageOrigin;
   /**
    * Chat the original message belongs to. Available only if the chat is a supergroup or a channel.
    */
@@ -1586,11 +1582,10 @@ export interface MessageOriginUser {
    * Date the message was sent originally in Unix time
    */
   date: number;
-<tr>
-<td>sender_user</td>
-<td><a href="#user">User</a></td>
-<td>User that sent the message originally</td>
-</tr>
+  /**
+   * User that sent the message originally
+   */
+  sender_user: User;
 </tbody>
 </table>
 }
@@ -1643,11 +1638,10 @@ export interface MessageOriginChat {
    * Date the message was sent originally in Unix time
    */
   date: number;
-<tr>
-<td>sender_chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat that sent the message originally</td>
-</tr>
+  /**
+   * Chat that sent the message originally
+   */
+  sender_chat: Chat;
   /**
    * For messages originally sent by an anonymous chat administrator, original message author signature
    */
@@ -1676,11 +1670,10 @@ export interface MessageOriginChannel {
    * Date the message was sent originally in Unix time
    */
   date: number;
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Channel chat to which the message was originally sent</td>
-</tr>
+  /**
+   * Channel chat to which the message was originally sent
+   */
+  chat: Chat;
   /**
    * Unique message identifier inside the chat
    */
@@ -1934,11 +1927,10 @@ export interface Story {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat that posted the story</td>
-</tr>
+  /**
+   * Chat that posted the story
+   */
+  chat: Chat;
   /**
    * Unique identifier for the story in the chat
    */
@@ -2183,11 +2175,10 @@ export interface PaidMediaLivePhoto {
    * Type of the paid media, always “live_photo”
    */
   type: string;
-<tr>
-<td>live_photo</td>
-<td><a href="#livephoto">LivePhoto</a></td>
-<td>The photo</td>
-</tr>
+  /**
+   * The photo
+   */
+  live_photo: LivePhoto;
 </tbody>
 </table>
 }
@@ -2265,11 +2256,10 @@ export interface PaidMediaVideo {
    * Type of the paid media, always “video”
    */
   type: string;
-<tr>
-<td>video</td>
-<td><a href="#video">Video</a></td>
-<td>The video</td>
-</tr>
+  /**
+   * The video
+   */
+  video: Video;
 </tbody>
 </table>
 }
@@ -2881,11 +2871,10 @@ export interface Venue {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td>Venue location. Can&#39;t be a live location.</td>
-</tr>
+  /**
+   * Venue location. Can&#39;t be a live location.
+   */
+  location: Location;
   /**
    * Name of the venue
    */
@@ -2950,16 +2939,14 @@ export interface ProximityAlertTriggered {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>traveler</td>
-<td><a href="#user">User</a></td>
-<td>User that triggered the alert</td>
-</tr>
-<tr>
-<td>watcher</td>
-<td><a href="#user">User</a></td>
-<td>User that set the alert</td>
-</tr>
+  /**
+   * User that triggered the alert
+   */
+  traveler: User;
+  /**
+   * User that set the alert
+   */
+  watcher: User;
   /**
    * The distance between the users
    */
@@ -3000,11 +2987,10 @@ export interface ManagedBotCreated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>bot</td>
-<td><a href="#user">User</a></td>
-<td>Information about the bot. The bot&#39;s token can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.</td>
-</tr>
+  /**
+   * Information about the bot. The bot&#39;s token can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.
+   */
+  bot: User;
 </tbody>
 </table>
 }
@@ -3021,16 +3007,14 @@ export interface ManagedBotUpdated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>User that created the bot</td>
-</tr>
-<tr>
-<td>bot</td>
-<td><a href="#user">User</a></td>
-<td>Information about the bot. Token of the bot can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.</td>
-</tr>
+  /**
+   * User that created the bot
+   */
+  user: User;
+  /**
+   * Information about the bot. Token of the bot can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.
+   */
+  bot: User;
 </tbody>
 </table>
 }
@@ -3047,11 +3031,10 @@ export interface BotSubscriptionUpdated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>User who subscribed for payments toward the bot</td>
-</tr>
+  /**
+   * User who subscribed for payments toward the bot
+   */
+  user: User;
   /**
    * Bot-specified invoice payload
    */
@@ -3270,11 +3253,10 @@ export interface BackgroundTypeFill {
    * Type of the background, always “fill”
    */
   type: string;
-<tr>
-<td>fill</td>
-<td><a href="#backgroundfill">BackgroundFill</a></td>
-<td>The background fill</td>
-</tr>
+  /**
+   * The background fill
+   */
+  fill: BackgroundFill;
   /**
    * Dimming of the background in dark themes, as a percentage; 0-100
    */
@@ -3299,11 +3281,10 @@ export interface BackgroundTypeWallpaper {
    * Type of the background, always “wallpaper”
    */
   type: string;
-<tr>
-<td>document</td>
-<td><a href="#document">Document</a></td>
-<td>Document with the wallpaper</td>
-</tr>
+  /**
+   * Document with the wallpaper
+   */
+  document: Document;
   /**
    * Dimming of the background in dark themes, as a percentage; 0-100
    */
@@ -3336,16 +3317,14 @@ export interface BackgroundTypePattern {
    * Type of the background, always “pattern”
    */
   type: string;
-<tr>
-<td>document</td>
-<td><a href="#document">Document</a></td>
-<td>Document with the pattern</td>
-</tr>
-<tr>
-<td>fill</td>
-<td><a href="#backgroundfill">BackgroundFill</a></td>
-<td>The background fill that is combined with the pattern</td>
-</tr>
+  /**
+   * Document with the pattern
+   */
+  document: Document;
+  /**
+   * The background fill that is combined with the pattern
+   */
+  fill: BackgroundFill;
   /**
    * Intensity of the pattern when it is shown above the filled background; 0-100
    */
@@ -3398,11 +3377,10 @@ export interface ChatBackground {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td><a href="#backgroundtype">BackgroundType</a></td>
-<td>Type of the background</td>
-</tr>
+  /**
+   * Type of the background
+   */
+  type: BackgroundType;
 </tbody>
 </table>
 }
@@ -3472,11 +3450,10 @@ export interface CommunityChatAdded {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>community</td>
-<td><a href="#community">Community</a></td>
-<td>The new community to which the chat belongs</td>
-</tr>
+  /**
+   * The new community to which the chat belongs
+   */
+  community: Community;
 </tbody>
 </table>
 }
@@ -3837,11 +3814,10 @@ export interface SuggestedPostApprovalFailed {
    * Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
   suggested_post_message?: Message;
-<tr>
-<td>price</td>
-<td><a href="#suggestedpostprice">SuggestedPostPrice</a></td>
-<td>Expected price of the post</td>
-</tr>
+  /**
+   * Expected price of the post
+   */
+  price: SuggestedPostPrice;
 </tbody>
 </table>
 }
@@ -4011,11 +3987,10 @@ export interface GiveawayWinners {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>The chat that created the giveaway</td>
-</tr>
+  /**
+   * The chat that created the giveaway
+   */
+  chat: Chat;
   /**
    * Identifier of the message with the giveaway in the chat
    */
@@ -4811,11 +4786,10 @@ export interface CallbackQuery {
    * Unique identifier for this query
    */
   id: string;
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>Sender</td>
-</tr>
+  /**
+   * Sender
+   */
+  from: User;
   /**
    * Message sent by the bot with the callback button that originated the query
    */
@@ -4947,11 +4921,10 @@ export interface ChatInviteLink {
    * The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
    */
   invite_link: string;
-<tr>
-<td>creator</td>
-<td><a href="#user">User</a></td>
-<td>Creator of the link</td>
-</tr>
+  /**
+   * Creator of the link
+   */
+  creator: User;
   /**
    * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators
    */
@@ -5088,30 +5061,26 @@ export interface ChatMemberUpdated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat the user belongs to</td>
-</tr>
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>Performer of the action, which resulted in the change</td>
-</tr>
+  /**
+   * Chat the user belongs to
+   */
+  chat: Chat;
+  /**
+   * Performer of the action, which resulted in the change
+   */
+  from: User;
   /**
    * Date the change was done in Unix time
    */
   date: number;
-<tr>
-<td>old_chat_member</td>
-<td><a href="#chatmember">ChatMember</a></td>
-<td>Previous information about the chat member</td>
-</tr>
-<tr>
-<td>new_chat_member</td>
-<td><a href="#chatmember">ChatMember</a></td>
-<td>New information about the chat member</td>
-</tr>
+  /**
+   * Previous information about the chat member
+   */
+  old_chat_member: ChatMember;
+  /**
+   * New information about the chat member
+   */
+  new_chat_member: ChatMember;
   /**
    * Chat invite link, which was used by the user to join the chat; for joining by invite link events only
    */
@@ -5161,11 +5130,10 @@ export interface ChatMemberOwner {
    * The member&#39;s status in the chat, always “creator”
    */
   status: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Information about the user</td>
-</tr>
+  /**
+   * Information about the user
+   */
+  user: User;
   /**
    * <em>True</em>, if the user&#39;s presence in the chat is hidden
    */
@@ -5194,11 +5162,10 @@ export interface ChatMemberAdministrator {
    * The member&#39;s status in the chat, always “administrator”
    */
   status: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Information about the user</td>
-</tr>
+  /**
+   * Information about the user
+   */
+  user: User;
   /**
    * <em>True</em>, if the bot is allowed to edit administrator privileges of that user
    */
@@ -5299,11 +5266,10 @@ export interface ChatMemberMember {
    * Tag of the member
    */
   tag?: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Information about the user</td>
-</tr>
+  /**
+   * Information about the user
+   */
+  user: User;
   /**
    * Date when the user&#39;s subscription will expire; Unix time
    */
@@ -5332,11 +5298,10 @@ export interface ChatMemberRestricted {
    * Tag of the member
    */
   tag?: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Information about the user</td>
-</tr>
+  /**
+   * Information about the user
+   */
+  user: User;
   /**
    * <em>True</em>, if the user is a member of the chat at the moment of the request
    */
@@ -5429,11 +5394,10 @@ export interface ChatMemberLeft {
    * The member&#39;s status in the chat, always “left”
    */
   status: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Information about the user</td>
-</tr>
+  /**
+   * Information about the user
+   */
+  user: User;
 </tbody>
 </table>
 }
@@ -5454,11 +5418,10 @@ export interface ChatMemberBanned {
    * The member&#39;s status in the chat, always “kicked”
    */
   status: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Information about the user</td>
-</tr>
+  /**
+   * Information about the user
+   */
+  user: User;
   /**
    * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever.
    */
@@ -5479,16 +5442,14 @@ export interface ChatJoinRequest {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat to which the request was sent</td>
-</tr>
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>User that sent the join request</td>
-</tr>
+  /**
+   * Chat to which the request was sent
+   */
+  chat: Chat;
+  /**
+   * User that sent the join request
+   */
+  from: User;
   /**
    * Identifier of a private chat with the user who sent the join request. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot can use this identifier for 5 minutes to send messages until the join request is processed, assuming no other administrator contacted the user.
    */
@@ -5889,11 +5850,10 @@ export interface StoryAreaTypeSuggestedReaction {
    * Type of the area, always “suggested_reaction”
    */
   type: string;
-<tr>
-<td>reaction_type</td>
-<td><a href="#reactiontype">ReactionType</a></td>
-<td>Type of the reaction</td>
-</tr>
+  /**
+   * Type of the reaction
+   */
+  reaction_type: ReactionType;
   /**
    * Pass <em>True</em> if the reaction area has a dark background
    */
@@ -5998,16 +5958,14 @@ export interface StoryArea {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>position</td>
-<td><a href="#storyareaposition">StoryAreaPosition</a></td>
-<td>Position of the area</td>
-</tr>
-<tr>
-<td>type</td>
-<td><a href="#storyareatype">StoryAreaType</a></td>
-<td>Type of the area</td>
-</tr>
+  /**
+   * Position of the area
+   */
+  position: StoryAreaPosition;
+  /**
+   * Type of the area
+   */
+  type: StoryAreaType;
 </tbody>
 </table>
 }
@@ -6024,11 +5982,10 @@ export interface ChatLocation {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td>The location to which the supergroup is connected. Can&#39;t be a live location.</td>
-</tr>
+  /**
+   * The location to which the supergroup is connected. Can&#39;t be a live location.
+   */
+  location: Location;
   /**
    * Location address; 1-64 characters, as defined by the chat owner
    */
@@ -6128,11 +6085,10 @@ export interface ReactionCount {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>type</td>
-<td><a href="#reactiontype">ReactionType</a></td>
-<td>Type of the reaction</td>
-</tr>
+  /**
+   * Type of the reaction
+   */
+  type: ReactionType;
   /**
    * Number of times the reaction was added
    */
@@ -6153,11 +6109,10 @@ export interface MessageReactionUpdated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>The chat containing the message the user reacted to</td>
-</tr>
+  /**
+   * The chat containing the message the user reacted to
+   */
+  chat: Chat;
   /**
    * Unique identifier of the message inside the chat
    */
@@ -6200,11 +6155,10 @@ export interface MessageReactionCountUpdated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>The chat containing the message</td>
-</tr>
+  /**
+   * The chat containing the message
+   */
+  chat: Chat;
   /**
    * Unique message identifier inside the chat
    */
@@ -6302,11 +6256,10 @@ export interface Gift {
    * Unique identifier of the gift
    */
   id: string;
-<tr>
-<td>sticker</td>
-<td><a href="#sticker">Sticker</a></td>
-<td>The sticker that represents the gift</td>
-</tr>
+  /**
+   * The sticker that represents the gift
+   */
+  sticker: Sticker;
   /**
    * The number of Telegram Stars that must be paid to send the sticker
    */
@@ -6392,11 +6345,10 @@ export interface UniqueGiftModel {
    * Name of the model
    */
   name: string;
-<tr>
-<td>sticker</td>
-<td><a href="#sticker">Sticker</a></td>
-<td>The sticker that represents the unique gift</td>
-</tr>
+  /**
+   * The sticker that represents the unique gift
+   */
+  sticker: Sticker;
   /**
    * The number of unique gifts that receive this model for every 1000 gift upgrades. Always 0 for crafted gifts.
    */
@@ -6425,11 +6377,10 @@ export interface UniqueGiftSymbol {
    * Name of the symbol
    */
   name: string;
-<tr>
-<td>sticker</td>
-<td><a href="#sticker">Sticker</a></td>
-<td>The sticker that represents the unique gift</td>
-</tr>
+  /**
+   * The sticker that represents the unique gift
+   */
+  sticker: Sticker;
   /**
    * The number of unique gifts that receive this model for every 1000 gifts upgraded
    */
@@ -6486,11 +6437,10 @@ export interface UniqueGiftBackdrop {
    * Name of the backdrop
    */
   name: string;
-<tr>
-<td>colors</td>
-<td><a href="#uniquegiftbackdropcolors">UniqueGiftBackdropColors</a></td>
-<td>Colors of the backdrop</td>
-</tr>
+  /**
+   * Colors of the backdrop
+   */
+  colors: UniqueGiftBackdropColors;
   /**
    * The number of unique gifts that receive this backdrop for every 1000 gifts upgraded
    */
@@ -6567,21 +6517,18 @@ export interface UniqueGift {
    * Unique number of the upgraded gift among gifts upgraded from the same regular gift
    */
   number: number;
-<tr>
-<td>model</td>
-<td><a href="#uniquegiftmodel">UniqueGiftModel</a></td>
-<td>Model of the gift</td>
-</tr>
-<tr>
-<td>symbol</td>
-<td><a href="#uniquegiftsymbol">UniqueGiftSymbol</a></td>
-<td>Symbol of the gift</td>
-</tr>
-<tr>
-<td>backdrop</td>
-<td><a href="#uniquegiftbackdrop">UniqueGiftBackdrop</a></td>
-<td>Backdrop of the gift</td>
-</tr>
+  /**
+   * Model of the gift
+   */
+  model: UniqueGiftModel;
+  /**
+   * Symbol of the gift
+   */
+  symbol: UniqueGiftSymbol;
+  /**
+   * Backdrop of the gift
+   */
+  backdrop: UniqueGiftBackdrop;
   /**
    * <em>True</em>, if the original regular gift was exclusively purchaseable by Telegram Premium subscribers
    */
@@ -6618,11 +6565,10 @@ export interface GiftInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>gift</td>
-<td><a href="#gift">Gift</a></td>
-<td>Information about the gift</td>
-</tr>
+  /**
+   * Information about the gift
+   */
+  gift: Gift;
   /**
    * Unique identifier of the received gift for the bot; only present for gifts received on behalf of business accounts
    */
@@ -6676,11 +6622,10 @@ export interface UniqueGiftInfo {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>gift</td>
-<td><a href="#uniquegift">UniqueGift</a></td>
-<td>Information about the gift</td>
-</tr>
+  /**
+   * Information about the gift
+   */
+  gift: UniqueGift;
   /**
    * Origin of the gift. Currently, either “upgrade” for gifts upgraded from regular gifts, “transfer” for gifts transferred from other users or channels, “resale” for gifts bought from other users, “gifted_upgrade” for upgrades purchased after the gift was sent, or “offer” for gifts bought or sold through gift purchase offers.
    */
@@ -6734,11 +6679,10 @@ export interface OwnedGiftRegular {
    * Type of the gift, always “regular”
    */
   type: string;
-<tr>
-<td>gift</td>
-<td><a href="#gift">Gift</a></td>
-<td>Information about the regular gift</td>
-</tr>
+  /**
+   * Information about the regular gift
+   */
+  gift: Gift;
   /**
    * Unique identifier of the gift for the bot; for gifts received on behalf of business accounts only
    */
@@ -6812,11 +6756,10 @@ export interface OwnedGiftUnique {
    * Type of the gift, always “unique”
    */
   type: string;
-<tr>
-<td>gift</td>
-<td><a href="#uniquegift">UniqueGift</a></td>
-<td>Information about the unique gift</td>
-</tr>
+  /**
+   * Information about the unique gift
+   */
+  gift: UniqueGift;
   /**
    * Unique identifier of the received gift for the bot; for gifts received on behalf of business accounts only
    */
@@ -7307,11 +7250,10 @@ export interface MenuButtonWebApp {
    * Text on the button
    */
   text: string;
-<tr>
-<td>web_app</td>
-<td><a href="#webappinfo">WebAppInfo</a></td>
-<td>Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Alternatively, a <code>t.me</code> link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.</td>
-</tr>
+  /**
+   * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Alternatively, a <code>t.me</code> link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
+   */
+  web_app: WebAppInfo;
 </tbody>
 </table>
 }
@@ -7363,11 +7305,10 @@ export interface ChatBoostSourcePremium {
    * Source of the boost, always “premium”
    */
   source: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>User that boosted the chat</td>
-</tr>
+  /**
+   * User that boosted the chat
+   */
+  user: User;
 </tbody>
 </table>
 }
@@ -7388,11 +7329,10 @@ export interface ChatBoostSourceGiftCode {
    * Source of the boost, always “gift_code”
    */
   source: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>User for which the gift code was created</td>
-</tr>
+  /**
+   * User for which the gift code was created
+   */
+  user: User;
 </tbody>
 </table>
 }
@@ -7457,11 +7397,10 @@ export interface ChatBoost {
    * Point in time (Unix timestamp) when the boost will automatically expire, unless the booster&#39;s Telegram Premium subscription is prolonged
    */
   expiration_date: number;
-<tr>
-<td>source</td>
-<td><a href="#chatboostsource">ChatBoostSource</a></td>
-<td>Source of the added boost</td>
-</tr>
+  /**
+   * Source of the added boost
+   */
+  source: ChatBoostSource;
 </tbody>
 </table>
 }
@@ -7478,16 +7417,14 @@ export interface ChatBoostUpdated {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat which was boosted</td>
-</tr>
-<tr>
-<td>boost</td>
-<td><a href="#chatboost">ChatBoost</a></td>
-<td>Information about the chat boost</td>
-</tr>
+  /**
+   * Chat which was boosted
+   */
+  chat: Chat;
+  /**
+   * Information about the chat boost
+   */
+  boost: ChatBoost;
 </tbody>
 </table>
 }
@@ -7504,11 +7441,10 @@ export interface ChatBoostRemoved {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Chat which was boosted</td>
-</tr>
+  /**
+   * Chat which was boosted
+   */
+  chat: Chat;
   /**
    * Unique identifier of the boost
    */
@@ -7517,11 +7453,10 @@ export interface ChatBoostRemoved {
    * Point in time (Unix timestamp) when the boost was removed
    */
   remove_date: number;
-<tr>
-<td>source</td>
-<td><a href="#chatboostsource">ChatBoostSource</a></td>
-<td>Source of the removed boost</td>
-</tr>
+  /**
+   * Source of the removed boost
+   */
+  source: ChatBoostSource;
 </tbody>
 </table>
 }
@@ -7558,11 +7493,10 @@ export interface ChatOwnerChanged {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>new_owner</td>
-<td><a href="#user">User</a></td>
-<td>The new owner of the chat</td>
-</tr>
+  /**
+   * The new owner of the chat
+   */
+  new_owner: User;
 </tbody>
 </table>
 }
@@ -7676,11 +7610,10 @@ export interface BusinessConnection {
    * Unique identifier of the business connection
    */
   id: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Business account user that created the business connection</td>
-</tr>
+  /**
+   * Business account user that created the business connection
+   */
+  user: User;
   /**
    * Identifier of a private chat with the user who created the business connection. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -7717,11 +7650,10 @@ export interface BusinessMessagesDeleted {
    * Unique identifier of the business connection
    */
   business_connection_id: string;
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Information about a chat in the business account. The bot may not have access to the chat or the corresponding user.</td>
-</tr>
+  /**
+   * Information about a chat in the business account. The bot may not have access to the chat or the corresponding user.
+   */
+  chat: Chat;
   /**
    * The list of identifiers of deleted messages in the chat of the business account
    */
@@ -17547,11 +17479,10 @@ export interface RichTextBold {
    * Type of the rich text, always “bold”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17572,11 +17503,10 @@ export interface RichTextItalic {
    * Type of the rich text, always “italic”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17597,11 +17527,10 @@ export interface RichTextUnderline {
    * Type of the rich text, always “underline”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17622,11 +17551,10 @@ export interface RichTextStrikethrough {
    * Type of the rich text, always “strikethrough”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17647,11 +17575,10 @@ export interface RichTextSpoiler {
    * Type of the rich text, always “spoiler”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17672,11 +17599,10 @@ export interface RichTextDateTime {
    * Type of the rich text, always “date_time”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The Unix time associated with the entity
    */
@@ -17705,16 +17631,14 @@ export interface RichTextTextMention {
    * Type of the rich text, always “text_mention”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>The mentioned user</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
+  /**
+   * The mentioned user
+   */
+  user: User;
 </tbody>
 </table>
 }
@@ -17735,11 +17659,10 @@ export interface RichTextSubscript {
    * Type of the rich text, always “subscript”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17760,11 +17683,10 @@ export interface RichTextSuperscript {
    * Type of the rich text, always “superscript”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17785,11 +17707,10 @@ export interface RichTextMarked {
    * Type of the rich text, always “marked”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17810,11 +17731,10 @@ export interface RichTextCode {
    * Type of the rich text, always “code”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -17887,11 +17807,10 @@ export interface RichTextUrl {
    * Type of the rich text, always “url”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * URL of the link
    */
@@ -17916,11 +17835,10 @@ export interface RichTextEmailAddress {
    * Type of the rich text, always “email_address”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The email address
    */
@@ -17945,11 +17863,10 @@ export interface RichTextPhoneNumber {
    * Type of the rich text, always “phone_number”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The phone number
    */
@@ -17974,11 +17891,10 @@ export interface RichTextBankCardNumber {
    * Type of the rich text, always “bank_card_number”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The bank card number
    */
@@ -18003,11 +17919,10 @@ export interface RichTextMention {
    * Type of the rich text, always “mention”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The username
    */
@@ -18032,11 +17947,10 @@ export interface RichTextHashtag {
    * Type of the rich text, always “hashtag”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The hashtag
    */
@@ -18061,11 +17975,10 @@ export interface RichTextCashtag {
    * Type of the rich text, always “cashtag”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The cashtag
    */
@@ -18090,11 +18003,10 @@ export interface RichTextBotCommand {
    * Type of the rich text, always “bot_command”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The text</td>
-</tr>
+  /**
+   * The text
+   */
+  text: RichText;
   /**
    * The bot command
    */
@@ -18143,11 +18055,10 @@ export interface RichTextAnchorLink {
    * Type of the rich text, always “anchor_link”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The link text</td>
-</tr>
+  /**
+   * The link text
+   */
+  text: RichText;
   /**
    * The name of the anchor. If the name is empty, then the link brings back to the top of the message.
    */
@@ -18172,11 +18083,10 @@ export interface RichTextReference {
    * Type of the rich text, always “reference”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the reference</td>
-</tr>
+  /**
+   * Text of the reference
+   */
+  text: RichText;
   /**
    * The name of the reference
    */
@@ -18201,11 +18111,10 @@ export interface RichTextReferenceLink {
    * Type of the rich text, always “reference_link”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>The link text</td>
-</tr>
+  /**
+   * The link text
+   */
+  text: RichText;
   /**
    * The name of the reference
    */
@@ -18226,11 +18135,10 @@ export interface RichBlockCaption {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Block caption</td>
-</tr>
+  /**
+   * Block caption
+   */
+  text: RichText;
   /**
    * Block credit which corresponds to the HTML tag &lt;cite&gt;
    */
@@ -18383,11 +18291,10 @@ export interface RichBlockParagraph {
    * Type of the block, always “paragraph”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -18408,11 +18315,10 @@ export interface RichBlockSectionHeading {
    * Type of the block, always “heading”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
   /**
    * Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest
    */
@@ -18437,11 +18343,10 @@ export interface RichBlockPreformatted {
    * Type of the block, always “pre”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
   /**
    * The programming language of the text
    */
@@ -18466,11 +18371,10 @@ export interface RichBlockFooter {
    * Type of the block, always “footer”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -18613,11 +18517,10 @@ export interface RichBlockPullQuotation {
    * Type of the block, always “pullquote”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
   /**
    * Credit of the block
    */
@@ -18737,11 +18640,10 @@ export interface RichBlockDetails {
    * Type of the block, always “details”
    */
   type: string;
-<tr>
-<td>summary</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Always shown summary of the block</td>
-</tr>
+  /**
+   * Always shown summary of the block
+   */
+  summary: RichText;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#richblock">RichBlock</a></td>
@@ -18771,11 +18673,10 @@ export interface RichBlockMap {
    * Type of the block, always “map”
    */
   type: string;
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td>Location of the center of the map</td>
-</tr>
+  /**
+   * Location of the center of the map
+   */
+  location: Location;
   /**
    * Map zoom level; 13-20
    */
@@ -18812,11 +18713,10 @@ export interface RichBlockAnimation {
    * Type of the block, always “animation”
    */
   type: string;
-<tr>
-<td>animation</td>
-<td><a href="#animation">Animation</a></td>
-<td>The animation</td>
-</tr>
+  /**
+   * The animation
+   */
+  animation: Animation;
   /**
    * <em>True</em>, if the media preview is covered by a spoiler animation
    */
@@ -18845,11 +18745,10 @@ export interface RichBlockAudio {
    * Type of the block, always “audio”
    */
   type: string;
-<tr>
-<td>audio</td>
-<td><a href="#audio">Audio</a></td>
-<td>The audio</td>
-</tr>
+  /**
+   * The audio
+   */
+  audio: Audio;
   /**
    * Caption of the block
    */
@@ -18907,11 +18806,10 @@ export interface RichBlockVideo {
    * Type of the block, always “video”
    */
   type: string;
-<tr>
-<td>video</td>
-<td><a href="#video">Video</a></td>
-<td>The video</td>
-</tr>
+  /**
+   * The video
+   */
+  video: Video;
   /**
    * <em>True</em>, if the media preview is covered by a spoiler animation
    */
@@ -18940,11 +18838,10 @@ export interface RichBlockVoiceNote {
    * Type of the block, always “voice_note”
    */
   type: string;
-<tr>
-<td>voice_note</td>
-<td><a href="#voice">Voice</a></td>
-<td>The voice note</td>
-</tr>
+  /**
+   * The voice note
+   */
+  voice_note: Voice;
   /**
    * Caption of the block
    */
@@ -18969,11 +18866,10 @@ export interface RichBlockThinking {
    * Type of the block, always “thinking”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.</td>
-</tr>
+  /**
+   * Text of the block. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -19078,11 +18974,10 @@ export interface InputRichBlockParagraph {
    * Type of the block, always “paragraph”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -19103,11 +18998,10 @@ export interface InputRichBlockSectionHeading {
    * Type of the block, always “heading”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
   /**
    * Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest
    */
@@ -19132,11 +19026,10 @@ export interface InputRichBlockPreformatted {
    * Type of the block, always “pre”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
   /**
    * The programming language of the text
    */
@@ -19161,11 +19054,10 @@ export interface InputRichBlockFooter {
    * Type of the block, always “footer”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -19308,11 +19200,10 @@ export interface InputRichBlockPullQuotation {
    * Type of the block, always “pullquote”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block</td>
-</tr>
+  /**
+   * Text of the block
+   */
+  text: RichText;
   /**
    * Credit of the block
    */
@@ -19432,11 +19323,10 @@ export interface InputRichBlockDetails {
    * Type of the block, always “details”
    */
   type: string;
-<tr>
-<td>summary</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Always shown summary of the block</td>
-</tr>
+  /**
+   * Always shown summary of the block
+   */
+  summary: RichText;
 <tr>
 <td>blocks</td>
 <td>Array of <a href="#inputrichblock">InputRichBlock</a></td>
@@ -19466,11 +19356,10 @@ export interface InputRichBlockMap {
    * Type of the block, always “map”
    */
   type: string;
-<tr>
-<td>location</td>
-<td><a href="#location">Location</a></td>
-<td>Location of the center of the map</td>
-</tr>
+  /**
+   * Location of the center of the map
+   */
+  location: Location;
   /**
    * Map zoom level; 0-24
    */
@@ -19507,11 +19396,10 @@ export interface InputRichBlockAnimation {
    * Type of the block, always “animation”
    */
   type: string;
-<tr>
-<td>animation</td>
-<td><a href="#inputmediaanimation">InputMediaAnimation</a></td>
-<td>The animation. Caption is ignored.</td>
-</tr>
+  /**
+   * The animation. Caption is ignored.
+   */
+  animation: InputMediaAnimation;
   /**
    * Caption of the block
    */
@@ -19536,11 +19424,10 @@ export interface InputRichBlockAudio {
    * Type of the block, always “audio”
    */
   type: string;
-<tr>
-<td>audio</td>
-<td><a href="#inputmediaaudio">InputMediaAudio</a></td>
-<td>The audio. Caption is ignored.</td>
-</tr>
+  /**
+   * The audio. Caption is ignored.
+   */
+  audio: InputMediaAudio;
   /**
    * Caption of the block
    */
@@ -19565,11 +19452,10 @@ export interface InputRichBlockPhoto {
    * Type of the block, always “photo”
    */
   type: string;
-<tr>
-<td>photo</td>
-<td><a href="#inputmediaphoto">InputMediaPhoto</a></td>
-<td>The photo. Caption is ignored.</td>
-</tr>
+  /**
+   * The photo. Caption is ignored.
+   */
+  photo: InputMediaPhoto;
   /**
    * Caption of the block
    */
@@ -19594,11 +19480,10 @@ export interface InputRichBlockVideo {
    * Type of the block, always “video”
    */
   type: string;
-<tr>
-<td>video</td>
-<td><a href="#inputmediavideo">InputMediaVideo</a></td>
-<td>The video. Caption is ignored.</td>
-</tr>
+  /**
+   * The video. Caption is ignored.
+   */
+  video: InputMediaVideo;
   /**
    * Caption of the block
    */
@@ -19623,11 +19508,10 @@ export interface InputRichBlockVoiceNote {
    * Type of the block, always “voice_note”
    */
   type: string;
-<tr>
-<td>voice_note</td>
-<td><a href="#inputmediavoicenote">InputMediaVoiceNote</a></td>
-<td>The voice note. Caption is ignored.</td>
-</tr>
+  /**
+   * The voice note. Caption is ignored.
+   */
+  voice_note: InputMediaVoiceNote;
   /**
    * Caption of the block
    */
@@ -19652,11 +19536,10 @@ export interface InputRichBlockThinking {
    * Type of the block, always “thinking”
    */
   type: string;
-<tr>
-<td>text</td>
-<td><a href="#richtext">RichText</a></td>
-<td>Text of the block. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.</td>
-</tr>
+  /**
+   * Text of the block. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
+   */
+  text: RichText;
 </tbody>
 </table>
 }
@@ -19680,11 +19563,10 @@ export interface InlineQuery {
    * Unique identifier for this query
    */
   id: string;
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>Sender</td>
-</tr>
+  /**
+   * Sender
+   */
+  from: User;
   /**
    * Text of the query (up to 256 characters)
    */
@@ -19858,11 +19740,10 @@ export interface InlineQueryResultArticle {
    * Title of the result
    */
   title: string;
-<tr>
-<td>input_message_content</td>
-<td><a href="#inputmessagecontent">InputMessageContent</a></td>
-<td>Content of the message to be sent</td>
-</tr>
+  /**
+   * Content of the message to be sent
+   */
+  input_message_content: InputMessageContent;
   /**
    * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
@@ -21125,11 +21006,10 @@ export interface InputRichMessageContent {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>rich_message</td>
-<td><a href="#inputrichmessage">InputRichMessage</a></td>
-<td>The message to be sent</td>
-</tr>
+  /**
+   * The message to be sent
+   */
+  rich_message: InputRichMessage;
 </tbody>
 </table>
 }
@@ -21369,11 +21249,10 @@ export interface ChosenInlineResult {
    * The unique identifier for the result that was chosen
    */
   result_id: string;
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>The user that chose the result</td>
-</tr>
+  /**
+   * The user that chose the result
+   */
+  from: User;
   /**
    * Sender location, only for bots that require user location
    */
@@ -22202,20 +22081,18 @@ export interface ShippingQuery {
    * Unique query identifier
    */
   id: string;
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>User who sent the query</td>
-</tr>
+  /**
+   * User who sent the query
+   */
+  from: User;
   /**
    * Bot-specified invoice payload
    */
   invoice_payload: string;
-<tr>
-<td>shipping_address</td>
-<td><a href="#shippingaddress">ShippingAddress</a></td>
-<td>User specified shipping address</td>
-</tr>
+  /**
+   * User specified shipping address
+   */
+  shipping_address: ShippingAddress;
 </tbody>
 </table>
 }
@@ -22236,11 +22113,10 @@ export interface PreCheckoutQuery {
    * Unique query identifier
    */
   id: string;
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>User who sent the query</td>
-</tr>
+  /**
+   * User who sent the query
+   */
+  from: User;
   /**
    * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
    */
@@ -22277,11 +22153,10 @@ export interface PaidMediaPurchased {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>from</td>
-<td><a href="#user">User</a></td>
-<td>User who purchased the media</td>
-</tr>
+  /**
+   * User who purchased the media
+   */
+  from: User;
   /**
    * Bot-specified paid media payload
    */
@@ -22444,11 +22319,10 @@ export interface TransactionPartnerUser {
    * Type of the transaction, currently one of “invoice_payment” for payments via invoices, “paid_media_payment” for payments for paid media, “gift_purchase” for gifts sent by the bot, “premium_purchase” for Telegram Premium subscriptions gifted by the bot, “business_account_transfer” for direct transfers from managed business accounts
    */
   transaction_type: string;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>Information about the user</td>
-</tr>
+  /**
+   * Information about the user
+   */
+  user: User;
   /**
    * Information about the affiliate that received a commission via this transaction. Can be available only for “invoice_payment” and “paid_media_payment” transactions.
    */
@@ -22498,11 +22372,10 @@ export interface TransactionPartnerChat {
    * Type of the transaction partner, always “chat”
    */
   type: string;
-<tr>
-<td>chat</td>
-<td><a href="#chat">Chat</a></td>
-<td>Information about the chat</td>
-</tr>
+  /**
+   * Information about the chat
+   */
+  chat: Chat;
   /**
    * The gift sent to the chat by the bot
    */
@@ -22707,11 +22580,10 @@ export interface PassportData {
 <td>Array of <a href="#encryptedpassportelement">EncryptedPassportElement</a></td>
 <td>Array with information about documents and other Telegram Passport elements that was shared with the bot</td>
 </tr>
-<tr>
-<td>credentials</td>
-<td><a href="#encryptedcredentials">EncryptedCredentials</a></td>
-<td>Encrypted credentials required to decrypt the data</td>
-</tr>
+  /**
+   * Encrypted credentials required to decrypt the data
+   */
+  credentials: EncryptedCredentials;
 </tbody>
 </table>
 }
@@ -23442,11 +23314,10 @@ export interface GameHighScore {
    * Position in high score table for the game
    */
   position: number;
-<tr>
-<td>user</td>
-<td><a href="#user">User</a></td>
-<td>User</td>
-</tr>
+  /**
+   * User
+   */
+  user: User;
   /**
    * Score
    */
