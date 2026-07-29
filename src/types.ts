@@ -2799,11 +2799,10 @@ export interface Poll {
    * A list of two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which users can vote in the poll. The country code “FT” is used for users with anonymous numbers. If omitted, then users from any country can participate in the poll.
    */
   country_codes?: string[];
-<tr>
-<td>correct_option_ids</td>
-<td>Array of Integer</td>
-<td><em>Optional</em>. Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.</td>
-</tr>
+  /**
+   * Array of 0-based identifiers of the correct answer options. Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.
+   */
+  correct_option_ids?: number[];
   /**
    * Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
    */
@@ -3598,16 +3597,14 @@ export interface ChecklistTasksDone {
 <td><a href="#message">Message</a></td>
 <td><em>Optional</em>. Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.</td>
 </tr>
-<tr>
-<td>marked_as_done_task_ids</td>
-<td>Array of Integer</td>
-<td><em>Optional</em>. Identifiers of the tasks that were marked as done</td>
-</tr>
-<tr>
-<td>marked_as_not_done_task_ids</td>
-<td>Array of Integer</td>
-<td><em>Optional</em>. Identifiers of the tasks that were marked as not done</td>
-</tr>
+  /**
+   * Identifiers of the tasks that were marked as done
+   */
+  marked_as_done_task_ids?: number[];
+  /**
+   * Identifiers of the tasks that were marked as not done
+   */
+  marked_as_not_done_task_ids?: number[];
 </tbody>
 </table>
 }
@@ -21586,11 +21583,10 @@ export interface InputInvoiceMessageContent {
    * The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   max_tip_amount?: number;
-<tr>
-<td>suggested_tip_amounts</td>
-<td>Array of Integer</td>
-<td><em>Optional</em>. A JSON-serialized Array of suggested amounts of tip in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.</td>
-</tr>
+  /**
+   * A JSON-serialized Array of suggested amounts of tip in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.
+   */
+  suggested_tip_amounts?: number[];
   /**
    * A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.
    */
