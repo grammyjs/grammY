@@ -1128,8 +1128,8 @@ export interface InaccessibleMessage {
  * - <a href="#inaccessiblemessage">InaccessibleMessage</a>
  */
 export type MaybeInaccessibleMessage =
- | <a href="#message">Message</a>
- | <a href="#inaccessiblemessage">InaccessibleMessage</a>
+ | Message
+ | InaccessibleMessage
 /**
  * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
  */
@@ -1355,10 +1355,10 @@ export interface ReplyParameters {
  * - <a href="#messageoriginchannel">MessageOriginChannel</a>
  */
 export type MessageOrigin =
- | <a href="#messageoriginuser">MessageOriginUser</a>
- | <a href="#messageoriginhiddenuser">MessageOriginHiddenUser</a>
- | <a href="#messageoriginchat">MessageOriginChat</a>
- | <a href="#messageoriginchannel">MessageOriginChannel</a>
+ | MessageOriginUser
+ | MessageOriginHiddenUser
+ | MessageOriginChat
+ | MessageOriginChannel
 /**
  * The message was originally sent by a known user.
  */
@@ -1783,10 +1783,10 @@ export interface PaidMediaInfo {
  * - <a href="#paidmediavideo">PaidMediaVideo</a>
  */
 export type PaidMedia =
- | <a href="#paidmedialivephoto">PaidMediaLivePhoto</a>
- | <a href="#paidmediaphoto">PaidMediaPhoto</a>
- | <a href="#paidmediapreview">PaidMediaPreview</a>
- | <a href="#paidmediavideo">PaidMediaVideo</a>
+ | PaidMediaLivePhoto
+ | PaidMediaPhoto
+ | PaidMediaPreview
+ | PaidMediaVideo
 /**
  * The paid media is a <a href="#livephoto">live photo</a>.
  */
@@ -1952,14 +1952,14 @@ export interface PollMedia {
  * - <a href="#inputmediavideo">InputMediaVideo</a>
  */
 export type InputPollMedia =
- | <a href="#inputmediaanimation">InputMediaAnimation</a>
- | <a href="#inputmediaaudio">InputMediaAudio</a>
- | <a href="#inputmediadocument">InputMediaDocument</a>
- | <a href="#inputmedialivephoto">InputMediaLivePhoto</a>
- | <a href="#inputmedialocation">InputMediaLocation</a>
- | <a href="#inputmediaphoto">InputMediaPhoto</a>
- | <a href="#inputmediavenue">InputMediaVenue</a>
- | <a href="#inputmediavideo">InputMediaVideo</a>
+ | InputMediaAnimation
+ | InputMediaAudio
+ | InputMediaDocument
+ | InputMediaLivePhoto
+ | InputMediaLocation
+ | InputMediaPhoto
+ | InputMediaVenue
+ | InputMediaVideo
 /**
  * This object represents the content of a poll option to be sent. It should be one of
  *
@@ -1973,14 +1973,14 @@ export type InputPollMedia =
  * - <a href="#inputmediavideo">InputMediaVideo</a>
  */
 export type InputPollOptionMedia =
- | <a href="#inputmediaanimation">InputMediaAnimation</a>
- | <a href="#inputmedialink">InputMediaLink</a>
- | <a href="#inputmedialivephoto">InputMediaLivePhoto</a>
- | <a href="#inputmedialocation">InputMediaLocation</a>
- | <a href="#inputmediaphoto">InputMediaPhoto</a>
- | <a href="#inputmediasticker">InputMediaSticker</a>
- | <a href="#inputmediavenue">InputMediaVenue</a>
- | <a href="#inputmediavideo">InputMediaVideo</a>
+ | InputMediaAnimation
+ | InputMediaLink
+ | InputMediaLivePhoto
+ | InputMediaLocation
+ | InputMediaPhoto
+ | InputMediaSticker
+ | InputMediaVenue
+ | InputMediaVideo
 /**
  * This object contains information about one answer option in a poll.
  */
@@ -2456,9 +2456,9 @@ export interface ChatBoostAdded {
  * - <a href="#backgroundfillfreeformgradient">BackgroundFillFreeformGradient</a>
  */
 export type BackgroundFill =
- | <a href="#backgroundfillsolid">BackgroundFillSolid</a>
- | <a href="#backgroundfillgradient">BackgroundFillGradient</a>
- | <a href="#backgroundfillfreeformgradient">BackgroundFillFreeformGradient</a>
+ | BackgroundFillSolid
+ | BackgroundFillGradient
+ | BackgroundFillFreeformGradient
 /**
  * The background is filled using the selected color.
  */
@@ -2515,10 +2515,10 @@ export interface BackgroundFillFreeformGradient {
  * - <a href="#backgroundtypechattheme">BackgroundTypeChatTheme</a>
  */
 export type BackgroundType =
- | <a href="#backgroundtypefill">BackgroundTypeFill</a>
- | <a href="#backgroundtypewallpaper">BackgroundTypeWallpaper</a>
- | <a href="#backgroundtypepattern">BackgroundTypePattern</a>
- | <a href="#backgroundtypechattheme">BackgroundTypeChatTheme</a>
+ | BackgroundTypeFill
+ | BackgroundTypeWallpaper
+ | BackgroundTypePattern
+ | BackgroundTypeChatTheme
 /**
  * The background is automatically filled based on the selected colors.
  */
@@ -3763,12 +3763,12 @@ export interface ChatMemberUpdated {
  * - <a href="#chatmemberbanned">ChatMemberBanned</a>
  */
 export type ChatMember =
- | <a href="#chatmemberowner">ChatMemberOwner</a>
- | <a href="#chatmemberadministrator">ChatMemberAdministrator</a>
- | <a href="#chatmembermember">ChatMemberMember</a>
- | <a href="#chatmemberrestricted">ChatMemberRestricted</a>
- | <a href="#chatmemberleft">ChatMemberLeft</a>
- | <a href="#chatmemberbanned">ChatMemberBanned</a>
+ | ChatMemberOwner
+ | ChatMemberAdministrator
+ | ChatMemberMember
+ | ChatMemberRestricted
+ | ChatMemberLeft
+ | ChatMemberBanned
 /**
  * Represents a <a href="#chatmember">chat member</a> that owns the chat and has all administrator privileges.
  */
@@ -4275,11 +4275,11 @@ export interface LocationAddress {
  * - <a href="#storyareatypeuniquegift">StoryAreaTypeUniqueGift</a>
  */
 export type StoryAreaType =
- | <a href="#storyareatypelocation">StoryAreaTypeLocation</a>
- | <a href="#storyareatypesuggestedreaction">StoryAreaTypeSuggestedReaction</a>
- | <a href="#storyareatypelink">StoryAreaTypeLink</a>
- | <a href="#storyareatypeweather">StoryAreaTypeWeather</a>
- | <a href="#storyareatypeuniquegift">StoryAreaTypeUniqueGift</a>
+ | StoryAreaTypeLocation
+ | StoryAreaTypeSuggestedReaction
+ | StoryAreaTypeLink
+ | StoryAreaTypeWeather
+ | StoryAreaTypeUniqueGift
 /**
  * Describes a story area pointing to a location. Currently, a story can have up to 10 location areas.
  */
@@ -4403,9 +4403,9 @@ export interface ChatLocation {
  * - <a href="#reactiontypepaid">ReactionTypePaid</a>
  */
 export type ReactionType =
- | <a href="#reactiontypeemoji">ReactionTypeEmoji</a>
- | <a href="#reactiontypecustomemoji">ReactionTypeCustomEmoji</a>
- | <a href="#reactiontypepaid">ReactionTypePaid</a>
+ | ReactionTypeEmoji
+ | ReactionTypeCustomEmoji
+ | ReactionTypePaid
 /**
  * The reaction is based on an emoji.
  */
@@ -4859,8 +4859,8 @@ export interface UniqueGiftInfo {
  * - <a href="#ownedgiftunique">OwnedGiftUnique</a>
  */
 export type OwnedGift =
- | <a href="#ownedgiftregular">OwnedGiftRegular</a>
- | <a href="#ownedgiftunique">OwnedGiftUnique</a>
+ | OwnedGiftRegular
+ | OwnedGiftUnique
 /**
  * Describes a regular gift owned by a user or a chat.
  */
@@ -5064,13 +5064,13 @@ export interface BotCommand {
  * - <a href="#botcommandscopechatmember">BotCommandScopeChatMember</a>
  */
 export type BotCommandScope =
- | <a href="#botcommandscopedefault">BotCommandScopeDefault</a>
- | <a href="#botcommandscopeallprivatechats">BotCommandScopeAllPrivateChats</a>
- | <a href="#botcommandscopeallgroupchats">BotCommandScopeAllGroupChats</a>
- | <a href="#botcommandscopeallchatadministrators">BotCommandScopeAllChatAdministrators</a>
- | <a href="#botcommandscopechat">BotCommandScopeChat</a>
- | <a href="#botcommandscopechatadministrators">BotCommandScopeChatAdministrators</a>
- | <a href="#botcommandscopechatmember">BotCommandScopeChatMember</a>
+ | BotCommandScopeDefault
+ | BotCommandScopeAllPrivateChats
+ | BotCommandScopeAllGroupChats
+ | BotCommandScopeAllChatAdministrators
+ | BotCommandScopeChat
+ | BotCommandScopeChatAdministrators
+ | BotCommandScopeChatMember
 <h4><a class="anchor" name="determining-list-of-commands" href="#determining-list-of-commands"><i class="anchor-icon"></i></a>Determining list of commands</h4>
 <p>The following algorithm is used to determine the list of commands for a particular user viewing the bot menu. The first list of commands which is set is returned:</p>
 <p><strong>Commands in the chat with the bot</strong></p>
@@ -5211,9 +5211,9 @@ export interface BotShortDescription {
  * - <a href="#menubuttondefault">MenuButtonDefault</a>
  */
 export type MenuButton =
- | <a href="#menubuttoncommands">MenuButtonCommands</a>
- | <a href="#menubuttonwebapp">MenuButtonWebApp</a>
- | <a href="#menubuttondefault">MenuButtonDefault</a>
+ | MenuButtonCommands
+ | MenuButtonWebApp
+ | MenuButtonDefault
 <p>If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.</p>
 /**
  * Represents a menu button, which opens the bot&#39;s list of commands.
@@ -5258,9 +5258,9 @@ export interface MenuButtonDefault {
  * - <a href="#chatboostsourcegiveaway">ChatBoostSourceGiveaway</a>
  */
 export type ChatBoostSource =
- | <a href="#chatboostsourcepremium">ChatBoostSourcePremium</a>
- | <a href="#chatboostsourcegiftcode">ChatBoostSourceGiftCode</a>
- | <a href="#chatboostsourcegiveaway">ChatBoostSourceGiveaway</a>
+ | ChatBoostSourcePremium
+ | ChatBoostSourceGiftCode
+ | ChatBoostSourceGiveaway
 /**
  * The boost was obtained by subscribing to Telegram Premium or by gifting a Telegram Premium subscription to another user.
  */
@@ -5565,12 +5565,12 @@ export interface ResponseParameters {
  * - <a href="#inputmediavideo">InputMediaVideo</a>
  */
 export type InputMedia =
- | <a href="#inputmediaanimation">InputMediaAnimation</a>
- | <a href="#inputmediaaudio">InputMediaAudio</a>
- | <a href="#inputmediadocument">InputMediaDocument</a>
- | <a href="#inputmedialivephoto">InputMediaLivePhoto</a>
- | <a href="#inputmediaphoto">InputMediaPhoto</a>
- | <a href="#inputmediavideo">InputMediaVideo</a>
+ | InputMediaAnimation
+ | InputMediaAudio
+ | InputMediaDocument
+ | InputMediaLivePhoto
+ | InputMediaPhoto
+ | InputMediaVideo
 /**
  * Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.
  */
@@ -5958,9 +5958,9 @@ export interface InputFile {}
  * - <a href="#inputpaidmediavideo">InputPaidMediaVideo</a>
  */
 export type InputPaidMedia =
- | <a href="#inputpaidmedialivephoto">InputPaidMediaLivePhoto</a>
- | <a href="#inputpaidmediaphoto">InputPaidMediaPhoto</a>
- | <a href="#inputpaidmediavideo">InputPaidMediaVideo</a>
+ | InputPaidMediaLivePhoto
+ | InputPaidMediaPhoto
+ | InputPaidMediaVideo
 /**
  * The paid media to send is a live photo.
  */
@@ -6039,8 +6039,8 @@ export interface InputPaidMediaVideo {
  * - <a href="#inputprofilephotoanimated">InputProfilePhotoAnimated</a>
  */
 export type InputProfilePhoto =
- | <a href="#inputprofilephotostatic">InputProfilePhotoStatic</a>
- | <a href="#inputprofilephotoanimated">InputProfilePhotoAnimated</a>
+ | InputProfilePhotoStatic
+ | InputProfilePhotoAnimated
 /**
  * A static profile photo in the .JPG format.
  */
@@ -6078,8 +6078,8 @@ export interface InputProfilePhotoAnimated {
  * - <a href="#inputstorycontentvideo">InputStoryContentVideo</a>
  */
 export type InputStoryContent =
- | <a href="#inputstorycontentphoto">InputStoryContentPhoto</a>
- | <a href="#inputstorycontentvideo">InputStoryContentVideo</a>
+ | InputStoryContentPhoto
+ | InputStoryContentVideo
 /**
  * Describes a photo to post as a story.
  */
@@ -11335,31 +11335,31 @@ export interface ApiMethods {
  * - <a href="#richtextreferencelink">RichTextReferenceLink</a>
  */
 export type RichText =
- | <a href="#richtextbold">RichTextBold</a>
- | <a href="#richtextitalic">RichTextItalic</a>
- | <a href="#richtextunderline">RichTextUnderline</a>
- | <a href="#richtextstrikethrough">RichTextStrikethrough</a>
- | <a href="#richtextspoiler">RichTextSpoiler</a>
- | <a href="#richtextdatetime">RichTextDateTime</a>
- | <a href="#richtexttextmention">RichTextTextMention</a>
- | <a href="#richtextsubscript">RichTextSubscript</a>
- | <a href="#richtextsuperscript">RichTextSuperscript</a>
- | <a href="#richtextmarked">RichTextMarked</a>
- | <a href="#richtextcode">RichTextCode</a>
- | <a href="#richtextcustomemoji">RichTextCustomEmoji</a>
- | <a href="#richtextmathematicalexpression">RichTextMathematicalExpression</a>
- | <a href="#richtexturl">RichTextUrl</a>
- | <a href="#richtextemailaddress">RichTextEmailAddress</a>
- | <a href="#richtextphonenumber">RichTextPhoneNumber</a>
- | <a href="#richtextbankcardnumber">RichTextBankCardNumber</a>
- | <a href="#richtextmention">RichTextMention</a>
- | <a href="#richtexthashtag">RichTextHashtag</a>
- | <a href="#richtextcashtag">RichTextCashtag</a>
- | <a href="#richtextbotcommand">RichTextBotCommand</a>
- | <a href="#richtextanchor">RichTextAnchor</a>
- | <a href="#richtextanchorlink">RichTextAnchorLink</a>
- | <a href="#richtextreference">RichTextReference</a>
- | <a href="#richtextreferencelink">RichTextReferenceLink</a>
+ | RichTextBold
+ | RichTextItalic
+ | RichTextUnderline
+ | RichTextStrikethrough
+ | RichTextSpoiler
+ | RichTextDateTime
+ | RichTextTextMention
+ | RichTextSubscript
+ | RichTextSuperscript
+ | RichTextMarked
+ | RichTextCode
+ | RichTextCustomEmoji
+ | RichTextMathematicalExpression
+ | RichTextUrl
+ | RichTextEmailAddress
+ | RichTextPhoneNumber
+ | RichTextBankCardNumber
+ | RichTextMention
+ | RichTextHashtag
+ | RichTextCashtag
+ | RichTextBotCommand
+ | RichTextAnchor
+ | RichTextAnchorLink
+ | RichTextReference
+ | RichTextReferenceLink
 /**
  * A bold text.
  */
@@ -11842,27 +11842,27 @@ export interface RichBlockListItem {
  * - <a href="#richblockthinking">RichBlockThinking</a>
  */
 export type RichBlock =
- | <a href="#richblockparagraph">RichBlockParagraph</a>
- | <a href="#richblocksectionheading">RichBlockSectionHeading</a>
- | <a href="#richblockpreformatted">RichBlockPreformatted</a>
- | <a href="#richblockfooter">RichBlockFooter</a>
- | <a href="#richblockdivider">RichBlockDivider</a>
- | <a href="#richblockmathematicalexpression">RichBlockMathematicalExpression</a>
- | <a href="#richblockanchor">RichBlockAnchor</a>
- | <a href="#richblocklist">RichBlockList</a>
- | <a href="#richblockblockquotation">RichBlockBlockQuotation</a>
- | <a href="#richblockpullquotation">RichBlockPullQuotation</a>
- | <a href="#richblockcollage">RichBlockCollage</a>
- | <a href="#richblockslideshow">RichBlockSlideshow</a>
- | <a href="#richblocktable">RichBlockTable</a>
- | <a href="#richblockdetails">RichBlockDetails</a>
- | <a href="#richblockmap">RichBlockMap</a>
- | <a href="#richblockanimation">RichBlockAnimation</a>
- | <a href="#richblockaudio">RichBlockAudio</a>
- | <a href="#richblockphoto">RichBlockPhoto</a>
- | <a href="#richblockvideo">RichBlockVideo</a>
- | <a href="#richblockvoicenote">RichBlockVoiceNote</a>
- | <a href="#richblockthinking">RichBlockThinking</a>
+ | RichBlockParagraph
+ | RichBlockSectionHeading
+ | RichBlockPreformatted
+ | RichBlockFooter
+ | RichBlockDivider
+ | RichBlockMathematicalExpression
+ | RichBlockAnchor
+ | RichBlockList
+ | RichBlockBlockQuotation
+ | RichBlockPullQuotation
+ | RichBlockCollage
+ | RichBlockSlideshow
+ | RichBlockTable
+ | RichBlockDetails
+ | RichBlockMap
+ | RichBlockAnimation
+ | RichBlockAudio
+ | RichBlockPhoto
+ | RichBlockVideo
+ | RichBlockVoiceNote
+ | RichBlockThinking
 /**
  * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
  */
@@ -12275,27 +12275,27 @@ export interface InputRichBlockListItem {
  * - <a href="#inputrichblockthinking">InputRichBlockThinking</a>
  */
 export type InputRichBlock =
- | <a href="#inputrichblockparagraph">InputRichBlockParagraph</a>
- | <a href="#inputrichblocksectionheading">InputRichBlockSectionHeading</a>
- | <a href="#inputrichblockpreformatted">InputRichBlockPreformatted</a>
- | <a href="#inputrichblockfooter">InputRichBlockFooter</a>
- | <a href="#inputrichblockdivider">InputRichBlockDivider</a>
- | <a href="#inputrichblockmathematicalexpression">InputRichBlockMathematicalExpression</a>
- | <a href="#inputrichblockanchor">InputRichBlockAnchor</a>
- | <a href="#inputrichblocklist">InputRichBlockList</a>
- | <a href="#inputrichblockblockquotation">InputRichBlockBlockQuotation</a>
- | <a href="#inputrichblockpullquotation">InputRichBlockPullQuotation</a>
- | <a href="#inputrichblockcollage">InputRichBlockCollage</a>
- | <a href="#inputrichblockslideshow">InputRichBlockSlideshow</a>
- | <a href="#inputrichblocktable">InputRichBlockTable</a>
- | <a href="#inputrichblockdetails">InputRichBlockDetails</a>
- | <a href="#inputrichblockmap">InputRichBlockMap</a>
- | <a href="#inputrichblockanimation">InputRichBlockAnimation</a>
- | <a href="#inputrichblockaudio">InputRichBlockAudio</a>
- | <a href="#inputrichblockphoto">InputRichBlockPhoto</a>
- | <a href="#inputrichblockvideo">InputRichBlockVideo</a>
- | <a href="#inputrichblockvoicenote">InputRichBlockVoiceNote</a>
- | <a href="#inputrichblockthinking">InputRichBlockThinking</a>
+ | InputRichBlockParagraph
+ | InputRichBlockSectionHeading
+ | InputRichBlockPreformatted
+ | InputRichBlockFooter
+ | InputRichBlockDivider
+ | InputRichBlockMathematicalExpression
+ | InputRichBlockAnchor
+ | InputRichBlockList
+ | InputRichBlockBlockQuotation
+ | InputRichBlockPullQuotation
+ | InputRichBlockCollage
+ | InputRichBlockSlideshow
+ | InputRichBlockTable
+ | InputRichBlockDetails
+ | InputRichBlockMap
+ | InputRichBlockAnimation
+ | InputRichBlockAudio
+ | InputRichBlockPhoto
+ | InputRichBlockVideo
+ | InputRichBlockVoiceNote
+ | InputRichBlockThinking
 /**
  * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
  */
@@ -12750,26 +12750,26 @@ export interface InlineQueryResultsButton {
  * - <a href="#inlinequeryresultvoice">InlineQueryResultVoice</a>
  */
 export type InlineQueryResult =
- | <a href="#inlinequeryresultcachedaudio">InlineQueryResultCachedAudio</a>
- | <a href="#inlinequeryresultcacheddocument">InlineQueryResultCachedDocument</a>
- | <a href="#inlinequeryresultcachedgif">InlineQueryResultCachedGif</a>
- | <a href="#inlinequeryresultcachedmpeg4gif">InlineQueryResultCachedMpeg4Gif</a>
- | <a href="#inlinequeryresultcachedphoto">InlineQueryResultCachedPhoto</a>
- | <a href="#inlinequeryresultcachedsticker">InlineQueryResultCachedSticker</a>
- | <a href="#inlinequeryresultcachedvideo">InlineQueryResultCachedVideo</a>
- | <a href="#inlinequeryresultcachedvoice">InlineQueryResultCachedVoice</a>
- | <a href="#inlinequeryresultarticle">InlineQueryResultArticle</a>
- | <a href="#inlinequeryresultaudio">InlineQueryResultAudio</a>
- | <a href="#inlinequeryresultcontact">InlineQueryResultContact</a>
- | <a href="#inlinequeryresultgame">InlineQueryResultGame</a>
- | <a href="#inlinequeryresultdocument">InlineQueryResultDocument</a>
- | <a href="#inlinequeryresultgif">InlineQueryResultGif</a>
- | <a href="#inlinequeryresultlocation">InlineQueryResultLocation</a>
- | <a href="#inlinequeryresultmpeg4gif">InlineQueryResultMpeg4Gif</a>
- | <a href="#inlinequeryresultphoto">InlineQueryResultPhoto</a>
- | <a href="#inlinequeryresultvenue">InlineQueryResultVenue</a>
- | <a href="#inlinequeryresultvideo">InlineQueryResultVideo</a>
- | <a href="#inlinequeryresultvoice">InlineQueryResultVoice</a>
+ | InlineQueryResultCachedAudio
+ | InlineQueryResultCachedDocument
+ | InlineQueryResultCachedGif
+ | InlineQueryResultCachedMpeg4Gif
+ | InlineQueryResultCachedPhoto
+ | InlineQueryResultCachedSticker
+ | InlineQueryResultCachedVideo
+ | InlineQueryResultCachedVoice
+ | InlineQueryResultArticle
+ | InlineQueryResultAudio
+ | InlineQueryResultContact
+ | InlineQueryResultGame
+ | InlineQueryResultDocument
+ | InlineQueryResultGif
+ | InlineQueryResultLocation
+ | InlineQueryResultMpeg4Gif
+ | InlineQueryResultPhoto
+ | InlineQueryResultVenue
+ | InlineQueryResultVideo
+ | InlineQueryResultVoice
 <p><strong>Note:</strong> All URLs passed in inline query results will be available to end users and therefore must be assumed to be <strong>public</strong>.</p>
 /**
  * Represents a link to an article or web page.
@@ -13776,12 +13776,12 @@ export interface InlineQueryResultCachedAudio {
  * - <a href="#inputinvoicemessagecontent">InputInvoiceMessageContent</a>
  */
 export type InputMessageContent =
- | <a href="#inputtextmessagecontent">InputTextMessageContent</a>
- | <a href="#inputrichmessagecontent">InputRichMessageContent</a>
- | <a href="#inputlocationmessagecontent">InputLocationMessageContent</a>
- | <a href="#inputvenuemessagecontent">InputVenueMessageContent</a>
- | <a href="#inputcontactmessagecontent">InputContactMessageContent</a>
- | <a href="#inputinvoicemessagecontent">InputInvoiceMessageContent</a>
+ | InputTextMessageContent
+ | InputRichMessageContent
+ | InputLocationMessageContent
+ | InputVenueMessageContent
+ | InputContactMessageContent
+ | InputInvoiceMessageContent
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a text message to be sent as the result of an inline query.
  */
@@ -14586,9 +14586,9 @@ export interface PaidMediaPurchased {
  * - <a href="#revenuewithdrawalstatefailed">RevenueWithdrawalStateFailed</a>
  */
 export type RevenueWithdrawalState =
- | <a href="#revenuewithdrawalstatepending">RevenueWithdrawalStatePending</a>
- | <a href="#revenuewithdrawalstatesucceeded">RevenueWithdrawalStateSucceeded</a>
- | <a href="#revenuewithdrawalstatefailed">RevenueWithdrawalStateFailed</a>
+ | RevenueWithdrawalStatePending
+ | RevenueWithdrawalStateSucceeded
+ | RevenueWithdrawalStateFailed
 /**
  * The withdrawal is in progress.
  */
@@ -14661,13 +14661,13 @@ export interface AffiliateInfo {
  * - <a href="#transactionpartnerother">TransactionPartnerOther</a>
  */
 export type TransactionPartner =
- | <a href="#transactionpartneruser">TransactionPartnerUser</a>
- | <a href="#transactionpartnerchat">TransactionPartnerChat</a>
- | <a href="#transactionpartneraffiliateprogram">TransactionPartnerAffiliateProgram</a>
- | <a href="#transactionpartnerfragment">TransactionPartnerFragment</a>
- | <a href="#transactionpartnertelegramads">TransactionPartnerTelegramAds</a>
- | <a href="#transactionpartnertelegramapi">TransactionPartnerTelegramApi</a>
- | <a href="#transactionpartnerother">TransactionPartnerOther</a>
+ | TransactionPartnerUser
+ | TransactionPartnerChat
+ | TransactionPartnerAffiliateProgram
+ | TransactionPartnerFragment
+ | TransactionPartnerTelegramAds
+ | TransactionPartnerTelegramApi
+ | TransactionPartnerOther
 /**
  * Describes a transaction with a user.
  */
@@ -14958,15 +14958,15 @@ export interface ApiMethods {
  * - <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a>
  */
 export type PassportElementError =
- | <a href="#passportelementerrordatafield">PassportElementErrorDataField</a>
- | <a href="#passportelementerrorfrontside">PassportElementErrorFrontSide</a>
- | <a href="#passportelementerrorreverseside">PassportElementErrorReverseSide</a>
- | <a href="#passportelementerrorselfie">PassportElementErrorSelfie</a>
- | <a href="#passportelementerrorfile">PassportElementErrorFile</a>
- | <a href="#passportelementerrorfiles">PassportElementErrorFiles</a>
- | <a href="#passportelementerrortranslationfile">PassportElementErrorTranslationFile</a>
- | <a href="#passportelementerrortranslationfiles">PassportElementErrorTranslationFiles</a>
- | <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a>
+ | PassportElementErrorDataField
+ | PassportElementErrorFrontSide
+ | PassportElementErrorReverseSide
+ | PassportElementErrorSelfie
+ | PassportElementErrorFile
+ | PassportElementErrorFiles
+ | PassportElementErrorTranslationFile
+ | PassportElementErrorTranslationFiles
+ | PassportElementErrorUnspecified
 /**
  * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field&#39;s value changes.
  */
