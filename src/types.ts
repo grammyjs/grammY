@@ -15286,12 +15286,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>custom_emoji_ids</td>
-<td>Array of String</td>
-<td>Yes</td>
-<td>A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.</td>
-</tr>
+    /**
+     * A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
+     */
+    custom_emoji_ids: string[];
 </tbody>
 </table>
   }): never;
@@ -15513,12 +15511,10 @@ export interface ApiMethods {
      * File identifier of the sticker
      */
     sticker: string;
-<tr>
-<td>emoji_list</td>
-<td>Array of String</td>
-<td>Yes</td>
-<td>A JSON-serialized list of 1-20 emoji associated with the sticker</td>
-</tr>
+    /**
+     * A JSON-serialized list of 1-20 emoji associated with the sticker
+     */
+    emoji_list: string[];
 </tbody>
 </table>
   }): never;
