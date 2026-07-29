@@ -1,3 +1,8 @@
+// === HELPER TYPES
+/**
+ * Object with no keys
+ */
+export type Empty = Record<string, never>;
 // === MAKING REQUESTS
 /**
  * Structure of an HTTP response body from the Bot API.
@@ -237,7 +242,7 @@ export interface ApiMethods {
   /**
    * Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the <em>url</em> field empty.
    */
-  getWebhookInfo(args: {}): never;
+  getWebhookInfo(args: Empty): never;
 }
 /**
  * Describes the current status of a webhook.
@@ -2652,7 +2657,7 @@ export interface CommunityChatAdded {
 /**
  * Describes a service message about a chat being removed from a community. Currently holds no information.
  */
-export interface CommunityChatRemoved {}
+export type CommunityChatRemoved = Empty;
 /**
  * This object represents a service message about a new forum topic created in the chat.
  */
@@ -2677,7 +2682,7 @@ export interface ForumTopicCreated {
 /**
  * This object represents a service message about a forum topic closed in the chat. Currently holds no information.
  */
-export interface ForumTopicClosed {}
+export type ForumTopicClosed = Empty;
 /**
  * This object represents a service message about an edited forum topic.
  */
@@ -2694,15 +2699,15 @@ export interface ForumTopicEdited {
 /**
  * This object represents a service message about a forum topic reopened in the chat. Currently holds no information.
  */
-export interface ForumTopicReopened {}
+export type ForumTopicReopened = Empty;
 /**
  * This object represents a service message about General forum topic hidden in the chat. Currently holds no information.
  */
-export interface GeneralForumTopicHidden {}
+export type GeneralForumTopicHidden = Empty;
 /**
  * This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.
  */
-export interface GeneralForumTopicUnhidden {}
+export type GeneralForumTopicUnhidden = Empty;
 /**
  * This object contains information about a user that was shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.
  */
@@ -2795,7 +2800,7 @@ export interface VideoChatScheduled {
 /**
  * This object represents a service message about a video chat started in the chat. Currently holds no information.
  */
-export interface VideoChatStarted {}
+export type VideoChatStarted = Empty;
 /**
  * This object represents a service message about a video chat ended in the chat.
  */
@@ -6209,19 +6214,19 @@ export interface ApiMethods {
   /**
    * A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.
    */
-  getMe(args: {}): never;
+  getMe(args: Empty): never;
 }
 export interface ApiMethods {
   /**
    * Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns <em>True</em> on success. Requires no parameters.
    */
-  logOut(args: {}): never;
+  logOut(args: Empty): never;
 }
 export interface ApiMethods {
   /**
    * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns <em>True</em> on success. Requires no parameters.
    */
-  close(args: {}): never;
+  close(args: Empty): never;
 }
 export interface ApiMethods {
   /**
@@ -8755,7 +8760,7 @@ export interface ApiMethods {
   /**
    * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.
    */
-  getForumTopicIconStickers(args: {}): never;
+  getForumTopicIconStickers(args: Empty): never;
 }
 export interface ApiMethods {
   /**
@@ -9197,7 +9202,7 @@ export interface ApiMethods {
   /**
    * Removes the profile photo of the bot. Requires no parameters. Returns <em>True</em> on success.
    */
-  removeMyProfilePhoto(args: {}): never;
+  removeMyProfilePhoto(args: Empty): never;
 }
 export interface ApiMethods {
   /**
@@ -9255,7 +9260,7 @@ export interface ApiMethods {
   /**
    * Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.
    */
-  getAvailableGifts(args: {}): never;
+  getAvailableGifts(args: Empty): never;
 }
 export interface ApiMethods {
   /**
@@ -14319,7 +14324,7 @@ export interface ApiMethods {
   /**
    * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.
    */
-  getMyStarBalance(args: {}): never;
+  getMyStarBalance(args: Empty): never;
 }
 export interface ApiMethods {
   /**
@@ -15273,7 +15278,7 @@ export interface Game {
 /**
  * A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.
  */
-export interface CallbackGame {}
+export type CallbackGame = Empty;
 export interface ApiMethods {
   /**
    * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.
