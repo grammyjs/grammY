@@ -7,7 +7,7 @@ export type Empty = Record<string, never>;
 /**
  * Structure of an HTTP response body from the Bot API.
  * 
- * The response contains a JSON object, which always has a Boolean field &#39;ok&#39; and may have an optional String field &#39;description&#39; with a human-readable description of the result. If &#39;ok&#39; equals `true`, the request was successful and the result of the query can be found in the &#39;result&#39; field. In case of an unsuccessful request, &#39;ok&#39; equals `false` and the error is explained in the &#39;description&#39;. An Integer &#39;error_code&#39; field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field &#39;parameters&#39; of the type <a href="#responseparameters">ResponseParameters</a>, which can help to automatically handle the error.
+ * The response contains a JSON object, which always has a Boolean field &#39;ok&#39; and may have an optional String field &#39;description&#39; with a human-readable description of the result. If &#39;ok&#39; equals `true`, the request was successful and the result of the query can be found in the &#39;result&#39; field. In case of an unsuccessful request, &#39;ok&#39; equals `false` and the error is explained in the &#39;description&#39;. An Integer &#39;error_code&#39; field is also returned, but its contents are subject to change in the future. Some errors may also have an optional field &#39;parameters&#39; of the type {@link ResponseParameters}, which can help to automatically handle the error.
  */
 export type ApiResponse<T> = ApiError | ApiSuccess<T>
 /**
@@ -54,7 +54,7 @@ export interface ApiSuccess<T> {
  */
 export interface Update {
   /**
-   * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using <a href="#setwebhook">webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+   * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using {@link ApiMethods.setWebhook | webhooks}, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
    */
   update_id: number;
   /**
@@ -90,7 +90,7 @@ export interface Update {
    */
   deleted_business_messages?: BusinessMessagesDeleted;
   /**
-   * New guest message. The bot can use the field _Message.guest_query_id_ and the method <a href="#answerguestquery">answerGuestQuery</a> to send a message in response.
+   * New guest message. The bot can use the field _Message.guest_query_id_ and the method {@link ApiMethods.answerGuestQuery | answerGuestQuery} to send a message in response.
    */
   guest_message?: Message;
   /**
@@ -167,7 +167,7 @@ export interface Update {
  */
 export interface ApiMethods {
   /**
-   * Use this method to receive incoming updates using long polling ({@link https://en.wikipedia.org/wiki/Push_technology#Long_polling | wiki}). Returns an Array of <a href="#update">Update</a> objects.
+   * Use this method to receive incoming updates using long polling ({@link https://en.wikipedia.org/wiki/Push_technology#Long_polling | wiki}). Returns an Array of {@link Update} objects.
    * 
    * > **Notes**
    * >
@@ -178,7 +178,7 @@ export interface ApiMethods {
    */
   getUpdates(args: {
     /**
-     * Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an _offset_ higher than its _update_id_. The negative offset can be specified to retrieve updates starting from _-offset_ update from the end of the updates queue. All previous updates will be forgotten.
+     * Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as {@link ApiMethods.getUpdates | getUpdates} is called with an _offset_ higher than its _update_id_. The negative offset can be specified to retrieve updates starting from _-offset_ update from the end of the updates queue. All previous updates will be forgotten.
      */
     offset?: number;
     /**
@@ -190,7 +190,7 @@ export interface ApiMethods {
      */
     timeout?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
      *
      * Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
      */
@@ -199,13 +199,13 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes | HTTP status code} different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns `true` on success.
+   * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized {@link Update}. In case of an unsuccessful request (a request with response {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes | HTTP status code} different from `2XY`), we will repeat the request and give up after a reasonable amount of attempts. Returns `true` on success.
    *
    * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter _secret_token_. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
    * 
    * > **Notes**
    * >
-   * > 1. You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.
+   * > 1. You will not be able to receive updates using {@link ApiMethods.getUpdates | getUpdates} for as long as an outgoing webhook is set up.
    * > 2. To use a self-signed certificate, you need to upload your {@link https://core.telegram.org/bots/self-signed | public key certificate} using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
    * > 3. Ports currently supported _for webhooks_: **443, 80, 88, 8443**.
    *
@@ -231,7 +231,7 @@ export interface ApiMethods {
      */
     max_connections?: number;
     /**
-     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify `[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]` to only receive updates of these types. See {@link Update} for a complete list of available update types. Specify an empty list to receive all update types except _chat_member_, _message_reaction_, and _message_reaction_count_ (default). If not specified, the previous setting will be used.
      *
      * Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
      */
@@ -248,7 +248,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns `true` on success.
+   * Use this method to remove webhook integration if you decide to switch back to {@link ApiMethods.getUpdates | getUpdates}. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletewebhook}
    */
@@ -261,7 +261,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the _url_ field empty.
+   * Use this method to get current webhook status. Requires no parameters. On success, returns a {@link WebhookInfo} object. If the bot is using {@link ApiMethods.getUpdates | getUpdates}, will return an object with the _url_ field empty.
    *
    * @see {@link https://core.telegram.org/bots/api#getwebhookinfo}
    */
@@ -350,43 +350,43 @@ export interface User {
    */
   added_to_attachment_menu?: true;
   /**
-   * `true`, if the bot can be invited to groups. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot can be invited to groups. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   can_join_groups?: boolean;
   /**
-   * `true`, if {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode} is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if {@link https://core.telegram.org/bots/features#privacy-mode | privacy mode} is disabled for the bot. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   can_read_all_group_messages?: boolean;
   /**
-   * `true`, if the bot supports guest queries from chats it is not a member of. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot supports guest queries from chats it is not a member of. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   supports_guest_queries?: boolean;
   /**
-   * `true`, if the bot supports inline queries. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot supports inline queries. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   supports_inline_queries?: boolean;
   /**
-   * `true`, if the bot can be connected to a user account to manage it. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot can be connected to a user account to manage it. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   can_connect_to_business?: boolean;
   /**
-   * `true`, if the bot has a main Web App. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot has a main Web App. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   has_main_web_app?: boolean;
   /**
-   * `true`, if the bot has forum topic mode enabled in private chats. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot has forum topic mode enabled in private chats. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   has_topics_enabled?: boolean;
   /**
-   * `true`, if the bot allows users to create and delete topics in private chats. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot allows users to create and delete topics in private chats. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   allows_users_to_create_topics?: boolean;
   /**
-   * `true`, if other bots can be created to be controlled by the bot. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if other bots can be created to be controlled by the bot. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   can_manage_bots?: boolean;
   /**
-   * `true`, if the bot supports join request queries and can be assigned to process them. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if the bot supports join request queries and can be assigned to process them. Returned only in {@link ApiMethods.getMe | getMe}.
    */
   supports_join_request_queries?: boolean;
 }
@@ -508,7 +508,7 @@ export interface ChatFullInfo {
    */
   parent_chat?: Chat;
   /**
-   * List of available reactions allowed in the chat. If omitted, then all <a href="#reactiontypeemoji">emoji reactions</a> are allowed.
+   * List of available reactions allowed in the chat. If omitted, then all {@link ReactionTypeEmoji | emoji reactions} are allowed.
    */
   available_reactions?: ReactionType[];
   /**
@@ -644,7 +644,7 @@ export interface ChatFullInfo {
    */
   guard_bot?: User;
   /**
-   * The <a href="#community">Community</a> to which the chat belongs
+   * The {@link Community} to which the chat belongs
    */
   community?: Community;
 }
@@ -699,7 +699,7 @@ export interface Message {
    */
   date: number;
   /**
-   * The unique identifier for the guest query. Use this identifier with the method <a href="#answerguestquery">answerGuestQuery</a> to send a response message. If non-empty, the message belongs to the chat where the guest bot was summoned, which may not coincide with other existing bot chats sharing the same identifier.
+   * The unique identifier for the guest query. Use this identifier with the method {@link ApiMethods.answerGuestQuery | answerGuestQuery} to send a response message. If non-empty, the message belongs to the chat where the guest bot was summoned, which may not coincide with other existing bot chats sharing the same identifier.
    */
   guest_query_id?: string;
   /**
@@ -723,7 +723,7 @@ export interface Message {
    */
   is_automatic_forward?: true;
   /**
-   * For replies in the same chat and message thread, the original message. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply. If the message is a reply to an ephemeral message, then this field may be omitted.
+   * For replies in the same chat and message thread, the original message. Note that the {@link Message} object in this field will not contain further _reply_to_message_ fields even if it itself is a reply. If the message is a reply to an ephemeral message, then this field may be omitted.
    */
   reply_to_message?: Message;
   /**
@@ -951,7 +951,7 @@ export interface Message {
    */
   migrate_from_chat_id?: number;
   /**
-   * Specified message was pinned. Note that the <a href="#message">Message</a> object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.
+   * Specified message was pinned. Note that the {@link Message} object in this field will not contain further _reply_to_message_ fields even if it itself is a reply.
    */
   pinned_message?: MaybeInaccessibleMessage;
   /**
@@ -1019,11 +1019,11 @@ export interface Message {
    */
   checklist_tasks_added?: ChecklistTasksAdded;
   /**
-   * Service message: chat added to a <a href="#community">Community</a>
+   * Service message: chat added to a {@link Community}
    */
   community_chat_added?: CommunityChatAdded;
   /**
-   * Service message: chat removed from a <a href="#community">Community</a>
+   * Service message: chat removed from a {@link Community}
    */
   community_chat_removed?: CommunityChatRemoved;
   /**
@@ -1164,8 +1164,8 @@ export interface InaccessibleMessage {
 /**
  * This object describes a message that can be inaccessible to the bot. It can be one of
  *
- * - <a href="#message">Message</a>
- * - <a href="#inaccessiblemessage">InaccessibleMessage</a>
+ * - {@link Message}
+ * - {@link InaccessibleMessage}
  *
  * @see {@link https://core.telegram.org/bots/api#maybeinaccessiblemessage}
  */
@@ -1203,7 +1203,7 @@ export interface MessageEntity {
    */
   language?: string;
   /**
-   * For “custom_emoji” only, unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker.
+   * For “custom_emoji” only, unique identifier of the custom emoji. Use {@link ApiMethods.getCustomEmojiStickers | getCustomEmojiStickers} to get full information about the sticker.
    */
   custom_emoji_id?: string;
   /**
@@ -1399,10 +1399,10 @@ export interface ReplyParameters {
 /**
  * This object describes the origin of a message. It can be one of
  *
- * - <a href="#messageoriginuser">MessageOriginUser</a>
- * - <a href="#messageoriginhiddenuser">MessageOriginHiddenUser</a>
- * - <a href="#messageoriginchat">MessageOriginChat</a>
- * - <a href="#messageoriginchannel">MessageOriginChannel</a>
+ * - {@link MessageOriginUser}
+ * - {@link MessageOriginHiddenUser}
+ * - {@link MessageOriginChat}
+ * - {@link MessageOriginChannel}
  *
  * @see {@link https://core.telegram.org/bots/api#messageorigin}
  */
@@ -1500,7 +1500,7 @@ export interface MessageOriginChannel {
   author_signature?: string;
 }
 /**
- * This object represents one size of a photo or a <a href="#document">file</a> / <a href="#sticker">sticker</a> thumbnail.
+ * This object represents one size of a photo or a {@link Document | file} / {@link Sticker | sticker} thumbnail.
  *
  * @see {@link https://core.telegram.org/bots/api#photosize}
  */
@@ -1613,7 +1613,7 @@ export interface Audio {
   thumbnail?: PhotoSize;
 }
 /**
- * This object represents a general file (as opposed to <a href="#photosize">photos</a>, <a href="#voice">voice messages</a> and <a href="#audio">audio files</a>).
+ * This object represents a general file (as opposed to {@link PhotoSize | photos}, {@link Voice | voice messages} and {@link Audio | audio files}).
  *
  * @see {@link https://core.telegram.org/bots/api#document}
  */
@@ -1859,10 +1859,10 @@ export interface PaidMediaInfo {
 /**
  * This object describes paid media. Currently, it can be one of
  *
- * - <a href="#paidmedialivephoto">PaidMediaLivePhoto</a>
- * - <a href="#paidmediaphoto">PaidMediaPhoto</a>
- * - <a href="#paidmediapreview">PaidMediaPreview</a>
- * - <a href="#paidmediavideo">PaidMediaVideo</a>
+ * - {@link PaidMediaLivePhoto}
+ * - {@link PaidMediaPhoto}
+ * - {@link PaidMediaPreview}
+ * - {@link PaidMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#paidmedia}
  */
@@ -1872,7 +1872,7 @@ export type PaidMedia =
  | PaidMediaPreview
  | PaidMediaVideo
 /**
- * The paid media is a <a href="#livephoto">live photo</a>.
+ * The paid media is a {@link LivePhoto | live photo}.
  *
  * @see {@link https://core.telegram.org/bots/api#paidmedialivephoto}
  */
@@ -2042,14 +2042,14 @@ export interface PollMedia {
 /**
  * This object represents the content of a poll description or a quiz explanation to be sent. It should be one of
  *
- * - <a href="#inputmediaanimation">InputMediaAnimation</a>
- * - <a href="#inputmediaaudio">InputMediaAudio</a>
- * - <a href="#inputmediadocument">InputMediaDocument</a>
- * - <a href="#inputmedialivephoto">InputMediaLivePhoto</a>
- * - <a href="#inputmedialocation">InputMediaLocation</a>
- * - <a href="#inputmediaphoto">InputMediaPhoto</a>
- * - <a href="#inputmediavenue">InputMediaVenue</a>
- * - <a href="#inputmediavideo">InputMediaVideo</a>
+ * - {@link InputMediaAnimation}
+ * - {@link InputMediaAudio}
+ * - {@link InputMediaDocument}
+ * - {@link InputMediaLivePhoto}
+ * - {@link InputMediaLocation}
+ * - {@link InputMediaPhoto}
+ * - {@link InputMediaVenue}
+ * - {@link InputMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputpollmedia}
  */
@@ -2065,14 +2065,14 @@ export type InputPollMedia =
 /**
  * This object represents the content of a poll option to be sent. It should be one of
  *
- * - <a href="#inputmediaanimation">InputMediaAnimation</a>
- * - <a href="#inputmedialink">InputMediaLink</a>
- * - <a href="#inputmedialivephoto">InputMediaLivePhoto</a>
- * - <a href="#inputmedialocation">InputMediaLocation</a>
- * - <a href="#inputmediaphoto">InputMediaPhoto</a>
- * - <a href="#inputmediasticker">InputMediaSticker</a>
- * - <a href="#inputmediavenue">InputMediaVenue</a>
- * - <a href="#inputmediavideo">InputMediaVideo</a>
+ * - {@link InputMediaAnimation}
+ * - {@link InputMediaLink}
+ * - {@link InputMediaLivePhoto}
+ * - {@link InputMediaLocation}
+ * - {@link InputMediaPhoto}
+ * - {@link InputMediaSticker}
+ * - {@link InputMediaVenue}
+ * - {@link InputMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputpolloptionmedia}
  */
@@ -2253,7 +2253,7 @@ export interface Poll {
    */
   close_date?: number;
   /**
-   * Description of the poll; for polls inside the <a href="#message">Message</a> object only
+   * Description of the poll; for polls inside the {@link Message} object only
    */
   description?: string;
   /**
@@ -2261,7 +2261,7 @@ export interface Poll {
    */
   description_entities?: MessageEntity[];
   /**
-   * Media added to the poll description; for polls inside the <a href="#message">Message</a> object only
+   * Media added to the poll description; for polls inside the {@link Message} object only
    */
   media?: PollMedia;
 }
@@ -2495,7 +2495,7 @@ export interface MessageAutoDeleteTimerChanged {
  */
 export interface ManagedBotCreated {
   /**
-   * Information about the bot. The bot&#39;s token can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.
+   * Information about the bot. The bot&#39;s token can be fetched using the method {@link ApiMethods.getManagedBotToken | getManagedBotToken}.
    */
   bot: User;
 }
@@ -2510,7 +2510,7 @@ export interface ManagedBotUpdated {
    */
   user: User;
   /**
-   * Information about the bot. Token of the bot can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.
+   * Information about the bot. Token of the bot can be fetched using the method {@link ApiMethods.getManagedBotToken | getManagedBotToken}.
    */
   bot: User;
 }
@@ -2540,7 +2540,7 @@ export interface BotSubscriptionUpdated {
  */
 export interface PollOptionAdded {
   /**
-   * Message containing the poll to which the option was added, if known. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the poll to which the option was added, if known. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   poll_message?: MaybeInaccessibleMessage;
   /**
@@ -2563,7 +2563,7 @@ export interface PollOptionAdded {
  */
 export interface PollOptionDeleted {
   /**
-   * Message containing the poll from which the option was deleted, if known. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the poll from which the option was deleted, if known. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   poll_message?: MaybeInaccessibleMessage;
   /**
@@ -2593,9 +2593,9 @@ export interface ChatBoostAdded {
 /**
  * This object describes the way a background is filled based on the selected colors. Currently, it can be one of
  *
- * - <a href="#backgroundfillsolid">BackgroundFillSolid</a>
- * - <a href="#backgroundfillgradient">BackgroundFillGradient</a>
- * - <a href="#backgroundfillfreeformgradient">BackgroundFillFreeformGradient</a>
+ * - {@link BackgroundFillSolid}
+ * - {@link BackgroundFillGradient}
+ * - {@link BackgroundFillFreeformGradient}
  *
  * @see {@link https://core.telegram.org/bots/api#backgroundfill}
  */
@@ -2659,10 +2659,10 @@ export interface BackgroundFillFreeformGradient {
 /**
  * This object describes the type of a background. Currently, it can be one of
  *
- * - <a href="#backgroundtypefill">BackgroundTypeFill</a>
- * - <a href="#backgroundtypewallpaper">BackgroundTypeWallpaper</a>
- * - <a href="#backgroundtypepattern">BackgroundTypePattern</a>
- * - <a href="#backgroundtypechattheme">BackgroundTypeChatTheme</a>
+ * - {@link BackgroundTypeFill}
+ * - {@link BackgroundTypeWallpaper}
+ * - {@link BackgroundTypePattern}
+ * - {@link BackgroundTypeChatTheme}
  *
  * @see {@link https://core.telegram.org/bots/api#backgroundtype}
  */
@@ -2781,7 +2781,7 @@ export interface ChatBackground {
  */
 export interface ChecklistTasksDone {
   /**
-   * Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the checklist whose tasks were marked as done or not done. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   checklist_message?: Message;
   /**
@@ -2800,7 +2800,7 @@ export interface ChecklistTasksDone {
  */
 export interface ChecklistTasksAdded {
   /**
-   * Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the checklist to which the tasks were added. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   checklist_message?: Message;
   /**
@@ -2888,7 +2888,7 @@ export type GeneralForumTopicHidden = Empty;
  */
 export type GeneralForumTopicUnhidden = Empty;
 /**
- * This object contains information about a user that was shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.
+ * This object contains information about a user that was shared with the bot using a {@link KeyboardButtonRequestUsers} button.
  *
  * @see {@link https://core.telegram.org/bots/api#shareduser}
  */
@@ -2915,7 +2915,7 @@ export interface SharedUser {
   photo?: PhotoSize[];
 }
 /**
- * This object contains information about the users whose identifiers were shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.
+ * This object contains information about the users whose identifiers were shared with the bot using a {@link KeyboardButtonRequestUsers} button.
  *
  * @see {@link https://core.telegram.org/bots/api#usersshared}
  */
@@ -2930,7 +2930,7 @@ export interface UsersShared {
   users: SharedUser[];
 }
 /**
- * This object contains information about a chat that was shared with the bot using a <a href="#keyboardbuttonrequestchat">KeyboardButtonRequestChat</a> button.
+ * This object contains information about a chat that was shared with the bot using a {@link KeyboardButtonRequestChat} button.
  *
  * @see {@link https://core.telegram.org/bots/api#chatshared}
  */
@@ -3047,7 +3047,7 @@ export interface DirectMessagePriceChanged {
  */
 export interface SuggestedPostApproved {
   /**
-   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the suggested post. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   suggested_post_message?: Message;
   /**
@@ -3066,7 +3066,7 @@ export interface SuggestedPostApproved {
  */
 export interface SuggestedPostApprovalFailed {
   /**
-   * Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the suggested post whose approval has failed. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   suggested_post_message?: Message;
   /**
@@ -3081,7 +3081,7 @@ export interface SuggestedPostApprovalFailed {
  */
 export interface SuggestedPostDeclined {
   /**
-   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the suggested post. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   suggested_post_message?: Message;
   /**
@@ -3096,7 +3096,7 @@ export interface SuggestedPostDeclined {
  */
 export interface SuggestedPostPaid {
   /**
-   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the suggested post. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   suggested_post_message?: Message;
   /**
@@ -3119,7 +3119,7 @@ export interface SuggestedPostPaid {
  */
 export interface SuggestedPostRefunded {
   /**
-   * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
+   * Message containing the suggested post. Note that the {@link Message} object in this field will not contain the _reply_to_message_ field even if it itself is a reply.
    */
   suggested_post_message?: Message;
   /**
@@ -3381,7 +3381,7 @@ export interface UserProfileAudios {
   audios: Audio[];
 }
 /**
- * This object represents a file ready to be downloaded. The file can be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a>.
+ * This object represents a file ready to be downloaded. The file can be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile}.
  *
  * > The maximum file size to download is 20 MB
  *
@@ -3423,7 +3423,7 @@ export interface WebAppInfo {
  */
 export interface ReplyKeyboardMarkup {
   /**
-   * Array of button rows, each represented by an Array of <a href="#keyboardbutton">KeyboardButton</a> objects
+   * Array of button rows, each represented by an Array of {@link KeyboardButton} objects
    */
   keyboard: KeyboardButton[][];
   /**
@@ -3443,7 +3443,7 @@ export interface ReplyKeyboardMarkup {
    */
   input_field_placeholder?: string;
   /**
-   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the _text_ of the {@link Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
    *
    * _Example:_ A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
    */
@@ -3503,7 +3503,7 @@ export interface KeyboardButton {
  */
 export interface KeyboardButtonRequestUsers {
   /**
-   * Signed 32-bit identifier of the request that will be received back in the <a href="#usersshared">UsersShared</a> object. Must be unique within the message.
+   * Signed 32-bit identifier of the request that will be received back in the {@link UsersShared} object. Must be unique within the message.
    */
   request_id: number;
   /**
@@ -3538,7 +3538,7 @@ export interface KeyboardButtonRequestUsers {
  */
 export interface KeyboardButtonRequestChat {
   /**
-   * Signed 32-bit identifier of the request, which will be received back in the <a href="#chatshared">ChatShared</a> object. Must be unique within the message.
+   * Signed 32-bit identifier of the request, which will be received back in the {@link ChatShared} object. Must be unique within the message.
    */
   request_id: number;
   /**
@@ -3583,7 +3583,7 @@ export interface KeyboardButtonRequestChat {
   request_photo?: boolean;
 }
 /**
- * This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update _managed_bot_ and a <a href="#message">Message</a> with the field _managed_bot_created_.
+ * This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update _managed_bot_ and a {@link Message} with the field _managed_bot_created_.
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbuttonrequestmanagedbot}
  */
@@ -3613,17 +3613,17 @@ export interface KeyboardButtonPollType {
   type?: string;
 }
 /**
- * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>). Not supported in channels and for messages sent on behalf of a business account.
+ * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see {@link ReplyKeyboardMarkup}). Not supported in channels and for messages sent on behalf of a business account.
  *
  * @see {@link https://core.telegram.org/bots/api#replykeyboardremove}
  */
 export interface ReplyKeyboardRemove {
   /**
-   * Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use _one_time_keyboard_ in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)
+   * Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use _one_time_keyboard_ in {@link ReplyKeyboardMarkup})
    */
   remove_keyboard: true;
   /**
-   * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
    *
    * _Example:_ A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
    */
@@ -3636,7 +3636,7 @@ export interface ReplyKeyboardRemove {
  */
 export interface InlineKeyboardMarkup {
   /**
-   * Array of button rows, each represented by an Array of <a href="#inlinekeyboardbutton">InlineKeyboardButton</a> objects
+   * Array of button rows, each represented by an Array of {@link InlineKeyboardButton} objects
    */
   inline_keyboard: InlineKeyboardButton[][];
 }
@@ -3663,11 +3663,11 @@ export interface InlineKeyboardButton {
    */
   url?: string;
   /**
-   * Data to be sent in a <a href="#callbackquery">callback query</a> to the bot when the button is pressed, 1-64 bytes
+   * Data to be sent in a {@link CallbackQuery | callback query} to the bot when the button is pressed, 1-64 bytes
    */
   callback_data?: string;
   /**
-   * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
+   * Description of the {@link https://core.telegram.org/bots/webapps | Web App} that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
    */
   web_app?: WebAppInfo;
   /**
@@ -3777,7 +3777,7 @@ export interface CopyTextButton {
 /**
  * This object represents an incoming callback query from a callback button in an {@link https://core.telegram.org/bots/features#inline-keyboards | inline keyboard}. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in {@link https://core.telegram.org/bots/api#inline-mode | inline mode}), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.
  * 
- * > **NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
+ * > **NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call {@link ApiMethods.answerCallbackQuery | answerCallbackQuery}. It is, therefore, necessary to react by calling {@link ApiMethods.answerCallbackQuery | answerCallbackQuery} even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
  *
  * @see {@link https://core.telegram.org/bots/api#callbackquery}
  */
@@ -3819,7 +3819,7 @@ export interface CallbackQuery {
  * > - Explain the user how to send a command with parameters (e.g. /newpoll question answer1 answer2). May be appealing for hardcore users but lacks modern day polish.
  * > - Guide the user through a step-by-step process. &#39;Please send me your question&#39;, &#39;Cool, now let&#39;s add the first answer option&#39;, &#39;Great. Keep adding answer options, then send /done when you&#39;re ready&#39;.
  * >
- * > The last option is definitely more attractive. And if you use <a href="#forcereply">ForceReply</a> in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.
+ * > The last option is definitely more attractive. And if you use {@link ForceReply} in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.
  *
  * @see {@link https://core.telegram.org/bots/api#forcereply}
  */
@@ -3833,7 +3833,7 @@ export interface ForceReply {
    */
   input_field_placeholder?: string;
   /**
-   * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
+   * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the _text_ of the {@link Message} object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
    */
   selective?: boolean;
 }
@@ -4043,12 +4043,12 @@ export interface ChatMemberUpdated {
 /**
  * This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
  *
- * - <a href="#chatmemberowner">ChatMemberOwner</a>
- * - <a href="#chatmemberadministrator">ChatMemberAdministrator</a>
- * - <a href="#chatmembermember">ChatMemberMember</a>
- * - <a href="#chatmemberrestricted">ChatMemberRestricted</a>
- * - <a href="#chatmemberleft">ChatMemberLeft</a>
- * - <a href="#chatmemberbanned">ChatMemberBanned</a>
+ * - {@link ChatMemberOwner}
+ * - {@link ChatMemberAdministrator}
+ * - {@link ChatMemberMember}
+ * - {@link ChatMemberRestricted}
+ * - {@link ChatMemberLeft}
+ * - {@link ChatMemberBanned}
  *
  * @see {@link https://core.telegram.org/bots/api#chatmember}
  */
@@ -4060,7 +4060,7 @@ export type ChatMember =
  | ChatMemberLeft
  | ChatMemberBanned
 /**
- * Represents a <a href="#chatmember">chat member</a> that owns the chat and has all administrator privileges.
+ * Represents a {@link ChatMember | chat member} that owns the chat and has all administrator privileges.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmemberowner}
  */
@@ -4083,7 +4083,7 @@ export interface ChatMemberOwner {
   custom_title?: string;
 }
 /**
- * Represents a <a href="#chatmember">chat member</a> that has some additional privileges.
+ * Represents a {@link ChatMember | chat member} that has some additional privileges.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmemberadministrator}
  */
@@ -4174,7 +4174,7 @@ export interface ChatMemberAdministrator {
   custom_title?: string;
 }
 /**
- * Represents a <a href="#chatmember">chat member</a> that has no additional privileges or restrictions.
+ * Represents a {@link ChatMember | chat member} that has no additional privileges or restrictions.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmembermember}
  */
@@ -4197,7 +4197,7 @@ export interface ChatMemberMember {
   until_date?: number;
 }
 /**
- * Represents a <a href="#chatmember">chat member</a> that is under certain restrictions in the chat. Supergroups only.
+ * Represents a {@link ChatMember | chat member} that is under certain restrictions in the chat. Supergroups only.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmemberrestricted}
  */
@@ -4288,7 +4288,7 @@ export interface ChatMemberRestricted {
   until_date: number;
 }
 /**
- * Represents a <a href="#chatmember">chat member</a> that isn&#39;t currently a member of the chat, but may join it themselves.
+ * Represents a {@link ChatMember | chat member} that isn&#39;t currently a member of the chat, but may join it themselves.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmemberleft}
  */
@@ -4303,7 +4303,7 @@ export interface ChatMemberLeft {
   user: User;
 }
 /**
- * Represents a <a href="#chatmember">chat member</a> that was banned in the chat and can&#39;t return to the chat or view chat messages.
+ * Represents a {@link ChatMember | chat member} that was banned in the chat and can&#39;t return to the chat or view chat messages.
  *
  * @see {@link https://core.telegram.org/bots/api#chatmemberbanned}
  */
@@ -4352,7 +4352,7 @@ export interface ChatJoinRequest {
    */
   invite_link?: ChatInviteLink;
   /**
-   * Identifier of the join request query; for bots assigned to process join requests only. If present, then the bot must call <a href="#sendchatjoinrequestwebapp">sendChatJoinRequestWebApp</a> or directly call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> within 10 seconds.
+   * Identifier of the join request query; for bots assigned to process join requests only. If present, then the bot must call {@link ApiMethods.sendChatJoinRequestWebApp | sendChatJoinRequestWebApp} or directly call {@link ApiMethods.answerChatJoinRequestQuery | answerChatJoinRequestQuery} within 10 seconds.
    */
   query_id?: string;
 }
@@ -4590,11 +4590,11 @@ export interface LocationAddress {
 /**
  * Describes the type of a clickable area on a story. Currently, it can be one of
  *
- * - <a href="#storyareatypelocation">StoryAreaTypeLocation</a>
- * - <a href="#storyareatypesuggestedreaction">StoryAreaTypeSuggestedReaction</a>
- * - <a href="#storyareatypelink">StoryAreaTypeLink</a>
- * - <a href="#storyareatypeweather">StoryAreaTypeWeather</a>
- * - <a href="#storyareatypeuniquegift">StoryAreaTypeUniqueGift</a>
+ * - {@link StoryAreaTypeLocation}
+ * - {@link StoryAreaTypeSuggestedReaction}
+ * - {@link StoryAreaTypeLink}
+ * - {@link StoryAreaTypeWeather}
+ * - {@link StoryAreaTypeUniqueGift}
  *
  * @see {@link https://core.telegram.org/bots/api#storyareatype}
  */
@@ -4736,9 +4736,9 @@ export interface ChatLocation {
 /**
  * This object describes the type of a reaction. Currently, it can be one of
  *
- * - <a href="#reactiontypeemoji">ReactionTypeEmoji</a>
- * - <a href="#reactiontypecustomemoji">ReactionTypeCustomEmoji</a>
- * - <a href="#reactiontypepaid">ReactionTypePaid</a>
+ * - {@link ReactionTypeEmoji}
+ * - {@link ReactionTypeCustomEmoji}
+ * - {@link ReactionTypePaid}
  *
  * @see {@link https://core.telegram.org/bots/api#reactiontype}
  */
@@ -5189,7 +5189,7 @@ export interface GiftInfo {
    */
   is_private?: true;
   /**
-   * Unique number reserved for this gift when upgraded. See the _number_ field in <a href="#uniquegift">UniqueGift</a>.
+   * Unique number reserved for this gift when upgraded. See the _number_ field in {@link UniqueGift}.
    */
   unique_gift_number?: number;
 }
@@ -5231,8 +5231,8 @@ export interface UniqueGiftInfo {
 /**
  * This object describes a gift received and owned by a user or a chat. Currently, it can be one of
  *
- * - <a href="#ownedgiftregular">OwnedGiftRegular</a>
- * - <a href="#ownedgiftunique">OwnedGiftUnique</a>
+ * - {@link OwnedGiftRegular}
+ * - {@link OwnedGiftUnique}
  *
  * @see {@link https://core.telegram.org/bots/api#ownedgift}
  */
@@ -5302,7 +5302,7 @@ export interface OwnedGiftRegular {
    */
   is_upgrade_separate?: true;
   /**
-   * Unique number reserved for this gift when upgraded. See the _number_ field in <a href="#uniquegift">UniqueGift</a>.
+   * Unique number reserved for this gift when upgraded. See the _number_ field in {@link UniqueGift}.
    */
   unique_gift_number?: number;
 }
@@ -5447,13 +5447,13 @@ export interface BotCommand {
 /**
  * This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:
  *
- * - <a href="#botcommandscopedefault">BotCommandScopeDefault</a>
- * - <a href="#botcommandscopeallprivatechats">BotCommandScopeAllPrivateChats</a>
- * - <a href="#botcommandscopeallgroupchats">BotCommandScopeAllGroupChats</a>
- * - <a href="#botcommandscopeallchatadministrators">BotCommandScopeAllChatAdministrators</a>
- * - <a href="#botcommandscopechat">BotCommandScopeChat</a>
- * - <a href="#botcommandscopechatadministrators">BotCommandScopeChatAdministrators</a>
- * - <a href="#botcommandscopechatmember">BotCommandScopeChatMember</a>
+ * - {@link BotCommandScopeDefault}
+ * - {@link BotCommandScopeAllPrivateChats}
+ * - {@link BotCommandScopeAllGroupChats}
+ * - {@link BotCommandScopeAllChatAdministrators}
+ * - {@link BotCommandScopeChat}
+ * - {@link BotCommandScopeChatAdministrators}
+ * - {@link BotCommandScopeChatMember}
  * 
  * #### Determining list of commands
  * 
@@ -5494,7 +5494,7 @@ export type BotCommandScope =
  | BotCommandScopeChatAdministrators
  | BotCommandScopeChatMember
 /**
- * Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a {@link https://core.telegram.org/bots/api#determining-list-of-commands | narrower scope} are specified for the user.
+ * Represents the default {@link BotCommandScope | scope} of bot commands. Default commands are used if no commands with a {@link https://core.telegram.org/bots/api#determining-list-of-commands | narrower scope} are specified for the user.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopedefault}
  */
@@ -5505,7 +5505,7 @@ export interface BotCommandScopeDefault {
   type: string;
 }
 /**
- * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all private chats.
+ * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all private chats.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopeallprivatechats}
  */
@@ -5516,7 +5516,7 @@ export interface BotCommandScopeAllPrivateChats {
   type: string;
 }
 /**
- * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chats.
+ * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all group and supergroup chats.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopeallgroupchats}
  */
@@ -5527,7 +5527,7 @@ export interface BotCommandScopeAllGroupChats {
   type: string;
 }
 /**
- * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chat administrators.
+ * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all group and supergroup chat administrators.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopeallchatadministrators}
  */
@@ -5538,7 +5538,7 @@ export interface BotCommandScopeAllChatAdministrators {
   type: string;
 }
 /**
- * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific chat.
+ * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering a specific chat.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopechat}
  */
@@ -5553,7 +5553,7 @@ export interface BotCommandScopeChat {
   chat_id: number | string;
 }
 /**
- * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all administrators of a specific group or supergroup chat.
+ * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering all administrators of a specific group or supergroup chat.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopechatadministrators}
  */
@@ -5568,7 +5568,7 @@ export interface BotCommandScopeChatAdministrators {
   chat_id: number | string;
 }
 /**
- * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific member of a group or supergroup chat.
+ * Represents the \{@link BotCommandScope \| scope\} of bot commands, covering a specific member of a group or supergroup chat.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopechatmember}
  */
@@ -5622,11 +5622,11 @@ export interface BotShortDescription {
 /**
  * This object describes the bot&#39;s menu button in a private chat. It should be one of
  *
- * - <a href="#menubuttoncommands">MenuButtonCommands</a>
- * - <a href="#menubuttonwebapp">MenuButtonWebApp</a>
- * - <a href="#menubuttondefault">MenuButtonDefault</a>
+ * - {@link MenuButtonCommands}
+ * - {@link MenuButtonWebApp}
+ * - {@link MenuButtonDefault}
  * 
- * If a menu button other than <a href="#menubuttondefault">MenuButtonDefault</a> is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.
+ * If a menu button other than {@link MenuButtonDefault} is set for a private chat, then it is applied in the chat. Otherwise the default menu button is applied. By default, the menu button opens the list of bot commands.
  *
  * @see {@link https://core.telegram.org/bots/api#menubutton}
  */
@@ -5660,7 +5660,7 @@ export interface MenuButtonWebApp {
    */
   text: string;
   /**
-   * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Alternatively, a `t.me` link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
+   * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method {@link ApiMethods.answerWebAppQuery | answerWebAppQuery}. Alternatively, a `t.me` link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
    */
   web_app: WebAppInfo;
 }
@@ -5678,9 +5678,9 @@ export interface MenuButtonDefault {
 /**
  * This object describes the source of a chat boost. It can be one of
  *
- * - <a href="#chatboostsourcepremium">ChatBoostSourcePremium</a>
- * - <a href="#chatboostsourcegiftcode">ChatBoostSourceGiftCode</a>
- * - <a href="#chatboostsourcegiveaway">ChatBoostSourceGiveaway</a>
+ * - {@link ChatBoostSourcePremium}
+ * - {@link ChatBoostSourceGiftCode}
+ * - {@link ChatBoostSourceGiveaway}
  *
  * @see {@link https://core.telegram.org/bots/api#chatboostsource}
  */
@@ -5959,7 +5959,7 @@ export interface BusinessMessagesDeleted {
  */
 export interface SentWebAppMessage {
   /**
-   * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.
+   * Identifier of the sent inline message. Available only if there is an {@link InlineKeyboardMarkup | inline keyboard} attached to the message.
    */
   inline_message_id?: string;
 }
@@ -6018,12 +6018,12 @@ export interface ResponseParameters {
 /**
  * This object represents the content of a media message to be sent. It should be one of
  *
- * - <a href="#inputmediaanimation">InputMediaAnimation</a>
- * - <a href="#inputmediaaudio">InputMediaAudio</a>
- * - <a href="#inputmediadocument">InputMediaDocument</a>
- * - <a href="#inputmedialivephoto">InputMediaLivePhoto</a>
- * - <a href="#inputmediaphoto">InputMediaPhoto</a>
- * - <a href="#inputmediavideo">InputMediaVideo</a>
+ * - {@link InputMediaAnimation}
+ * - {@link InputMediaAudio}
+ * - {@link InputMediaDocument}
+ * - {@link InputMediaLivePhoto}
+ * - {@link InputMediaPhoto}
+ * - {@link InputMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputmedia}
  */
@@ -6440,9 +6440,9 @@ export interface InputFile {}
 /**
  * This object describes the paid media to be sent. Currently, it can be one of
  *
- * - <a href="#inputpaidmedialivephoto">InputPaidMediaLivePhoto</a>
- * - <a href="#inputpaidmediaphoto">InputPaidMediaPhoto</a>
- * - <a href="#inputpaidmediavideo">InputPaidMediaVideo</a>
+ * - {@link InputPaidMediaLivePhoto}
+ * - {@link InputPaidMediaPhoto}
+ * - {@link InputPaidMediaVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputpaidmedia}
  */
@@ -6530,8 +6530,8 @@ export interface InputPaidMediaVideo {
 /**
  * This object describes a profile photo to set. Currently, it can be one of
  *
- * - <a href="#inputprofilephotostatic">InputProfilePhotoStatic</a>
- * - <a href="#inputprofilephotoanimated">InputProfilePhotoAnimated</a>
+ * - {@link InputProfilePhotoStatic}
+ * - {@link InputProfilePhotoAnimated}
  *
  * @see {@link https://core.telegram.org/bots/api#inputprofilephoto}
  */
@@ -6575,8 +6575,8 @@ export interface InputProfilePhotoAnimated {
 /**
  * This object describes the content of a story to post. Currently, it can be one of
  *
- * - <a href="#inputstorycontentphoto">InputStoryContentPhoto</a>
- * - <a href="#inputstorycontentvideo">InputStoryContentVideo</a>
+ * - {@link InputStoryContentPhoto}
+ * - {@link InputStoryContentVideo}
  *
  * @see {@link https://core.telegram.org/bots/api#inputstorycontent}
  */
@@ -6717,7 +6717,7 @@ export type ProfileAccentColorId =
 // === AVAILABLE METHODS
 export interface ApiMethods {
   /**
-   * A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.
+   * A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a {@link User} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getme}
    */
@@ -6741,7 +6741,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send text messages. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendmessage}
    */
@@ -6895,7 +6895,7 @@ export interface ApiMethods {
  * - Inside the `(...)` part of the inline link and custom emoji definition, all &#39;)&#39; and &#39;\&#39; must be escaped with a preceding &#39;\&#39; character.
  * - In all other places characters &#39;_&#39;, &#39;*&#39;, &#39;[&#39;, &#39;]&#39;, &#39;(&#39;, &#39;)&#39;, &#39;~&#39;, &#39;`&#39;, &#39;&gt;&#39;, &#39;#&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &#39;|&#39;, &#39;{&#39;, &#39;}&#39;, &#39;.&#39;, &#39;!&#39; must be escaped with the preceding character &#39;\&#39;.
  * - In case of ambiguity between `italic` and `underline` entities `__` is always greedily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
- * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.
+ * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji {@link Sticker | sticker}.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
  * - See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details about supported date-time formats.
  *
@@ -6939,7 +6939,7 @@ export interface ApiMethods {
  * - The API currently supports only the following named HTML entities: `&amp;lt;`, `&amp;gt;`, `&amp;amp;` and `&amp;quot;`.
  * - Use nested `pre` and `code` tags, to define programming language for `pre` entity.
  * - Programming language can&#39;t be specified for standalone `code` tags.
- * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.
+ * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji {@link Sticker | sticker}.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on {@link https://fragment.com | Fragment} or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
  * - See {@link https://core.telegram.org/bots/api#date-time-entity-formatting | date-time entity formatting} for more details about supported date-time formats.
  *
@@ -6973,7 +6973,7 @@ export interface ApiMethods {
 export type ParseMode = "Markdown" | "MarkdownV2" | "HTML";
 export interface ApiMethods {
   /**
-   * Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#forwardmessage}
    */
@@ -7022,7 +7022,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
+   * Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of {@link MessageId} of the sent messages is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#forwardmessages}
    */
@@ -7059,7 +7059,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.
+   * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessage | forwardMessage}, but the copied message doesn&#39;t have a link to the original message. Returns the {@link MessageId} of the sent message on success.
    *
    * @see {@link https://core.telegram.org/bots/api#copymessage}
    */
@@ -7136,7 +7136,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
+   * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz {@link Poll | poll} can be copied only if the value of the field _correct_option_ids_ is known to the bot. The method is analogous to the method {@link ApiMethods.forwardMessages | forwardMessages}, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of {@link MessageId} of the sent messages is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#copymessages}
    */
@@ -7177,7 +7177,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send photos. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendphoto}
    */
@@ -7262,7 +7262,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send live photos. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send live photos. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendlivephoto}
    */
@@ -7351,9 +7351,9 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+   * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent {@link Message} is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
    *
-   * For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.
+   * For sending voice messages, use the {@link ApiMethods.sendVoice | sendVoice} method instead.
    *
    * @see {@link https://core.telegram.org/bots/api#sendaudio}
    */
@@ -7446,7 +7446,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+   * Use this method to send general files. On success, the sent {@link Message} is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see {@link https://core.telegram.org/bots/api#senddocument}
    */
@@ -7531,7 +7531,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+   * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as {@link Document}). On success, the sent {@link Message} is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see {@link https://core.telegram.org/bots/api#sendvideo}
    */
@@ -7644,7 +7644,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+   * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent {@link Message} is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see {@link https://core.telegram.org/bots/api#sendanimation}
    */
@@ -7745,7 +7745,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+   * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as {@link Audio} or {@link Document}). On success, the sent {@link Message} is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see {@link https://core.telegram.org/bots/api#sendvoice}
    */
@@ -7826,7 +7826,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * As of {@link https://telegram.org/blog/video-messages-and-telescope | v.4.0}, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.
+   * As of {@link https://telegram.org/blog/video-messages-and-telescope | v.4.0}, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendvideonote}
    */
@@ -7903,7 +7903,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send paid media. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendpaidmedia}
    */
@@ -7980,7 +7980,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of <a href="#message">Message</a> objects that were sent is returned.
+   * Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of {@link Message} objects that were sent is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendmediagroup}
    */
@@ -8029,7 +8029,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send point on the map. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendlocation}
    */
@@ -8114,7 +8114,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send information about a venue. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendvenue}
    */
@@ -8207,7 +8207,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send phone contacts. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendcontact}
    */
@@ -8284,7 +8284,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send a native poll. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendpoll}
    */
@@ -8429,7 +8429,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send a checklist on behalf of a connected business account. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendchecklist}
    */
@@ -8470,7 +8470,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send an animated emoji that will display a random value. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#senddice}
    */
@@ -8527,7 +8527,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
+   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendMessage | sendMessage} with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendmessagedraft}
    */
@@ -8562,7 +8562,7 @@ export interface ApiMethods {
   /**
    * Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns `true` on success.
    *
-   * > Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.
+   * > Example: The {@link https://t.me/imagebot | ImageBot} needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use {@link ApiMethods.sendChatAction | sendChatAction} with _action_ = _upload_photo_. The user will see a “sending photo” status for the bot.
    * 
    * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.
    *
@@ -8582,7 +8582,7 @@ export interface ApiMethods {
      */
     message_thread_id?: number;
     /**
-     * Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for <a href="#sendmessage">text messages</a>, _upload_photo_ for <a href="#sendphoto">photos</a>, _record_video_ or _upload_video_ for <a href="#sendvideo">videos</a>, _record_voice_ or _upload_voice_ for <a href="#sendvoice">voice notes</a>, _upload_document_ for <a href="#senddocument">general files</a>, _choose_sticker_ for <a href="#sendsticker">stickers</a>, _find_location_ for <a href="#sendlocation">location data</a>, _record_video_note_ or _upload_video_note_ for <a href="#sendvideonote">video notes</a>.
+     * Type of action to broadcast. Choose one, depending on what the user is about to receive: _typing_ for {@link ApiMethods.sendMessage | text messages}, _upload_photo_ for {@link ApiMethods.sendPhoto | photos}, _record_video_ or _upload_video_ for {@link ApiMethods.sendVideo | videos}, _record_voice_ or _upload_voice_ for {@link ApiMethods.sendVoice | voice notes}, _upload_document_ for {@link ApiMethods.sendDocument | general files}, _choose_sticker_ for {@link ApiMethods.sendSticker | stickers}, _find_location_ for {@link ApiMethods.sendLocation | location data}, _record_video_note_ or _upload_video_note_ for {@link ApiMethods.sendVideoNote | video notes}.
      */
     action: string;
   }): never;
@@ -8614,7 +8614,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.
+   * Use this method to get a list of profile pictures for a user. Returns a {@link UserProfilePhotos} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getuserprofilephotos}
    */
@@ -8635,7 +8635,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get a list of profile audios for a user. Returns a <a href="#userprofileaudios">UserProfileAudios</a> object.
+   * Use this method to get a list of profile audios for a user. Returns a {@link UserProfileAudios} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getuserprofileaudios}
    */
@@ -8677,7 +8677,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.
+   * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a {@link File} object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;`, where `&lt;file_path&gt;` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling {@link ApiMethods.getFile | getFile} again.
    * 
    * **Note:** This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.
    *
@@ -8692,7 +8692,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
+   * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless {@link ApiMethods.unbanChatMember | unbanned} first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#banchatmember}
    */
@@ -8894,7 +8894,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
+   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is {@link ApiMethods.unbanChatSenderChat | unbanned}, the owner of the banned chat won&#39;t be able to send messages on behalf of **any of their channels**. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#banchatsenderchat}
    */
@@ -8951,7 +8951,7 @@ export interface ApiMethods {
   /**
    * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as `string` on success.
    * 
-   * > Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.
+   * > Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} or by calling the {@link ApiMethods.getChat | getChat} method. If your bot needs to generate a new primary invite link replacing its previous one, use {@link ApiMethods.exportChatInviteLink | exportChatInviteLink} again.
    *
    * @see {@link https://core.telegram.org/bots/api#exportchatinvitelink}
    */
@@ -8964,7 +8964,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
+   * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as {@link ChatInviteLink} object.
    *
    * @see {@link https://core.telegram.org/bots/api#createchatinvitelink}
    */
@@ -8993,7 +8993,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
+   * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a {@link ChatInviteLink} object.
    *
    * @see {@link https://core.telegram.org/bots/api#editchatinvitelink}
    */
@@ -9026,7 +9026,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
+   * Use this method to create a {@link https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions | subscription invite link} for a channel chat. The bot must have the _can_invite_users_ administrator rights. The link can be edited using the method {@link ApiMethods.editChatSubscriptionInviteLink | editChatSubscriptionInviteLink} or revoked using the method {@link ApiMethods.revokeChatInviteLink | revokeChatInviteLink}. Returns the new invite link as a {@link ChatInviteLink} object.
    *
    * @see {@link https://core.telegram.org/bots/api#createchatsubscriptioninvitelink}
    */
@@ -9051,7 +9051,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit a subscription invite link created by the bot. The bot must have the _can_invite_users_ administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
+   * Use this method to edit a subscription invite link created by the bot. The bot must have the _can_invite_users_ administrator rights. Returns the edited invite link as a {@link ChatInviteLink} object.
    *
    * @see {@link https://core.telegram.org/bots/api#editchatsubscriptioninvitelink}
    */
@@ -9072,7 +9072,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
+   * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as {@link ChatInviteLink} object.
    *
    * @see {@link https://core.telegram.org/bots/api#revokechatinvitelink}
    */
@@ -9140,7 +9140,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns `true` on success.
+   * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call {@link ApiMethods.answerChatJoinRequestQuery | answerChatJoinRequestQuery} to resolve the join request query based on the user interaction with the Mini App. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendchatjoinrequestwebapp}
    */
@@ -9293,7 +9293,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.
+   * Use this method to get up-to-date information about the chat. Returns a {@link ChatFullInfo} object on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getchat}
    */
@@ -9306,7 +9306,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get a list of administrators in a chat. Returns an Array of <a href="#chatmember">ChatMember</a> objects.
+   * Use this method to get a list of administrators in a chat. Returns an Array of {@link ChatMember} objects.
    *
    * @see {@link https://core.telegram.org/bots/api#getchatadministrators}
    */
@@ -9336,7 +9336,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.
+   * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a {@link ChatMember} object on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getchatmember}
    */
@@ -9353,7 +9353,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of <a href="#message">Message</a> objects is returned.
+   * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of {@link Message} objects is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#getuserpersonalchatmessages}
    */
@@ -9370,7 +9370,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns `true` on success.
+   * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setchatstickerset}
    */
@@ -9387,7 +9387,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns `true` on success.
+   * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field _can_set_sticker_set_ optionally returned in {@link ApiMethods.getChat | getChat} requests to check if the bot can use this method. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletechatstickerset}
    */
@@ -9400,7 +9400,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.
+   * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of {@link Sticker} objects.
    *
    * @see {@link https://core.telegram.org/bots/api#getforumtopiciconstickers}
    */
@@ -9408,7 +9408,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator right. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.
+   * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the _can_manage_topics_ administrator right. Returns information about the created topic as a {@link ForumTopic} object.
    *
    * @see {@link https://core.telegram.org/bots/api#createforumtopic}
    */
@@ -9426,7 +9426,7 @@ export interface ApiMethods {
      */
     icon_color?: number;
     /**
-     * Unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers.
+     * Unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers.
      */
     icon_custom_emoji_id?: string;
   }): never;
@@ -9451,7 +9451,7 @@ export interface ApiMethods {
      */
     name?: string;
     /**
-     * New unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept.
+     * New unique identifier of the custom emoji shown as the topic icon. Use {@link ApiMethods.getForumTopicIconStickers | getForumTopicIconStickers} to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept.
      */
     icon_custom_emoji_id?: string;
   }): never;
@@ -9628,7 +9628,7 @@ export interface ApiMethods {
      */
     show_alert?: boolean;
     /**
-     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via {@link https://t.me/botfather | \@BotFather}, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton">_callback_game_</a> button.
+     * URL that will be opened by the user&#39;s client. If you have created a {@link Game} and accepted the conditions via {@link https://t.me/botfather | \@BotFather}, specify the URL that opens your game - note that this will only work if the query comes from a {@link InlineKeyboardButton | _callback_game_} button.
      *
      * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
      */
@@ -9641,7 +9641,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to reply to a received guest message. On success, a <a href="#sentguestmessage">SentGuestMessage</a> object is returned.
+   * Use this method to reply to a received guest message. On success, a {@link SentGuestMessage} object is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#answerguestquery}
    */
@@ -9658,7 +9658,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.
+   * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a {@link UserChatBoosts} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getuserchatboosts}
    */
@@ -9675,7 +9675,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.
+   * Use this method to get information about the connection of the bot with a business account. Returns a {@link BusinessConnection} object on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getbusinessconnection}
    */
@@ -9714,7 +9714,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the access settings of a managed bot. Returns a <a href="#botaccesssettings">BotAccessSettings</a> object on success.
+   * Use this method to get the access settings of a managed bot. Returns a {@link BotAccessSettings} object on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getmanagedbotaccesssettings}
    */
@@ -9758,7 +9758,7 @@ export interface ApiMethods {
      */
     commands: BotCommand[];
     /**
-     * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
+     * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to {@link BotCommandScopeDefault}.
      */
     scope?: BotCommandScope;
     /**
@@ -9775,7 +9775,7 @@ export interface ApiMethods {
    */
   deleteMyCommands(args: {
     /**
-     * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
+     * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to {@link BotCommandScopeDefault}.
      */
     scope?: BotCommandScope;
     /**
@@ -9786,13 +9786,13 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.
+   * Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of {@link BotCommand} objects. If commands aren&#39;t set, an empty list is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#getmycommands}
    */
   getMyCommands(args: {
     /**
-     * A JSON-serialized object, describing scope of users. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
+     * A JSON-serialized object, describing scope of users. Defaults to {@link BotCommandScopeDefault}.
      */
     scope?: BotCommandScope;
     /**
@@ -9820,7 +9820,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.
+   * Use this method to get the current bot name for the given user language. Returns {@link BotName} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getmyname}
    */
@@ -9850,7 +9850,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.
+   * Use this method to get the current bot description for the given user language. Returns {@link BotDescription} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getmydescription}
    */
@@ -9880,7 +9880,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.
+   * Use this method to get the current bot short description for the given user language. Returns {@link BotShortDescription} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getmyshortdescription}
    */
@@ -9924,14 +9924,14 @@ export interface ApiMethods {
      */
     chat_id?: number;
     /**
-     * A JSON-serialized object for the bot&#39;s new menu button. Defaults to <a href="#menubuttondefault">MenuButtonDefault</a>.
+     * A JSON-serialized object for the bot&#39;s new menu button. Defaults to {@link MenuButtonDefault}.
      */
     menu_button?: MenuButton;
   }): never;
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.
+   * Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns {@link MenuButton} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getchatmenubutton}
    */
@@ -9961,7 +9961,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.
+   * Use this method to get the current default administrator rights of the bot. Returns {@link ChatAdministratorRights} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getmydefaultadministratorrights}
    */
@@ -9974,7 +9974,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.
+   * Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a {@link Gifts} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getavailablegifts}
    */
@@ -10143,7 +10143,7 @@ export interface ApiMethods {
      */
     business_connection_id: string;
     /**
-     * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.
+     * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted.
      */
     message_ids: number[];
   }): never;
@@ -10264,7 +10264,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Returns the amount of Telegram Stars owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#staramount">StarAmount</a> on success.
+   * Returns the amount of Telegram Stars owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns {@link StarAmount} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getbusinessaccountstarbalance}
    */
@@ -10294,7 +10294,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Returns the gifts received and owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
+   * Returns the gifts received and owned by a managed business account. Requires the _can_view_gifts_and_stars_ business bot right. Returns {@link OwnedGifts} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getbusinessaccountgifts}
    */
@@ -10347,7 +10347,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Returns the gifts owned and hosted by a user. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
+   * Returns the gifts owned and hosted by a user. Returns {@link OwnedGifts} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getusergifts}
    */
@@ -10392,7 +10392,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Returns the gifts owned by a chat. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
+   * Returns the gifts owned by a chat. Returns {@link OwnedGifts} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#getchatgifts}
    */
@@ -10512,7 +10512,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Posts a story on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.
+   * Posts a story on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns {@link Story} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#poststory}
    */
@@ -10557,7 +10557,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the _can_manage_stories_ business bot right for both business accounts. Returns <a href="#story">Story</a> on success.
+   * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the _can_manage_stories_ business bot right for both business accounts. Returns {@link Story} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#repoststory}
    */
@@ -10590,7 +10590,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Edits a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns <a href="#story">Story</a> on success.
+   * Edits a story previously posted by the bot on behalf of a managed business account. Requires the _can_manage_stories_ business bot right. Returns {@link Story} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#editstory}
    */
@@ -10644,7 +10644,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set the result of an interaction with a {@link https://core.telegram.org/bots/webapps | Web App} and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.
+   * Use this method to set the result of an interaction with a {@link https://core.telegram.org/bots/webapps | Web App} and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a {@link SentWebAppMessage} object is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#answerwebappquery}
    */
@@ -10661,7 +10661,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.
+   * Stores a message that can be sent by a user of a Mini App. Returns a {@link PreparedInlineMessage} object.
    *
    * @see {@link https://core.telegram.org/bots/api#savepreparedinlinemessage}
    */
@@ -10694,7 +10694,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Stores a keyboard button that can be used by a user within a Mini App. Returns a <a href="#preparedkeyboardbutton">PreparedKeyboardButton</a> object.
+   * Stores a keyboard button that can be used by a user within a Mini App. Returns a {@link PreparedKeyboardButton} object.
    *
    * @see {@link https://core.telegram.org/bots/api#savepreparedkeyboardbutton}
    */
@@ -10712,7 +10712,7 @@ export interface ApiMethods {
 // === UPDATING MESSAGES
 export interface ApiMethods {
   /**
-   * Use this method to edit text, rich and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+   * Use this method to edit text, rich and {@link https://core.telegram.org/bots/api#games | game} messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagetext}
    */
@@ -10761,7 +10761,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+   * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagecaption}
    */
@@ -10806,7 +10806,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagemedia}
    */
@@ -10839,7 +10839,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned.
+   * Use this method to edit live location messages. A location can be edited until its _live_period_ expires or editing is explicitly disabled by a call to {@link ApiMethods.stopMessageLiveLocation | stopMessageLiveLocation}. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagelivelocation}
    */
@@ -10892,7 +10892,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned.
+   * Use this method to stop updating a live location message before _live_period_ expires. On success, if the message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#stopmessagelivelocation}
    */
@@ -10921,7 +10921,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.
+   * Use this method to edit a checklist on behalf of a connected business account. On success, the edited {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagechecklist}
    */
@@ -10950,7 +10950,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+   * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited {@link Message} is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagereplymarkup}
    */
@@ -10979,7 +10979,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.
+   * Use this method to stop a poll which was sent by the bot. On success, the stopped {@link Poll} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#stoppoll}
    */
@@ -11217,7 +11217,7 @@ export interface ApiMethods {
      */
     chat_id: number | string;
     /**
-     * A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.
+     * A JSON-serialized list of 1-100 identifiers of messages to delete. See {@link ApiMethods.deleteMessage | deleteMessage} for limitations on which messages can be deleted.
      */
     message_ids: number[];
   }): never;
@@ -11436,7 +11436,7 @@ export interface InputSticker {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send static .WEBP, {@link https://telegram.org/blog/animated-stickers | animated} .TGS, or {@link https://telegram.org/blog/video-stickers-better-reactions | video} .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send static .WEBP, {@link https://telegram.org/blog/animated-stickers | animated} .TGS, or {@link https://telegram.org/blog/video-stickers-better-reactions | video} .WEBM stickers. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendsticker}
    */
@@ -11505,7 +11505,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.
+   * Use this method to get a sticker set. On success, a {@link StickerSet} object is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#getstickerset}
    */
@@ -11518,7 +11518,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.
+   * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of {@link Sticker} objects.
    *
    * @see {@link https://core.telegram.org/bots/api#getcustomemojistickers}
    */
@@ -11531,7 +11531,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.
+   * Use this method to upload a file with a sticker for later use in the {@link ApiMethods.createNewStickerSet | createNewStickerSet}, {@link ApiMethods.addStickerToSet | addStickerToSet}, or {@link ApiMethods.replaceStickerInSet | replaceStickerInSet} methods (the file can be used multiple times). Returns the uploaded {@link File} on success.
    *
    * @see {@link https://core.telegram.org/bots/api#uploadstickerfile}
    */
@@ -11636,7 +11636,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns `true` on success.
+   * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling {@link ApiMethods.deleteStickerFromSet | deleteStickerFromSet}, then {@link ApiMethods.addStickerToSet | addStickerToSet}, then {@link ApiMethods.setStickerPositionInSet | setStickerPositionInSet}. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#replacestickerinset}
    */
@@ -11695,7 +11695,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns `true` on success.
+   * Use this method to change the {@link MaskPosition | mask position} of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setstickermaskposition}
    */
@@ -11788,7 +11788,7 @@ export interface ApiMethods {
  *
  * #### Rich Message Formatting Options
  * 
- * <a href="#inputrichmessage">Rich messages</a> support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using {@link https://core.telegram.org/bots/api#rich-markdown-style | Markdown-style} or {@link https://core.telegram.org/bots/api#rich-html-style | HTML-style} formatting, or explicit <a href="#inputrichblock">blocks</a>.
+ * {@link InputRichMessage | Rich messages} support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using {@link https://core.telegram.org/bots/api#rich-markdown-style | Markdown-style} or {@link https://core.telegram.org/bots/api#rich-html-style | HTML-style} formatting, or explicit {@link InputRichBlock | blocks}.
  * 
  * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass `true` in the _skip_entity_detection_ field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
  *
@@ -11947,7 +11947,7 @@ export interface ApiMethods {
  * &lt;tg-slideshow&gt;&lt;img src=&quot;https://telegram.org/example/photo.jpg&quot;/&gt;&lt;video src=&quot;https://telegram.org/example/video.mp4&quot;/&gt;&lt;figcaption&gt;Slideshow caption&lt;cite&gt;The Author&lt;/cite&gt;&lt;/figcaption&gt;&lt;/tg-slideshow&gt;
  * ```
  * 
- * Additionally, you can use the following tag in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>:
+ * Additionally, you can use the following tag in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}:
  * 
  * ```html
  * &lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;
@@ -12056,7 +12056,7 @@ export interface ApiMethods {
  * &lt;tg-math-block&gt;E = mc^2&lt;/tg-math-block&gt;
  * ```
  * 
- * Additionally, you can use the following tag in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>:
+ * Additionally, you can use the following tag in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}:
  * 
  * ```html
  * &lt;tg-thinking&gt;Thinking...&lt;/tg-thinking&gt;
@@ -12142,7 +12142,7 @@ export interface InputRichMessageMedia {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendrichmessage}
    */
@@ -12199,7 +12199,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
+   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you **must** call {@link ApiMethods.sendRichMessage | sendRichMessage} with the complete message to persist it in the user&#39;s chat. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#sendrichmessagedraft}
    */
@@ -12223,33 +12223,33 @@ export interface ApiMethods {
   }): never;
 }
 /**
- * This object represents a rich formatted text. Currently, it can be either a String for plain text, an Array of <a href="#richtext">RichText</a>, or any of the following types:
+ * This object represents a rich formatted text. Currently, it can be either a String for plain text, an Array of {@link RichText}, or any of the following types:
  *
- * - <a href="#richtextbold">RichTextBold</a>
- * - <a href="#richtextitalic">RichTextItalic</a>
- * - <a href="#richtextunderline">RichTextUnderline</a>
- * - <a href="#richtextstrikethrough">RichTextStrikethrough</a>
- * - <a href="#richtextspoiler">RichTextSpoiler</a>
- * - <a href="#richtextdatetime">RichTextDateTime</a>
- * - <a href="#richtexttextmention">RichTextTextMention</a>
- * - <a href="#richtextsubscript">RichTextSubscript</a>
- * - <a href="#richtextsuperscript">RichTextSuperscript</a>
- * - <a href="#richtextmarked">RichTextMarked</a>
- * - <a href="#richtextcode">RichTextCode</a>
- * - <a href="#richtextcustomemoji">RichTextCustomEmoji</a>
- * - <a href="#richtextmathematicalexpression">RichTextMathematicalExpression</a>
- * - <a href="#richtexturl">RichTextUrl</a>
- * - <a href="#richtextemailaddress">RichTextEmailAddress</a>
- * - <a href="#richtextphonenumber">RichTextPhoneNumber</a>
- * - <a href="#richtextbankcardnumber">RichTextBankCardNumber</a>
- * - <a href="#richtextmention">RichTextMention</a>
- * - <a href="#richtexthashtag">RichTextHashtag</a>
- * - <a href="#richtextcashtag">RichTextCashtag</a>
- * - <a href="#richtextbotcommand">RichTextBotCommand</a>
- * - <a href="#richtextanchor">RichTextAnchor</a>
- * - <a href="#richtextanchorlink">RichTextAnchorLink</a>
- * - <a href="#richtextreference">RichTextReference</a>
- * - <a href="#richtextreferencelink">RichTextReferenceLink</a>
+ * - {@link RichTextBold}
+ * - {@link RichTextItalic}
+ * - {@link RichTextUnderline}
+ * - {@link RichTextStrikethrough}
+ * - {@link RichTextSpoiler}
+ * - {@link RichTextDateTime}
+ * - {@link RichTextTextMention}
+ * - {@link RichTextSubscript}
+ * - {@link RichTextSuperscript}
+ * - {@link RichTextMarked}
+ * - {@link RichTextCode}
+ * - {@link RichTextCustomEmoji}
+ * - {@link RichTextMathematicalExpression}
+ * - {@link RichTextUrl}
+ * - {@link RichTextEmailAddress}
+ * - {@link RichTextPhoneNumber}
+ * - {@link RichTextBankCardNumber}
+ * - {@link RichTextMention}
+ * - {@link RichTextHashtag}
+ * - {@link RichTextCashtag}
+ * - {@link RichTextBotCommand}
+ * - {@link RichTextAnchor}
+ * - {@link RichTextAnchorLink}
+ * - {@link RichTextReference}
+ * - {@link RichTextReferenceLink}
  *
  * @see {@link https://core.telegram.org/bots/api#richtext}
  */
@@ -12467,7 +12467,7 @@ export interface RichTextCustomEmoji {
    */
   type: string;
   /**
-   * Unique identifier of the custom emoji. Use <a href="#getcustomemojistickers">getCustomEmojiStickers</a> to get full information about the sticker.
+   * Unique identifier of the custom emoji. Use {@link ApiMethods.getCustomEmojiStickers | getCustomEmojiStickers} to get full information about the sticker.
    */
   custom_emoji_id: string;
   /**
@@ -12794,27 +12794,27 @@ export interface RichBlockListItem {
 /**
  * This object represents a block in a rich formatted message. Currently, it can be any of the following types:
  *
- * - <a href="#richblockparagraph">RichBlockParagraph</a>
- * - <a href="#richblocksectionheading">RichBlockSectionHeading</a>
- * - <a href="#richblockpreformatted">RichBlockPreformatted</a>
- * - <a href="#richblockfooter">RichBlockFooter</a>
- * - <a href="#richblockdivider">RichBlockDivider</a>
- * - <a href="#richblockmathematicalexpression">RichBlockMathematicalExpression</a>
- * - <a href="#richblockanchor">RichBlockAnchor</a>
- * - <a href="#richblocklist">RichBlockList</a>
- * - <a href="#richblockblockquotation">RichBlockBlockQuotation</a>
- * - <a href="#richblockpullquotation">RichBlockPullQuotation</a>
- * - <a href="#richblockcollage">RichBlockCollage</a>
- * - <a href="#richblockslideshow">RichBlockSlideshow</a>
- * - <a href="#richblocktable">RichBlockTable</a>
- * - <a href="#richblockdetails">RichBlockDetails</a>
- * - <a href="#richblockmap">RichBlockMap</a>
- * - <a href="#richblockanimation">RichBlockAnimation</a>
- * - <a href="#richblockaudio">RichBlockAudio</a>
- * - <a href="#richblockphoto">RichBlockPhoto</a>
- * - <a href="#richblockvideo">RichBlockVideo</a>
- * - <a href="#richblockvoicenote">RichBlockVoiceNote</a>
- * - <a href="#richblockthinking">RichBlockThinking</a>
+ * - {@link RichBlockParagraph}
+ * - {@link RichBlockSectionHeading}
+ * - {@link RichBlockPreformatted}
+ * - {@link RichBlockFooter}
+ * - {@link RichBlockDivider}
+ * - {@link RichBlockMathematicalExpression}
+ * - {@link RichBlockAnchor}
+ * - {@link RichBlockList}
+ * - {@link RichBlockBlockQuotation}
+ * - {@link RichBlockPullQuotation}
+ * - {@link RichBlockCollage}
+ * - {@link RichBlockSlideshow}
+ * - {@link RichBlockTable}
+ * - {@link RichBlockDetails}
+ * - {@link RichBlockMap}
+ * - {@link RichBlockAnimation}
+ * - {@link RichBlockAudio}
+ * - {@link RichBlockPhoto}
+ * - {@link RichBlockVideo}
+ * - {@link RichBlockVoiceNote}
+ * - {@link RichBlockThinking}
  *
  * @see {@link https://core.telegram.org/bots/api#richblock}
  */
@@ -13229,7 +13229,7 @@ export interface RichBlockVoiceNote {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
+ * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}, therefore it can&#39;t be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
  *
  * @see {@link https://core.telegram.org/bots/api#richblockthinking}
  */
@@ -13273,27 +13273,27 @@ export interface InputRichBlockListItem {
 /**
  * This object represents a block in a rich formatted message to be sent. Currently, it can be any of the following types:
  *
- * - <a href="#inputrichblockparagraph">InputRichBlockParagraph</a>
- * - <a href="#inputrichblocksectionheading">InputRichBlockSectionHeading</a>
- * - <a href="#inputrichblockpreformatted">InputRichBlockPreformatted</a>
- * - <a href="#inputrichblockfooter">InputRichBlockFooter</a>
- * - <a href="#inputrichblockdivider">InputRichBlockDivider</a>
- * - <a href="#inputrichblockmathematicalexpression">InputRichBlockMathematicalExpression</a>
- * - <a href="#inputrichblockanchor">InputRichBlockAnchor</a>
- * - <a href="#inputrichblocklist">InputRichBlockList</a>
- * - <a href="#inputrichblockblockquotation">InputRichBlockBlockQuotation</a>
- * - <a href="#inputrichblockpullquotation">InputRichBlockPullQuotation</a>
- * - <a href="#inputrichblockcollage">InputRichBlockCollage</a>
- * - <a href="#inputrichblockslideshow">InputRichBlockSlideshow</a>
- * - <a href="#inputrichblocktable">InputRichBlockTable</a>
- * - <a href="#inputrichblockdetails">InputRichBlockDetails</a>
- * - <a href="#inputrichblockmap">InputRichBlockMap</a>
- * - <a href="#inputrichblockanimation">InputRichBlockAnimation</a>
- * - <a href="#inputrichblockaudio">InputRichBlockAudio</a>
- * - <a href="#inputrichblockphoto">InputRichBlockPhoto</a>
- * - <a href="#inputrichblockvideo">InputRichBlockVideo</a>
- * - <a href="#inputrichblockvoicenote">InputRichBlockVoiceNote</a>
- * - <a href="#inputrichblockthinking">InputRichBlockThinking</a>
+ * - {@link InputRichBlockParagraph}
+ * - {@link InputRichBlockSectionHeading}
+ * - {@link InputRichBlockPreformatted}
+ * - {@link InputRichBlockFooter}
+ * - {@link InputRichBlockDivider}
+ * - {@link InputRichBlockMathematicalExpression}
+ * - {@link InputRichBlockAnchor}
+ * - {@link InputRichBlockList}
+ * - {@link InputRichBlockBlockQuotation}
+ * - {@link InputRichBlockPullQuotation}
+ * - {@link InputRichBlockCollage}
+ * - {@link InputRichBlockSlideshow}
+ * - {@link InputRichBlockTable}
+ * - {@link InputRichBlockDetails}
+ * - {@link InputRichBlockMap}
+ * - {@link InputRichBlockAnimation}
+ * - {@link InputRichBlockAudio}
+ * - {@link InputRichBlockPhoto}
+ * - {@link InputRichBlockVideo}
+ * - {@link InputRichBlockVoiceNote}
+ * - {@link InputRichBlockThinking}
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblock}
  */
@@ -13696,7 +13696,7 @@ export interface InputRichBlockVoiceNote {
   caption?: RichBlockCaption;
 }
 /**
- * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
+ * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag `&lt;tg-thinking&gt;`. The block may be used only in {@link ApiMethods.sendRichMessageDraft | sendRichMessageDraft}, therefore it can&#39;t be received in messages. See {@link https://t.me/addemoji/AIActions | https://t.me/addemoji/AIActions} for examples of custom emoji that are recommended for usage in the block.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichblockthinking}
  */
@@ -13794,33 +13794,33 @@ export interface InlineQueryResultsButton {
   /**
    * {@link https://core.telegram.org/bots/features#deep-linking | Deep-linking} parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
    *
-   * _Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
+   * _Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a {@link InlineKeyboardMarkup | _switch_inline_} button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
    */
   start_parameter?: string;
 }
 /**
  * This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
  *
- * - <a href="#inlinequeryresultcachedaudio">InlineQueryResultCachedAudio</a>
- * - <a href="#inlinequeryresultcacheddocument">InlineQueryResultCachedDocument</a>
- * - <a href="#inlinequeryresultcachedgif">InlineQueryResultCachedGif</a>
- * - <a href="#inlinequeryresultcachedmpeg4gif">InlineQueryResultCachedMpeg4Gif</a>
- * - <a href="#inlinequeryresultcachedphoto">InlineQueryResultCachedPhoto</a>
- * - <a href="#inlinequeryresultcachedsticker">InlineQueryResultCachedSticker</a>
- * - <a href="#inlinequeryresultcachedvideo">InlineQueryResultCachedVideo</a>
- * - <a href="#inlinequeryresultcachedvoice">InlineQueryResultCachedVoice</a>
- * - <a href="#inlinequeryresultarticle">InlineQueryResultArticle</a>
- * - <a href="#inlinequeryresultaudio">InlineQueryResultAudio</a>
- * - <a href="#inlinequeryresultcontact">InlineQueryResultContact</a>
- * - <a href="#inlinequeryresultgame">InlineQueryResultGame</a>
- * - <a href="#inlinequeryresultdocument">InlineQueryResultDocument</a>
- * - <a href="#inlinequeryresultgif">InlineQueryResultGif</a>
- * - <a href="#inlinequeryresultlocation">InlineQueryResultLocation</a>
- * - <a href="#inlinequeryresultmpeg4gif">InlineQueryResultMpeg4Gif</a>
- * - <a href="#inlinequeryresultphoto">InlineQueryResultPhoto</a>
- * - <a href="#inlinequeryresultvenue">InlineQueryResultVenue</a>
- * - <a href="#inlinequeryresultvideo">InlineQueryResultVideo</a>
- * - <a href="#inlinequeryresultvoice">InlineQueryResultVoice</a>
+ * - {@link InlineQueryResultCachedAudio}
+ * - {@link InlineQueryResultCachedDocument}
+ * - {@link InlineQueryResultCachedGif}
+ * - {@link InlineQueryResultCachedMpeg4Gif}
+ * - {@link InlineQueryResultCachedPhoto}
+ * - {@link InlineQueryResultCachedSticker}
+ * - {@link InlineQueryResultCachedVideo}
+ * - {@link InlineQueryResultCachedVoice}
+ * - {@link InlineQueryResultArticle}
+ * - {@link InlineQueryResultAudio}
+ * - {@link InlineQueryResultContact}
+ * - {@link InlineQueryResultGame}
+ * - {@link InlineQueryResultDocument}
+ * - {@link InlineQueryResultGif}
+ * - {@link InlineQueryResultLocation}
+ * - {@link InlineQueryResultMpeg4Gif}
+ * - {@link InlineQueryResultPhoto}
+ * - {@link InlineQueryResultVenue}
+ * - {@link InlineQueryResultVideo}
+ * - {@link InlineQueryResultVoice}
  * 
  * **Note:** All URLs passed in inline query results will be available to end users and therefore must be assumed to be **public**.
  *
@@ -14884,12 +14884,12 @@ export interface InlineQueryResultCachedAudio {
 /**
  * This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following types:
  *
- * - <a href="#inputtextmessagecontent">InputTextMessageContent</a>
- * - <a href="#inputrichmessagecontent">InputRichMessageContent</a>
- * - <a href="#inputlocationmessagecontent">InputLocationMessageContent</a>
- * - <a href="#inputvenuemessagecontent">InputVenueMessageContent</a>
- * - <a href="#inputcontactmessagecontent">InputContactMessageContent</a>
- * - <a href="#inputinvoicemessagecontent">InputInvoiceMessageContent</a>
+ * - {@link InputTextMessageContent}
+ * - {@link InputRichMessageContent}
+ * - {@link InputLocationMessageContent}
+ * - {@link InputVenueMessageContent}
+ * - {@link InputContactMessageContent}
+ * - {@link InputInvoiceMessageContent}
  *
  * @see {@link https://core.telegram.org/bots/api#inputmessagecontent}
  */
@@ -14901,7 +14901,7 @@ export type InputMessageContent =
  | InputContactMessageContent
  | InputInvoiceMessageContent
 /**
- * Represents the <a href="#inputmessagecontent">content</a> of a text message to be sent as the result of an inline query.
+ * Represents the {@link InputMessageContent | content} of a text message to be sent as the result of an inline query.
  *
  * @see {@link https://core.telegram.org/bots/api#inputtextmessagecontent}
  */
@@ -14924,7 +14924,7 @@ export interface InputTextMessageContent {
   link_preview_options?: LinkPreviewOptions;
 }
 /**
- * Represents the <a href="#inputmessagecontent">content</a> of a rich message to be sent as the result of an inline query.
+ * Represents the {@link InputMessageContent | content} of a rich message to be sent as the result of an inline query.
  *
  * @see {@link https://core.telegram.org/bots/api#inputrichmessagecontent}
  */
@@ -14935,7 +14935,7 @@ export interface InputRichMessageContent {
   rich_message: InputRichMessage;
 }
 /**
- * Represents the <a href="#inputmessagecontent">content</a> of a location message to be sent as the result of an inline query.
+ * Represents the {@link InputMessageContent | content} of a location message to be sent as the result of an inline query.
  *
  * @see {@link https://core.telegram.org/bots/api#inputlocationmessagecontent}
  */
@@ -14966,7 +14966,7 @@ export interface InputLocationMessageContent {
   proximity_alert_radius?: number;
 }
 /**
- * Represents the <a href="#inputmessagecontent">content</a> of a venue message to be sent as the result of an inline query.
+ * Represents the {@link InputMessageContent | content} of a venue message to be sent as the result of an inline query.
  *
  * @see {@link https://core.telegram.org/bots/api#inputvenuemessagecontent}
  */
@@ -15005,7 +15005,7 @@ export interface InputVenueMessageContent {
   google_place_type?: string;
 }
 /**
- * Represents the <a href="#inputmessagecontent">content</a> of a contact message to be sent as the result of an inline query.
+ * Represents the {@link InputMessageContent | content} of a contact message to be sent as the result of an inline query.
  *
  * @see {@link https://core.telegram.org/bots/api#inputcontactmessagecontent}
  */
@@ -15028,7 +15028,7 @@ export interface InputContactMessageContent {
   vcard?: string;
 }
 /**
- * Represents the <a href="#inputmessagecontent">content</a> of an invoice message to be sent as the result of an inline query.
+ * Represents the {@link InputMessageContent | content} of an invoice message to be sent as the result of an inline query.
  *
  * @see {@link https://core.telegram.org/bots/api#inputinvoicemessagecontent}
  */
@@ -15115,7 +15115,7 @@ export interface InputInvoiceMessageContent {
   is_flexible?: boolean;
 }
 /**
- * Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.
+ * Represents a {@link InlineQueryResult | result} of an inline query that was chosen by the user and sent to their chat partner.
  * 
  * **Note:** It is necessary to enable {@link https://core.telegram.org/bots/inline#collecting-feedback | inline feedback} via {@link https://t.me/botfather | \@BotFather} in order to receive these objects in updates.
  *
@@ -15135,7 +15135,7 @@ export interface ChosenInlineResult {
    */
   location?: Location;
   /**
-   * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to {@link https://core.telegram.org/bots/api#updating-messages | edit} the message.
+   * Identifier of the sent inline message. Available only if there is an {@link InlineKeyboardMarkup | inline keyboard} attached to the message. Will be also received in {@link CallbackQuery | callback queries} and can be used to {@link https://core.telegram.org/bots/api#updating-messages | edit} the message.
    */
   inline_message_id?: string;
   /**
@@ -15146,7 +15146,7 @@ export interface ChosenInlineResult {
 // === PAYMENTS
 export interface ApiMethods {
   /**
-   * Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send invoices. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendinvoice}
    */
@@ -15376,7 +15376,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an <a href="#update">Update</a> with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, `true` is returned.
+   * If you sent an invoice requesting a shipping address and the parameter _is_flexible_ was specified, the Bot API will send an {@link Update} with a _shipping_query_ field to the bot. Use this method to reply to shipping queries. On success, `true` is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#answershippingquery}
    */
@@ -15401,7 +15401,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, `true` is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+   * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an {@link Update} with the field _pre_checkout_query_. Use this method to respond to such pre-checkout queries. On success, `true` is returned. **Note:** The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
    *
    * @see {@link https://core.telegram.org/bots/api#answerprecheckoutquery}
    */
@@ -15422,7 +15422,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.
+   * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a {@link StarAmount} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getmystarbalance}
    */
@@ -15430,7 +15430,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.
+   * Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a {@link StarTransactions} object.
    *
    * @see {@link https://core.telegram.org/bots/api#getstartransactions}
    */
@@ -15748,9 +15748,9 @@ export interface PaidMediaPurchased {
 /**
  * This object describes the state of a revenue withdrawal operation. Currently, it can be one of
  *
- * - <a href="#revenuewithdrawalstatepending">RevenueWithdrawalStatePending</a>
- * - <a href="#revenuewithdrawalstatesucceeded">RevenueWithdrawalStateSucceeded</a>
- * - <a href="#revenuewithdrawalstatefailed">RevenueWithdrawalStateFailed</a>
+ * - {@link RevenueWithdrawalStatePending}
+ * - {@link RevenueWithdrawalStateSucceeded}
+ * - {@link RevenueWithdrawalStateFailed}
  *
  * @see {@link https://core.telegram.org/bots/api#revenuewithdrawalstate}
  */
@@ -15829,13 +15829,13 @@ export interface AffiliateInfo {
 /**
  * This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
  *
- * - <a href="#transactionpartneruser">TransactionPartnerUser</a>
- * - <a href="#transactionpartnerchat">TransactionPartnerChat</a>
- * - <a href="#transactionpartneraffiliateprogram">TransactionPartnerAffiliateProgram</a>
- * - <a href="#transactionpartnerfragment">TransactionPartnerFragment</a>
- * - <a href="#transactionpartnertelegramads">TransactionPartnerTelegramAds</a>
- * - <a href="#transactionpartnertelegramapi">TransactionPartnerTelegramApi</a>
- * - <a href="#transactionpartnerother">TransactionPartnerOther</a>
+ * - {@link TransactionPartnerUser}
+ * - {@link TransactionPartnerChat}
+ * - {@link TransactionPartnerAffiliateProgram}
+ * - {@link TransactionPartnerFragment}
+ * - {@link TransactionPartnerTelegramAds}
+ * - {@link TransactionPartnerTelegramApi}
+ * - {@link TransactionPartnerOther}
  *
  * @see {@link https://core.telegram.org/bots/api#transactionpartner}
  */
@@ -16076,7 +16076,7 @@ export interface EncryptedPassportElement {
    */
   type: string;
   /**
-   * Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   * Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying {@link EncryptedCredentials}.
    */
   data?: string;
   /**
@@ -16088,38 +16088,38 @@ export interface EncryptedPassportElement {
    */
   email?: string;
   /**
-   * Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   * Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying {@link EncryptedCredentials}.
    */
   files?: PassportFile[];
   /**
-   * Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   * Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying {@link EncryptedCredentials}.
    */
   front_side?: PassportFile;
   /**
-   * Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   * Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying {@link EncryptedCredentials}.
    */
   reverse_side?: PassportFile;
   /**
-   * Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   * Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying {@link EncryptedCredentials}.
    */
   selfie?: PassportFile;
   /**
-   * Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying <a href="#encryptedcredentials">EncryptedCredentials</a>.
+   * Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying {@link EncryptedCredentials}.
    */
   translation?: PassportFile[];
   /**
-   * Base64-encoded element hash for using in <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a>
+   * Base64-encoded element hash for using in {@link PassportElementErrorUnspecified}
    */
   hash: string;
 }
 /**
- * Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the {@link https://core.telegram.org/passport#receiving-information | Telegram Passport Documentation} for a complete description of the data decryption and authentication processes.
+ * Describes data required for decrypting and authenticating {@link EncryptedPassportElement}. See the {@link https://core.telegram.org/passport#receiving-information | Telegram Passport Documentation} for a complete description of the data decryption and authentication processes.
  *
  * @see {@link https://core.telegram.org/bots/api#encryptedcredentials}
  */
 export interface EncryptedCredentials {
   /**
-   * Base64-encoded encrypted JSON-serialized data with unique user&#39;s payload, data hashes and secrets required for <a href="#encryptedpassportelement">EncryptedPassportElement</a> decryption and authentication
+   * Base64-encoded encrypted JSON-serialized data with unique user&#39;s payload, data hashes and secrets required for {@link EncryptedPassportElement} decryption and authentication
    */
   data: string;
   /**
@@ -16153,15 +16153,15 @@ export interface ApiMethods {
 /**
  * This object represents an error in the Telegram Passport element which was submitted that should be resolved by the user. It should be one of:
  *
- * - <a href="#passportelementerrordatafield">PassportElementErrorDataField</a>
- * - <a href="#passportelementerrorfrontside">PassportElementErrorFrontSide</a>
- * - <a href="#passportelementerrorreverseside">PassportElementErrorReverseSide</a>
- * - <a href="#passportelementerrorselfie">PassportElementErrorSelfie</a>
- * - <a href="#passportelementerrorfile">PassportElementErrorFile</a>
- * - <a href="#passportelementerrorfiles">PassportElementErrorFiles</a>
- * - <a href="#passportelementerrortranslationfile">PassportElementErrorTranslationFile</a>
- * - <a href="#passportelementerrortranslationfiles">PassportElementErrorTranslationFiles</a>
- * - <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a>
+ * - {@link PassportElementErrorDataField}
+ * - {@link PassportElementErrorFrontSide}
+ * - {@link PassportElementErrorReverseSide}
+ * - {@link PassportElementErrorSelfie}
+ * - {@link PassportElementErrorFile}
+ * - {@link PassportElementErrorFiles}
+ * - {@link PassportElementErrorTranslationFile}
+ * - {@link PassportElementErrorTranslationFiles}
+ * - {@link PassportElementErrorUnspecified}
  *
  * @see {@link https://core.telegram.org/bots/api#passportelementerror}
  */
@@ -16389,7 +16389,7 @@ export interface PassportElementErrorUnspecified {
 // === GAMES
 export interface ApiMethods {
   /**
-   * Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.
+   * Use this method to send a game. On success, the sent {@link Message} is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#sendgame}
    */
@@ -16455,7 +16455,7 @@ export interface Game {
    */
   photo: PhotoSize[];
   /**
-   * Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls <a href="#setgamescore">setGameScore</a>, or manually edited using <a href="#editmessagetext">editMessageText</a>. 0-4096 characters.
+   * Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls {@link ApiMethods.setGameScore | setGameScore}, or manually edited using {@link ApiMethods.editMessageText | editMessageText}. 0-4096 characters.
    */
   text?: string;
   /**
@@ -16475,7 +16475,7 @@ export interface Game {
 export type CallbackGame = Empty;
 export interface ApiMethods {
   /**
-   * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise `true` is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and _force_ is `false`.
+   * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the {@link Message} is returned, otherwise `true` is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and _force_ is `false`.
    *
    * @see {@link https://core.telegram.org/bots/api#setgamescore}
    */
@@ -16512,7 +16512,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of <a href="#gamehighscore">GameHighScore</a> objects.
+   * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of {@link GameHighScore} objects.
    *
    * > This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.
    *
