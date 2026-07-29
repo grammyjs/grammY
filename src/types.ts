@@ -17265,11 +17265,10 @@ export interface InputRichMessageMedia {
    * Unique identifier of the media used in a <code>tg://photo?id=</code>, <code>tg://video?id=</code>, or <code>tg://audio?id=</code> link. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.
    */
   id: string;
-<tr>
-<td>media</td>
-<td><a href="#inputmediaanimation">InputMediaAnimation</a> or <a href="#inputmediaaudio">InputMediaAudio</a> or <a href="#inputmediaphoto">InputMediaPhoto</a> or <a href="#inputmediavideo">InputMediaVideo</a> or <a href="#inputmediavoicenote">InputMediaVoiceNote</a></td>
-<td>The media to be sent. Everything except the media itself and its properties is ignored.</td>
-</tr>
+  /**
+   * The media to be sent. Everything except the media itself and its properties is ignored.
+   */
+  media: InputMediaAnimation | InputMediaAudio | InputMediaPhoto | InputMediaVideo | InputMediaVoiceNote
 </tbody>
 </table>
 }
