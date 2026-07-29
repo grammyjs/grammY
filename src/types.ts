@@ -193,12 +193,10 @@ export interface ApiMethods {
      * Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.
      */
     timeout?: number;
-<tr>
-<td>allowed_updates</td>
-<td>Array of String</td>
-<td>Optional</td>
-<td>A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.</td>
-</tr>
+    /**
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
+     */
+    allowed_updates?: string[];
 </tbody>
 </table>
   }): never;
@@ -242,12 +240,10 @@ export interface ApiMethods {
      * The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to <em>40</em>. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.
      */
     max_connections?: number;
-<tr>
-<td>allowed_updates</td>
-<td>Array of String</td>
-<td>Optional</td>
-<td>A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.</td>
-</tr>
+    /**
+     * A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br>Please note that this parameter doesn&#39;t affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+     */
+    allowed_updates?: string[];
     /**
      * Pass <em>True</em> to drop all pending updates
      */
@@ -10542,12 +10538,10 @@ export interface ApiMethods {
      * Pass <em>True</em> if voting is limited to users who have been members of the chat where the poll is being sent for more than 24 hours; for channel chats only
      */
     members_only?: boolean;
-<tr>
-<td>country_codes</td>
-<td>Array of String</td>
-<td>Optional</td>
-<td>A JSON-serialized list of 0-12 two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which users can vote in the poll; for channel chats only. Use “FT” as a country code to allow users with anonymous numbers to vote. If omitted or empty, then users from any country can participate in the poll.</td>
-</tr>
+    /**
+     * A JSON-serialized list of 0-12 two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country codes indicating the countries from which users can vote in the poll; for channel chats only. Use “FT” as a country code to allow users with anonymous numbers to vote. If omitted or empty, then users from any country can participate in the poll.
+     */
+    country_codes?: string[];
 <tr>
 <td>correct_option_ids</td>
 <td>Array of Integer</td>
@@ -15548,12 +15542,10 @@ export interface ApiMethods {
      * File identifier of the sticker
      */
     sticker: string;
-<tr>
-<td>keywords</td>
-<td>Array of String</td>
-<td>Optional</td>
-<td>A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters</td>
-</tr>
+    /**
+     * A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters
+     */
+    keywords?: string[];
 </tbody>
 </table>
   }): never;
