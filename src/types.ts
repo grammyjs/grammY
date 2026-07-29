@@ -3016,16 +3016,14 @@ export interface Location {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Latitude as defined by the sender</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Longitude as defined by the sender</td>
-</tr>
+  /**
+   * Latitude as defined by the sender
+   */
+  latitude: number;
+  /**
+   * Longitude as defined by the sender
+   */
+  longitude: number;
   /**
    * The radius of uncertainty for the location, measured in meters; 0-1500
    */
@@ -5979,36 +5977,30 @@ export interface StoryAreaPosition {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>x_percentage</td>
-<td>Float</td>
-<td>The abscissa of the area&#39;s center, as a percentage of the media width</td>
-</tr>
-<tr>
-<td>y_percentage</td>
-<td>Float</td>
-<td>The ordinate of the area&#39;s center, as a percentage of the media height</td>
-</tr>
-<tr>
-<td>width_percentage</td>
-<td>Float</td>
-<td>The width of the area&#39;s rectangle, as a percentage of the media width</td>
-</tr>
-<tr>
-<td>height_percentage</td>
-<td>Float</td>
-<td>The height of the area&#39;s rectangle, as a percentage of the media height</td>
-</tr>
-<tr>
-<td>rotation_angle</td>
-<td>Float</td>
-<td>The clockwise rotation angle of the rectangle, in degrees; 0-360</td>
-</tr>
-<tr>
-<td>corner_radius_percentage</td>
-<td>Float</td>
-<td>The radius of the rectangle corner rounding, as a percentage of the media width</td>
-</tr>
+  /**
+   * The abscissa of the area&#39;s center, as a percentage of the media width
+   */
+  x_percentage: number;
+  /**
+   * The ordinate of the area&#39;s center, as a percentage of the media height
+   */
+  y_percentage: number;
+  /**
+   * The width of the area&#39;s rectangle, as a percentage of the media width
+   */
+  width_percentage: number;
+  /**
+   * The height of the area&#39;s rectangle, as a percentage of the media height
+   */
+  height_percentage: number;
+  /**
+   * The clockwise rotation angle of the rectangle, in degrees; 0-360
+   */
+  rotation_angle: number;
+  /**
+   * The radius of the rectangle corner rounding, as a percentage of the media width
+   */
+  corner_radius_percentage: number;
 </tbody>
 </table>
 }
@@ -6076,16 +6068,14 @@ export interface StoryAreaTypeLocation {
    * Type of the area, always “location”
    */
   type: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Location latitude in degrees</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Location longitude in degrees</td>
-</tr>
+  /**
+   * Location latitude in degrees
+   */
+  latitude: number;
+  /**
+   * Location longitude in degrees
+   */
+  longitude: number;
 <tr>
 <td>address</td>
 <td><a href="#locationaddress">LocationAddress</a></td>
@@ -6168,11 +6158,10 @@ export interface StoryAreaTypeWeather {
    * Type of the area, always “weather”
    */
   type: string;
-<tr>
-<td>temperature</td>
-<td>Float</td>
-<td>Temperature, in degree Celsius</td>
-</tr>
+  /**
+   * Temperature, in degree Celsius
+   */
+  temperature: number;
   /**
    * Emoji representing the weather
    */
@@ -8340,16 +8329,14 @@ export interface InputMediaLocation {
    * Type of the media, must be <em>location</em>
    */
   type: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Latitude of the location</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Longitude of the location</td>
-</tr>
+  /**
+   * Latitude of the location
+   */
+  latitude: number;
+  /**
+   * Longitude of the location
+   */
+  longitude: number;
   /**
    * The radius of uncertainty for the location, measured in meters; 0-1500
    */
@@ -8447,16 +8434,14 @@ export interface InputMediaVenue {
    * Type of the media, must be <em>venue</em>
    */
   type: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Latitude of the location</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Longitude of the location</td>
-</tr>
+  /**
+   * Latitude of the location
+   */
+  latitude: number;
+  /**
+   * Longitude of the location
+   */
+  longitude: number;
   /**
    * Name of the venue
    */
@@ -16565,21 +16550,18 @@ export interface MaskPosition {
    * The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
    */
   point: string;
-<tr>
-<td>x_shift</td>
-<td>Float</td>
-<td>Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position.</td>
-</tr>
-<tr>
-<td>y_shift</td>
-<td>Float</td>
-<td>Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. For example, 1.0 will place the mask just below the default mask position.</td>
-</tr>
-<tr>
-<td>scale</td>
-<td>Float</td>
-<td>Mask scaling coefficient. For example, 2.0 means double size.</td>
-</tr>
+  /**
+   * Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position.
+   */
+  x_shift: number;
+  /**
+   * Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. For example, 1.0 will place the mask just below the default mask position.
+   */
+  y_shift: number;
+  /**
+   * Mask scaling coefficient. For example, 2.0 means double size.
+   */
+  scale: number;
 </tbody>
 </table>
 }
@@ -20704,16 +20686,14 @@ export interface InlineQueryResultLocation {
    * Unique identifier for this result, 1-64 Bytes
    */
   id: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Location latitude in degrees</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Location longitude in degrees</td>
-</tr>
+  /**
+   * Location latitude in degrees
+   */
+  latitude: number;
+  /**
+   * Location longitude in degrees
+   */
+  longitude: number;
   /**
    * Location title
    */
@@ -20780,16 +20760,14 @@ export interface InlineQueryResultVenue {
    * Unique identifier for this result, 1-64 Bytes
    */
   id: string;
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Latitude of the venue location in degrees</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Longitude of the venue location in degrees</td>
-</tr>
+  /**
+   * Latitude of the venue location in degrees
+   */
+  latitude: number;
+  /**
+   * Longitude of the venue location in degrees
+   */
+  longitude: number;
   /**
    * Title of the venue
    */
@@ -21466,16 +21444,14 @@ export interface InputLocationMessageContent {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Latitude of the location in degrees</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Longitude of the location in degrees</td>
-</tr>
+  /**
+   * Latitude of the location in degrees
+   */
+  latitude: number;
+  /**
+   * Longitude of the location in degrees
+   */
+  longitude: number;
   /**
    * The radius of uncertainty for the location, measured in meters; 0-1500
    */
@@ -21508,16 +21484,14 @@ export interface InputVenueMessageContent {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>latitude</td>
-<td>Float</td>
-<td>Latitude of the venue in degrees</td>
-</tr>
-<tr>
-<td>longitude</td>
-<td>Float</td>
-<td>Longitude of the venue in degrees</td>
-</tr>
+  /**
+   * Latitude of the venue in degrees
+   */
+  latitude: number;
+  /**
+   * Longitude of the venue in degrees
+   */
+  longitude: number;
   /**
    * Name of the venue
    */
