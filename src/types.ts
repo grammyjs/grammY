@@ -191,8 +191,10 @@ export interface Update = {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.
+   */
   getUpdates(args: {
-<p>Use this method to receive incoming updates using long polling (<a href="https://en.wikipedia.org/wiki/Push_technology#Long_polling">wiki</a>). Returns an Array of <a href="#update">Update</a> objects.</p>
 <table class="table">
 <thead>
 <tr>
@@ -233,9 +235,12 @@ export interface ApiMethods {
 <p><strong>Notes</strong><br><strong>1.</strong> This method will not work if an outgoing webhook is set up.<br><strong>2.</strong> In order to avoid getting duplicate updates, recalculate <em>offset</em> after each server response.</p>
 </blockquote>
 export interface ApiMethods {
+  /**
+   * Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns <em>True</em> on success.
+   *
+   * If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter <em>secret_token</em>. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.
+   */
   setWebhook(args: {
-<p>Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized <a href="#update">Update</a>. In case of an unsuccessful request (a request with response <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> different from <code>2XY</code>), we will repeat the request and give up after a reasonable amount of attempts. Returns <em>True</em> on success.</p>
-<p>If you&#39;d like to make sure that the webhook was set by you, you can specify secret data in the parameter <em>secret_token</em>. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.</p>
 <table class="table">
 <thead>
 <tr>
@@ -295,8 +300,10 @@ export interface ApiMethods {
 <p>If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.</p>
 </blockquote>
 export interface ApiMethods {
+  /**
+   * Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns <em>True</em> on success.
+   */
   deleteWebhook(args: {
-<p>Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -316,8 +323,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the <em>url</em> field empty.
+   */
   getWebhookInfo(args: {
-<p>Use this method to get current webhook status. Requires no parameters. On success, returns a <a href="#webhookinfo">WebhookInfo</a> object. If the bot is using <a href="#getupdates">getUpdates</a>, will return an object with the <em>url</em> field empty.</p>
 /**
  * Describes the current status of a webhook.
  */
@@ -9490,17 +9499,25 @@ export interface InputStoryContentVideo = {
 <p>All methods in the Bot API are case-insensitive. We support <strong>GET</strong> and <strong>POST</strong> HTTP methods. Use either <a href="https://en.wikipedia.org/wiki/Query_string">URL query string</a> or <em>application/json</em> or <em>application/x-www-form-urlencoded</em> or <em>multipart/form-data</em> for passing parameters in Bot API requests.<br>On successful call, a JSON-object containing the result will be returned.</p>
 </blockquote>
 export interface ApiMethods {
+  /**
+   * A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.
+   */
   getMe(args: {
-<p>A simple method for testing your bot&#39;s authentication token. Requires no parameters. Returns basic information about the bot in form of a <a href="#user">User</a> object.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns <em>True</em> on success. Requires no parameters.
+   */
   logOut(args: {
-<p>Use this method to log out from the cloud Bot API server before launching the bot locally. You <strong>must</strong> log out the bot before running it locally, otherwise there is no guarantee that the bot will receive updates. After a successful call, you can immediately log in on a local server, but will not be able to log in back to the cloud Bot API server for 10 minutes. Returns <em>True</em> on success. Requires no parameters.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns <em>True</em> on success. Requires no parameters.
+   */
   close(args: {
-<p>Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn&#39;t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns <em>True</em> on success. Requires no parameters.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendMessage(args: {
-<p>Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -9764,8 +9781,10 @@ pre-formatted fixed-width code block written in the Python programming language
 <p>Bots with increased limits are only charged for messages that are broadcasted successfully.</p>
 </blockquote>
 export interface ApiMethods {
+  /**
+   * Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.
+   */
   forwardMessage(args: {
-<p>Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -9839,8 +9858,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
+   */
   forwardMessages(args: {
-<p>Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -9896,8 +9917,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.
+   */
   copyMessage(args: {
-<p>Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10013,8 +10036,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
+   */
   copyMessages(args: {
-<p>Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10076,8 +10101,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendPhoto(args: {
-<p>Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10205,8 +10232,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send live photos. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendLivePhoto(args: {
-<p>Use this method to send live photos. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10340,9 +10369,12 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+   *
+   * For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.
+   */
   sendAudio(args: {
-<p>Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.</p>
-<p>For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10482,8 +10514,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+   */
   sendDocument(args: {
-<p>Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10611,8 +10645,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+   */
   sendVideo(args: {
-<p>Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10782,8 +10818,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+   */
   sendAnimation(args: {
-<p>Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
 <tr>
@@ -10935,8 +10973,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+   */
   sendVoice(args: {
-<p>Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11058,8 +11098,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendVideoNote(args: {
-<p>As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11175,8 +11217,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendPaidMedia(args: {
-<p>Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11292,8 +11336,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of <a href="#message">Message</a> objects that were sent is returned.
+   */
   sendMediaGroup(args: {
-<p>Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of <a href="#message">Message</a> objects that were sent is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11367,8 +11413,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendLocation(args: {
-<p>Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11496,8 +11544,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendVenue(args: {
-<p>Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11637,8 +11687,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendContact(args: {
-<p>Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11754,8 +11806,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendPoll(args: {
-<p>Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -11973,8 +12027,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendChecklist(args: {
-<p>Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12036,8 +12092,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendDice(args: {
-<p>Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12123,8 +12181,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
+   */
   sendMessageDraft(args: {
-<p>Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12174,11 +12234,12 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns <em>True</em> on success.
+   *
+   * > Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with <em>action</em> = <em>upload_photo</em>. The user will see a “sending photo” status for the bot.
+   */
   sendChatAction(args: {
-<p>Use this method when you need to tell the user that something is happening on the bot&#39;s side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns <em>True</em> on success.</p>
-<blockquote>
-<p>Example: The <a href="https://t.me/imagebot">ImageBot</a> needs some time to process a request and upload the image. Instead of sending a text message along the lines of “Retrieving image, please wait…”, the bot may use <a href="#sendchataction">sendChatAction</a> with <em>action</em> = <em>upload_photo</em>. The user will see a “sending photo” status for the bot.</p>
-</blockquote>
 <p>We only recommend using this method when a response from the bot will take a <strong>noticeable</strong> amount of time to arrive.</p>
 <table class="table">
 <thead>
@@ -12217,8 +12278,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.
+   */
   setMessageReaction(args: {
-<p>Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12256,8 +12319,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.
+   */
   getUserProfilePhotos(args: {
-<p>Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12289,8 +12354,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get a list of profile audios for a user. Returns a <a href="#userprofileaudios">UserProfileAudios</a> object.
+   */
   getUserProfileAudios(args: {
-<p>Use this method to get a list of profile audios for a user. Returns a <a href="#userprofileaudios">UserProfileAudios</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12322,8 +12389,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns <em>True</em> on success.
+   */
   setUserEmojiStatus(args: {
-<p>Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12355,8 +12424,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>, where <code>&lt;file_path&gt;</code> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.
+   */
   getFile(args: {
-<p>Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a <a href="#file">File</a> object is returned. The file can then be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>, where <code>&lt;file_path&gt;</code> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a> again.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12377,8 +12448,10 @@ export interface ApiMethods {
 </table>
 <p><strong>Note:</strong> This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   */
   banChatMember(args: {
-<p>Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12416,8 +12489,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns <em>True</em> on success.
+   */
   unbanChatMember(args: {
-<p>Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12449,8 +12524,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift restrictions from a user. Returns <em>True</em> on success.
+   */
   restrictChatMember(args: {
-<p>Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift restrictions from a user. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12494,8 +12571,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all boolean parameters to demote a user. Returns <em>True</em> on success.
+   */
   promoteChatMember(args: {
-<p>Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all boolean parameters to demote a user. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12623,8 +12702,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns <em>True</em> on success.
+   */
   setChatAdministratorCustomTitle(args: {
-<p>Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12656,8 +12737,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_tags</em> administrator right. Returns <em>True</em> on success.
+   */
   setChatMemberTag(args: {
-<p>Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_tags</em> administrator right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12689,8 +12772,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   */
   banChatSenderChat(args: {
-<p>Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12716,8 +12801,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   */
   unbanChatSenderChat(args: {
-<p>Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12743,8 +12830,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns <em>True</em> on success.
+   */
   setChatPermissions(args: {
-<p>Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12776,8 +12865,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as <em>String</em> on success.
+   */
   exportChatInviteLink(args: {
-<p>Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as <em>String</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12800,8 +12891,10 @@ export interface ApiMethods {
 <p>Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.</p>
 </blockquote>
 export interface ApiMethods {
+  /**
+   * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
+   */
   createChatInviteLink(args: {
-<p>Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12845,8 +12938,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
+   */
   editChatInviteLink(args: {
-<p>Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12896,8 +12991,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the <em>can_invite_users</em> administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
+   */
   createChatSubscriptionInviteLink(args: {
-<p>Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the <em>can_invite_users</em> administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12935,8 +13032,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit a subscription invite link created by the bot. The bot must have the <em>can_invite_users</em> administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
+   */
   editChatSubscriptionInviteLink(args: {
-<p>Use this method to edit a subscription invite link created by the bot. The bot must have the <em>can_invite_users</em> administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12968,8 +13067,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
+   */
   revokeChatInviteLink(args: {
-<p>Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -12995,8 +13096,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
+   */
   approveChatJoinRequest(args: {
-<p>Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13022,8 +13125,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
+   */
   declineChatJoinRequest(args: {
-<p>Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13049,8 +13154,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to process a received chat join request query. Returns <em>True</em> on success.
+   */
   answerChatJoinRequestQuery(args: {
-<p>Use this method to process a received chat join request query. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13076,8 +13183,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns <em>True</em> on success.
+   */
   sendChatJoinRequestWebApp(args: {
-<p>Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13103,8 +13212,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   */
   setChatPhoto(args: {
-<p>Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13130,8 +13241,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   */
   deleteChatPhoto(args: {
-<p>Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13151,8 +13264,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   */
   setChatTitle(args: {
-<p>Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13178,8 +13293,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
+   */
   setChatDescription(args: {
-<p>Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13205,8 +13322,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns <em>True</em> on success.
+   */
   pinChatMessage(args: {
-<p>Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13244,8 +13363,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns <em>True</em> on success.
+   */
   unpinChatMessage(args: {
-<p>Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13277,8 +13398,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns <em>True</em> on success.
+   */
   unpinAllChatMessages(args: {
-<p>Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13298,8 +13421,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method for your bot to leave a group, supergroup or channel. Returns <em>True</em> on success.
+   */
   leaveChat(args: {
-<p>Use this method for your bot to leave a group, supergroup or channel. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13319,8 +13444,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.
+   */
   getChat(args: {
-<p>Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13340,8 +13467,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get a list of administrators in a chat. Returns an Array of <a href="#chatmember">ChatMember</a> objects.
+   */
   getChatAdministrators(args: {
-<p>Use this method to get a list of administrators in a chat. Returns an Array of <a href="#chatmember">ChatMember</a> objects.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13367,8 +13496,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the number of members in a chat. Returns <em>Integer</em> on success.
+   */
   getChatMemberCount(args: {
-<p>Use this method to get the number of members in a chat. Returns <em>Integer</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13388,8 +13519,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.
+   */
   getChatMember(args: {
-<p>Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13415,8 +13548,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of <a href="#message">Message</a> objects is returned.
+   */
   getUserPersonalChatMessages(args: {
-<p>Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of <a href="#message">Message</a> objects is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13442,8 +13577,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
+   */
   setChatStickerSet(args: {
-<p>Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13469,8 +13606,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
+   */
   deleteChatStickerSet(args: {
-<p>Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13490,11 +13629,15 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.
+   */
   getForumTopicIconStickers(args: {
-<p>Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator right. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.
+   */
   createForumTopic(args: {
-<p>Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator right. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13532,8 +13675,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
+   */
   editForumTopic(args: {
-<p>Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13571,8 +13716,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
+   */
   closeForumTopic(args: {
-<p>Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13598,8 +13745,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
+   */
   reopenForumTopic(args: {
-<p>Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13625,8 +13774,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns <em>True</em> on success.
+   */
   deleteForumTopic(args: {
-<p>Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13652,8 +13803,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
+   */
   unpinAllForumTopicMessages(args: {
-<p>Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13679,8 +13832,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
+   */
   editGeneralForumTopic(args: {
-<p>Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13706,8 +13861,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
+   */
   closeGeneralForumTopic(args: {
-<p>Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13727,8 +13884,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns <em>True</em> on success.
+   */
   reopenGeneralForumTopic(args: {
-<p>Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13748,8 +13907,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns <em>True</em> on success.
+   */
   hideGeneralForumTopic(args: {
-<p>Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13769,8 +13930,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
+   */
   unhideGeneralForumTopic(args: {
-<p>Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13790,8 +13953,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
+   */
   unpinAllGeneralForumTopicMessages(args: {
-<p>Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13811,11 +13976,12 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, <em>True</em> is returned.
+   *
+   * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
+   */
   answerCallbackQuery(args: {
-<p>Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, <em>True</em> is returned.</p>
-<blockquote>
-<p>Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.</p>
-</blockquote>
 <table class="table">
 <thead>
 <tr>
@@ -13859,8 +14025,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to reply to a received guest message. On success, a <a href="#sentguestmessage">SentGuestMessage</a> object is returned.
+   */
   answerGuestQuery(args: {
-<p>Use this method to reply to a received guest message. On success, a <a href="#sentguestmessage">SentGuestMessage</a> object is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13886,8 +14054,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.
+   */
   getUserChatBoosts(args: {
-<p>Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13913,8 +14083,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.
+   */
   getBusinessConnection(args: {
-<p>Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13934,8 +14106,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the token of a managed bot. Returns the token as <em>String</em> on success.
+   */
   getManagedBotToken(args: {
-<p>Use this method to get the token of a managed bot. Returns the token as <em>String</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13955,8 +14129,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as <em>String</em> on success.
+   */
   replaceManagedBotToken(args: {
-<p>Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as <em>String</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13976,8 +14152,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the access settings of a managed bot. Returns a <a href="#botaccesssettings">BotAccessSettings</a> object on success.
+   */
   getManagedBotAccessSettings(args: {
-<p>Use this method to get the access settings of a managed bot. Returns a <a href="#botaccesssettings">BotAccessSettings</a> object on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -13997,8 +14175,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the access settings of a managed bot. Returns <em>True</em> on success.
+   */
   setManagedBotAccessSettings(args: {
-<p>Use this method to change the access settings of a managed bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14030,8 +14210,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns <em>True</em> on success.
+   */
   setMyCommands(args: {
-<p>Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14063,8 +14245,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns <em>True</em> on success.
+   */
   deleteMyCommands(args: {
-<p>Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14090,8 +14274,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.
+   */
   getMyCommands(args: {
-<p>Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14117,8 +14303,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the bot&#39;s name. Returns <em>True</em> on success.
+   */
   setMyName(args: {
-<p>Use this method to change the bot&#39;s name. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14144,8 +14332,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.
+   */
   getMyName(args: {
-<p>Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14165,8 +14355,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns <em>True</em> on success.
+   */
   setMyDescription(args: {
-<p>Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14192,8 +14384,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.
+   */
   getMyDescription(args: {
-<p>Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14213,8 +14407,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns <em>True</em> on success.
+   */
   setMyShortDescription(args: {
-<p>Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14240,8 +14436,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.
+   */
   getMyShortDescription(args: {
-<p>Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14261,8 +14459,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Changes the profile photo of the bot. Returns <em>True</em> on success.
+   */
   setMyProfilePhoto(args: {
-<p>Changes the profile photo of the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14282,11 +14482,15 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Removes the profile photo of the bot. Requires no parameters. Returns <em>True</em> on success.
+   */
   removeMyProfilePhoto(args: {
-<p>Removes the profile photo of the bot. Requires no parameters. Returns <em>True</em> on success.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns <em>True</em> on success.
+   */
   setChatMenuButton(args: {
-<p>Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14312,8 +14516,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.
+   */
   getChatMenuButton(args: {
-<p>Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14333,8 +14539,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns <em>True</em> on success.
+   */
   setMyDefaultAdministratorRights(args: {
-<p>Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14360,8 +14568,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.
+   */
   getMyDefaultAdministratorRights(args: {
-<p>Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14381,11 +14591,15 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.
+   */
   getAvailableGifts(args: {
-<p>Returns the list of gifts that can be sent by the bot to users and channel chats. Requires no parameters. Returns a <a href="#gifts">Gifts</a> object.</p>
 export interface ApiMethods {
+  /**
+   * Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns <em>True</em> on success.
+   */
   sendGift(args: {
-<p>Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14441,8 +14655,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Gifts a Telegram Premium subscription to the given user. Returns <em>True</em> on success.
+   */
   giftPremiumSubscription(args: {
-<p>Gifts a Telegram Premium subscription to the given user. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14492,8 +14708,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
+   */
   verifyUser(args: {
-<p>Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14519,8 +14737,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
+   */
   verifyChat(args: {
-<p>Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14546,8 +14766,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
+   */
   removeUserVerification(args: {
-<p>Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14567,8 +14789,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
+   */
   removeChatVerification(args: {
-<p>Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14588,8 +14812,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns <em>True</em> on success.
+   */
   readBusinessMessage(args: {
-<p>Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14621,8 +14847,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns <em>True</em> on success.
+   */
   deleteBusinessMessages(args: {
-<p>Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14648,8 +14876,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns <em>True</em> on success.
+   */
   setBusinessAccountName(args: {
-<p>Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14681,8 +14911,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns <em>True</em> on success.
+   */
   setBusinessAccountUsername(args: {
-<p>Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14708,8 +14940,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns <em>True</em> on success.
+   */
   setBusinessAccountBio(args: {
-<p>Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14735,8 +14969,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
+   */
   setBusinessAccountProfilePhoto(args: {
-<p>Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14768,8 +15004,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
+   */
   removeBusinessAccountProfilePhoto(args: {
-<p>Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14795,8 +15033,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns <em>True</em> on success.
+   */
   setBusinessAccountGiftSettings(args: {
-<p>Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14828,8 +15068,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Returns the amount of Telegram Stars owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#staramount">StarAmount</a> on success.
+   */
   getBusinessAccountStarBalance(args: {
-<p>Returns the amount of Telegram Stars owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#staramount">StarAmount</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14849,8 +15091,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns <em>True</em> on success.
+   */
   transferBusinessAccountStars(args: {
-<p>Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14876,8 +15120,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Returns the gifts received and owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
+   */
   getBusinessAccountGifts(args: {
-<p>Returns the gifts received and owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -14957,8 +15203,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Returns the gifts owned and hosted by a user. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
+   */
   getUserGifts(args: {
-<p>Returns the gifts owned and hosted by a user. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15026,8 +15274,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Returns the gifts owned by a chat. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
+   */
   getChatGifts(args: {
-<p>Returns the gifts owned by a chat. Returns <a href="#ownedgifts">OwnedGifts</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15107,8 +15357,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns <em>True</em> on success.
+   */
   convertGiftToStars(args: {
-<p>Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15134,8 +15386,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns <em>True</em> on success.
+   */
   upgradeGift(args: {
-<p>Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15173,8 +15427,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns <em>True</em> on success.
+   */
   transferGift(args: {
-<p>Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15212,8 +15468,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Posts a story on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.
+   */
   postStory(args: {
-<p>Posts a story on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15281,8 +15539,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the <em>can_manage_stories</em> business bot right for both business accounts. Returns <a href="#story">Story</a> on success.
+   */
   repostStory(args: {
-<p>Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the <em>can_manage_stories</em> business bot right for both business accounts. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15332,8 +15592,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Edits a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.
+   */
   editStory(args: {
-<p>Edits a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15389,8 +15651,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <em>True</em> on success.
+   */
   deleteStory(args: {
-<p>Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15416,8 +15680,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.
+   */
   answerWebAppQuery(args: {
-<p>Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15443,8 +15709,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.
+   */
   savePreparedInlineMessage(args: {
-<p>Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15494,8 +15762,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Stores a keyboard button that can be used by a user within a Mini App. Returns a <a href="#preparedkeyboardbutton">PreparedKeyboardButton</a> object.
+   */
   savePreparedKeyboardButton(args: {
-<p>Stores a keyboard button that can be used by a user within a Mini App. Returns a <a href="#preparedkeyboardbutton">PreparedKeyboardButton</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15526,8 +15796,10 @@ export interface ApiMethods {
 <p>The following methods allow you to change an existing message in the message history instead of sending a new one with a result of an action. This is most useful for messages with <a href="/bots/features#inline-keyboards">inline keyboards</a> using callback queries, but can also help reduce clutter in conversations with regular chat bots.</p>
 <p>Please note, that it is currently only possible to edit messages without <em>reply_markup</em> or with <a href="/bots/features#inline-keyboards">inline keyboards</a>.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   */
   editMessageText(args: {
-<p>Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15601,8 +15873,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   */
   editMessageCaption(args: {
-<p>Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15670,8 +15944,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   */
   editMessageMedia(args: {
-<p>Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15721,8 +15997,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
+   */
   editMessageLiveLocation(args: {
-<p>Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15802,8 +16080,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
+   */
   stopMessageLiveLocation(args: {
-<p>Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15847,8 +16127,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.
+   */
   editMessageChecklist(args: {
-<p>Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15892,8 +16174,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
+   */
   editMessageReplyMarkup(args: {
-<p>Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15937,8 +16221,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.
+   */
   stopPoll(args: {
-<p>Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -15976,8 +16262,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   */
   editEphemeralMessageText(args: {
-<p>Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16039,8 +16327,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   */
   editEphemeralMessageMedia(args: {
-<p>Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16084,8 +16374,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   */
   editEphemeralMessageCaption(args: {
-<p>Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16141,8 +16433,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
+   */
   editEphemeralMessageReplyMarkup(args: {
-<p>Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16180,8 +16474,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
+   */
   approveSuggestedPost(args: {
-<p>Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16213,8 +16509,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
+   */
   declineSuggestedPost(args: {
-<p>Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16246,8 +16544,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns <em>True</em> on success.
+   */
   deleteMessage(args: {
-<p>Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16273,8 +16573,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns <em>True</em> on success.
+   */
   deleteMessages(args: {
-<p>Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16300,8 +16602,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns <em>True</em> on success.
+   */
   deleteEphemeralMessage(args: {
-<p>Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16333,8 +16637,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
+   */
   deleteMessageReaction(args: {
-<p>Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16372,8 +16678,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
+   */
   deleteAllMessageReactions(args: {
-<p>Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16612,8 +16920,10 @@ export interface InputSticker = {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendSticker(args: {
-<p>Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16717,8 +17027,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.
+   */
   getStickerSet(args: {
-<p>Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16738,8 +17050,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.
+   */
   getCustomEmojiStickers(args: {
-<p>Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16759,8 +17073,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.
+   */
   uploadStickerFile(args: {
-<p>Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16792,8 +17108,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns <em>True</em> on success.
+   */
   createNewStickerSet(args: {
-<p>Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16843,8 +17161,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns <em>True</em> on success.
+   */
   addStickerToSet(args: {
-<p>Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16876,8 +17196,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to move a sticker in a set created by the bot to a specific position. Returns <em>True</em> on success.
+   */
   setStickerPositionInSet(args: {
-<p>Use this method to move a sticker in a set created by the bot to a specific position. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16903,8 +17225,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.
+   */
   deleteStickerFromSet(args: {
-<p>Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16924,8 +17248,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns <em>True</em> on success.
+   */
   replaceStickerInSet(args: {
-<p>Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16963,8 +17289,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
+   */
   setStickerEmojiList(args: {
-<p>Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -16990,8 +17318,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
+   */
   setStickerKeywords(args: {
-<p>Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17017,8 +17347,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns <em>True</em> on success.
+   */
   setStickerMaskPosition(args: {
-<p>Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17044,8 +17376,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set the title of a created sticker set. Returns <em>True</em> on success.
+   */
   setStickerSetTitle(args: {
-<p>Use this method to set the title of a created sticker set. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17071,8 +17405,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns <em>True</em> on success.
+   */
   setStickerSetThumbnail(args: {
-<p>Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17110,8 +17446,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to set the thumbnail of a custom emoji sticker set. Returns <em>True</em> on success.
+   */
   setCustomEmojiStickerSetThumbnail(args: {
-<p>Use this method to set the thumbnail of a custom emoji sticker set. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17137,8 +17475,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to delete a sticker set that was created by the bot. Returns <em>True</em> on success.
+   */
   deleteStickerSet(args: {
-<p>Use this method to delete a sticker set that was created by the bot. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17521,8 +17861,10 @@ export interface InputRichMessageMedia = {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendRichMessage(args: {
-<p>Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -17608,8 +17950,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
+   */
   sendRichMessageDraft(args: {
-<p>Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -19954,8 +20298,10 @@ export interface InlineQuery = {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than <strong>50</strong> results per query are allowed.
+   */
   answerInlineQuery(args: {
-<p>Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than <strong>50</strong> results per query are allowed.</p>
 <table class="table">
 <thead>
 <tr>
@@ -21863,8 +22209,10 @@ export interface ChosenInlineResult = {
 // === PAYMENTS
 <p>Your bot can accept payments from Telegram users. Please see the <a href="/bots/payments">introduction to payments</a> for more details on the process and how to set up payments for your bot.</p>
 export interface ApiMethods {
+  /**
+   * Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendInvoice(args: {
-<p>Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -22064,8 +22412,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to create a link for an invoice. Returns the created invoice link as <em>String</em> on success.
+   */
   createInvoiceLink(args: {
-<p>Use this method to create a link for an invoice. Returns the created invoice link as <em>String</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -22211,8 +22561,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, <em>True</em> is returned.
+   */
   answerShippingQuery(args: {
-<p>If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, <em>True</em> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -22250,8 +22602,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, <em>True</em> is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
+   */
   answerPreCheckoutQuery(args: {
-<p>Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, <em>True</em> is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.</p>
 <table class="table">
 <thead>
 <tr>
@@ -22283,11 +22637,15 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.
+   */
   getMyStarBalance(args: {
-<p>A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a <a href="#staramount">StarAmount</a> object.</p>
 export interface ApiMethods {
+  /**
+   * Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.
+   */
   getStarTransactions(args: {
-<p>Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.</p>
 <table class="table">
 <thead>
 <tr>
@@ -22313,8 +22671,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns <em>True</em> on success.
+   */
   refundStarPayment(args: {
-<p>Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -22340,8 +22700,10 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns <em>True</em> on success.
+   */
   editUserStarSubscription(args: {
-<p>Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns <em>True</em> on success.</p>
 <table class="table">
 <thead>
 <tr>
@@ -23340,9 +23702,12 @@ export interface EncryptedCredentials = {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns <em>True</em> on success.
+   *
+   * Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
+   */
   setPassportDataErrors(args: {
-<p>Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns <em>True</em> on success.</p>
-<p>Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.</p>
 <table class="table">
 <thead>
 <tr>
@@ -23724,8 +24089,10 @@ export interface PassportElementErrorUnspecified = {
 <li>For examples of what can be done using this new stuff, check the <a href="https://t.me/gamebot">@gamebot</a> and <a href="https://t.me/gamee">@gamee</a> bots.</li>
 </ul>
 export interface ApiMethods {
+  /**
+   * Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.
+   */
   sendGame(args: {
-<p>Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.</p>
 <table class="table">
 <thead>
 <tr>
@@ -23848,8 +24215,10 @@ export interface Game = {
  */
 export interface CallbackGame = {
 export interface ApiMethods {
+  /**
+   * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.
+   */
   setGameScore(args: {
-<p>Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.</p>
 <table class="table">
 <thead>
 <tr>
@@ -23905,11 +24274,12 @@ export interface ApiMethods {
 </tbody>
 </table>
 export interface ApiMethods {
+  /**
+   * Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of <a href="#gamehighscore">GameHighScore</a> objects.
+   *
+   * > This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.
+   */
   getGameHighScores(args: {
-<p>Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of <a href="#gamehighscore">GameHighScore</a> objects.</p>
-<blockquote>
-<p>This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.</p>
-</blockquote>
 <table class="table">
 <thead>
 <tr>
