@@ -8566,12 +8566,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -8799,12 +8797,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -8813,12 +8809,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the message will be forwarded; required if the message is forwarded to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>from_chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
-</tr>
+    /**
+     * Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     */
+    from_chat_id: number | string;
     /**
      * New start timestamp for the forwarded video in the message
      */
@@ -8862,12 +8856,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -8876,12 +8868,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the messages will be forwarded; required if the messages are forwarded to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>from_chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
-</tr>
+    /**
+     * Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     */
+    from_chat_id: number | string;
     /**
      * A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to forward. The identifiers must be specified in a strictly increasing order.
      */
@@ -8913,12 +8903,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -8927,12 +8915,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>from_chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
-</tr>
+    /**
+     * Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     */
+    from_chat_id: number | string;
     /**
      * Message identifier in the chat specified in <em>from_chat_id</em>
      */
@@ -9004,12 +8990,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9018,12 +9002,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>from_chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
-</tr>
+    /**
+     * Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)
+     */
+    from_chat_id: number | string;
     /**
      * A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to copy. The identifiers must be specified in a strictly increasing order.
      */
@@ -9063,12 +9045,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9160,12 +9140,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9263,12 +9241,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9368,12 +9344,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9465,12 +9439,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9590,12 +9562,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9703,12 +9673,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9796,12 +9764,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9885,12 +9851,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat&#39;s balance. Otherwise, they will be credited to the bot&#39;s balance.</td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat&#39;s balance. Otherwise, they will be credited to the bot&#39;s balance.
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -9974,12 +9938,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -10035,12 +9997,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -10132,12 +10092,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -10237,12 +10195,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -10326,12 +10282,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Polls can&#39;t be sent to channel direct messages chats.</td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Polls can&#39;t be sent to channel direct messages chats.
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -10483,12 +10437,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * A JSON-serialized object for the checklist to send
      */
@@ -10536,12 +10488,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -10651,12 +10601,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the action will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot or supergroup in the format <code>@username</code>. Channel chats and channel direct messages chats aren&#39;t supported.</td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot or supergroup in the format <code>@username</code>. Channel chats and channel direct messages chats aren&#39;t supported.
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread or topic of a forum; for supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -10682,12 +10630,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
      */
@@ -10837,12 +10783,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -10874,12 +10818,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -10907,12 +10849,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -10948,12 +10888,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -11045,12 +10983,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -11078,12 +11014,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -11111,12 +11045,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target sender chat
      */
@@ -11140,12 +11072,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target sender chat
      */
@@ -11169,12 +11099,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * A JSON-serialized object for new default chat permissions
      */
@@ -11204,12 +11132,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -11229,12 +11155,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Invite link name; 0-32 characters
      */
@@ -11270,12 +11194,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * The invite link to edit
      */
@@ -11315,12 +11237,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target channel chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target channel chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Invite link name; 0-32 characters
      */
@@ -11352,12 +11272,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * The invite link to edit
      */
@@ -11385,12 +11303,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier of the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier of the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * The invite link to revoke
      */
@@ -11414,12 +11330,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -11443,12 +11357,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -11526,12 +11438,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * New chat photo, uploaded using multipart/form-data
      */
@@ -11555,12 +11465,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -11580,12 +11488,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * New chat title, 1-128 characters
      */
@@ -11609,12 +11515,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * New chat description, 0-255 characters
      */
@@ -11642,12 +11546,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be pinned
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of a message to pin
      */
@@ -11679,12 +11581,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be unpinned
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the message to unpin. Required if <em>business_connection_id</em> is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
      */
@@ -11708,12 +11608,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -11733,12 +11631,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>. Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.</td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>. Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -11758,12 +11654,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -11783,12 +11677,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Pass <em>True</em> to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.
      */
@@ -11812,12 +11704,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -11837,12 +11727,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -11893,12 +11781,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Name of the sticker set to be set as the group sticker set
      */
@@ -11922,12 +11808,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -11953,12 +11837,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Topic name, 1-128 characters
      */
@@ -11990,12 +11872,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread of the forum topic
      */
@@ -12027,12 +11907,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread of the forum topic
      */
@@ -12056,12 +11934,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread of the forum topic
      */
@@ -12085,12 +11961,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread of the forum topic
      */
@@ -12114,12 +11988,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread of the forum topic
      */
@@ -12143,12 +12015,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * New topic name, 1-128 characters
      */
@@ -12172,12 +12042,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -12197,12 +12065,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -12222,12 +12088,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -12247,12 +12111,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -12272,12 +12134,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -12365,12 +12225,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the chat or username of the channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the chat or username of the channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier of the target user
      */
@@ -13004,12 +12862,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Channel direct messages chats can&#39;t be verified.</td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Channel direct messages chats can&#39;t be verified.
+     */
+    chat_id: number | string;
     /**
      * Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.
      */
@@ -13056,12 +12912,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
 </tbody>
 </table>
   }): never;
@@ -13481,12 +13335,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Pass <em>True</em> to exclude gifts that aren&#39;t saved to the chat&#39;s profile page. Always <em>True</em>, unless the bot has the <em>can_post_messages</em> administrator right in the channel.
      */
@@ -14180,12 +14032,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message
      */
@@ -14260,12 +14110,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the original message with the poll
      */
@@ -14293,12 +14141,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the user who received the message
      */
@@ -14346,12 +14192,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the user who received the message
      */
@@ -14387,12 +14231,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the user who received the message
      */
@@ -14436,12 +14278,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the user who received the message
      */
@@ -14535,12 +14375,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the message to delete
      */
@@ -14564,12 +14402,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.
      */
@@ -14593,12 +14429,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the user who received the message
      */
@@ -14626,12 +14460,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the target message
      */
@@ -14663,12 +14495,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Identifier of the user whose reactions will be removed, if the reactions were added by a user
      */
@@ -14882,12 +14712,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -15748,12 +15576,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent. Bot can send rich messages on behalf of a business account only if the corresponding user can send rich messages.
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -19668,12 +19494,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
@@ -21326,12 +21150,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
     business_connection_id?: string;
-<tr>
-<td>chat_id</td>
-<td>Integer or String</td>
-<td>Yes</td>
-<td>Unique identifier for the target chat or username of the target bot in the format <code>@username</code>. Games can&#39;t be sent to channel direct messages chats and channel chats.</td>
-</tr>
+    /**
+     * Unique identifier for the target chat or username of the target bot in the format <code>@username</code>. Games can&#39;t be sent to channel direct messages chats and channel chats.
+     */
+    chat_id: number | string;
     /**
      * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
      */
