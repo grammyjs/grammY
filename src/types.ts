@@ -236,12 +236,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Upload your public key certificate so that the root certificate in use can be checked. See our <a href="/bots/self-signed">self-signed guide</a> for details.</td>
 </tr>
-<tr>
-<td>ip_address</td>
-<td>String</td>
-<td>Optional</td>
-<td>The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS</td>
-</tr>
+    /**
+     * The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS
+     */
+    ip_address?: string;
     /**
      * The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to <em>40</em>. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.
      */
@@ -258,12 +256,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to drop all pending updates</td>
 </tr>
-<tr>
-<td>secret_token</td>
-<td>String</td>
-<td>Optional</td>
-<td>A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed. The header is useful to ensure that the request comes from a webhook set by you.</td>
-</tr>
+    /**
+     * A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed. The header is useful to ensure that the request comes from a webhook set by you.
+     */
+    secret_token?: string;
 </tbody>
 </table>
   }): never;
@@ -8578,12 +8574,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -8602,24 +8596,20 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>text</td>
 <td>String</td>
 <td>Yes</td>
 <td>Text of the message to be sent, 1-4096 characters after entities parsing</td>
 </tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -8650,12 +8640,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -8877,12 +8865,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Protects the contents of the forwarded message from forwarding and saving</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; only available when forwarding to private chats</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; only available when forwarding to private chats
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -8997,18 +8983,14 @@ export interface ApiMethods {
      * New start timestamp for the copied video in the message
      */
     video_start_timestamp?: number;
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept.</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the new caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept.
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the new caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9039,12 +9021,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; only available when copying to private chats</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; only available when copying to private chats
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -9145,12 +9125,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9169,30 +9147,24 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>photo</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
 <td>Yes</td>
 <td>Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Photo caption (may also be used when resending photos by <em>file_id</em>), 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Photo caption (may also be used when resending photos by <em>file_id</em>), 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9229,12 +9201,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -9272,12 +9242,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9296,12 +9264,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>live_photo</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -9314,18 +9280,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Video caption (may also be used when resending videos by <em>file_id</em>), 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Video caption (may also be used when resending videos by <em>file_id</em>), 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9362,12 +9324,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -9407,12 +9367,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9431,30 +9389,24 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>audio</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
 <td>Yes</td>
 <td>Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Audio caption, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Audio caption, 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9465,18 +9417,14 @@ export interface ApiMethods {
      * Duration of the audio in seconds
      */
     duration?: number;
-<tr>
-<td>performer</td>
-<td>String</td>
-<td>Optional</td>
-<td>Performer</td>
-</tr>
-<tr>
-<td>title</td>
-<td>String</td>
-<td>Optional</td>
-<td>Track name</td>
-</tr>
+    /**
+     * Performer
+     */
+    performer?: string;
+    /**
+     * Track name
+     */
+    title?: string;
 <tr>
 <td>thumbnail</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -9501,12 +9449,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -9544,12 +9490,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9568,12 +9512,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>document</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -9586,18 +9528,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Document caption (may also be used when resending documents by <em>file_id</em>), 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Document caption (may also be used when resending documents by <em>file_id</em>), 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9628,12 +9566,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -9671,12 +9607,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9695,12 +9629,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>video</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -9735,18 +9667,14 @@ export interface ApiMethods {
      * Start timestamp for the video in the message
      */
     start_timestamp?: number;
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Video caption (may also be used when resending videos by <em>file_id</em>), 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Video caption (may also be used when resending videos by <em>file_id</em>), 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9789,12 +9717,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -9832,12 +9758,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -9856,12 +9780,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>animation</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -9886,18 +9808,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Animation caption (may also be used when resending animation by <em>file_id</em>), 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Animation caption (may also be used when resending animation by <em>file_id</em>), 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -9934,12 +9852,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -9977,12 +9893,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10001,30 +9915,24 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>voice</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
 <td>Yes</td>
 <td>Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Voice message caption, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Voice message caption, 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -10053,12 +9961,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -10096,12 +10002,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10120,12 +10024,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>video_note</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -10164,12 +10066,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -10207,12 +10107,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10237,24 +10135,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized Array describing the media to be sent; up to 10 items</td>
 </tr>
-<tr>
-<td>payload</td>
-<td>String</td>
-<td>Optional</td>
-<td>Bot-defined paid media payload, 0-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Media caption, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the media caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Bot-defined paid media payload, 0-128 bytes. This will not be displayed to the user, use it for your internal processes.
+     */
+    payload?: string;
+    /**
+     * Media caption, 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the media caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -10322,12 +10214,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10366,12 +10256,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>reply_parameters</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
@@ -10397,12 +10285,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10421,12 +10307,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -10475,12 +10359,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -10518,12 +10400,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10542,12 +10422,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -10572,30 +10450,22 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Address of the venue</td>
 </tr>
-<tr>
-<td>foursquare_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Foursquare identifier of the venue</td>
-</tr>
-<tr>
-<td>foursquare_type</td>
-<td>String</td>
-<td>Optional</td>
-<td>Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)</td>
-</tr>
-<tr>
-<td>google_place_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Google Places identifier of the venue</td>
-</tr>
-<tr>
-<td>google_place_type</td>
-<td>String</td>
-<td>Optional</td>
-<td>Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)</td>
-</tr>
+    /**
+     * Foursquare identifier of the venue
+     */
+    foursquare_id?: string;
+    /**
+     * Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+     */
+    foursquare_type?: string;
+    /**
+     * Google Places identifier of the venue
+     */
+    google_place_id?: string;
+    /**
+     * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
+     */
+    google_place_type?: string;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -10614,12 +10484,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -10657,12 +10525,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10681,12 +10547,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>phone_number</td>
 <td>String</td>
@@ -10699,18 +10563,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Contact&#39;s first name</td>
 </tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td>Optional</td>
-<td>Contact&#39;s last name</td>
-</tr>
-<tr>
-<td>vcard</td>
-<td>String</td>
-<td>Optional</td>
-<td>Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes</td>
-</tr>
+    /**
+     * Contact&#39;s last name
+     */
+    last_name?: string;
+    /**
+     * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
+     */
+    vcard?: string;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -10729,12 +10589,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -10772,12 +10630,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -10794,12 +10650,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Poll question, 1-300 characters</td>
 </tr>
-<tr>
-<td>question_parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the question. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.</td>
-</tr>
+    /**
+     * Mode for parsing entities in the question. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
+     */
+    question_parse_mode?: string;
 <tr>
 <td>question_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -10818,12 +10672,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td><em>True</em>, if the poll needs to be anonymous, defaults to <em>True</em></td>
 </tr>
-<tr>
-<td>type</td>
-<td>String</td>
-<td>Optional</td>
-<td>Poll type, “quiz” or “regular”, defaults to “regular”</td>
-</tr>
+    /**
+     * Poll type, “quiz” or “regular”, defaults to “regular”
+     */
+    type?: string;
 <tr>
 <td>allows_multiple_answers</td>
 <td>Boolean</td>
@@ -10872,18 +10724,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of monotonically increasing 0-based identifiers of the correct answer options, required for polls in quiz mode</td>
 </tr>
-<tr>
-<td>explanation</td>
-<td>String</td>
-<td>Optional</td>
-<td>Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing</td>
-</tr>
-<tr>
-<td>explanation_parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the explanation. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
+     */
+    explanation?: string;
+    /**
+     * Mode for parsing entities in the explanation. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    explanation_parse_mode?: string;
 <tr>
 <td>explanation_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -10910,18 +10758,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> if the poll needs to be immediately closed. This can be useful for poll preview.</td>
 </tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Optional</td>
-<td>Description of the poll to be sent, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>description_parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the poll description. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Description of the poll to be sent, 0-1024 characters after entities parsing
+     */
+    description?: string;
+    /**
+     * Mode for parsing entities in the poll description. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    description_parse_mode?: string;
 <tr>
 <td>description_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -10952,12 +10796,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>reply_parameters</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
@@ -11019,12 +10861,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Protects the contents of the sent message from forwarding and saving</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message
+     */
+    message_effect_id?: string;
 <tr>
 <td>reply_parameters</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
@@ -11056,12 +10896,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11076,12 +10914,10 @@ export interface ApiMethods {
      * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
      */
     direct_messages_topic_id?: number;
-<tr>
-<td>emoji</td>
-<td>String</td>
-<td>Optional</td>
-<td>Emoji on which the dice throw animation is based. Currently, must be one of “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, or “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Dice can have values 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, values 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, and values 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Defaults to “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”.</td>
-</tr>
+    /**
+     * Emoji on which the dice throw animation is based. Currently, must be one of “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, or “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Dice can have values 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />”, values 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />”, and values 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />”. Defaults to “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”.
+     */
+    emoji?: string;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -11100,12 +10936,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -11155,18 +10989,14 @@ export interface ApiMethods {
      * Unique identifier of the message draft; must be non-zero. Changes to drafts with the same identifier are animated.
      */
     draft_id: number;
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Optional</td>
-<td>Text of the message to be sent, 0-4096 characters after entities parsing. Pass an empty text to show a “Thinking…” placeholder.</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Text of the message to be sent, 0-4096 characters after entities parsing. Pass an empty text to show a “Thinking…” placeholder.
+     */
+    text?: string;
+    /**
+     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -11195,12 +11025,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the action will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the action will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -11341,12 +11169,10 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-<tr>
-<td>emoji_status_custom_emoji_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Custom emoji identifier of the emoji status to set. Pass an empty string to remove the status.</td>
-</tr>
+    /**
+     * Custom emoji identifier of the emoji status to set. Pass an empty string to remove the status.
+     */
+    emoji_status_custom_emoji_id?: string;
     /**
      * Expiration date of the emoji status, if any
      */
@@ -11692,12 +11518,10 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-<tr>
-<td>tag</td>
-<td>String</td>
-<td>Optional</td>
-<td>New tag for the member; 0-16 characters, emoji are not allowed</td>
-</tr>
+    /**
+     * New tag for the member; 0-16 characters, emoji are not allowed
+     */
+    tag?: string;
 </tbody>
 </table>
   }): never;
@@ -11845,12 +11669,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Optional</td>
-<td>Invite link name; 0-32 characters</td>
-</tr>
+    /**
+     * Invite link name; 0-32 characters
+     */
+    name?: string;
     /**
      * Point in time (Unix timestamp) when the link will expire
      */
@@ -11896,12 +11718,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>The invite link to edit</td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Optional</td>
-<td>Invite link name; 0-32 characters</td>
-</tr>
+    /**
+     * Invite link name; 0-32 characters
+     */
+    name?: string;
     /**
      * Point in time (Unix timestamp) when the link will expire
      */
@@ -11941,12 +11761,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target channel chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Optional</td>
-<td>Invite link name; 0-32 characters</td>
-</tr>
+    /**
+     * Invite link name; 0-32 characters
+     */
+    name?: string;
     /**
      * The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
      */
@@ -11986,12 +11804,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>The invite link to edit</td>
 </tr>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Optional</td>
-<td>Invite link name; 0-32 characters</td>
-</tr>
+    /**
+     * Invite link name; 0-32 characters
+     */
+    name?: string;
 </tbody>
 </table>
   }): never;
@@ -12255,12 +12071,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Optional</td>
-<td>New chat description, 0-255 characters</td>
-</tr>
+    /**
+     * New chat description, 0-255 characters
+     */
+    description?: string;
 </tbody>
 </table>
   }): never;
@@ -12280,12 +12094,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be pinned</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be pinned
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -12321,12 +12133,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be unpinned</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be unpinned
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -12621,12 +12431,10 @@ export interface ApiMethods {
      * Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F).
      */
     icon_color?: number;
-<tr>
-<td>icon_custom_emoji_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers.</td>
-</tr>
+    /**
+     * Unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers.
+     */
+    icon_custom_emoji_id?: string;
 </tbody>
 </table>
   }): never;
@@ -12656,18 +12464,14 @@ export interface ApiMethods {
      * Unique identifier for the target message thread of the forum topic
      */
     message_thread_id: number;
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Optional</td>
-<td>New topic name, 0-128 characters. If not specified or empty, the current name of the topic will be kept.</td>
-</tr>
-<tr>
-<td>icon_custom_emoji_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>New unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept.</td>
-</tr>
+    /**
+     * New topic name, 0-128 characters. If not specified or empty, the current name of the topic will be kept.
+     */
+    name?: string;
+    /**
+     * New unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept.
+     */
+    icon_custom_emoji_id?: string;
 </tbody>
 </table>
   }): never;
@@ -12967,24 +12771,20 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the query to be answered</td>
 </tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Optional</td>
-<td>Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters.</td>
-</tr>
+    /**
+     * Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters.
+     */
+    text?: string;
 <tr>
 <td>show_alert</td>
 <td>Boolean</td>
 <td>Optional</td>
 <td>If <em>True</em>, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to <em>False</em>.</td>
 </tr>
-<tr>
-<td>url</td>
-<td>String</td>
-<td>Optional</td>
-<td>URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton"><em>callback_game</em></a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.</td>
-</tr>
+    /**
+     * URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton"><em>callback_game</em></a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
+     */
+    url?: string;
     /**
      * The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
      */
@@ -13209,12 +13009,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
 </tr>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.</td>
-</tr>
+    /**
+     * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13240,12 +13038,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
 </tr>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.</td>
-</tr>
+    /**
+     * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13271,12 +13067,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized object, describing scope of users. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.</td>
 </tr>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code or an empty string</td>
-</tr>
+    /**
+     * A two-letter ISO 639-1 language code or an empty string
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13296,18 +13090,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>name</td>
-<td>String</td>
-<td>Optional</td>
-<td>New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.</td>
-</tr>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name.</td>
-</tr>
+    /**
+     * New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.
+     */
+    name?: string;
+    /**
+     * A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name.
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13327,12 +13117,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code or an empty string</td>
-</tr>
+    /**
+     * A two-letter ISO 639-1 language code or an empty string
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13352,18 +13140,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>description</td>
-<td>String</td>
-<td>Optional</td>
-<td>New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.</td>
-</tr>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.</td>
-</tr>
+    /**
+     * New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.
+     */
+    description?: string;
+    /**
+     * A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13383,12 +13167,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code or an empty string</td>
-</tr>
+    /**
+     * A two-letter ISO 639-1 language code or an empty string
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13408,18 +13190,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>short_description</td>
-<td>String</td>
-<td>Optional</td>
-<td>New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.</td>
-</tr>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.</td>
-</tr>
+    /**
+     * New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.
+     */
+    short_description?: string;
+    /**
+     * A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13439,12 +13217,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>language_code</td>
-<td>String</td>
-<td>Optional</td>
-<td>A two-letter ISO 639-1 language code or an empty string</td>
-</tr>
+    /**
+     * A two-letter ISO 639-1 language code or an empty string
+     */
+    language_code?: string;
 </tbody>
 </table>
   }): never;
@@ -13631,18 +13407,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to pay for the gift upgrade from the bot&#39;s balance, thereby making the upgrade free for the receiver</td>
 </tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Optional</td>
-<td>Text that will be shown along with the gift; 0-128 characters</td>
-</tr>
-<tr>
-<td>text_parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.</td>
-</tr>
+    /**
+     * Text that will be shown along with the gift; 0-128 characters
+     */
+    text?: string;
+    /**
+     * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+     */
+    text_parse_mode?: string;
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -13680,18 +13452,14 @@ export interface ApiMethods {
      * Number of Telegram Stars to pay for the Telegram Premium subscription; must be 1000 for 3 months, 1500 for 6 months, and 2500 for 12 months
      */
     star_count: number;
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Optional</td>
-<td>Text that will be shown along with the service message about the subscription; 0-128 characters</td>
-</tr>
-<tr>
-<td>text_parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.</td>
-</tr>
+    /**
+     * Text that will be shown along with the service message about the subscription; 0-128 characters
+     */
+    text?: string;
+    /**
+     * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+     */
+    text_parse_mode?: string;
 <tr>
 <td>text_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -13721,12 +13489,10 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-<tr>
-<td>custom_description</td>
-<td>String</td>
-<td>Optional</td>
-<td>Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.</td>
-</tr>
+    /**
+     * Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.
+     */
+    custom_description?: string;
 </tbody>
 </table>
   }): never;
@@ -13752,12 +13518,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Channel direct messages chats can&#39;t be verified.</td>
 </tr>
-<tr>
-<td>custom_description</td>
-<td>String</td>
-<td>Optional</td>
-<td>Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.</td>
-</tr>
+    /**
+     * Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.
+     */
+    custom_description?: string;
 </tbody>
 </table>
   }): never;
@@ -13901,12 +13665,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>The new value of the first name for the business account; 1-64 characters</td>
 </tr>
-<tr>
-<td>last_name</td>
-<td>String</td>
-<td>Optional</td>
-<td>The new value of the last name for the business account; 0-64 characters</td>
-</tr>
+    /**
+     * The new value of the last name for the business account; 0-64 characters
+     */
+    last_name?: string;
 </tbody>
 </table>
   }): never;
@@ -13932,12 +13694,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-<tr>
-<td>username</td>
-<td>String</td>
-<td>Optional</td>
-<td>The new value of the username for the business account; 0-32 characters</td>
-</tr>
+    /**
+     * The new value of the username for the business account; 0-32 characters
+     */
+    username?: string;
 </tbody>
 </table>
   }): never;
@@ -13963,12 +13723,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the business connection</td>
 </tr>
-<tr>
-<td>bio</td>
-<td>String</td>
-<td>Optional</td>
-<td>The new value of the bio for the business account; 0-140 characters</td>
-</tr>
+    /**
+     * The new value of the bio for the business account; 0-140 characters
+     */
+    bio?: string;
 </tbody>
 </table>
   }): never;
@@ -14201,12 +13959,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
 </tr>
-<tr>
-<td>offset</td>
-<td>String</td>
-<td>Optional</td>
-<td>Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results</td>
-</tr>
+    /**
+     * Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results
+     */
+    offset?: string;
     /**
      * The maximum number of gifts to be returned; 1-100. Defaults to 100.
      */
@@ -14270,12 +14026,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
 </tr>
-<tr>
-<td>offset</td>
-<td>String</td>
-<td>Optional</td>
-<td>Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results</td>
-</tr>
+    /**
+     * Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results
+     */
+    offset?: string;
     /**
      * The maximum number of gifts to be returned; 1-100. Defaults to 100.
      */
@@ -14353,12 +14107,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to sort results by gift price instead of send date. Sorting is applied before pagination.</td>
 </tr>
-<tr>
-<td>offset</td>
-<td>String</td>
-<td>Optional</td>
-<td>Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results</td>
-</tr>
+    /**
+     * Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results
+     */
+    offset?: string;
     /**
      * The maximum number of gifts to be returned; 1-100. Defaults to 100.
      */
@@ -14509,18 +14261,14 @@ export interface ApiMethods {
      * Period after which the story is moved to the archive, in seconds; must be one of <code>6 * 3600</code>, <code>12 * 3600</code>, <code>86400</code>, or <code>2 * 86400</code>
      */
     active_period: number;
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Caption of the story, 0-2048 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Caption of the story, 0-2048 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -14629,18 +14377,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Content of the story</td>
 </tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>Caption of the story, 0-2048 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Caption of the story, 0-2048 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -14819,12 +14563,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message to be edited was sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -14835,24 +14577,18 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
-<tr>
-<td>text</td>
-<td>String</td>
-<td>Optional</td>
-<td>New text of the message, 1-4096 characters after entity parsing; required if <em>rich_message</em> isn&#39;t specified</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
+    /**
+     * New text of the message, 1-4096 characters after entity parsing; required if <em>rich_message</em> isn&#39;t specified
+     */
+    text?: string;
+    /**
+     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -14896,12 +14632,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message to be edited was sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -14912,24 +14646,18 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>New caption of the message, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
+    /**
+     * New caption of the message, 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -14967,12 +14695,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message to be edited was sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -14983,12 +14709,10 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
 <tr>
 <td>media</td>
 <td><a href="#inputmedia">InputMedia</a></td>
@@ -15020,12 +14744,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message to be edited was sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -15036,12 +14758,10 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
 <tr>
 <td>latitude</td>
 <td>Float</td>
@@ -15097,12 +14817,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message to be edited was sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -15113,12 +14831,10 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message with live location to stop.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -15191,12 +14907,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message to be edited was sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -15207,12 +14921,10 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -15238,12 +14950,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message to be edited was sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message to be edited was sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -15299,12 +15009,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>New text of the message, 1-4096 characters after entity parsing</td>
 </tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -15401,18 +15109,14 @@ export interface ApiMethods {
      * Identifier of the ephemeral message to edit
      */
     ephemeral_message_id: number;
-<tr>
-<td>caption</td>
-<td>String</td>
-<td>Optional</td>
-<td>New caption of the message, 0-1024 characters after entities parsing</td>
-</tr>
-<tr>
-<td>parse_mode</td>
-<td>String</td>
-<td>Optional</td>
-<td>Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.</td>
-</tr>
+    /**
+     * New caption of the message, 0-1024 characters after entities parsing
+     */
+    caption?: string;
+    /**
+     * Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     */
+    parse_mode?: string;
 <tr>
 <td>caption_entities</td>
 <td>Array of <a href="#messageentity">MessageEntity</a></td>
@@ -15522,12 +15226,10 @@ export interface ApiMethods {
      * Identifier of a suggested post message to decline
      */
     message_id: number;
-<tr>
-<td>comment</td>
-<td>String</td>
-<td>Optional</td>
-<td>Comment for the creator of the suggested post; 0-128 characters</td>
-</tr>
+    /**
+     * Comment for the creator of the suggested post; 0-128 characters
+     */
+    comment?: string;
 </tbody>
 </table>
   }): never;
@@ -15892,12 +15594,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -15916,24 +15616,20 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
-<tr>
-<td>callback_query_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, identifier of the callback query which triggered the message if any</td>
-</tr>
+    /**
+     * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
+     */
+    callback_query_id?: string;
 <tr>
 <td>sticker</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
 <td>Yes</td>
 <td>Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Video and animated stickers can&#39;t be sent via an HTTP URL.</td>
 </tr>
-<tr>
-<td>emoji</td>
-<td>String</td>
-<td>Optional</td>
-<td>Emoji associated with the sticker; only for just uploaded stickers</td>
-</tr>
+    /**
+     * Emoji associated with the sticker; only for just uploaded stickers
+     */
+    emoji?: string;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -15952,12 +15648,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -16102,12 +15796,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized list of 1-50 initial stickers to be added to the sticker set</td>
 </tr>
-<tr>
-<td>sticker_type</td>
-<td>String</td>
-<td>Optional</td>
-<td>Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.</td>
-</tr>
+    /**
+     * Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.
+     */
+    sticker_type?: string;
 <tr>
 <td>needs_repainting</td>
 <td>Boolean</td>
@@ -16434,12 +16126,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Sticker set name</td>
 </tr>
-<tr>
-<td>custom_emoji_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail</td>
-</tr>
+    /**
+     * Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail
+     */
+    custom_emoji_id?: string;
 </tbody>
 </table>
   }): never;
@@ -16840,12 +16530,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent. Bot can send rich messages on behalf of a business account only if the corresponding user can send rich messages.</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent. Bot can send rich messages on behalf of a business account only if the corresponding user can send rich messages.
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -16884,12 +16572,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -19150,12 +18836,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query.</td>
 </tr>
-<tr>
-<td>next_offset</td>
-<td>String</td>
-<td>Optional</td>
-<td>Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don&#39;t support pagination. Offset length can&#39;t exceed 64 bytes.</td>
-</tr>
+    /**
+     * Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don&#39;t support pagination. Offset length can&#39;t exceed 64 bytes.
+     */
+    next_offset?: string;
 <tr>
 <td>button</td>
 <td><a href="#inlinequeryresultsbutton">InlineQueryResultsButton</a></td>
@@ -20826,12 +20510,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
 </tr>
-<tr>
-<td>provider_token</td>
-<td>String</td>
-<td>Optional</td>
-<td>Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    provider_token?: string;
 <tr>
 <td>currency</td>
 <td>String</td>
@@ -20854,24 +20536,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized Array of suggested amounts of tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.</td>
 </tr>
-<tr>
-<td>start_parameter</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique deep-linking parameter. If left empty, <strong>forwarded copies</strong> of the sent message will have a <em>Pay</em> button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a <em>URL</em> button with a deep link to the bot (instead of a <em>Pay</em> button), with the value used as the start parameter.</td>
-</tr>
-<tr>
-<td>provider_data</td>
-<td>String</td>
-<td>Optional</td>
-<td>JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.</td>
-</tr>
-<tr>
-<td>photo_url</td>
-<td>String</td>
-<td>Optional</td>
-<td>URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.</td>
-</tr>
+    /**
+     * Unique deep-linking parameter. If left empty, <strong>forwarded copies</strong> of the sent message will have a <em>Pay</em> button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a <em>URL</em> button with a deep link to the bot (instead of a <em>Pay</em> button), with the value used as the start parameter.
+     */
+    start_parameter?: string;
+    /**
+     * JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.
+     */
+    provider_data?: string;
+    /**
+     * URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.
+     */
+    photo_url?: string;
     /**
      * Photo size in bytes
      */
@@ -20944,12 +20620,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>suggested_post_parameters</td>
 <td><a href="#suggestedpostparameters">SuggestedPostParameters</a></td>
@@ -20987,12 +20661,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the link will be created. For payments in <a href="https://t.me/BotNews/90">Telegram Stars</a> only.</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the link will be created. For payments in <a href="https://t.me/BotNews/90">Telegram Stars</a> only.
+     */
+    business_connection_id?: string;
 <tr>
 <td>title</td>
 <td>String</td>
@@ -21011,12 +20683,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use it for your internal processes.</td>
 </tr>
-<tr>
-<td>provider_token</td>
-<td>String</td>
-<td>Optional</td>
-<td>Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * Payment provider token, obtained via <a href="https://t.me/botfather">@BotFather</a>. Pass an empty string for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    provider_token?: string;
 <tr>
 <td>currency</td>
 <td>String</td>
@@ -21043,18 +20713,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized Array of suggested amounts of tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <em>max_tip_amount</em>.</td>
 </tr>
-<tr>
-<td>provider_data</td>
-<td>String</td>
-<td>Optional</td>
-<td>JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.</td>
-</tr>
-<tr>
-<td>photo_url</td>
-<td>String</td>
-<td>Optional</td>
-<td>URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
-</tr>
+    /**
+     * JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.
+     */
+    provider_data?: string;
+    /**
+     * URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.
+     */
+    photo_url?: string;
     /**
      * Photo size in bytes
      */
@@ -21146,12 +20812,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>ok</em> is <em>True</em>. A JSON-serialized Array of available shipping options.</td>
 </tr>
-<tr>
-<td>error_message</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.</td>
-</tr>
+    /**
+     * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
+     */
+    error_message?: string;
 </tbody>
 </table>
   }): never;
@@ -21183,12 +20847,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Specify <em>True</em> if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use <em>False</em> if there are any problems.</td>
 </tr>
-<tr>
-<td>error_message</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.</td>
-</tr>
+    /**
+     * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.
+     */
+    error_message?: string;
 </tbody>
 </table>
   }): never;
@@ -22552,12 +22214,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>business_connection_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the business connection on behalf of which the message will be sent</td>
-</tr>
+    /**
+     * Unique identifier of the business connection on behalf of which the message will be sent
+     */
+    business_connection_id?: string;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -22592,12 +22252,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to allow up to 1000 messages per second, ignoring <a href="https://core.telegram.org/bots/faq#how-can-i-message-all-of-my-bot-39s-subscribers-at-once">broadcasting limits</a> for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_effect_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Unique identifier of the message effect to be added to the message; for private chats only</td>
-</tr>
+    /**
+     * Unique identifier of the message effect to be added to the message; for private chats only
+     */
+    message_effect_id?: string;
 <tr>
 <td>reply_parameters</td>
 <td><a href="#replyparameters">ReplyParameters</a></td>
@@ -22701,12 +22359,10 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the sent message.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
 </tbody>
 </table>
   }): never;
@@ -22740,12 +22396,10 @@ export interface ApiMethods {
      * Required if <em>inline_message_id</em> is not specified. Identifier of the sent message.
      */
     message_id?: number;
-<tr>
-<td>inline_message_id</td>
-<td>String</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
+     */
+    inline_message_id?: string;
 </tbody>
 </table>
   }): never;
