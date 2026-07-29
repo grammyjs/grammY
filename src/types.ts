@@ -46,7 +46,7 @@ export interface ApiSuccess<T> {
 }
 // === GETTING UPDATES
 /**
- * This <a href="#available-types">object</a> represents an incoming update.
+ * This <a href="https://core.telegram.org/bots/api#available-types">object</a> represents an incoming update.
  *
  * At most **one** of the optional fields can be present in any given update.
  *
@@ -102,11 +102,11 @@ export interface Update {
    */
   message_reaction_count?: MessageReactionCountUpdated;
   /**
-   * New incoming <a href="#inline-mode">inline</a> query
+   * New incoming <a href="https://core.telegram.org/bots/api#inline-mode">inline</a> query
    */
   inline_query?: InlineQuery;
   /**
-   * The result of an <a href="#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.
+   * The result of an <a href="https://core.telegram.org/bots/api#inline-mode">inline</a> query that was chosen by a user and sent to their chat partner. Please see our documentation on the <a href="https://core.telegram.org/bots/inline#collecting-feedback">feedback collecting</a> for details on how to enable these updates for your bot.
    */
   chosen_inline_result?: ChosenInlineResult;
   /**
@@ -206,10 +206,10 @@ export interface ApiMethods {
    * > **Notes**
    * >
    * > 1. You will not be able to receive updates using <a href="#getupdates">getUpdates</a> for as long as an outgoing webhook is set up.
-   * > 2. To use a self-signed certificate, you need to upload your <a href="/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
+   * > 2. To use a self-signed certificate, you need to upload your <a href="https://core.telegram.org/bots/self-signed">public key certificate</a> using _certificate_ parameter. Please upload as InputFile, sending a String will not work.
    * > 3. Ports currently supported _for webhooks_: **443, 80, 88, 8443**.
    *
-   * > If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.
+   * > If you&#39;re having any trouble setting up webhooks, please check out this <a href="https://core.telegram.org/bots/webhooks">amazing guide to webhooks</a>.
    *
    * @see {@link https://core.telegram.org/bots/api#setwebhook}
    */
@@ -219,7 +219,7 @@ export interface ApiMethods {
      */
     url: string;
     /**
-     * Upload your public key certificate so that the root certificate in use can be checked. See our <a href="/bots/self-signed">self-signed guide</a> for details.
+     * Upload your public key certificate so that the root certificate in use can be checked. See our <a href="https://core.telegram.org/bots/self-signed">self-signed guide</a> for details.
      */
     certificate?: InputFile;
     /**
@@ -354,7 +354,7 @@ export interface User {
    */
   can_join_groups?: boolean;
   /**
-   * `true`, if <a href="/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
+   * `true`, if <a href="https://core.telegram.org/bots/features#privacy-mode">privacy mode</a> is disabled for the bot. Returned only in <a href="#getme">getMe</a>.
    */
   can_read_all_group_messages?: boolean;
   /**
@@ -468,7 +468,7 @@ export interface ChatFullInfo {
    */
   is_direct_messages?: true;
   /**
-   * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See <a href="#accent-colors">accent colors</a> for more details.
+   * Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See <a href="https://core.telegram.org/bots/api#accent-colors">accent colors</a> for more details.
    */
   accent_color_id: number;
   /**
@@ -516,7 +516,7 @@ export interface ChatFullInfo {
    */
   background_custom_emoji_id?: string;
   /**
-   * Identifier of the accent color for the chat&#39;s profile background. See <a href="#profile-accent-colors">profile accent colors</a> for more details.
+   * Identifier of the accent color for the chat&#39;s profile background. See <a href="https://core.telegram.org/bots/api#profile-accent-colors">profile accent colors</a> for more details.
    */
   profile_accent_color_id?: number;
   /**
@@ -883,7 +883,7 @@ export interface Message {
    */
   dice?: Dice;
   /**
-   * Message is a game, information about the game. <a href="#games">More about games »</a>
+   * Message is a game, information about the game. <a href="https://core.telegram.org/bots/api#games">More about games »</a>
    */
   game?: Game;
   /**
@@ -955,15 +955,15 @@ export interface Message {
    */
   pinned_message?: MaybeInaccessibleMessage;
   /**
-   * Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a>
+   * Message is an invoice for a <a href="https://core.telegram.org/bots/api#payments">payment</a>, information about the invoice. <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
    */
   invoice?: Invoice;
   /**
-   * Message is a service message about a successful payment, information about the payment. <a href="#payments">More about payments »</a>
+   * Message is a service message about a successful payment, information about the payment. <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
    */
   successful_payment?: SuccessfulPayment;
   /**
-   * Message is a service message about a refunded payment, information about the payment. <a href="#payments">More about payments »</a>
+   * Message is a service message about a refunded payment, information about the payment. <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
    */
   refunded_payment?: RefundedPayment;
   /**
@@ -987,11 +987,11 @@ export interface Message {
    */
   gift_upgrade_sent?: GiftInfo;
   /**
-   * The domain name of the website on which the user has logged in. <a href="/widgets/login">More about Telegram Login »</a>
+   * The domain name of the website on which the user has logged in. <a href="https://core.telegram.org/widgets/login">More about Telegram Login »</a>
    */
   connected_website?: string;
   /**
-   * Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
+   * Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
    */
   write_access_allowed?: WriteAccessAllowed;
   /**
@@ -1127,7 +1127,7 @@ export interface Message {
    */
   web_app_data?: WebAppData;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message. `login_url` buttons are represented as ordinary `url` buttons.
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message. `login_url` buttons are represented as ordinary `url` buttons.
    */
   reply_markup?: InlineKeyboardMarkup;
 }
@@ -1183,11 +1183,11 @@ export interface MessageEntity {
    */
   type: string;
   /**
-   * Offset in <a href="/api/entities#entity-length">UTF-16 code units</a> to the start of the entity
+   * Offset in <a href="https://core.telegram.org/api/entities#entity-length">UTF-16 code units</a> to the start of the entity
    */
   offset: number;
   /**
-   * Length of the entity in <a href="/api/entities#entity-length">UTF-16 code units</a>
+   * Length of the entity in <a href="https://core.telegram.org/api/entities#entity-length">UTF-16 code units</a>
    */
   length: number;
   /**
@@ -1211,7 +1211,7 @@ export interface MessageEntity {
    */
   unix_time?: number;
   /**
-   * For “date_time” only, the string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.
+   * For “date_time” only, the string that defines the formatting of the date and time. See <a href="https://core.telegram.org/bots/api#date-time-entity-formatting">date-time entity formatting</a> for more details.
    */
   date_time_format?: string;
 }
@@ -1321,7 +1321,7 @@ export interface ExternalReplyInfo {
    */
   dice?: Dice;
   /**
-   * Message is a game, information about the game. <a href="#games">More about games »</a>
+   * Message is a game, information about the game. <a href="https://core.telegram.org/bots/api#games">More about games »</a>
    */
   game?: Game;
   /**
@@ -1333,7 +1333,7 @@ export interface ExternalReplyInfo {
    */
   giveaway_winners?: GiveawayWinners;
   /**
-   * Message is an invoice for a <a href="#payments">payment</a>, information about the invoice. <a href="#payments">More about payments »</a>
+   * Message is an invoice for a <a href="https://core.telegram.org/bots/api#payments">payment</a>, information about the invoice. <a href="https://core.telegram.org/bots/api#payments">More about payments »</a>
    */
   invoice?: Invoice;
   /**
@@ -1376,7 +1376,7 @@ export interface ReplyParameters {
    */
   quote?: string;
   /**
-   * Mode for parsing entities in the quote. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the quote. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   quote_parse_mode?: string;
   /**
@@ -2135,7 +2135,7 @@ export interface InputPollOption {
    */
   text: string;
   /**
-   * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
+   * Mode for parsing entities in the text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
    */
   text_parse_mode?: string;
   /**
@@ -2338,7 +2338,7 @@ export interface InputChecklistTask {
    */
   text: string;
   /**
-   * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -2357,7 +2357,7 @@ export interface InputChecklist {
    */
   title: string;
   /**
-   * Mode for parsing entities in the title. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the title. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -2444,7 +2444,7 @@ export interface Venue {
   google_place_type?: string;
 }
 /**
- * Describes data sent from a <a href="/bots/webapps">Web App</a> to the bot.
+ * Describes data sent from a <a href="https://core.telegram.org/bots/webapps">Web App</a> to the bot.
  *
  * @see {@link https://core.telegram.org/bots/api#webappdata}
  */
@@ -2957,13 +2957,13 @@ export interface ChatShared {
   photo?: PhotoSize[];
 }
 /**
- * This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>.
+ * This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">requestWriteAccess</a>.
  *
  * @see {@link https://core.telegram.org/bots/api#writeaccessallowed}
  */
 export interface WriteAccessAllowed {
   /**
-   * `true`, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
+   * `true`, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
    */
   from_request?: boolean;
   /**
@@ -3406,18 +3406,18 @@ export interface File {
   file_path?: string;
 }
 /**
- * Describes a <a href="/bots/webapps">Web App</a>.
+ * Describes a <a href="https://core.telegram.org/bots/webapps">Web App</a>.
  *
  * @see {@link https://core.telegram.org/bots/api#webappinfo}
  */
 export interface WebAppInfo {
   /**
-   * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
+   * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
    */
   url: string;
 }
 /**
- * This object represents a <a href="/bots/features#keyboards">custom keyboard</a> with reply options (see <a href="/bots/features#keyboards">Introduction to bots</a> for details and examples). Not supported in channels and for messages sent on behalf of a business account.
+ * This object represents a <a href="https://core.telegram.org/bots/features#keyboards">custom keyboard</a> with reply options (see <a href="https://core.telegram.org/bots/features#keyboards">Introduction to bots</a> for details and examples). Not supported in channels and for messages sent on behalf of a business account.
  *
  * @see {@link https://core.telegram.org/bots/api#replykeyboardmarkup}
  */
@@ -3492,12 +3492,12 @@ export interface KeyboardButton {
    */
   request_poll?: KeyboardButtonPollType;
   /**
-   * If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
+   * If specified, the described <a href="https://core.telegram.org/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
    */
   web_app?: WebAppInfo;
 }
 /**
- * This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="/bots/features#chat-and-user-selection">More about requesting users »</a>
+ * This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="https://core.telegram.org/bots/features#chat-and-user-selection">More about requesting users »</a>
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbuttonrequestusers}
  */
@@ -3532,7 +3532,7 @@ export interface KeyboardButtonRequestUsers {
   request_photo?: boolean;
 }
 /**
- * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. <a href="/bots/features#chat-and-user-selection">More about requesting chats »</a>.
+ * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. <a href="https://core.telegram.org/bots/features#chat-and-user-selection">More about requesting chats »</a>.
  *
  * @see {@link https://core.telegram.org/bots/api#keyboardbuttonrequestchat}
  */
@@ -3630,7 +3630,7 @@ export interface ReplyKeyboardRemove {
   selective?: boolean;
 }
 /**
- * This object represents an <a href="/bots/features#inline-keyboards">inline keyboard</a> that appears right next to the message it belongs to.
+ * This object represents an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a> that appears right next to the message it belongs to.
  *
  * @see {@link https://core.telegram.org/bots/api#inlinekeyboardmarkup}
  */
@@ -3667,11 +3667,11 @@ export interface InlineKeyboardButton {
    */
   callback_data?: string;
   /**
-   * Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
+   * Description of the <a href="https://core.telegram.org/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
    */
   web_app?: WebAppInfo;
   /**
-   * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="/widgets/login">Telegram Login Widget</a>.
+   * An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the <a href="https://core.telegram.org/widgets/login">Telegram Login Widget</a>.
    */
   login_url?: LoginUrl;
   /**
@@ -3699,16 +3699,16 @@ export interface InlineKeyboardButton {
    */
   callback_game?: CallbackGame;
   /**
-   * Specify `true`, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.
+   * Specify `true`, to send a <a href="https://core.telegram.org/bots/api#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.
    *
    * **NOTE:** This type of button **must** always be the first button in the first row and can only be used in invoice messages.
    */
   pay?: boolean;
 }
 /**
- * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the <a href="/widgets/login">Telegram Login Widget</a> when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:
+ * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the <a href="https://core.telegram.org/widgets/login">Telegram Login Widget</a> when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:
  *
- * <a href="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c" target="_blank"><img src="/file/811140909/1631/20k1Z53eiyY.23995/c541e89b74253623d9" title="TITLE" alt="TITLE" srcset="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c , 2x" /></a>
+ * <a href="https://core.telegram.org/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c" target="_blank"><img src="/file/811140909/1631/20k1Z53eiyY.23995/c541e89b74253623d9" title="TITLE" alt="TITLE" srcset="/file/811140015/1734/8VZFkwWXalM.97872/6127fa62d8a0bf2b3c , 2x" /></a>
  *
  * Telegram apps support these buttons as of <a href="https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots">version 5.7</a>.
  *
@@ -3718,9 +3718,9 @@ export interface InlineKeyboardButton {
  */
 export interface LoginUrl {
   /**
-   * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.
+   * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="https://core.telegram.org/widgets/login#receiving-authorization-data">Receiving authorization data</a>.
    *
-   * **NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
+   * **NOTE:** You **must** always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="https://core.telegram.org/widgets/login#checking-authorization">Checking authorization</a>.
    */
   url: string;
   /**
@@ -3728,7 +3728,7 @@ export interface LoginUrl {
    */
   forward_text?: string;
   /**
-   * Username of a bot, which will be used for user authorization. See <a href="/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See <a href="/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.
+   * Username of a bot, which will be used for user authorization. See <a href="https://core.telegram.org/widgets/login#setting-up-a-bot">Setting up a bot</a> for more details. If not specified, the current bot&#39;s username will be assumed. The _url_&#39;s domain must be the same as the domain linked with the bot. See <a href="https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot">Linking your domain to the bot</a> for more details.
    */
   bot_username?: string;
   /**
@@ -3775,7 +3775,7 @@ export interface CopyTextButton {
   text: string;
 }
 /**
- * This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.
+ * This object represents an incoming callback query from a callback button in an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field _message_ will be present. If the button was attached to a message sent via the bot (in <a href="https://core.telegram.org/bots/api#inline-mode">inline mode</a>), the field _inline_message_id_ will be present. Exactly one of the fields _data_ or _game_short_name_ will be present.
  * 
  * > **NOTE:** After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
  *
@@ -3799,7 +3799,7 @@ export interface CallbackQuery {
    */
   inline_message_id?: string;
   /**
-   * Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in <a href="#games">games</a>.
+   * Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in <a href="https://core.telegram.org/bots/api#games">games</a>.
    */
   chat_instance: string;
   /**
@@ -3807,12 +3807,12 @@ export interface CallbackQuery {
    */
   data?: string;
   /**
-   * Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game
+   * Short name of a <a href="https://core.telegram.org/bots/api#games">Game</a> to be returned, serves as the unique identifier for the game
    */
   game_short_name?: string;
 }
 /**
- * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a user account.
+ * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="https://core.telegram.org/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a user account.
  * 
  * > **Example:** A <a href="https://t.me/PollBot">poll bot</a> for groups runs in privacy mode (only receives commands, replies to its messages and mentions). There could be two ways to create a new poll:
  * >
@@ -5494,7 +5494,7 @@ export type BotCommandScope =
  | BotCommandScopeChatAdministrators
  | BotCommandScopeChatMember
 /**
- * Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.
+ * Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="https://core.telegram.org/bots/api#determining-list-of-commands">narrower scope</a> are specified for the user.
  *
  * @see {@link https://core.telegram.org/bots/api#botcommandscopedefault}
  */
@@ -5646,7 +5646,7 @@ export interface MenuButtonCommands {
   type: string;
 }
 /**
- * Represents a menu button, which launches a <a href="/bots/webapps">Web App</a>.
+ * Represents a menu button, which launches a <a href="https://core.telegram.org/bots/webapps">Web App</a>.
  *
  * @see {@link https://core.telegram.org/bots/api#menubuttonwebapp}
  */
@@ -5953,7 +5953,7 @@ export interface BusinessMessagesDeleted {
   message_ids: number[];
 }
 /**
- * Describes an inline message sent by a <a href="/bots/webapps">Web App</a> on behalf of a user.
+ * Describes an inline message sent by a <a href="https://core.telegram.org/bots/webapps">Web App</a> on behalf of a user.
  *
  * @see {@link https://core.telegram.org/bots/api#sentwebappmessage}
  */
@@ -6045,11 +6045,11 @@ export interface InputMediaAnimation {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   thumbnail?: string;
   /**
@@ -6057,7 +6057,7 @@ export interface InputMediaAnimation {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the animation caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -6096,11 +6096,11 @@ export interface InputMediaAudio {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   thumbnail?: string;
   /**
@@ -6108,7 +6108,7 @@ export interface InputMediaAudio {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the audio caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -6139,11 +6139,11 @@ export interface InputMediaDocument {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   thumbnail?: string;
   /**
@@ -6151,7 +6151,7 @@ export interface InputMediaDocument {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the document caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -6189,11 +6189,11 @@ export interface InputMediaLivePhoto {
    */
   type: string;
   /**
-   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
    */
   media: string;
   /**
-   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
    */
   photo: string;
   /**
@@ -6201,7 +6201,7 @@ export interface InputMediaLivePhoto {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the live photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the live photo caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -6251,7 +6251,7 @@ export interface InputMediaPhoto {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
@@ -6259,7 +6259,7 @@ export interface InputMediaPhoto {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the photo caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -6286,7 +6286,7 @@ export interface InputMediaSticker {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a .WEBP sticker from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
@@ -6348,15 +6348,15 @@ export interface InputMediaVideo {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   thumbnail?: string;
   /**
-   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   cover?: string;
   /**
@@ -6368,7 +6368,7 @@ export interface InputMediaVideo {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the video caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -6411,7 +6411,7 @@ export interface InputMediaVoiceNote {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass &quot;attach://&lt;file_attach_name&gt;&quot; to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass &quot;attach://&lt;file_attach_name&gt;&quot; to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
@@ -6419,7 +6419,7 @@ export interface InputMediaVoiceNote {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the voice message caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -6461,11 +6461,11 @@ export interface InputPaidMediaLivePhoto {
    */
   type: string;
   /**
-   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   * Video of the live photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
    */
   media: string;
   /**
-   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+   * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
    */
   photo: string;
 }
@@ -6480,7 +6480,7 @@ export interface InputPaidMediaPhoto {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
 }
@@ -6495,15 +6495,15 @@ export interface InputPaidMediaVideo {
    */
   type: string;
   /**
-   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   media: string;
   /**
-   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   thumbnail?: string;
   /**
-   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+   * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   cover?: string;
   /**
@@ -6549,7 +6549,7 @@ export interface InputProfilePhotoStatic {
    */
   type: string;
   /**
-   * The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   photo: string;
 }
@@ -6564,7 +6564,7 @@ export interface InputProfilePhotoAnimated {
    */
   type: string;
   /**
-   * The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * The animated profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   animation: string;
   /**
@@ -6594,7 +6594,7 @@ export interface InputStoryContentPhoto {
    */
   type: string;
   /**
-   * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   photo: string;
 }
@@ -6609,7 +6609,7 @@ export interface InputStoryContentVideo {
    */
   type: string;
   /**
-   * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+   * The video to post as a story. The video must be of the size 720x1280, streamable, encoded with H.265 codec, with key frames added each second in the MPEG4 format, and must not exceed 30 MB. The video can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the video was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   video: string;
   /**
@@ -6763,7 +6763,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -6775,7 +6775,7 @@ export interface ApiMethods {
      */
     text: string;
     /**
-     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the message text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -6811,7 +6811,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -6897,7 +6897,7 @@ export interface ApiMethods {
  * - In case of ambiguity between `italic` and `underline` entities `__` is always greedily treated from left to right as beginning or end of an `underline` entity, so instead of `___italic underline___` use `___italic underline_**__`, adding an empty bold entity as a separator.
  * - A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
- * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ * - See <a href="https://core.telegram.org/bots/api#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  *
  * ##### HTML style
  *
@@ -6941,7 +6941,7 @@ export interface ApiMethods {
  * - Programming language can&#39;t be specified for standalone `code` tags.
  * - A valid emoji must be used as the content of the `tg-emoji` tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the **emoji** field of the custom emoji <a href="#sticker">sticker</a>.
  * - Custom emoji entities can only be used by bots that purchased additional usernames on <a href="https://fragment.com">Fragment</a> or in the messages directly sent by the bot to private, group and supergroup chats if the owner of the bot has a Telegram Premium subscription.
- * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ * - See <a href="https://core.telegram.org/bots/api#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  *
  * ##### Markdown style
  *
@@ -6963,8 +6963,8 @@ export interface ApiMethods {
  *
  * Please note:
  *
- * - Entities must not be nested, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
- * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote”, “custom_emoji”, and “date_time” entities, use parse mode <a href="#markdownv2-style">MarkdownV2</a> instead.
+ * - Entities must not be nested, use parse mode <a href="https://core.telegram.org/bots/api#markdownv2-style">MarkdownV2</a> instead.
+ * - There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote”, “custom_emoji”, and “date_time” entities, use parse mode <a href="https://core.telegram.org/bots/api#markdownv2-style">MarkdownV2</a> instead.
  * - To escape characters &#39;_&#39;, &#39;*&#39;, &#39;`&#39;, &#39;[&#39; outside of an entity, prepend the character &#39;\&#39; before them.
  * - Escaping inside entities is not allowed, so entity must be closed first and reopened again: use `_snake_\__case_` for italic `snake_case` and `*2*\**2=4*` for bold `2*2=4`.
  *
@@ -7093,7 +7093,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the new caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the new caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7129,7 +7129,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7199,7 +7199,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7207,7 +7207,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a href="#sending-files">More information on Sending Files »</a>
+     * Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     photo: InputFile | string;
     /**
@@ -7215,7 +7215,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the photo caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7255,7 +7255,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7284,7 +7284,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7292,11 +7292,11 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+     * Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
      */
     live_photo: InputFile | string;
     /**
-     * The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+     * The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
      */
     photo: InputFile | string;
     /**
@@ -7304,7 +7304,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the video caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7344,7 +7344,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7375,7 +7375,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7383,7 +7383,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     * Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     audio: InputFile | string;
     /**
@@ -7391,7 +7391,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the audio caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7411,7 +7411,7 @@ export interface ApiMethods {
      */
     title?: string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     thumbnail?: InputFile | string;
     /**
@@ -7439,7 +7439,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7468,7 +7468,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7476,11 +7476,11 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     * File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     document: InputFile | string;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     thumbnail?: InputFile | string;
     /**
@@ -7488,7 +7488,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the document caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7524,7 +7524,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7553,7 +7553,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7561,7 +7561,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     * Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     video: InputFile | string;
     /**
@@ -7577,11 +7577,11 @@ export interface ApiMethods {
      */
     height?: number;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     thumbnail?: InputFile | string;
     /**
-     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
+     * Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     cover?: InputFile | string;
     /**
@@ -7593,7 +7593,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the video caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7637,7 +7637,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7666,7 +7666,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7674,7 +7674,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     * Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     animation: InputFile | string;
     /**
@@ -7690,7 +7690,7 @@ export interface ApiMethods {
      */
     height?: number;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     thumbnail?: InputFile | string;
     /**
@@ -7698,7 +7698,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the animation caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the animation caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7738,7 +7738,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7767,7 +7767,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7775,7 +7775,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     * Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     voice: InputFile | string;
     /**
@@ -7783,7 +7783,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the voice message caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7819,7 +7819,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7848,7 +7848,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -7856,7 +7856,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending video notes by a URL is currently unsupported.
+     * Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Sending video notes by a URL is currently unsupported.
      */
     video_note: InputFile | string;
     /**
@@ -7868,7 +7868,7 @@ export interface ApiMethods {
      */
     length?: number;
     /**
-     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
+     * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     thumbnail?: InputFile | string;
     /**
@@ -7896,7 +7896,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -7941,7 +7941,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the media caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the media caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -7973,7 +7973,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -8051,7 +8051,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -8107,7 +8107,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -8136,7 +8136,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -8200,7 +8200,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -8229,7 +8229,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -8277,7 +8277,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -8306,7 +8306,7 @@ export interface ApiMethods {
      */
     question: string;
     /**
-     * Mode for parsing entities in the question. See <a href="#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
+     * Mode for parsing entities in the question. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details. Currently, only custom emoji entities are allowed.
      */
     question_parse_mode?: string;
     /**
@@ -8362,7 +8362,7 @@ export interface ApiMethods {
      */
     explanation?: string;
     /**
-     * Mode for parsing entities in the explanation. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the explanation. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     explanation_parse_mode?: string;
     /**
@@ -8390,7 +8390,7 @@ export interface ApiMethods {
      */
     description?: string;
     /**
-     * Mode for parsing entities in the poll description. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the poll description. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     description_parse_mode?: string;
     /**
@@ -8422,7 +8422,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -8463,7 +8463,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -8520,7 +8520,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -8549,7 +8549,7 @@ export interface ApiMethods {
      */
     text?: string;
     /**
-     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the message text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -8656,7 +8656,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns `true` on success.
+   * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setuseremojistatus}
    */
@@ -9150,7 +9150,7 @@ export interface ApiMethods {
      */
     chat_join_request_query_id: string;
     /**
-     * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
+     * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
      */
     web_app_url: string;
   }): never;
@@ -9608,7 +9608,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to send answers to callback queries sent from <a href="/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, `true` is returned.
+   * Use this method to send answers to callback queries sent from <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboards</a>. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, `true` is returned.
    *
    * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">\@BotFather</a> and accept the terms. Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
    *
@@ -9748,7 +9748,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns `true` on success.
+   * Use this method to change the list of the bot&#39;s commands. See <a href="https://core.telegram.org/bots/features#commands">this manual</a> for more details about bot commands. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#setmycommands}
    */
@@ -9769,7 +9769,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns `true` on success.
+   * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="https://core.telegram.org/bots/api#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns `true` on success.
    *
    * @see {@link https://core.telegram.org/bots/api#deletemycommands}
    */
@@ -10008,7 +10008,7 @@ export interface ApiMethods {
      */
     text?: string;
     /**
-     * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+     * Mode for parsing entities in the text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
      */
     text_parse_mode?: string;
     /**
@@ -10041,7 +10041,7 @@ export interface ApiMethods {
      */
     text?: string;
     /**
-     * Mode for parsing entities in the text. See <a href="#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
+     * Mode for parsing entities in the text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
      */
     text_parse_mode?: string;
     /**
@@ -10534,7 +10534,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the story caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -10612,7 +10612,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the story caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the story caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -10644,7 +10644,7 @@ export interface ApiMethods {
 }
 export interface ApiMethods {
   /**
-   * Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.
+   * Use this method to set the result of an interaction with a <a href="https://core.telegram.org/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.
    *
    * @see {@link https://core.telegram.org/bots/api#answerwebappquery}
    */
@@ -10712,7 +10712,7 @@ export interface ApiMethods {
 // === UPDATING MESSAGES
 export interface ApiMethods {
   /**
-   * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
+   * Use this method to edit text, rich and <a href="https://core.telegram.org/bots/api#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise `true` is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within **48 hours** from the time they were sent.
    *
    * @see {@link https://core.telegram.org/bots/api#editmessagetext}
    */
@@ -10738,7 +10738,7 @@ export interface ApiMethods {
      */
     text?: string;
     /**
-     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the message text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -10754,7 +10754,7 @@ export interface ApiMethods {
      */
     rich_message?: InputRichMessage;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -10787,7 +10787,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the message caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -10799,7 +10799,7 @@ export interface ApiMethods {
      */
     show_caption_above_media?: boolean;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -10832,7 +10832,7 @@ export interface ApiMethods {
      */
     media: InputMedia;
     /**
-     * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for a new <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -10885,7 +10885,7 @@ export interface ApiMethods {
      */
     proximity_alert_radius?: number;
     /**
-     * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for a new <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -10914,7 +10914,7 @@ export interface ApiMethods {
      */
     inline_message_id?: string;
     /**
-     * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for a new <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -10943,7 +10943,7 @@ export interface ApiMethods {
      */
     checklist: InputChecklist;
     /**
-     * A JSON-serialized object for the new <a href="/bots/features#inline-keyboards">inline keyboard</a> for the message
+     * A JSON-serialized object for the new <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a> for the message
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -10972,7 +10972,7 @@ export interface ApiMethods {
      */
     inline_message_id?: string;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -10997,7 +10997,7 @@ export interface ApiMethods {
      */
     message_id: number;
     /**
-     * A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for a new message <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -11026,7 +11026,7 @@ export interface ApiMethods {
      */
     text: string;
     /**
-     * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the message text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -11038,7 +11038,7 @@ export interface ApiMethods {
      */
     link_preview_options?: LinkPreviewOptions;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -11067,7 +11067,7 @@ export interface ApiMethods {
      */
     media: InputMedia;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -11096,7 +11096,7 @@ export interface ApiMethods {
      */
     caption?: string;
     /**
-     * Mode for parsing entities in the message caption. See <a href="#formatting-options">formatting options</a> for more details.
+     * Mode for parsing entities in the message caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
      */
     parse_mode?: string;
     /**
@@ -11104,7 +11104,7 @@ export interface ApiMethods {
      */
     caption_entities?: MessageEntity[];
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -11129,7 +11129,7 @@ export interface ApiMethods {
      */
     ephemeral_message_id: number;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -11414,7 +11414,7 @@ export interface MaskPosition {
  */
 export interface InputSticker {
   /**
-   * The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="#sending-files">More information on Sending Files »</a>
+   * The added sticker. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
    */
   sticker: string;
   /**
@@ -11458,7 +11458,7 @@ export interface ApiMethods {
      */
     direct_messages_topic_id?: number;
     /**
-     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="https://core.telegram.org/bots/api#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
      */
     receiver_user_id?: number;
     /**
@@ -11466,7 +11466,7 @@ export interface ApiMethods {
      */
     callback_query_id?: string;
     /**
-     * Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Video and animated stickers can&#39;t be sent via an HTTP URL.
+     * Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Video and animated stickers can&#39;t be sent via an HTTP URL.
      */
     sticker: InputFile | string;
     /**
@@ -11498,7 +11498,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -11541,7 +11541,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="/stickers"><a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a></a> for technical requirements. <a href="#sending-files">More information on Sending Files »</a>
+     * A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See <a href="https://core.telegram.org/stickers"><a href="https://core.telegram.org/stickers">https://core.telegram.org/stickers</a></a> for technical requirements. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>
      */
     sticker: InputFile;
     /**
@@ -11743,7 +11743,7 @@ export interface ApiMethods {
      */
     user_id: number;
     /**
-     * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+     * A **.WEBP** or **.PNG** image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a **.TGS** animation with a thumbnail up to 32 kilobytes in size (see <a href="https://core.telegram.org/stickers#animation-requirements"><a href="https://core.telegram.org/stickers#animation-requirements">https://core.telegram.org/stickers#animation-requirements</a></a> for animated sticker technical requirements), or a **.WEBM** video with the thumbnail up to 32 kilobytes in size; see <a href="https://core.telegram.org/stickers#video-requirements"><a href="https://core.telegram.org/stickers#video-requirements">https://core.telegram.org/stickers#video-requirements</a></a> for video sticker technical requirements. Pass a _file_id_ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="https://core.telegram.org/bots/api#sending-files">More information on Sending Files »</a>. Animated and video sticker set thumbnails can&#39;t be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
      */
     thumbnail?: InputFile | string;
     /**
@@ -11788,11 +11788,11 @@ export interface ApiMethods {
  *
  * #### Rich Message Formatting Options
  * 
- * <a href="#inputrichmessage">Rich messages</a> support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting, or explicit <a href="#inputrichblock">blocks</a>.
+ * <a href="#inputrichmessage">Rich messages</a> support advanced structured formatting options like headings, lists, tables, media, block quotations, collapsible blocks, footnotes, and formulas. Telegram clients will render them accordingly. You can specify rich message content using <a href="https://core.telegram.org/bots/api#rich-markdown-style">Markdown-style</a> or <a href="https://core.telegram.org/bots/api#rich-html-style">HTML-style</a> formatting, or explicit <a href="#inputrichblock">blocks</a>.
  * 
  * Plain URLs, e-mail addresses, username mentions, hashtags, cashtags, bot commands, phone numbers, and bank card numbers are detected automatically. To disable automatic entity detection, pass `true` in the _skip_entity_detection_ field. Note that Telegram clients will display an alert to the user before opening an inline link (&#39;Open this link?&#39; together with the full URL).
  *
- * When <a href="#rich-markdown-style">Markdown-style</a> or <a href="#rich-html-style">HTML-style</a> formatting is used, you can use links in the form `tg://photo?id=...`, `tg://video?id=...`, and `tg://audio?id=...` instead of an HTTP URL to reuse previously uploaded files or upload a new file.
+ * When <a href="https://core.telegram.org/bots/api#rich-markdown-style">Markdown-style</a> or <a href="https://core.telegram.org/bots/api#rich-html-style">HTML-style</a> formatting is used, you can use links in the form `tg://photo?id=...`, `tg://video?id=...`, and `tg://audio?id=...` instead of an HTTP URL to reuse previously uploaded files or upload a new file.
  *
  * ##### Rich Message Limits
  *
@@ -11933,7 +11933,7 @@ export interface ApiMethods {
  * &lt;/tg-slideshow&gt;
  * ````
  * 
- * For formatting features that don&#39;t have Markdown syntax, use <a href="#rich-html-style">HTML tags</a>:
+ * For formatting features that don&#39;t have Markdown syntax, use <a href="https://core.telegram.org/bots/api#rich-html-style">HTML tags</a>:
  * 
  * ```html
  * &lt;u&gt;underlined text&lt;/u&gt;, &lt;ins&gt;underlined text&lt;/ins&gt;
@@ -11955,7 +11955,7 @@ export interface ApiMethods {
  * 
  * Please note:
  * 
- * - Rich Markdown is compatible with GitHub Flavored Markdown where possible and can contain arbitrary HTML. Supported rich message HTML tags are parsed as described in <a href="#rich-html-style">Rich HTML style</a>.
+ * - Rich Markdown is compatible with GitHub Flavored Markdown where possible and can contain arbitrary HTML. Supported rich message HTML tags are parsed as described in <a href="https://core.telegram.org/bots/api#rich-html-style">Rich HTML style</a>.
  * - Media can be specified only as a separate block.
  * - Media blocks support only HTTP and HTTPS URLs.
  * - Media type is determined by the MIME type and the URL of the media.
@@ -11963,7 +11963,7 @@ export interface ApiMethods {
  * - Table cells can contain only inline formatting.
  * - Formula source is treated as raw LaTeX.
  * - Markdown isn&#39;t parsed inside block HTML tags other than &lt;details&gt;, &lt;tg-collage&gt; and &lt;tg-slideshow&gt;, therefore only HTML tags can be used there.
- * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ * - See <a href="https://core.telegram.org/bots/api#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  *
  * ##### Rich HTML style
  *
@@ -12077,7 +12077,7 @@ export interface ApiMethods {
  * - Use `&lt;tg-reference name=&quot;...&quot;&gt;...&lt;/tg-reference&gt;` to define referenced text that can be linked to with `&lt;a href=&quot;#...&quot;&gt;...&lt;/a&gt;`.
  * - The body of a `&lt;details&gt;` tag can contain rich message content. If the `open` attribute is specified, the block is expanded by default.
  * - Formula source is treated as raw LaTeX.
- * - See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
+ * - See <a href="https://core.telegram.org/bots/api#date-time-entity-formatting">date-time entity formatting</a> for more details about supported date-time formats.
  */
 /**
  * Rich formatted message.
@@ -12105,11 +12105,11 @@ export interface InputRichMessage {
    */
   blocks?: InputRichBlock[];
   /**
-   * Content of the rich message to send described using HTML formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use _media_ field to specify the media used in the message.
+   * Content of the rich message to send described using HTML formatting. See <a href="https://core.telegram.org/bots/api#rich-message-formatting-options">rich message formatting options</a> for more details. Use _media_ field to specify the media used in the message.
    */
   html?: string;
   /**
-   * Content of the rich message to send described using Markdown formatting. See <a href="#rich-message-formatting-options">rich message formatting options</a> for more details. Use _media_ field to specify the media used in the message.
+   * Content of the rich message to send described using Markdown formatting. See <a href="https://core.telegram.org/bots/api#rich-message-formatting-options">rich message formatting options</a> for more details. Use _media_ field to specify the media used in the message.
    */
   markdown?: string;
   /**
@@ -12192,7 +12192,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
+     * Additional interface options. A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>, <a href="https://core.telegram.org/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
   }): never;
@@ -12373,7 +12373,7 @@ export interface RichTextDateTime {
    */
   unix_time: number;
   /**
-   * The string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.
+   * The string that defines the formatting of the date and time. See <a href="https://core.telegram.org/bots/api#date-time-entity-formatting">date-time entity formatting</a> for more details.
    */
   date_time_format: string;
 }
@@ -13788,11 +13788,11 @@ export interface InlineQueryResultsButton {
    */
   text: string;
   /**
-   * Description of the <a href="/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.
+   * Description of the <a href="https://core.telegram.org/bots/webapps">Web App</a> that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method <a href="https://core.telegram.org/bots/webapps#initializing-mini-apps">switchInlineQuery</a> inside the Web App.
    */
   web_app?: WebAppInfo;
   /**
-   * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
+   * <a href="https://core.telegram.org/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
    *
    * _Example:_ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup">_switch_inline_</a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
    */
@@ -13870,7 +13870,7 @@ export interface InlineQueryResultArticle {
    */
   input_message_content: InputMessageContent;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -13937,7 +13937,7 @@ export interface InlineQueryResultPhoto {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the photo caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -13949,7 +13949,7 @@ export interface InlineQueryResultPhoto {
    */
   show_caption_above_media?: boolean;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14004,7 +14004,7 @@ export interface InlineQueryResultGif {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14016,7 +14016,7 @@ export interface InlineQueryResultGif {
    */
   show_caption_above_media?: boolean;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14071,7 +14071,7 @@ export interface InlineQueryResultMpeg4Gif {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14083,7 +14083,7 @@ export interface InlineQueryResultMpeg4Gif {
    */
   show_caption_above_media?: boolean;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14128,7 +14128,7 @@ export interface InlineQueryResultVideo {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the video caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14156,7 +14156,7 @@ export interface InlineQueryResultVideo {
    */
   description?: string;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14191,7 +14191,7 @@ export interface InlineQueryResultAudio {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the audio caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14207,7 +14207,7 @@ export interface InlineQueryResultAudio {
    */
   audio_duration?: number;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14242,7 +14242,7 @@ export interface InlineQueryResultVoice {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the voice message caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14254,7 +14254,7 @@ export interface InlineQueryResultVoice {
    */
   voice_duration?: number;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14285,7 +14285,7 @@ export interface InlineQueryResultDocument {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the document caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14305,7 +14305,7 @@ export interface InlineQueryResultDocument {
    */
   description?: string;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14368,7 +14368,7 @@ export interface InlineQueryResultLocation {
    */
   proximity_alert_radius?: number;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14435,7 +14435,7 @@ export interface InlineQueryResultVenue {
    */
   google_place_type?: string;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14486,7 +14486,7 @@ export interface InlineQueryResultContact {
    */
   vcard?: string;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14507,7 +14507,7 @@ export interface InlineQueryResultContact {
   thumbnail_height?: number;
 }
 /**
- * Represents a <a href="#games">Game</a>.
+ * Represents a <a href="https://core.telegram.org/bots/api#games">Game</a>.
  *
  * @see {@link https://core.telegram.org/bots/api#inlinequeryresultgame}
  */
@@ -14525,7 +14525,7 @@ export interface InlineQueryResultGame {
    */
   game_short_name: string;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
 }
@@ -14560,7 +14560,7 @@ export interface InlineQueryResultCachedPhoto {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the photo caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the photo caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14572,7 +14572,7 @@ export interface InlineQueryResultCachedPhoto {
    */
   show_caption_above_media?: boolean;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14607,7 +14607,7 @@ export interface InlineQueryResultCachedGif {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14619,7 +14619,7 @@ export interface InlineQueryResultCachedGif {
    */
   show_caption_above_media?: boolean;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14654,7 +14654,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14666,7 +14666,7 @@ export interface InlineQueryResultCachedMpeg4Gif {
    */
   show_caption_above_media?: boolean;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14693,7 +14693,7 @@ export interface InlineQueryResultCachedSticker {
    */
   sticker_file_id: string;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14732,7 +14732,7 @@ export interface InlineQueryResultCachedDocument {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the document caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the document caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14740,7 +14740,7 @@ export interface InlineQueryResultCachedDocument {
    */
   caption_entities?: MessageEntity[];
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14779,7 +14779,7 @@ export interface InlineQueryResultCachedVideo {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the video caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the video caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14791,7 +14791,7 @@ export interface InlineQueryResultCachedVideo {
    */
   show_caption_above_media?: boolean;
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14826,7 +14826,7 @@ export interface InlineQueryResultCachedVoice {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the voice message caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the voice message caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14834,7 +14834,7 @@ export interface InlineQueryResultCachedVoice {
    */
   caption_entities?: MessageEntity[];
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14865,7 +14865,7 @@ export interface InlineQueryResultCachedAudio {
    */
   caption?: string;
   /**
-   * Mode for parsing entities in the audio caption. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the audio caption. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -14873,7 +14873,7 @@ export interface InlineQueryResultCachedAudio {
    */
   caption_entities?: MessageEntity[];
   /**
-   * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
+   * <a href="https://core.telegram.org/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
   /**
@@ -14911,7 +14911,7 @@ export interface InputTextMessageContent {
    */
   message_text: string;
   /**
-   * Mode for parsing entities in the message text. See <a href="#formatting-options">formatting options</a> for more details.
+   * Mode for parsing entities in the message text. See <a href="https://core.telegram.org/bots/api#formatting-options">formatting options</a> for more details.
    */
   parse_mode?: string;
   /**
@@ -15050,7 +15050,7 @@ export interface InputInvoiceMessageContent {
    */
   provider_token?: string;
   /**
-   * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * Three-letter ISO 4217 currency code, see <a href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   currency: string;
   /**
@@ -15058,7 +15058,7 @@ export interface InputInvoiceMessageContent {
    */
   prices: LabeledPrice[];
   /**
-   * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+   * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   max_tip_amount?: number;
   /**
@@ -15117,7 +15117,7 @@ export interface InputInvoiceMessageContent {
 /**
  * Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.
  * 
- * **Note:** It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">\@BotFather</a> in order to receive these objects in updates.
+ * **Note:** It is necessary to enable <a href="https://core.telegram.org/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">\@BotFather</a> in order to receive these objects in updates.
  *
  * @see {@link https://core.telegram.org/bots/api#choseninlineresult}
  */
@@ -15135,7 +15135,7 @@ export interface ChosenInlineResult {
    */
   location?: Location;
   /**
-   * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="#updating-messages">edit</a> the message.
+   * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message. Will be also received in <a href="#callbackquery">callback queries</a> and can be used to <a href="https://core.telegram.org/bots/api#updating-messages">edit</a> the message.
    */
   inline_message_id?: string;
   /**
@@ -15180,7 +15180,7 @@ export interface ApiMethods {
      */
     provider_token?: string;
     /**
-     * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Three-letter ISO 4217 currency code, see <a href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     currency: string;
     /**
@@ -15188,7 +15188,7 @@ export interface ApiMethods {
      */
     prices: LabeledPrice[];
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     max_tip_amount?: number;
     /**
@@ -15272,7 +15272,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay `total price`&#39; button will be shown. If not empty, the first button must be a Pay button.
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
@@ -15305,7 +15305,7 @@ export interface ApiMethods {
      */
     provider_token?: string;
     /**
-     * Three-letter ISO 4217 currency code, see <a href="/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * Three-letter ISO 4217 currency code, see <a href="https://core.telegram.org/bots/payments#supported-currencies">more on currencies</a>. Pass “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     currency: string;
     /**
@@ -15317,7 +15317,7 @@ export interface ApiMethods {
      */
     subscription_period?: number;
     /**
-     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     * The maximum accepted amount for tips in the _smallest units_ of the currency (integer, **not** float/double). For example, for a maximum tip of `US$ 1.45` pass `max_tip_amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     max_tip_amount?: number;
     /**
@@ -15494,7 +15494,7 @@ export interface LabeledPrice {
    */
   label: string;
   /**
-   * Price of the product in the _smallest units_ of the <a href="/bots/payments#supported-currencies">currency</a> (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Price of the product in the _smallest units_ of the <a href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   amount: number;
 }
@@ -15517,11 +15517,11 @@ export interface Invoice {
    */
   start_parameter: string;
   /**
-   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+   * Three-letter ISO 4217 <a href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
 }
@@ -15605,11 +15605,11 @@ export interface ShippingOption {
  */
 export interface SuccessfulPayment {
   /**
-   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+   * Three-letter ISO 4217 <a href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -15652,11 +15652,11 @@ export interface SuccessfulPayment {
  */
 export interface RefundedPayment {
   /**
-   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Currently, always “XTR”.
+   * Three-letter ISO 4217 <a href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Currently, always “XTR”.
    */
   currency: string;
   /**
-   * Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total refunded price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45`, `total_amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -15710,11 +15710,11 @@ export interface PreCheckoutQuery {
    */
   from: User;
   /**
-   * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
+   * Three-letter ISO 4217 <a href="https://core.telegram.org/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
    */
   currency: string;
   /**
-   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
+   * Total price in the _smallest units_ of the currency (integer, **not** float/double). For example, for a price of `US$ 1.45` pass `amount = 145`. See the _exp_ parameter in <a href="https://core.telegram.org/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
   /**
@@ -15959,7 +15959,7 @@ export interface TransactionPartnerTelegramAds {
   type: string;
 }
 /**
- * Describes a transaction with payment for <a href="#paid-broadcasts">paid broadcasting</a>.
+ * Describes a transaction with payment for <a href="https://core.telegram.org/bots/api#paid-broadcasts">paid broadcasting</a>.
  *
  * @see {@link https://core.telegram.org/bots/api#transactionpartnertelegramapi}
  */
@@ -16113,7 +16113,7 @@ export interface EncryptedPassportElement {
   hash: string;
 }
 /**
- * Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the <a href="/passport#receiving-information">Telegram Passport Documentation</a> for a complete description of the data decryption and authentication processes.
+ * Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the <a href="https://core.telegram.org/passport#receiving-information">Telegram Passport Documentation</a> for a complete description of the data decryption and authentication processes.
  *
  * @see {@link https://core.telegram.org/bots/api#encryptedcredentials}
  */
@@ -16431,7 +16431,7 @@ export interface ApiMethods {
      */
     reply_parameters?: ReplyParameters;
     /**
-     * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.
+     * A JSON-serialized object for an <a href="https://core.telegram.org/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.
      */
     reply_markup?: InlineKeyboardMarkup;
   }): never;
