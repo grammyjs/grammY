@@ -44,15 +44,6 @@ export interface ApiSuccess<T> {
  * This <a href="#available-types">object</a> represents an incoming update.<br>At most <strong>one</strong> of the optional fields can be present in any given update.
  */
 export interface Update {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The update&#39;s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you&#39;re using <a href="#setwebhook">webhooks</a>, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
    */
@@ -161,8 +152,6 @@ export interface Update {
    * User payment subscription has changed
    */
   subscription?: BotSubscriptionUpdated;
-</tbody>
-</table>
 }
 export interface ApiMethods {
   /**
@@ -171,16 +160,6 @@ export interface ApiMethods {
    * > <strong>Notes</strong><br><strong>1.</strong> This method will not work if an outgoing webhook is set up.<br><strong>2.</strong> In order to avoid getting duplicate updates, recalculate <em>offset</em> after each server response.
    */
   getUpdates(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an <em>offset</em> higher than its <em>update_id</em>. The negative offset can be specified to retrieve updates starting from <em>-offset</em> update from the end of the updates queue. All previous updates will be forgotten.
      */
@@ -197,8 +176,6 @@ export interface ApiMethods {
      * A JSON-serialized list of the update types you want your bot to receive. For example, specify <code>[&quot;message&quot;, &quot;edited_channel_post&quot;, &quot;callback_query&quot;]</code> to only receive updates of these types. See <a href="#update">Update</a> for a complete list of available update types. Specify an empty list to receive all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em> (default). If not specified, the previous setting will be used.<br><br>Please note that this parameter doesn&#39;t affect updates created before the call to getUpdates, so unwanted updates may be received for a short period of time.
      */
     allowed_updates?: string[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -212,16 +189,6 @@ export interface ApiMethods {
    * > If you&#39;re having any trouble setting up webhooks, please check out this <a href="/bots/webhooks">amazing guide to webhooks</a>.
    */
   setWebhook(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * HTTPS URL to send updates to. Use an empty string to remove webhook integration.
      */
@@ -250,8 +217,6 @@ export interface ApiMethods {
      * A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed. The header is useful to ensure that the request comes from a webhook set by you.
      */
     secret_token?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -259,22 +224,10 @@ export interface ApiMethods {
    * Use this method to remove webhook integration if you decide to switch back to <a href="#getupdates">getUpdates</a>. Returns <em>True</em> on success.
    */
   deleteWebhook(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Pass <em>True</em> to drop all pending updates
      */
     drop_pending_updates?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -287,15 +240,6 @@ export interface ApiMethods {
  * Describes the current status of a webhook.
  */
 export interface WebhookInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Webhook URL, may be empty if webhook is not set up
    */
@@ -332,8 +276,6 @@ export interface WebhookInfo {
    * A list of update types the bot is subscribed to. Defaults to all update types except <em>chat_member</em>, <em>message_reaction</em>, and <em>message_reaction_count</em>.
    */
   allowed_updates?: string[];
-</tbody>
-</table>
 }
 // === AVAILABLE TYPES
 <p>All types used in the Bot API responses are represented as JSON-objects.</p>
@@ -345,15 +287,6 @@ export interface WebhookInfo {
  * This object represents a Telegram user or bot.
  */
 export interface User {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -426,22 +359,11 @@ export interface User {
    * <em>True</em>, if the bot supports join request queries and can be assigned to process them. Returned only in <a href="#getme">getMe</a>.
    */
   supports_join_request_queries?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents a chat.
  */
 export interface Chat {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -474,22 +396,11 @@ export interface Chat {
    * <em>True</em>, if the chat is the direct messages chat of a channel
    */
   is_direct_messages?: true;
-</tbody>
-</table>
 }
 /**
  * This object contains full information about a chat.
  */
 export interface ChatFullInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -702,22 +613,11 @@ export interface ChatFullInfo {
    * The <a href="#community">Community</a> to which the chat belongs
    */
   community?: Community;
-</tbody>
-</table>
 }
 /**
  * This object represents a message.
  */
 export interface Message {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique message identifier inside this chat; 0 for ephemeral messages. In specific instances (e.g., a message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.
    */
@@ -1194,42 +1094,20 @@ export interface Message {
    * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message. <code>login_url</code> buttons are represented as ordinary <code>url</code> buttons.
    */
   reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
 }
 /**
  * This object represents a unique message identifier.
  */
 export interface MessageId {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique message identifier. In specific instances (e.g., message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.
    */
   message_id: number;
-</tbody>
-</table>
 }
 /**
  * This object describes a message that was deleted or is otherwise inaccessible to the bot.
  */
 export interface InaccessibleMessage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Chat the message belonged to
    */
@@ -1242,8 +1120,6 @@ export interface InaccessibleMessage {
    * Always 0. The field can be used to differentiate regular and inaccessible messages.
    */
   date: number;
-</tbody>
-</table>
 }
 /**
  * This object describes a message that can be inaccessible to the bot. It can be one of
@@ -1258,15 +1134,6 @@ export type MaybeInaccessibleMessage =
  * This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
  */
 export interface MessageEntity {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the entity. Currently, can be “mention” (<code>@username</code>), “hashtag” (<code>#hashtag</code> or <code>#hashtag@chatusername</code>), “cashtag” (<code>$USD</code> or <code>$USD@chatusername</code>), “bot_command” (<code>/start@jobs_bot</code>), “url” (<code>https://telegram.org</code>), “email” (<code>do-not-reply@telegram.org</code>), “phone_number” (<code>+1-212-555-0123</code>), “bold” (<strong>bold text</strong>), “italic” (<em>italic text</em>), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users <a href="https://telegram.org/blog/edit#new-mentions">without usernames</a>), “custom_emoji” (for inline custom emoji stickers), or “date_time” (for formatted date and time).
    */
@@ -1303,22 +1170,11 @@ export interface MessageEntity {
    * For “date_time” only, the string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.
    */
   date_time_format?: string;
-</tbody>
-</table>
 }
 /**
  * This object contains information about the quoted part of a message that is replied to by the given message.
  */
 export interface TextQuote {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Text of the quoted part of a message that is replied to by the given message
    */
@@ -1335,22 +1191,11 @@ export interface TextQuote {
    * <em>True</em>, if the quote was chosen manually by the message sender. Otherwise, the quote was added automatically by the server.
    */
   is_manual?: true;
-</tbody>
-</table>
 }
 /**
  * This object contains information about a message that is being replied to, which may come from another chat or forum topic.
  */
 export interface ExternalReplyInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Origin of the message replied to by the given message
    */
@@ -1455,22 +1300,11 @@ export interface ExternalReplyInfo {
    * Message is a venue, information about the venue
    */
   venue?: Venue;
-</tbody>
-</table>
 }
 /**
  * Describes reply parameters for the message that is being sent.
  */
 export interface ReplyParameters {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier of the message that will be replied to in the current chat, or in the chat <em>chat_id</em> if it is specified. Required if <em>ephemeral_message_id</em> isn&#39;t specified.
    */
@@ -1511,8 +1345,6 @@ export interface ReplyParameters {
    * Persistent identifier of the specific poll option to be replied to
    */
   poll_option_id?: string;
-</tbody>
-</table>
 }
 /**
  * This object describes the origin of a message. It can be one of
@@ -1531,15 +1363,6 @@ export type MessageOrigin =
  * The message was originally sent by a known user.
  */
 export interface MessageOriginUser {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the message origin, always “user”
    */
@@ -1552,22 +1375,11 @@ export interface MessageOriginUser {
    * User that sent the message originally
    */
   sender_user: User;
-</tbody>
-</table>
 }
 /**
  * The message was originally sent by an unknown user.
  */
 export interface MessageOriginHiddenUser {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the message origin, always “hidden_user”
    */
@@ -1580,22 +1392,11 @@ export interface MessageOriginHiddenUser {
    * Name of the user that sent the message originally
    */
   sender_user_name: string;
-</tbody>
-</table>
 }
 /**
  * The message was originally sent on behalf of a chat to a group chat.
  */
 export interface MessageOriginChat {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the message origin, always “chat”
    */
@@ -1612,22 +1413,11 @@ export interface MessageOriginChat {
    * For messages originally sent by an anonymous chat administrator, original message author signature
    */
   author_signature?: string;
-</tbody>
-</table>
 }
 /**
  * The message was originally sent to a channel chat.
  */
 export interface MessageOriginChannel {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the message origin, always “channel”
    */
@@ -1648,22 +1438,11 @@ export interface MessageOriginChannel {
    * Signature of the original post author
    */
   author_signature?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents one size of a photo or a <a href="#document">file</a> / <a href="#sticker">sticker</a> thumbnail.
  */
 export interface PhotoSize {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -1684,22 +1463,11 @@ export interface PhotoSize {
    * File size in bytes
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
  */
 export interface Animation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -1736,22 +1504,11 @@ export interface Animation {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents an audio file to be treated as music by the Telegram clients.
  */
 export interface Audio {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -1788,22 +1545,11 @@ export interface Audio {
    * Thumbnail of the album cover to which the music file belongs
    */
   thumbnail?: PhotoSize;
-</tbody>
-</table>
 }
 /**
  * This object represents a general file (as opposed to <a href="#photosize">photos</a>, <a href="#voice">voice messages</a> and <a href="#audio">audio files</a>).
  */
 export interface Document {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -1828,22 +1574,11 @@ export interface Document {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a live photo.
  */
 export interface LivePhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Available sizes of the corresponding static photo
    */
@@ -1876,22 +1611,11 @@ export interface LivePhoto {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a story.
  */
 export interface Story {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Chat that posted the story
    */
@@ -1900,22 +1624,11 @@ export interface Story {
    * Unique identifier for the story in the chat
    */
   id: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a video file of a specific quality.
  */
 export interface VideoQuality {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -1940,22 +1653,11 @@ export interface VideoQuality {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a video file.
  */
 export interface Video {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -2004,22 +1706,11 @@ export interface Video {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a <a href="https://telegram.org/blog/video-messages-and-telescope">video message</a> (available in Telegram apps as of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>).
  */
 export interface VideoNote {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -2044,22 +1735,11 @@ export interface VideoNote {
    * File size in bytes
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a voice note.
  */
 export interface Voice {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -2080,22 +1760,11 @@ export interface Voice {
    * File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value.
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * Describes the paid media added to a message.
  */
 export interface PaidMediaInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The number of Telegram Stars that must be paid to buy access to the media
    */
@@ -2104,8 +1773,6 @@ export interface PaidMediaInfo {
    * Information about the paid media
    */
   paid_media: PaidMedia[];
-</tbody>
-</table>
 }
 /**
  * This object describes paid media. Currently, it can be one of
@@ -2124,15 +1791,6 @@ export type PaidMedia =
  * The paid media is a <a href="#livephoto">live photo</a>.
  */
 export interface PaidMediaLivePhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the paid media, always “live_photo”
    */
@@ -2141,22 +1799,11 @@ export interface PaidMediaLivePhoto {
    * The photo
    */
   live_photo: LivePhoto;
-</tbody>
-</table>
 }
 /**
  * The paid media is a photo.
  */
 export interface PaidMediaPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the paid media, always “photo”
    */
@@ -2165,22 +1812,11 @@ export interface PaidMediaPhoto {
    * The photo
    */
   photo: PhotoSize[];
-</tbody>
-</table>
 }
 /**
  * The paid media isn&#39;t available before the payment.
  */
 export interface PaidMediaPreview {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the paid media, always “preview”
    */
@@ -2197,22 +1833,11 @@ export interface PaidMediaPreview {
    * Duration of the media in seconds as defined by the sender
    */
   duration?: number;
-</tbody>
-</table>
 }
 /**
  * The paid media is a video.
  */
 export interface PaidMediaVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the paid media, always “video”
    */
@@ -2221,22 +1846,11 @@ export interface PaidMediaVideo {
    * The video
    */
   video: Video;
-</tbody>
-</table>
 }
 /**
  * This object represents a phone contact.
  */
 export interface Contact {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Contact&#39;s phone number
    */
@@ -2257,22 +1871,11 @@ export interface Contact {
    * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>
    */
   vcard?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents an animated emoji that displays a random value.
  */
 export interface Dice {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Emoji on which the dice throw animation is based
    */
@@ -2281,42 +1884,20 @@ export interface Dice {
    * Value of the dice, 1-6 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB2.png" width="20" height="20" alt="🎲" />”, “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EAF.png" width="20" height="20" alt="🎯" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB3.png" width="20" height="20" alt="🎳" />” base emoji, 1-5 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F80.png" width="20" height="20" alt="🏀" />” and “<img class="emoji" src="//telegram.org/img/emoji/40/E29ABD.png" width="20" height="20" alt="⚽" />” base emoji, 1-64 for “<img class="emoji" src="//telegram.org/img/emoji/40/F09F8EB0.png" width="20" height="20" alt="🎰" />” base emoji
    */
   value: number;
-</tbody>
-</table>
 }
 /**
  * Represents an HTTP link.
  */
 export interface Link {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * URL of the link
    */
   url: string;
-</tbody>
-</table>
 }
 /**
  * At most <strong>one</strong> of the optional fields can be present in any given object.
  */
 export interface PollMedia {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Media is an animation, information about the animation
    */
@@ -2357,8 +1938,6 @@ export interface PollMedia {
    * Media is a video, information about the video
    */
   video?: Video;
-</tbody>
-</table>
 }
 /**
  * This object represents the content of a poll description or a quiz explanation to be sent. It should be one of
@@ -2406,15 +1985,6 @@ export type InputPollOptionMedia =
  * This object contains information about one answer option in a poll.
  */
 export interface PollOption {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the option, persistent on option addition and deletion
    */
@@ -2447,22 +2017,11 @@ export interface PollOption {
    * Point in time (Unix timestamp) when the option was added; omitted if the option existed in the original poll
    */
   addition_date?: number;
-</tbody>
-</table>
 }
 /**
  * This object contains information about one answer option in a poll to be sent.
  */
 export interface InputPollOption {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Option text, 1-100 characters
    */
@@ -2479,22 +2038,11 @@ export interface InputPollOption {
    * Media added to the poll option
    */
   media?: InputPollOptionMedia;
-</tbody>
-</table>
 }
 /**
  * This object represents an answer of a user in a non-anonymous poll.
  */
 export interface PollAnswer {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique poll identifier
    */
@@ -2515,22 +2063,11 @@ export interface PollAnswer {
    * Persistent identifiers of the chosen answer options. May be empty if the vote was retracted.
    */
   option_persistent_ids: string[];
-</tbody>
-</table>
 }
 /**
  * This object contains information about a poll.
  */
 export interface Poll {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique poll identifier
    */
@@ -2615,22 +2152,11 @@ export interface Poll {
    * Media added to the poll description; for polls inside the <a href="#message">Message</a> object only
    */
   media?: PollMedia;
-</tbody>
-</table>
 }
 /**
  * Describes a task in a checklist.
  */
 export interface ChecklistTask {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the task
    */
@@ -2655,22 +2181,11 @@ export interface ChecklistTask {
    * Point in time (Unix timestamp) when the task was completed; 0 if the task wasn&#39;t completed
    */
   completion_date?: number;
-</tbody>
-</table>
 }
 /**
  * Describes a checklist.
  */
 export interface Checklist {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Title of the checklist
    */
@@ -2691,22 +2206,11 @@ export interface Checklist {
    * <em>True</em>, if users other than the creator of the list can mark tasks as done or not done
    */
   others_can_mark_tasks_as_done?: true;
-</tbody>
-</table>
 }
 /**
  * Describes a task to add to a checklist.
  */
 export interface InputChecklistTask {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the task; must be positive and unique among all task identifiers currently present in the checklist
    */
@@ -2723,22 +2227,11 @@ export interface InputChecklistTask {
    * List of special entities that appear in the text, which can be specified instead of parse_mode. Currently, only <em>bold</em>, <em>italic</em>, <em>underline</em>, <em>strikethrough</em>, <em>spoiler</em>, <em>custom_emoji</em>, and <em>date_time</em> entities are allowed.
    */
   text_entities?: MessageEntity[];
-</tbody>
-</table>
 }
 /**
  * Describes a checklist to create.
  */
 export interface InputChecklist {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Title of the checklist; 1-255 characters after entities parsing
    */
@@ -2763,22 +2256,11 @@ export interface InputChecklist {
    * Pass <em>True</em> if other users can mark tasks as done or not done in the checklist
    */
   others_can_mark_tasks_as_done?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents a point on the map.
  */
 export interface Location {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Latitude as defined by the sender
    */
@@ -2803,22 +2285,11 @@ export interface Location {
    * The maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
    */
   proximity_alert_radius?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a venue.
  */
 export interface Venue {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Venue location. Can&#39;t be a live location.
    */
@@ -2847,22 +2318,11 @@ export interface Venue {
    * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
    */
   google_place_type?: string;
-</tbody>
-</table>
 }
 /**
  * Describes data sent from a <a href="/bots/webapps">Web App</a> to the bot.
  */
 export interface WebAppData {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The data. Be aware that a bad client can send arbitrary data in this field.
    */
@@ -2871,22 +2331,11 @@ export interface WebAppData {
    * Text of the <em>web_app</em> keyboard button from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field.
    */
   button_text: string;
-</tbody>
-</table>
 }
 /**
  * This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.
  */
 export interface ProximityAlertTriggered {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * User that triggered the alert
    */
@@ -2899,62 +2348,29 @@ export interface ProximityAlertTriggered {
    * The distance between the users
    */
   distance: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about a change in auto-delete timer settings.
  */
 export interface MessageAutoDeleteTimerChanged {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * New auto-delete time for messages in the chat; in seconds
    */
   message_auto_delete_time: number;
-</tbody>
-</table>
 }
 /**
  * This object contains information about the bot that was created to be managed by the current bot.
  */
 export interface ManagedBotCreated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Information about the bot. The bot&#39;s token can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.
    */
   bot: User;
-</tbody>
-</table>
 }
 /**
  * This object contains information about the creation, token update, or owner update of a bot that is managed by the current bot.
  */
 export interface ManagedBotUpdated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * User that created the bot
    */
@@ -2963,22 +2379,11 @@ export interface ManagedBotUpdated {
    * Information about the bot. Token of the bot can be fetched using the method <a href="#getmanagedbottoken">getManagedBotToken</a>.
    */
   bot: User;
-</tbody>
-</table>
 }
 /**
  * This object contains information about changes to a user payment subscription toward the current bot.
  */
 export interface BotSubscriptionUpdated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * User who subscribed for payments toward the bot
    */
@@ -2991,22 +2396,11 @@ export interface BotSubscriptionUpdated {
    * The new state of the subscription. Currently, it can be one of “canceled” if the user canceled the subscription, “active” if the user re-enabled a previously canceled subscription, or “failed” if payment for the subscription failed.
    */
   state: string;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about an option added to a poll.
  */
 export interface PollOptionAdded {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the poll to which the option was added, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3023,22 +2417,11 @@ export interface PollOptionAdded {
    * Special entities that appear in the <em>option_text</em>
    */
   option_text_entities?: MessageEntity[];
-</tbody>
-</table>
 }
 /**
  * Describes a service message about an option deleted from a poll.
  */
 export interface PollOptionDeleted {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the poll from which the option was deleted, if known. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3055,28 +2438,15 @@ export interface PollOptionDeleted {
    * Special entities that appear in the <em>option_text</em>
    */
   option_text_entities?: MessageEntity[];
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about a user boosting a chat.
  */
 export interface ChatBoostAdded {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Number of boosts added by the user
    */
   boost_count: number;
-</tbody>
-</table>
 }
 /**
  * This object describes the way a background is filled based on the selected colors. Currently, it can be one of
@@ -3093,15 +2463,6 @@ export type BackgroundFill =
  * The background is filled using the selected color.
  */
 export interface BackgroundFillSolid {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background fill, always “solid”
    */
@@ -3110,22 +2471,11 @@ export interface BackgroundFillSolid {
    * The color of the background fill in the RGB24 format
    */
   color: number;
-</tbody>
-</table>
 }
 /**
  * The background is a gradient fill.
  */
 export interface BackgroundFillGradient {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background fill, always “gradient”
    */
@@ -3142,22 +2492,11 @@ export interface BackgroundFillGradient {
    * Clockwise rotation angle of the background fill in degrees; 0-359
    */
   rotation_angle: number;
-</tbody>
-</table>
 }
 /**
  * The background is a freeform gradient that rotates after every message in the chat.
  */
 export interface BackgroundFillFreeformGradient {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background fill, always “freeform_gradient”
    */
@@ -3166,8 +2505,6 @@ export interface BackgroundFillFreeformGradient {
    * A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format
    */
   colors: number[];
-</tbody>
-</table>
 }
 /**
  * This object describes the type of a background. Currently, it can be one of
@@ -3186,15 +2523,6 @@ export type BackgroundType =
  * The background is automatically filled based on the selected colors.
  */
 export interface BackgroundTypeFill {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background, always “fill”
    */
@@ -3207,22 +2535,11 @@ export interface BackgroundTypeFill {
    * Dimming of the background in dark themes, as a percentage; 0-100
    */
   dark_theme_dimming: number;
-</tbody>
-</table>
 }
 /**
  * The background is a wallpaper in the JPEG format.
  */
 export interface BackgroundTypeWallpaper {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background, always “wallpaper”
    */
@@ -3243,22 +2560,11 @@ export interface BackgroundTypeWallpaper {
    * <em>True</em>, if the background moves slightly when the device is tilted
    */
   is_moving?: true;
-</tbody>
-</table>
 }
 /**
  * The background is a .PNG or .TGV (gzipped subset of SVG with MIME type “application/x-tgwallpattern”) pattern to be combined with the background fill chosen by the user.
  */
 export interface BackgroundTypePattern {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background, always “pattern”
    */
@@ -3283,22 +2589,11 @@ export interface BackgroundTypePattern {
    * <em>True</em>, if the background moves slightly when the device is tilted
    */
   is_moving?: true;
-</tbody>
-</table>
 }
 /**
  * The background is taken directly from a built-in chat theme.
  */
 export interface BackgroundTypeChatTheme {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background, always “chat_theme”
    */
@@ -3307,42 +2602,20 @@ export interface BackgroundTypeChatTheme {
    * Name of the chat theme, which is usually an emoji
    */
   theme_name: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a chat background.
  */
 export interface ChatBackground {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the background
    */
   type: BackgroundType;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about checklist tasks marked as done or not done.
  */
 export interface ChecklistTasksDone {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the checklist whose tasks were marked as done or not done. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3355,22 +2628,11 @@ export interface ChecklistTasksDone {
    * Identifiers of the tasks that were marked as not done
    */
   marked_as_not_done_task_ids?: number[];
-</tbody>
-</table>
 }
 /**
  * Describes a service message about tasks added to a checklist.
  */
 export interface ChecklistTasksAdded {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the checklist to which the tasks were added. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3379,28 +2641,15 @@ export interface ChecklistTasksAdded {
    * List of tasks added to the checklist
    */
   tasks: ChecklistTask[];
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a chat being added to a community.
  */
 export interface CommunityChatAdded {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The new community to which the chat belongs
    */
   community: Community;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a chat being removed from a community. Currently holds no information.
@@ -3410,15 +2659,6 @@ export interface CommunityChatRemoved {}
  * This object represents a service message about a new forum topic created in the chat.
  */
 export interface ForumTopicCreated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Name of the topic
    */
@@ -3435,8 +2675,6 @@ export interface ForumTopicCreated {
    * <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
    */
   is_name_implicit?: true;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about a forum topic closed in the chat. Currently holds no information.
@@ -3446,15 +2684,6 @@ export interface ForumTopicClosed {}
  * This object represents a service message about an edited forum topic.
  */
 export interface ForumTopicEdited {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * New name of the topic, if it was edited
    */
@@ -3463,8 +2692,6 @@ export interface ForumTopicEdited {
    * New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed
    */
   icon_custom_emoji_id?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about a forum topic reopened in the chat. Currently holds no information.
@@ -3482,15 +2709,6 @@ export interface GeneralForumTopicUnhidden {}
  * This object contains information about a user that was shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.
  */
 export interface SharedUser {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means.
    */
@@ -3511,22 +2729,11 @@ export interface SharedUser {
    * Available sizes of the chat photo, if the photo was requested by the bot
    */
   photo?: PhotoSize[];
-</tbody>
-</table>
 }
 /**
  * This object contains information about the users whose identifiers were shared with the bot using a <a href="#keyboardbuttonrequestusers">KeyboardButtonRequestUsers</a> button.
  */
 export interface UsersShared {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier of the request
    */
@@ -3535,22 +2742,11 @@ export interface UsersShared {
    * Information about users shared with the bot
    */
   users: SharedUser[];
-</tbody>
-</table>
 }
 /**
  * This object contains information about a chat that was shared with the bot using a <a href="#keyboardbuttonrequestchat">KeyboardButtonRequestChat</a> button.
  */
 export interface ChatShared {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier of the request
    */
@@ -3571,22 +2767,11 @@ export interface ChatShared {
    * Available sizes of the chat photo, if the photo was requested by the bot
    */
   photo?: PhotoSize[];
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>.
  */
 export interface WriteAccessAllowed {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if the access was granted after the user accepted an explicit request from a Web App sent by the method <a href="/bots/webapps#initializing-mini-apps">requestWriteAccess</a>
    */
@@ -3599,28 +2784,15 @@ export interface WriteAccessAllowed {
    * <em>True</em>, if the access was granted when the bot was added to the attachment or side menu
    */
   from_attachment_menu?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about a video chat scheduled in the chat.
  */
 export interface VideoChatScheduled {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
    */
   start_date: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about a video chat started in the chat. Currently holds no information.
@@ -3630,75 +2802,33 @@ export interface VideoChatStarted {}
  * This object represents a service message about a video chat ended in the chat.
  */
 export interface VideoChatEnded {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Video chat duration in seconds
    */
   duration: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about new members invited to a video chat.
  */
 export interface VideoChatParticipantsInvited {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * New members that were invited to the video chat
    */
   users: User[];
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a change in the price of paid messages within a chat.
  */
 export interface PaidMessagePriceChanged {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The new number of Telegram Stars that must be paid by non-administrator users of the supergroup chat for each sent message
    */
   paid_message_star_count: number;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a change in the price of direct messages sent to a channel chat.
  */
 export interface DirectMessagePriceChanged {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if direct messages are enabled for the channel chat; <em>False</em> otherwise
    */
@@ -3707,22 +2837,11 @@ export interface DirectMessagePriceChanged {
    * The new number of Telegram Stars that must be paid by users for each direct message sent to the channel. Does not apply to users who have been exempted by administrators. Defaults to 0.
    */
   direct_message_star_count?: number;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about the approval of a suggested post.
  */
 export interface SuggestedPostApproved {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3735,22 +2854,11 @@ export interface SuggestedPostApproved {
    * Date when the post will be published
    */
   send_date: number;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about the failed approval of a suggested post. Currently, only caused by insufficient user funds at the time of approval.
  */
 export interface SuggestedPostApprovalFailed {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the suggested post whose approval has failed. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3759,22 +2867,11 @@ export interface SuggestedPostApprovalFailed {
    * Expected price of the post
    */
   price: SuggestedPostPrice;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about the rejection of a suggested post.
  */
 export interface SuggestedPostDeclined {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3783,22 +2880,11 @@ export interface SuggestedPostDeclined {
    * Comment with which the post was declined
    */
   comment?: string;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a successful payment for a suggested post.
  */
 export interface SuggestedPostPaid {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3815,22 +2901,11 @@ export interface SuggestedPostPaid {
    * The amount of Telegram Stars that was received by the channel; for payments in Telegram Stars only
    */
   star_amount?: StarAmount;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a payment refund for a suggested post.
  */
 export interface SuggestedPostRefunded {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Message containing the suggested post. Note that the <a href="#message">Message</a> object in this field will not contain the <em>reply_to_message</em> field even if it itself is a reply.
    */
@@ -3839,42 +2914,20 @@ export interface SuggestedPostRefunded {
    * Reason for the refund. Currently, one of “post_deleted” if the post was deleted within 24 hours of being posted or removed from scheduled messages without being posted, or “payment_refunded” if the payer refunded their payment.
    */
   reason: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about the creation of a scheduled giveaway.
  */
 export interface GiveawayCreated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
    */
   prize_star_count?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a message about a scheduled giveaway.
  */
 export interface Giveaway {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The list of chats which the user must join to participate in the giveaway
    */
@@ -3911,22 +2964,11 @@ export interface Giveaway {
    * The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only
    */
   premium_subscription_month_count?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a message about the completion of a giveaway with public winners.
  */
 export interface GiveawayWinners {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The chat that created the giveaway
    */
@@ -3975,22 +3017,11 @@ export interface GiveawayWinners {
    * Description of additional giveaway prize
    */
   prize_description?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a service message about the completion of a giveaway without public winners.
  */
 export interface GiveawayCompleted {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Number of winners in the giveaway
    */
@@ -4007,22 +3038,11 @@ export interface GiveawayCompleted {
    * <em>True</em>, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.
    */
   is_star_giveaway?: true;
-</tbody>
-</table>
 }
 /**
  * Describes the options used for link preview generation.
  */
 export interface LinkPreviewOptions {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if the link preview is disabled
    */
@@ -4043,22 +3063,11 @@ export interface LinkPreviewOptions {
    * <em>True</em>, if the link preview must be shown above the message text; otherwise, the link preview will be shown below the message text
    */
   show_above_text?: boolean;
-</tbody>
-</table>
 }
 /**
  * Describes the price of a suggested post.
  */
 export interface SuggestedPostPrice {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Currency in which the post will be paid. Currently, must be one of “XTR” for Telegram Stars or “TON” for TON grams.
    */
@@ -4067,22 +3076,11 @@ export interface SuggestedPostPrice {
    * The amount of the currency that will be paid for the post in the <em>smallest units</em> of the currency, i.e. Telegram Stars or nanograms. Currently, price in Telegram Stars must be between 5 and 100000, and price in nanograms must be between 10000000 and 10000000000000.
    */
   amount: number;
-</tbody>
-</table>
 }
 /**
  * Contains information about a suggested post.
  */
 export interface SuggestedPostInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * State of the suggested post. Currently, it can be one of “pending”, “approved”, “declined”.
    */
@@ -4095,22 +3093,11 @@ export interface SuggestedPostInfo {
    * Proposed send date of the post. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user or administrator who approves it.
    */
   send_date?: number;
-</tbody>
-</table>
 }
 /**
  * Contains parameters of a post that is being suggested by the bot.
  */
 export interface SuggestedPostParameters {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Proposed price for the post. If the field is omitted, then the post is unpaid.
    */
@@ -4119,22 +3106,11 @@ export interface SuggestedPostParameters {
    * Proposed send date of the post. If specified, then the date must be between 300 second and 2678400 seconds (30 days) in the future. If the field is omitted, then the post can be published at any time within 30 days at the sole discretion of the user who approves it.
    */
   send_date?: number;
-</tbody>
-</table>
 }
 /**
  * Describes a topic of a direct messages chat.
  */
 export interface DirectMessagesTopic {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the topic. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -4143,22 +3119,11 @@ export interface DirectMessagesTopic {
    * Information about the user that created the topic. Currently, it is always present.
    */
   user?: User;
-</tbody>
-</table>
 }
 /**
  * This object represent a user&#39;s profile pictures.
  */
 export interface UserProfilePhotos {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Total number of profile pictures the target user has
    */
@@ -4167,22 +3132,11 @@ export interface UserProfilePhotos {
    * Requested profile pictures (in up to 4 sizes each)
    */
   photos: PhotoSize[][];
-</tbody>
-</table>
 }
 /**
  * This object represents the audios displayed on a user&#39;s profile.
  */
 export interface UserProfileAudios {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Total number of profile audios for the target user
    */
@@ -4191,8 +3145,6 @@ export interface UserProfileAudios {
    * Requested profile audios
    */
   audios: Audio[];
-</tbody>
-</table>
 }
 /**
  * This object represents a file ready to be downloaded. The file can be downloaded via the link <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code>. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling <a href="#getfile">getFile</a>.
@@ -4200,15 +3152,6 @@ export interface UserProfileAudios {
  * > The maximum file size to download is 20 MB
  */
 export interface File {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -4225,42 +3168,20 @@ export interface File {
    * File path. Use <code>https://api.telegram.org/file/bot&lt;token&gt;/&lt;file_path&gt;</code> to get the file.
    */
   file_path?: string;
-</tbody>
-</table>
 }
 /**
  * Describes a <a href="/bots/webapps">Web App</a>.
  */
 export interface WebAppInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
    */
   url: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a <a href="/bots/features#keyboards">custom keyboard</a> with reply options (see <a href="/bots/features#keyboards">Introduction to bots</a> for details and examples). Not supported in channels and for messages sent on behalf of a business account.
  */
 export interface ReplyKeyboardMarkup {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Array of button rows, each represented by an Array of <a href="#keyboardbutton">KeyboardButton</a> objects
    */
@@ -4285,22 +3206,11 @@ export interface ReplyKeyboardMarkup {
    * Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user requests to change the bot&#39;s language, bot replies to the request with a keyboard to select the new language. Other users in the group don&#39;t see the keyboard.
    */
   selective?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents one button of the reply keyboard. At most one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button. For simple text buttons, <em>String</em> can be used instead of this object to specify the button text.
  */
 export interface KeyboardButton {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Text of the button. If none of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> are used, it will be sent as a message when the button is pressed.
    */
@@ -4341,22 +3251,11 @@ export interface KeyboardButton {
    * If specified, the described <a href="/bots/webapps">Web App</a> will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only.
    */
   web_app?: WebAppInfo;
-</tbody>
-</table>
 }
 /**
  * This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. <a href="/bots/features#chat-and-user-selection">More about requesting users »</a>
  */
 export interface KeyboardButtonRequestUsers {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Signed 32-bit identifier of the request that will be received back in the <a href="#usersshared">UsersShared</a> object. Must be unique within the message.
    */
@@ -4385,22 +3284,11 @@ export interface KeyboardButtonRequestUsers {
    * Pass <em>True</em> to request the users&#39; photos
    */
   request_photo?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. <a href="/bots/features#chat-and-user-selection">More about requesting chats »</a>.
  */
 export interface KeyboardButtonRequestChat {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Signed 32-bit identifier of the request, which will be received back in the <a href="#chatshared">ChatShared</a> object. Must be unique within the message.
    */
@@ -4445,22 +3333,11 @@ export interface KeyboardButtonRequestChat {
    * Pass <em>True</em> to request the chat&#39;s photo
    */
   request_photo?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object defines the parameters for the creation of a managed bot. Information about the created bot will be shared with the bot using the update <em>managed_bot</em> and a <a href="#message">Message</a> with the field <em>managed_bot_created</em>.
  */
 export interface KeyboardButtonRequestManagedBot {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Signed 32-bit identifier of the request. Must be unique within the message.
    */
@@ -4473,42 +3350,20 @@ export interface KeyboardButtonRequestManagedBot {
    * Suggested username for the bot
    */
   suggested_username?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.
  */
 export interface KeyboardButtonPollType {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * If <em>quiz</em> is passed, the user will be allowed to create only polls in the quiz mode. If <em>regular</em> is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.
    */
   type?: string;
-</tbody>
-</table>
 }
 /**
  * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>). Not supported in channels and for messages sent on behalf of a business account.
  */
 export interface ReplyKeyboardRemove {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use <em>one_time_keyboard</em> in <a href="#replykeyboardmarkup">ReplyKeyboardMarkup</a>)
    */
@@ -4517,42 +3372,20 @@ export interface ReplyKeyboardRemove {
    * Use this parameter if you want to remove the keyboard for specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.<br><br><em>Example:</em> A user votes in a poll, bot returns confirmation message in reply to the vote and removes the keyboard for that user, while still showing the keyboard with poll options to users who haven&#39;t voted yet.
    */
   selective?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents an <a href="/bots/features#inline-keyboards">inline keyboard</a> that appears right next to the message it belongs to.
  */
 export interface InlineKeyboardMarkup {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Array of button rows, each represented by an Array of <a href="#inlinekeyboardbutton">InlineKeyboardButton</a> objects
    */
   inline_keyboard: InlineKeyboardButton[][];
-</tbody>
-</table>
 }
 /**
  * This object represents one button of an inline keyboard. Exactly one of the fields other than <em>text</em>, <em>icon_custom_emoji_id</em>, and <em>style</em> must be used to specify the type of the button.
  */
 export interface InlineKeyboardButton {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Label text on the button
    */
@@ -4605,8 +3438,6 @@ export interface InlineKeyboardButton {
    * Specify <em>True</em>, to send a <a href="#payments">Pay button</a>. Substrings “<img class="emoji" src="//telegram.org/img/emoji/40/E2AD90.png" width="20" height="20" alt="⭐" />” and “XTR” in the buttons&#39;s text will be replaced with a Telegram Star icon.<br><br><strong>NOTE:</strong> This type of button <strong>must</strong> always be the first button in the first row and can only be used in invoice messages.
    */
   pay?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the <a href="/widgets/login">Telegram Login Widget</a> when the user is coming from Telegram. All the user needs to do is tap/click a button and confirm that they want to log in:
@@ -4618,15 +3449,6 @@ export interface InlineKeyboardButton {
  * > Sample bot: <a href="https://t.me/discussbot">@discussbot</a>
  */
 export interface LoginUrl {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in <a href="/widgets/login#receiving-authorization-data">Receiving authorization data</a>.<br><br><strong>NOTE:</strong> You <strong>must</strong> always check the hash of the received data to verify the authentication and the integrity of the data as described in <a href="/widgets/login#checking-authorization">Checking authorization</a>.
    */
@@ -4643,22 +3465,11 @@ export interface LoginUrl {
    * Pass <em>True</em> to request the permission for your bot to send messages to the user
    */
   request_write_access?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents an inline button that switches the current user to inline mode in a chosen chat, with an optional default inline query.
  */
 export interface SwitchInlineQueryChosenChat {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The default inline query to be inserted in the input field. If left empty, only the bot&#39;s username will be inserted.
    */
@@ -4679,28 +3490,15 @@ export interface SwitchInlineQueryChosenChat {
    * <em>True</em>, if channel chats can be chosen
    */
   allow_channel_chats?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents an inline keyboard button that copies specified text to the clipboard.
  */
 export interface CopyTextButton {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The text to be copied to the clipboard; 1-256 characters
    */
   text: string;
-</tbody>
-</table>
 }
 /**
  * This object represents an incoming callback query from a callback button in an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If the button that originated the query was attached to a message sent by the bot, the field <em>message</em> will be present. If the button was attached to a message sent via the bot (in <a href="#inline-mode">inline mode</a>), the field <em>inline_message_id</em> will be present. Exactly one of the fields <em>data</em> or <em>game_short_name</em> will be present.
@@ -4708,15 +3506,6 @@ export interface CopyTextButton {
  * > <strong>NOTE:</strong> After the user presses a callback button, Telegram clients will display a progress bar until you call <a href="#answercallbackquery">answerCallbackQuery</a>. It is, therefore, necessary to react by calling <a href="#answercallbackquery">answerCallbackQuery</a> even if no notification to the user is needed (e.g., without specifying any of the optional parameters).
  */
 export interface CallbackQuery {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier for this query
    */
@@ -4745,8 +3534,6 @@ export interface CallbackQuery {
    * Short name of a <a href="#games">Game</a> to be returned, serves as the unique identifier for the game
    */
   game_short_name?: string;
-</tbody>
-</table>
 }
 /**
  * Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot&#39;s message and tapped &#39;Reply&#39;). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice <a href="/bots/features#privacy-mode">privacy mode</a>. Not supported in channels and for messages sent on behalf of a user account.
@@ -4759,15 +3546,6 @@ export interface CallbackQuery {
  * > The last option is definitely more attractive. And if you use <a href="#forcereply">ForceReply</a> in your bot&#39;s questions, it will receive the user&#39;s answers even if it only receives replies, commands and mentions - without any extra work for the user.
  */
 export interface ForceReply {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Shows reply interface to the user, as if they manually selected the bot&#39;s message and tapped &#39;Reply&#39;
    */
@@ -4780,22 +3558,11 @@ export interface ForceReply {
    * Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the <em>text</em> of the <a href="#message">Message</a> object; 2) if the bot&#39;s message is a reply to a message in the same chat and forum topic, sender of the original message.
    */
   selective?: boolean;
-</tbody>
-</table>
 }
 /**
  * Represents a community (a group of chats).
  */
 export interface Community {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier for this community. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -4804,22 +3571,11 @@ export interface Community {
    * Name of the community
    */
   name: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a chat photo.
  */
 export interface ChatPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * File identifier of small (160x160) chat photo. This file_id can be used only for photo download and only for as long as the photo is not changed.
    */
@@ -4836,22 +3592,11 @@ export interface ChatPhoto {
    * Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can&#39;t be used to download or reuse the file.
    */
   big_file_unique_id: string;
-</tbody>
-</table>
 }
 /**
  * Represents an invite link for a chat.
  */
 export interface ChatInviteLink {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
    */
@@ -4896,22 +3641,11 @@ export interface ChatInviteLink {
    * The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link
    */
   subscription_price?: number;
-</tbody>
-</table>
 }
 /**
  * Represents the rights of an administrator in a chat.
  */
 export interface ChatAdministratorRights {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if the user&#39;s presence in the chat is hidden
    */
@@ -4980,22 +3714,11 @@ export interface ChatAdministratorRights {
    * <em>True</em>, if the administrator can edit the tags of regular members; for groups and supergroups only. If omitted, defaults to the value of can_pin_messages.
    */
   can_manage_tags?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents changes in the status of a chat member.
  */
 export interface ChatMemberUpdated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Chat the user belongs to
    */
@@ -5028,8 +3751,6 @@ export interface ChatMemberUpdated {
    * <em>True</em>, if the user joined the chat via a chat folder invite link
    */
   via_chat_folder_invite_link?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:
@@ -5052,15 +3773,6 @@ export type ChatMember =
  * Represents a <a href="#chatmember">chat member</a> that owns the chat and has all administrator privileges.
  */
 export interface ChatMemberOwner {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The member&#39;s status in the chat, always “creator”
    */
@@ -5077,22 +3789,11 @@ export interface ChatMemberOwner {
    * Custom title for this user
    */
   custom_title?: string;
-</tbody>
-</table>
 }
 /**
  * Represents a <a href="#chatmember">chat member</a> that has some additional privileges.
  */
 export interface ChatMemberAdministrator {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The member&#39;s status in the chat, always “administrator”
    */
@@ -5177,22 +3878,11 @@ export interface ChatMemberAdministrator {
    * Custom title for this user
    */
   custom_title?: string;
-</tbody>
-</table>
 }
 /**
  * Represents a <a href="#chatmember">chat member</a> that has no additional privileges or restrictions.
  */
 export interface ChatMemberMember {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The member&#39;s status in the chat, always “member”
    */
@@ -5209,22 +3899,11 @@ export interface ChatMemberMember {
    * Date when the user&#39;s subscription will expire; Unix time
    */
   until_date?: number;
-</tbody>
-</table>
 }
 /**
  * Represents a <a href="#chatmember">chat member</a> that is under certain restrictions in the chat. Supergroups only.
  */
 export interface ChatMemberRestricted {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The member&#39;s status in the chat, always “restricted”
    */
@@ -5309,22 +3988,11 @@ export interface ChatMemberRestricted {
    * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever.
    */
   until_date: number;
-</tbody>
-</table>
 }
 /**
  * Represents a <a href="#chatmember">chat member</a> that isn&#39;t currently a member of the chat, but may join it themselves.
  */
 export interface ChatMemberLeft {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The member&#39;s status in the chat, always “left”
    */
@@ -5333,22 +4001,11 @@ export interface ChatMemberLeft {
    * Information about the user
    */
   user: User;
-</tbody>
-</table>
 }
 /**
  * Represents a <a href="#chatmember">chat member</a> that was banned in the chat and can&#39;t return to the chat or view chat messages.
  */
 export interface ChatMemberBanned {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The member&#39;s status in the chat, always “kicked”
    */
@@ -5361,22 +4018,11 @@ export interface ChatMemberBanned {
    * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever.
    */
   until_date: number;
-</tbody>
-</table>
 }
 /**
  * Represents a join request sent to a chat.
  */
 export interface ChatJoinRequest {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Chat to which the request was sent
    */
@@ -5405,22 +4051,11 @@ export interface ChatJoinRequest {
    * Identifier of the join request query; for bots assigned to process join requests only. If present, then the bot must call <a href="#sendchatjoinrequestwebapp">sendChatJoinRequestWebApp</a> or directly call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> within 10 seconds.
    */
   query_id?: string;
-</tbody>
-</table>
 }
 /**
  * Describes actions that a non-administrator user is allowed to take in a chat.
  */
 export interface ChatPermissions {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if the user is allowed to send text messages, rich messages, contacts, giveaways, giveaway winners, invoices, locations and venues
    */
@@ -5485,22 +4120,11 @@ export interface ChatPermissions {
    * <em>True</em>, if the user is allowed to create forum topics. If omitted, defaults to the value of can_pin_messages.
    */
   can_manage_topics?: boolean;
-</tbody>
-</table>
 }
 /**
  * Describes the birthdate of a user.
  */
 export interface Birthdate {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Day of the user&#39;s birth; 1-31
    */
@@ -5513,22 +4137,11 @@ export interface Birthdate {
    * Year of the user&#39;s birth
    */
   year?: number;
-</tbody>
-</table>
 }
 /**
  * Contains information about the start page settings of a Telegram Business account.
  */
 export interface BusinessIntro {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Title text of the business intro
    */
@@ -5541,22 +4154,11 @@ export interface BusinessIntro {
    * Sticker of the business intro
    */
   sticker?: Sticker;
-</tbody>
-</table>
 }
 /**
  * Contains information about the location of a Telegram Business account.
  */
 export interface BusinessLocation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Address of the business
    */
@@ -5565,22 +4167,11 @@ export interface BusinessLocation {
    * Location of the business
    */
   location?: Location;
-</tbody>
-</table>
 }
 /**
  * Describes an interval of time during which a business is open.
  */
 export interface BusinessOpeningHoursInterval {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The minute&#39;s sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7 * 24 * 60
    */
@@ -5589,22 +4180,11 @@ export interface BusinessOpeningHoursInterval {
    * The minute&#39;s sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8 * 24 * 60
    */
   closing_minute: number;
-</tbody>
-</table>
 }
 /**
  * Describes the opening hours of a business.
  */
 export interface BusinessOpeningHours {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique name of the time zone for which the opening hours are defined
    */
@@ -5613,22 +4193,11 @@ export interface BusinessOpeningHours {
    * List of time intervals describing business opening hours
    */
   opening_hours: BusinessOpeningHoursInterval[];
-</tbody>
-</table>
 }
 /**
  * This object describes the rating of a user based on their Telegram Star spendings.
  */
 export interface UserRating {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Current level of the user, indicating their reliability when purchasing digital goods and services. A higher level suggests a more trustworthy customer; a negative level is likely reason for concern.
    */
@@ -5645,22 +4214,11 @@ export interface UserRating {
    * The rating value required to get to the next level; omitted if the maximum level was reached
    */
   next_level_rating?: number;
-</tbody>
-</table>
 }
 /**
  * Describes the position of a clickable area within a story.
  */
 export interface StoryAreaPosition {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The abscissa of the area&#39;s center, as a percentage of the media width
    */
@@ -5685,22 +4243,11 @@ export interface StoryAreaPosition {
    * The radius of the rectangle corner rounding, as a percentage of the media width
    */
   corner_radius_percentage: number;
-</tbody>
-</table>
 }
 /**
  * Describes the physical address of a location.
  */
 export interface LocationAddress {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The two-letter ISO 3166-1 alpha-2 country code of the country where the location is located
    */
@@ -5717,8 +4264,6 @@ export interface LocationAddress {
    * Street address of the location
    */
   street?: string;
-</tbody>
-</table>
 }
 /**
  * Describes the type of a clickable area on a story. Currently, it can be one of
@@ -5739,15 +4284,6 @@ export type StoryAreaType =
  * Describes a story area pointing to a location. Currently, a story can have up to 10 location areas.
  */
 export interface StoryAreaTypeLocation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the area, always “location”
    */
@@ -5764,22 +4300,11 @@ export interface StoryAreaTypeLocation {
    * Address of the location
    */
   address?: LocationAddress;
-</tbody>
-</table>
 }
 /**
  * Describes a story area pointing to a suggested reaction. Currently, a story can have up to 5 suggested reaction areas.
  */
 export interface StoryAreaTypeSuggestedReaction {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the area, always “suggested_reaction”
    */
@@ -5796,22 +4321,11 @@ export interface StoryAreaTypeSuggestedReaction {
    * Pass <em>True</em> if reaction area corner is flipped
    */
   is_flipped?: boolean;
-</tbody>
-</table>
 }
 /**
  * Describes a story area pointing to an HTTP or tg:// link. Currently, a story can have up to 3 link areas.
  */
 export interface StoryAreaTypeLink {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the area, always “link”
    */
@@ -5820,22 +4334,11 @@ export interface StoryAreaTypeLink {
    * HTTP or tg:// URL to be opened when the area is clicked
    */
   url: string;
-</tbody>
-</table>
 }
 /**
  * Describes a story area containing weather information. Currently, a story can have up to 3 weather areas.
  */
 export interface StoryAreaTypeWeather {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the area, always “weather”
    */
@@ -5852,22 +4355,11 @@ export interface StoryAreaTypeWeather {
    * A color of the area background in the ARGB format
    */
   background_color: number;
-</tbody>
-</table>
 }
 /**
  * Describes a story area pointing to a unique gift. Currently, a story can have at most 1 unique gift area.
  */
 export interface StoryAreaTypeUniqueGift {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the area, always “unique_gift”
    */
@@ -5876,22 +4368,11 @@ export interface StoryAreaTypeUniqueGift {
    * Unique name of the gift
    */
   name: string;
-</tbody>
-</table>
 }
 /**
  * Describes a clickable area on a story media.
  */
 export interface StoryArea {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Position of the area
    */
@@ -5900,22 +4381,11 @@ export interface StoryArea {
    * Type of the area
    */
   type: StoryAreaType;
-</tbody>
-</table>
 }
 /**
  * Represents a location to which a chat is connected.
  */
 export interface ChatLocation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The location to which the supergroup is connected. Can&#39;t be a live location.
    */
@@ -5924,8 +4394,6 @@ export interface ChatLocation {
    * Location address; 1-64 characters, as defined by the chat owner
    */
   address: string;
-</tbody>
-</table>
 }
 /**
  * This object describes the type of a reaction. Currently, it can be one of
@@ -5942,15 +4410,6 @@ export type ReactionType =
  * The reaction is based on an emoji.
  */
 export interface ReactionTypeEmoji {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the reaction, always “emoji”
    */
@@ -5959,22 +4418,11 @@ export interface ReactionTypeEmoji {
    * Reaction emoji. Currently, it can be one of &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29DA4.png" width="20" height="20" alt="❤" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918D.png" width="20" height="20" alt="👍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918E.png" width="20" height="20" alt="👎" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F94A5.png" width="20" height="20" alt="🔥" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B0.png" width="20" height="20" alt="🥰" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918F.png" width="20" height="20" alt="👏" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9881.png" width="20" height="20" alt="😁" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA494.png" width="20" height="20" alt="🤔" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AF.png" width="20" height="20" alt="🤯" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98B1.png" width="20" height="20" alt="😱" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AC.png" width="20" height="20" alt="🤬" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A2.png" width="20" height="20" alt="😢" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E89.png" width="20" height="20" alt="🎉" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A9.png" width="20" height="20" alt="🤩" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AE.png" width="20" height="20" alt="🤮" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F92A9.png" width="20" height="20" alt="💩" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F998F.png" width="20" height="20" alt="🙏" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F918C.png" width="20" height="20" alt="👌" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F958A.png" width="20" height="20" alt="🕊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A1.png" width="20" height="20" alt="🤡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B1.png" width="20" height="20" alt="🥱" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA5B4.png" width="20" height="20" alt="🥴" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F988D.png" width="20" height="20" alt="😍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F90B3.png" width="20" height="20" alt="🐳" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29DA4E2808DF09F94A5.png" width="20" height="20" alt="❤‍🔥" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8C9A.png" width="20" height="20" alt="🌚" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8CAD.png" width="20" height="20" alt="🌭" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F92AF.png" width="20" height="20" alt="💯" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A3.png" width="20" height="20" alt="🤣" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29AA1.png" width="20" height="20" alt="⚡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8D8C.png" width="20" height="20" alt="🍌" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8F86.png" width="20" height="20" alt="🏆" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9294.png" width="20" height="20" alt="💔" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4A8.png" width="20" height="20" alt="🤨" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9890.png" width="20" height="20" alt="😐" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8D93.png" width="20" height="20" alt="🍓" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8DBE.png" width="20" height="20" alt="🍾" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F928B.png" width="20" height="20" alt="💋" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9695.png" width="20" height="20" alt="🖕" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9888.png" width="20" height="20" alt="😈" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98B4.png" width="20" height="20" alt="😴" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98AD.png" width="20" height="20" alt="😭" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA493.png" width="20" height="20" alt="🤓" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91BB.png" width="20" height="20" alt="👻" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91A8E2808DF09F92BB.png" width="20" height="20" alt="👨‍💻" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9180.png" width="20" height="20" alt="👀" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E83.png" width="20" height="20" alt="🎃" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9988.png" width="20" height="20" alt="🙈" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9887.png" width="20" height="20" alt="😇" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A8.png" width="20" height="20" alt="😨" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA49D.png" width="20" height="20" alt="🤝" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29C8D.png" width="20" height="20" alt="✍" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA497.png" width="20" height="20" alt="🤗" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FABA1.png" width="20" height="20" alt="🫡" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E85.png" width="20" height="20" alt="🎅" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8E84.png" width="20" height="20" alt="🎄" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/E29883.png" width="20" height="20" alt="☃" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9285.png" width="20" height="20" alt="💅" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4AA.png" width="20" height="20" alt="🤪" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F97BF.png" width="20" height="20" alt="🗿" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F8692.png" width="20" height="20" alt="🆒" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9298.png" width="20" height="20" alt="💘" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9989.png" width="20" height="20" alt="🙉" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA684.png" width="20" height="20" alt="🦄" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F9898.png" width="20" height="20" alt="😘" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F928A.png" width="20" height="20" alt="💊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F998A.png" width="20" height="20" alt="🙊" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F988E.png" width="20" height="20" alt="😎" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F91BE.png" width="20" height="20" alt="👾" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7E2808DE29982.png" width="20" height="20" alt="🤷‍♂" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7.png" width="20" height="20" alt="🤷" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09FA4B7E2808DE29980.png" width="20" height="20" alt="🤷‍♀" />&quot;, &quot;<img class="emoji" src="//telegram.org/img/emoji/40/F09F98A1.png" width="20" height="20" alt="😡" />&quot;.
    */
   emoji: string;
-</tbody>
-</table>
 }
 /**
  * The reaction is based on a custom emoji.
  */
 export interface ReactionTypeCustomEmoji {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the reaction, always “custom_emoji”
    */
@@ -5983,42 +4431,20 @@ export interface ReactionTypeCustomEmoji {
    * Custom emoji identifier
    */
   custom_emoji_id: string;
-</tbody>
-</table>
 }
 /**
  * The reaction is paid.
  */
 export interface ReactionTypePaid {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the reaction, always “paid”
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Represents a reaction added to a message along with the number of times it was added.
  */
 export interface ReactionCount {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the reaction
    */
@@ -6027,22 +4453,11 @@ export interface ReactionCount {
    * Number of times the reaction was added
    */
   total_count: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a change of a reaction on a message performed by a user.
  */
 export interface MessageReactionUpdated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The chat containing the message the user reacted to
    */
@@ -6071,22 +4486,11 @@ export interface MessageReactionUpdated {
    * New list of reaction types that have been set by the user
    */
   new_reaction: ReactionType[];
-</tbody>
-</table>
 }
 /**
  * This object represents reaction changes on a message with anonymous reactions.
  */
 export interface MessageReactionCountUpdated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The chat containing the message
    */
@@ -6103,22 +4507,11 @@ export interface MessageReactionCountUpdated {
    * List of reactions that are present on the message
    */
   reactions: ReactionCount[];
-</tbody>
-</table>
 }
 /**
  * This object represents a forum topic.
  */
 export interface ForumTopic {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the forum topic
    */
@@ -6139,22 +4532,11 @@ export interface ForumTopic {
    * <em>True</em>, if the name of the topic wasn&#39;t specified explicitly by its creator and likely needs to be changed by the bot
    */
   is_name_implicit?: true;
-</tbody>
-</table>
 }
 /**
  * This object describes the background of a gift.
  */
 export interface GiftBackground {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Center color of the background in RGB format
    */
@@ -6167,22 +4549,11 @@ export interface GiftBackground {
    * Text color of the background in RGB format
    */
   text_color: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a gift that can be sent by the bot.
  */
 export interface Gift {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the gift
    */
@@ -6235,42 +4606,20 @@ export interface Gift {
    * Information about the chat that published the gift
    */
   publisher_chat?: Chat;
-</tbody>
-</table>
 }
 /**
  * This object represent a list of gifts.
  */
 export interface Gifts {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The list of gifts
    */
   gifts: Gift[];
-</tbody>
-</table>
 }
 /**
  * This object describes the model of a unique gift.
  */
 export interface UniqueGiftModel {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Name of the model
    */
@@ -6287,22 +4636,11 @@ export interface UniqueGiftModel {
    * Rarity of the model if it is a crafted model. Currently, can be “uncommon”, “rare”, “epic”, or “legendary”.
    */
   rarity?: string;
-</tbody>
-</table>
 }
 /**
  * This object describes the symbol shown on the pattern of a unique gift.
  */
 export interface UniqueGiftSymbol {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Name of the symbol
    */
@@ -6315,22 +4653,11 @@ export interface UniqueGiftSymbol {
    * The number of unique gifts that receive this model for every 1000 gifts upgraded
    */
   rarity_per_mille: number;
-</tbody>
-</table>
 }
 /**
  * This object describes the colors of the backdrop of a unique gift.
  */
 export interface UniqueGiftBackdropColors {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The color in the center of the backdrop in RGB format
    */
@@ -6347,22 +4674,11 @@ export interface UniqueGiftBackdropColors {
    * The color for the text on the backdrop in RGB format
    */
   text_color: number;
-</tbody>
-</table>
 }
 /**
  * This object describes the backdrop of a unique gift.
  */
 export interface UniqueGiftBackdrop {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Name of the backdrop
    */
@@ -6375,22 +4691,11 @@ export interface UniqueGiftBackdrop {
    * The number of unique gifts that receive this backdrop for every 1000 gifts upgraded
    */
   rarity_per_mille: number;
-</tbody>
-</table>
 }
 /**
  * This object contains information about the color scheme for a user&#39;s name, message replies and link previews based on a unique gift.
  */
 export interface UniqueGiftColors {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Custom emoji identifier of the unique gift&#39;s model
    */
@@ -6415,22 +4720,11 @@ export interface UniqueGiftColors {
    * List of 1-3 additional colors used in dark themes; RGB format
    */
   dark_theme_other_colors: number[];
-</tbody>
-</table>
 }
 /**
  * This object describes a unique gift that was upgraded from a regular gift.
  */
 export interface UniqueGift {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier of the regular gift from which the gift was upgraded
    */
@@ -6479,22 +4773,11 @@ export interface UniqueGift {
    * Information about the chat that published the gift
    */
   publisher_chat?: Chat;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a regular gift that was sent or received.
  */
 export interface GiftInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Information about the gift
    */
@@ -6535,22 +4818,11 @@ export interface GiftInfo {
    * Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.
    */
   unique_gift_number?: number;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about a unique gift that was sent or received.
  */
 export interface UniqueGiftInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Information about the gift
    */
@@ -6579,8 +4851,6 @@ export interface UniqueGiftInfo {
    * Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now.
    */
   next_transfer_date?: number;
-</tbody>
-</table>
 }
 /**
  * This object describes a gift received and owned by a user or a chat. Currently, it can be one of
@@ -6595,15 +4865,6 @@ export type OwnedGift =
  * Describes a regular gift owned by a user or a chat.
  */
 export interface OwnedGiftRegular {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the gift, always “regular”
    */
@@ -6664,22 +4925,11 @@ export interface OwnedGiftRegular {
    * Unique number reserved for this gift when upgraded. See the <em>number</em> field in <a href="#uniquegift">UniqueGift</a>.
    */
   unique_gift_number?: number;
-</tbody>
-</table>
 }
 /**
  * Describes a unique gift received and owned by a user or a chat.
  */
 export interface OwnedGiftUnique {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the gift, always “unique”
    */
@@ -6716,22 +4966,11 @@ export interface OwnedGiftUnique {
    * Point in time (Unix timestamp) when the gift can be transferred. If it is in the past, then the gift can be transferred now.
    */
   next_transfer_date?: number;
-</tbody>
-</table>
 }
 /**
  * Contains the list of gifts received and owned by a user or a chat.
  */
 export interface OwnedGifts {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The total number of gifts owned by the user or the chat
    */
@@ -6744,22 +4983,11 @@ export interface OwnedGifts {
    * Offset for the next request. If empty, then there are no more results.
    */
   next_offset?: string;
-</tbody>
-</table>
 }
 /**
  * This object describes the access settings of a bot.
  */
 export interface BotAccessSettings {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if only selected users can access the bot. The bot&#39;s owner can always access it.
    */
@@ -6768,22 +4996,11 @@ export interface BotAccessSettings {
    * The list of other users who have access to the bot if the access is restricted
    */
   added_users?: User[];
-</tbody>
-</table>
 }
 /**
  * This object describes the types of gifts that can be gifted to a user or a chat.
  */
 export interface AcceptedGiftTypes {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if unlimited regular gifts are accepted
    */
@@ -6804,22 +5021,11 @@ export interface AcceptedGiftTypes {
    * <em>True</em>, if transfers of unique gifts from channels are accepted
    */
   gifts_from_channels: boolean;
-</tbody>
-</table>
 }
 /**
  * Describes an amount of Telegram Stars.
  */
 export interface StarAmount {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Integer amount of Telegram Stars, rounded to 0; can be negative
    */
@@ -6828,22 +5034,11 @@ export interface StarAmount {
    * The number of 1/1000000000 shares of Telegram Stars; from -999999999 to 999999999; can be negative if and only if <em>amount</em> is non-positive
    */
   nanostar_amount?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a bot command.
  */
 export interface BotCommand {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores.
    */
@@ -6856,8 +5051,6 @@ export interface BotCommand {
    * <em>True</em>, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
    */
   is_ephemeral?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object represents the scope to which bot commands are applied. Currently, the following 7 scopes are supported:
@@ -6908,95 +5101,42 @@ export type BotCommandScope =
  * Represents the default <a href="#botcommandscope">scope</a> of bot commands. Default commands are used if no commands with a <a href="#determining-list-of-commands">narrower scope</a> are specified for the user.
  */
 export interface BotCommandScopeDefault {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Scope type, must be <em>default</em>
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all private chats.
  */
 export interface BotCommandScopeAllPrivateChats {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Scope type, must be <em>all_private_chats</em>
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chats.
  */
 export interface BotCommandScopeAllGroupChats {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Scope type, must be <em>all_group_chats</em>
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all group and supergroup chat administrators.
  */
 export interface BotCommandScopeAllChatAdministrators {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Scope type, must be <em>all_chat_administrators</em>
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific chat.
  */
 export interface BotCommandScopeChat {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Scope type, must be <em>chat</em>
    */
@@ -7005,22 +5145,11 @@ export interface BotCommandScopeChat {
    * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
    */
   chat_id: number | string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering all administrators of a specific group or supergroup chat.
  */
 export interface BotCommandScopeChatAdministrators {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Scope type, must be <em>chat_administrators</em>
    */
@@ -7029,22 +5158,11 @@ export interface BotCommandScopeChatAdministrators {
    * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>. Channel direct messages chats and channel chats aren&#39;t supported.
    */
   chat_id: number | string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#botcommandscope">scope</a> of bot commands, covering a specific member of a group or supergroup chat.
  */
 export interface BotCommandScopeChatMember {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Scope type, must be <em>chat_member</em>
    */
@@ -7057,68 +5175,33 @@ export interface BotCommandScopeChatMember {
    * Unique identifier of the target user
    */
   user_id: number;
-</tbody>
-</table>
 }
 /**
  * This object represents the bot&#39;s name.
  */
 export interface BotName {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The bot&#39;s name
    */
   name: string;
-</tbody>
-</table>
 }
 /**
  * This object represents the bot&#39;s description.
  */
 export interface BotDescription {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The bot&#39;s description
    */
   description: string;
-</tbody>
-</table>
 }
 /**
  * This object represents the bot&#39;s short description.
  */
 export interface BotShortDescription {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The bot&#39;s short description
    */
   short_description: string;
-</tbody>
-</table>
 }
 /**
  * This object describes the bot&#39;s menu button in a private chat. It should be one of
@@ -7136,35 +5219,15 @@ export type MenuButton =
  * Represents a menu button, which opens the bot&#39;s list of commands.
  */
 export interface MenuButtonCommands {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the button, must be <em>commands</em>
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Represents a menu button, which launches a <a href="/bots/webapps">Web App</a>.
  */
 export interface MenuButtonWebApp {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the button, must be <em>web_app</em>
    */
@@ -7177,28 +5240,15 @@ export interface MenuButtonWebApp {
    * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method <a href="#answerwebappquery">answerWebAppQuery</a>. Alternatively, a <code>t.me</code> link to a Web App of the bot can be specified in the object instead of the Web App&#39;s URL, in which case the Web App will be opened as if the user pressed the link.
    */
   web_app: WebAppInfo;
-</tbody>
-</table>
 }
 /**
  * Describes that no specific value for the menu button was set.
  */
 export interface MenuButtonDefault {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the button, must be <em>default</em>
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * This object describes the source of a chat boost. It can be one of
@@ -7215,15 +5265,6 @@ export type ChatBoostSource =
  * The boost was obtained by subscribing to Telegram Premium or by gifting a Telegram Premium subscription to another user.
  */
 export interface ChatBoostSourcePremium {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Source of the boost, always “premium”
    */
@@ -7232,22 +5273,11 @@ export interface ChatBoostSourcePremium {
    * User that boosted the chat
    */
   user: User;
-</tbody>
-</table>
 }
 /**
  * The boost was obtained by the creation of Telegram Premium gift codes to boost a chat. Each such code boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription.
  */
 export interface ChatBoostSourceGiftCode {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Source of the boost, always “gift_code”
    */
@@ -7256,22 +5286,11 @@ export interface ChatBoostSourceGiftCode {
    * User for which the gift code was created
    */
   user: User;
-</tbody>
-</table>
 }
 /**
  * The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway. This boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription for Telegram Premium giveaways and <em>prize_star_count</em> / 500 times for one year for Telegram Star giveaways.
  */
 export interface ChatBoostSourceGiveaway {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Source of the boost, always “giveaway”
    */
@@ -7292,22 +5311,11 @@ export interface ChatBoostSourceGiveaway {
    * <em>True</em>, if the giveaway was completed, but there was no user to win the prize
    */
   is_unclaimed?: true;
-</tbody>
-</table>
 }
 /**
  * This object contains information about a chat boost.
  */
 export interface ChatBoost {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the boost
    */
@@ -7324,22 +5332,11 @@ export interface ChatBoost {
    * Source of the added boost
    */
   source: ChatBoostSource;
-</tbody>
-</table>
 }
 /**
  * This object represents a boost added to a chat or changed.
  */
 export interface ChatBoostUpdated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Chat which was boosted
    */
@@ -7348,22 +5345,11 @@ export interface ChatBoostUpdated {
    * Information about the chat boost
    */
   boost: ChatBoost;
-</tbody>
-</table>
 }
 /**
  * This object represents a boost removed from a chat.
  */
 export interface ChatBoostRemoved {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Chat which was boosted
    */
@@ -7380,82 +5366,38 @@ export interface ChatBoostRemoved {
    * Source of the removed boost
    */
   source: ChatBoostSource;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about the chat owner leaving the chat.
  */
 export interface ChatOwnerLeft {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The user who will become the new owner of the chat if the previous owner does not return to the chat
    */
   new_owner?: User;
-</tbody>
-</table>
 }
 /**
  * Describes a service message about an ownership change in the chat.
  */
 export interface ChatOwnerChanged {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The new owner of the chat
    */
   new_owner: User;
-</tbody>
-</table>
 }
 /**
  * This object represents a list of boosts added to a chat by a user.
  */
 export interface UserChatBoosts {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The list of boosts added to the chat by the user
    */
   boosts: ChatBoost[];
-</tbody>
-</table>
 }
 /**
  * Represents the rights of a business bot.
  */
 export interface BusinessBotRights {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * <em>True</em>, if the bot can send and edit messages in the private chats that had incoming messages in the last 24 hours
    */
@@ -7512,22 +5454,11 @@ export interface BusinessBotRights {
    * <em>True</em>, if the bot can post, edit and delete stories on behalf of the business account
    */
   can_manage_stories?: true;
-</tbody>
-</table>
 }
 /**
  * Describes the connection of the bot with a business account.
  */
 export interface BusinessConnection {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the business connection
    */
@@ -7552,22 +5483,11 @@ export interface BusinessConnection {
    * <em>True</em>, if the connection is active
    */
   is_enabled: boolean;
-</tbody>
-</table>
 }
 /**
  * This object is received when messages are deleted from a connected business account.
  */
 export interface BusinessMessagesDeleted {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the business connection
    */
@@ -7580,62 +5500,29 @@ export interface BusinessMessagesDeleted {
    * The list of identifiers of deleted messages in the chat of the business account
    */
   message_ids: number[];
-</tbody>
-</table>
 }
 /**
  * Describes an inline message sent by a <a href="/bots/webapps">Web App</a> on behalf of a user.
  */
 export interface SentWebAppMessage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier of the sent inline message. Available only if there is an <a href="#inlinekeyboardmarkup">inline keyboard</a> attached to the message.
    */
   inline_message_id?: string;
-</tbody>
-</table>
 }
 /**
  * Describes an inline message sent by a guest bot.
  */
 export interface SentGuestMessage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier of the sent inline message
    */
   inline_message_id: string;
-</tbody>
-</table>
 }
 /**
  * Describes an inline message to be sent by a user of a Mini App.
  */
 export interface PreparedInlineMessage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the prepared message
    */
@@ -7644,42 +5531,20 @@ export interface PreparedInlineMessage {
    * Expiration date of the prepared message, in Unix time. Expired prepared messages can no longer be used.
    */
   expiration_date: number;
-</tbody>
-</table>
 }
 /**
  * Describes a keyboard button to be used by a user of a Mini App.
  */
 export interface PreparedKeyboardButton {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the keyboard button
    */
   id: string;
-</tbody>
-</table>
 }
 /**
  * Describes why a request was unsuccessful.
  */
 export interface ResponseParameters {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
    */
@@ -7688,8 +5553,6 @@ export interface ResponseParameters {
    * In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
    */
   retry_after?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents the content of a media message to be sent. It should be one of
@@ -7712,15 +5575,6 @@ export type InputMedia =
  * Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.
  */
 export interface InputMediaAnimation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>animation</em>
    */
@@ -7765,22 +5619,11 @@ export interface InputMediaAnimation {
    * Pass <em>True</em> if the animation needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
-</tbody>
-</table>
 }
 /**
  * Represents an audio file to be treated as music to be sent.
  */
 export interface InputMediaAudio {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>audio</em>
    */
@@ -7817,22 +5660,11 @@ export interface InputMediaAudio {
    * Title of the audio
    */
   title?: string;
-</tbody>
-</table>
 }
 /**
  * Represents a general file to be sent.
  */
 export interface InputMediaDocument {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>document</em>
    */
@@ -7861,22 +5693,11 @@ export interface InputMediaDocument {
    * Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always <em>True</em>, if the document is sent as part of an album.
    */
   disable_content_type_detection?: boolean;
-</tbody>
-</table>
 }
 /**
  * Represents an HTTP link to be sent.
  */
 export interface InputMediaLink {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>link</em>
    */
@@ -7885,22 +5706,11 @@ export interface InputMediaLink {
    * HTTP URL of the link
    */
   url: string;
-</tbody>
-</table>
 }
 /**
  * Represents a live photo to be sent.
  */
 export interface InputMediaLivePhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>live_photo</em>
    */
@@ -7933,22 +5743,11 @@ export interface InputMediaLivePhoto {
    * Pass <em>True</em> if the live photo needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
-</tbody>
-</table>
 }
 /**
  * Represents a location to be sent.
  */
 export interface InputMediaLocation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>location</em>
    */
@@ -7965,22 +5764,11 @@ export interface InputMediaLocation {
    * The radius of uncertainty for the location, measured in meters; 0-1500
    */
   horizontal_accuracy?: number;
-</tbody>
-</table>
 }
 /**
  * Represents a photo to be sent.
  */
 export interface InputMediaPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>photo</em>
    */
@@ -8009,22 +5797,11 @@ export interface InputMediaPhoto {
    * Pass <em>True</em> if the photo needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
-</tbody>
-</table>
 }
 /**
  * Represents a sticker file to be sent.
  */
 export interface InputMediaSticker {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>sticker</em>
    */
@@ -8037,22 +5814,11 @@ export interface InputMediaSticker {
    * Emoji associated with the sticker; only for just uploaded stickers
    */
   emoji?: string;
-</tbody>
-</table>
 }
 /**
  * Represents a venue to be sent.
  */
 export interface InputMediaVenue {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>venue</em>
    */
@@ -8089,22 +5855,11 @@ export interface InputMediaVenue {
    * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
    */
   google_place_type?: string;
-</tbody>
-</table>
 }
 /**
  * Represents a video to be sent.
  */
 export interface InputMediaVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>video</em>
    */
@@ -8161,22 +5916,11 @@ export interface InputMediaVideo {
    * Pass <em>True</em> if the video needs to be covered with a spoiler animation
    */
   has_spoiler?: boolean;
-</tbody>
-</table>
 }
 /**
  * Represents a voice message file to be sent.
  */
 export interface InputMediaVoiceNote {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>voice_note</em>
    */
@@ -8201,8 +5945,6 @@ export interface InputMediaVoiceNote {
    * Duration of the voice message in seconds
    */
   duration?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser.
@@ -8223,15 +5965,6 @@ export type InputPaidMedia =
  * The paid media to send is a live photo.
  */
 export interface InputPaidMediaLivePhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>live_photo</em>
    */
@@ -8244,22 +5977,11 @@ export interface InputPaidMediaLivePhoto {
    * The static photo to send. Pass a file_id to send a file that exists on the Telegram servers (recommended) or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
    */
   photo: string;
-</tbody>
-</table>
 }
 /**
  * The paid media to send is a photo.
  */
 export interface InputPaidMediaPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>photo</em>
    */
@@ -8268,22 +5990,11 @@ export interface InputPaidMediaPhoto {
    * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a>
    */
   media: string;
-</tbody>
-</table>
 }
 /**
  * The paid media to send is a video.
  */
 export interface InputPaidMediaVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the media, must be <em>video</em>
    */
@@ -8320,8 +6031,6 @@ export interface InputPaidMediaVideo {
    * Pass <em>True</em> if the uploaded video is suitable for streaming
    */
   supports_streaming?: boolean;
-</tbody>
-</table>
 }
 /**
  * This object describes a profile photo to set. Currently, it can be one of
@@ -8336,15 +6045,6 @@ export type InputProfilePhoto =
  * A static profile photo in the .JPG format.
  */
 export interface InputProfilePhotoStatic {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the profile photo, must be <em>static</em>
    */
@@ -8353,22 +6053,11 @@ export interface InputProfilePhotoStatic {
    * The static profile photo. Profile photos can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
   photo: string;
-</tbody>
-</table>
 }
 /**
  * An animated profile photo in the MPEG4 format.
  */
 export interface InputProfilePhotoAnimated {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the profile photo, must be <em>animated</em>
    */
@@ -8381,8 +6070,6 @@ export interface InputProfilePhotoAnimated {
    * Timestamp in seconds of the frame that will be used as the static profile photo. Defaults to 0.0.
    */
   main_frame_timestamp?: number;
-</tbody>
-</table>
 }
 /**
  * This object describes the content of a story to post. Currently, it can be one of
@@ -8397,15 +6084,6 @@ export type InputStoryContent =
  * Describes a photo to post as a story.
  */
 export interface InputStoryContentPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the content, must be <em>photo</em>
    */
@@ -8414,22 +6092,11 @@ export interface InputStoryContentPhoto {
    * The photo to post as a story. The photo must be of the size 1080x1920 and must not exceed 10 MB. The photo can&#39;t be reused and can only be uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the photo was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
    */
   photo: string;
-</tbody>
-</table>
 }
 /**
  * Describes a video to post as a story.
  */
 export interface InputStoryContentVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the content, must be <em>video</em>
    */
@@ -8450,8 +6117,6 @@ export interface InputStoryContentVideo {
    * Pass <em>True</em> if the video has no sound
    */
   is_animation?: boolean;
-</tbody>
-</table>
 }
 <h4><a class="anchor" name="sending-files" href="#sending-files"><i class="anchor-icon"></i></a>Sending files</h4>
 <p>There are three ways to send files (photos, stickers, audio, media, etc.):</p>
@@ -8552,16 +6217,6 @@ export interface ApiMethods {
    * Use this method to send text messages. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -8630,8 +6285,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 <h4><a class="anchor" name="formatting-options" href="#formatting-options"><i class="anchor-icon"></i></a>Formatting options</h4>
@@ -8787,16 +6440,6 @@ export interface ApiMethods {
    * Use this method to forward messages of any kind. Service messages and messages with protected content can&#39;t be forwarded. On success, the sent <a href="#message">Message</a> is returned.
    */
   forwardMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -8837,8 +6480,6 @@ export interface ApiMethods {
      * Message identifier in the chat specified in <em>from_chat_id</em>
      */
     message_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -8846,16 +6487,6 @@ export interface ApiMethods {
    * Use this method to forward multiple messages of any kind. If some of the specified messages can&#39;t be found or forwarded, they are skipped. Service messages and messages with protected content can&#39;t be forwarded. Album grouping is kept for forwarded messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
    */
   forwardMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -8884,8 +6515,6 @@ export interface ApiMethods {
      * Protects the contents of the forwarded messages from forwarding and saving
      */
     protect_content?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -8893,16 +6522,6 @@ export interface ApiMethods {
    * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessage">forwardMessage</a>, but the copied message doesn&#39;t have a link to the original message. Returns the <a href="#messageid">MessageId</a> of the sent message on success.
    */
   copyMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -8971,8 +6590,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -8980,16 +6597,6 @@ export interface ApiMethods {
    * Use this method to copy messages of any kind. If some of the specified messages can&#39;t be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can&#39;t be copied. A quiz <a href="#poll">poll</a> can be copied only if the value of the field <em>correct_option_ids</em> is known to the bot. The method is analogous to the method <a href="#forwardmessages">forwardMessages</a>, but the copied messages don&#39;t have a link to the original message. Album grouping is kept for copied messages. On success, an Array of <a href="#messageid">MessageId</a> of the sent messages is returned.
    */
   copyMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -9022,8 +6629,6 @@ export interface ApiMethods {
      * Pass <em>True</em> to copy the messages without their captions
      */
     remove_caption?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9031,16 +6636,6 @@ export interface ApiMethods {
    * Use this method to send photos. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendPhoto(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9117,8 +6712,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9126,16 +6719,6 @@ export interface ApiMethods {
    * Use this method to send live photos. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendLivePhoto(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9216,8 +6799,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9227,16 +6808,6 @@ export interface ApiMethods {
    * For sending voice messages, use the <a href="#sendvoice">sendVoice</a> method instead.
    */
   sendAudio(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9321,8 +6892,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9330,16 +6899,6 @@ export interface ApiMethods {
    * Use this method to send general files. On success, the sent <a href="#message">Message</a> is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
    */
   sendDocument(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9416,8 +6975,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9425,16 +6982,6 @@ export interface ApiMethods {
    * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
    */
   sendVideo(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9539,8 +7086,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9548,16 +7093,6 @@ export interface ApiMethods {
    * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
    */
   sendAnimation(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9650,8 +7185,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9659,16 +7192,6 @@ export interface ApiMethods {
    * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as <a href="#audio">Audio</a> or <a href="#document">Document</a>). On success, the sent <a href="#message">Message</a> is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
    */
   sendVoice(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9741,8 +7264,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9750,16 +7271,6 @@ export interface ApiMethods {
    * As of <a href="https://telegram.org/blog/video-messages-and-telescope">v.4.0</a>, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendVideoNote(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9828,8 +7339,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9837,16 +7346,6 @@ export interface ApiMethods {
    * Use this method to send paid media. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendPaidMedia(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9915,8 +7414,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9924,16 +7421,6 @@ export interface ApiMethods {
    * Use this method to send a group of photos, live photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an Array of <a href="#message">Message</a> objects that were sent is returned.
    */
   sendMediaGroup(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -9974,8 +7461,6 @@ export interface ApiMethods {
      * Description of the message to reply to
      */
     reply_parameters?: ReplyParameters;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -9983,16 +7468,6 @@ export interface ApiMethods {
    * Use this method to send point on the map. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendLocation(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -10069,8 +7544,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10078,16 +7551,6 @@ export interface ApiMethods {
    * Use this method to send information about a venue. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendVenue(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -10172,8 +7635,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10181,16 +7642,6 @@ export interface ApiMethods {
    * Use this method to send phone contacts. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendContact(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -10259,8 +7710,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10268,16 +7717,6 @@ export interface ApiMethods {
    * Use this method to send a native poll. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendPoll(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -10414,8 +7853,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10423,16 +7860,6 @@ export interface ApiMethods {
    * Use this method to send a checklist on behalf of a connected business account. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendChecklist(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -10465,8 +7892,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10474,16 +7899,6 @@ export interface ApiMethods {
    * Use this method to send an animated emoji that will display a random value. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendDice(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -10532,8 +7947,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10541,16 +7954,6 @@ export interface ApiMethods {
    * Use this method to stream a partial message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendmessage">sendMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
    */
   sendMessageDraft(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target private chat
      */
@@ -10575,8 +7978,6 @@ export interface ApiMethods {
      * A JSON-serialized list of special entities that appear in message text, which can be specified instead of <em>parse_mode</em>
      */
     entities?: MessageEntity[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10587,16 +7988,6 @@ export interface ApiMethods {
    */
   sendChatAction(args: {
 <p>We only recommend using this method when a response from the bot will take a <strong>noticeable</strong> amount of time to arrive.</p>
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the action will be sent
      */
@@ -10620,16 +8011,6 @@ export interface ApiMethods {
    * Use this method to change the chosen reactions on a message. Service messages of some types can&#39;t be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can&#39;t use paid reactions. Returns <em>True</em> on success.
    */
   setMessageReaction(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -10646,8 +8027,6 @@ export interface ApiMethods {
      * Pass <em>True</em> to set the reaction with a big animation
      */
     is_big?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10655,16 +8034,6 @@ export interface ApiMethods {
    * Use this method to get a list of profile pictures for a user. Returns a <a href="#userprofilephotos">UserProfilePhotos</a> object.
    */
   getUserProfilePhotos(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user
      */
@@ -10677,8 +8046,6 @@ export interface ApiMethods {
      * Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
      */
     limit?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10686,16 +8053,6 @@ export interface ApiMethods {
    * Use this method to get a list of profile audios for a user. Returns a <a href="#userprofileaudios">UserProfileAudios</a> object.
    */
   getUserProfileAudios(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user
      */
@@ -10708,8 +8065,6 @@ export interface ApiMethods {
      * Limits the number of audios to be retrieved. Values between 1-100 are accepted. Defaults to 100.
      */
     limit?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10717,16 +8072,6 @@ export interface ApiMethods {
    * Changes the emoji status for a given user that previously allowed the bot to manage their emoji status via the Mini App method <a href="/bots/webapps#initializing-mini-apps">requestEmojiStatusAccess</a>. Returns <em>True</em> on success.
    */
   setUserEmojiStatus(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user
      */
@@ -10739,8 +8084,6 @@ export interface ApiMethods {
      * Expiration date of the emoji status, if any
      */
     emoji_status_expiration_date?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10750,22 +8093,10 @@ export interface ApiMethods {
    * <strong>Note:</strong> This function may not preserve the original file name and MIME type. You should save the file&#39;s MIME type and name (if available) when the File object is received.
    */
   getFile(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * File identifier to get information about
      */
     file_id: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10773,16 +8104,6 @@ export interface ApiMethods {
    * Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless <a href="#unbanchatmember">unbanned</a> first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
    */
   banChatMember(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code>
      */
@@ -10799,8 +8120,6 @@ export interface ApiMethods {
      * Pass <em>True</em> to delete all messages from the chat for the user that is being removed. If <em>False</em>, the user will be able to see messages in the group that were sent before the user was removed. Always <em>True</em> for supergroups and channels.
      */
     revoke_messages?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10808,16 +8127,6 @@ export interface ApiMethods {
    * Use this method to unban a previously banned user in a supergroup or channel. The user will <strong>not</strong> return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. By default, this method guarantees that after the call the user is not a member of the chat, but will be able to join it. So if the user is a member of the chat they will also be <strong>removed</strong> from the chat. If you don&#39;t want this, use the parameter <em>only_if_banned</em>. Returns <em>True</em> on success.
    */
   unbanChatMember(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target group or username of the target supergroup or channel in the format <code>@username</code>
      */
@@ -10830,8 +8139,6 @@ export interface ApiMethods {
      * Do nothing if the user is not banned
      */
     only_if_banned?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10839,16 +8146,6 @@ export interface ApiMethods {
    * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass <em>True</em> for all permissions to lift restrictions from a user. Returns <em>True</em> on success.
    */
   restrictChatMember(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -10869,8 +8166,6 @@ export interface ApiMethods {
      * Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.
      */
     until_date?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10878,16 +8173,6 @@ export interface ApiMethods {
    * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass <em>False</em> for all boolean parameters to demote a user. Returns <em>True</em> on success.
    */
   promoteChatMember(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -10964,8 +8249,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if the administrator can edit the tags of regular members; for groups and supergroups only
      */
     can_manage_tags?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -10973,16 +8256,6 @@ export interface ApiMethods {
    * Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns <em>True</em> on success.
    */
   setChatAdministratorCustomTitle(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -10995,8 +8268,6 @@ export interface ApiMethods {
      * New custom title for the administrator; 0-16 characters, emoji are not allowed
      */
     custom_title: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11004,16 +8275,6 @@ export interface ApiMethods {
    * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_tags</em> administrator right. Returns <em>True</em> on success.
    */
   setChatMemberTag(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11026,8 +8287,6 @@ export interface ApiMethods {
      * New tag for the member; 0-16 characters, emoji are not allowed
      */
     tag?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11035,16 +8294,6 @@ export interface ApiMethods {
    * Use this method to ban a channel chat in a supergroup or a channel. Until the chat is <a href="#unbanchatsenderchat">unbanned</a>, the owner of the banned chat won&#39;t be able to send messages on behalf of <strong>any of their channels</strong>. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
    */
   banChatSenderChat(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11053,8 +8302,6 @@ export interface ApiMethods {
      * Unique identifier of the target sender chat
      */
     sender_chat_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11062,16 +8309,6 @@ export interface ApiMethods {
    * Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
    */
   unbanChatSenderChat(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11080,8 +8317,6 @@ export interface ApiMethods {
      * Unique identifier of the target sender chat
      */
     sender_chat_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11089,16 +8324,6 @@ export interface ApiMethods {
    * Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the <em>can_restrict_members</em> administrator rights. Returns <em>True</em> on success.
    */
   setChatPermissions(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11111,8 +8336,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.
      */
     use_independent_chat_permissions?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11122,22 +8345,10 @@ export interface ApiMethods {
    * > Note: Each administrator in a chat generates their own invite links. Bots can&#39;t use invite links generated by other administrators. If you want your bot to work with invite links, it will need to generate its own link using <a href="#exportchatinvitelink">exportChatInviteLink</a> or by calling the <a href="#getchat">getChat</a> method. If your bot needs to generate a new primary invite link replacing its previous one, use <a href="#exportchatinvitelink">exportChatInviteLink</a> again.
    */
   exportChatInviteLink(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11145,16 +8356,6 @@ export interface ApiMethods {
    * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
    */
   createChatInviteLink(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11175,8 +8376,6 @@ export interface ApiMethods {
      * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.
      */
     creates_join_request?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11184,16 +8383,6 @@ export interface ApiMethods {
    * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
    */
   editChatInviteLink(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11218,8 +8407,6 @@ export interface ApiMethods {
      * <em>True</em>, if users joining the chat via the link need to be approved by chat administrators. If <em>True</em>, <em>member_limit</em> can&#39;t be specified.
      */
     creates_join_request?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11227,16 +8414,6 @@ export interface ApiMethods {
    * Use this method to create a <a href="https://telegram.org/blog/superchannels-star-reactions-subscriptions#star-subscriptions">subscription invite link</a> for a channel chat. The bot must have the <em>can_invite_users</em> administrator rights. The link can be edited using the method <a href="#editchatsubscriptioninvitelink">editChatSubscriptionInviteLink</a> or revoked using the method <a href="#revokechatinvitelink">revokeChatInviteLink</a>. Returns the new invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
    */
   createChatSubscriptionInviteLink(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target channel chat or username of the target channel in the format <code>@username</code>
      */
@@ -11253,8 +8430,6 @@ export interface ApiMethods {
      * The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-10000
      */
     subscription_price: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11262,16 +8437,6 @@ export interface ApiMethods {
    * Use this method to edit a subscription invite link created by the bot. The bot must have the <em>can_invite_users</em> administrator rights. Returns the edited invite link as a <a href="#chatinvitelink">ChatInviteLink</a> object.
    */
   editChatSubscriptionInviteLink(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11284,8 +8449,6 @@ export interface ApiMethods {
      * Invite link name; 0-32 characters
      */
     name?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11293,16 +8456,6 @@ export interface ApiMethods {
    * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as <a href="#chatinvitelink">ChatInviteLink</a> object.
    */
   revokeChatInviteLink(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11311,8 +8464,6 @@ export interface ApiMethods {
      * The invite link to revoke
      */
     invite_link: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11320,16 +8471,6 @@ export interface ApiMethods {
    * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
    */
   approveChatJoinRequest(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11338,8 +8479,6 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11347,16 +8486,6 @@ export interface ApiMethods {
    * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the <em>can_invite_users</em> administrator right. Returns <em>True</em> on success.
    */
   declineChatJoinRequest(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11365,8 +8494,6 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11374,16 +8501,6 @@ export interface ApiMethods {
    * Use this method to process a received chat join request query. Returns <em>True</em> on success.
    */
   answerChatJoinRequestQuery(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the join request query
      */
@@ -11392,8 +8509,6 @@ export interface ApiMethods {
      * Result of the query. Must be either “approve” to allow the user to join the chat, “decline” to disallow the user to join the chat, or “queue” to leave the decision to other administrators.
      */
     result: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11401,16 +8516,6 @@ export interface ApiMethods {
    * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Call <a href="#answerchatjoinrequestquery">answerChatJoinRequestQuery</a> to resolve the join request query based on the user interaction with the Mini App. Returns <em>True</em> on success.
    */
   sendChatJoinRequestWebApp(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the join request query
      */
@@ -11419,8 +8524,6 @@ export interface ApiMethods {
      * An HTTPS URL of a Web App to be opened with additional data as specified in <a href="/bots/webapps#initializing-mini-apps">Initializing Web Apps</a>
      */
     web_app_url: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11428,16 +8531,6 @@ export interface ApiMethods {
    * Use this method to set a new profile photo for the chat. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
    */
   setChatPhoto(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11446,8 +8539,6 @@ export interface ApiMethods {
      * New chat photo, uploaded using multipart/form-data
      */
     photo: InputFile;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11455,22 +8546,10 @@ export interface ApiMethods {
    * Use this method to delete a chat photo. Photos can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
    */
   deleteChatPhoto(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11478,16 +8557,6 @@ export interface ApiMethods {
    * Use this method to change the title of a chat. Titles can&#39;t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
    */
   setChatTitle(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11496,8 +8565,6 @@ export interface ApiMethods {
      * New chat title, 1-128 characters
      */
     title: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11505,16 +8572,6 @@ export interface ApiMethods {
    * Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns <em>True</em> on success.
    */
   setChatDescription(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -11523,8 +8580,6 @@ export interface ApiMethods {
      * New chat description, 0-255 characters
      */
     description?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11532,16 +8587,6 @@ export interface ApiMethods {
    * Use this method to add a message to the list of pinned messages in a chat. In private chats and channel direct messages chats, all non-service messages can be pinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to pin messages in groups and channels respectively. Returns <em>True</em> on success.
    */
   pinChatMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be pinned
      */
@@ -11558,8 +8603,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
      */
     disable_notification?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11567,16 +8610,6 @@ export interface ApiMethods {
    * Use this method to remove a message from the list of pinned messages in a chat. In private chats and channel direct messages chats, all messages can be unpinned. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin messages in groups and channels respectively. Returns <em>True</em> on success.
    */
   unpinChatMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be unpinned
      */
@@ -11589,8 +8622,6 @@ export interface ApiMethods {
      * Identifier of the message to unpin. Required if <em>business_connection_id</em> is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
      */
     message_id?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11598,22 +8629,10 @@ export interface ApiMethods {
    * Use this method to clear the list of pinned messages in a chat. In private chats and channel direct messages chats, no additional rights are required to unpin all pinned messages. Conversely, the bot must be an administrator with the &#39;can_pin_messages&#39; right or the &#39;can_edit_messages&#39; right to unpin all pinned messages in groups and channels respectively. Returns <em>True</em> on success.
    */
   unpinAllChatMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11621,22 +8640,10 @@ export interface ApiMethods {
    * Use this method for your bot to leave a group, supergroup or channel. Returns <em>True</em> on success.
    */
   leaveChat(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>. Channel direct messages chats aren&#39;t supported; leave the corresponding channel instead.
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11644,22 +8651,10 @@ export interface ApiMethods {
    * Use this method to get up-to-date information about the chat. Returns a <a href="#chatfullinfo">ChatFullInfo</a> object on success.
    */
   getChat(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11667,16 +8662,6 @@ export interface ApiMethods {
    * Use this method to get a list of administrators in a chat. Returns an Array of <a href="#chatmember">ChatMember</a> objects.
    */
   getChatAdministrators(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
      */
@@ -11685,8 +8670,6 @@ export interface ApiMethods {
      * Pass <em>True</em> to additionally receive all bots that are administrators of the chat. By default, bots other than the current bot are omitted.
      */
     return_bots?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11694,22 +8677,10 @@ export interface ApiMethods {
    * Use this method to get the number of members in a chat. Returns <em>Integer</em> on success.
    */
   getChatMemberCount(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11717,16 +8688,6 @@ export interface ApiMethods {
    * Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a <a href="#chatmember">ChatMember</a> object on success.
    */
   getChatMember(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup or channel in the format <code>@username</code>
      */
@@ -11735,8 +8696,6 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11744,16 +8703,6 @@ export interface ApiMethods {
    * Use this method to get the last messages from the personal chat (i.e., the chat currently added to their profile) of a given user. On success, an Array of <a href="#message">Message</a> objects is returned.
    */
   getUserPersonalChatMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target user
      */
@@ -11762,8 +8711,6 @@ export interface ApiMethods {
      * The maximum number of messages to return; 1-20
      */
     limit: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11771,16 +8718,6 @@ export interface ApiMethods {
    * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
    */
   setChatStickerSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11789,8 +8726,6 @@ export interface ApiMethods {
      * Name of the sticker set to be set as the group sticker set
      */
     sticker_set_name: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11798,22 +8733,10 @@ export interface ApiMethods {
    * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field <em>can_set_sticker_set</em> optionally returned in <a href="#getchat">getChat</a> requests to check if the bot can use this method. Returns <em>True</em> on success.
    */
   deleteChatStickerSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11827,16 +8750,6 @@ export interface ApiMethods {
    * Use this method to create a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator right. Returns information about the created topic as a <a href="#forumtopic">ForumTopic</a> object.
    */
   createForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11853,8 +8766,6 @@ export interface ApiMethods {
      * Unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers.
      */
     icon_custom_emoji_id?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11862,16 +8773,6 @@ export interface ApiMethods {
    * Use this method to edit name and icon of a topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
    */
   editForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11888,8 +8789,6 @@ export interface ApiMethods {
      * New unique identifier of the custom emoji shown as the topic icon. Use <a href="#getforumtopiciconstickers">getForumTopicIconStickers</a> to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept.
      */
     icon_custom_emoji_id?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11897,16 +8796,6 @@ export interface ApiMethods {
    * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
    */
   closeForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11915,8 +8804,6 @@ export interface ApiMethods {
      * Unique identifier for the target message thread of the forum topic
      */
     message_thread_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11924,16 +8811,6 @@ export interface ApiMethods {
    * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights, unless it is the creator of the topic. Returns <em>True</em> on success.
    */
   reopenForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11942,8 +8819,6 @@ export interface ApiMethods {
      * Unique identifier for the target message thread of the forum topic
      */
     message_thread_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11951,16 +8826,6 @@ export interface ApiMethods {
    * Use this method to delete a forum topic along with all its messages in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_delete_messages</em> administrator rights. Returns <em>True</em> on success.
    */
   deleteForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11969,8 +8834,6 @@ export interface ApiMethods {
      * Unique identifier for the target message thread of the forum topic
      */
     message_thread_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -11978,16 +8841,6 @@ export interface ApiMethods {
    * Use this method to clear the list of pinned messages in a forum topic in a forum supergroup chat or a private chat with a user. In the case of a supergroup chat the bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
    */
   unpinAllForumTopicMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -11996,8 +8849,6 @@ export interface ApiMethods {
      * Unique identifier for the target message thread of the forum topic
      */
     message_thread_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12005,16 +8856,6 @@ export interface ApiMethods {
    * Use this method to edit the name of the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
    */
   editGeneralForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -12023,8 +8864,6 @@ export interface ApiMethods {
      * New topic name, 1-128 characters
      */
     name: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12032,22 +8871,10 @@ export interface ApiMethods {
    * Use this method to close an open &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
    */
   closeGeneralForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12055,22 +8882,10 @@ export interface ApiMethods {
    * Use this method to reopen a closed &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically unhidden if it was hidden. Returns <em>True</em> on success.
    */
   reopenGeneralForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12078,22 +8893,10 @@ export interface ApiMethods {
    * Use this method to hide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. The topic will be automatically closed if it was open. Returns <em>True</em> on success.
    */
   hideGeneralForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12101,22 +8904,10 @@ export interface ApiMethods {
    * Use this method to unhide the &#39;General&#39; topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the <em>can_manage_topics</em> administrator rights. Returns <em>True</em> on success.
    */
   unhideGeneralForumTopic(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12124,22 +8915,10 @@ export interface ApiMethods {
    * Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the <em>can_pin_messages</em> administrator right in the supergroup. Returns <em>True</em> on success.
    */
   unpinAllGeneralForumTopicMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12149,16 +8928,6 @@ export interface ApiMethods {
    * > Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via <a href="https://t.me/botfather">@BotFather</a> and accept the terms. Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.
    */
   answerCallbackQuery(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the query to be answered
      */
@@ -12179,8 +8948,6 @@ export interface ApiMethods {
      * The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
      */
     cache_time?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12188,16 +8955,6 @@ export interface ApiMethods {
    * Use this method to reply to a received guest message. On success, a <a href="#sentguestmessage">SentGuestMessage</a> object is returned.
    */
   answerGuestQuery(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the query to be answered
      */
@@ -12206,8 +8963,6 @@ export interface ApiMethods {
      * A JSON-serialized object describing the message to be sent
      */
     result: InlineQueryResult;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12215,16 +8970,6 @@ export interface ApiMethods {
    * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a <a href="#userchatboosts">UserChatBoosts</a> object.
    */
   getUserChatBoosts(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the chat or username of the channel in the format <code>@username</code>
      */
@@ -12233,8 +8978,6 @@ export interface ApiMethods {
      * Unique identifier of the target user
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12242,22 +8985,10 @@ export interface ApiMethods {
    * Use this method to get information about the connection of the bot with a business account. Returns a <a href="#businessconnection">BusinessConnection</a> object on success.
    */
   getBusinessConnection(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
     business_connection_id: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12265,22 +8996,10 @@ export interface ApiMethods {
    * Use this method to get the token of a managed bot. Returns the token as <em>String</em> on success.
    */
   getManagedBotToken(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of the managed bot whose token will be returned
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12288,22 +9007,10 @@ export interface ApiMethods {
    * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as <em>String</em> on success.
    */
   replaceManagedBotToken(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of the managed bot whose token will be replaced
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12311,22 +9018,10 @@ export interface ApiMethods {
    * Use this method to get the access settings of a managed bot. Returns a <a href="#botaccesssettings">BotAccessSettings</a> object on success.
    */
   getManagedBotAccessSettings(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of the managed bot whose access settings will be returned
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12334,16 +9029,6 @@ export interface ApiMethods {
    * Use this method to change the access settings of a managed bot. Returns <em>True</em> on success.
    */
   setManagedBotAccessSettings(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of the managed bot whose access settings will be changed
      */
@@ -12356,8 +9041,6 @@ export interface ApiMethods {
      * A JSON-serialized list of up to 10 identifiers of users who will have access to the bot in addition to its owner. Ignored if <em>is_access_restricted</em> is <em>False</em>.
      */
     added_user_ids?: number[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12365,16 +9048,6 @@ export interface ApiMethods {
    * Use this method to change the list of the bot&#39;s commands. See <a href="/bots/features#commands">this manual</a> for more details about bot commands. Returns <em>True</em> on success.
    */
   setMyCommands(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A JSON-serialized list of bot commands to be set as the list of the bot&#39;s commands. At most 100 commands can be specified.
      */
@@ -12387,8 +9060,6 @@ export interface ApiMethods {
      * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12396,16 +9067,6 @@ export interface ApiMethods {
    * Use this method to delete the list of the bot&#39;s commands for the given scope and user language. After deletion, <a href="#determining-list-of-commands">higher level commands</a> will be shown to affected users. Returns <em>True</em> on success.
    */
   deleteMyCommands(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
      */
@@ -12414,8 +9075,6 @@ export interface ApiMethods {
      * A two-letter ISO 639-1 language code. If empty, commands will be applied to all users from the given scope, for whose language there are no dedicated commands.
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12423,16 +9082,6 @@ export interface ApiMethods {
    * Use this method to get the current list of the bot&#39;s commands for the given scope and user language. Returns an Array of <a href="#botcommand">BotCommand</a> objects. If commands aren&#39;t set, an empty list is returned.
    */
   getMyCommands(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A JSON-serialized object, describing scope of users. Defaults to <a href="#botcommandscopedefault">BotCommandScopeDefault</a>.
      */
@@ -12441,8 +9090,6 @@ export interface ApiMethods {
      * A two-letter ISO 639-1 language code or an empty string
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12450,16 +9097,6 @@ export interface ApiMethods {
    * Use this method to change the bot&#39;s name. Returns <em>True</em> on success.
    */
   setMyName(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.
      */
@@ -12468,8 +9105,6 @@ export interface ApiMethods {
      * A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name.
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12477,22 +9112,10 @@ export interface ApiMethods {
    * Use this method to get the current bot name for the given user language. Returns <a href="#botname">BotName</a> on success.
    */
   getMyName(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A two-letter ISO 639-1 language code or an empty string
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12500,16 +9123,6 @@ export interface ApiMethods {
    * Use this method to change the bot&#39;s description, which is shown in the chat with the bot if the chat is empty. Returns <em>True</em> on success.
    */
   setMyDescription(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.
      */
@@ -12518,8 +9131,6 @@ export interface ApiMethods {
      * A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12527,22 +9138,10 @@ export interface ApiMethods {
    * Use this method to get the current bot description for the given user language. Returns <a href="#botdescription">BotDescription</a> on success.
    */
   getMyDescription(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A two-letter ISO 639-1 language code or an empty string
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12550,16 +9149,6 @@ export interface ApiMethods {
    * Use this method to change the bot&#39;s short description, which is shown on the bot&#39;s profile page and is sent together with the link when users share the bot. Returns <em>True</em> on success.
    */
   setMyShortDescription(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.
      */
@@ -12568,8 +9157,6 @@ export interface ApiMethods {
      * A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12577,22 +9164,10 @@ export interface ApiMethods {
    * Use this method to get the current bot short description for the given user language. Returns <a href="#botshortdescription">BotShortDescription</a> on success.
    */
   getMyShortDescription(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A two-letter ISO 639-1 language code or an empty string
      */
     language_code?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12600,22 +9175,10 @@ export interface ApiMethods {
    * Changes the profile photo of the bot. Returns <em>True</em> on success.
    */
   setMyProfilePhoto(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * The new profile photo to set
      */
     photo: InputProfilePhoto;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12629,16 +9192,6 @@ export interface ApiMethods {
    * Use this method to change the bot&#39;s menu button in a private chat, or the default menu button. Returns <em>True</em> on success.
    */
   setChatMenuButton(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be changed.
      */
@@ -12647,8 +9200,6 @@ export interface ApiMethods {
      * A JSON-serialized object for the bot&#39;s new menu button. Defaults to <a href="#menubuttondefault">MenuButtonDefault</a>.
      */
     menu_button?: MenuButton;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12656,22 +9207,10 @@ export interface ApiMethods {
    * Use this method to get the current value of the bot&#39;s menu button in a private chat, or the default menu button. Returns <a href="#menubutton">MenuButton</a> on success.
    */
   getChatMenuButton(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be returned.
      */
     chat_id?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12679,16 +9218,6 @@ export interface ApiMethods {
    * Use this method to change the default administrator rights requested by the bot when it&#39;s added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns <em>True</em> on success.
    */
   setMyDefaultAdministratorRights(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared.
      */
@@ -12697,8 +9226,6 @@ export interface ApiMethods {
      * Pass <em>True</em> to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
      */
     for_channels?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12706,22 +9233,10 @@ export interface ApiMethods {
    * Use this method to get the current default administrator rights of the bot. Returns <a href="#chatadministratorrights">ChatAdministratorRights</a> on success.
    */
   getMyDefaultAdministratorRights(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Pass <em>True</em> to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
      */
     for_channels?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12735,16 +9250,6 @@ export interface ApiMethods {
    * Sends a gift to the given user or channel chat. The gift can&#39;t be converted to Telegram Stars by the receiver. Returns <em>True</em> on success.
    */
   sendGift(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Required if <em>chat_id</em> is not specified. Unique identifier of the target user who will receive the gift.
      */
@@ -12773,8 +9278,6 @@ export interface ApiMethods {
      * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
      */
     text_entities?: MessageEntity[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12782,16 +9285,6 @@ export interface ApiMethods {
    * Gifts a Telegram Premium subscription to the given user. Returns <em>True</em> on success.
    */
   giftPremiumSubscription(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user who will receive a Telegram Premium subscription
      */
@@ -12816,8 +9309,6 @@ export interface ApiMethods {
      * A JSON-serialized list of special entities that appear in the gift text. It can be specified instead of <em>text_parse_mode</em>. Entities other than “bold”, “italic”, “underline”, “strikethrough”, “spoiler”, “custom_emoji”, and “date_time” are ignored.
      */
     text_entities?: MessageEntity[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12825,16 +9316,6 @@ export interface ApiMethods {
    * Verifies a user <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
    */
   verifyUser(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user
      */
@@ -12843,8 +9324,6 @@ export interface ApiMethods {
      * Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.
      */
     custom_description?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12852,16 +9331,6 @@ export interface ApiMethods {
    * Verifies a chat <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> which is represented by the bot. Returns <em>True</em> on success.
    */
   verifyChat(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Channel direct messages chats can&#39;t be verified.
      */
@@ -12870,8 +9339,6 @@ export interface ApiMethods {
      * Custom description for the verification; 0-70 characters. Must be empty if the organization isn&#39;t allowed to provide a custom verification description.
      */
     custom_description?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12879,22 +9346,10 @@ export interface ApiMethods {
    * Removes verification from a user who is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
    */
   removeUserVerification(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user
      */
     user_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12902,22 +9357,10 @@ export interface ApiMethods {
    * Removes verification from a chat that is currently verified <a href="https://telegram.org/verify#third-party-verification">on behalf of the organization</a> represented by the bot. Returns <em>True</em> on success.
    */
   removeChatVerification(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot or channel in the format <code>@username</code>
      */
     chat_id: number | string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12925,16 +9368,6 @@ export interface ApiMethods {
    * Marks incoming message as read on behalf of a business account. Requires the <em>can_read_messages</em> business bot right. Returns <em>True</em> on success.
    */
   readBusinessMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which to read the message
      */
@@ -12947,8 +9380,6 @@ export interface ApiMethods {
      * Unique identifier of the message to mark as read
      */
     message_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12956,16 +9387,6 @@ export interface ApiMethods {
    * Delete messages on behalf of a business account. Requires the <em>can_delete_sent_messages</em> business bot right to delete messages sent by the bot itself, or the <em>can_delete_all_messages</em> business bot right to delete any message. Returns <em>True</em> on success.
    */
   deleteBusinessMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which to delete the messages
      */
@@ -12974,8 +9395,6 @@ export interface ApiMethods {
      * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.
      */
     message_ids: number[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -12983,16 +9402,6 @@ export interface ApiMethods {
    * Changes the first and last name of a managed business account. Requires the <em>can_change_name</em> business bot right. Returns <em>True</em> on success.
    */
   setBusinessAccountName(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13005,8 +9414,6 @@ export interface ApiMethods {
      * The new value of the last name for the business account; 0-64 characters
      */
     last_name?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13014,16 +9421,6 @@ export interface ApiMethods {
    * Changes the username of a managed business account. Requires the <em>can_change_username</em> business bot right. Returns <em>True</em> on success.
    */
   setBusinessAccountUsername(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13032,8 +9429,6 @@ export interface ApiMethods {
      * The new value of the username for the business account; 0-32 characters
      */
     username?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13041,16 +9436,6 @@ export interface ApiMethods {
    * Changes the bio of a managed business account. Requires the <em>can_change_bio</em> business bot right. Returns <em>True</em> on success.
    */
   setBusinessAccountBio(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13059,8 +9444,6 @@ export interface ApiMethods {
      * The new value of the bio for the business account; 0-140 characters
      */
     bio?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13068,16 +9451,6 @@ export interface ApiMethods {
    * Changes the profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
    */
   setBusinessAccountProfilePhoto(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13090,8 +9463,6 @@ export interface ApiMethods {
      * Pass <em>True</em> to set the public photo, which will be visible even if the main photo is hidden by the business account&#39;s privacy settings. An account can have only one public photo.
      */
     is_public?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13099,16 +9470,6 @@ export interface ApiMethods {
    * Removes the current profile photo of a managed business account. Requires the <em>can_edit_profile_photo</em> business bot right. Returns <em>True</em> on success.
    */
   removeBusinessAccountProfilePhoto(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13117,8 +9478,6 @@ export interface ApiMethods {
      * Pass <em>True</em> to remove the public photo, which is visible even if the main photo is hidden by the business account&#39;s privacy settings. After the main photo is removed, the previous profile photo (if present) becomes the main photo.
      */
     is_public?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13126,16 +9485,6 @@ export interface ApiMethods {
    * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the <em>can_change_gift_settings</em> business bot right. Returns <em>True</em> on success.
    */
   setBusinessAccountGiftSettings(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13148,8 +9497,6 @@ export interface ApiMethods {
      * Types of gifts accepted by the business account
      */
     accepted_gift_types: AcceptedGiftTypes;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13157,22 +9504,10 @@ export interface ApiMethods {
    * Returns the amount of Telegram Stars owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#staramount">StarAmount</a> on success.
    */
   getBusinessAccountStarBalance(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
     business_connection_id: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13180,16 +9515,6 @@ export interface ApiMethods {
    * Transfers Telegram Stars from the business account balance to the bot&#39;s balance. Requires the <em>can_transfer_stars</em> business bot right. Returns <em>True</em> on success.
    */
   transferBusinessAccountStars(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13198,8 +9523,6 @@ export interface ApiMethods {
      * Number of Telegram Stars to transfer; 1-10000
      */
     star_count: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13207,16 +9530,6 @@ export interface ApiMethods {
    * Returns the gifts received and owned by a managed business account. Requires the <em>can_view_gifts_and_stars</em> business bot right. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
    */
   getBusinessAccountGifts(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13261,8 +9574,6 @@ export interface ApiMethods {
      * The maximum number of gifts to be returned; 1-100. Defaults to 100.
      */
     limit?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13270,16 +9581,6 @@ export interface ApiMethods {
    * Returns the gifts owned and hosted by a user. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
    */
   getUserGifts(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the user
      */
@@ -13316,8 +9617,6 @@ export interface ApiMethods {
      * The maximum number of gifts to be returned; 1-100. Defaults to 100.
      */
     limit?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13325,16 +9624,6 @@ export interface ApiMethods {
    * Returns the gifts owned by a chat. Returns <a href="#ownedgifts">OwnedGifts</a> on success.
    */
   getChatGifts(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target channel in the format <code>@username</code>
      */
@@ -13379,8 +9668,6 @@ export interface ApiMethods {
      * The maximum number of gifts to be returned; 1-100. Defaults to 100.
      */
     limit?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13388,16 +9675,6 @@ export interface ApiMethods {
    * Converts a given regular gift to Telegram Stars. Requires the <em>can_convert_gifts_to_stars</em> business bot right. Returns <em>True</em> on success.
    */
   convertGiftToStars(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13406,8 +9683,6 @@ export interface ApiMethods {
      * Unique identifier of the regular gift that should be converted to Telegram Stars
      */
     owned_gift_id: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13415,16 +9690,6 @@ export interface ApiMethods {
    * Upgrades a given regular gift to a unique gift. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Additionally requires the <em>can_transfer_stars</em> business bot right if the upgrade is paid. Returns <em>True</em> on success.
    */
   upgradeGift(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13441,8 +9706,6 @@ export interface ApiMethods {
      * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If <code>gift.prepaid_upgrade_star_count &gt; 0</code>, then pass 0, otherwise, the <em>can_transfer_stars</em> business bot right is required and <code>gift.upgrade_star_count</code> must be passed.
      */
     star_count?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13450,16 +9713,6 @@ export interface ApiMethods {
    * Transfers an owned unique gift to another user. Requires the <em>can_transfer_and_upgrade_gifts</em> business bot right. Requires <em>can_transfer_stars</em> business bot right if the transfer is paid. Returns <em>True</em> on success.
    */
   transferGift(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13476,8 +9729,6 @@ export interface ApiMethods {
      * The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the <em>can_transfer_stars</em> business bot right is required.
      */
     star_count?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13485,16 +9736,6 @@ export interface ApiMethods {
    * Posts a story on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.
    */
   postStory(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13531,8 +9772,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting
      */
     protect_content?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13540,16 +9779,6 @@ export interface ApiMethods {
    * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the <em>can_manage_stories</em> business bot right for both business accounts. Returns <a href="#story">Story</a> on success.
    */
   repostStory(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13574,8 +9803,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if the content of the story must be protected from forwarding and screenshotting
      */
     protect_content?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13583,16 +9810,6 @@ export interface ApiMethods {
    * Edits a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <a href="#story">Story</a> on success.
    */
   editStory(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13621,8 +9838,6 @@ export interface ApiMethods {
      * A JSON-serialized list of clickable areas to be shown on the story
      */
     areas?: StoryArea[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13630,16 +9845,6 @@ export interface ApiMethods {
    * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the <em>can_manage_stories</em> business bot right. Returns <em>True</em> on success.
    */
   deleteStory(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection
      */
@@ -13648,8 +9853,6 @@ export interface ApiMethods {
      * Unique identifier of the story to delete
      */
     story_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13657,16 +9860,6 @@ export interface ApiMethods {
    * Use this method to set the result of an interaction with a <a href="/bots/webapps">Web App</a> and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a <a href="#sentwebappmessage">SentWebAppMessage</a> object is returned.
    */
   answerWebAppQuery(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the query to be answered
      */
@@ -13675,8 +9868,6 @@ export interface ApiMethods {
      * A JSON-serialized object describing the message to be sent
      */
     result: InlineQueryResult;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13684,16 +9875,6 @@ export interface ApiMethods {
    * Stores a message that can be sent by a user of a Mini App. Returns a <a href="#preparedinlinemessage">PreparedInlineMessage</a> object.
    */
   savePreparedInlineMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user that can use the prepared message
      */
@@ -13718,8 +9899,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if the message can be sent to channel chats
      */
     allow_channel_chats?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13727,16 +9906,6 @@ export interface ApiMethods {
    * Stores a keyboard button that can be used by a user within a Mini App. Returns a <a href="#preparedkeyboardbutton">PreparedKeyboardButton</a> object.
    */
   savePreparedKeyboardButton(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the target user that can use the button
      */
@@ -13745,8 +9914,6 @@ export interface ApiMethods {
      * A JSON-serialized object describing the button to be saved. The button must be of the type <em>request_users</em>, <em>request_chat</em>, or <em>request_managed_bot</em>.
      */
     button: KeyboardButton;
-</tbody>
-</table>
   }): never;
 }
 <h4><a class="anchor" name="inline-mode-methods" href="#inline-mode-methods"><i class="anchor-icon"></i></a>Inline mode methods</h4>
@@ -13759,16 +9926,6 @@ export interface ApiMethods {
    * Use this method to edit text, rich and <a href="#games">game</a> messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    */
   editMessageText(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
@@ -13809,8 +9966,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13818,16 +9973,6 @@ export interface ApiMethods {
    * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    */
   editMessageCaption(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
@@ -13864,8 +10009,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13873,16 +10016,6 @@ export interface ApiMethods {
    * Use this method to edit animation, audio, document, live photo, photo, or video messages, or to replace a text or a rich message with a media. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo, a live photo, or a video otherwise. When an inline message is edited, a new file can&#39;t be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    */
   editMessageMedia(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
@@ -13907,8 +10040,6 @@ export interface ApiMethods {
      * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13916,16 +10047,6 @@ export interface ApiMethods {
    * Use this method to edit live location messages. A location can be edited until its <em>live_period</em> expires or editing is explicitly disabled by a call to <a href="#stopmessagelivelocation">stopMessageLiveLocation</a>. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
    */
   editMessageLiveLocation(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
@@ -13970,8 +10091,6 @@ export interface ApiMethods {
      * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -13979,16 +10098,6 @@ export interface ApiMethods {
    * Use this method to stop updating a live location message before <em>live_period</em> expires. On success, if the message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned.
    */
   stopMessageLiveLocation(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
@@ -14009,8 +10118,6 @@ export interface ApiMethods {
      * A JSON-serialized object for a new <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14018,16 +10125,6 @@ export interface ApiMethods {
    * Use this method to edit a checklist on behalf of a connected business account. On success, the edited <a href="#message">Message</a> is returned.
    */
   editMessageChecklist(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -14048,8 +10145,6 @@ export interface ApiMethods {
      * A JSON-serialized object for the new <a href="/bots/features#inline-keyboards">inline keyboard</a> for the message
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14057,16 +10152,6 @@ export interface ApiMethods {
    * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within <strong>48 hours</strong> from the time they were sent.
    */
   editMessageReplyMarkup(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
@@ -14087,8 +10172,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14096,16 +10179,6 @@ export interface ApiMethods {
    * Use this method to stop a poll which was sent by the bot. On success, the stopped <a href="#poll">Poll</a> is returned.
    */
   stopPoll(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message to be edited was sent
      */
@@ -14122,8 +10195,6 @@ export interface ApiMethods {
      * A JSON-serialized object for a new message <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14131,16 +10202,6 @@ export interface ApiMethods {
    * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
    */
   editEphemeralMessageText(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -14173,8 +10234,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14182,16 +10241,6 @@ export interface ApiMethods {
    * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
    */
   editEphemeralMessageMedia(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -14212,8 +10261,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14221,16 +10268,6 @@ export interface ApiMethods {
    * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
    */
   editEphemeralMessageCaption(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -14259,8 +10296,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14268,16 +10303,6 @@ export interface ApiMethods {
    * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, <em>True</em> is returned.
    */
   editEphemeralMessageReplyMarkup(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -14294,8 +10319,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14303,16 +10326,6 @@ export interface ApiMethods {
    * Use this method to approve a suggested post in a direct messages chat. The bot must have the &#39;can_post_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
    */
   approveSuggestedPost(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target direct messages chat
      */
@@ -14325,8 +10338,6 @@ export interface ApiMethods {
      * Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future.
      */
     send_date?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14334,16 +10345,6 @@ export interface ApiMethods {
    * Use this method to decline a suggested post in a direct messages chat. The bot must have the &#39;can_manage_direct_messages&#39; administrator right in the corresponding channel chat. Returns <em>True</em> on success.
    */
   declineSuggestedPost(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target direct messages chat
      */
@@ -14356,8 +10357,6 @@ export interface ApiMethods {
      * Comment for the creator of the suggested post; 0-128 characters
      */
     comment?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14365,16 +10364,6 @@ export interface ApiMethods {
    * Use this method to delete a message, including service messages, with the following limitations:<br>- A message can only be deleted if it was sent less than 48 hours ago.<br>- Service messages about a supergroup, channel, or forum topic creation can&#39;t be deleted.<br>- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.<br>- Bots can delete outgoing messages in private chats, groups, and supergroups.<br>- Bots can delete incoming messages in private chats.<br>- Bots granted <em>can_post_messages</em> permissions can delete outgoing messages in channels.<br>- If the bot is an administrator of a group, it can delete any message there.<br>- If the bot has <em>can_delete_messages</em> administrator right in a supergroup or a channel, it can delete any message there.<br>- If the bot has <em>can_manage_direct_messages</em> administrator right in a channel, it can delete any message in the corresponding direct messages chat.<br>Returns <em>True</em> on success.
    */
   deleteMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -14383,8 +10372,6 @@ export interface ApiMethods {
      * Identifier of the message to delete
      */
     message_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14392,16 +10379,6 @@ export interface ApiMethods {
    * Use this method to delete multiple messages simultaneously. If some of the specified messages can&#39;t be found, they are skipped. Returns <em>True</em> on success.
    */
   deleteMessages(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -14410,8 +10387,6 @@ export interface ApiMethods {
      * A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.
      */
     message_ids: number[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14419,16 +10394,6 @@ export interface ApiMethods {
    * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns <em>True</em> on success.
    */
   deleteEphemeralMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -14441,8 +10406,6 @@ export interface ApiMethods {
      * Identifier of the ephemeral message to delete
      */
     ephemeral_message_id: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14450,16 +10413,6 @@ export interface ApiMethods {
    * Use this method to remove a reaction from a message in a group or a supergroup chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
    */
   deleteMessageReaction(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -14476,8 +10429,6 @@ export interface ApiMethods {
      * Identifier of the chat whose reaction will be removed, if the reaction was added by a chat
      */
     actor_chat_id?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14485,16 +10436,6 @@ export interface ApiMethods {
    * Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat. The bot must have the &#39;can_delete_messages&#39; administrator right in the chat. Returns <em>True</em> on success.
    */
   deleteAllMessageReactions(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code>
      */
@@ -14507,8 +10448,6 @@ export interface ApiMethods {
      * Identifier of the chat whose reactions will be removed, if the reactions were added by a chat
      */
     actor_chat_id?: number;
-</tbody>
-</table>
   }): never;
 }
 // === STICKERS
@@ -14517,15 +10456,6 @@ export interface ApiMethods {
  * This object represents a sticker.
  */
 export interface Sticker {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -14586,22 +10516,11 @@ export interface Sticker {
    * File size in bytes
    */
   file_size?: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a sticker set.
  */
 export interface StickerSet {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Sticker set name
    */
@@ -14622,22 +10541,11 @@ export interface StickerSet {
    * Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
    */
   thumbnail?: PhotoSize;
-</tbody>
-</table>
 }
 /**
  * This object describes the position on faces where a mask should be placed by default.
  */
 export interface MaskPosition {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
    */
@@ -14654,22 +10562,11 @@ export interface MaskPosition {
    * Mask scaling coefficient. For example, 2.0 means double size.
    */
   scale: number;
-</tbody>
-</table>
 }
 /**
  * This object describes a sticker to be added to a sticker set.
  */
 export interface InputSticker {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The added sticker. Pass a <em>file_id</em> as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new file using multipart/form-data under &lt;file_attach_name&gt; name. Animated and video stickers can&#39;t be uploaded via HTTP URL. <a href="#sending-files">More information on Sending Files »</a>
    */
@@ -14690,24 +10587,12 @@ export interface InputSticker {
    * List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only.
    */
   keywords?: string[];
-</tbody>
-</table>
 }
 export interface ApiMethods {
   /**
    * Use this method to send static .WEBP, <a href="https://telegram.org/blog/animated-stickers">animated</a> .TGS, or <a href="https://telegram.org/blog/video-stickers-better-reactions">video</a> .WEBM stickers. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendSticker(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -14768,8 +10653,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14777,22 +10660,10 @@ export interface ApiMethods {
    * Use this method to get a sticker set. On success, a <a href="#stickerset">StickerSet</a> object is returned.
    */
   getStickerSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Name of the sticker set
      */
     name: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14800,22 +10671,10 @@ export interface ApiMethods {
    * Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of <a href="#sticker">Sticker</a> objects.
    */
   getCustomEmojiStickers(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
      */
     custom_emoji_ids: string[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14823,16 +10682,6 @@ export interface ApiMethods {
    * Use this method to upload a file with a sticker for later use in the <a href="#createnewstickerset">createNewStickerSet</a>, <a href="#addstickertoset">addStickerToSet</a>, or <a href="#replacestickerinset">replaceStickerInSet</a> methods (the file can be used multiple times). Returns the uploaded <a href="#file">File</a> on success.
    */
   uploadStickerFile(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of sticker file owner
      */
@@ -14845,8 +10694,6 @@ export interface ApiMethods {
      * Format of the sticker, must be one of “static”, “animated”, “video”
      */
     sticker_format: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14854,16 +10701,6 @@ export interface ApiMethods {
    * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns <em>True</em> on success.
    */
   createNewStickerSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of created sticker set owner
      */
@@ -14888,8 +10725,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
      */
     needs_repainting?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14897,16 +10732,6 @@ export interface ApiMethods {
    * Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns <em>True</em> on success.
    */
   addStickerToSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of sticker set owner
      */
@@ -14919,8 +10744,6 @@ export interface ApiMethods {
      * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn&#39;t changed.
      */
     sticker: InputSticker;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14928,16 +10751,6 @@ export interface ApiMethods {
    * Use this method to move a sticker in a set created by the bot to a specific position. Returns <em>True</em> on success.
    */
   setStickerPositionInSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * File identifier of the sticker
      */
@@ -14946,8 +10759,6 @@ export interface ApiMethods {
      * New sticker position in the set, zero-based
      */
     position: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14955,22 +10766,10 @@ export interface ApiMethods {
    * Use this method to delete a sticker from a set created by the bot. Returns <em>True</em> on success.
    */
   deleteStickerFromSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * File identifier of the sticker
      */
     sticker: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -14978,16 +10777,6 @@ export interface ApiMethods {
    * Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling <a href="#deletestickerfromset">deleteStickerFromSet</a>, then <a href="#addstickertoset">addStickerToSet</a>, then <a href="#setstickerpositioninset">setStickerPositionInSet</a>. Returns <em>True</em> on success.
    */
   replaceStickerInSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier of the sticker set owner
      */
@@ -15004,8 +10793,6 @@ export interface ApiMethods {
      * A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.
      */
     sticker: InputSticker;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15013,16 +10800,6 @@ export interface ApiMethods {
    * Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
    */
   setStickerEmojiList(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * File identifier of the sticker
      */
@@ -15031,8 +10808,6 @@ export interface ApiMethods {
      * A JSON-serialized list of 1-20 emoji associated with the sticker
      */
     emoji_list: string[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15040,16 +10815,6 @@ export interface ApiMethods {
    * Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns <em>True</em> on success.
    */
   setStickerKeywords(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * File identifier of the sticker
      */
@@ -15058,8 +10823,6 @@ export interface ApiMethods {
      * A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters
      */
     keywords?: string[];
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15067,16 +10830,6 @@ export interface ApiMethods {
    * Use this method to change the <a href="#maskposition">mask position</a> of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns <em>True</em> on success.
    */
   setStickerMaskPosition(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * File identifier of the sticker
      */
@@ -15085,8 +10838,6 @@ export interface ApiMethods {
      * A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.
      */
     mask_position?: MaskPosition;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15094,16 +10845,6 @@ export interface ApiMethods {
    * Use this method to set the title of a created sticker set. Returns <em>True</em> on success.
    */
   setStickerSetTitle(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Sticker set name
      */
@@ -15112,8 +10853,6 @@ export interface ApiMethods {
      * Sticker set title, 1-64 characters
      */
     title: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15121,16 +10860,6 @@ export interface ApiMethods {
    * Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns <em>True</em> on success.
    */
   setStickerSetThumbnail(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Sticker set name
      */
@@ -15147,8 +10876,6 @@ export interface ApiMethods {
      * Format of the thumbnail, must be one of “static” for a <strong>.WEBP</strong> or <strong>.PNG</strong> image, “animated” for a <strong>.TGS</strong> animation, or “video” for a <strong>.WEBM</strong> video
      */
     format: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15156,16 +10883,6 @@ export interface ApiMethods {
    * Use this method to set the thumbnail of a custom emoji sticker set. Returns <em>True</em> on success.
    */
   setCustomEmojiStickerSetThumbnail(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Sticker set name
      */
@@ -15174,8 +10891,6 @@ export interface ApiMethods {
      * Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail
      */
     custom_emoji_id?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15183,22 +10898,10 @@ export interface ApiMethods {
    * Use this method to delete a sticker set that was created by the bot. Returns <em>True</em> on success.
    */
   deleteStickerSet(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Sticker set name
      */
     name: string;
-</tbody>
-</table>
   }): never;
 }
 // === RICH MESSAGES
@@ -15473,15 +11176,6 @@ all the text above was on the same line
  * Rich formatted message.
  */
 export interface RichMessage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Content of the message
    */
@@ -15490,22 +11184,11 @@ export interface RichMessage {
    * <em>True</em>, if the rich message must be shown right-to-left
    */
   is_rtl?: boolean;
-</tbody>
-</table>
 }
 /**
  * Describes a rich message to be sent. Exactly <strong>one</strong> of the fields <em>html</em>, <em>markdown</em>, or <em>blocks</em> must be used.
  */
 export interface InputRichMessage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Content of the rich message to send described as a list of blocks
    */
@@ -15530,22 +11213,11 @@ export interface InputRichMessage {
    * Pass <em>True</em> to skip automatic detection of entities (e.g., URLs, email addresses, username mentions, hashtags, cashtags, bot commands, or phone numbers) in the text
    */
   skip_entity_detection?: boolean;
-</tbody>
-</table>
 }
 /**
  * Describes a media element embedded in an outgoing rich message.
  */
 export interface InputRichMessageMedia {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the media used in a <code>tg://photo?id=</code>, <code>tg://video?id=</code>, or <code>tg://audio?id=</code> link. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.
    */
@@ -15554,24 +11226,12 @@ export interface InputRichMessageMedia {
    * The media to be sent. Everything except the media itself and its properties is ignored.
    */
   media: InputMediaAnimation | InputMediaAudio | InputMediaPhoto | InputMediaVideo | InputMediaVoiceNote
-</tbody>
-</table>
 }
 export interface ApiMethods {
   /**
    * Use this method to send rich messages. If the message contains a block with a media element, then the bot must have the right to send the media to the chat. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendRichMessage(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent. Bot can send rich messages on behalf of a business account only if the corresponding user can send rich messages.
      */
@@ -15620,8 +11280,6 @@ export interface ApiMethods {
      * Additional interface options. A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>, <a href="/bots/features#keyboards">custom reply keyboard</a>, instructions to remove a reply keyboard or to force a reply from the user.
      */
     reply_markup?: InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -15629,16 +11287,6 @@ export interface ApiMethods {
    * Use this method to stream a partial rich message to a user while the message is being generated. Note that the streamed draft is ephemeral and acts as a temporary 30-second preview - once the output is finalized, you <strong>must</strong> call <a href="#sendrichmessage">sendRichMessage</a> with the complete message to persist it in the user&#39;s chat. Returns <em>True</em> on success.
    */
   sendRichMessageDraft(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target private chat
      */
@@ -15655,8 +11303,6 @@ export interface ApiMethods {
      * The partial message to be streamed. Direct upload of new files isn&#39;t supported.
      */
     rich_message: InputRichMessage;
-</tbody>
-</table>
   }): never;
 }
 /**
@@ -15718,15 +11364,6 @@ export type RichText =
  * A bold text.
  */
 export interface RichTextBold {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “bold”
    */
@@ -15735,22 +11372,11 @@ export interface RichTextBold {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * An italicized text.
  */
 export interface RichTextItalic {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “italic”
    */
@@ -15759,22 +11385,11 @@ export interface RichTextItalic {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * An underlined text.
  */
 export interface RichTextUnderline {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “underline”
    */
@@ -15783,22 +11398,11 @@ export interface RichTextUnderline {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A strikethrough text.
  */
 export interface RichTextStrikethrough {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “strikethrough”
    */
@@ -15807,22 +11411,11 @@ export interface RichTextStrikethrough {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A text covered by a spoiler.
  */
 export interface RichTextSpoiler {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “spoiler”
    */
@@ -15831,22 +11424,11 @@ export interface RichTextSpoiler {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * Formatted date and time.
  */
 export interface RichTextDateTime {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “date_time”
    */
@@ -15863,22 +11445,11 @@ export interface RichTextDateTime {
    * The string that defines the formatting of the date and time. See <a href="#date-time-entity-formatting">date-time entity formatting</a> for more details.
    */
   date_time_format: string;
-</tbody>
-</table>
 }
 /**
  * A mention of a Telegram user by their identifier.
  */
 export interface RichTextTextMention {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “text_mention”
    */
@@ -15891,22 +11462,11 @@ export interface RichTextTextMention {
    * The mentioned user
    */
   user: User;
-</tbody>
-</table>
 }
 /**
  * A subscript text.
  */
 export interface RichTextSubscript {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “subscript”
    */
@@ -15915,22 +11475,11 @@ export interface RichTextSubscript {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A superscript text.
  */
 export interface RichTextSuperscript {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “superscript”
    */
@@ -15939,22 +11488,11 @@ export interface RichTextSuperscript {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A marked text.
  */
 export interface RichTextMarked {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “marked”
    */
@@ -15963,22 +11501,11 @@ export interface RichTextMarked {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A monowidth text.
  */
 export interface RichTextCode {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “code”
    */
@@ -15987,22 +11514,11 @@ export interface RichTextCode {
    * The text
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A custom emoji.
  */
 export interface RichTextCustomEmoji {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “custom_emoji”
    */
@@ -16015,22 +11531,11 @@ export interface RichTextCustomEmoji {
    * Alternative emoji for the custom emoji
    */
   alternative_text: string;
-</tbody>
-</table>
 }
 /**
  * A mathematical expression.
  */
 export interface RichTextMathematicalExpression {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “mathematical_expression”
    */
@@ -16039,22 +11544,11 @@ export interface RichTextMathematicalExpression {
    * The expression in LaTeX format
    */
   expression: string;
-</tbody>
-</table>
 }
 /**
  * A text with a link.
  */
 export interface RichTextUrl {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “url”
    */
@@ -16067,22 +11561,11 @@ export interface RichTextUrl {
    * URL of the link
    */
   url: string;
-</tbody>
-</table>
 }
 /**
  * A text with an email address.
  */
 export interface RichTextEmailAddress {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “email_address”
    */
@@ -16095,22 +11578,11 @@ export interface RichTextEmailAddress {
    * The email address
    */
   email_address: string;
-</tbody>
-</table>
 }
 /**
  * A text with a phone number.
  */
 export interface RichTextPhoneNumber {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “phone_number”
    */
@@ -16123,22 +11595,11 @@ export interface RichTextPhoneNumber {
    * The phone number
    */
   phone_number: string;
-</tbody>
-</table>
 }
 /**
  * A text with a bank card number.
  */
 export interface RichTextBankCardNumber {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “bank_card_number”
    */
@@ -16151,22 +11612,11 @@ export interface RichTextBankCardNumber {
    * The bank card number
    */
   bank_card_number: string;
-</tbody>
-</table>
 }
 /**
  * A mention by a username.
  */
 export interface RichTextMention {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “mention”
    */
@@ -16179,22 +11629,11 @@ export interface RichTextMention {
    * The username
    */
   username: string;
-</tbody>
-</table>
 }
 /**
  * A hashtag.
  */
 export interface RichTextHashtag {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “hashtag”
    */
@@ -16207,22 +11646,11 @@ export interface RichTextHashtag {
    * The hashtag
    */
   hashtag: string;
-</tbody>
-</table>
 }
 /**
  * A cashtag.
  */
 export interface RichTextCashtag {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “cashtag”
    */
@@ -16235,22 +11663,11 @@ export interface RichTextCashtag {
    * The cashtag
    */
   cashtag: string;
-</tbody>
-</table>
 }
 /**
  * A bot command.
  */
 export interface RichTextBotCommand {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “bot_command”
    */
@@ -16263,22 +11680,11 @@ export interface RichTextBotCommand {
    * The bot command
    */
   bot_command: string;
-</tbody>
-</table>
 }
 /**
  * An anchor.
  */
 export interface RichTextAnchor {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “anchor”
    */
@@ -16287,22 +11693,11 @@ export interface RichTextAnchor {
    * The name of the anchor
    */
   name: string;
-</tbody>
-</table>
 }
 /**
  * A link to an anchor.
  */
 export interface RichTextAnchorLink {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “anchor_link”
    */
@@ -16315,22 +11710,11 @@ export interface RichTextAnchorLink {
    * The name of the anchor. If the name is empty, then the link brings back to the top of the message.
    */
   anchor_name: string;
-</tbody>
-</table>
 }
 /**
  * A reference.
  */
 export interface RichTextReference {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “reference”
    */
@@ -16343,22 +11727,11 @@ export interface RichTextReference {
    * The name of the reference
    */
   name: string;
-</tbody>
-</table>
 }
 /**
  * A link to a reference.
  */
 export interface RichTextReferenceLink {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the rich text, always “reference_link”
    */
@@ -16371,22 +11744,11 @@ export interface RichTextReferenceLink {
    * The name of the reference
    */
   reference_name: string;
-</tbody>
-</table>
 }
 /**
  * Caption of a rich formatted block.
  */
 export interface RichBlockCaption {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Block caption
    */
@@ -16395,22 +11757,11 @@ export interface RichBlockCaption {
    * Block credit which corresponds to the HTML tag &lt;cite&gt;
    */
   credit?: RichText;
-</tbody>
-</table>
 }
 /**
  * Cell in a table.
  */
 export interface RichBlockTableCell {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Text in the cell. If omitted, then the cell is invisible.
    */
@@ -16435,22 +11786,11 @@ export interface RichBlockTableCell {
    * Vertical cell content alignment. Currently, must be one of “top”, “middle”, or “bottom”.
    */
   valign: string;
-</tbody>
-</table>
 }
 /**
  * An item of a list.
  */
 export interface RichBlockListItem {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Label of the item
    */
@@ -16475,8 +11815,6 @@ export interface RichBlockListItem {
    * For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers
    */
   type?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a block in a rich formatted message. Currently, it can be any of the following types:
@@ -16529,15 +11867,6 @@ export type RichBlock =
  * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
  */
 export interface RichBlockParagraph {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “paragraph”
    */
@@ -16546,22 +11875,11 @@ export interface RichBlockParagraph {
    * Text of the block
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.
  */
 export interface RichBlockSectionHeading {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “heading”
    */
@@ -16574,22 +11892,11 @@ export interface RichBlockSectionHeading {
    * Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest
    */
   size: number;
-</tbody>
-</table>
 }
 /**
  * A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.
  */
 export interface RichBlockPreformatted {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “pre”
    */
@@ -16602,22 +11909,11 @@ export interface RichBlockPreformatted {
    * The programming language of the text
    */
   language?: string;
-</tbody>
-</table>
 }
 /**
  * A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.
  */
 export interface RichBlockFooter {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “footer”
    */
@@ -16626,42 +11922,20 @@ export interface RichBlockFooter {
    * Text of the block
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.
  */
 export interface RichBlockDivider {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “divider”
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.
  */
 export interface RichBlockMathematicalExpression {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “mathematical_expression”
    */
@@ -16670,22 +11944,11 @@ export interface RichBlockMathematicalExpression {
    * The mathematical expression in LaTeX format
    */
   expression: string;
-</tbody>
-</table>
 }
 /**
  * A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.
  */
 export interface RichBlockAnchor {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “anchor”
    */
@@ -16694,22 +11957,11 @@ export interface RichBlockAnchor {
    * The name of the anchor
    */
   name: string;
-</tbody>
-</table>
 }
 /**
  * A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.
  */
 export interface RichBlockList {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “list”
    */
@@ -16718,22 +11970,11 @@ export interface RichBlockList {
    * Items of the list
    */
   items: RichBlockListItem[];
-</tbody>
-</table>
 }
 /**
  * A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.
  */
 export interface RichBlockBlockQuotation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “blockquote”
    */
@@ -16746,22 +11987,11 @@ export interface RichBlockBlockQuotation {
    * Credit of the block
    */
   credit?: RichText;
-</tbody>
-</table>
 }
 /**
  * A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.
  */
 export interface RichBlockPullQuotation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “pullquote”
    */
@@ -16774,22 +12004,11 @@ export interface RichBlockPullQuotation {
    * Credit of the block
    */
   credit?: RichText;
-</tbody>
-</table>
 }
 /**
  * A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.
  */
 export interface RichBlockCollage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “collage”
    */
@@ -16802,22 +12021,11 @@ export interface RichBlockCollage {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.
  */
 export interface RichBlockSlideshow {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “slideshow”
    */
@@ -16830,22 +12038,11 @@ export interface RichBlockSlideshow {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.
  */
 export interface RichBlockTable {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “table”
    */
@@ -16866,22 +12063,11 @@ export interface RichBlockTable {
    * Caption of the table
    */
   caption?: RichText;
-</tbody>
-</table>
 }
 /**
  * An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.
  */
 export interface RichBlockDetails {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “details”
    */
@@ -16898,22 +12084,11 @@ export interface RichBlockDetails {
    * <em>True</em>, if the content of the block is visible by default
    */
   is_open?: true;
-</tbody>
-</table>
 }
 /**
  * A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>.
  */
 export interface RichBlockMap {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “map”
    */
@@ -16938,22 +12113,11 @@ export interface RichBlockMap {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
 export interface RichBlockAnimation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “animation”
    */
@@ -16970,22 +12134,11 @@ export interface RichBlockAnimation {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
 export interface RichBlockAudio {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “audio”
    */
@@ -16998,22 +12151,11 @@ export interface RichBlockAudio {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.
  */
 export interface RichBlockPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “photo”
    */
@@ -17030,22 +12172,11 @@ export interface RichBlockPhoto {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
 export interface RichBlockVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “video”
    */
@@ -17062,22 +12193,11 @@ export interface RichBlockVideo {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
 export interface RichBlockVoiceNote {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “voice_note”
    */
@@ -17090,22 +12210,11 @@ export interface RichBlockVoiceNote {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
  */
 export interface RichBlockThinking {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “thinking”
    */
@@ -17114,22 +12223,11 @@ export interface RichBlockThinking {
    * Text of the block. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * An item of a list to be sent.
  */
 export interface InputRichBlockListItem {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The content of the item
    */
@@ -17150,8 +12248,6 @@ export interface InputRichBlockListItem {
    * For ordered lists, the type of the item label; must be one of “a” for lowercase letters, “A” for uppercase letters, “i” for lowercase Roman numerals, “I” for uppercase Roman numerals, or “1” for decimal numbers
    */
   type?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents a block in a rich formatted message to be sent. Currently, it can be any of the following types:
@@ -17204,15 +12300,6 @@ export type InputRichBlock =
  * A text paragraph, corresponding to the HTML tag <code>&lt;p&gt;</code>.
  */
 export interface InputRichBlockParagraph {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “paragraph”
    */
@@ -17221,22 +12308,11 @@ export interface InputRichBlockParagraph {
    * Text of the block
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A section heading, corresponding to the HTML tags <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, or <code>&lt;h6&gt;</code>.
  */
 export interface InputRichBlockSectionHeading {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “heading”
    */
@@ -17249,22 +12325,11 @@ export interface InputRichBlockSectionHeading {
    * Relative size of the text font; 1-6, 1 is the largest, 6 is the smallest
    */
   size: number;
-</tbody>
-</table>
 }
 /**
  * A preformatted text block, corresponding to the nested HTML tags <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code>.
  */
 export interface InputRichBlockPreformatted {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “pre”
    */
@@ -17277,22 +12342,11 @@ export interface InputRichBlockPreformatted {
    * The programming language of the text
    */
   language?: string;
-</tbody>
-</table>
 }
 /**
  * A footer, corresponding to the HTML tag <code>&lt;footer&gt;</code>.
  */
 export interface InputRichBlockFooter {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “footer”
    */
@@ -17301,42 +12355,20 @@ export interface InputRichBlockFooter {
    * Text of the block
    */
   text: RichText;
-</tbody>
-</table>
 }
 /**
  * A divider, corresponding to the HTML tag <code>&lt;hr/&gt;</code>.
  */
 export interface InputRichBlockDivider {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “divider”
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * A block with a mathematical expression in LaTeX format, corresponding to the custom HTML tag <code>&lt;tg-math-block&gt;</code>.
  */
 export interface InputRichBlockMathematicalExpression {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “mathematical_expression”
    */
@@ -17345,22 +12377,11 @@ export interface InputRichBlockMathematicalExpression {
    * The mathematical expression in LaTeX format
    */
   expression: string;
-</tbody>
-</table>
 }
 /**
  * A block with an anchor, corresponding to the HTML tag <code>&lt;a&gt;</code> with the attribute <code>name</code>.
  */
 export interface InputRichBlockAnchor {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “anchor”
    */
@@ -17369,22 +12390,11 @@ export interface InputRichBlockAnchor {
    * The name of the anchor
    */
   name: string;
-</tbody>
-</table>
 }
 /**
  * A list of blocks, corresponding to the HTML tag <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with multiple nested tags <code>&lt;li&gt;</code>.
  */
 export interface InputRichBlockList {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “list”
    */
@@ -17393,22 +12403,11 @@ export interface InputRichBlockList {
    * Items of the list
    */
   items: InputRichBlockListItem[];
-</tbody>
-</table>
 }
 /**
  * A block quotation, corresponding to the HTML tag <code>&lt;blockquote&gt;</code>.
  */
 export interface InputRichBlockBlockQuotation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “blockquote”
    */
@@ -17421,22 +12420,11 @@ export interface InputRichBlockBlockQuotation {
    * Credit of the block
    */
   credit?: RichText;
-</tbody>
-</table>
 }
 /**
  * A quotation with centered text, loosely corresponding to the HTML tag <code>&lt;aside&gt;</code>.
  */
 export interface InputRichBlockPullQuotation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “pullquote”
    */
@@ -17449,22 +12437,11 @@ export interface InputRichBlockPullQuotation {
    * Credit of the block
    */
   credit?: RichText;
-</tbody>
-</table>
 }
 /**
  * A collage, corresponding to the custom HTML tag <code>&lt;tg-collage&gt;</code>.
  */
 export interface InputRichBlockCollage {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “collage”
    */
@@ -17477,22 +12454,11 @@ export interface InputRichBlockCollage {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A slideshow, corresponding to the custom HTML tag <code>&lt;tg-slideshow&gt;</code>.
  */
 export interface InputRichBlockSlideshow {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “slideshow”
    */
@@ -17505,22 +12471,11 @@ export interface InputRichBlockSlideshow {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A table, corresponding to the HTML tag <code>&lt;table&gt;</code>.
  */
 export interface InputRichBlockTable {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “table”
    */
@@ -17541,22 +12496,11 @@ export interface InputRichBlockTable {
    * Caption of the table
    */
   caption?: RichText;
-</tbody>
-</table>
 }
 /**
  * An expandable block for details disclosure, corresponding to the HTML tag <code>&lt;details&gt;</code>.
  */
 export interface InputRichBlockDetails {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “details”
    */
@@ -17573,22 +12517,11 @@ export interface InputRichBlockDetails {
    * Pass <em>True</em> if the content of the block is visible by default
    */
   is_open?: true;
-</tbody>
-</table>
 }
 /**
  * A block with a map, corresponding to the custom HTML tag <code>&lt;tg-map&gt;</code>. The map&#39;s width and height must not exceed 10000 in total. The width and height ratio must be at most 20.
  */
 export interface InputRichBlockMap {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “map”
    */
@@ -17613,22 +12546,11 @@ export interface InputRichBlockMap {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with an animation, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
 export interface InputRichBlockAnimation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “animation”
    */
@@ -17641,22 +12563,11 @@ export interface InputRichBlockAnimation {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a music file, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
 export interface InputRichBlockAudio {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “audio”
    */
@@ -17669,22 +12580,11 @@ export interface InputRichBlockAudio {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a photo, corresponding to the HTML tag <code>&lt;img&gt;</code>.
  */
 export interface InputRichBlockPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “photo”
    */
@@ -17697,22 +12597,11 @@ export interface InputRichBlockPhoto {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a video, corresponding to the HTML tag <code>&lt;video&gt;</code>.
  */
 export interface InputRichBlockVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “video”
    */
@@ -17725,22 +12614,11 @@ export interface InputRichBlockVideo {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a voice note, corresponding to the HTML tag <code>&lt;audio&gt;</code>.
  */
 export interface InputRichBlockVoiceNote {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “voice_note”
    */
@@ -17753,22 +12631,11 @@ export interface InputRichBlockVoiceNote {
    * Caption of the block
    */
   caption?: RichBlockCaption;
-</tbody>
-</table>
 }
 /**
  * A block with a “Thinking…” placeholder, corresponding to the custom HTML tag <code>&lt;tg-thinking&gt;</code>. The block may be used only in <a href="#sendrichmessagedraft">sendRichMessageDraft</a>, therefore it can&#39;t be received in messages. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
  */
 export interface InputRichBlockThinking {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the block, always “thinking”
    */
@@ -17777,8 +12644,6 @@ export interface InputRichBlockThinking {
    * Text of the block. See <a href="https://t.me/addemoji/AIActions"><a href="https://t.me/addemoji/AIActions">https://t.me/addemoji/AIActions</a></a> for examples of custom emoji that are recommended for usage in the block.
    */
   text: RichText;
-</tbody>
-</table>
 }
 // === INLINE MODE
 <p>The following methods and objects allow your bot to work in <a href="/bots/inline">inline mode</a>.<br>Please see our <a href="/bots/inline">Introduction to Inline bots</a> for more details.</p>
@@ -17787,15 +12652,6 @@ export interface InputRichBlockThinking {
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
  */
 export interface InlineQuery {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier for this query
    */
@@ -17820,24 +12676,12 @@ export interface InlineQuery {
    * Sender location, only for bots that request user location
    */
   location?: Location;
-</tbody>
-</table>
 }
 export interface ApiMethods {
   /**
    * Use this method to send answers to an inline query. On success, <em>True</em> is returned.<br>No more than <strong>50</strong> results per query are allowed.
    */
   answerInlineQuery(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the answered query
      */
@@ -17862,23 +12706,12 @@ export interface ApiMethods {
      * A JSON-serialized object describing a button to be shown above inline query results
      */
     button?: InlineQueryResultsButton;
-</tbody>
-</table>
   }): never;
 }
 /**
  * This object represents a button to be shown above inline query results. You <strong>must</strong> use exactly one of the optional fields.
  */
 export interface InlineQueryResultsButton {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Label text on the button
    */
@@ -17891,8 +12724,6 @@ export interface InlineQueryResultsButton {
    * <a href="/bots/features#deep-linking">Deep-linking</a> parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only <code>A-Z</code>, <code>a-z</code>, <code>0-9</code>, <code>_</code> and <code>-</code> are allowed.<br><br><em>Example:</em> An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a &#39;Connect your YouTube account&#39; button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a <a href="#inlinekeyboardmarkup"><em>switch_inline</em></a> button so that the user can easily return to the chat where they wanted to use the bot&#39;s inline capabilities.
    */
   start_parameter?: string;
-</tbody>
-</table>
 }
 /**
  * This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:
@@ -17944,15 +12775,6 @@ export type InlineQueryResult =
  * Represents a link to an article or web page.
  */
 export interface InlineQueryResultArticle {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>article</em>
    */
@@ -17993,22 +12815,11 @@ export interface InlineQueryResultArticle {
    * Thumbnail height
    */
   thumbnail_height?: number;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a photo. By default, this photo will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.
  */
 export interface InlineQueryResultPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>photo</em>
    */
@@ -18065,22 +12876,11 @@ export interface InlineQueryResultPhoto {
    * Content of the message to be sent instead of the photo
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.
  */
 export interface InlineQueryResultGif {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>gif</em>
    */
@@ -18141,22 +12941,11 @@ export interface InlineQueryResultGif {
    * Content of the message to be sent instead of the GIF animation
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound). By default, this animated MPEG-4 file will be sent by the user with optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.
  */
 export interface InlineQueryResultMpeg4Gif {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>mpeg4_gif</em>
    */
@@ -18217,8 +13006,6 @@ export interface InlineQueryResultMpeg4Gif {
    * Content of the message to be sent instead of the video animation
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a page containing an embedded video player or a video file. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.
@@ -18226,15 +13013,6 @@ export interface InlineQueryResultMpeg4Gif {
  * > If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you <strong>must</strong> replace its content using <em>input_message_content</em>.
  */
 export interface InlineQueryResultVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>video</em>
    */
@@ -18299,22 +13077,11 @@ export interface InlineQueryResultVideo {
    * Content of the message to be sent instead of the video. This field is <strong>required</strong> if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a YouTube video).
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.
  */
 export interface InlineQueryResultAudio {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>audio</em>
    */
@@ -18359,22 +13126,11 @@ export interface InlineQueryResultAudio {
    * Content of the message to be sent instead of the audio
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a voice recording in an .OGG container encoded with OPUS. By default, this voice recording will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the the voice message.
  */
 export interface InlineQueryResultVoice {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>voice</em>
    */
@@ -18415,22 +13171,11 @@ export interface InlineQueryResultVoice {
    * Content of the message to be sent instead of the voice recording
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file. Currently, only <strong>.PDF</strong> and <strong>.ZIP</strong> files can be sent using this method.
  */
 export interface InlineQueryResultDocument {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>document</em>
    */
@@ -18487,22 +13232,11 @@ export interface InlineQueryResultDocument {
    * Thumbnail height
    */
   thumbnail_height?: number;
-</tbody>
-</table>
 }
 /**
  * Represents a location on a map. By default, the location will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the location.
  */
 export interface InlineQueryResultLocation {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>location</em>
    */
@@ -18559,22 +13293,11 @@ export interface InlineQueryResultLocation {
    * Thumbnail height
    */
   thumbnail_height?: number;
-</tbody>
-</table>
 }
 /**
  * Represents a venue. By default, the venue will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the venue.
  */
 export interface InlineQueryResultVenue {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>venue</em>
    */
@@ -18635,22 +13358,11 @@ export interface InlineQueryResultVenue {
    * Thumbnail height
    */
   thumbnail_height?: number;
-</tbody>
-</table>
 }
 /**
  * Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the contact.
  */
 export interface InlineQueryResultContact {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>contact</em>
    */
@@ -18695,22 +13407,11 @@ export interface InlineQueryResultContact {
    * Thumbnail height
    */
   thumbnail_height?: number;
-</tbody>
-</table>
 }
 /**
  * Represents a <a href="#games">Game</a>.
  */
 export interface InlineQueryResultGame {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>game</em>
    */
@@ -18727,22 +13428,11 @@ export interface InlineQueryResultGame {
    * <a href="/bots/features#inline-keyboards">Inline keyboard</a> attached to the message
    */
   reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a photo stored on the Telegram servers. By default, this photo will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the photo.
  */
 export interface InlineQueryResultCachedPhoto {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>photo</em>
    */
@@ -18787,22 +13477,11 @@ export interface InlineQueryResultCachedPhoto {
    * Content of the message to be sent instead of the photo
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to an animated GIF file stored on the Telegram servers. By default, this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with specified content instead of the animation.
  */
 export interface InlineQueryResultCachedGif {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>gif</em>
    */
@@ -18843,22 +13522,11 @@ export interface InlineQueryResultCachedGif {
    * Content of the message to be sent instead of the GIF animation
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers. By default, this animated MPEG-4 file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the animation.
  */
 export interface InlineQueryResultCachedMpeg4Gif {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>mpeg4_gif</em>
    */
@@ -18899,22 +13567,11 @@ export interface InlineQueryResultCachedMpeg4Gif {
    * Content of the message to be sent instead of the video animation
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the sticker.
  */
 export interface InlineQueryResultCachedSticker {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>sticker</em>
    */
@@ -18935,22 +13592,11 @@ export interface InlineQueryResultCachedSticker {
    * Content of the message to be sent instead of the sticker
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a file stored on the Telegram servers. By default, this file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the file.
  */
 export interface InlineQueryResultCachedDocument {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>document</em>
    */
@@ -18991,22 +13637,11 @@ export interface InlineQueryResultCachedDocument {
    * Content of the message to be sent instead of the file
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a video file stored on the Telegram servers. By default, this video file will be sent by the user with an optional caption. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the video.
  */
 export interface InlineQueryResultCachedVideo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>video</em>
    */
@@ -19051,22 +13686,11 @@ export interface InlineQueryResultCachedVideo {
    * Content of the message to be sent instead of the video
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to a voice message stored on the Telegram servers. By default, this voice message will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the voice message.
  */
 export interface InlineQueryResultCachedVoice {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>voice</em>
    */
@@ -19103,22 +13727,11 @@ export interface InlineQueryResultCachedVoice {
    * Content of the message to be sent instead of the voice message
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will be sent by the user. Alternatively, you can use <em>input_message_content</em> to send a message with the specified content instead of the audio.
  */
 export interface InlineQueryResultCachedAudio {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the result, must be <em>audio</em>
    */
@@ -19151,8 +13764,6 @@ export interface InlineQueryResultCachedAudio {
    * Content of the message to be sent instead of the audio
    */
   input_message_content?: InputMessageContent;
-</tbody>
-</table>
 }
 /**
  * This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following types:
@@ -19175,15 +13786,6 @@ export type InputMessageContent =
  * Represents the <a href="#inputmessagecontent">content</a> of a text message to be sent as the result of an inline query.
  */
 export interface InputTextMessageContent {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Text of the message to be sent, 1-4096 characters
    */
@@ -19200,42 +13802,20 @@ export interface InputTextMessageContent {
    * Link preview generation options for the message
    */
   link_preview_options?: LinkPreviewOptions;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a rich message to be sent as the result of an inline query.
  */
 export interface InputRichMessageContent {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The message to be sent
    */
   rich_message: InputRichMessage;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a location message to be sent as the result of an inline query.
  */
 export interface InputLocationMessageContent {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Latitude of the location in degrees
    */
@@ -19260,22 +13840,11 @@ export interface InputLocationMessageContent {
    * For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
    */
   proximity_alert_radius?: number;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a venue message to be sent as the result of an inline query.
  */
 export interface InputVenueMessageContent {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Latitude of the venue in degrees
    */
@@ -19308,22 +13877,11 @@ export interface InputVenueMessageContent {
    * Google Places type of the venue. (See <a href="https://developers.google.com/places/web-service/supported_types">supported types</a>.)
    */
   google_place_type?: string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of a contact message to be sent as the result of an inline query.
  */
 export interface InputContactMessageContent {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Contact&#39;s phone number
    */
@@ -19340,22 +13898,11 @@ export interface InputContactMessageContent {
    * Additional data about the contact in the form of a <a href="https://en.wikipedia.org/wiki/VCard">vCard</a>, 0-2048 bytes
    */
   vcard?: string;
-</tbody>
-</table>
 }
 /**
  * Represents the <a href="#inputmessagecontent">content</a> of an invoice message to be sent as the result of an inline query.
  */
 export interface InputInvoiceMessageContent {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Product name, 1-32 characters
    */
@@ -19436,8 +13983,6 @@ export interface InputInvoiceMessageContent {
    * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
    */
   is_flexible?: boolean;
-</tbody>
-</table>
 }
 /**
  * Represents a <a href="#inlinequeryresult">result</a> of an inline query that was chosen by the user and sent to their chat partner.
@@ -19445,15 +13990,6 @@ export interface InputInvoiceMessageContent {
  * <strong>Note:</strong> It is necessary to enable <a href="/bots/inline#collecting-feedback">inline feedback</a> via <a href="https://t.me/botfather">@BotFather</a> in order to receive these objects in updates.
  */
 export interface ChosenInlineResult {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The unique identifier for the result that was chosen
    */
@@ -19474,8 +14010,6 @@ export interface ChosenInlineResult {
    * The query that was used to obtain the result
    */
   query: string;
-</tbody>
-</table>
 }
 // === PAYMENTS
 <p>Your bot can accept payments from Telegram users. Please see the <a href="/bots/payments">introduction to payments</a> for more details on the process and how to set up payments for your bot.</p>
@@ -19484,16 +14018,6 @@ export interface ApiMethods {
    * Use this method to send invoices. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendInvoice(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>
      */
@@ -19618,8 +14142,6 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Pay <code>total price</code>&#39; button will be shown. If not empty, the first button must be a Pay button.
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -19627,16 +14149,6 @@ export interface ApiMethods {
    * Use this method to create a link for an invoice. Returns the created invoice link as <em>String</em> on success.
    */
   createInvoiceLink(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the link will be created. For payments in <a href="https://t.me/BotNews/90">Telegram Stars</a> only.
      */
@@ -19725,8 +14237,6 @@ export interface ApiMethods {
      * Pass <em>True</em> if the final price depends on the shipping method. Ignored for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
      */
     is_flexible?: boolean;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -19734,16 +14244,6 @@ export interface ApiMethods {
    * If you sent an invoice requesting a shipping address and the parameter <em>is_flexible</em> was specified, the Bot API will send an <a href="#update">Update</a> with a <em>shipping_query</em> field to the bot. Use this method to reply to shipping queries. On success, <em>True</em> is returned.
    */
   answerShippingQuery(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the query to be answered
      */
@@ -19760,8 +14260,6 @@ export interface ApiMethods {
      * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains why it is impossible to complete the order (e.g. “Sorry, delivery to your desired address is unavailable”). Telegram will display this message to the user.
      */
     error_message?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -19769,16 +14267,6 @@ export interface ApiMethods {
    * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an <a href="#update">Update</a> with the field <em>pre_checkout_query</em>. Use this method to respond to such pre-checkout queries. On success, <em>True</em> is returned. <strong>Note:</strong> The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.
    */
   answerPreCheckoutQuery(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier for the query to be answered
      */
@@ -19791,8 +14279,6 @@ export interface ApiMethods {
      * Required if <em>ok</em> is <em>False</em>. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. &quot;Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!&quot;). Telegram will display this message to the user.
      */
     error_message?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -19806,16 +14292,6 @@ export interface ApiMethods {
    * Returns the bot&#39;s Telegram Star transactions in chronological order. On success, returns a <a href="#startransactions">StarTransactions</a> object.
    */
   getStarTransactions(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Number of transactions to skip in the response
      */
@@ -19824,8 +14300,6 @@ export interface ApiMethods {
      * The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100.
      */
     limit?: number;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -19833,16 +14307,6 @@ export interface ApiMethods {
    * Refunds a successful payment in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Returns <em>True</em> on success.
    */
   refundStarPayment(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Identifier of the user whose payment will be refunded
      */
@@ -19851,8 +14315,6 @@ export interface ApiMethods {
      * Telegram payment identifier
      */
     telegram_payment_charge_id: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -19860,16 +14322,6 @@ export interface ApiMethods {
    * Allows the bot to cancel or re-enable extension of a subscription paid in Telegram Stars. Returns <em>True</em> on success.
    */
   editUserStarSubscription(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Identifier of the user whose subscription will be edited
      */
@@ -19882,23 +14334,12 @@ export interface ApiMethods {
      * Pass <em>True</em> to cancel extension of the user subscription; the subscription must be active up to the end of the current subscription period. Pass <em>False</em> to allow the user to re-enable a subscription that was previously canceled by the bot.
      */
     is_canceled: boolean;
-</tbody>
-</table>
   }): never;
 }
 /**
  * This object represents a portion of the price for goods or services.
  */
 export interface LabeledPrice {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Portion label
    */
@@ -19907,22 +14348,11 @@ export interface LabeledPrice {
    * Price of the product in the <em>smallest units</em> of the <a href="/bots/payments#supported-currencies">currency</a> (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   amount: number;
-</tbody>
-</table>
 }
 /**
  * This object contains basic information about an invoice.
  */
 export interface Invoice {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Product name
    */
@@ -19943,22 +14373,11 @@ export interface Invoice {
    * Total price in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a price of <code>US$ 1.45</code> pass <code>amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
    */
   total_amount: number;
-</tbody>
-</table>
 }
 /**
  * This object represents a shipping address.
  */
 export interface ShippingAddress {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Two-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> country code
    */
@@ -19983,22 +14402,11 @@ export interface ShippingAddress {
    * Address post code
    */
   post_code: string;
-</tbody>
-</table>
 }
 /**
  * This object represents information about an order.
  */
 export interface OrderInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * User name
    */
@@ -20015,22 +14423,11 @@ export interface OrderInfo {
    * User shipping address
    */
   shipping_address?: ShippingAddress;
-</tbody>
-</table>
 }
 /**
  * This object represents one shipping option.
  */
 export interface ShippingOption {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Shipping option identifier
    */
@@ -20043,22 +14440,11 @@ export interface ShippingOption {
    * List of price portions
    */
   prices: LabeledPrice[];
-</tbody>
-</table>
 }
 /**
  * This object contains basic information about a successful payment. Note that if the buyer initiates a chargeback with the relevant payment provider following this transaction, the funds may be debited from your balance. This is outside of Telegram&#39;s control.
  */
 export interface SuccessfulPayment {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>
    */
@@ -20099,22 +14485,11 @@ export interface SuccessfulPayment {
    * Provider payment identifier
    */
   provider_payment_charge_id: string;
-</tbody>
-</table>
 }
 /**
  * This object contains basic information about a refunded payment.
  */
 export interface RefundedPayment {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Three-letter ISO 4217 <a href="/bots/payments#supported-currencies">currency</a> code, or “XTR” for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>. Currently, always “XTR”.
    */
@@ -20135,22 +14510,11 @@ export interface RefundedPayment {
    * Provider payment identifier
    */
   provider_payment_charge_id?: string;
-</tbody>
-</table>
 }
 /**
  * This object contains information about an incoming shipping query.
  */
 export interface ShippingQuery {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique query identifier
    */
@@ -20167,22 +14531,11 @@ export interface ShippingQuery {
    * User specified shipping address
    */
   shipping_address: ShippingAddress;
-</tbody>
-</table>
 }
 /**
  * This object contains information about an incoming pre-checkout query.
  */
 export interface PreCheckoutQuery {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique query identifier
    */
@@ -20211,22 +14564,11 @@ export interface PreCheckoutQuery {
    * Order information provided by the user
    */
   order_info?: OrderInfo;
-</tbody>
-</table>
 }
 /**
  * This object contains information about a paid media purchase.
  */
 export interface PaidMediaPurchased {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * User who purchased the media
    */
@@ -20235,8 +14577,6 @@ export interface PaidMediaPurchased {
    * Bot-specified paid media payload
    */
   paid_media_payload: string;
-</tbody>
-</table>
 }
 /**
  * This object describes the state of a revenue withdrawal operation. Currently, it can be one of
@@ -20253,35 +14593,15 @@ export type RevenueWithdrawalState =
  * The withdrawal is in progress.
  */
 export interface RevenueWithdrawalStatePending {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the state, always “pending”
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * The withdrawal succeeded.
  */
 export interface RevenueWithdrawalStateSucceeded {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the state, always “succeeded”
    */
@@ -20294,42 +14614,20 @@ export interface RevenueWithdrawalStateSucceeded {
    * An HTTPS URL that can be used to see transaction details
    */
   url: string;
-</tbody>
-</table>
 }
 /**
  * The withdrawal failed and the transaction was refunded.
  */
 export interface RevenueWithdrawalStateFailed {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the state, always “failed”
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Contains information about the affiliate that received a commission via this transaction.
  */
 export interface AffiliateInfo {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The bot or the user that received an affiliate commission if it was received by a bot or a user
    */
@@ -20350,8 +14648,6 @@ export interface AffiliateInfo {
    * The number of 1/1000000000 shares of Telegram Stars received by the affiliate; from -999999999 to 999999999; can be negative for refunds
    */
   nanostar_amount?: number;
-</tbody>
-</table>
 }
 /**
  * This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of
@@ -20376,15 +14672,6 @@ export type TransactionPartner =
  * Describes a transaction with a user.
  */
 export interface TransactionPartnerUser {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the transaction partner, always “user”
    */
@@ -20425,22 +14712,11 @@ export interface TransactionPartnerUser {
    * Number of months the gifted Telegram Premium subscription will be active for; for “premium_purchase” transactions only
    */
   premium_subscription_duration?: number;
-</tbody>
-</table>
 }
 /**
  * Describes a transaction with a chat.
  */
 export interface TransactionPartnerChat {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the transaction partner, always “chat”
    */
@@ -20453,22 +14729,11 @@ export interface TransactionPartnerChat {
    * The gift sent to the chat by the bot
    */
   gift?: Gift;
-</tbody>
-</table>
 }
 /**
  * Describes the affiliate program that issued the affiliate commission received via this transaction.
  */
 export interface TransactionPartnerAffiliateProgram {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the transaction partner, always “affiliate_program”
    */
@@ -20481,22 +14746,11 @@ export interface TransactionPartnerAffiliateProgram {
    * The number of Telegram Stars received by the bot for each 1000 Telegram Stars received by the affiliate program sponsor from referred users
    */
   commission_per_mille: number;
-</tbody>
-</table>
 }
 /**
  * Describes a withdrawal transaction with Fragment.
  */
 export interface TransactionPartnerFragment {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the transaction partner, always “fragment”
    */
@@ -20505,42 +14759,20 @@ export interface TransactionPartnerFragment {
    * State of the transaction if the transaction is outgoing
    */
   withdrawal_state?: RevenueWithdrawalState;
-</tbody>
-</table>
 }
 /**
  * Describes a withdrawal transaction to the Telegram Ads platform.
  */
 export interface TransactionPartnerTelegramAds {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the transaction partner, always “telegram_ads”
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Describes a transaction with payment for <a href="#paid-broadcasts">paid broadcasting</a>.
  */
 export interface TransactionPartnerTelegramApi {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the transaction partner, always “telegram_api”
    */
@@ -20549,42 +14781,20 @@ export interface TransactionPartnerTelegramApi {
    * The number of successful requests that exceeded regular limits and were therefore billed
    */
   request_count: number;
-</tbody>
-</table>
 }
 /**
  * Describes a transaction with an unknown source or recipient.
  */
 export interface TransactionPartnerOther {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Type of the transaction partner, always “other”
    */
   type: string;
-</tbody>
-</table>
 }
 /**
  * Describes a Telegram Star transaction. Note that if the buyer initiates a chargeback with the payment provider from whom they acquired Stars (e.g., Apple, Google) following this transaction, the refunded Stars will be deducted from the bot&#39;s balance. This is outside of Telegram&#39;s control.
  */
 export interface StarTransaction {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with <em>SuccessfulPayment.telegram_payment_charge_id</em> for successful incoming payments from users.
    */
@@ -20609,28 +14819,15 @@ export interface StarTransaction {
    * Receiver of an outgoing transaction (e.g., a user for a purchase refund, Fragment for a withdrawal). Only for outgoing transactions.
    */
   receiver?: TransactionPartner;
-</tbody>
-</table>
 }
 /**
  * Contains a list of Telegram Star transactions.
  */
 export interface StarTransactions {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * The list of transactions
    */
   transactions: StarTransaction[];
-</tbody>
-</table>
 }
 // === TELEGRAM PASSPORT
 <p><strong>Telegram Passport</strong> is a unified authorization method for services that require personal identification. Users can upload their documents once, then instantly share their data with services that require real-world ID (finance, ICOs, etc.). Please see the <a href="/passport">manual</a> for details.</p>
@@ -20638,15 +14835,6 @@ export interface StarTransactions {
  * Describes Telegram Passport data shared with the bot by the user.
  */
 export interface PassportData {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Array with information about documents and other Telegram Passport elements that was shared with the bot
    */
@@ -20655,22 +14843,11 @@ export interface PassportData {
    * Encrypted credentials required to decrypt the data
    */
   credentials: EncryptedCredentials;
-</tbody>
-</table>
 }
 /**
  * This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format when decrypted and don&#39;t exceed 10MB.
  */
 export interface PassportFile {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Identifier for this file, which can be used to download or reuse the file
    */
@@ -20687,22 +14864,11 @@ export interface PassportFile {
    * Unix time when the file was uploaded
    */
   file_date: number;
-</tbody>
-</table>
 }
 /**
  * Describes documents or other Telegram Passport elements shared with the bot by the user.
  */
 export interface EncryptedPassportElement {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.
    */
@@ -20743,22 +14909,11 @@ export interface EncryptedPassportElement {
    * Base64-encoded element hash for using in <a href="#passportelementerrorunspecified">PassportElementErrorUnspecified</a>
    */
   hash: string;
-</tbody>
-</table>
 }
 /**
  * Describes data required for decrypting and authenticating <a href="#encryptedpassportelement">EncryptedPassportElement</a>. See the <a href="/passport#receiving-information">Telegram Passport Documentation</a> for a complete description of the data decryption and authentication processes.
  */
 export interface EncryptedCredentials {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Base64-encoded encrypted JSON-serialized data with unique user&#39;s payload, data hashes and secrets required for <a href="#encryptedpassportelement">EncryptedPassportElement</a> decryption and authentication
    */
@@ -20771,8 +14926,6 @@ export interface EncryptedCredentials {
    * Base64-encoded secret, encrypted with the bot&#39;s public RSA key, required for data decryption
    */
   secret: string;
-</tbody>
-</table>
 }
 export interface ApiMethods {
   /**
@@ -20781,16 +14934,6 @@ export interface ApiMethods {
    * Use this if the data submitted by the user doesn&#39;t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
    */
   setPassportDataErrors(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier
      */
@@ -20799,8 +14942,6 @@ export interface ApiMethods {
      * A JSON-serialized Array describing the errors
      */
     errors: PassportElementError[];
-</tbody>
-</table>
   }): never;
 }
 /**
@@ -20830,15 +14971,6 @@ export type PassportElementError =
  * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when the field&#39;s value changes.
  */
 export interface PassportElementErrorDataField {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>data</em>
    */
@@ -20859,22 +14991,11 @@ export interface PassportElementErrorDataField {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue with the front side of a document. The error is considered resolved when the file with the front side of the document changes.
  */
 export interface PassportElementErrorFrontSide {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>front_side</em>
    */
@@ -20891,22 +15012,11 @@ export interface PassportElementErrorFrontSide {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue with the reverse side of a document. The error is considered resolved when the file with reverse side of the document changes.
  */
 export interface PassportElementErrorReverseSide {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>reverse_side</em>
    */
@@ -20923,22 +15033,11 @@ export interface PassportElementErrorReverseSide {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue with the selfie with a document. The error is considered resolved when the file with the selfie changes.
  */
 export interface PassportElementErrorSelfie {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>selfie</em>
    */
@@ -20955,22 +15054,11 @@ export interface PassportElementErrorSelfie {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue with a document scan. The error is considered resolved when the file with the document scan changes.
  */
 export interface PassportElementErrorFile {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>file</em>
    */
@@ -20987,22 +15075,11 @@ export interface PassportElementErrorFile {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue with a list of scans. The error is considered resolved when the list of files containing the scans changes.
  */
 export interface PassportElementErrorFiles {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>files</em>
    */
@@ -21019,22 +15096,11 @@ export interface PassportElementErrorFiles {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue with one of the files that constitute the translation of a document. The error is considered resolved when the file changes.
  */
 export interface PassportElementErrorTranslationFile {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>translation_file</em>
    */
@@ -21051,22 +15117,11 @@ export interface PassportElementErrorTranslationFile {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue with the translated version of a document. The error is considered resolved when a file with the document translation change.
  */
 export interface PassportElementErrorTranslationFiles {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>translation_files</em>
    */
@@ -21083,22 +15138,11 @@ export interface PassportElementErrorTranslationFiles {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 /**
  * Represents an issue in an unspecified place. The error is considered resolved when new data is added.
  */
 export interface PassportElementErrorUnspecified {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Error source, must be <em>unspecified</em>
    */
@@ -21115,8 +15159,6 @@ export interface PassportElementErrorUnspecified {
    * Error message
    */
   message: string;
-</tbody>
-</table>
 }
 // === GAMES
 <p>Your bot can offer users <strong>HTML5 games</strong> to play solo or to compete against each other in groups and one-on-one chats. Create games via <a href="https://t.me/botfather">@BotFather</a> using the <em>/newgame</em> command. Please note that this kind of power requires responsibility: you will need to accept the terms for each game that your bots will be offering.</p>
@@ -21136,16 +15178,6 @@ export interface ApiMethods {
    * Use this method to send a game. On success, the sent <a href="#message">Message</a> is returned.
    */
   sendGame(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Unique identifier of the business connection on behalf of which the message will be sent
      */
@@ -21186,23 +15218,12 @@ export interface ApiMethods {
      * A JSON-serialized object for an <a href="/bots/features#inline-keyboards">inline keyboard</a>. If empty, one &#39;Play game_title&#39; button will be shown. If not empty, the first button must launch the game.
      */
     reply_markup?: InlineKeyboardMarkup;
-</tbody>
-</table>
   }): never;
 }
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers.
  */
 export interface Game {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Title of the game
    */
@@ -21227,8 +15248,6 @@ export interface Game {
    * Animation that will be displayed in the game message in chats. Upload via <a href="https://t.me/botfather">BotFather</a>.
    */
   animation?: Animation;
-</tbody>
-</table>
 }
 /**
  * A placeholder, currently holds no information. Use <a href="https://t.me/botfather">BotFather</a> to set up your game.
@@ -21239,16 +15258,6 @@ export interface ApiMethods {
    * Use this method to set the score of the specified user in a game message. On success, if the message is not an inline message, the <a href="#message">Message</a> is returned, otherwise <em>True</em> is returned. Returns an error, if the new score is not greater than the user&#39;s current score in the chat and <em>force</em> is <em>False</em>.
    */
   setGameScore(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * User identifier
      */
@@ -21277,8 +15286,6 @@ export interface ApiMethods {
      * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
      */
     inline_message_id?: string;
-</tbody>
-</table>
   }): never;
 }
 export interface ApiMethods {
@@ -21288,16 +15295,6 @@ export interface ApiMethods {
    * > This method will currently return scores for the target user, plus two of their closest neighbors on each side. Will also return the top three users if the user and their neighbors are not among them. Please note that this behavior is subject to change.
    */
   getGameHighScores(args: {
-<table class="table">
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
     /**
      * Target user id
      */
@@ -21314,23 +15311,12 @@ export interface ApiMethods {
      * Required if <em>chat_id</em> and <em>message_id</em> are not specified. Identifier of the inline message.
      */
     inline_message_id?: string;
-</tbody>
-</table>
   }): never;
 }
 /**
  * This object represents one row of the high scores table for a game.
  */
 export interface GameHighScore {
-<table class="table">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
   /**
    * Position in high score table for the game
    */
@@ -21343,8 +15329,6 @@ export interface GameHighScore {
    * Score
    */
   score: number;
-</tbody>
-</table>
 }
 <hr>
 <p>And that&#39;s about all we&#39;ve got for now.<br>If you&#39;ve got any questions, please check out our <a href="/bots/faq"><strong>Bot FAQ »</strong></a></p>
