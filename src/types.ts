@@ -181,24 +181,18 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>offset</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an <em>offset</em> higher than its <em>update_id</em>. The negative offset can be specified to retrieve updates starting from <em>-offset</em> update from the end of the updates queue. All previous updates will be forgotten.</td>
-</tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
-</tr>
-<tr>
-<td>timeout</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.</td>
-</tr>
+    /**
+     * Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as <a href="#getupdates">getUpdates</a> is called with an <em>offset</em> higher than its <em>update_id</em>. The negative offset can be specified to retrieve updates starting from <em>-offset</em> update from the end of the updates queue. All previous updates will be forgotten.
+     */
+    offset?: number;
+    /**
+     * Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+     */
+    limit?: number;
+    /**
+     * Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.
+     */
+    timeout?: number;
 <tr>
 <td>allowed_updates</td>
 <td>Array of String</td>
@@ -248,12 +242,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS</td>
 </tr>
-<tr>
-<td>max_connections</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to <em>40</em>. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.</td>
-</tr>
+    /**
+     * The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to <em>40</em>. Use lower values to limit the load on your bot&#39;s server, and higher values to increase your bot&#39;s throughput.
+     */
+    max_connections?: number;
 <tr>
 <td>allowed_updates</td>
 <td>Array of String</td>
@@ -8598,24 +8590,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -8861,30 +8847,24 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be forwarded; required if the message is forwarded to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be forwarded; required if the message is forwarded to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
 <td>Yes</td>
 <td>Unique identifier for the chat where the original message was sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
 </tr>
-<tr>
-<td>video_start_timestamp</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>New start timestamp for the forwarded video in the message</td>
-</tr>
+    /**
+     * New start timestamp for the forwarded video in the message
+     */
+    video_start_timestamp?: number;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -8940,18 +8920,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the messages will be forwarded; required if the messages are forwarded to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the messages will be forwarded; required if the messages are forwarded to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
@@ -9001,18 +8977,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
@@ -9025,12 +8997,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Message identifier in the chat specified in <em>from_chat_id</em></td>
 </tr>
-<tr>
-<td>video_start_timestamp</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>New start timestamp for the copied video in the message</td>
-</tr>
+    /**
+     * New start timestamp for the copied video in the message
+     */
+    video_start_timestamp?: number;
 <tr>
 <td>caption</td>
 <td>String</td>
@@ -9122,18 +9092,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>from_chat_id</td>
 <td>Integer or String</td>
@@ -9195,24 +9161,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -9328,24 +9288,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel (in the format <code>@channelusername</code>)</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -9469,24 +9423,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -9517,12 +9465,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Duration of the audio in seconds</td>
-</tr>
+    /**
+     * Duration of the audio in seconds
+     */
+    duration?: number;
 <tr>
 <td>performer</td>
 <td>String</td>
@@ -9614,24 +9560,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -9747,24 +9687,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -9777,24 +9711,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Duration of sent video in seconds</td>
-</tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Video width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Video height</td>
-</tr>
+    /**
+     * Duration of sent video in seconds
+     */
+    duration?: number;
+    /**
+     * Video width
+     */
+    width?: number;
+    /**
+     * Video height
+     */
+    height?: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -9807,12 +9735,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Cover for the video in the message. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://&lt;file_attach_name&gt;” to upload a new one using multipart/form-data under &lt;file_attach_name&gt; name. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>start_timestamp</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Start timestamp for the video in the message</td>
-</tr>
+    /**
+     * Start timestamp for the video in the message
+     */
+    start_timestamp?: number;
 <tr>
 <td>caption</td>
 <td>String</td>
@@ -9922,24 +9848,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -9952,24 +9872,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Duration of sent animation in seconds</td>
-</tr>
-<tr>
-<td>width</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Animation width</td>
-</tr>
-<tr>
-<td>height</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Animation height</td>
-</tr>
+    /**
+     * Duration of sent animation in seconds
+     */
+    duration?: number;
+    /**
+     * Animation width
+     */
+    width?: number;
+    /**
+     * Animation height
+     */
+    height?: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -10079,24 +9993,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -10127,12 +10035,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>A JSON-serialized list of special entities that appear in the caption, which can be specified instead of <em>parse_mode</em></td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Duration of the voice message in seconds</td>
-</tr>
+    /**
+     * Duration of the voice message in seconds
+     */
+    duration?: number;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -10206,24 +10112,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -10236,18 +10136,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending video notes by a URL is currently unsupported.</td>
 </tr>
-<tr>
-<td>duration</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Duration of sent video in seconds</td>
-</tr>
-<tr>
-<td>length</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Video width and height, i.e. diameter of the video message</td>
-</tr>
+    /**
+     * Duration of sent video in seconds
+     */
+    duration?: number;
+    /**
+     * Video width and height, i.e. diameter of the video message
+     */
+    length?: number;
 <tr>
 <td>thumbnail</td>
 <td><a href="#inputfile">InputFile</a> or String</td>
@@ -10327,18 +10223,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat&#39;s balance. Otherwise, they will be credited to the bot&#39;s balance.</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>star_count</td>
 <td>Integer</td>
@@ -10448,18 +10340,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the messages will be sent; required if the messages are sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>media</td>
 <td>Array of <a href="#inputmediaaudio">InputMediaAudio</a>, <a href="#inputmediadocument">InputMediaDocument</a>, <a href="#inputmedialivephoto">InputMediaLivePhoto</a>, <a href="#inputmediaphoto">InputMediaPhoto</a> and <a href="#inputmediavideo">InputMediaVideo</a></td>
@@ -10527,24 +10415,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -10569,24 +10451,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
-<tr>
-<td>live_period</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Period in seconds during which the location will be updated (see <a href="https://telegram.org/blog/live-locations">Live Locations</a>), must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely. Must be 0 for ephemeral messages.</td>
-</tr>
-<tr>
-<td>heading</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
-</tr>
-<tr>
-<td>proximity_alert_radius</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
-</tr>
+    /**
+     * Period in seconds during which the location will be updated (see <a href="https://telegram.org/blog/live-locations">Live Locations</a>), must be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely. Must be 0 for ephemeral messages.
+     */
+    live_period?: number;
+    /**
+     * For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+     */
+    heading?: number;
+    /**
+     * For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
+     */
+    proximity_alert_radius?: number;
 <tr>
 <td>disable_notification</td>
 <td>Boolean</td>
@@ -10660,24 +10536,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -10805,24 +10675,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -10926,12 +10790,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>. Polls can&#39;t be sent to channel direct messages chats.</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
 <tr>
 <td>question</td>
 <td>String</td>
@@ -11040,18 +10902,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Media added to the quiz explanation</td>
 </tr>
-<tr>
-<td>open_period</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Amount of time in seconds the poll will be active after creation, 5-2628000. Can&#39;t be used together with <em>close_date</em>.</td>
-</tr>
-<tr>
-<td>close_date</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can&#39;t be used together with <em>open_period</em>.</td>
-</tr>
+    /**
+     * Amount of time in seconds the poll will be active after creation, 5-2628000. Can&#39;t be used together with <em>close_date</em>.
+     */
+    open_period?: number;
+    /**
+     * Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 2628000 seconds in the future. Can&#39;t be used together with <em>open_period</em>.
+     */
+    close_date?: number;
 <tr>
 <td>is_closed</td>
 <td>Boolean</td>
@@ -11216,18 +11074,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>emoji</td>
 <td>String</td>
@@ -11301,12 +11155,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target private chat</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread
+     */
+    message_thread_id?: number;
 <tr>
 <td>draft_id</td>
 <td>Integer</td>
@@ -11365,12 +11217,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot or supergroup in the format <code>@username</code>. Channel chats and channel direct messages chats aren&#39;t supported.</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread or topic of a forum; for supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread or topic of a forum; for supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
 <tr>
 <td>action</td>
 <td>String</td>
@@ -11443,18 +11293,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-<tr>
-<td>offset</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Sequential number of the first photo to be returned. By default, all photos are returned.</td>
-</tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
-</tr>
+    /**
+     * Sequential number of the first photo to be returned. By default, all photos are returned.
+     */
+    offset?: number;
+    /**
+     * Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+     */
+    limit?: number;
 </tbody>
 </table>
   }): never;
@@ -11480,18 +11326,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-<tr>
-<td>offset</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Sequential number of the first audio to be returned. By default, all audios are returned.</td>
-</tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Limits the number of audios to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
-</tr>
+    /**
+     * Sequential number of the first audio to be returned. By default, all audios are returned.
+     */
+    offset?: number;
+    /**
+     * Limits the number of audios to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+     */
+    limit?: number;
 </tbody>
 </table>
   }): never;
@@ -11523,12 +11365,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Custom emoji identifier of the emoji status to set. Pass an empty string to remove the status.</td>
 </tr>
-<tr>
-<td>emoji_status_expiration_date</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Expiration date of the emoji status, if any</td>
-</tr>
+    /**
+     * Expiration date of the emoji status, if any
+     */
+    emoji_status_expiration_date?: number;
 </tbody>
 </table>
   }): never;
@@ -11587,12 +11427,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the target user</td>
 </tr>
-<tr>
-<td>until_date</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Date when the user will be unbanned; Unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.</td>
-</tr>
+    /**
+     * Date when the user will be unbanned; Unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.
+     */
+    until_date?: number;
 <tr>
 <td>revoke_messages</td>
 <td>Boolean</td>
@@ -11679,12 +11517,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> if chat permissions are set independently. Otherwise, the <em>can_send_other_messages</em> and <em>can_add_web_page_previews</em> permissions will imply the <em>can_send_messages</em>, <em>can_send_audios</em>, <em>can_send_documents</em>, <em>can_send_photos</em>, <em>can_send_videos</em>, <em>can_send_video_notes</em>, and <em>can_send_voice_notes</em> permissions; the <em>can_send_polls</em> permission will imply the <em>can_send_messages</em> permission.</td>
 </tr>
-<tr>
-<td>until_date</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.</td>
-</tr>
+    /**
+     * Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever.
+     */
+    until_date?: number;
 </tbody>
 </table>
   }): never;
@@ -12049,18 +11885,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
-<tr>
-<td>expire_date</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Point in time (Unix timestamp) when the link will expire</td>
-</tr>
-<tr>
-<td>member_limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
-</tr>
+    /**
+     * Point in time (Unix timestamp) when the link will expire
+     */
+    expire_date?: number;
+    /**
+     * The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+     */
+    member_limit?: number;
 <tr>
 <td>creates_join_request</td>
 <td>Boolean</td>
@@ -12104,18 +11936,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Invite link name; 0-32 characters</td>
 </tr>
-<tr>
-<td>expire_date</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Point in time (Unix timestamp) when the link will expire</td>
-</tr>
-<tr>
-<td>member_limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999</td>
-</tr>
+    /**
+     * Point in time (Unix timestamp) when the link will expire
+     */
+    expire_date?: number;
+    /**
+     * The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
+     */
+    member_limit?: number;
 <tr>
 <td>creates_join_request</td>
 <td>Boolean</td>
@@ -12549,12 +12377,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the message to unpin. Required if <em>business_connection_id</em> is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.</td>
-</tr>
+    /**
+     * Identifier of the message to unpin. Required if <em>business_connection_id</em> is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
+     */
+    message_id?: number;
 </tbody>
 </table>
   }): never;
@@ -12841,12 +12667,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Topic name, 1-128 characters</td>
 </tr>
-<tr>
-<td>icon_color</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F).</td>
-</tr>
+    /**
+     * Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F).
+     */
+    icon_color?: number;
 <tr>
 <td>icon_custom_emoji_id</td>
 <td>String</td>
@@ -13221,12 +13045,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>URL that will be opened by the user&#39;s client. If you have created a <a href="#game">Game</a> and accepted the conditions via <a href="https://t.me/botfather">@BotFather</a>, specify the URL that opens your game - note that this will only work if the query comes from a <a href="#inlinekeyboardbutton"><em>callback_game</em></a> button.<br><br>Otherwise, you may use links like <code>t.me/your_bot?start=XXXX</code> that open your bot with a parameter.</td>
 </tr>
-<tr>
-<td>cache_time</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.</td>
-</tr>
+    /**
+     * The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
+     */
+    cache_time?: number;
 </tbody>
 </table>
   }): never;
@@ -13743,12 +13565,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be changed.</td>
-</tr>
+    /**
+     * Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be changed.
+     */
+    chat_id?: number;
 <tr>
 <td>menu_button</td>
 <td><a href="#menubutton">MenuButton</a></td>
@@ -13774,12 +13594,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be returned.</td>
-</tr>
+    /**
+     * Unique identifier for the target private chat. If not specified, the bot&#39;s default menu button will be returned.
+     */
+    chat_id?: number;
 </tbody>
 </table>
   }): never;
@@ -13861,12 +13679,10 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>chat_id</em> is not specified. Unique identifier of the target user who will receive the gift.</td>
-</tr>
+    /**
+     * Required if <em>chat_id</em> is not specified. Unique identifier of the target user who will receive the gift.
+     */
+    user_id?: number;
 <tr>
 <td>chat_id</td>
 <td>Integer or String</td>
@@ -14477,12 +14293,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Offset of the first entry to return as received from the previous request; use empty string to get the first chunk of results</td>
 </tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum number of gifts to be returned; 1-100. Defaults to 100.</td>
-</tr>
+    /**
+     * The maximum number of gifts to be returned; 1-100. Defaults to 100.
+     */
+    limit?: number;
 </tbody>
 </table>
   }): never;
@@ -14550,12 +14364,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results</td>
 </tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum number of gifts to be returned; 1-100. Defaults to 100.</td>
-</tr>
+    /**
+     * The maximum number of gifts to be returned; 1-100. Defaults to 100.
+     */
+    limit?: number;
 </tbody>
 </table>
   }): never;
@@ -14635,12 +14447,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Offset of the first entry to return as received from the previous request; use an empty string to get the first chunk of results</td>
 </tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum number of gifts to be returned; 1-100. Defaults to 100.</td>
-</tr>
+    /**
+     * The maximum number of gifts to be returned; 1-100. Defaults to 100.
+     */
+    limit?: number;
 </tbody>
 </table>
   }): never;
@@ -14709,12 +14519,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> to keep the original gift text, sender and receiver in the upgraded gift</td>
 </tr>
-<tr>
-<td>star_count</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If <code>gift.prepaid_upgrade_star_count &gt; 0</code>, then pass 0, otherwise, the <em>can_transfer_stars</em> business bot right is required and <code>gift.upgrade_star_count</code> must be passed.</td>
-</tr>
+    /**
+     * The amount of Telegram Stars that will be paid for the upgrade from the business account balance. If <code>gift.prepaid_upgrade_star_count &gt; 0</code>, then pass 0, otherwise, the <em>can_transfer_stars</em> business bot right is required and <code>gift.upgrade_star_count</code> must be passed.
+     */
+    star_count?: number;
 </tbody>
 </table>
   }): never;
@@ -14752,12 +14560,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier of the chat which will own the gift. The chat must be active in the last 24 hours.</td>
 </tr>
-<tr>
-<td>star_count</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the <em>can_transfer_stars</em> business bot right is required.</td>
-</tr>
+    /**
+     * The amount of Telegram Stars that will be paid for the transfer from the business account balance. If positive, then the <em>can_transfer_stars</em> business bot right is required.
+     */
+    star_count?: number;
 </tbody>
 </table>
   }): never;
@@ -15131,12 +14937,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
@@ -15210,12 +15014,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
@@ -15283,12 +15085,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
@@ -15338,12 +15138,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
@@ -15362,30 +15160,24 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Longitude of new location</td>
 </tr>
-<tr>
-<td>live_period</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current <em>live_period</em> by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then <em>live_period</em> remains unchanged.</td>
-</tr>
+    /**
+     * New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current <em>live_period</em> by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then <em>live_period</em> remains unchanged.
+     */
+    live_period?: number;
 <tr>
 <td>horizontal_accuracy</td>
 <td>Float</td>
 <td>Optional</td>
 <td>The radius of uncertainty for the location, measured in meters; 0-1500</td>
 </tr>
-<tr>
-<td>heading</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.</td>
-</tr>
-<tr>
-<td>proximity_alert_radius</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.</td>
-</tr>
+    /**
+     * Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+     */
+    heading?: number;
+    /**
+     * The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
+     */
+    proximity_alert_radius?: number;
 <tr>
 <td>reply_markup</td>
 <td><a href="#inlinekeyboardmarkup">InlineKeyboardMarkup</a></td>
@@ -15423,12 +15215,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message with live location to stop.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the message with live location to stop.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
@@ -15521,12 +15311,10 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code>.</td>
 </tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the message to edit.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
@@ -15833,12 +15621,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Identifier of a suggested post message to approve</td>
 </tr>
-<tr>
-<td>send_date</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future.</td>
-</tr>
+    /**
+     * Point in time (Unix timestamp) when the post is expected to be published; omit if the date has already been specified when the suggested post was created. If specified, then the date must be not more than 2678400 seconds (30 days) in the future.
+     */
+    send_date?: number;
 </tbody>
 </table>
   }): never;
@@ -16006,18 +15792,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Identifier of the target message</td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the user whose reaction will be removed, if the reaction was added by a user</td>
-</tr>
-<tr>
-<td>actor_chat_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the chat whose reaction will be removed, if the reaction was added by a chat</td>
-</tr>
+    /**
+     * Identifier of the user whose reaction will be removed, if the reaction was added by a user
+     */
+    user_id?: number;
+    /**
+     * Identifier of the chat whose reaction will be removed, if the reaction was added by a chat
+     */
+    actor_chat_id?: number;
 </tbody>
 </table>
   }): never;
@@ -16043,18 +15825,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target supergroup in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the user whose reactions will be removed, if the reactions were added by a user</td>
-</tr>
-<tr>
-<td>actor_chat_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the chat whose reactions will be removed, if the reactions were added by a chat</td>
-</tr>
+    /**
+     * Identifier of the user whose reactions will be removed, if the reactions were added by a user
+     */
+    user_id?: number;
+    /**
+     * Identifier of the chat whose reactions will be removed, if the reactions were added by a chat
+     */
+    actor_chat_id?: number;
 </tbody>
 </table>
   }): never;
@@ -16268,24 +16046,18 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
-<tr>
-<td>receiver_user_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
+    /**
+     * For outgoing ephemeral messages, unique identifier of the user who will receive the message; for group and supergroup chats only. It is not guaranteed that the user will receive the message, especially if they are offline. See <a href="#ephemeral-messages-and-commands">ephemeral message sending</a> for more details.
+     */
+    receiver_user_id?: number;
 <tr>
 <td>callback_query_id</td>
 <td>String</td>
@@ -17234,18 +17006,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>rich_message</td>
 <td><a href="#inputrichmessage">InputRichMessage</a></td>
@@ -17319,12 +17087,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target private chat</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread
+     */
+    message_thread_id?: number;
 <tr>
 <td>draft_id</td>
 <td>Integer</td>
@@ -19532,12 +19298,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>A JSON-serialized Array of results for the inline query</td>
 </tr>
-<tr>
-<td>cache_time</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.</td>
-</tr>
+    /**
+     * The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.
+     */
+    cache_time?: number;
 <tr>
 <td>is_personal</td>
 <td>Boolean</td>
@@ -21194,18 +20958,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
-<tr>
-<td>direct_messages_topic_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
+    /**
+     * Identifier of the direct messages topic to which the message will be sent; required if the message is sent to a direct messages chat
+     */
+    direct_messages_topic_id?: number;
 <tr>
 <td>title</td>
 <td>String</td>
@@ -21242,12 +21002,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
-<tr>
-<td>max_tip_amount</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    max_tip_amount?: number;
 <tr>
 <td>suggested_tip_amounts</td>
 <td>Array of Integer</td>
@@ -21272,24 +21030,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.</td>
 </tr>
-<tr>
-<td>photo_size</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Photo size in bytes</td>
-</tr>
-<tr>
-<td>photo_width</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Photo width</td>
-</tr>
-<tr>
-<td>photo_height</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Photo height</td>
-</tr>
+    /**
+     * Photo size in bytes
+     */
+    photo_size?: number;
+    /**
+     * Photo width
+     */
+    photo_width?: number;
+    /**
+     * Photo height
+     */
+    photo_height?: number;
 <tr>
 <td>need_name</td>
 <td>Boolean</td>
@@ -21435,18 +21187,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
 </tr>
-<tr>
-<td>subscription_period</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The number of seconds the subscription will be active for before the next payment. The currency must be set to “XTR” (Telegram Stars) if the parameter is used. Currently, it must always be 2592000 (30 days) if specified. Any number of subscriptions can be active for a given bot at the same time, including multiple concurrent subscriptions from the same user. Subscription price must no exceed 10000 Telegram Stars.</td>
-</tr>
-<tr>
-<td>max_tip_amount</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.</td>
-</tr>
+    /**
+     * The number of seconds the subscription will be active for before the next payment. The currency must be set to “XTR” (Telegram Stars) if the parameter is used. Currently, it must always be 2592000 (30 days) if specified. Any number of subscriptions can be active for a given bot at the same time, including multiple concurrent subscriptions from the same user. Subscription price must no exceed 10000 Telegram Stars.
+     */
+    subscription_period?: number;
+    /**
+     * The maximum accepted amount for tips in the <em>smallest units</em> of the currency (integer, <strong>not</strong> float/double). For example, for a maximum tip of <code>US$ 1.45</code> pass <code>max_tip_amount = 145</code>. See the <em>exp</em> parameter in <a href="/bots/payments/currencies.json">currencies.json</a>, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in <a href="https://t.me/BotNews/90">Telegram Stars</a>.
+     */
+    max_tip_amount?: number;
 <tr>
 <td>suggested_tip_amounts</td>
 <td>Array of Integer</td>
@@ -21465,24 +21213,18 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.</td>
 </tr>
-<tr>
-<td>photo_size</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Photo size in bytes</td>
-</tr>
-<tr>
-<td>photo_width</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Photo width</td>
-</tr>
-<tr>
-<td>photo_height</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Photo height</td>
-</tr>
+    /**
+     * Photo size in bytes
+     */
+    photo_size?: number;
+    /**
+     * Photo width
+     */
+    photo_width?: number;
+    /**
+     * Photo height
+     */
+    photo_height?: number;
 <tr>
 <td>need_name</td>
 <td>Boolean</td>
@@ -21630,18 +21372,14 @@ export interface ApiMethods {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>offset</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Number of transactions to skip in the response</td>
-</tr>
-<tr>
-<td>limit</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100.</td>
-</tr>
+    /**
+     * Number of transactions to skip in the response
+     */
+    offset?: number;
+    /**
+     * The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+     */
+    limit?: number;
 </tbody>
 </table>
   }): never;
@@ -22990,12 +22728,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot in the format <code>@username</code>. Games can&#39;t be sent to channel direct messages chats and channel chats.</td>
 </tr>
-<tr>
-<td>message_thread_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only</td>
-</tr>
+    /**
+     * Unique identifier for the target message thread (topic) of a forum; for forum supergroups and private chats of bots with forum topic mode enabled only
+     */
+    message_thread_id?: number;
 <tr>
 <td>game_short_name</td>
 <td>String</td>
@@ -23125,18 +22861,14 @@ export interface ApiMethods {
 <td>Optional</td>
 <td>Pass <em>True</em> if the game message should not be automatically edited to include the current scoreboard</td>
 </tr>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat.</td>
-</tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the sent message.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat.
+     */
+    chat_id?: number;
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the sent message.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
@@ -23170,18 +22902,14 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Target user id</td>
 </tr>
-<tr>
-<td>chat_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat.</td>
-</tr>
-<tr>
-<td>message_id</td>
-<td>Integer</td>
-<td>Optional</td>
-<td>Required if <em>inline_message_id</em> is not specified. Identifier of the sent message.</td>
-</tr>
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Unique identifier for the target chat.
+     */
+    chat_id?: number;
+    /**
+     * Required if <em>inline_message_id</em> is not specified. Identifier of the sent message.
+     */
+    message_id?: number;
 <tr>
 <td>inline_message_id</td>
 <td>String</td>
