@@ -9089,12 +9089,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>photo</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+    /**
+     * Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo&#39;s width and height must not exceed 10000 in total. Width and height ratio must be at most 20. <a href="#sending-files">More information on Sending Files »</a>
+     */
+    photo: InputFile | string;
     /**
      * Photo caption (may also be used when resending photos by <em>file_id</em>), 0-1024 characters after entities parsing
      */
@@ -9190,18 +9188,14 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>live_photo</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
-</tr>
-<tr>
-<td>photo</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.</td>
-</tr>
+    /**
+     * Live photo video to send. The video must be no longer than 10 seconds and must not exceed 10 MB in size. Pass a file_id as String to send a video that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+     */
+    live_photo: InputFile | string;
+    /**
+     * The static photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending live photos by a URL is currently unsupported.
+     */
+    photo: InputFile | string;
     /**
      * Video caption (may also be used when resending videos by <em>file_id</em>), 0-1024 characters after entities parsing
      */
@@ -9299,12 +9293,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>audio</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+    /**
+     * Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     */
+    audio: InputFile | string;
     /**
      * Audio caption, 0-1024 characters after entities parsing
      */
@@ -9408,12 +9400,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>document</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+    /**
+     * File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     */
+    document: InputFile | string;
     /**
      * Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail&#39;s width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can&#39;t be reused and can be only uploaded as a new file, so you can pass “attach://&lt;file_attach_name&gt;” if the thumbnail was uploaded using multipart/form-data under &lt;file_attach_name&gt;. <a href="#sending-files">More information on Sending Files »</a>
      */
@@ -9509,12 +9499,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>video</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+    /**
+     * Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     */
+    video: InputFile | string;
     /**
      * Duration of sent video in seconds
      */
@@ -9638,12 +9626,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>animation</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+    /**
+     * Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     */
+    animation: InputFile | string;
     /**
      * Duration of sent animation in seconds
      */
@@ -9755,12 +9741,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>voice</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a></td>
-</tr>
+    /**
+     * Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>
+     */
+    voice: InputFile | string;
     /**
      * Voice message caption, 0-1024 characters after entities parsing
      */
@@ -9852,12 +9836,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>video_note</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending video notes by a URL is currently unsupported.</td>
-</tr>
+    /**
+     * Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Sending video notes by a URL is currently unsupported.
+     */
+    video_note: InputFile | string;
     /**
      * Duration of sent video in seconds
      */
@@ -14994,12 +14976,10 @@ export interface ApiMethods {
      * For outgoing ephemeral messages, identifier of the callback query which triggered the message if any
      */
     callback_query_id?: string;
-<tr>
-<td>sticker</td>
-<td><a href="#inputfile">InputFile</a> or String</td>
-<td>Yes</td>
-<td>Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Video and animated stickers can&#39;t be sent via an HTTP URL.</td>
-</tr>
+    /**
+     * Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. <a href="#sending-files">More information on Sending Files »</a>. Video and animated stickers can&#39;t be sent via an HTTP URL.
+     */
+    sticker: InputFile | string;
     /**
      * Emoji associated with the sticker; only for just uploaded stickers
      */
