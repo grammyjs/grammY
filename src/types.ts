@@ -8896,12 +8896,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
 </tr>
-<tr>
-<td>message_ids</td>
-<td>Array of Integer</td>
-<td>Yes</td>
-<td>A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to forward. The identifiers must be specified in a strictly increasing order.</td>
-</tr>
+    /**
+     * A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to forward. The identifiers must be specified in a strictly increasing order.
+     */
+    message_ids: number[];
     /**
      * Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
      */
@@ -9048,12 +9046,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the chat where the original messages were sent (or username of the target bot, supergroup or channel in the format <code>@username</code>)</td>
 </tr>
-<tr>
-<td>message_ids</td>
-<td>Array of Integer</td>
-<td>Yes</td>
-<td>A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to copy. The identifiers must be specified in a strictly increasing order.</td>
-</tr>
+    /**
+     * A JSON-serialized list of 1-100 identifiers of messages in the chat <em>from_chat_id</em> to copy. The identifiers must be specified in a strictly increasing order.
+     */
+    message_ids: number[];
     /**
      * Sends the messages <a href="https://telegram.org/blog/channels-2-0#silent-messages">silently</a>. Users will receive a notification with no sound.
      */
@@ -13326,12 +13322,10 @@ export interface ApiMethods {
      * Unique identifier of the business connection on behalf of which to delete the messages
      */
     business_connection_id: string;
-<tr>
-<td>message_ids</td>
-<td>Array of Integer</td>
-<td>Yes</td>
-<td>A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.</td>
-</tr>
+    /**
+     * A JSON-serialized list of 1-100 identifiers of messages to delete. All messages must be from the same chat. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.
+     */
+    message_ids: number[];
 </tbody>
 </table>
   }): never;
@@ -14860,12 +14854,10 @@ export interface ApiMethods {
 <td>Yes</td>
 <td>Unique identifier for the target chat or username of the target bot, supergroup or channel in the format <code>@username</code></td>
 </tr>
-<tr>
-<td>message_ids</td>
-<td>Array of Integer</td>
-<td>Yes</td>
-<td>A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.</td>
-</tr>
+    /**
+     * A JSON-serialized list of 1-100 identifiers of messages to delete. See <a href="#deletemessage">deleteMessage</a> for limitations on which messages can be deleted.
+     */
+    message_ids: number[];
 </tbody>
 </table>
   }): never;
